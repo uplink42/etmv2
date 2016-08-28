@@ -3024,6 +3024,21 @@ fieldset[disabled] .form-control {
     padding-top: 0 !important;
 }
 
-#profits-table_wrapper {
+@media only screen and (min-width: 768px) {
+  .table-responsive {
     overflow-x: hidden;
+  }
+}
+
+#profits-table td:nth-child(6)::after {
+    content: " %";
+}
+
+#profits-table {
+    color: #fff;
+    opacity: 0.7;
+}
+
+#pie svg {
+    background-color: transparent !important;
 }

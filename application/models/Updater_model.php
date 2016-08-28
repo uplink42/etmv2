@@ -8,8 +8,7 @@ use Pheal\Pheal;
 Config::getInstance()->cache  = new \Pheal\Cache\FileStorage(FILESTORAGE);
 Config::getInstance()->access = new \Pheal\Access\StaticCheck();
 
-class Updater_model extends CI_Model
-{
+class Updater_model extends CI_Model {
 
     //account related
     private $user_id;
@@ -389,7 +388,6 @@ class Updater_model extends CI_Model
         //only update transactions not in db already
         foreach ($response->transactions as $row) {
             if ($row->transactionID > $latest_transaction) {
-
                 $data = array("idbuy"       => "null",
                     "time"                      => $this->db->escape($row->transactionDateTime),
                     "quantity"                  => $this->db->escape($row->quantity),
@@ -442,32 +440,53 @@ class Updater_model extends CI_Model
         $this->db->select('COALESCE(max(eve_idcontracts),0) AS val');
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $query           = $this->db->get('contracts');
-        $latest_contract = $query->row()->val;
         $contracts       = array();
+        $old_contracts = [];
+        $new_contracts = [];
+
 
         foreach ($response->contractList as $row) {
-            if ($row->contractID > $latest_contract) {
+            $data = array("eve_idcontracts" => $this->db->escape($row->contractID),
+                "issuer_id"                     => $this->db->escape($row->issuerID),
+                "acceptor_id"                   => $this->db->escape($row->acceptorID),
+                "status"                        => $this->db->escape($row->status),
+                "availability"                  => $this->db->escape($row->availability),
+                "type"                          => $this->db->escape($row->type),
+                "creation_date"                 => $this->db->escape($row->dateIssued),
+                "expiration_date"               => $this->db->escape($row->dateExpired),
+                "completed_date"                => $this->db->escape($row->dateCompleted),
+                "price"                         => $this->db->escape($row->price),
+                "reward"                        => $this->db->escape($row->reward),
+                "colateral"                     => $this->db->escape($row->collateral),
+                "fromStation_eve_idstation"     => $this->db->escape($row->startStationID),
+                "toStation_eve_idstation"       => $this->db->escape($row->endStationID),
+                "characters_eve_idcharacters"   => $this->db->escape($this->character_id),
+            );
 
-                $data = array("eve_idcontracts" => "null",
-                    "issuer_id"                     => $this->db->escape($row->issuerID),
-                    "acceptor_id"                   => $this->db->escape($row->acceptorID),
-                    "status"                        => $this->db->escape($row->status),
-                    "availability"                  => $this->db->escape($row->availability),
-                    "type"                          => $this->db->escape($row->type),
-                    "creation_date"                 => $this->db->escape($row->dateIssued),
-                    "expiration_date"               => $this->db->escape($row->dateExpired),
-                    "completed_date"                => $this->db->escape($row->dateCompleted),
-                    "price"                         => $this->db->escape($row->price),
-                    "reward"                        => $this->db->escape($row->reward),
-                    "colateral"                     => $this->db->escape($row->collateral),
-                    "fromStation_eve_idstation"     => $this->db->escape($row->startStationID),
-                    "toStation_eve_idstation"       => $this->db->escape($row->endStationID),
-                    "characters_eve_idcharacters"   => $this->db->escape($this->character_id),
-                );
+            array_push($contracts, $data);
+            array_push($new_contracts, $row->contractID);
+        }
 
-                array_push($contracts, $data);
+        //count how many new contracts were inserted
+        $this->db->select('eve_idcontracts');
+        $this->db->where('characters_eve_idcharacters', $this->character_id);
+        $query = $this->db->get('contracts');
+        $old = $query->result();
+        
+        foreach($old as $row) {
+            array_push($old_contracts, $row->eve_idcontracts);
+        }
+
+        $duplicates = 0;
+        foreach($new_contracts as $new) {
+            foreach($old_contracts as $old) {
+                if($new == $old) {
+                    $duplicates++;
+                }
             }
         }
+
+        $this->character_new_contracts = count($new_contracts) - $duplicates;
 
         if (!empty($contracts)) {
             $this->db->query(batch("contracts",
@@ -488,7 +507,6 @@ class Updater_model extends CI_Model
                     'characters_eve_idcharacters'),
                 $contracts)
             );
-            $this->character_new_contracts = $this->db->affected_rows();
         } else {
             $this->character_new_contracts = 0;
         }
@@ -499,10 +517,11 @@ class Updater_model extends CI_Model
         $pheal    = new Pheal($this->apikey, $this->vcode, "char");
         $response = $pheal->MarketOrders(array("characterID" => $this->character_id));
 
-        $market_orders = array();
+        $market_orders = [];
+        $new_orders = [];
+        $old_orders = [];
 
         foreach ($response->orders as $row) {
-
             //Eve API reports order states with these codes
             switch ($row->orderState) {
                 case '0':
@@ -542,7 +561,27 @@ class Updater_model extends CI_Model
             );
 
             array_push($market_orders, $data);
+            array_push($new_orders, $row->orderID);
         }
+
+        $this->db->select('transkey');
+        $this->db->where('characters_eve_idcharacters', $this->character_id);
+        $query = $this->db->get('orders');
+        $old = $query->result();
+        
+        foreach($old as $row) {
+            array_push($old_orders, $row->transkey);
+        }
+
+        $duplicates = 0;
+        foreach($new_orders as $new) {
+            foreach($old_orders as $old) {
+                if($new == $old) {
+                    $duplicates++;
+                }
+            }
+        }
+        $this->character_new_orders = count($new_orders) - $duplicates;
 
         if (!empty($market_orders)) {
             $this->db->query(batch("orders",
@@ -561,10 +600,10 @@ class Updater_model extends CI_Model
                     'transkey'),
                 $market_orders)
             );
-            $this->character_new_orders = $this->db->affected_rows();
         } else {
             $this->character_new_orders = 0;
         }
+
 
         $query = $this->db->query("SELECT coalesce(sum(orders.volume_remaining * item_price_data.price_evecentral),0) AS grand_total
                         FROM orders
@@ -790,8 +829,8 @@ class Updater_model extends CI_Model
                     $CI->Tax_Model->tax($stationFromID, $stationToID, $characterBuyID, $characterSellID, "buy", "sell");
                     $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
                     $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
-                    $transTaxTo  = $CI->Tax_Model->calculateTaxTo();
-                    $brokerFeeTo = $CI->Tax_Model->calculateBrokerTo();
+                    $transTaxTo    = $CI->Tax_Model->calculateTaxTo();
+                    $brokerFeeTo   = $CI->Tax_Model->calculateBrokerTo();
 
                     $price_unit_b_taxed  = $price_unit_b * $brokerFeeFrom * $transTaxFrom;
                     $price_total_b_taxed = $price_unit_b_taxed * min($quantity_b, $quantity_s);
@@ -902,7 +941,7 @@ class Updater_model extends CI_Model
         }
 
         $this->is_updating = 0;
-        $data = ["updating" => $this->is_updating];
+        $data              = ["updating" => $this->is_updating];
         $this->db->where('username', $this->username);
         $this->db->update("user", $data);
 

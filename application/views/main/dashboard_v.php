@@ -3,7 +3,6 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
 ?>
 <!--Fusioncharts -->
 <script src="<?=base_url('assets/fusioncharts/js/fusioncharts.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
-<script src="<?=base_url('assets/luna/vendor/datatables/datatables.min.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <script src="<?=base_url('assets/js/dashboard-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
@@ -77,7 +76,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     ?>
                 </span>
                 </h2>
-                <div class="small">New orders</div>
+                <div class="small">Orders up</div>
 
             </div>
             </div>
@@ -86,14 +85,16 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         <div class="col-lg-4 col-lg-offset-2 col-xs-12">
             <div class="panel panel-filled" style="position:relative;height: 114px">
             <div style="position: absolute;bottom: 0;left: 0;right: 0">
-                <span class="sparkline"></span>
+                <span class="sparkline" data-profit=<?= $week_profits?>></span>
             </div>
             <div class="panel-body">
                 <div class="m-t-sm">
                     <div class="c-white"><span class="label label-accent"></span> Last 7 day profits (all characters)</div>
-                        <span class="small c-white"><?=number_format($profits_trends['total_week'], 2) . " ISK";?>
-                            <i class="fa fa-play fa-rotate-270 text-warning"></i>
-                            <?=$profits_trends['trend_today']?>% (today)
+                        <span class="small c-white">This week: <?=number_format($profits_trends['total_week'], 2) . " ISK";?>
+                            <?php
+                            $profits_trends['trend_today'] > 0 ? $res = "270" : $res="90"?>
+                            <i class="fa fa-play fa-rotate-<?=$res?> text-warning"></i>
+                            <?=number_format($profits_trends['trend_today'],0)?>% (today)
                         </span>
                 <!--<span class="sparkline"></span>-->
                 </div>
@@ -128,8 +129,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                             <thead>
                                 <tr>
                                     <th>Item</th>
-                                    <th>Station</th>
-                                    <th>Quantity</th>
+                                    <th>System</th>
+                                    <th>Date</th>
+                                    <th>Q</th>
                                     <th>Profit</th>
                                     <th>Margin</th>
                                 </tr>
@@ -137,13 +139,15 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                             <tbody>
                                     <?php
                                 foreach ($profits as $row) {
+                                    if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
                                     ?>
-                                <tr>
-                                    <td><?=$row->item_name?></td>
-                                    <td><?=$row->station_name?></td>
-                                    <td><?=$row->quantity?></td>
-                                    <td><?=$row->profit_unit?></td>
-                                    <td><?=$row->margin?></td>
+                                <tr class="<?=$res?>">
+                                    <td><?=$row['item_name']?></td>
+                                    <td><?=$row['system_name']?></td>
+                                    <td><?=$row['sell_time']?></td>
+                                    <td><?=number_format($row['quantity'],0)?></td>
+                                    <td><?=number_format($row['profit_total'],2)?></td>
+                                    <td><?=number_format($row['margin'],2)?></td>
                                 </tr>
                                     <?php }?>
                             </tbody>
@@ -156,7 +160,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="panel">
                 <div class="panel-heading">
                     <?php
-                        $pieChart = new FusionCharts("pie3d", "mypiechart", "100%", "300", "pie", "json", $pie_data);
+                        $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "300", "pie", "json", $pie_data);
                         $pieChart->render();
                     ?>
                     Asset distribution

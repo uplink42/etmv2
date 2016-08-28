@@ -34,7 +34,8 @@ $(document).ready(function() {
     //datatables
     $('#profits-table').DataTable({
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-            "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-            buttons: []
+            "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],
+            buttons: [],
+            "order": []
         });
 });

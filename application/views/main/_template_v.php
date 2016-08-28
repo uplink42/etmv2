@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="<?=base_url('assets/luna/vendor/animate.css/animate.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
     <link rel="stylesheet" href="<?=base_url('assets/luna/vendor/bootstrap/css/bootstrap.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
     <link rel="stylesheet" href="<?=base_url('assets/luna/vendor/toastr/toastr.min.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
+    <link rel="stylesheet" href="<?=base_url('assets/luna/vendor/datatables/datatables.min.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
 
     <!-- App styles -->
     <link rel="stylesheet" href="<?=base_url('assets/luna/styles/pe-icons/pe-icon-7-stroke.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
@@ -35,6 +36,7 @@
     <script src="<?=base_url('assets/luna/vendor/flot/jquery.flot.min.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
     <script src="<?=base_url('assets/luna/vendor/flot/jquery.flot.resize.min.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
     <script src="<?=base_url('assets/luna/vendor/flot/jquery.flot.spline.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+    <script src="<?=base_url('assets/luna/vendor/datatables/datatables.min.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 
     <!-- App scripts -->
     <script src="<?=base_url('assets/luna/scripts/luna.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
