@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+
+    <!-- Page title -->
+    <title>LUNA | Responsive Admin Theme</title>
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="vendor/animate.css/animate.css"/>
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css"/>
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="styles/pe-icons/pe-icon-7-stroke.css"/>
+    <link rel="stylesheet" href="styles/pe-icons/helper.css"/>
+    <link rel="stylesheet" href="styles/stroke-icons/style.css"/>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<!-- Wrapper-->
+<div class="wrapper">
+
+    <!-- Header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div id="mobile-menu">
+                    <div class="left-nav-toggle">
+                        <a href="#">
+                            <i class="stroke-hamburgermenu"></i>
+                        </a>
+                    </div>
+                </div>
+                <a class="navbar-brand" href="index-2.html">
+                    LUNA
+                    <span>v.1.0</span>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="left-nav-toggle">
+                    <a href="#">
+                        <i class="stroke-hamburgermenu"></i>
+                    </a>
+                </div>
+                <form class="navbar-form navbar-left">
+                    <input type="text" class="form-control" placeholder="Search data for analysis" style="width: 175px">
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="versions.html" >Versions
+                            <span class="label label-warning pull-right">2</span>
+                        </a>
+                    </li>
+                    <li class=" profil-link">
+                        <a href="login.html">
+                            <span class="profile-address">luna@company.io</span>
+                            <img src="images/profile.jpg" class="img-circle" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End header-->
+
+    <!-- Navigation-->
+    <aside class="navigation">
+        <nav>
+            <ul class="nav luna-nav">
+                <li class="nav-category">
+                    Main
+                </li>
+                <li>
+                    <a href="index-2.html">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="#monitoring" data-toggle="collapse" aria-expanded="false">
+                        Monitoring<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="monitoring" class="nav nav-second collapse">
+                        <li><a href="metrics.html"> Metrics</a></li>
+                        <li><a href="usage.html"> Usage</a></li>
+                        <li><a href="activity.html"> Activity</a></li>
+                    </ul>
+                </li>
+                <li class="nav-category">
+                    UI Elements
+                </li>
+                <li class="active">
+                    <a href="#uielements" data-toggle="collapse" aria-expanded="false">
+                        General<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="uielements" class="nav nav-second collapse in">
+                        <li><a href="panels.html">Panels</a></li>
+                        <li><a href="typography.html">Typography</a></li>
+                        <li class="active"><a href="icons.html">Icons</a></li>
+                        <li><a href="buttons.html">Buttons</a></li>
+                        <li><a href="tabs.html">Tabs</a></li>
+                        <li><a href="modals.html">Modals</a></li>
+                        <li><a href="alerts.html">Alerts</a></li>
+                        <li><a href="gridSystem.html">Grid system</a></li>
+                        <li><a href="draggable.html">Draggable</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#tables" data-toggle="collapse" aria-expanded="false">
+                        Tables design<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="tables" class="nav nav-second collapse">
+                        <li><a href="tableStyles.html">Table styles</a></li>
+                        <li><a href="dataTables.html">Data Tables</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="formElements.html"> Form elements </a>
+                </li>
+                <li>
+                    <a href="#charts" data-toggle="collapse" aria-expanded="false">
+                        Charts and graphs<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="charts" class="nav nav-second collapse">
+                        <li><a href="flotCharts.html">Flot charts</a></li>
+                        <li><a href="sparkline.html">Sparkline</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-category">
+                    App Pages
+                </li>
+
+                <li>
+                    <a href="#extras" data-toggle="collapse" aria-expanded="false">
+                        Basic <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="extras" class="nav nav-second collapse">
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="support.html">Support</a></li>
+                        <li><a href="nestableList.html">List</a></li>
+                        <li><a href="timeline.html">Timeline</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#common" data-toggle="collapse" aria-expanded="false">
+                        Common <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="common" class="nav nav-second collapse">
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="forgotPassword.html">Forgot password</a></li>
+                        <li><a href="error.html">Error page</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="versions.html">
+                        <span class="badge pull-right">2</span>
+                        Versions
+                    </a>
+                </li>
+                <li class="nav-info">
+                    <i class="pe pe-7s-shield text-accent"></i>
+                    <div class="m-t-xs">
+                        <span class="c-white">LUNA</span> admin theme with Dark UI style for monitoring and administration web applications.
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <!-- End navigation-->
+
+
+    <!-- Main content-->
+    <section class="content">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="view-header">
+                        <div class="pull-right text-right" style="line-height: 14px">
+                            <small>UI Elements<br>General<br> <span class="c-white">Icons</span></small>
+                        </div>
+                        <div class="header-icon">
+                            <i class="pe page-header-icon pe-7s-rocket"></i>
+                        </div>
+                        <div class="header-title">
+                            <h3>Icons</h3>
+                            <small>
+                                Two great icon libraries. Pe-icon-7-stroke and Font Awesome
+                            </small>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-8">
+
+                    <div class="panel">
+                        <div class="panel-heading">
+                            Complete 202 stroke icons - Pe-icon-7-stroke - 1.2.0
+                        </div>
+                        <div class="panel-body">
+                            A series of iOS 7 inspired vector icons in a custom@font-face icon font that can be styled dynamically using CSS.
+                            Those retina ready icons have a very modern style that will beautifully complement any project.
+
+                            <div class="row m-t-md">
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-album"></span>
+                                    <span class="icon-example-name">pe-7s-album</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-arc"></span>
+                                    <span class="icon-example-name">pe-7s-arc</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-back-2"></span>
+                                    <span class="icon-example-name">pe-7s-back-2</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-bandaid"></span>
+                                    <span class="icon-example-name">pe-7s-bandaid</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-car"></span>
+                                    <span class="icon-example-name">pe-7s-car</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-diamond"></span>
+                                    <span class="icon-example-name">pe-7s-diamond</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-door-lock"></span>
+                                    <span class="icon-example-name">pe-7s-door-lock</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-eyedropper"></span>
+                                    <span class="icon-example-name">pe-7s-eyedropper</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-female"></span>
+                                    <span class="icon-example-name">pe-7s-female</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-gym"></span>
+                                    <span class="icon-example-name">pe-7s-gym</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-hammer"></span>
+                                    <span class="icon-example-name">pe-7s-hammer</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-headphones"></span>
+                                    <span class="icon-example-name">pe-7s-headphones</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-helm"></span>
+                                    <span class="icon-example-name">pe-7s-helm</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-hourglass"></span>
+                                    <span class="icon-example-name">pe-7s-hourglass</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-leaf"></span>
+                                    <span class="icon-example-name">pe-7s-leaf</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-magic-wand"></span>
+                                    <span class="icon-example-name">pe-7s-magic-wand</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-male"></span>
+                                    <span class="icon-example-name">pe-7s-male</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-map-2"></span>
+                                    <span class="icon-example-name">pe-7s-map-2</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-next-2"></span>
+                                    <span class="icon-example-name">pe-7s-next-2</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-paint-bucket"></span>
+                                    <span class="icon-example-name">pe-7s-paint-bucket</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-pendrive"></span>
+                                    <span class="icon-example-name">pe-7s-pendrive</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-photo"></span>
+                                    <span class="icon-example-name">pe-7s-photo</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-piggy"></span>
+                                    <span class="icon-example-name">pe-7s-piggy</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-plugin"></span>
+                                    <span class="icon-example-name">pe-7s-plugin</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-refresh-2"></span>
+                                    <span class="icon-example-name">pe-7s-refresh-2</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-rocket"></span>
+                                    <span class="icon-example-name">pe-7s-rocket</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-settings"></span>
+                                    <span class="icon-example-name">pe-7s-settings</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-shield"></span>
+                                    <span class="icon-example-name">pe-7s-shield</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-smile"></span>
+                                    <span class="icon-example-name">pe-7s-smile</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-usb"></span>
+                                    <span class="icon-example-name">pe-7s-usb</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-vector"></span>
+                                    <span class="icon-example-name">pe-7s-vector</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-wine"></span>
+                                    <span class="icon-example-name">pe-7s-wine</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-cloud-upload"></span>
+                                    <span class="icon-example-name">pe-7s-cloud-upload</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-cash"></span>
+                                    <span class="icon-example-name">pe-7s-cash</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-close"></span>
+                                    <span class="icon-example-name">pe-7s-close</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-bluetooth"></span>
+                                    <span class="icon-example-name">pe-7s-bluetooth</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-cloud-download"></span>
+                                    <span class="icon-example-name">pe-7s-cloud-download</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-way"></span>
+                                    <span class="icon-example-name">pe-7s-way</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-close-circle"></span>
+                                    <span class="icon-example-name">pe-7s-close-circle</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-id"></span>
+                                    <span class="icon-example-name">pe-7s-id</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-angle-up"></span>
+                                    <span class="icon-example-name">pe-7s-angle-up</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-wristwatch"></span>
+                                    <span class="icon-example-name">pe-7s-wristwatch</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-angle-up-circle"></span>
+                                    <span class="icon-example-name">pe-7s-angle-up-circle</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-world"></span>
+                                    <span class="icon-example-name">pe-7s-world</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-angle-right"></span>
+                                    <span class="icon-example-name">pe-7s-angle-right</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-volume"></span>
+                                    <span class="icon-example-name">pe-7s-volume</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-angle-right-circle"></span>
+                                    <span class="icon-example-name">pe-7s-angle-right-circle</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-users"></span>
+                                    <span class="icon-example-name">pe-7s-users</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-angle-left"></span>
+                                    <span class="icon-example-name">pe-7s-angle-left</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-user-female"></span>
+                                    <span class="icon-example-name">pe-7s-user-female</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-angle-left-circle"></span>
+                                    <span class="icon-example-name">pe-7s-angle-left-circle</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-up-arrow"></span>
+                                    <span class="icon-example-name">pe-7s-up-arrow</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-angle-down"></span>
+                                    <span class="icon-example-name">pe-7s-angle-down</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-switch"></span>
+                                    <span class="icon-example-name">pe-7s-switch</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-angle-down-circle"></span>
+                                    <span class="icon-example-name">pe-7s-angle-down-circle</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-scissors"></span>
+                                    <span class="icon-example-name">pe-7s-scissors</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-wallet"></span>
+                                    <span class="icon-example-name">pe-7s-wallet</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-safe"></span>
+                                    <span class="icon-example-name">pe-7s-safe</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-volume2"></span>
+                                    <span class="icon-example-name">pe-7s-volume2</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-volume1"></span>
+                                    <span class="icon-example-name">pe-7s-volume1</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-voicemail"></span>
+                                    <span class="icon-example-name">pe-7s-voicemail</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-video"></span>
+                                    <span class="icon-example-name">pe-7s-video</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-user"></span>
+                                    <span class="icon-example-name">pe-7s-user</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-upload"></span>
+                                    <span class="icon-example-name">pe-7s-upload</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-unlock"></span>
+                                    <span class="icon-example-name">pe-7s-unlock</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-umbrella"></span>
+                                    <span class="icon-example-name">pe-7s-umbrella</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-trash"></span>
+                                    <span class="icon-example-name">pe-7s-trash</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-tools"></span>
+                                    <span class="icon-example-name">pe-7s-tools</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-timer"></span>
+                                    <span class="icon-example-name">pe-7s-timer</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-ticket"></span>
+                                    <span class="icon-example-name">pe-7s-ticket</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-target"></span>
+                                    <span class="icon-example-name">pe-7s-target</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-sun"></span>
+                                    <span class="icon-example-name">pe-7s-sun</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-study"></span>
+                                    <span class="icon-example-name">pe-7s-study</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-stopwatch"></span>
+                                    <span class="icon-example-name">pe-7s-stopwatch</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-star"></span>
+                                    <span class="icon-example-name">pe-7s-star</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-speaker"></span>
+                                    <span class="icon-example-name">pe-7s-speaker</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-signal"></span>
+                                    <span class="icon-example-name">pe-7s-signal</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-shuffle"></span>
+                                    <span class="icon-example-name">pe-7s-shuffle</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-shopbag"></span>
+                                    <span class="icon-example-name">pe-7s-shopbag</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-share"></span>
+                                    <span class="icon-example-name">pe-7s-share</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-server"></span>
+                                    <span class="icon-example-name">pe-7s-server</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-search"></span>
+                                    <span class="icon-example-name">pe-7s-search</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-film"></span>
+                                    <span class="icon-example-name">pe-7s-film</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-science"></span>
+                                    <span class="icon-example-name">pe-7s-science</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-disk"></span>
+                                    <span class="icon-example-name">pe-7s-disk</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-ribbon"></span>
+                                    <span class="icon-example-name">pe-7s-ribbon</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-repeat"></span>
+                                    <span class="icon-example-name">pe-7s-repeat</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-refresh"></span>
+                                    <span class="icon-example-name">pe-7s-refresh</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-add-user"></span>
+                                    <span class="icon-example-name">pe-7s-add-user</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-refresh-cloud"></span>
+                                    <span class="icon-example-name">pe-7s-refresh-cloud</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-paperclip"></span>
+                                    <span class="icon-example-name">pe-7s-paperclip</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-radio"></span>
+                                    <span class="icon-example-name">pe-7s-radio</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-note2"></span>
+                                    <span class="icon-example-name">pe-7s-note2</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-print"></span>
+                                    <span class="icon-example-name">pe-7s-print</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-network"></span>
+                                    <span class="icon-example-name">pe-7s-network</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-prev"></span>
+                                    <span class="icon-example-name">pe-7s-prev</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-mute"></span>
+                                    <span class="icon-example-name">pe-7s-mute</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-power"></span>
+                                    <span class="icon-example-name">pe-7s-power</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-medal"></span>
+                                    <span class="icon-example-name">pe-7s-medal</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-portfolio"></span>
+                                    <span class="icon-example-name">pe-7s-portfolio</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-like2"></span>
+                                    <span class="icon-example-name">pe-7s-like2</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-plus"></span>
+                                    <span class="icon-example-name">pe-7s-plus</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-left-arrow"></span>
+                                    <span class="icon-example-name">pe-7s-left-arrow</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-play"></span>
+                                    <span class="icon-example-name">pe-7s-play</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-key"></span>
+                                    <span class="icon-example-name">pe-7s-key</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-plane"></span>
+                                    <span class="icon-example-name">pe-7s-plane</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-joy"></span>
+                                    <span class="icon-example-name">pe-7s-joy</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-photo-gallery"></span>
+                                    <span class="icon-example-name">pe-7s-photo-gallery</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-pin"></span>
+                                    <span class="icon-example-name">pe-7s-pin</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-phone"></span>
+                                    <span class="icon-example-name">pe-7s-phone</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-plug"></span>
+                                    <span class="icon-example-name">pe-7s-plug</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-pen"></span>
+                                    <span class="icon-example-name">pe-7s-pen</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-right-arrow"></span>
+                                    <span class="icon-example-name">pe-7s-right-arrow</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-paper-plane"></span>
+                                    <span class="icon-example-name">pe-7s-paper-plane</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-delete-user"></span>
+                                    <span class="icon-example-name">pe-7s-delete-user</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-paint"></span>
+                                    <span class="icon-example-name">pe-7s-paint</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-bottom-arrow"></span>
+                                    <span class="icon-example-name">pe-7s-bottom-arrow</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-notebook"></span>
+                                    <span class="icon-example-name">pe-7s-notebook</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-note"></span>
+                                    <span class="icon-example-name">pe-7s-note</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-next"></span>
+                                    <span class="icon-example-name">pe-7s-next</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-news-paper"></span>
+                                    <span class="icon-example-name">pe-7s-news-paper</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-musiclist"></span>
+                                    <span class="icon-example-name">pe-7s-musiclist</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-music"></span>
+                                    <span class="icon-example-name">pe-7s-music</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-mouse"></span>
+                                    <span class="icon-example-name">pe-7s-mouse</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-more"></span>
+                                    <span class="icon-example-name">pe-7s-more</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-moon"></span>
+                                    <span class="icon-example-name">pe-7s-moon</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-monitor"></span>
+                                    <span class="icon-example-name">pe-7s-monitor</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-micro"></span>
+                                    <span class="icon-example-name">pe-7s-micro</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-menu"></span>
+                                    <span class="icon-example-name">pe-7s-menu</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-map"></span>
+                                    <span class="icon-example-name">pe-7s-map</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-map-marker"></span>
+                                    <span class="icon-example-name">pe-7s-map-marker</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-mail"></span>
+                                    <span class="icon-example-name">pe-7s-mail</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-mail-open"></span>
+                                    <span class="icon-example-name">pe-7s-mail-open</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-mail-open-file"></span>
+                                    <span class="icon-example-name">pe-7s-mail-open-file</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-magnet"></span>
+                                    <span class="icon-example-name">pe-7s-magnet</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-loop"></span>
+                                    <span class="icon-example-name">pe-7s-loop</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-look"></span>
+                                    <span class="icon-example-name">pe-7s-look</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-lock"></span>
+                                    <span class="icon-example-name">pe-7s-lock</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-lintern"></span>
+                                    <span class="icon-example-name">pe-7s-lintern</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-link"></span>
+                                    <span class="icon-example-name">pe-7s-link</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-like"></span>
+                                    <span class="icon-example-name">pe-7s-like</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-light"></span>
+                                    <span class="icon-example-name">pe-7s-light</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-less"></span>
+                                    <span class="icon-example-name">pe-7s-less</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-keypad"></span>
+                                    <span class="icon-example-name">pe-7s-keypad</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-junk"></span>
+                                    <span class="icon-example-name">pe-7s-junk</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-info"></span>
+                                    <span class="icon-example-name">pe-7s-info</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-home"></span>
+                                    <span class="icon-example-name">pe-7s-home</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-help2"></span>
+                                    <span class="icon-example-name">pe-7s-help2</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-help1"></span>
+                                    <span class="icon-example-name">pe-7s-help1</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-graph3"></span>
+                                    <span class="icon-example-name">pe-7s-graph3</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-graph2"></span>
+                                    <span class="icon-example-name">pe-7s-graph2</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-graph1"></span>
+                                    <span class="icon-example-name">pe-7s-graph1</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-graph"></span>
+                                    <span class="icon-example-name">pe-7s-graph</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-global"></span>
+                                    <span class="icon-example-name">pe-7s-global</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-gleam"></span>
+                                    <span class="icon-example-name">pe-7s-gleam</span>
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-glasses"></span>
+                                    <span class="icon-example-name">pe-7s-glasses</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-gift"></span>
+                                    <span class="icon-example-name">pe-7s-gift</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-folder"></span>
+                                    <span class="icon-example-name">pe-7s-folder</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-flag"></span>
+                                    <span class="icon-example-name">pe-7s-flag</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-filter"></span>
+                                    <span class="icon-example-name">pe-7s-filter</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-file"></span>
+                                    <span class="icon-example-name">pe-7s-file</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-expand1"></span>
+                                    <span class="icon-example-name">pe-7s-expand1</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-exapnd2"></span>
+                                    <span class="icon-example-name">pe-7s-exapnd2</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-edit"></span>
+                                    <span class="icon-example-name">pe-7s-edit</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-drop"></span>
+                                    <span class="icon-example-name">pe-7s-drop</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-drawer"></span>
+                                    <span class="icon-example-name">pe-7s-drawer</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-download"></span>
+                                    <span class="icon-example-name">pe-7s-download</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-display2"></span>
+                                    <span class="icon-example-name">pe-7s-display2</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-display1"></span>
+                                    <span class="icon-example-name">pe-7s-display1</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-diskette"></span>
+                                    <span class="icon-example-name">pe-7s-diskette</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-date"></span>
+                                    <span class="icon-example-name">pe-7s-date</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-cup"></span>
+                                    <span class="icon-example-name">pe-7s-cup</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-culture"></span>
+                                    <span class="icon-example-name">pe-7s-culture</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-crop"></span>
+                                    <span class="icon-example-name">pe-7s-crop</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-credit"></span>
+                                    <span class="icon-example-name">pe-7s-credit</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-copy-file"></span>
+                                    <span class="icon-example-name">pe-7s-copy-file</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-config"></span>
+                                    <span class="icon-example-name">pe-7s-config</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-compass"></span>
+                                    <span class="icon-example-name">pe-7s-compass</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-comment"></span>
+                                    <span class="icon-example-name">pe-7s-comment</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-coffee"></span>
+                                    <span class="icon-example-name">pe-7s-coffee</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-cloud"></span>
+                                    <span class="icon-example-name">pe-7s-cloud</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-clock"></span>
+                                    <span class="icon-example-name">pe-7s-clock</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-check"></span>
+                                    <span class="icon-example-name">pe-7s-check</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-chat"></span>
+                                    <span class="icon-example-name">pe-7s-chat</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-cart"></span>
+                                    <span class="icon-example-name">pe-7s-cart</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-camera"></span>
+                                    <span class="icon-example-name">pe-7s-camera</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-call"></span>
+                                    <span class="icon-example-name">pe-7s-call</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-calculator"></span>
+                                    <span class="icon-example-name">pe-7s-calculator</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-browser"></span>
+                                    <span class="icon-example-name">pe-7s-browser</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-box2"></span>
+                                    <span class="icon-example-name">pe-7s-box2</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-box1"></span>
+                                    <span class="icon-example-name">pe-7s-box1</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-bookmarks"></span>
+                                    <span class="icon-example-name">pe-7s-bookmarks</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-bicycle"></span>
+                                    <span class="icon-example-name">pe-7s-bicycle</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-bell"></span>
+                                    <span class="icon-example-name">pe-7s-bell</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-battery"></span>
+                                    <span class="icon-example-name">pe-7s-battery</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-ball"></span>
+                                    <span class="icon-example-name">pe-7s-ball</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-back"></span>
+                                    <span class="icon-example-name">pe-7s-back</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-attention"></span>
+                                    <span class="icon-example-name">pe-7s-attention</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-anchor"></span>
+                                    <span class="icon-example-name">pe-7s-anchor</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-albums"></span>
+                                    <span class="icon-example-name">pe-7s-albums</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-alarm"></span>
+                                    <span class="icon-example-name">pe-7s-alarm</span>
+
+                                </div>
+                                <div class="font-example-box col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                                    <span class="pe-7s-airplay"></span>
+                                    <span class="icon-example-name">pe-7s-airplay</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="panel panel-filled">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+                                <a class="panel-close"><i class="fa fa-times"></i></a>
+                            </div>
+                            Font Awesome 4.4.0
+                        </div>
+                        <div class="panel-body">
+                            Font Awesome gives you scalable vector icons that can instantly be customized — size, color, drop shadow, and anything that can be done with the power of CSS.
+
+                            <div class="icons-box">
+
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-500px"></i><span class="icon-example-name">  500px</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-amazon"></i><span class="icon-example-name">  amazon</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-balance-scale"></i><span class="icon-example-name">  balance-scale</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-0"></i><span class="icon-example-name">  battery-0 </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-1"></i><span class="icon-example-name">  battery-1 </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-2"></i><span class="icon-example-name">  battery-2 </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-3"></i><span class="icon-example-name">  battery-3 </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-4"></i><span class="icon-example-name">  battery-4 </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-empty"></i><span class="icon-example-name">  battery-empty</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-full"></i><span class="icon-example-name">  battery-full</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-half"></i><span class="icon-example-name">  battery-half</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-quarter"></i><span class="icon-example-name">  battery-quarter</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-battery-three-quarters"></i><span class="icon-example-name">  battery-three-quarters</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-black-tie"></i><span class="icon-example-name">  black-tie</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-calendar-check-o"></i><span class="icon-example-name">  calendar-check-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-calendar-minus-o"></i><span class="icon-example-name">  calendar-minus-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-calendar-plus-o"></i><span class="icon-example-name">  calendar-plus-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-calendar-times-o"></i><span class="icon-example-name">  calendar-times-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cc-diners-club"></i><span class="icon-example-name">  cc-diners-club</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cc-jcb"></i><span class="icon-example-name">  cc-jcb</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chrome"></i><span class="icon-example-name">  chrome</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-clone"></i><span class="icon-example-name">  clone</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-commenting"></i><span class="icon-example-name">  commenting</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-commenting-o"></i><span class="icon-example-name">  commenting-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-contao"></i><span class="icon-example-name">  contao</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-creative-commons"></i><span class="icon-example-name">  creative-commons</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-expeditedssl"></i><span class="icon-example-name">  expeditedssl</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-firefox"></i><span class="icon-example-name">  firefox</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-fonticons"></i><span class="icon-example-name">  fonticons</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-genderless"></i><span class="icon-example-name">  genderless</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-get-pocket"></i><span class="icon-example-name">  get-pocket</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-gg"></i><span class="icon-example-name">  gg</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-gg-circle"></i><span class="icon-example-name">  gg-circle</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-grab-o"></i><span class="icon-example-name">  hand-grab-o </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-lizard-o"></i><span class="icon-example-name">  hand-lizard-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-paper-o"></i><span class="icon-example-name">  hand-paper-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-peace-o"></i><span class="icon-example-name">  hand-peace-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-pointer-o"></i><span class="icon-example-name">  hand-pointer-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-rock-o"></i><span class="icon-example-name">  hand-rock-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-scissors-o"></i><span class="icon-example-name">  hand-scissors-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-spock-o"></i><span class="icon-example-name">  hand-spock-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-stop-o"></i><span class="icon-example-name">  hand-stop-o </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hourglass"></i><span class="icon-example-name">  hourglass</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hourglass-1"></i><span class="icon-example-name">  hourglass-1 </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hourglass-2"></i><span class="icon-example-name">  hourglass-2 </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hourglass-3"></i><span class="icon-example-name">  hourglass-3 </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hourglass-end"></i><span class="icon-example-name">  hourglass-end</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hourglass-half"></i><span class="icon-example-name">  hourglass-half</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hourglass-o"></i><span class="icon-example-name">  hourglass-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hourglass-start"></i><span class="icon-example-name">  hourglass-start</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-houzz"></i><span class="icon-example-name">  houzz</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-i-cursor"></i><span class="icon-example-name">  i-cursor</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-industry"></i><span class="icon-example-name">  industry</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-internet-explorer"></i><span class="icon-example-name">  internet-explorer</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-map"></i><span class="icon-example-name">  map</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-map-o"></i><span class="icon-example-name">  map-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-map-pin"></i><span class="icon-example-name">  map-pin</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-map-signs"></i><span class="icon-example-name">  map-signs</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-mouse-pointer"></i><span class="icon-example-name">  mouse-pointer</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-object-group"></i><span class="icon-example-name">  object-group</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-object-ungroup"></i><span class="icon-example-name">  object-ungroup</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-odnoklassniki"></i><span class="icon-example-name">  odnoklassniki</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-odnoklassniki-square"></i><span class="icon-example-name">  odnoklassniki-square</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-opencart"></i><span class="icon-example-name">  opencart</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-opera"></i><span class="icon-example-name">  opera</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-optin-monster"></i><span class="icon-example-name">  optin-monster</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-registered"></i><span class="icon-example-name">  registered</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-safari"></i><span class="icon-example-name">  safari</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sticky-note"></i><span class="icon-example-name">  sticky-note</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sticky-note-o"></i><span class="icon-example-name">  sticky-note-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-television"></i><span class="icon-example-name">  television</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-trademark"></i><span class="icon-example-name">  trademark</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tripadvisor"></i><span class="icon-example-name">  tripadvisor</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tv"></i><span class="icon-example-name">  tv </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-vimeo"></i><span class="icon-example-name">  vimeo</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-wikipedia-w"></i><span class="icon-example-name">  wikipedia-w</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-y-combinator"></i><span class="icon-example-name">  y-combinator</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-yc"></i><span class="icon-example-name">  yc </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rub"></i><span class="icon-example-name">  fa-rub</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-ruble"></i><span class="icon-example-name">  fa-ruble </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rouble"></i><span class="icon-example-name">  fa-rouble </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pagelines"></i><span class="icon-example-name">  fa-pagelines</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-stack-exchange"></i><span class="icon-example-name">  fa-stack-exchange</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-o-right"></i><span class="icon-example-name">  fa-arrow-circle-o-right</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-o-left"></i><span class="icon-example-name">  fa-arrow-circle-o-left</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-square-o-left"></i><span class="icon-example-name">  fa-caret-square-o-left</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-toggle-left"></i><span class="icon-example-name">  fa-toggle-left </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-dot-circle-o"></i><span class="icon-example-name">  fa-dot-circle-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-wheelchair"></i><span class="icon-example-name">  fa-wheelchair</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-vimeo-square"></i><span class="icon-example-name">  fa-vimeo-square</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-try"></i><span class="icon-example-name">  fa-try</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-turkish-lira"></i><span class="icon-example-name">  fa-turkish-lira </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-plus-square-o"></i><span class="icon-example-name">  fa-plus-square-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-automobile"></i><span class="icon-example-name">  fa-automobile </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bank"></i><span class="icon-example-name">  fa-bank </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-behance"></i><span class="icon-example-name">  fa-behance</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-behance-square"></i><span class="icon-example-name">  fa-behance-square</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bomb"></i><span class="icon-example-name">  fa-bomb</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-building"></i><span class="icon-example-name">  fa-building</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cab"></i><span class="icon-example-name">  fa-cab </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-car"></i><span class="icon-example-name">  fa-car</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-child"></i><span class="icon-example-name">  fa-child</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-circle-o-notch"></i><span class="icon-example-name">  fa-circle-o-notch</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-circle-thin"></i><span class="icon-example-name">  fa-circle-thin</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-codepen"></i><span class="icon-example-name">  fa-codepen</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cube"></i><span class="icon-example-name">  fa-cube</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cubes"></i><span class="icon-example-name">  fa-cubes</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-database"></i><span class="icon-example-name">  fa-database</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-delicious"></i><span class="icon-example-name">  fa-delicious</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-deviantart"></i><span class="icon-example-name">  fa-deviantart</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-digg"></i><span class="icon-example-name">  fa-digg</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-drupal"></i><span class="icon-example-name">  fa-drupal</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-empire"></i><span class="icon-example-name">  fa-empire</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-envelope-square"></i><span class="icon-example-name">  fa-envelope-square</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-fax"></i><span class="icon-example-name">  fa-fax</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-archive-o"></i><span class="icon-example-name">  fa-file-archive-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-audio-o"></i><span class="icon-example-name">  fa-file-audio-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-code-o"></i><span class="icon-example-name">  fa-file-code-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-excel-o"></i><span class="icon-example-name">  fa-file-excel-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-image-o"></i><span class="icon-example-name">  fa-file-image-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-movie-o"></i><span class="icon-example-name">  fa-file-movie-o </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-pdf-o"></i><span class="icon-example-name">  fa-file-pdf-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-photo-o"></i><span class="icon-example-name">  fa-file-photo-o </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-picture-o"></i><span class="icon-example-name">  fa-file-picture-o </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-powerpoint-o"></i><span class="icon-example-name">  fa-file-powerpoint-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-sound-o"></i><span class="icon-example-name">  fa-file-sound-o </span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-video-o"></i><span class="icon-example-name">  fa-file-video-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-word-o"></i><span class="icon-example-name">  fa-file-word-o</span></div>
+                                <div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-zip-o"></i><span class="icon-example-name">  fa-file-zip-o </span></div>
+
+                                <a target="_blank" href="https://fortawesome.github.io/Font-Awesome/icons/">List of all avalible icons from Font Awesome: https://fortawesome.github.io/Font-Awesome/icons/</a>
+
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-git"></i><span class="icon-example-name">  fa-git</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-git-square"></i><span class="icon-example-name">  fa-git-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-google"></i><span class="icon-example-name">  fa-google</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-graduation-cap"></i><span class="icon-example-name">  fa-graduation-cap</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hacker-news"></i><span class="icon-example-name">  fa-hacker-news</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-header"></i><span class="icon-example-name">  fa-header</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-history"></i><span class="icon-example-name">  fa-history</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-institution"></i><span class="icon-example-name">  fa-institution </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-joomla"></i><span class="icon-example-name">  fa-joomla</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-jsfiddle"></i><span class="icon-example-name">  fa-jsfiddle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-language"></i><span class="icon-example-name">  fa-language</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-life-bouy"></i><span class="icon-example-name">  fa-life-bouy </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-life-ring"></i><span class="icon-example-name">  fa-life-ring</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-life-saver"></i><span class="icon-example-name">  fa-life-saver </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-mortar-board"></i><span class="icon-example-name">  fa-mortar-board </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-openid"></i><span class="icon-example-name">  fa-openid</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-paper-plane"></i><span class="icon-example-name">  fa-paper-plane</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-paper-plane-o"></i><span class="icon-example-name">  fa-paper-plane-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-paragraph"></i><span class="icon-example-name">  fa-paragraph</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-paw"></i><span class="icon-example-name">  fa-paw</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pied-piper"></i><span class="icon-example-name">  fa-pied-piper</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pied-piper-alt"></i><span class="icon-example-name">  fa-pied-piper-alt</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pied-piper-square"></i><span class="icon-example-name">  fa-pied-piper-square </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-qq"></i><span class="icon-example-name">  fa-qq</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-ra"></i><span class="icon-example-name">  fa-ra </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rebel"></i><span class="icon-example-name">  fa-rebel</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-recycle"></i><span class="icon-example-name">  fa-recycle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-reddit"></i><span class="icon-example-name">  fa-reddit</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-reddit-square"></i><span class="icon-example-name">  fa-reddit-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-send"></i><span class="icon-example-name">  fa-send </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-send-o"></i><span class="icon-example-name">  fa-send-o </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-share-alt"></i><span class="icon-example-name">  fa-share-alt</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-share-alt-square"></i><span class="icon-example-name">  fa-share-alt-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-slack"></i><span class="icon-example-name">  fa-slack</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sliders"></i><span class="icon-example-name">  fa-sliders</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-soundcloud"></i><span class="icon-example-name">  fa-soundcloud</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-space-shuttle"></i><span class="icon-example-name">  fa-space-shuttle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-spoon"></i><span class="icon-example-name">  fa-spoon</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-spotify"></i><span class="icon-example-name">  fa-spotify</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-steam"></i><span class="icon-example-name">  fa-steam</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-steam-square"></i><span class="icon-example-name">  fa-steam-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-stumbleupon"></i><span class="icon-example-name">  fa-stumbleupon</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-stumbleupon-circle"></i><span class="icon-example-name">  fa-stumbleupon-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-support"></i><span class="icon-example-name">  fa-support </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-taxi"></i><span class="icon-example-name">  fa-taxi</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tencent-weibo"></i><span class="icon-example-name">  fa-tencent-weibo</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tree"></i><span class="icon-example-name">  fa-tree</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-university"></i><span class="icon-example-name">  fa-university</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-vine"></i><span class="icon-example-name">  fa-vine</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-wechat"></i><span class="icon-example-name">  fa-wechat </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-weixin"></i><span class="icon-example-name">  fa-weixin</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-wordpress"></i><span class="icon-example-name">  fa-wordpress</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-yahoo"></i><span class="icon-example-name">  fa-yahoo</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-adjust"></i><span class="icon-example-name">  fa-adjust</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-anchor"></i><span class="icon-example-name">  fa-anchor</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-archive"></i><span class="icon-example-name">  fa-archive</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrows"></i><span class="icon-example-name">  fa-arrows</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrows-h"></i><span class="icon-example-name">  fa-arrows-h</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrows-v"></i><span class="icon-example-name">  fa-arrows-v</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-asterisk"></i><span class="icon-example-name">  fa-asterisk</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-ban"></i><span class="icon-example-name">  fa-ban</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bar-chart-o"></i><span class="icon-example-name">  fa-bar-chart-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-barcode"></i><span class="icon-example-name">  fa-barcode</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bars"></i><span class="icon-example-name">  fa-bars</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-beer"></i><span class="icon-example-name">  fa-beer</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bell"></i><span class="icon-example-name">  fa-bell</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bell-o"></i><span class="icon-example-name">  fa-bell-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bolt"></i><span class="icon-example-name">  fa-bolt</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-book"></i><span class="icon-example-name">  fa-book</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bookmark"></i><span class="icon-example-name">  fa-bookmark</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bookmark-o"></i><span class="icon-example-name">  fa-bookmark-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-briefcase"></i><span class="icon-example-name">  fa-briefcase</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bug"></i><span class="icon-example-name">  fa-bug</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-building-o"></i><span class="icon-example-name">  fa-building-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bullhorn"></i><span class="icon-example-name">  fa-bullhorn</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bullseye"></i><span class="icon-example-name">  fa-bullseye</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-calendar"></i><span class="icon-example-name">  fa-calendar</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-calendar-o"></i><span class="icon-example-name">  fa-calendar-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-camera"></i><span class="icon-example-name">  fa-camera</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-camera-retro"></i><span class="icon-example-name">  fa-camera-retro</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-square-o-down"></i><span class="icon-example-name">  fa-caret-square-o-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-square-o-left"></i><span class="icon-example-name">  fa-caret-square-o-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-square-o-right"></i><span class="icon-example-name">  fa-caret-square-o-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-square-o-up"></i><span class="icon-example-name">  fa-caret-square-o-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-certificate"></i><span class="icon-example-name">  fa-certificate</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-check"></i><span class="icon-example-name">  fa-check</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-check-circle"></i><span class="icon-example-name">  fa-check-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-check-circle-o"></i><span class="icon-example-name">  fa-check-circle-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-check-square"></i><span class="icon-example-name">  fa-check-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-check-square-o"></i><span class="icon-example-name">  fa-check-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-circle"></i><span class="icon-example-name">  fa-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-circle-o"></i><span class="icon-example-name">  fa-circle-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-clock-o"></i><span class="icon-example-name">  fa-clock-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cloud"></i><span class="icon-example-name">  fa-cloud</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cloud-download"></i><span class="icon-example-name">  fa-cloud-download</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cloud-upload"></i><span class="icon-example-name">  fa-cloud-upload</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-code"></i><span class="icon-example-name">  fa-code</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-code-fork"></i><span class="icon-example-name">  fa-code-fork</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-coffee"></i><span class="icon-example-name">  fa-coffee</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cog"></i><span class="icon-example-name">  fa-cog</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cogs"></i><span class="icon-example-name">  fa-cogs</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-comment"></i><span class="icon-example-name">  fa-comment</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-comment-o"></i><span class="icon-example-name">  fa-comment-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-comments"></i><span class="icon-example-name">  fa-comments</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-comments-o"></i><span class="icon-example-name">  fa-comments-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-compass"></i><span class="icon-example-name">  fa-compass</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-credit-card"></i><span class="icon-example-name">  fa-credit-card</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-crop"></i><span class="icon-example-name">  fa-crop</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-crosshairs"></i><span class="icon-example-name">  fa-crosshairs</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cutlery"></i><span class="icon-example-name">  fa-cutlery</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-dashboard"></i><span class="icon-example-name">  fa-dashboard </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-desktop"></i><span class="icon-example-name">  fa-desktop</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-dot-circle-o"></i><span class="icon-example-name">  fa-dot-circle-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-download"></i><span class="icon-example-name">  fa-download</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-edit"></i><span class="icon-example-name">  fa-edit </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-ellipsis-h"></i><span class="icon-example-name">  fa-ellipsis-h</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-ellipsis-v"></i><span class="icon-example-name">  fa-ellipsis-v</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-envelope"></i><span class="icon-example-name">  fa-envelope</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-envelope-o"></i><span class="icon-example-name">  fa-envelope-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-eraser"></i><span class="icon-example-name">  fa-eraser</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-exchange"></i><span class="icon-example-name">  fa-exchange</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-exclamation"></i><span class="icon-example-name">  fa-exclamation</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-exclamation-circle"></i><span class="icon-example-name">  fa-exclamation-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-exclamation-triangle"></i><span class="icon-example-name">  fa-exclamation-triangle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-external-link"></i><span class="icon-example-name">  fa-external-link</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-external-link-square"></i><span class="icon-example-name">  fa-external-link-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-eye"></i><span class="icon-example-name">  fa-eye</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-eye-slash"></i><span class="icon-example-name">  fa-eye-slash</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-female"></i><span class="icon-example-name">  fa-female</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-fighter-jet"></i><span class="icon-example-name">  fa-fighter-jet</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-film"></i><span class="icon-example-name">  fa-film</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-filter"></i><span class="icon-example-name">  fa-filter</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-fire"></i><span class="icon-example-name">  fa-fire</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-fire-extinguisher"></i><span class="icon-example-name">  fa-fire-extinguisher</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-flag"></i><span class="icon-example-name">  fa-flag</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-flag-checkered"></i><span class="icon-example-name">  fa-flag-checkered</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-flag-o"></i><span class="icon-example-name">  fa-flag-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-flash"></i><span class="icon-example-name">  fa-flash </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-flask"></i><span class="icon-example-name">  fa-flask</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-folder"></i><span class="icon-example-name">  fa-folder</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-folder-o"></i><span class="icon-example-name">  fa-folder-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-folder-open"></i><span class="icon-example-name">  fa-folder-open</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-folder-open-o"></i><span class="icon-example-name">  fa-folder-open-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-frown-o"></i><span class="icon-example-name">  fa-frown-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-gamepad"></i><span class="icon-example-name">  fa-gamepad</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-gavel"></i><span class="icon-example-name">  fa-gavel</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-gear"></i><span class="icon-example-name">  fa-gear </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-gears"></i><span class="icon-example-name">  fa-gears </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-gift"></i><span class="icon-example-name">  fa-gift</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-glass"></i><span class="icon-example-name">  fa-glass</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-globe"></i><span class="icon-example-name">  fa-globe</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-group"></i><span class="icon-example-name">  fa-group </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hdd-o"></i><span class="icon-example-name">  fa-hdd-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-headphones"></i><span class="icon-example-name">  fa-headphones</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-heart"></i><span class="icon-example-name">  fa-heart</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-heart-o"></i><span class="icon-example-name">  fa-heart-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-home"></i><span class="icon-example-name">  fa-home</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-inbox"></i><span class="icon-example-name">  fa-inbox</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-info"></i><span class="icon-example-name">  fa-info</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-info-circle"></i><span class="icon-example-name">  fa-info-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-key"></i><span class="icon-example-name">  fa-key</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-keyboard-o"></i><span class="icon-example-name">  fa-keyboard-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-laptop"></i><span class="icon-example-name">  fa-laptop</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-leaf"></i><span class="icon-example-name">  fa-leaf</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-legal"></i><span class="icon-example-name">  fa-legal </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-lemon-o"></i><span class="icon-example-name">  fa-lemon-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-level-down"></i><span class="icon-example-name">  fa-level-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-level-up"></i><span class="icon-example-name">  fa-level-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-lightbulb-o"></i><span class="icon-example-name">  fa-lightbulb-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-location-arrow"></i><span class="icon-example-name">  fa-location-arrow</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-lock"></i><span class="icon-example-name">  fa-lock</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-magic"></i><span class="icon-example-name">  fa-magic</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-magnet"></i><span class="icon-example-name">  fa-magnet</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-mail-forward"></i><span class="icon-example-name">  fa-mail-forward </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-mail-reply"></i><span class="icon-example-name">  fa-mail-reply </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-mail-reply-all"></i><span class="icon-example-name">  fa-mail-reply-all</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-male"></i><span class="icon-example-name">  fa-male</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-map-marker"></i><span class="icon-example-name">  fa-map-marker</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-meh-o"></i><span class="icon-example-name">  fa-meh-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-microphone"></i><span class="icon-example-name">  fa-microphone</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-microphone-slash"></i><span class="icon-example-name">  fa-microphone-slash</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-minus"></i><span class="icon-example-name">  fa-minus</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-minus-circle"></i><span class="icon-example-name">  fa-minus-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-minus-square"></i><span class="icon-example-name">  fa-minus-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-minus-square-o"></i><span class="icon-example-name">  fa-minus-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-mobile"></i><span class="icon-example-name">  fa-mobile</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-mobile-phone"></i><span class="icon-example-name">  fa-mobile-phone </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-money"></i><span class="icon-example-name">  fa-money</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-moon-o"></i><span class="icon-example-name">  fa-moon-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-music"></i><span class="icon-example-name">  fa-music</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pencil"></i><span class="icon-example-name">  fa-pencil</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pencil-square"></i><span class="icon-example-name">  fa-pencil-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pencil-square-o"></i><span class="icon-example-name">  fa-pencil-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-phone"></i><span class="icon-example-name">  fa-phone</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-phone-square"></i><span class="icon-example-name">  fa-phone-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-picture-o"></i><span class="icon-example-name">  fa-picture-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-plane"></i><span class="icon-example-name">  fa-plane</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-plus"></i><span class="icon-example-name">  fa-plus</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-plus-circle"></i><span class="icon-example-name">  fa-plus-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-plus-square"></i><span class="icon-example-name">  fa-plus-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-plus-square-o"></i><span class="icon-example-name">  fa-plus-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-power-off"></i><span class="icon-example-name">  fa-power-off</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-print"></i><span class="icon-example-name">  fa-print</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-puzzle-piece"></i><span class="icon-example-name">  fa-puzzle-piece</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-qrcode"></i><span class="icon-example-name">  fa-qrcode</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-question"></i><span class="icon-example-name">  fa-question</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-question-circle"></i><span class="icon-example-name">  fa-question-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-quote-left"></i><span class="icon-example-name">  fa-quote-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-quote-right"></i><span class="icon-example-name">  fa-quote-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-random"></i><span class="icon-example-name">  fa-random</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-refresh"></i><span class="icon-example-name">  fa-refresh</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-reply"></i><span class="icon-example-name">  fa-reply</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-reply-all"></i><span class="icon-example-name">  fa-reply-all</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-retweet"></i><span class="icon-example-name">  fa-retweet</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-road"></i><span class="icon-example-name">  fa-road</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rocket"></i><span class="icon-example-name">  fa-rocket</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rss"></i><span class="icon-example-name">  fa-rss</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rss-square"></i><span class="icon-example-name">  fa-rss-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-search"></i><span class="icon-example-name">  fa-search</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-search-minus"></i><span class="icon-example-name">  fa-search-minus</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-search-plus"></i><span class="icon-example-name">  fa-search-plus</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-share"></i><span class="icon-example-name">  fa-share</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-share-square"></i><span class="icon-example-name">  fa-share-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-share-square-o"></i><span class="icon-example-name">  fa-share-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-shield"></i><span class="icon-example-name">  fa-shield</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-shopping-cart"></i><span class="icon-example-name">  fa-shopping-cart</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sign-in"></i><span class="icon-example-name">  fa-sign-in</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sign-out"></i><span class="icon-example-name">  fa-sign-out</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-signal"></i><span class="icon-example-name">  fa-signal</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sitemap"></i><span class="icon-example-name">  fa-sitemap</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-smile-o"></i><span class="icon-example-name">  fa-smile-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort"></i><span class="icon-example-name">  fa-sort</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-alpha-asc"></i><span class="icon-example-name">  fa-sort-alpha-asc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-alpha-desc"></i><span class="icon-example-name">  fa-sort-alpha-desc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-amount-asc"></i><span class="icon-example-name">  fa-sort-amount-asc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-amount-desc"></i><span class="icon-example-name">  fa-sort-amount-desc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-asc"></i><span class="icon-example-name">  fa-sort-asc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-desc"></i><span class="icon-example-name">  fa-sort-desc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-down"></i><span class="icon-example-name">  fa-sort-down </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-numeric-asc"></i><span class="icon-example-name">  fa-sort-numeric-asc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-numeric-desc"></i><span class="icon-example-name">  fa-sort-numeric-desc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sort-up"></i><span class="icon-example-name">  fa-sort-up </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-spinner"></i><span class="icon-example-name">  fa-spinner</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-square"></i><span class="icon-example-name">  fa-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-square-o"></i><span class="icon-example-name">  fa-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-star"></i><span class="icon-example-name">  fa-star</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-star-half"></i><span class="icon-example-name">  fa-star-half</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-star-half-empty"></i><span class="icon-example-name">  fa-star-half-empty </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-star-half-full"></i><span class="icon-example-name">  fa-star-half-full </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-star-half-o"></i><span class="icon-example-name">  fa-star-half-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-star-o"></i><span class="icon-example-name">  fa-star-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-subscript"></i><span class="icon-example-name">  fa-subscript</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-suitcase"></i><span class="icon-example-name">  fa-suitcase</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-sun-o"></i><span class="icon-example-name">  fa-sun-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-superscript"></i><span class="icon-example-name">  fa-superscript</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tablet"></i><span class="icon-example-name">  fa-tablet</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tachometer"></i><span class="icon-example-name">  fa-tachometer</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tag"></i><span class="icon-example-name">  fa-tag</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tags"></i><span class="icon-example-name">  fa-tags</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tasks"></i><span class="icon-example-name">  fa-tasks</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-terminal"></i><span class="icon-example-name">  fa-terminal</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-thumb-tack"></i><span class="icon-example-name">  fa-thumb-tack</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-thumbs-down"></i><span class="icon-example-name">  fa-thumbs-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-thumbs-o-down"></i><span class="icon-example-name">  fa-thumbs-o-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-thumbs-o-up"></i><span class="icon-example-name">  fa-thumbs-o-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-thumbs-up"></i><span class="icon-example-name">  fa-thumbs-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-ticket"></i><span class="icon-example-name">  fa-ticket</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-times"></i><span class="icon-example-name">  fa-times</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-times-circle"></i><span class="icon-example-name">  fa-times-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-times-circle-o"></i><span class="icon-example-name">  fa-times-circle-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tint"></i><span class="icon-example-name">  fa-tint</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-toggle-down"></i><span class="icon-example-name">  fa-toggle-down </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-toggle-left"></i><span class="icon-example-name">  fa-toggle-left </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-toggle-right"></i><span class="icon-example-name">  fa-toggle-right </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-toggle-up"></i><span class="icon-example-name">  fa-toggle-up </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-trash-o"></i><span class="icon-example-name">  fa-trash-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-trophy"></i><span class="icon-example-name">  fa-trophy</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-truck"></i><span class="icon-example-name">  fa-truck</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-umbrella"></i><span class="icon-example-name">  fa-umbrella</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-unlock"></i><span class="icon-example-name">  fa-unlock</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-unlock-alt"></i><span class="icon-example-name">  fa-unlock-alt</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-unsorted"></i><span class="icon-example-name">  fa-unsorted </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-upload"></i><span class="icon-example-name">  fa-upload</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-user"></i><span class="icon-example-name">  fa-user</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-users"></i><span class="icon-example-name">  fa-users</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-video-camera"></i><span class="icon-example-name">  fa-video-camera</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-volume-down"></i><span class="icon-example-name">  fa-volume-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-volume-off"></i><span class="icon-example-name">  fa-volume-off</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-volume-up"></i><span class="icon-example-name">  fa-volume-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-warning"></i><span class="icon-example-name">  fa-warning </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-wheelchair"></i><span class="icon-example-name">  fa-wheelchair</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-wrench"></i><span class="icon-example-name">  fa-wrench</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-check-square"></i><span class="icon-example-name">  fa-check-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-check-square-o"></i><span class="icon-example-name">  fa-check-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-circle"></i><span class="icon-example-name">  fa-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-circle-o"></i><span class="icon-example-name">  fa-circle-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-dot-circle-o"></i><span class="icon-example-name">  fa-dot-circle-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-minus-square"></i><span class="icon-example-name">  fa-minus-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-minus-square-o"></i><span class="icon-example-name">  fa-minus-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-plus-square"></i><span class="icon-example-name">  fa-plus-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-plus-square-o"></i><span class="icon-example-name">  fa-plus-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-square"></i><span class="icon-example-name">  fa-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-square-o"></i><span class="icon-example-name">  fa-square-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bitcoin"></i><span class="icon-example-name">  fa-bitcoin </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-btc"></i><span class="icon-example-name">  fa-btc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cny"></i><span class="icon-example-name">  fa-cny </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-dollar"></i><span class="icon-example-name">  fa-dollar </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-eur"></i><span class="icon-example-name">  fa-eur</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-euro"></i><span class="icon-example-name">  fa-euro </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-gbp"></i><span class="icon-example-name">  fa-gbp</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-inr"></i><span class="icon-example-name">  fa-inr</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-jpy"></i><span class="icon-example-name">  fa-jpy</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-krw"></i><span class="icon-example-name">  fa-krw</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-money"></i><span class="icon-example-name">  fa-money</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rmb"></i><span class="icon-example-name">  fa-rmb </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rouble"></i><span class="icon-example-name">  fa-rouble </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rub"></i><span class="icon-example-name">  fa-rub</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-ruble"></i><span class="icon-example-name">  fa-ruble </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rupee"></i><span class="icon-example-name">  fa-rupee </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-try"></i><span class="icon-example-name">  fa-try</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-turkish-lira"></i><span class="icon-example-name">  fa-turkish-lira </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-usd"></i><span class="icon-example-name">  fa-usd</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-won"></i><span class="icon-example-name">  fa-won </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-yen"></i><span class="icon-example-name">  fa-yen </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-align-center"></i><span class="icon-example-name">  fa-align-center</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-align-justify"></i><span class="icon-example-name">  fa-align-justify</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-align-left"></i><span class="icon-example-name">  fa-align-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-align-right"></i><span class="icon-example-name">  fa-align-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bold"></i><span class="icon-example-name">  fa-bold</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chain"></i><span class="icon-example-name">  fa-chain </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chain-broken"></i><span class="icon-example-name">  fa-chain-broken</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-clipboard"></i><span class="icon-example-name">  fa-clipboard</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-columns"></i><span class="icon-example-name">  fa-columns</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-copy"></i><span class="icon-example-name">  fa-copy </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-cut"></i><span class="icon-example-name">  fa-cut </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-dedent"></i><span class="icon-example-name">  fa-dedent </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-eraser"></i><span class="icon-example-name">  fa-eraser</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file"></i><span class="icon-example-name">  fa-file</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-o"></i><span class="icon-example-name">  fa-file-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-text"></i><span class="icon-example-name">  fa-file-text</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-file-text-o"></i><span class="icon-example-name">  fa-file-text-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-files-o"></i><span class="icon-example-name">  fa-files-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-floppy-o"></i><span class="icon-example-name">  fa-floppy-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-font"></i><span class="icon-example-name">  fa-font</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-indent"></i><span class="icon-example-name">  fa-indent</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-italic"></i><span class="icon-example-name">  fa-italic</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-link"></i><span class="icon-example-name">  fa-link</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-list"></i><span class="icon-example-name">  fa-list</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-list-alt"></i><span class="icon-example-name">  fa-list-alt</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-list-ol"></i><span class="icon-example-name">  fa-list-ol</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-list-ul"></i><span class="icon-example-name">  fa-list-ul</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-outdent"></i><span class="icon-example-name">  fa-outdent</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-paperclip"></i><span class="icon-example-name">  fa-paperclip</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-paste"></i><span class="icon-example-name">  fa-paste </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-repeat"></i><span class="icon-example-name">  fa-repeat</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rotate-left"></i><span class="icon-example-name">  fa-rotate-left </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-rotate-right"></i><span class="icon-example-name">  fa-rotate-right </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-save"></i><span class="icon-example-name">  fa-save </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-scissors"></i><span class="icon-example-name">  fa-scissors</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-strikethrough"></i><span class="icon-example-name">  fa-strikethrough</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-table"></i><span class="icon-example-name">  fa-table</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-text-height"></i><span class="icon-example-name">  fa-text-height</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-text-width"></i><span class="icon-example-name">  fa-text-width</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-th"></i><span class="icon-example-name">  fa-th</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-th-large"></i><span class="icon-example-name">  fa-th-large</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-th-list"></i><span class="icon-example-name">  fa-th-list</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-underline"></i><span class="icon-example-name">  fa-underline</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-undo"></i><span class="icon-example-name">  fa-undo</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-unlink"></i><span class="icon-example-name">  fa-unlink </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-angle-double-down"></i><span class="icon-example-name">  fa-angle-double-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-angle-double-left"></i><span class="icon-example-name">  fa-angle-double-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-angle-double-right"></i><span class="icon-example-name">  fa-angle-double-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-angle-double-up"></i><span class="icon-example-name">  fa-angle-double-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-angle-down"></i><span class="icon-example-name">  fa-angle-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-angle-left"></i><span class="icon-example-name">  fa-angle-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-angle-right"></i><span class="icon-example-name">  fa-angle-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-angle-up"></i><span class="icon-example-name">  fa-angle-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-down"></i><span class="icon-example-name">  fa-arrow-circle-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-left"></i><span class="icon-example-name">  fa-arrow-circle-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-o-down"></i><span class="icon-example-name">  fa-arrow-circle-o-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-o-left"></i><span class="icon-example-name">  fa-arrow-circle-o-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-o-right"></i><span class="icon-example-name">  fa-arrow-circle-o-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-o-up"></i><span class="icon-example-name">  fa-arrow-circle-o-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-right"></i><span class="icon-example-name">  fa-arrow-circle-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-circle-up"></i><span class="icon-example-name">  fa-arrow-circle-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-down"></i><span class="icon-example-name">  fa-arrow-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-left"></i><span class="icon-example-name">  fa-arrow-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-right"></i><span class="icon-example-name">  fa-arrow-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrow-up"></i><span class="icon-example-name">  fa-arrow-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrows"></i><span class="icon-example-name">  fa-arrows</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrows-alt"></i><span class="icon-example-name">  fa-arrows-alt</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrows-h"></i><span class="icon-example-name">  fa-arrows-h</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrows-v"></i><span class="icon-example-name">  fa-arrows-v</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-down"></i><span class="icon-example-name">  fa-caret-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-left"></i><span class="icon-example-name">  fa-caret-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-right"></i><span class="icon-example-name">  fa-caret-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-square-o-down"></i><span class="icon-example-name">  fa-caret-square-o-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-square-o-left"></i><span class="icon-example-name">  fa-caret-square-o-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-square-o-right"></i><span class="icon-example-name">  fa-caret-square-o-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-square-o-up"></i><span class="icon-example-name">  fa-caret-square-o-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-caret-up"></i><span class="icon-example-name">  fa-caret-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chevron-circle-down"></i><span class="icon-example-name">  fa-chevron-circle-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chevron-circle-left"></i><span class="icon-example-name">  fa-chevron-circle-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chevron-circle-right"></i><span class="icon-example-name">  fa-chevron-circle-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chevron-circle-up"></i><span class="icon-example-name">  fa-chevron-circle-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chevron-down"></i><span class="icon-example-name">  fa-chevron-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chevron-left"></i><span class="icon-example-name">  fa-chevron-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chevron-right"></i><span class="icon-example-name">  fa-chevron-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-chevron-up"></i><span class="icon-example-name">  fa-chevron-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-o-down"></i><span class="icon-example-name">  fa-hand-o-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-o-left"></i><span class="icon-example-name">  fa-hand-o-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-o-right"></i><span class="icon-example-name">  fa-hand-o-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hand-o-up"></i><span class="icon-example-name">  fa-hand-o-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-long-arrow-down"></i><span class="icon-example-name">  fa-long-arrow-down</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-long-arrow-left"></i><span class="icon-example-name">  fa-long-arrow-left</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-long-arrow-right"></i><span class="icon-example-name">  fa-long-arrow-right</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-long-arrow-up"></i><span class="icon-example-name">  fa-long-arrow-up</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-toggle-down"></i><span class="icon-example-name">  fa-toggle-down </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-toggle-left"></i><span class="icon-example-name">  fa-toggle-left </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-toggle-right"></i><span class="icon-example-name">  fa-toggle-right </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-toggle-up"></i><span class="icon-example-name">  fa-toggle-up </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-arrows-alt"></i><span class="icon-example-name">  fa-arrows-alt</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-backward"></i><span class="icon-example-name">  fa-backward</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-compress"></i><span class="icon-example-name">  fa-compress</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-eject"></i><span class="icon-example-name">  fa-eject</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-expand"></i><span class="icon-example-name">  fa-expand</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-fast-backward"></i><span class="icon-example-name">  fa-fast-backward</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-fast-forward"></i><span class="icon-example-name">  fa-fast-forward</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-forward"></i><span class="icon-example-name">  fa-forward</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pause"></i><span class="icon-example-name">  fa-pause</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-play"></i><span class="icon-example-name">  fa-play</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-play-circle"></i><span class="icon-example-name">  fa-play-circle</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-play-circle-o"></i><span class="icon-example-name">  fa-play-circle-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-step-backward"></i><span class="icon-example-name">  fa-step-backward</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-step-forward"></i><span class="icon-example-name">  fa-step-forward</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-stop"></i><span class="icon-example-name">  fa-stop</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-youtube-play"></i><span class="icon-example-name">  fa-youtube-play</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-adn"></i><span class="icon-example-name">  fa-adn</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-android"></i><span class="icon-example-name">  fa-android</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-apple"></i><span class="icon-example-name">  fa-apple</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bitbucket"></i><span class="icon-example-name">  fa-bitbucket</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bitbucket-square"></i><span class="icon-example-name">  fa-bitbucket-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-bitcoin"></i><span class="icon-example-name">  fa-bitcoin </span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-btc"></i><span class="icon-example-name">  fa-btc</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-css3"></i><span class="icon-example-name">  fa-css3</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-dribbble"></i><span class="icon-example-name">  fa-dribbble</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-dropbox"></i><span class="icon-example-name">  fa-dropbox</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-facebook"></i><span class="icon-example-name">  fa-facebook</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-facebook-square"></i><span class="icon-example-name">  fa-facebook-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-flickr"></i><span class="icon-example-name">  fa-flickr</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-foursquare"></i><span class="icon-example-name">  fa-foursquare</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-github"></i><span class="icon-example-name">  fa-github</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-github-alt"></i><span class="icon-example-name">  fa-github-alt</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-github-square"></i><span class="icon-example-name">  fa-github-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-gittip"></i><span class="icon-example-name">  fa-gittip</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-google-plus"></i><span class="icon-example-name">  fa-google-plus</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-google-plus-square"></i><span class="icon-example-name">  fa-google-plus-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-html5"></i><span class="icon-example-name">  fa-html5</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-instagram"></i><span class="icon-example-name">  fa-instagram</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-linkedin"></i><span class="icon-example-name">  fa-linkedin</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-linkedin-square"></i><span class="icon-example-name">  fa-linkedin-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-linux"></i><span class="icon-example-name">  fa-linux</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-maxcdn"></i><span class="icon-example-name">  fa-maxcdn</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pagelines"></i><span class="icon-example-name">  fa-pagelines</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pinterest"></i><span class="icon-example-name">  fa-pinterest</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-pinterest-square"></i><span class="icon-example-name">  fa-pinterest-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-renren"></i><span class="icon-example-name">  fa-renren</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-skype"></i><span class="icon-example-name">  fa-skype</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-stack-exchange"></i><span class="icon-example-name">  fa-stack-exchange</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-stack-overflow"></i><span class="icon-example-name">  fa-stack-overflow</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-trello"></i><span class="icon-example-name">  fa-trello</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tumblr"></i><span class="icon-example-name">  fa-tumblr</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-tumblr-square"></i><span class="icon-example-name">  fa-tumblr-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-twitter"></i><span class="icon-example-name">  fa-twitter</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-twitter-square"></i><span class="icon-example-name">  fa-twitter-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-vimeo-square"></i><span class="icon-example-name">  fa-vimeo-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-vk"></i><span class="icon-example-name">  fa-vk</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-weibo"></i><span class="icon-example-name">  fa-weibo</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-windows"></i><span class="icon-example-name">  fa-windows</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-xing"></i><span class="icon-example-name">  fa-xing</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-xing-square"></i><span class="icon-example-name">  fa-xing-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-youtube"></i><span class="icon-example-name">  fa-youtube</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-youtube-play"></i><span class="icon-example-name">  fa-youtube-play</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-youtube-square"></i><span class="icon-example-name">  fa-youtube-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-ambulance"></i><span class="icon-example-name">  fa-ambulance</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-h-square"></i><span class="icon-example-name">  fa-h-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-hospital-o"></i><span class="icon-example-name">  fa-hospital-o</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-medkit"></i><span class="icon-example-name">  fa-medkit</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-plus-square"></i><span class="icon-example-name">  fa-plus-square</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-stethoscope"></i><span class="icon-example-name">  fa-stethoscope</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-user-md"></i><span class="icon-example-name">  fa-user-md</span></div>-->
+                                <!--<div class="font-example-box col-md-3 col-xs-6"><i class="fa fa-wheelchair"></i><span class="icon-example-name">  fa-wheelchair</span></div>-->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- End main content-->
+
+</div>
+<!-- End wrapper-->
+
+<!-- Vendor scripts -->
+<script src="vendor/pacejs/pace.min.js"></script>
+<script src="vendor/jquery/dist/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- App scripts -->
+<script src="scripts/luna.js"></script>
+
+</body>
+
+
+</html>

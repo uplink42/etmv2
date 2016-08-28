@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+
+    <!-- Page title -->
+    <title>LUNA | Responsive Admin Theme</title>
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="vendor/animate.css/animate.css"/>
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css"/>
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="styles/pe-icons/pe-icon-7-stroke.css"/>
+    <link rel="stylesheet" href="styles/pe-icons/helper.css"/>
+    <link rel="stylesheet" href="styles/stroke-icons/style.css"/>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<!-- Wrapper-->
+<div class="wrapper">
+
+    <!-- Header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div id="mobile-menu">
+                    <div class="left-nav-toggle">
+                        <a href="#">
+                            <i class="stroke-hamburgermenu"></i>
+                        </a>
+                    </div>
+                </div>
+                <a class="navbar-brand" href="index-2.html">
+                    LUNA
+                    <span>v.1.0</span>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="left-nav-toggle">
+                    <a href="#">
+                        <i class="stroke-hamburgermenu"></i>
+                    </a>
+                </div>
+                <form class="navbar-form navbar-left">
+                    <input type="text" class="form-control" placeholder="Search data for analysis" style="width: 175px">
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="versions.html" >Versions
+                            <span class="label label-warning pull-right">2</span>
+                        </a>
+                    </li>
+                    <li class=" profil-link">
+                        <a href="login.html">
+                            <span class="profile-address">luna@company.io</span>
+                            <img src="images/profile.jpg" class="img-circle" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End header-->
+
+    <!-- Navigation-->
+    <aside class="navigation">
+        <nav>
+            <ul class="nav luna-nav">
+                <li class="nav-category">
+                    Main
+                </li>
+                <li>
+                    <a href="index-2.html">Dashboard</a>
+                </li>
+
+                <li class="active">
+                    <a href="#monitoring" data-toggle="collapse" aria-expanded="false">
+                        Monitoring<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="monitoring" class="nav nav-second collapse in">
+                        <li><a href="metrics.html"> Metrics</a></li>
+                        <li class="active"><a href="usage.html"> Usage</a></li>
+                        <li><a href="activity.html"> Activity</a></li>
+                    </ul>
+                </li>
+                <li class="nav-category">
+                    UI Elements
+                </li>
+                <li>
+                    <a href="#uielements" data-toggle="collapse" aria-expanded="false">
+                        General<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="uielements" class="nav nav-second collapse">
+                        <li><a href="panels.html">Panels</a></li>
+                        <li><a href="typography.html">Typography</a></li>
+                        <li><a href="icons.html">Icons</a></li>
+                        <li><a href="buttons.html">Buttons</a></li>
+                        <li><a href="tabs.html">Tabs</a></li>
+                        <li><a href="modals.html">Modals</a></li>
+                        <li><a href="alerts.html">Alerts</a></li>
+                        <li><a href="gridSystem.html">Grid system</a></li>
+                        <li><a href="draggable.html">Draggable</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#tables" data-toggle="collapse" aria-expanded="false">
+                        Tables design<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="tables" class="nav nav-second collapse">
+                        <li><a href="tableStyles.html">Table styles</a></li>
+                        <li><a href="dataTables.html">Data Tables</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="formElements.html"> Form elements </a>
+                </li>
+                <li>
+                    <a href="#charts" data-toggle="collapse" aria-expanded="false">
+                        Charts and graphs<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="charts" class="nav nav-second collapse">
+                        <li><a href="flotCharts.html">Flot charts</a></li>
+                        <li><a href="sparkline.html">Sparkline</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-category">
+                    App Pages
+                </li>
+
+                <li>
+                    <a href="#extras" data-toggle="collapse" aria-expanded="false">
+                        Basic <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="extras" class="nav nav-second collapse">
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="support.html">Support</a></li>
+                        <li><a href="nestableList.html">List</a></li>
+                        <li><a href="timeline.html">Timeline</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#common" data-toggle="collapse" aria-expanded="false">
+                        Common <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="common" class="nav nav-second collapse">
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="forgotPassword.html">Forgot password</a></li>
+                        <li><a href="error.html">Error page</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="versions.html">
+                        <span class="badge pull-right">2</span>
+                        Versions
+                    </a>
+                </li>
+                <li class="nav-info">
+                    <i class="pe pe-7s-shield text-accent"></i>
+                    <div class="m-t-xs">
+                        <span class="c-white">LUNA</span> admin theme with Dark UI style for monitoring and administration web applications.
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <!-- End navigation-->
+
+
+    <!-- Main content-->
+    <section class="content">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel m-b-none">
+                        <div class="panel-body">
+                            <h3 class="m-b-xs"><i class="pe pe-7s-graph1 text-warning m-r-xs"></i> Usage </h3>
+                            <hr/>
+                            <p class="small">
+                                <span class="c-white">Monitoring view provide real time</span>
+                                data from geographically distributed servers. Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                                scrambled it to make a type specimen book.
+                            </p>
+                            <hr/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-9">
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                            <div class="panel m-b-none">
+                                <div class="panel-body">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Machine SRF T51</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Number</td>
+                                            <td class="text-right">REGT44</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td class="text-right">Germany</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usage</td>
+                                            <td class="text-right"><span class="usage11">12</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                            <div class="panel m-b-none">
+                                <div class="panel-body">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Machine SRF T51</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Number</td>
+                                            <td class="text-right">REGT44</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td class="text-right">Holland</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usage</td>
+                                            <td class="text-right"><span class="usage12">12</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                            <div class="panel m-b-none">
+                                <div class="panel-body">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Machine GTR T31</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Number</td>
+                                            <td class="text-right">TRG54</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td class="text-right">New York</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usage</td>
+                                            <td class="text-right"><span class="usage13">12</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                            <div class="panel m-b-none">
+                                <div class="panel-body">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Machine UTV 291</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Number</td>
+                                            <td class="text-right">GGV5</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td class="text-right">Germany</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usage</td>
+                                            <td class="text-right"><span class="usage14">12</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                            <div class="panel m-b-none">
+                                <div class="panel-body">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Machine VFF 8UY</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Number</td>
+                                            <td class="text-right">JUY3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td class="text-right">Holland</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usage</td>
+                                            <td class="text-right"><span class="usage15">12</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                            <div class="panel m-b-none">
+                                <div class="panel-body">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Machine FD43</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Number</td>
+                                            <td class="text-right">7655</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td class="text-right">New York</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usage</td>
+                                            <td class="text-right"><span class="usage16">12</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                            <div class="panel m-b-none">
+                                <div class="panel-body">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Machine UY2</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Number</td>
+                                            <td class="text-right">5433</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td class="text-right">Germany</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usage</td>
+                                            <td class="text-right"><span class="usage17">12</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                            <div class="panel m-b-none">
+                                <div class="panel-body">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Machine NNG 322</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Number</td>
+                                            <td class="text-right">UYT5</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td class="text-right">Holland</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usage</td>
+                                            <td class="text-right"><span class="usage18">12</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                            <div class="panel m-b-none">
+                                <div class="panel-body">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Machine DDEW 654</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Number</td>
+                                            <td class="text-right">BG87</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location</td>
+                                            <td class="text-right">New York</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usage</td>
+                                            <td class="text-right"><span class="usage19">12</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="col-lg-3">
+                    <div class="panel panel-filled">
+
+
+                        <div class="panel-body">
+
+                            <p>
+                                It is a long established fact that a reader will be distracted by the readable content of
+                            </p>
+
+                            <table class="table">
+
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Machine number
+                                    </th>
+                                    <th>
+                                        Usage
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td> SRF T51</td>
+                                    <td><span class="usage1">12</span></td>
+                                </tr>
+                                <tr>
+                                    <td> RTH 2T1</td>
+                                    <td><span class="usage2">32</span></td>
+                                </tr>
+                                <tr>
+                                    <td> HTD E41</td>
+                                    <td><span class="usage3">45</span></td>
+                                </tr>
+                                <tr>
+                                    <td> IIU I62</td>
+                                    <td><span class="usage4">61</span></td>
+                                </tr>
+                                <tr>
+                                    <td> BGH RE3</td>
+                                    <td><span class="usage5">22</span></td>
+                                </tr>
+                                <tr>
+                                    <td> OIU T65</td>
+                                    <td><span class="usage6">10</span></td>
+                                </tr>
+                                <tr>
+                                    <td> ASD UY8</td>
+                                    <td><span class="usage7">7</span></td>
+                                </tr>
+                                <tr>
+                                    <td> BGH 90R</td>
+                                    <td><span class="usage8">56</span></td>
+                                </tr>
+                                <tr>
+                                    <td> YYT RR5</td>
+                                    <td><span class="usage9">97</span></td>
+                                </tr>
+                                <tr>
+                                    <td> VBH NJ2</td>
+                                    <td><span class="usage10">21</span></td>
+                                </tr>
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </section>
+    <!-- End main content-->
+
+</div>
+<!-- End wrapper-->
+
+<!-- Vendor scripts -->
+<script src="vendor/pacejs/pace.min.js"></script>
+<script src="vendor/jquery/dist/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- App scripts -->
+<script src="scripts/luna.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+
+        // Function to generate data
+        function setUsage(selector){
+
+            var usage1 = Math.floor(Math.random() * 100) + 1;
+            $(selector).text(usage1 + '%');
+            if (usage1 > 40) {
+                $(selector).addClass('c-accent');
+            } else {
+                $(selector).removeClass('c-accent')
+            }
+
+        }
+
+        // Generate data for all span elements
+        function generate() {
+
+            setUsage('.usage1');
+            setUsage('.usage2');
+            setUsage('.usage3');
+            setUsage('.usage4');
+            setUsage('.usage5');
+            setUsage('.usage6');
+            setUsage('.usage7');
+            setUsage('.usage8');
+            setUsage('.usage9');
+            setUsage('.usage10');
+            setUsage('.usage11');
+            setUsage('.usage12');
+            setUsage('.usage13');
+            setUsage('.usage14');
+            setUsage('.usage15');
+            setUsage('.usage16');
+            setUsage('.usage17');
+            setUsage('.usage18');
+            setUsage('.usage19');
+
+
+        }
+
+        // Run interval function
+        usageInterval = setInterval(generate, 800);
+
+    });
+</script>
+
+</body>
+
+</html>

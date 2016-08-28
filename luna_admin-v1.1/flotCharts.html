@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+
+    <!-- Page title -->
+    <title>LUNA | Responsive Admin Theme</title>
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="vendor/animate.css/animate.css"/>
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css"/>
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="styles/pe-icons/pe-icon-7-stroke.css"/>
+    <link rel="stylesheet" href="styles/pe-icons/helper.css"/>
+    <link rel="stylesheet" href="styles/stroke-icons/style.css"/>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<!-- Wrapper-->
+<div class="wrapper">
+
+    <!-- Header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div id="mobile-menu">
+                    <div class="left-nav-toggle">
+                        <a href="#">
+                            <i class="stroke-hamburgermenu"></i>
+                        </a>
+                    </div>
+                </div>
+                <a class="navbar-brand" href="index-2.html">
+                    LUNA
+                    <span>v.1.0</span>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="left-nav-toggle">
+                    <a href="#">
+                        <i class="stroke-hamburgermenu"></i>
+                    </a>
+                </div>
+                <form class="navbar-form navbar-left">
+                    <input type="text" class="form-control" placeholder="Search data for analysis" style="width: 175px">
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="versions.html" >Versions
+                            <span class="label label-warning pull-right">2</span>
+                        </a>
+                    </li>
+                    <li class=" profil-link">
+                        <a href="login.html">
+                            <span class="profile-address">luna@company.io</span>
+                            <img src="images/profile.jpg" class="img-circle" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End header-->
+
+    <!-- Navigation-->
+    <aside class="navigation">
+        <nav>
+            <ul class="nav luna-nav">
+                <li class="nav-category">
+                    Main
+                </li>
+                <li>
+                    <a href="index-2.html">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="#monitoring" data-toggle="collapse" aria-expanded="false">
+                        Monitoring<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="monitoring" class="nav nav-second collapse">
+                        <li><a href="metrics.html"> Metrics</a></li>
+                        <li><a href="usage.html"> Usage</a></li>
+                        <li><a href="activity.html"> Activity</a></li>
+                    </ul>
+                </li>
+                <li class="nav-category">
+                    UI Elements
+                </li>
+                <li>
+                    <a href="#uielements" data-toggle="collapse" aria-expanded="false">
+                        General<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="uielements" class="nav nav-second collapse">
+                        <li><a href="panels.html">Panels</a></li>
+                        <li><a href="typography.html">Typography</a></li>
+                        <li><a href="icons.html">Icons</a></li>
+                        <li><a href="buttons.html">Buttons</a></li>
+                        <li><a href="tabs.html">Tabs</a></li>
+                        <li><a href="modals.html">Modals</a></li>
+                        <li><a href="alerts.html">Alerts</a></li>
+                        <li><a href="gridSystem.html">Grid system</a></li>
+                        <li><a href="draggable.html">Draggable</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#tables" data-toggle="collapse" aria-expanded="false">
+                        Tables design<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="tables" class="nav nav-second collapse">
+                        <li><a href="tableStyles.html">Table styles</a></li>
+                        <li><a href="dataTables.html">Data Tables</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="formElements.html"> Form elements </a>
+                </li>
+                <li class="active">
+                    <a href="#charts" data-toggle="collapse" aria-expanded="false">
+                        Charts and graphs<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="charts" class="nav nav-second collapse in">
+                        <li class="active"><a href="flotCharts.html">Flot charts</a></li>
+                        <li><a href="sparkline.html">Sparkline</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-category">
+                    App Pages
+                </li>
+
+                <li>
+                    <a href="#extras" data-toggle="collapse" aria-expanded="false">
+                        Basic <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="extras" class="nav nav-second collapse">
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="support.html">Support</a></li>
+                        <li><a href="nestableList.html">List</a></li>
+                        <li><a href="timeline.html">Timeline</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#common" data-toggle="collapse" aria-expanded="false">
+                        Common <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="common" class="nav nav-second collapse">
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="forgotPassword.html">Forgot password</a></li>
+                        <li><a href="error.html">Error page</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="versions.html">
+                        <span class="badge pull-right">2</span>
+                        Versions
+                    </a>
+                </li>
+                <li class="nav-info">
+                    <i class="pe pe-7s-shield text-accent"></i>
+                    <div class="m-t-xs">
+                        <span class="c-white">LUNA</span> admin theme with Dark UI style for monitoring and administration web applications.
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <!-- End navigation-->
+
+
+    <!-- Main content-->
+    <section class="content">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="view-header">
+                        <div class="pull-right text-right" style="line-height: 14px">
+                            <small>Charts and graphs<br>UI Elements<br> <span class="c-white">Flot charts</span></small>
+                        </div>
+                        <div class="header-icon">
+                            <i class="pe page-header-icon pe-7s-graph2"></i>
+                        </div>
+                        <div class="header-title">
+                            <h3>Flot charts</h3>
+                            <small>
+                                Flot is a pure JavaScript plotting library for jQuery, with a focus on simple usage, attractive looks and interactive features.
+                            </small>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+                                <a class="panel-close"><i class="fa fa-times"></i></a>
+                            </div>
+                            Points type chart
+                        </div>
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flotExample1"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+                                <a class="panel-close"><i class="fa fa-times"></i></a>
+                            </div>
+                            Line type chart
+                        </div>
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flotExample2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+                                <a class="panel-close"><i class="fa fa-times"></i></a>
+                            </div>
+                            Line type chart with tension
+                        </div>
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flotExample5"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+                                <a class="panel-close"><i class="fa fa-times"></i></a>
+                            </div>
+                            Line type chart with steps
+                        </div>
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flotExample4"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+                                <a class="panel-close"><i class="fa fa-times"></i></a>
+                            </div>
+                            Bar type chart
+                        </div>
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flotExample3"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="panel-tools">
+                                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+                                <a class="panel-close"><i class="fa fa-times"></i></a>
+                            </div>
+                            Filled Area type chart
+                        </div>
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flotExample6"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </section>
+    <!-- End main content-->
+
+</div>
+<!-- End wrapper-->
+
+<!-- Vendor scripts -->
+<script src="vendor/pacejs/pace.min.js"></script>
+<script src="vendor/jquery/dist/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/flot/jquery.flot.min.js"></script>
+<script src="vendor/flot/jquery.flot.resize.min.js"></script>
+<script src="vendor/flot/jquery.flot.spline.js"></script>
+
+<!-- App scripts -->
+<script src="scripts/luna.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        var data1 = [ [0, 3], [1, 6], [2, 8], [3, 9], [4, 12], [5, 14], [6, 15], [7, 12],
+            [8, 14], [9, 12], [10, 11], [11, 10], [12, 14], [13, 16], [14, 15], [15, 15],
+            [16, 16], [17, 12], [18, 13], [19, 15], [20, 16], [21, 18], [22, 20], [23, 23],
+            [24, 22], [25, 21], [26, 20], [27, 17], [28, 15], [29, 14], [30, 13], [31, 10]];
+
+        var chartUsersOptions = {
+            points: {
+                show: true,
+                fill: true,
+                lineWidth: 1,
+                fillColor: "#f6a821"
+            },
+            grid: {
+                borderWidth: 0
+            }
+        };
+
+        $.plot($("#flotExample1"), [data1], chartUsersOptions);
+
+
+        var chartUsersOptions = {
+            lines: {
+                show: true,
+                fill: false,
+                lineWidth: 2,
+                fillColor: "#f6a821"
+            },
+            grid: {
+                borderWidth: 0
+            }
+        };
+
+        $.plot($("#flotExample2"), [data1], chartUsersOptions);
+
+        var data2 = [
+            {
+                label: "bar",
+                data: [ [1, 12], [2, 14], [3, 18], [4, 24], [5, 28], [6, 22],[7, 20], [8, 18], [9, 17], [10, 13], [11, 15], [12, 17] ]
+            }
+        ];
+
+        var chartUsersOptions2 = {
+            bars: {
+                show: true,
+                fill: false,
+                lineWidth: 2,
+                fillColor: "#f6a821"
+            },
+            legend: {
+                show: false
+            },
+            grid: {
+                borderWidth: 0
+            }
+        };
+
+        $.plot($("#flotExample3"), data2, chartUsersOptions2);
+
+
+        var chartUsersOptions2 = {
+            lines: {
+                show: true,
+                steps: true
+            },
+            grid: {
+                borderWidth: 0
+            }
+        };
+
+        $.plot($("#flotExample4"), data2, chartUsersOptions2);
+
+        var data2 = [
+            {
+                data: [ [1, 4], [2, 5], [3, 7], [4, 4], [5, 8], [6, 9],[7, 11], [8, 10], [9, 8], [10, 5], [11, 4], [12, 3] ]
+            }
+        ];
+
+        var chartUsersOptions2 = {
+            series: {
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 2,
+                    fill: false
+                },
+            },
+            legend: {
+                show: false
+            },
+            grid: {
+                borderWidth: 0
+            }
+        };
+
+        $.plot($("#flotExample5"), data2, chartUsersOptions2);
+
+        var data2 = [
+            {
+                data: [ [1, 4], [2, 5], [3, 7], [4, 4], [5, 8], [6, 9],[7, 11], [8, 10], [9, 8], [10, 5], [11, 4], [12, 3] ]
+            }
+        ];
+
+        var chartUsersOptions2 = {
+            lines: {
+                show: true,
+                fill: 0.1
+            },
+            grid: {
+                borderWidth: 0
+            }
+        };
+
+        $.plot($("#flotExample6"), data2, chartUsersOptions2);
+
+    });
+</script>
+
+</body>
+
+
+</html>

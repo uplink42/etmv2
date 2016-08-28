@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+
+    <!-- Page title -->
+    <title>LUNA | Responsive Admin Theme</title>
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="vendor/animate.css/animate.css"/>
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css"/>
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="styles/pe-icons/pe-icon-7-stroke.css"/>
+    <link rel="stylesheet" href="styles/pe-icons/helper.css"/>
+    <link rel="stylesheet" href="styles/stroke-icons/style.css"/>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<!-- Wrapper-->
+<div class="wrapper">
+
+    <!-- Header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div id="mobile-menu">
+                    <div class="left-nav-toggle">
+                        <a href="#">
+                            <i class="stroke-hamburgermenu"></i>
+                        </a>
+                    </div>
+                </div>
+                <a class="navbar-brand" href="index-2.html">
+                    LUNA
+                    <span>v.1.0</span>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="left-nav-toggle">
+                    <a href="#">
+                        <i class="stroke-hamburgermenu"></i>
+                    </a>
+                </div>
+                <form class="navbar-form navbar-left">
+                    <input type="text" class="form-control" placeholder="Search data for analysis" style="width: 175px">
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="versions.html" >Versions
+                            <span class="label label-warning pull-right">2</span>
+                        </a>
+                    </li>
+                    <li class=" profil-link">
+                        <a href="login.html">
+                            <span class="profile-address">luna@company.io</span>
+                            <img src="images/profile.jpg" class="img-circle" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End header-->
+
+    <!-- Navigation-->
+    <aside class="navigation">
+        <nav>
+            <ul class="nav luna-nav">
+                <li class="nav-category">
+                    Main
+                </li>
+                <li>
+                    <a href="index-2.html">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="#monitoring" data-toggle="collapse" aria-expanded="false">
+                        Monitoring<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="monitoring" class="nav nav-second collapse">
+                        <li><a href="metrics.html"> Metrics</a></li>
+                        <li><a href="usage.html"> Usage</a></li>
+                        <li><a href="activity.html"> Activity</a></li>
+                    </ul>
+                </li>
+                <li class="nav-category">
+                    UI Elements
+                </li>
+                <li>
+                    <a href="#uielements" data-toggle="collapse" aria-expanded="false">
+                        General<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="uielements" class="nav nav-second collapse">
+                        <li><a href="panels.html">Panels</a></li>
+                        <li><a href="typography.html">Typography</a></li>
+                        <li><a href="icons.html">Icons</a></li>
+                        <li><a href="buttons.html">Buttons</a></li>
+                        <li><a href="tabs.html">Tabs</a></li>
+                        <li><a href="modals.html">Modals</a></li>
+                        <li><a href="alerts.html">Alerts</a></li>
+                        <li><a href="gridSystem.html">Grid system</a></li>
+                        <li><a href="draggable.html">Draggable</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#tables" data-toggle="collapse" aria-expanded="false">
+                        Tables design<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="tables" class="nav nav-second collapse">
+                        <li><a href="tableStyles.html">Table styles</a></li>
+                        <li><a href="dataTables.html">Data Tables</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="formElements.html"> Form elements </a>
+                </li>
+                <li>
+                    <a href="#charts" data-toggle="collapse" aria-expanded="false">
+                        Charts and graphs<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="charts" class="nav nav-second collapse">
+                        <li><a href="flotCharts.html">Flot charts</a></li>
+                        <li><a href="sparkline.html">Sparkline</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-category">
+                    App Pages
+                </li>
+
+                <li class="active">
+                    <a href="#extras" data-toggle="collapse" aria-expanded="false">
+                        Basic <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="extras" class="nav nav-second collapse in">
+                        <li class="active"><a href="profile.html">Profile</a></li>
+                        <li><a href="support.html">Support</a></li>
+                        <li><a href="nestableList.html">List</a></li>
+                        <li><a href="timeline.html">Timeline</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#common" data-toggle="collapse" aria-expanded="false">
+                        Common <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="common" class="nav nav-second collapse">
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="forgotPassword.html">Forgot password</a></li>
+                        <li><a href="error.html">Error page</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="versions.html">
+                        <span class="badge pull-right">2</span>
+                        Versions
+                    </a>
+                </li>
+                <li class="nav-info">
+                    <i class="pe pe-7s-shield text-accent"></i>
+                    <div class="m-t-xs">
+                        <span class="c-white">LUNA</span> admin theme with Dark UI style for monitoring and administration web applications.
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <!-- End navigation-->
+
+
+    <!-- Main content-->
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row m-t-sm">
+
+                <div class="col-md-12">
+                    <div class="panel panel-filled">
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="media">
+                                        <i class="pe pe-7s-user c-accent fa-3x"></i>
+                                        <h2 class="m-t-xs m-b-none">
+                                            Luna user
+                                        </h2>
+                                        <small>
+                                            There are many variations of passages of Lorem Ipsum available, but the majority
+                                            have suffered alteration in some form Ipsum available.
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <table class="table small m-t-sm">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong class="c-white">122</strong> Projects
+                                            </td>
+                                            <td>
+                                                <strong class="c-white">42</strong> Active project
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong class="c-white">61</strong> Comments
+                                            </td>
+                                            <td>
+                                                <strong class="c-white">84</strong> Articles
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong class="c-white">244</strong> Tags
+                                            </td>
+                                            <td>
+                                                <strong class="c-white">42</strong> Friends
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-3 m-t-sm">
+                                <span class="c-white">
+                                    Contact with user
+                                </span>
+                                    <br>
+                                    <small>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry
+                                    </small>
+                                    <div class="btn-group m-t-sm">
+                                        <a href="#" class="btn btn-default btn-sm"><i class="fa fa-envelope"></i> Contact</a>
+                                        <a href="#" class="btn btn-default btn-sm"><i class="fa fa-check"></i> Check availability</a>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h4> Recent Activity</h4>
+
+                            <div class="v-timeline vertical-container">
+                                <div class="vertical-timeline-block">
+                                    <div class="vertical-timeline-icon">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <div class="vertical-timeline-content">
+                                        <div class="p-sm">
+                                            <span class="vertical-date pull-right"> <small>1 day ago</small> </span>
+
+                                            <h2>Update profile</h2>
+
+                                            <p>Change profile name and set new profile description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vertical-timeline-block">
+                                    <div class="vertical-timeline-icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="vertical-timeline-content">
+                                        <div class="p-sm">
+                                            <span class="vertical-date pull-right"> <small>2 days ago</small> </span>
+
+                                            <h2>Add new documents to X project</h2>
+
+                                            <p>Project_document.docx, Contract_20_11_2016.docx, 10_08_2016.docx</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vertical-timeline-block">
+                                    <div class="vertical-timeline-icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="vertical-timeline-content">
+                                        <div class="p-sm">
+                                            <span class="vertical-date pull-right"> <small>2 days ago</small> </span>
+
+                                            <h2>Contrary to popular belief</h2>
+
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vertical-timeline-block">
+                                    <div class="vertical-timeline-icon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <div class="vertical-timeline-content">
+                                        <div class="p-sm">
+                                            <span class="vertical-date pull-right"> <small>4 days ago</small> </span>
+
+                                            <h2>The generated Lorem Ipsum</h2>
+
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="panel">
+
+                        <div class="panel-body">
+                            <h4> Project this year</h4>
+
+                            <p class="small">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+                            </p>
+
+                            <div class="flot-chart  m-t-md m-b-xl" style="height: 200px">
+                                <div class="flot-chart-content" id="flotProfile"></div>
+                            </div>
+
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+
+                                    <th>#</th>
+                                    <th>Project</th>
+                                    <th>Company</th>
+                                    <th>Task</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Project
+                                        <small>This is example of project</small>
+                                    </td>
+                                    <td>Inceptos Hymenaeos Ltd</td>
+                                    <td>20%</td>
+                                    <td>Jul 14, 2016</td>
+                                    <td class="text-right"><a href="#"><i class="fa fa-edit"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Alpha project</td>
+                                    <td>Nec Euismod In Company</td>
+                                    <td>40%</td>
+                                    <td>Jul 16, 2016</td>
+                                    <td class="text-right"><a href="#"><i class="fa fa-edit"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Betha project</td>
+                                    <td>Erat Volutpat</td>
+                                    <td>75%</td>
+                                    <td>Jul 18, 2016</td>
+                                    <td class="text-right"><a href="#"><i class="fa fa-edit"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Gamma project</td>
+                                    <td>Tellus Ltd</td>
+                                    <td>18%</td>
+                                    <td>Jul 22, 2016</td>
+                                    <td class="text-right"><a href="#"><i class="fa fa-edit"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Alpha project</td>
+                                    <td>Nec Euismod In Company</td>
+                                    <td>40%</td>
+                                    <td>Jul 16, 2016</td>
+                                    <td class="text-right"><a href="#"><i class="fa fa-edit"></i></a></td>
+                                </tr>
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="panel panel-filled">
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 text-center">
+                                    <h2 class="no-margins">
+                                        534
+                                    </h2>
+                                    <span class="c-white">Commits</span> in last week
+                                </div>
+                                <div class="col-md-3 col-xs-6 text-center">
+                                    <h2 class="no-margins">
+                                        126
+                                    </h2>
+                                    <span class="c-white">Public</span> gists
+                                </div>
+                                <div class="col-md-3 col-xs-6 text-center">
+                                    <h2 class="no-margins">
+                                        680
+                                    </h2>
+                                    <span class="c-white">New code</span> line
+                                </div>
+                                <div class="col-md-3 col-xs-6 text-center">
+                                    <h2 class="no-margins">
+                                        14
+                                    </h2>
+                                    <span class="c-white">New</span> builds
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- End main content-->
+
+</div>
+<!-- End wrapper-->
+
+<!-- Vendor scripts -->
+<script src="vendor/pacejs/pace.min.js"></script>
+<script src="vendor/jquery/dist/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/flot/jquery.flot.min.js"></script>
+<script src="vendor/flot/jquery.flot.resize.min.js"></script>
+<script src="vendor/flot/jquery.flot.spline.js"></script>
+
+<!-- App scripts -->
+<script src="scripts/luna.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+
+        var data = [
+            {
+                data: [ [1, 4], [2, 5], [3, 7], [4, 4], [5, 8], [6, 9],[7, 11], [8, 10], [9, 8], [10, 5], [11, 4], [12, 3] ]
+            }
+        ];
+
+        var chartUsersOptions2 = {
+            series: {
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 2,
+                    fill: false
+                },
+            },
+            legend: {
+                show: false
+            },
+            grid: {
+                borderWidth: 0
+            }
+        };
+
+        $.plot($("#flotProfile"), data, chartUsersOptions2);
+
+    });
+</script>
+
+</body>
+
+</html>
