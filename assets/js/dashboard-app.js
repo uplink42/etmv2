@@ -32,10 +32,63 @@ $(document).ready(function() {
     }, 1600)
     
     //datatables
-    $('#profits-table').DataTable({
+    var table = $('#profits-table').DataTable({
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
             "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],
             buttons: [],
-            "order": []
+            "order": [],
+            
+
+    });
+
+    //time picker ajax request
+    $(".dropdown-interval a").on('click', function () {
+        var charid = $(".profil-link").data('character');
+        var domain = $(".profil-link").data('url');
+        var interval = $(this).parent('li').data('id');
+        var url = domain + "Dashboard/getProfitsTable/" + charid + "/" + interval;
+
+        console.log(url);
+
+        $.ajax({
+            dataType: "json",
+            url: url,
+            success: function(result) {
+                $("table tbody").empty();
+
+                if(result.length ==0) {
+                    table.rows().remove().draw();
+                } else {
+                    $.each(result, function(index, value) {
+
+                        $element = "<tr><td>" + "<img src='" + value.url + "'alt='icon'>"
+                                              + value.item_name + "</td><td>" 
+                                              + value.system_name + "</td><td>"
+                                              + value.sell_time + "</td><td>"
+                                              + number_format(value.quantity,0, ',', '.') + "</td><td>"
+                                              + number_format(value.profit_total,2, ',','.') + "</td><td>"
+                                              + number_format(value.margin,2,',','.') + "</td></tr>";
+                        $("table tbody").append($element);
+                    }); 
+                }
+
+                
+            }
         });
+
+    });
+
+    
+
+   
+    
+
+
+
+
+      
+
+
+
+
 });

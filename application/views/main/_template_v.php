@@ -41,6 +41,12 @@
     <!-- App scripts -->
     <script src="<?=base_url('assets/luna/scripts/luna.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
     <script src="<?=base_url('assets/js/toastr_options.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+    <script src="<?=base_url('assets/js/app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
 </head>
 
     <?php echo isset($no_header) ? "<body class='blank'>" : "" ?>
