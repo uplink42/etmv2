@@ -71,13 +71,18 @@ class Login_model extends CI_Model
         return $query->result();
     }
 
-
     public function getCharacterList($user_id)
     {
         $this->db->select('name, character_eve_idcharacter as id');
         $this->db->where('iduser', $user_id);
         $query = $this->db->get('v_user_characters');
         return $query->result();
+    }
+
+    public function getCharacterName($character_id)
+    {
+        $this->db->select('name');
+        //remove views when possible
     }
 
 }

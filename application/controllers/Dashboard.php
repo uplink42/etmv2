@@ -27,6 +27,8 @@ class Dashboard extends MY_Controller {
             $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($character_id);
             $data['character_list'] = $this->getCharacterList($this->session->iduser);
 
+            $this->load->model('Login_model');
+            $data['character_name'] = $this->Login_model->getCharacterName($character_id);
             $data['character_id'] = $character_id;
             $data['view']         = 'main/dashboard_v';
             $this->load->view('main/_template_v', $data);

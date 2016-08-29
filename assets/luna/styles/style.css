@@ -3047,3 +3047,7 @@ fieldset[disabled] .form-control {
     background-color: transparent !important;
 }
 
+.character-portrait {
+    border-radius: 50%;
+}
+

@@ -29,7 +29,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                 <i class="pe page-header-icon pe-7s-shield"></i>
             </div>
             <div class="header-title">
-                <h1>Dashboard</h1>
+                <h1><img class="character-portrait" src= "https://image.eveonline.com/Character/<?=$character_id?>_64.jpg" alt="character portrait">Dashboard</h1>
             </div>
 
             </div>
