@@ -139,7 +139,19 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                 </tr>
                             </thead>
                             <tbody>
-                                    
+                                    <?php
+                                  foreach ($profits as $row) {
+                                     if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
+                                      ?>
+                                 <tr class="<?=$res?>">
+                                     <td><?=$row['item_name']?></td>
+                                     <td><?=$row['system_name']?></td>
+                                     <td><?=$row['sell_time']?></td>
+                                     <td><?=number_format($row['quantity'],0)?></td>
+                                     <td><?=number_format($row['profit_total'],2)?></td>
+                                     <td><?=number_format($row['margin'],2)?></td>
+                                  </tr>
+                                      <?php }?>
                             </tbody>
                         </table>
                     </div>

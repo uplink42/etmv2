@@ -25,7 +25,7 @@ class Dashboard extends MY_Controller
             $data['pie_data']     = $this->Dashboard_model->getPieData($character_id);
             $data['week_profits'] = $this->Dashboard_model->getWeekProfits($character_id);
             $data['new_info']     = $this->Dashboard_model->getNewInfo($character_id);
-            //$data['profits']       = $this->Dashboard_model->getProfits($character_id);
+            $data['profits']       = $this->Dashboard_model->getProfits($character_id);
             $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($character_id);
 
             $data['character_id'] = $character_id;
@@ -33,17 +33,4 @@ class Dashboard extends MY_Controller
             $this->load->view('main/_template_v', $data);
         }
     }
-
-    public function getProfitsTable($character_id, $interval)
-    {
-        $this->load->model('Nav_model');
-        if ($this->Nav_model->checkCharacterBelong($character_id, $this->session->iduser)) {
-            $this->load->model('Dashboard_model');
-            echo json_encode($this->Dashboard_model->getProfits($character_id, $interval));
-        } else {
-            echo json_encode(["message" => "Invalid request"]);
-        }
-
-    }
-
 }
