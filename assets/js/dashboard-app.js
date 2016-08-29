@@ -21,13 +21,13 @@ $(document).ready(function() {
     // Run toastr notification with Welcome message
     setTimeout(function() {
         toastr.options = {
-            "positionClass": "toast-top-right",
+            "positionClass": "toast-top-center",
             "closeButton": true,
             "progressBar": true,
             "showEasing": "swing",
             "timeOut": "6000"
         };
-        toastr.warning('<strong>Welcome to Eve Trade Master 2.0!</strong> <br/><small>\n\
+        toastr.success('<strong>Welcome to Eve Trade Master 2.0!</strong> <br/><small>\n\
         Hope you enjoy the new layout and new features. Make sure to report any bugs you find.</small>');
     }, 1600)
     
@@ -37,7 +37,5 @@ $(document).ready(function() {
             "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],
             buttons: [],
             "order": [],
-            
-
     });
 });

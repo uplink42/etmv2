@@ -119,7 +119,7 @@ class Dashboard_model extends CI_Model
         return $result = $query->row();
     }
 
-    public function getProfits($character_id)
+    public function getProfits($character_id, $interval = 1)
     //redo this query, profit data
     {
         $this->db->select('p.profit_unit as profit_unit,
@@ -144,7 +144,7 @@ class Dashboard_model extends CI_Model
         $this->db->join('characters c1', 'c1.eve_idcharacter = t1.character_eve_idcharacter');
         $this->db->join('characters c2', 'c2.eve_idcharacter = t2.character_eve_idcharacter');
         $this->db->where('t2.character_eve_idcharacter', $character_id);
-        $this->db->where("t2.time>= (now() - INTERVAL 30 DAY)");
+        $this->db->where("t2.time>= (now() - INTERVAL " . $interval ." DAY)");
         $this->db->order_by('t2.time', 'desc');
         $query  = $this->db->get();
         log_message('error', $this->db->last_query());

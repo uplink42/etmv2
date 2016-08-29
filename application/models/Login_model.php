@@ -59,7 +59,7 @@ class Login_model extends CI_Model
         }
     }
 
-    //check if the assigned character belongs to account
+    //check if the assigned character belongs to account,
     public function checkCharacter($character_id, $user_id)
     {
         $this->db->where('character_eve_idcharacter', $character_id);
@@ -68,6 +68,16 @@ class Login_model extends CI_Model
         if ($query->num_rows() == 0) {
             return false;
         }
-        return true;
+        return $query->result();
     }
+
+
+    public function getCharacterList($user_id)
+    {
+        $this->db->select('name, character_eve_idcharacter as id');
+        $this->db->where('iduser', $user_id);
+        $query = $this->db->get('v_user_characters');
+        return $query->result();
+    }
+
 }

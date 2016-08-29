@@ -14,10 +14,15 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             Character
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-              <li><a href="#">Last 3 days</a></li>
-              <li><a href="#">Last 7 days</a></li>
-              <li><a href="#">Last 14 days</a></li>
+            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="characters-dropdown">
+            <?php 
+                foreach($character_list as $row) {
+                    ?>
+                <li><a href="<?=base_url('Dashboard/index/'.$row->id.'/')?>"><?=$row->name?></a></li>    
+            <?php    }
+            ?>
+                <li role="separator" class="divider"></li>
+                <li><a href="<?=base_url('Dashboard/index/all/')?>"><b>All</b></a></li> 
             </ul>
             </div>
             <div class="header-icon">
@@ -113,9 +118,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right dropdown-interval" aria-labelledby="dropdownMenu1">
-                  <li  data-id="1"><a href="#">Last 24 hours</a></li>
-                  <li  data-id="3"><a href="#">Last 3 days</a></li>
-                  <li  data-id="60"><a href="#">Last 7 days</a></li>
+                  <li  data-id="1"><a href="<?=base_url('Dashboard/index/'.$character_id.'/1')?>">Last 24 hours</a></li>
+                  <li  data-id="3"><a href="<?=base_url('Dashboard/index/'.$character_id.'/3')?>">Last 3 days</a></li>
+                  <li  data-id="60"><a href="<?=base_url('Dashboard/index/'.$character_id.'/7')?>">Last 7 days</a></li>
                 </ul>
             </div>
             <div class="panel">
@@ -144,7 +149,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                      if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
                                       ?>
                                  <tr class="<?=$res?>">
-                                     <td><?=$row['item_name']?></td>
+                                     <td><img src="<?=$row['url']?>" alt="icon"></img><?=$row['item_name']?></td>
                                      <td><?=$row['system_name']?></td>
                                      <td><?=$row['sell_time']?></td>
                                      <td><?=number_format($row['quantity'],0)?></td>
