@@ -71,6 +71,7 @@ class Login_model extends CI_Model
         return $query->result();
     }
 
+    //retrieves a list of all characters associated with an account
     public function getCharacterList($user_id)
     {
         $this->db->select('name, character_eve_idcharacter as id');
@@ -79,10 +80,15 @@ class Login_model extends CI_Model
         return $query->result();
     }
 
+    //returns the character name
     public function getCharacterName($character_id)
     {
         $this->db->select('name');
-        //remove views when possible
+        $this->db->where('eve_idcharacter', $character_id);
+        $query = $this->db->get('characters');
+
+        $result = $query->row()->name;
+        return $result;
     }
 
 }

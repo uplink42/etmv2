@@ -11,17 +11,13 @@ class MY_Controller extends CI_Controller
     }
 
     //logs off if either session or character request is invalid
-    protected function enforce($character_id = "all", $user_id = "")
+    protected function enforce($character_id, $user_id = "")
     {
-
-        if($character_id != "all") {
-            
-            $this->load->model('Login_model');
-            if ($this->Login_model->checkSession() &&
-                $this->Login_model->checkCharacter($character_id, $user_id)) {
-                return true;
-            }
-            
+        $this->load->model('Login_model');
+        if ($this->Login_model->checkSession() &&
+            $this->Login_model->checkCharacter($character_id, $user_id)) {
+            return true;
+        } else {
             $data['view'] = "login/login_v";
             buildMessage("error", "Invalid session or character request", $data['view']);
             $data['no_header'] = 1;
@@ -31,7 +27,7 @@ class MY_Controller extends CI_Controller
             $this->session->unset_userdata('iduser');
             $this->load->view('main/_template_v', $data);
             return false;
-        }      
+        }
     }
 
     protected function getCharacterList($user_id)

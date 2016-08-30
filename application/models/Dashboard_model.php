@@ -10,7 +10,7 @@ class Dashboard_model extends CI_Model
         parent::__construct();
     }
 
-    public function getPieData($character_id)
+    public function getPieData($character_id, $chars = null)
     {
         $this->db->where('eve_idcharacter', $character_id);
         $query  = $this->db->get('characters');
@@ -19,33 +19,32 @@ class Dashboard_model extends CI_Model
         $arrData["chart"] = array(
             "paletteColors"             => "#f6a821,#f45b00,#8e0000,#007F00,#1aaf5d",
             "bgColor"                   => "#44464f",
-
-            "showBorder"=> "0",
-            "use3DLighting"=> "0",
-            "showShadow"=> "0",
-            "enableSmartLabels"=> "0",
-            "startingAngle"=> "0",
-            "showPercentValues"=> "1",
-            "showPercentInTooltip"=> "0",
-            "decimals"=> "1",
-            "captionFontSize"=> "0",
-            "subcaptionFontSize"=> "0",
-            "subcaptionFontBold"=> "0",
-            "toolTipColor"=> "#000000",
-            "toolTipBorderThickness"=> "0",
-            "toolTipBgColor"=> "#ffffff",
-            "toolTipBgAlpha"=> "80",
-            "toolTipBorderRadius"=> "2",
-            "toolTipPadding"=> "5",
-            "showHoverEffect"=> "1",
-            "showLegend"=> "1",
-            "legendBgColor"=> "#ffffff",
-            "legendBorderAlpha"=> "0",
-            "legendShadow"=> "0",
-            "legendItemFontSize"=> "12",
-            "legendItemFontColor"=> "#666666",
-             "labelfontsize" => "0",
-            "useDataPlotColorForLabels"=> "1" );
+            "showBorder"                => "0",
+            "use3DLighting"             => "0",
+            "showShadow"                => "0",
+            "enableSmartLabels"         => "0",
+            "startingAngle"             => "0",
+            "showPercentValues"         => "1",
+            "showPercentInTooltip"      => "0",
+            "decimals"                  => "1",
+            "captionFontSize"           => "0",
+            "subcaptionFontSize"        => "0",
+            "subcaptionFontBold"        => "0",
+            "toolTipColor"              => "#000000",
+            "toolTipBorderThickness"    => "0",
+            "toolTipBgColor"            => "#ffffff",
+            "toolTipBgAlpha"            => "80",
+            "toolTipBorderRadius"       => "2",
+            "toolTipPadding"            => "5",
+            "showHoverEffect"           => "1",
+            "showLegend"                => "1",
+            "legendBgColor"             => "#ffffff",
+            "legendBorderAlpha"         => "0",
+            "legendShadow"              => "0",
+            "legendItemFontSize"        => "12",
+            "legendItemFontColor"       => "#666666",
+            "labelfontsize"             => "0",
+            "useDataPlotColorForLabels" => "1");
 
         $arrData["data"] = array();
         $assetTypes      = array("wallet", "assets", "escrow", "sellorders");
@@ -62,7 +61,7 @@ class Dashboard_model extends CI_Model
         return $jsonEncodedData;
     }
 
-    public function getWeekProfits($character_id)
+    public function getWeekProfits($character_id, $chars = null)
     {
         $this->db->select('total_profit');
         $this->db->where('characters_eve_idcharacters', $character_id);
@@ -86,7 +85,7 @@ class Dashboard_model extends CI_Model
         return $data;
     }
 
-    public function getTotalProfitsTrends($character_id)
+    public function getTotalProfitsTrends($character_id, $chars = null)
     {
         $this->db->select('coalesce(sum(total_profit),0) as sum');
         $this->db->where('characters_eve_idcharacters', $character_id);
@@ -101,8 +100,7 @@ class Dashboard_model extends CI_Model
         $this->db->where('characters_eve_idcharacters', $character_id);
         $this->db->where("date>= (now() - INTERVAL 24 HOUR)");
         $this->db->order_by('date', 'asc');
-        $query = $this->db->get('history');
-        log_message('error', $this->db->last_query());
+        $query        = $this->db->get('history');
         $today_profit = $query->row()->sum;
 
         $week_avg == 0 ? $trend = 0 : $trend = $today_profit / $week_avg * 100;
@@ -112,14 +110,14 @@ class Dashboard_model extends CI_Model
         return $data;
     }
 
-    public function getNewInfo($character_id)
+    public function getNewInfo($character_id, $chars = null)
     {
         $this->db->where('characters_eve_idcharacters', $character_id);
         $query         = $this->db->get('new_info');
         return $result = $query->row();
     }
 
-    public function getProfits($character_id, $interval = 1)
+    public function getProfits($character_id, $interval = 1, $chars = null)
     //redo this query, profit data
     {
         $this->db->select('p.profit_unit as profit_unit,
@@ -144,20 +142,18 @@ class Dashboard_model extends CI_Model
         $this->db->join('characters c1', 'c1.eve_idcharacter = t1.character_eve_idcharacter');
         $this->db->join('characters c2', 'c2.eve_idcharacter = t2.character_eve_idcharacter');
         $this->db->where('t2.character_eve_idcharacter', $character_id);
-        $this->db->where("t2.time>= (now() - INTERVAL " . $interval ." DAY)");
+        $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
         $this->db->order_by('t2.time', 'desc');
         $query  = $this->db->get();
-        log_message('error', $this->db->last_query());
         $result = $query->result_array();
 
-
-        for ($i = 0; $i <= count($result)-1; $i++) {
-            $price_buy     = $result[$i]['price_buy'];
-            $profit_unit   = $result[$i]['profit_unit'];
-            $character_buy = $result[$i]['character_from'];
+        for ($i = 0; $i <= count($result) - 1; $i++) {
+            $price_buy      = $result[$i]['price_buy'];
+            $profit_unit    = $result[$i]['profit_unit'];
+            $character_buy  = $result[$i]['character_from'];
             $character_sell = $result[$i]['character_to'];
-            $station_from = $result[$i]['station_from'];
-            $station_to   = $result[$i]['station_to'];
+            $station_from   = $result[$i]['station_from'];
+            $station_to     = $result[$i]['station_to'];
 
             $CI = &get_instance();
             $CI->load->model('Tax_Model');
@@ -165,10 +161,10 @@ class Dashboard_model extends CI_Model
             $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
             $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
 
-            $price_buy            = $price_buy * $transTaxFrom * $brokerFeeFrom;
-            $result[$i]['margin'] = $profit_unit / $price_buy * 100;
+            $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
+            $result[$i]['margin']       = $profit_unit / $price_buy * 100;
             $result[$i]['profit_total'] = $profit_unit * $result[$i]['quantity'];
-            $result[$i]['url'] = "https://image.eveonline.com/Type/".$result[$i]['item_id']."_32.png";
+            $result[$i]['url']          = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
         }
 
         return $result;

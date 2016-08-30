@@ -9,29 +9,29 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         <div class="row">
         <div class="col-lg-12">
             <div class="view-header">
-            <div class="dropdown pull-right">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownmenu-characters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Character
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="characters-dropdown">
-            <?php 
-                foreach($character_list as $row) {
-                    ?>
-                <li><a href="<?=base_url('Dashboard/index/'.$row->id.'/')?>"><?=$row->name?></a></li>    
-            <?php    }
-            ?>
-                <li role="separator" class="divider"></li>
-                <li><a href="<?=base_url('Dashboard/index/all/')?>"><b>All</b></a></li> 
-            </ul>
-            </div>
-            <div class="header-icon">
-                <i class="pe page-header-icon pe-7s-shield"></i>
-            </div>
-            <div class="header-title">
-                <h1><img class="character-portrait" src= "https://image.eveonline.com/Character/<?=$character_id?>_64.jpg" alt="character portrait">Dashboard</h1>
-            </div>
-
+                <div class="dropdown pull-right">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownmenu-characters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Character
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="characters-dropdown">
+                <?php 
+                    foreach($character_list as $row) {
+                        ?>
+                    <li><a href="<?=base_url('Dashboard/index/'.$row->id.'/')?>"><?=$row->name?></a></li>    
+                <?php    }
+                ?>
+                    <li role="separator" class="divider"></li>
+                    <?php $url = "Dashboard/index/".$character_id."/".$interval."/1";?>
+                    <li><a href="<?=base_url($url)?>"><b>All</b></a></li>
+                </ul>
+                </div>
+                <div class="header-icon">
+                    <img class="character-portrait" src= "https://image.eveonline.com/Character/<?=$character_id?>_64.jpg" alt="character portrait">
+                </div>
+                <div class="header-title">
+                    <h1><?=$character_name?>'s Dashboard</h1>
+                </div>
             </div>
             <hr>
         </div>
@@ -125,7 +125,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             </div>
             <div class="panel">
                 <div class="panel-heading">
-                    Latest profits
+                    <h4>Latest profits - last <?=$interval?> day(s)</h4>
                 </div>
             </div>
 
@@ -146,15 +146,15 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                             <tbody>
                                     <?php
                                   foreach ($profits as $row) {
-                                     if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
+                                        if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
                                       ?>
-                                 <tr class="<?=$res?>">
-                                     <td><img src="<?=$row['url']?>" alt="icon"></img><?=$row['item_name']?></td>
-                                     <td><?=$row['system_name']?></td>
-                                     <td><?=$row['sell_time']?></td>
-                                     <td><?=number_format($row['quantity'],0)?></td>
-                                     <td><?=number_format($row['profit_total'],2)?></td>
-                                     <td><?=number_format($row['margin'],2)?></td>
+                                    <tr class="<?=$res?>">
+                                        <td><img src="<?=$row['url']?>" alt="icon"></img><?=$row['item_name']?></td>
+                                        <td><?=$row['system_name']?></td>
+                                        <td><?=$row['sell_time']?></td>
+                                        <td><?=number_format($row['quantity'],0)?></td>
+                                        <td><?=number_format($row['profit_total'],2)?></td>
+                                        <td><?=number_format($row['margin'],2)?></td>
                                   </tr>
                                       <?php }?>
                             </tbody>
@@ -170,7 +170,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "300", "pie", "json", $pie_data);
                         $pieChart->render();
                     ?>
-                    Asset distribution
+                    <h4>Asset distribution</h4>
                 </div>
             </div>
             <div id="pie">
