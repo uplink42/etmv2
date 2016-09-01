@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller
+class Assets extends MY_Controller
 {
 
     public function __construct()
@@ -11,7 +11,7 @@ class Dashboard extends MY_Controller
         $this->load->library('session');
     }
 
-    public function index($character_id, $interval = 3, $aggregate = 0)
+    public function index($character_id, $aggregate = 0)
     {
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
@@ -30,23 +30,17 @@ class Dashboard extends MY_Controller
 
             $character_list = $this->getCharacterList($this->session->iduser);
 
-            $data['selected'] = "dashboard";
+            $data['selected'] = "assets";
             $this->load->model('Dashboard_model');
-            $data['interval']   = $interval;
+
             $data['aggregate']  = $aggregate;
             $data['char_names'] = $char_names;
-
-            $data['pie_data']       = $this->Dashboard_model->getPieData($chars);
-            $data['week_profits']   = $this->Dashboard_model->getWeekProfits($chars);
-            $data['new_info']       = $this->Dashboard_model->getNewInfo($chars);
-            $data['profits']        = $this->Dashboard_model->getProfits($interval, $chars);
-            $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($chars);
-            $data['character_list'] = $character_list;
-            
             $this->load->model('Login_model');
+
+            $data['character_list'] = $character_list;
             $data['character_name'] = $this->Login_model->getCharacterName($character_id);
             $data['character_id']   = $character_id;
-            $data['view']           = 'main/dashboard_v';
+            $data['view']           = 'main/assets_v';
             $this->load->view('main/_template_v', $data);
         }
     }
