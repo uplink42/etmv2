@@ -33,12 +33,21 @@ class Main extends MY_Controller
         $this->load->view('main/_template_v', $data);
     }
 
-    public function headerData($character_id)
+    public function headerData($character_id, $aggr = 0)
     {
         $this->load->model('Nav_model');
         if ($this->Nav_model->checkCharacterBelong($character_id, $this->session->iduser)) {
-            $result = json_encode($this->Nav_model->getHeaderData($character_id));
-            echo $result;
+            if($aggr == 0) {
+                $result = json_encode($this->Nav_model->getHeaderData($character_id));
+                echo $result;
+            } else {
+                $this->load->model('Login_model');
+                $characters = $this->Login_model->getCharacterList($this->session->iduser);
+                $chars = $characters['aggr'];
+                $result = json_encode($this->Nav_model->getHeaderData($character_id, $chars));
+                echo $result;
+            }
+            
         }
     }
 

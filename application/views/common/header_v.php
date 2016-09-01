@@ -10,7 +10,7 @@
 		    </a>
 		</div>
 	    </div>
-	    <a class="navbar-brand" href="<?=base_url('Updater')?>" data-selected="<?=$selected?>">
+	    <a class="navbar-brand" href="<?=base_url('Updater')?>" data-selected="<?=$selected?>"> 
 		ETM
 		<span>v.2.0</span>
 	    </a>
@@ -23,7 +23,7 @@
 	    </div>
 	    <ul class="nav navbar-nav navbar-right">
 
-		<li class="profil-link" data-character ="<?=$character_id?>" data-url="<?=base_url()?>" >
+		<li class="profil-link" data-character ="<?=$character_id?>" data-url="<?=base_url()?>" data-aggr="<?=$aggregate?>">
 		    <a>
 			<span class="profile-address">
 			    <i class="pe-7s-piggy"></i> Wallet: <span class="header-balance"></span>|

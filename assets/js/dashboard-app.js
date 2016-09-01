@@ -21,7 +21,7 @@ $(document).ready(function() {
     // Run toastr notification with Welcome message
     setTimeout(function() {
         toastr.options = {
-            "positionClass": "toast-top-center",
+            "positionClass": "toast-bottom-right",
             "closeButton": true,
             "progressBar": true,
             "showEasing": "swing",

@@ -10,16 +10,17 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         <div class="col-lg-12">
             <div class="view-header">
                 <div class="dropdown pull-right">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownmenu-characters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Character
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="characters-dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownmenu-characters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Character
+                        <span class="caret"></span>
+                    </button>
+                <ul class="dropdown-menu dropdown-menu-right">
                 <?php 
-                    foreach($character_list as $row) {
+                    for($i=0; $i<count($character_list); $i++) {
                         ?>
-                    <li><a href="<?=base_url('Dashboard/index/'.$row->id.'/')?>"><?=$row->name?></a></li>    
-                <?php    }
+                    <li><a href="<?=base_url('Dashboard/index/'.$character_list['chars'][$i].'/'.$interval)?>"><?=$character_list['char_names'][$i]?></a></li>    
+                <?php
+                   }
                 ?>
                     <li role="separator" class="divider"></li>
                     <?php $url = "Dashboard/index/".$character_id."/".$interval."/1";?>
@@ -27,10 +28,15 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                 </ul>
                 </div>
                 <div class="header-icon">
+                <?php if($aggregate==0) {?>
                     <img class="character-portrait" src= "https://image.eveonline.com/Character/<?=$character_id?>_64.jpg" alt="character portrait">
+                <?php } else {
+                ?>
+                    <i class="pe page-header-icon pe-7s-shield"></i>
+                    <?php } ?>
                 </div>
                 <div class="header-title">
-                    <h1><?=$character_name?>'s Dashboard</h1>
+                    <h1><?php echo $aggregate == 1 ? implode(' + ', $char_names) : $character_name?>'s Dashboard</h1>
                 </div>
             </div>
             <hr>
@@ -117,10 +123,10 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                 Time Interval
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-right dropdown-interval" aria-labelledby="dropdownMenu1">
-                  <li  data-id="1"><a href="<?=base_url('Dashboard/index/'.$character_id.'/1')?>">Last 24 hours</a></li>
-                  <li  data-id="3"><a href="<?=base_url('Dashboard/index/'.$character_id.'/3')?>">Last 3 days</a></li>
-                  <li  data-id="60"><a href="<?=base_url('Dashboard/index/'.$character_id.'/7')?>">Last 7 days</a></li>
+                <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
+                  <li  data-id="1"><a href="<?=base_url('Dashboard/index/'.$character_id.'/1'."/".$aggregate)?>">Last 24 hours</a></li>
+                  <li  data-id="3"><a href="<?=base_url('Dashboard/index/'.$character_id.'/3'."/".$aggregate)?>">Last 3 days</a></li>
+                  <li  data-id="60"><a href="<?=base_url('Dashboard/index/'.$character_id.'/7'."/".$aggregate)?>">Last 7 days</a></li>
                 </ul>
             </div>
             <div class="panel">
@@ -154,7 +160,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <td><?=$row['sell_time']?></td>
                                         <td><?=number_format($row['quantity'],0)?></td>
                                         <td><?=number_format($row['profit_total'],2)?></td>
-                                        <td><?=number_format($row['margin'],2)?></td>
+                                        <td><a href="#" class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
                                   </tr>
                                       <?php }?>
                             </tbody>

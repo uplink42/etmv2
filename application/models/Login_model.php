@@ -77,7 +77,17 @@ class Login_model extends CI_Model
         $this->db->select('name, character_eve_idcharacter as id');
         $this->db->where('iduser', $user_id);
         $query = $this->db->get('v_user_characters');
-        return $query->result();
+        $result = $query->result();
+
+        $chars = [];
+        $char_names = [];
+        foreach ($result as $row) {
+            array_push($chars, $row->id);
+            array_push($char_names, $row->name);
+        }
+
+        $aggr = "(".implode(",", $chars).")";
+        return array("aggr" => $aggr, "char_names" => $char_names, "chars" => $chars);
     }
 
     //returns the character name
