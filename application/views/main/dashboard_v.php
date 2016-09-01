@@ -155,7 +155,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
                                       ?>
                                     <tr class="<?=$res?>">
-                                        <td><img src="<?=$row['url']?>" alt="icon"></img><?=$row['item_name']?></td>
+                                        <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item_name']?></td>
                                         <td><?=$row['system_name']?></td>
                                         <td><?=$row['sell_time']?></td>
                                         <td><?=number_format($row['quantity'],0)?></td>

@@ -10,21 +10,12 @@ class Dashboard_model extends CI_Model
         parent::__construct();
     }
 
-    public function getPieData($character_id, $chars = null)
+    public function getPieData($chars)
     {
-
-        if ($chars == null) {
-            $this->db->select('networth, escrow, total_sell, balance');
-            $this->db->where('eve_idcharacter', $character_id);
-            $query  = $this->db->get('characters');
-            $result = $query->row();
-        } else {
-
-            $this->db->select('sum(networth) as networth, sum(escrow) as escrow, sum(total_sell) as total_sell, sum(balance) as balance');
-            $this->db->where('eve_idcharacter IN ' . $chars);
-            $query  = $this->db->get('characters');
-            $result = $query->row();
-        }
+        $this->db->select('sum(networth) as networth, sum(escrow) as escrow, sum(total_sell) as total_sell, sum(balance) as balance');
+        $this->db->where('eve_idcharacter IN ' . $chars);
+        $query  = $this->db->get('characters');
+        $result = $query->row();
 
         $arrData["chart"] = array(
             "paletteColors"             => "#f6a821,#f45b00,#8e0000,#007F00,#1aaf5d",
@@ -71,21 +62,13 @@ class Dashboard_model extends CI_Model
         return $jsonEncodedData;
     }
 
-    public function getWeekProfits($character_id, $chars = null)
-    {
-        if ($chars == null) {
-            $this->db->select('total_profit');
-            $this->db->where('characters_eve_idcharacters', $character_id);
-            $this->db->where("date>= (now() - INTERVAL 7 DAY)");
-            $this->db->order_by('date', 'asc');
-            $query = $this->db->get('history');
-        } else {
-            $this->db->select('total_profit');
-            $this->db->where('characters_eve_idcharacters IN ' . $chars);
-            $this->db->where("date>= (now() - INTERVAL 7 DAY)");
-            $this->db->order_by('date', 'asc');
-            $query = $this->db->get('history');
-        }
+    public function getWeekProfits($chars)
+    {  
+        $this->db->select('total_profit');
+        $this->db->where('characters_eve_idcharacters IN ' . $chars);
+        $this->db->where("date>= (now() - INTERVAL 7 DAY)");
+        $this->db->order_by('date', 'asc');
+        $query = $this->db->get('history');
 
         /*$query = $this->db->query("SELECT total_profit FROM history
         WHERE characters_eve_idcharacters = '$character_id'
@@ -103,33 +86,20 @@ class Dashboard_model extends CI_Model
         return $data;
     }
 
-    public function getTotalProfitsTrends($character_id, $chars = null)
+    public function getTotalProfitsTrends($chars)
     {
-        if ($chars == null) {
-            $this->db->select('coalesce(sum(total_profit),0) as sum');
-            $this->db->where('characters_eve_idcharacters', $character_id);
-            $this->db->where("date>= (now() - INTERVAL 7 DAY)");
-            $this->db->order_by('date', 'asc');
-            $query1 = $this->db->get('history');
+       
+        $this->db->select('coalesce(sum(total_profit),0) as sum');
+        $this->db->where('characters_eve_idcharacters IN ' . $chars);
+        $this->db->where("date>= (now() - INTERVAL 7 DAY)");
+        $this->db->order_by('date', 'asc');
+        $query1 = $this->db->get('history');
 
-            $this->db->select('coalesce(total_profit,0) as sum');
-            $this->db->where('characters_eve_idcharacters', $character_id);
-            $this->db->where("date>= (now() - INTERVAL 24 HOUR)");
-            $this->db->order_by('date', 'asc');
-            $query2 = $this->db->get('history');
-        } else {
-            $this->db->select('coalesce(sum(total_profit),0) as sum');
-            $this->db->where('characters_eve_idcharacters IN ' . $chars);
-            $this->db->where("date>= (now() - INTERVAL 7 DAY)");
-            $this->db->order_by('date', 'asc');
-            $query1 = $this->db->get('history');
-
-            $this->db->select('coalesce(total_profit,0) as sum');
-            $this->db->where('characters_eve_idcharacters IN ' . $chars);
-            $this->db->where("date>= (now() - INTERVAL 24 HOUR)");
-            $this->db->order_by('date', 'asc');
-            $query2 = $this->db->get('history');
-        }
+        $this->db->select('coalesce(total_profit,0) as sum');
+        $this->db->where('characters_eve_idcharacters IN ' . $chars);
+        $this->db->where("date>= (now() - INTERVAL 24 HOUR)");
+        $this->db->order_by('date', 'asc');
+        $query2 = $this->db->get('history');
 
         $result                  = $query1->row()->sum;
         $result == 0 ? $week_avg = 0 : $week_avg = $result / 7;
@@ -141,76 +111,42 @@ class Dashboard_model extends CI_Model
         return $data;
     }
 
-    public function getNewInfo($character_id, $chars = null)
+    public function getNewInfo($chars)
     {
-        if ($chars == null) {
-            $this->db->where('characters_eve_idcharacters', $character_id);
-            $query = $this->db->get('new_info');
-        } else {
-            $this->db->where('characters_eve_idcharacters IN ' . $chars);
-            $query = $this->db->get('new_info');
-        }
-
+        $this->db->where('characters_eve_idcharacters IN ' . $chars);
+        $query = $this->db->get('new_info');
         return $result = $query->row();
     }
 
-    public function getProfits($character_id, $interval = 1, $chars = null)
+    public function getProfits($interval = 1, $chars = null)
     //redo this query, profit data
     {
-        if ($chars == null) {
-            $this->db->select('p.profit_unit as profit_unit,
-                            p.quantity_profit as quantity,
-                            p.timestamp_sell as sell_time,
-                            i.name as item_name,
-                            i.eve_iditem as item_id,
-                            sys2.name as system_name,
-                            s2.eve_idstation as station_from,
-                            s1.eve_idstation as station_to,
-                            c1.eve_idcharacter as character_from,
-                            c2.eve_idcharacter as character_to,
-                            t1.price_unit as price_buy,
-                            t2.price_unit as price_sell');
-            $this->db->from('profit p');
-            $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
-            $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
-            $this->db->join('item i', 'i.eve_iditem = t2.item_eve_iditem');
-            $this->db->join('station s1', 's1.eve_idstation = t1.station_eve_idstation');
-            $this->db->join('station s2', 's2.eve_idstation = t2.station_eve_idstation');
-            $this->db->join('system sys2', 'sys2.eve_idsystem = s2.system_eve_idsystem');
-            $this->db->join('characters c1', 'c1.eve_idcharacter = t1.character_eve_idcharacter');
-            $this->db->join('characters c2', 'c2.eve_idcharacter = t2.character_eve_idcharacter');
-            $this->db->where('t2.character_eve_idcharacter', $character_id);
-            $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
-            $this->db->order_by('t2.time', 'desc');
-            $query = $this->db->get();
-        } else {
-            $this->db->select('p.profit_unit as profit_unit,
-                            p.quantity_profit as quantity,
-                            p.timestamp_sell as sell_time,
-                            i.name as item_name,
-                            i.eve_iditem as item_id,
-                            sys2.name as system_name,
-                            s2.eve_idstation as station_from,
-                            s1.eve_idstation as station_to,
-                            c1.eve_idcharacter as character_from,
-                            c2.eve_idcharacter as character_to,
-                            t1.price_unit as price_buy,
-                            t2.price_unit as price_sell');
-            $this->db->from('profit p');
-            $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
-            $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
-            $this->db->join('item i', 'i.eve_iditem = t2.item_eve_iditem');
-            $this->db->join('station s1', 's1.eve_idstation = t1.station_eve_idstation');
-            $this->db->join('station s2', 's2.eve_idstation = t2.station_eve_idstation');
-            $this->db->join('system sys2', 'sys2.eve_idsystem = s2.system_eve_idsystem');
-            $this->db->join('characters c1', 'c1.eve_idcharacter = t1.character_eve_idcharacter');
-            $this->db->join('characters c2', 'c2.eve_idcharacter = t2.character_eve_idcharacter');
-            $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
-            $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
-            $this->db->order_by('t2.time', 'desc');
-            $query = $this->db->get();
+        $this->db->select('p.profit_unit as profit_unit,
+                        p.quantity_profit as quantity,
+                        p.timestamp_sell as sell_time,
+                        i.name as item_name,
+                        i.eve_iditem as item_id,
+                        sys2.name as system_name,
+                        s2.eve_idstation as station_from,
+                        s1.eve_idstation as station_to,
+                        c1.eve_idcharacter as character_from,
+                        c2.eve_idcharacter as character_to,
+                        t1.price_unit as price_buy,
+                        t2.price_unit as price_sell');
+        $this->db->from('profit p');
+        $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
+        $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
+        $this->db->join('item i', 'i.eve_iditem = t2.item_eve_iditem');
+        $this->db->join('station s1', 's1.eve_idstation = t1.station_eve_idstation');
+        $this->db->join('station s2', 's2.eve_idstation = t2.station_eve_idstation');
+        $this->db->join('system sys2', 'sys2.eve_idsystem = s2.system_eve_idsystem');
+        $this->db->join('characters c1', 'c1.eve_idcharacter = t1.character_eve_idcharacter');
+        $this->db->join('characters c2', 'c2.eve_idcharacter = t2.character_eve_idcharacter');
+        $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
+        $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
+        $this->db->order_by('t2.time', 'desc');
+        $query = $this->db->get();
 
-        }
         $result = $query->result_array();
 
         for ($i = 0; $i <= count($result) - 1; $i++) {
