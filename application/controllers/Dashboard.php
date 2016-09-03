@@ -6,47 +6,39 @@ class Dashboard extends MY_Controller
 
     public function __construct()
     {
-
         parent::__construct();
         $this->load->library('session');
+
+        $aggr = $_GET['aggr'];
+
+        if ($aggr != 1 && $aggr != 0) {
+            $this->aggregate = 0;
+        } else {
+            $this->aggregate = $aggr;
+        }
     }
 
-    public function index($character_id, $interval = 3, $aggregate = 0)
+    //returns all dashboard information to the relevant view
+    public function index($character_id, $interval = 3)
     {
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
-            $chars      = [];
-            $char_names = [];
+            $aggregate = $this->aggregate;
+            $data  = $this->loadViewDependencies($character_id, $user_id, $aggregate);
 
-            if ($aggregate == true) {
-                $this->load->model('Login_model');
-                $characters = $this->Login_model->getCharacterList($user_id);
-
-                $chars      = $characters['aggr'];
-                $char_names = $characters['char_names'];
-            } else {
-                $chars = "(" . $character_id . ")";
-            }
-
-            $character_list = $this->getCharacterList($this->session->iduser);
+            $chars = $data['chars'];
 
             $data['selected'] = "dashboard";
             $this->load->model('Dashboard_model');
-            $data['interval']   = $interval;
-            $data['aggregate']  = $aggregate;
-            $data['char_names'] = $char_names;
+            $data['interval'] = $interval;
 
             $data['pie_data']       = $this->Dashboard_model->getPieData($chars);
             $data['week_profits']   = $this->Dashboard_model->getWeekProfits($chars);
             $data['new_info']       = $this->Dashboard_model->getNewInfo($chars);
             $data['profits']        = $this->Dashboard_model->getProfits($interval, $chars);
             $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($chars);
-            $data['character_list'] = $character_list;
-            
-            $this->load->model('Login_model');
-            $data['character_name'] = $this->Login_model->getCharacterName($character_id);
-            $data['character_id']   = $character_id;
-            $data['view']           = 'main/dashboard_v';
+
+            $data['view'] = 'main/dashboard_v';
             $this->load->view('main/_template_v', $data);
         }
     }

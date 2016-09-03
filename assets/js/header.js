@@ -17,7 +17,7 @@ $(document).ready(function() {
     });
 
     if(aggr == 1) {
-        $(".profil-link a").css('color','#f7af3e');
+        $(".profil-link a").css('color','#cc0044');
     }
     
     //highlight the correct option

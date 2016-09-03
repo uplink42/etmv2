@@ -2669,7 +2669,6 @@ fieldset[disabled] .form-control {
     color: #f6a821;
 }
 
-
 .windows8 {
 	position: relative;
 	width: 50px;
@@ -3055,3 +3054,10 @@ fieldset[disabled] .form-control {
     color: #f7af3e;
 }
 
+.warning-asset {
+    white-space: normal;
+}
+
+.yellow-2 {
+    color: #f7af3e;
+}

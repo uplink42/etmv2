@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller
 {
+    protected $aggregate;
 
     public function __construct()
     {
@@ -16,6 +17,16 @@ class MY_Controller extends CI_Controller
         $this->load->model('Login_model');
         if ($this->Login_model->checkSession() &&
             $this->Login_model->checkCharacter($character_id, $user_id)) {
+
+            if(isset($_GET['aggr'])) {
+                $aggr = $_GET['aggr'];
+
+                if ($aggr != 1 && $aggr != 0) {
+                    $this->aggregate = 0;
+                } else {
+                    $this->aggregate = $aggr;
+                }
+            }
             return true;
         } else {
             $data['view'] = "login/login_v";
@@ -36,5 +47,32 @@ class MY_Controller extends CI_Controller
         $data = $this->Login_model->getCharacterList($user_id);
         return $data;
     }
-    
+
+    protected function loadViewDependencies($character_id, $user_id, $aggregate)
+    {
+        $chars      = [];
+        $char_names = [];
+
+        if ($aggregate == true) {
+            $this->load->model('Login_model');
+            $characters = $this->Login_model->getCharacterList($user_id);
+
+            $chars      = $characters['aggr'];
+            $char_names = $characters['char_names'];
+        } else {
+            $chars = "(" . $character_id . ")";
+        }
+
+        $data['chars']          = $chars;
+        $character_list         = $this->getCharacterList($this->session->iduser);
+        $data['aggregate']      = $aggregate;
+        $data['char_names']     = $char_names;
+        $data['character_list'] = $character_list;
+
+        $this->load->model('Login_model');
+        $data['character_name'] = $this->Login_model->getCharacterName($character_id);
+        $data['character_id']   = $character_id;
+        return $data;
+    }
+
 }

@@ -14,18 +14,18 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                             Character
                             <span class="caret"></span>
                         </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                    <?php 
-                        for($i=0; $i<count($character_list); $i++) {
-                            ?>
-                        <li><a href="<?=base_url('Dashboard/index/'.$character_list['chars'][$i].'/'.$interval)?>"><?=$character_list['char_names'][$i]?></a></li>    
-                    <?php
-                       }
-                    ?>
-                        <li role="separator" class="divider"></li>
-                        <?php $url = "Dashboard/index/".$character_id."/".$interval."/1";?>
-                        <li><a href="<?=base_url($url)?>"><b>All</b></a></li>
-                    </ul>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                        <?php 
+                            for($i=0; $i<count($character_list); $i++) {
+                                ?>
+                            <li><a href="<?=base_url('Dashboard/index/'.$character_list['chars'][$i].'/'.$interval. '?aggr=0')?>"><?=$character_list['char_names'][$i]?></a></li>    
+                        <?php
+                           }
+                        ?>
+                            <li role="separator" class="divider"></li>
+                            <?php $url = "Dashboard/index/".$character_id."/".$interval."?aggr=1";?>
+                            <li><a href="<?=base_url($url)?>"><b>All</b></a></li>
+                        </ul>
                     </div>
                     <div class="header-icon">
                     <?php if($aggregate==0) {?>
@@ -43,145 +43,144 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             </div>
         </div>
         <div class="row">
-        <div class="col-lg-2 col-xs-6">
-            <div class="panel panel-filled">
-                <div class="panel-body">
-                    <h2 class="m-b-none">
-                        <i class="pe-7s-id"></i>
-                        <?=$new_info->contracts?>
-                    <span class="slight">
-                        <?php if ($new_info->contracts > 0) {
-                            echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
-                        }
-                        ?>
-                    </span>
-                    </h2>
-                    <div>New Contracts</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-xs-6">
-            <div class="panel panel-filled">
-                <div class="panel-body">
-                    <h2 class="m-b-none">
-                        <i class="pe-7s-menu"></i>
-                        <?=$new_info->transactions?>
-                    <span class="slight">
-                        <?php if ($new_info->transactions > 0) {
-                            echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
-                        }
-                        ?>
-                    </span>
-                    </h2>
-                    <div>New transactions</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-xs-6">
-            <div class="panel panel-filled">
-                <div class="panel-body">
-                    <h2 class="m-b-none">
-                    <i class="pe-7s-cart"></i>
-                        <?=$new_info->orders?>
-                    <span class="slight">
-                        <?php if ($new_info->orders > 0) {
-                            echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
-                        }
-                        ?>
-                    </span>
-                    </h2>
-                    <div>New orders</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-lg-offset-2 col-xs-12">
-            <div class="panel panel-filled" style="position:relative;height: 114px">
-            <div style="position: absolute;bottom: 0;left: 0;right: 0">
-                <span class="sparkline" data-profit=<?= $week_profits?>></span>
-            </div>
-            <div class="panel-body">
-                <div class="m-t-sm">
-                    <div class="c-white"><span class="label label-accent"></span> Last 7 day profits (all characters)</div>
-                        <span class="small c-white">This week: <?=number_format($profits_trends['total_week'], 0) . " ISK";?>
-                            <?php
-                            $profits_trends['trend_today'] > 0 ? $res = "270" : $res="90"?>
-                            <i class="fa fa-play fa-rotate-<?=$res?> text-warning"></i>
-                            <?=number_format($profits_trends['trend_today'],0)?>% (today)
+            <div class="col-lg-2 col-xs-6">
+                <div class="panel panel-filled">
+                    <div class="panel-body">
+                        <h2 class="m-b-none">
+                            <i class="pe-7s-id"></i>
+                            <?=$new_info->contracts?>
+                        <span class="slight">
+                            <?php if ($new_info->contracts > 0) {
+                                echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
+                            }
+                            ?>
                         </span>
-                <!--<span class="sparkline"></span>-->
-                </div>
-            </div>
-            </div>
-        </div>
-
-        </div>
-        <div class="row">
-        <div class="col-md-8">
-            <div class="dropdown pull-right">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Time Interval
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                  <li  data-id="1"><a href="<?=base_url('Dashboard/index/'.$character_id.'/1'."/".$aggregate)?>">Last 24 hours</a></li>
-                  <li  data-id="3"><a href="<?=base_url('Dashboard/index/'.$character_id.'/3'."/".$aggregate)?>">Last 3 days</a></li>
-                  <li  data-id="60"><a href="<?=base_url('Dashboard/index/'.$character_id.'/7'."/".$aggregate)?>">Last 7 days</a></li>
-                </ul>
-            </div>
-            <div class="panel">
-                <div class="panel-heading">
-                    <h4>Latest profits - last <?=$interval?> day(s)</h4>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table id="profits-table" class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="width: 40%;">Item</th>
-                                    <th>System</th>
-                                    <th>Date</th>
-                                    <th>Q</th>
-                                    <th>Profit</th>
-                                    <th>Margin</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    <?php
-                                  foreach ($profits as $row) {
-                                        if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
-                                      ?>
-                                    <tr class="<?=$res?>">
-                                        <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item_name']?></td>
-                                        <td><?=$row['system_name']?></td>
-                                        <td><?=$row['sell_time']?></td>
-                                        <td><?=number_format($row['quantity'],0)?></td>
-                                        <td><?=number_format($row['profit_total'],2)?></td>
-                                        <td><a href="#" class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
-                                  </tr>
-                                      <?php }?>
-                            </tbody>
-                        </table>
+                        </h2>
+                        <div>New Contracts</div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel">
-                <div class="panel-heading">
-                    <?php
-                        $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "300", "pie", "json", $pie_data);
-                        $pieChart->render();
-                    ?>
-                    <h4>Asset distribution</h4>
+            <div class="col-lg-2 col-xs-6">
+                <div class="panel panel-filled">
+                    <div class="panel-body">
+                        <h2 class="m-b-none">
+                            <i class="pe-7s-menu"></i>
+                            <?=$new_info->transactions?>
+                        <span class="slight">
+                            <?php if ($new_info->transactions > 0) {
+                                echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
+                            }
+                            ?>
+                        </span>
+                        </h2>
+                        <div>New transactions</div>
+                    </div>
                 </div>
             </div>
-            <div id="pie">
+            <div class="col-lg-2 col-xs-6">
+                <div class="panel panel-filled">
+                    <div class="panel-body">
+                        <h2 class="m-b-none">
+                        <i class="pe-7s-cart"></i>
+                            <?=$new_info->orders?>
+                        <span class="slight">
+                            <?php if ($new_info->orders > 0) {
+                                echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
+                            }
+                            ?>
+                        </span>
+                        </h2>
+                        <div>New orders</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-lg-offset-2 col-xs-12">
+                <div class="panel panel-filled" style="position:relative;height: 114px">
+                    <div style="position: absolute;bottom: 0;left: 0;right: 0">
+                        <span class="sparkline" data-profit=<?= $week_profits?>></span>
+                    </div>
+                <div class="panel-body">
+                    <div class="m-t-sm">
+                        <div class="c-white"><span class="label label-accent"></span> Last 7 day profits (all characters)</div>
+                            <span class="small c-white">This week: <?=number_format($profits_trends['total_week'], 0) . " ISK";?>
+                                <?php
+                                $profits_trends['trend_today'] > 0 ? $res = "270" : $res="90"?>
+                                <i class="fa fa-play fa-rotate-<?=$res?> text-warning"></i>
+                                <?=number_format($profits_trends['trend_today'],0)?>% (today)
+                            </span>
+                    <!--<span class="sparkline"></span>-->
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="dropdown pull-right">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Time Interval
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
+                      <li  data-id="1"><a href="<?=base_url('Dashboard/index/'.$character_id.'/1'."/".$aggregate)?>">Last 24 hours</a></li>
+                      <li  data-id="3"><a href="<?=base_url('Dashboard/index/'.$character_id.'/3'."/".$aggregate)?>">Last 3 days</a></li>
+                      <li  data-id="60"><a href="<?=base_url('Dashboard/index/'.$character_id.'/7'."/".$aggregate)?>">Last 7 days</a></li>
+                    </ul>
+                </div>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h4>Latest profits - last <?=$interval?> day(s)</h4>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="profits-table" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40%;">Item</th>
+                                        <th>System</th>
+                                        <th>Date</th>
+                                        <th>Q</th>
+                                        <th>Profit</th>
+                                        <th>Margin</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <?php
+                                      foreach ($profits as $row) {
+                                            if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
+                                          ?>
+                                        <tr class="<?=$res?>">
+                                            <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item_name']?></td>
+                                            <td><?=$row['system_name']?></td>
+                                            <td><?=$row['sell_time']?></td>
+                                            <td><?=number_format($row['quantity'],0)?></td>
+                                            <td><?=number_format($row['profit_total'],2)?></td>
+                                            <td><a href="#" class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
+                                      </tr>
+                                          <?php }?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <?php
+                            $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "300", "pie", "json", $pie_data);
+                            $pieChart->render();
+                        ?>
+                        <h4>Asset distribution</h4>
+                    </div>
+                </div>
+                <div id="pie">
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
