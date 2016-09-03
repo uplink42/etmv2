@@ -3,11 +3,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Assets extends MY_Controller
 {
+    private $significant;
 
     public function __construct()
     {
         parent::__construct();
         $this->load->library('session');
+
+        if(isset($_GET['sig'])) {
+            if($_GET['sig'] ==0 || $_GET['sig'] ==1) {
+                $this->significant = $_GET['sig'];
+            } else {
+                $this->significant = 1;
+            }
+        } else {
+            $this->significant = 1;
+        }
     }
 
     public function index($character_id, $region_id = 0)
@@ -34,7 +45,8 @@ class Assets extends MY_Controller
 
             $asset_totals = $this->Assets_model->getRegionData($chars);
             $region_name = $this->Assets_model->getRegionName($region_id);
-            $asset_list = $this->Assets_model->getAssetsList($region_id, $chars);
+            $asset_list = $this->Assets_model->getAssetsList($region_id, $chars, $this->significant);
+            $ratio = $this->Assets_model->getWorthSignificant($chars);
             
             if($region_name != "All") {
                 $data['current_asset_value'] = $asset_totals[$region_name][0]['total_value'];
@@ -42,8 +54,8 @@ class Assets extends MY_Controller
                 $data['current_asset_value'] = $this->Assets_model->getCurrentAssetTotals($chars);
             }
             
-            
-
+            $data['sig'] = $this->significant;
+            $data['ratio'] = $ratio;
             $data['asset_list'] = $asset_list;
             $data['region_name'] = $region_name;
             $data['region_id'] = $region_id;

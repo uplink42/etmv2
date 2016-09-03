@@ -14,7 +14,7 @@
 for ($i = 0; $i < count($character_list); $i++) {
     ?>
                             <li>
-                                <a href="<?=base_url('Assets/index/' . $character_list['chars'][$i]) . '?aggr=0'?>">
+                                <a href="<?=base_url('Assets/index/' . $character_list['chars'][$i]) . '/'. $region_id . '?aggr=0'?>">
                                     <?=$character_list['char_names'][$i]?>
                                 </a>
                             </li>
@@ -69,9 +69,13 @@ for ($i = 0; $i < count($character_list); $i++) {
                             </tr>
                             </table> 
                         <div class="text-center">
-                            <p class="btn btn-w-md btn-warning warning-asset">Currently only displaying the most significant items which represent 
-                                <span class="btn btn-default btn-xs">96.41%</span> 
-                            of your total networth. Click here to see the full item list (page may be slower to load).</p>
+                            <?php if($sig==1) {?>
+                            <a href="<?=base_url('Assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=0')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently only displaying the most significant items which represent 
+                                <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> 
+                            of your total asset value. Click here to see the full item list (page may be slower to load and export features may crash your browser if you have too many items).</p></a>
+                            <?php } else {?>
+                                <a href="<?=base_url('Assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=1')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently displaying all items. For faster page loads and exports you may request only the most significant items, which would represent <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> of your total asset value.</p></a>
+                            <?php } ?>
                         </div>       
                     </div>
                 </div>
@@ -140,7 +144,7 @@ for ($i = 0; $i < count($character_list); $i++) {
                         <div class="panel-tools">
                         </div>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body assets-body">
                         <p>This list contains all assets inside stations, POSes, hangars and containers. Citadel assets are currently not supported by the API.
                         </p>
                         <div class="table-responsive">

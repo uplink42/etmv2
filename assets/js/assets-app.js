@@ -10,11 +10,11 @@ $(document).ready(function() {
             className: 'btn-sm'
         }, {
             extend: 'csv',
-            title: 'ExampleFile',
+            title: 'assets',
             className: 'btn-sm'
         }, {
             extend: 'pdf',
-            title: 'ExampleFile',
+            title: 'assets',
             className: 'btn-sm'
         }, {
             extend: 'print',
@@ -25,6 +25,9 @@ $(document).ready(function() {
             "bSearchable": false, "aTargets": [ 2 ] 
         }]
     });
+
+    $(".assets-body").append("<p>There are "+ table.rows().count() + " results.</p>");
+
     // Sparkline charts
     var sparklineCharts = function() {
         $(".sparkline").sparkline($(".sparkline").data('profit'), {
