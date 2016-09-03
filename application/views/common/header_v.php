@@ -26,12 +26,11 @@
 		<li class="profil-link" data-character ="<?=$character_id?>" data-url="<?=base_url()?>" data-aggr="<?=$aggregate?>">
 		    <a>
 			<span class="profile-address">
-			    <i class="pe-7s-piggy"></i> Wallet: <span class="header-balance"></span>|
-			    <i class="pe-7s-plugin"></i> Assets: <span class="header-networth"></span>|
-			    <i class="pe-7s-cart"></i> Market Orders: <span class="header-orders"></span>| 
-			    <i class="pe-7s-culture"></i> Escrow: <span class="header-escrow"></span>
+			    <i class="pe-7s-piggy"></i><span class="header-balance" title="balance"></span> |
+			    <i class="pe-7s-plugin"></i><span class="header-networth" title="assets"></span> |
+			    <i class="pe-7s-cart"></i><span class="header-orders" title="sell orders"></span> | 
+			    <i class="pe-7s-culture"></i><span class="header-escrow" title="escrow"></span>
 			</span>
-
 		    </a>
 		</li>
 	    </ul>

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var table = $('#assets-table').DataTable({
+    var table = $('#transactions-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         "lengthMenu": [
             [25, 50, 100, -1],
@@ -20,30 +20,13 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
+        "order": [[ 0, "desc" ]],
         "aoColumnDefs": [
             { 
-            "bSearchable": false, "aTargets": [ 3 ] 
+            "bSearchable": false, "aTargets": [ 6 ] 
         }]
     });
 
     $(".assets-body").prepend("<p>There are "+ table.rows().count() + " results.</p>");
 
-    // Sparkline charts
-    var sparklineCharts = function() {
-        $(".sparkline").sparkline($(".sparkline").data('profit'), {
-            type: 'line',
-            lineColor: '#f6a821',
-            fillColor: '#f6a821',
-            height: 100,
-            width: '100%'
-        });
-    };
-    var sparkResize;
-    // Resize sparkline charts on window resize
-    $(window).resize(function() {
-        clearTimeout(sparkResize);
-        sparkResize = setTimeout(sparklineCharts, 100);
-    });
-    // Run sparkline
-    sparklineCharts();
 });

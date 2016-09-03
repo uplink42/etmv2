@@ -17,7 +17,6 @@ class Dashboard extends MY_Controller
 
             $aggregate = $this->aggregate;
             $data  = $this->loadViewDependencies($character_id, $user_id, $aggregate);
-
             $chars = $data['chars'];
 
             $data['selected'] = "dashboard";

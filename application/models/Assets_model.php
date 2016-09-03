@@ -18,7 +18,6 @@ class Assets_model extends CI_Model
         $this->db->group_by('date');
         $this->db->order_by('date', 'asc');
         $query = $this->db->get('net_history', 'date');
-        log_message('error', $this->db->last_query());
         $result = $query->result_array();
 
         return $result;

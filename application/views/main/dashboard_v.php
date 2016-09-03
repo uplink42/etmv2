@@ -134,7 +134,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     </div>
                 </div>
 
-                <div class="panel">
+                <div class="panel panel-filled">
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table id="profits-table" class="table table-striped table-hover">
