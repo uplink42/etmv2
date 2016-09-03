@@ -8,14 +8,6 @@ class Dashboard extends MY_Controller
     {
         parent::__construct();
         $this->load->library('session');
-
-        $aggr = $_GET['aggr'];
-
-        if ($aggr != 1 && $aggr != 0) {
-            $this->aggregate = 0;
-        } else {
-            $this->aggregate = $aggr;
-        }
     }
 
     //returns all dashboard information to the relevant view

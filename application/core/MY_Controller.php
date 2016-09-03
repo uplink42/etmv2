@@ -26,7 +26,10 @@ class MY_Controller extends CI_Controller
                 } else {
                     $this->aggregate = $aggr;
                 }
+            } else {
+                $this->aggregate = 0;
             }
+            
             return true;
         } else {
             $data['view'] = "login/login_v";

@@ -8,8 +8,6 @@ class Assets extends MY_Controller
     {
         parent::__construct();
         $this->load->library('session');
-
-
     }
 
     public function index($character_id, $region_id = 0)
