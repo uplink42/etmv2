@@ -21,7 +21,7 @@ class Assets extends MY_Controller
         }
     }
 
-    public function index($character_id, $region_id = 0)
+    public function index($character_id, $region_id = "all")
     {
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 

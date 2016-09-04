@@ -14,7 +14,7 @@
 for ($i = 0; $i < count($character_list); $i++) {
     ?>
                             <li>
-                                <a href="<?=base_url('Assets/index/' . $character_list['chars'][$i]) . '/'. $region_id . '?aggr=0'?>">
+                                <a href="<?=base_url('Assets/index/' . $character_list['chars'][$i]) . '/'. $region_id . '?sig='.$sig.'&aggr=0'?>">
                                     <?=$character_list['char_names'][$i]?>
                                 </a>
                             </li>
@@ -23,7 +23,7 @@ for ($i = 0; $i < count($character_list); $i++) {
 ?>
                             <li class="divider" role="separator">
                             </li>
-                            <?php $url = "Assets/index/" . $character_id . "/" . $region_id . "?aggr=1" ;?>
+                            <?php $url = "Assets/index/" . $character_id . "/" . $region_id . "?sig='.$sig.'&aggr=1" ;?>
                             <li>
                                 <a href="<?=base_url($url)?>">
                                     <b>
@@ -101,13 +101,13 @@ for ($i = 0; $i < count($character_list); $i++) {
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                                <?php $url = "Assets/index/".$character_id."/all?aggr=".$aggregate;?>
+                                                <?php $url = "Assets/index/".$character_id."/all?sig=".$sig."&aggr=".$aggregate;?>
                                                 <li><a href="<?=base_url($url)?>"><b>All</b></a></li>
                                                 <li role="separator" class="divider"></li>
                                         <?php 
                                         foreach($totals as $key => $row) {
                                             ?>
-                                            <li  data-id=""><a href="<?=base_url('Assets/index/'.$character_id.'/'.$row[0]['region_id']."?aggr=".$aggregate)?>">
+                                            <li  data-id=""><a href="<?=base_url('Assets/index/'.$character_id.'/'.$row[0]['region_id']."?sig=".$sig."&aggr=".$aggregate)?>">
                                             <?php echo $key . " (" . number_format($row[0]['total_value']/1000000000,3) . " b)"?></a></li>
                                             <?php
                                         }
