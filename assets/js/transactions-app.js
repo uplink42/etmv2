@@ -5,26 +5,26 @@ $(document).ready(function() {
     }
 
     if(window.location.hash == "#error") {
-        toastr["error"]("Unable to unlink transaction. This transaction does not belong to you.", "Error");
+        toastr["error"]("Unable to unlink transaction. This transaction is already unlinked or does not belong to you.", "Error");
     }
     window.location.hash = "";
     
     var table = $('#transactions-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         "lengthMenu": [
-            [25, 50, 100, -1],
-            [25, 50, 100, "All"]
+            [50, 75, 100, -1],
+            [50, 75, 100, "All"]
         ],
         buttons: [{
             extend: 'copy',
             className: 'btn-sm'
         }, {
             extend: 'csv',
-            title: 'assets',
+            title: 'transactions',
             className: 'btn-sm'
         }, {
             extend: 'pdf',
-            title: 'assets',
+            title: 'transactions',
             className: 'btn-sm'
         }, {
             extend: 'print',
@@ -57,12 +57,10 @@ $(document).ready(function() {
 
     $(".btn-unlink-confirm").on('click', function() {
         var url = $(".btn-unlink-confirm").data('url');
-        console.log(url);
         $.ajax({
             dataType: "json",
             url: url,
             success: function(result) {
-                console.log(result);
                 $('#unlink').modal('toggle');
                 if(result.result == "true") {
                     window.location.hash = "#success";

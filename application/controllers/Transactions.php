@@ -10,7 +10,7 @@ class Transactions extends MY_Controller
         $this->load->library('session');
     }
 
-    public function index($character_id, $interval = 7)
+    public function index($character_id, $interval = 30)
     {
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
@@ -21,8 +21,6 @@ class Transactions extends MY_Controller
 
             $this->load->model('Transactions_model');
             $transactions = $this->Transactions_model->getTransactionList($chars, $interval);
-
-            
 
             $data['transactions'] = $transactions;
             $data['interval'] = $interval;
@@ -40,7 +38,6 @@ class Transactions extends MY_Controller
             } else {
                 echo json_encode(array("result" => "false", "msg" => "This transaction is already unlinked", "type" => "error"));
             }
-            //echo json_encode(array("result" => "true"));
         } else {
             echo json_encode(array("result" => "false", "msg" => "This transaction does not belong to you.", "type" => "error"));
         }

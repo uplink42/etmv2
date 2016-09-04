@@ -30,7 +30,7 @@ class Transactions_model extends CI_Model
         $this->db->join('item i', 'i.eve_iditem = t.item_eve_iditem', 'left');
         $this->db->join('station s', 's.eve_idstation = t.station_eve_idstation', 'left');
         $this->db->join('transaction_processed tp', 'tp.transactionID = t.idbuy', 'left');
-        $this->db->where('t.character_eve_idcharacter IN '. $chars);
+        $this->db->where('t.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
         $query = $this->db->get();
 
@@ -42,10 +42,10 @@ class Transactions_model extends CI_Model
     {
         $this->load->model('Login_model');
         $result = $this->Login_model->getCharacterList($user_id);
-        $chars = $result['aggr'];
+        $chars  = $result['aggr'];
         log_message('error', $chars);
 
-        if(strlen($chars)==0) {
+        if (strlen($chars) == 0) {
             return false;
         } else {
             $this->db->select('character_eve_idcharacter, idbuy');
@@ -53,7 +53,7 @@ class Transactions_model extends CI_Model
             $this->db->where('idbuy', $transaction_id);
             $query = $this->db->get('transaction');
 
-            if($query->num_rows() !=0) {
+            if ($query->num_rows() != 0) {
                 return true;
             }
             return false;
@@ -64,20 +64,18 @@ class Transactions_model extends CI_Model
     {
         $this->db->select('character_eve_idcharacter as c');
         $this->db->where('idbuy', $transaction_id);
-        $query = $this->db->get('transaction');
+        $query        = $this->db->get('transaction');
         $character_id = $query->row()->c;
 
         $data = array("transactionID" => $transaction_id,
-                      "characters_eve_idcharacters" => $character_id);
+            "characters_eve_idcharacters" => $character_id);
 
         $sql = $this->db->insert_string('transaction_processed', $data) . ' ON DUPLICATE KEY UPDATE transactionID=transactionID';
         $this->db->query($sql);
-        if($this->db->affected_rows() ==1) {
+        if ($this->db->affected_rows() == 1) {
             return true;
         }
         return false;
-
-
     }
 
 }
