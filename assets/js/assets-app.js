@@ -26,7 +26,14 @@ $(document).ready(function() {
         }]
     });
 
-    $(".assets-body").prepend("<p>There are "+ table.rows().count() + " results.</p>");
+    $(".assets-body p.yellow").html("<p>There are "+ table.rows().count() + " results for a total of "
+        + number_format(table.column(5).data().sum(),2, '.', ',' ) + " ISK</p>");
+    $("#assets-table_filter input").keyup(function () {
+        $(".assets-body p.yellow").html("There are "+ table.rows({filter: 'applied'}).count() + " results for a total of "
+            + number_format(table.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
+    });
+
+        
 
     // Sparkline charts
     var sparklineCharts = function() {

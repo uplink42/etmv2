@@ -23,6 +23,7 @@ class Transactions_model extends CI_Model
             t.transkey as transkey,
             t.client as client,
             i.name as item_name,
+            i.eve_iditem as item_id,
             tp.transactionID as proc');
         $this->db->from('transaction t');
         $this->db->join('characters c', 'c.eve_idcharacter = t.character_eve_idcharacter');
@@ -32,10 +33,51 @@ class Transactions_model extends CI_Model
         $this->db->where('t.character_eve_idcharacter IN '. $chars);
         $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
         $query = $this->db->get();
-        log_message('error', $this->db->last_query());
 
         $result = $query->result();
         return $result;
+    }
+
+    public function checkOwnership($transaction_id, $user_id)
+    {
+        $this->load->model('Login_model');
+        $result = $this->Login_model->getCharacterList($user_id);
+        $chars = $result['aggr'];
+        log_message('error', $chars);
+
+        if(strlen($chars)==0) {
+            return false;
+        } else {
+            $this->db->select('character_eve_idcharacter, idbuy');
+            $this->db->where('character_eve_idcharacter IN ' . $chars);
+            $this->db->where('idbuy', $transaction_id);
+            $query = $this->db->get('transaction');
+
+            if($query->num_rows() !=0) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public function unlinkTransaction($transaction_id)
+    {
+        $this->db->select('character_eve_idcharacter as c');
+        $this->db->where('idbuy', $transaction_id);
+        $query = $this->db->get('transaction');
+        $character_id = $query->row()->c;
+
+        $data = array("transactionID" => $transaction_id,
+                      "characters_eve_idcharacters" => $character_id);
+
+        $sql = $this->db->insert_string('transaction_processed', $data) . ' ON DUPLICATE KEY UPDATE transactionID=transactionID';
+        $this->db->query($sql);
+        if($this->db->affected_rows() ==1) {
+            return true;
+        }
+        return false;
+
+
     }
 
 }

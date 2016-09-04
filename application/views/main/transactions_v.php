@@ -23,7 +23,7 @@ for ($i = 0; $i < count($character_list); $i++) {
 ?>
                             <li class="divider" role="separator">
                             </li>
-                            <?php $url = "Transactions/index/" . $character_id . "?aggr=1" ;?>
+                            <?php $url = "Transactions/index/" . $character_id . '/' . $interval . "?aggr=1" ;?>
                             <li>
                                 <a href="<?=base_url($url)?>">
                                     <b>
@@ -64,7 +64,6 @@ for ($i = 0; $i < count($character_list); $i++) {
                         Transactions from last <?=$interval?> days
                     </div>
                     <div class="panel-body">
-
                         <ul class="info-panel-main">
                             <li><i class="fa fa-info yellow"></i> You can unlink certain transactions from being evaluated in the Profit calculator (e.g items for personal use or that you don't intend to re-sell)</li>
                             <li><i class="fa fa-info yellow"></i> Transactions already processed as profits are marked with a <span class="yellow">P</span> and cannot be unlinked. You can unlink unprocessed buy transactions so that they aren't taken into account later on when calculating profits</li>
@@ -84,21 +83,21 @@ for ($i = 0; $i < count($character_list); $i++) {
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                <li  data-id="1"><a href="<?=base_url('Transactions/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
-                                <li  data-id="3"><a href="<?=base_url('Transactions/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
-                                <li  data-id="60"><a href="<?=base_url('Transactions/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
-                                <li  data-id="3"><a href="<?=base_url('Transactions/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
-                                <li  data-id="60"><a href="<?=base_url('Transactions/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
-                                <li  data-id="60"><a href="<?=base_url('Transactions/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
-                                <li  data-id="60"><a href="<?=base_url('Transactions/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
+                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
+                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
+                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
+                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
+                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
+                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
+                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
                             </ul>
                         </div>
                         <div class="panel-tools">
                         </div>
                     </div>
-
-                    <div class="panel-body assets-body">
-                        <p></p>
+                    <br>
+                    <div class="panel-body transactions-body">
+                        <p class="yellow"></p>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="transactions-table">
                                 <thead>
@@ -121,13 +120,13 @@ for ($i = 0; $i < count($character_list); $i++) {
                                             $row->type == 'Buy' ? $button = 'btn-danger' : $button = 'btn-success';
                                             !empty($row->proc) ? $unlink = "P" : ($row->type == 'Buy' ? $unlink = 1 : $unlink = "-");
                                             if($unlink == 1) {
-                                                $unlink = "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#unlink'> 
+                                                $unlink = "<button type='button' class='btn btn-default btn-unlink' data-toggle='modal' data-target='#unlink' data-transaction='$row->transaction_id'> 
                                                 Unlink</button>";
                                             }
                                         ?>
                                     <tr>
                                         <td><?=$row->time?></td>
-                                        <td><?=$row->item_name?></td>
+                                        <td><img src="https://image.eveonline.com/Type/<?=$row->item_id?>_32.png" alt="item icon"><?=$row->item_name?></td>
                                         <td><?=number_format($row->quantity,0)?></td>
                                         <td><?=number_format($row->price_unit,2)?></td>
                                         <td><?=number_format($row->price_total,2)?></td>
@@ -142,7 +141,7 @@ for ($i = 0; $i < count($character_list); $i++) {
                                 ?>
                                 </tbody>
                             </table>
-                            <div class="modal fade" id="unlink" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal fade" id="unlink" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" data-url="<?=base_url('Transactions/unlink')?>">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header text-center">
@@ -155,7 +154,7 @@ for ($i = 0; $i < count($character_list); $i++) {
                                             
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-accent">Save changes</button>
+                                                <button type="button" class="btn btn-accent btn-unlink-confirm" data-url="0">Save changes</button>
                                             </div>
                                         </div>
                                     </div>

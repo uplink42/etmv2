@@ -147,6 +147,7 @@ for ($i = 0; $i < count($character_list); $i++) {
                     <div class="panel-body assets-body">
                         <p>This list contains all assets inside stations, POSes, hangars and containers. Citadel assets are currently not supported by the API.
                         </p>
+                        <p class="yellow"></p>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="assets-table">
                                 <thead>

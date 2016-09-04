@@ -30,4 +30,19 @@ class Transactions extends MY_Controller
             $this->load->view('main/_template_v', $data);
         }
     }
+
+    public function unlink($transaction_id)
+    {
+        $this->load->model('Transactions_model');
+        if($this->Transactions_model->checkOwnership($transaction_id, $this->session->iduser)) {
+            if($this->Transactions_model->unlinkTransaction($transaction_id)) {
+                echo json_encode(array("result" => "true", "msg" => "Transaction unlinked successfully", "type" => "success"));
+            } else {
+                echo json_encode(array("result" => "false", "msg" => "This transaction is already unlinked", "type" => "error"));
+            }
+            //echo json_encode(array("result" => "true"));
+        } else {
+            echo json_encode(array("result" => "false", "msg" => "This transaction does not belong to you.", "type" => "error"));
+        }
+    }
 }
