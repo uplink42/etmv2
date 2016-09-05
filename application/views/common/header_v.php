@@ -75,7 +75,7 @@
 		<a href="<?=base_url('Assets/index/'.$character_id .'?aggr='.$aggregate)?>"> Assets </a>
 	    </li>
 	    <li class="networth">
-		<a href="<?=base_url('Net_worth/index/'.$character_id .'?aggr='.$aggregate)?>"> Net worth evolution </a>
+		<a href="<?=base_url('NetworthTracker/index/'.$character_id .'?aggr='.$aggregate)?>"> Net worth evolution </a>
 	    </li>
 
 	    <li class="nav-category">
