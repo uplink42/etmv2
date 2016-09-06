@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     var table = $('#assets-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         "lengthMenu": [

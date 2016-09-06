@@ -4,6 +4,7 @@
 
 class NetworthTracker_model extends CI_Model
 {
+
     private $chars;
     private $interval;
 
@@ -36,21 +37,7 @@ class NetworthTracker_model extends CI_Model
             'captionFontSize'         => '20',
             'subcaptionFontSize'      => '14',
             'subcaptionFontBold'      => '0',
-            'paletteColors'           => '#0075c2,#1aaf5d,#8e0000,#f2c500,#c4c4c4',
-            'bgcolor'                 => '#ffffff',
-            'showBorder'              => '1',
-            'showShadow'              => '0',
-            'showCanvasBorder'        => '0',
-            'usePlotGradientColor'    => '0',
-            'legendBorderAlpha'       => '0',
-            'legendShadow'            => '0',
-            'showAxisLines'           => '0',
-            'showAlternateHGridColor' => '0',
-            'divlineThickness'        => '1',
-            'divLineDashed'           => '1',
-            'divLineDashLen'          => '1',
-            'divLineGapLen'           => '1',
-            'showValues'              => '0',
+            'showValues'              => '0'
         );
 
         $this->styles = array(

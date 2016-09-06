@@ -1,6 +1,6 @@
 <!-- Header-->
 <script src="<?=base_url('assets/js/header.js')?>"></script>
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" data-url="<?=base_url()?>" data-id="<?=$character_id?>">
     <div class="container-fluid">
 	<div class="navbar-header">
 	    <div id="mobile-menu">
@@ -75,7 +75,7 @@
 		<a href="<?=base_url('Assets/index/'.$character_id .'?aggr='.$aggregate)?>"> Assets </a>
 	    </li>
 	    <li class="networth">
-		<a href="<?=base_url('NetworthTracker/index/'.$character_id .'?aggr='.$aggregate)?>"> Net worth evolution </a>
+		<a href="<?=base_url('NetworthTracker/index/'.$character_id .'?aggr='.$aggregate)?>"> Net worth Tracker </a>
 	    </li>
 
 	    <li class="nav-category">
@@ -88,7 +88,7 @@
 		<a href="<?=base_url('Stock_lists/index/'.$character_id .'?aggr='.$aggregate)?>"> Stock Lists </a>
 	    </li>
 	    <li class="traderoutes">
-		<a href="<?=base_url('Trade_routes/index/'.$character_id .'?aggr='.$aggregate)?>"> Trade Routes </a>
+		<a href="<?=base_url('TradeRoutes/index/'.$character_id .'?aggr='.$aggregate)?>"> Trade Routes </a>
 	    </li>
 
 	    <li class="nav-category">

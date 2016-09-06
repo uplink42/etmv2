@@ -50,7 +50,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     <div class="header-title">
                         <h1>
                             <?php echo $aggregate == 1 ? implode(' + ', $char_names) : $character_name?>
-                            's Networth Tracker
+                            's Net worth Tracker
                         </h1>
                     </div>
                 </div>
@@ -69,7 +69,8 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         Net worth tracker
                     </div>
                     <div class="panel-body">
-                        <i class="fa fa-info"></i> Data is pulled once a day at 00.00 AM GMT time, and updates for every login past that point in the same day.
+                        <i class="fa fa-info"></i> Data is pulled once a day at 00.00 AM GMT time, and updates for every login past that point in each day.<br/>
+                        <i class="fa fa-info"></i> Item values are based on Eve's estimated prices
                     </div>
                 </div>
             </div>
@@ -80,7 +81,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                 <div class="panel panel-filled">
                     <div class="panel-body">
                         <div class="dropdown pull-right">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="margin-bottom: 20px;">
                             Time Interval
                                 <span class="caret"></span>
                             </button>

@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+    $("#username").focus().select();
     //only allow number input on api
     $("#apikey").keydown(function(e) {
         // Allow: backspace, delete, tab, escape, enter and .

@@ -37,6 +37,7 @@
     <script src="<?=base_url('assets/luna/vendor/flot/jquery.flot.resize.min.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
     <script src="<?=base_url('assets/luna/vendor/flot/jquery.flot.spline.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
     <script src="<?=base_url('assets/luna/vendor/datatables/datatables.min.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+    <script src="<?=base_url('assets/luna/vendor/jquery-ui/jquery-ui.min.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 
     <!-- App scripts -->
     <script src="<?=base_url('assets/luna/scripts/luna.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
@@ -61,4 +62,5 @@
     $this->load->view('common/footer_v');
 ?>
     </div>
+    <div class="modal-load"></div>
 </body>
