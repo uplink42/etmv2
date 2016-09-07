@@ -3158,3 +3158,7 @@ body.loading {
 body.loading .modal-load {
     display: block;
 }
+
+.selected-option {
+    font-weight: 700;
+}

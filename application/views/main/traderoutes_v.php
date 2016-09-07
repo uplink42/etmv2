@@ -1,9 +1,3 @@
-<style>
-.selected-option {
-    font-weight: 700;
-}
-</style>
-
 <script src="<?=base_url('assets/js/traderoutes-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
@@ -62,7 +56,7 @@
                         Trade Routes
                     </div>
                     <div class="panel-body">
-                        <i class="fa fa-info"></i> Here you can set predefined starting and destination stations which you can import in the Trade Simulator for your convenience<br/>
+                        <i class="fa fa-info"></i> Here you can set predefined starting and destination stations you use often so you can later import them into the Trade Simulator<br/>
                         <i class="fa fa-info"></i> Trade Routes are shared among all account characters
                     </div>
                 </div>
@@ -76,10 +70,10 @@
                         <h3 class="yellow">Create new Trade Route</h3>
                             <form class="form-horizontal" data-url=<?=base_url()?>>
                                 <div class="form-group"><label for="origin-station" class="col-sm-2 control-label">Origin</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control origin-station" placeholder="Begin typing and select one of the highlighted stations"></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control origin-station" id="origin-station" placeholder="Begin typing and select one of the highlighted stations"></div>
                                 </div>
                                 <div class="form-group"><label for="destination-station" class="col-sm-2 control-label">Destination</label>
-                                    <div class="col-sm-10"><input type="text" class="form-control destination-station" placeholder="Begin typing and select one of the highlighted stations"></div>
+                                    <div class="col-sm-10"><input type="text" class="form-control destination-station" id= "destination-station" placeholder="Begin typing and select one of the highlighted stations"></div>
                                 </div>  
                                 <input type="hidden" class="origin" name="origin">
                                 <input type="hidden" class="destination" name="destination">
@@ -92,7 +86,21 @@
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-body traderoute-list-panel">
-                        
+                        <h3 class="yellow">Existing Trade Routes</h3>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Origin</th>
+                                            <th>Destination</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
                     </div>
                 </div>
             </div>

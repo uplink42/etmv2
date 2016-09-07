@@ -6,6 +6,34 @@ $(document).ready(function() {
     var url = base + "TradeRoutes/searchStations";
     var id = $(".navbar").data('id');
 
+    function list() {
+        var listurl = base + "TradeRoutes/listTradeRoutes/" + id;
+        $.ajax({
+            dataType: "json",
+            url: listurl,
+            success: function(result) {
+                console.log(result);
+                $("table tbody tr").empty();
+                if(result.length == 0) {
+                    $row = "<tr><td colspan='3' class='text-center'>No trade routes present. Create one at the left</td></tr>";
+                    $("table").prepend($row);
+                } else {
+                    $.each(result, function(k,v) {
+                        var iddel = result[k].id;
+                        $row = "<tr><td>" + result[k].s1 + 
+                        "</td><td>" + 
+                        result[k].s2 + 
+                        "</td><td><button class='btn btn-danger btn-delete' data-iddel="+iddel+">Delete</button></tr></tr>";
+                        $("table").prepend($row);
+                    });
+                }
+                
+            }
+        });
+    }
+
+    list();
+
     $(".origin-station, .destination-station").autocomplete({
         source: url,
         minLength: 2,
@@ -39,15 +67,34 @@ $(document).ready(function() {
             data: data,
             type: "POST",
             success: function(result) {
-                if(result.notice == "success") {
-                    toastr["success"](result.message);   
-                } else {
-                    toastr["error"](result.message);
+                toastr[result.notice](result.message);
+                $(".origin-station, .destination-station").val("");
+                list();
+            }
+        });
+    }); 
+
+    $("table").on('click', 'button', function() {
+        var $this = $(this);
+        var url = base + "TradeRoutes/" + "deleteRoute/" + $(this).data('iddel');
+        console.log(url);
+        $.ajax({
+            dataType: "json",
+            url: url,
+            success: function(result) {
+                $this.closest("tr").remove();
+                toastr[result.notice](result.message);
+
+                if($("table tr").length == 2) {
+                    $row = "<tr><td colspan='3' class='text-center'>No trade routes present. Create one at the left</td></tr>";
+                    $("table").prepend($row);
                 }
             }
         });
+    });
 
-    }); 
 
+
+    
 
 });
