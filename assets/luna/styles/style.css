@@ -3162,3 +3162,7 @@ body.loading .modal-load {
 .selected-option {
     font-weight: 700;
 }
+
+.add-list-item, .stocklist-content {
+    display: none;
+}
