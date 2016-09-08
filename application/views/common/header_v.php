@@ -85,7 +85,7 @@
 		<a href="<?=base_url('Trade_simulator/index/'.$character_id .'?aggr='.$aggregate)?>"> Trade Simulator </a>
 	    </li>
 	    <li class="stocklists">
-		<a href="<?=base_url('Stock_lists/index/'.$character_id .'?aggr='.$aggregate)?>"> Stock Lists </a>
+		<a href="<?=base_url('StockLists/index/'.$character_id .'?aggr='.$aggregate)?>"> Stock Lists </a>
 	    </li>
 	    <li class="traderoutes">
 		<a href="<?=base_url('TradeRoutes/index/'.$character_id .'?aggr='.$aggregate)?>"> Trade Routes </a>

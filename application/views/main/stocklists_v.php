@@ -1,4 +1,4 @@
-<script src="<?=base_url('assets/js/traderoutes-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+<script src="<?=base_url('assets/js/stocklists-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -11,19 +11,19 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <?php
-                            for ($i = 0; $i < count($character_list); $i++) {
-                                ?>
+for ($i = 0; $i < count($character_list); $i++) {
+    ?>
                             <li>
-                                <a href="<?=base_url('TradeRoutes/index/' . $character_list['chars'][$i]) . '?aggr=0'?>">
+                                <a href="<?=base_url('StockLists/index/' . $character_list['chars'][$i]) . '?aggr=0'?>">
                                     <?=$character_list['char_names'][$i]?>
                                 </a>
                             </li>
                             <?php
-                            }
-                            ?>
+}
+?>
                             <li class="divider" role="separator">
                             </li>
-                            <?php $url = "TradeRoutes/index/" . $character_id . "?aggr=1" ;?>
+                            <?php $url = "StockLists/index/" . $character_id . "?aggr=1" ;?>
                             <li>
                                 <a href="<?=base_url($url)?>">
                                     <b>
@@ -34,50 +34,50 @@
                         </ul>
                     </div>
                     <div class="header-icon">
-                        <i class="pe page-header-icon pe-7s-plane">
+                        <i class="pe page-header-icon pe-7s-note2">
                         </i>
                     </div>
                     <div class="header-title">
-                        <h1>Trade Routes</h1>
+                        <h1>
+                            Stock Lists
+                        </h1>
                     </div>
                 </div>
                 <hr>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
+
                     <div class="panel-heading">
                         <div class="panel-tools">
                             <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
                             <a class="panel-close"><i class="fa fa-times"></i></a>
                         </div>
-                        Trade Routes
+                        Stock Lists
                     </div>
                     <div class="panel-body">
-                        <i class="fa fa-info"></i> Here you can set predefined starting and destination stations you use often so you can later import them into the Trade Simulator<br/>
-                        <i class="fa fa-info"></i> Trade Routes are shared among all account characters
+                        <ul class="info-panel-main">
+                            <li><i class="fa fa-info yellow"></i> Here you can manage several items in bulk to simultaneaously check their prices with the Trade Simulator</li>
+                            <li><i class="fa fa-info yellow"></i> Stock lists are accessible to every character in your account</li>
+                            <li><i class="fa fa-info yellow"></i> You can store up to 100 items per list</li>
+                        </ul>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
-
+        
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-body traderoute-creation-panel">
-                        <h3 class="yellow">Create new Trade Route</h3>
+                        <h3 class="yellow">Create new Stock List</h3>
                         <form class="form-horizontal" data-url=<?=base_url()?>>
-                            <div class="form-group"><label for="origin-station" class="col-sm-2 control-label">Origin</label>
-                                <div class="col-sm-10"><input type="text" class="form-control origin-station" id="origin-station" placeholder="Begin typing and select one of the highlighted stations"></div>
+                            <div class="form-group"><label for="list-name" class="col-sm-2 control-label">Name</label>
+                                <div class="col-sm-10"><input type="text" class="form-control list-name" id="list-name" placeholder="Type your new list name here"></div>
                             </div>
-                            <div class="form-group"><label for="destination-station" class="col-sm-2 control-label">Destination</label>
-                                <div class="col-sm-10"><input type="text" class="form-control destination-station" id= "destination-station" placeholder="Begin typing and select one of the highlighted stations"></div>
-                            </div>  
-                            <input type="hidden" class="origin" name="origin">
-                            <input type="hidden" class="destination" name="destination">
-                            <button type="submit" class="btn btn-default submit-traderoute" name="submit-traderoute">Submit</button>
+                            <button type="submit" class="btn btn-default submit-lis" name="submit-list">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -86,24 +86,11 @@
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-body traderoute-list-panel">
-                        <h3 class="yellow">Existing Trade Routes</h3>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Origin</th>
-                                        <th>Destination</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
+                        <h3 class="yellow">Select Stock List</h3>
+                        
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </section>

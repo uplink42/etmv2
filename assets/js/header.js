@@ -3,7 +3,6 @@ $(document).ready(function() {
     var domain = $(".profil-link").data('url');
     var aggr = $(".profil-link").data('aggr');
     var url = domain + "Main/headerData/" + charid + "/" + aggr;
-    console.log(url);
     //sends an ajax request to fill the top header data
     $.ajax({
         dataType: "json",
