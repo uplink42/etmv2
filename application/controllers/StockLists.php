@@ -29,9 +29,11 @@ class StockLists extends MY_Controller
     {
         $name = $this->security->xss_clean($this->input->post('list-name'));
         $this->load->model('StockLists_model');
-        if ($this->StockLists_model->createEmptyList($this->session->iduser, $name)) {
+        $res = $this->StockLists_model->createEmptyList($this->session->iduser, $name);
+        if ($res) {
             $data['notice']  = "success";
             $data['message'] = "Stock List created successfully. You may now add some items to it";
+            $data['id'] = $res;
 
         } else {
             $data['notice']  = "error";
@@ -52,9 +54,13 @@ class StockLists extends MY_Controller
     public function getItems($id_list)
     {
         $this->load->model('StockLists_model');
-        $result = $this->StockLists_model->getItems($id_list);
-
-        return json_encode($result);
+        if($this->StockLists_model->checkListBelong($id_list, $this->session->iduser)) {
+            $result = $this->StockLists_model->getItems($id_list);
+            echo json_encode($result);
+        } else {
+            echo "error";
+        }
+        
     }
 
     public function searchItems()
