@@ -3,17 +3,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Profits extends MY_Controller
 {
-    private $significant;
 
     public function __construct()
     {
         parent::__construct();
+        ini_set('memory_limit', '-1');
         $this->db->cache_on();
         $this->load->library('session');
 
     }
 
-    public function index($character_id, $interval = 7, $item_id = null)
+    public function index($character_id, $interval = 1, $item_id = null)
     {
         if($interval>365) {$interval = 365;}
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {

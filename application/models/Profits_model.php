@@ -56,6 +56,7 @@ class Profits_model extends CI_Model
         }
         $this->db->where('p.timestamp_sell>= now() - INTERVAL '.$interval. ' DAY');
         $this->db->order_by('t2.time DESC');
+        $this->db->limit(20000);
         $query = $this->db->get();
         $result = $query->result_array();
 
@@ -101,15 +102,14 @@ class Profits_model extends CI_Model
                         "subCaption" => "last " . $interval . " days",
                         "xAxisName"=> "Day",
                         "yAxisName"=> "ISK Profit",
-                        "paletteColors" => "#f6a821",
-                        "showValues" => "0"
+                        "paletteColors" => "#f6a821"
 
             )
         );
 
         $index = -1;
         
-        $profits_list = array();
+        /*$profits_list = array();
         $days_list = array();
         $arrData['data'] = array();
         $today = new DateTime('now');
@@ -133,9 +133,37 @@ class Profits_model extends CI_Model
 
         }
 
+        $jsonEncodedData = json_encode($arrData);*/
+        $inner = "";
+        $int = $interval-1;
+        for($i=2; $i<$int; $i++) {
+            $inner .= "SELECT ". $i . " UNION ALL ";
+        }
+
+        $fromStr = "(SELECT 1 i UNION ALL " . $inner . " SELECT " . $interval . ") i";
+
+        $this->db->select("DATE_SUB(CURDATE(), INTERVAL i DAY) date, sum(total_profit) as sum");
+        $this->db->from($fromStr);
+        $this->db->join('history', 'date=DATE_SUB(CURDATE(), INTERVAL i DAY)', 'left');
+        $this->db->where('history.characters_eve_idcharacters IN '. $chars);
+        $this->db->group_by('DATE_SUB(CURDATE(), INTERVAL i DAY)');
+        $query = $this->db->get();
+        $result = $query->result();
+
+
+        $profits_list = array();
+        $days_list = array();
+        $arrData['data'] = array();
+
+        foreach($result as $row) {
+            $index++;
+            array_push($days_list, $row->date);
+            array_push($profits_list, $row->sum);
+            array_push($arrData['data'], array("label" => (string)$days_list[$index], "value" => (string)$profits_list[$index]));
+        }
+
         $jsonEncodedData = json_encode($arrData);
         return $jsonEncodedData;
-
     }
     
 
