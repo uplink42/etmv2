@@ -51,14 +51,15 @@ $(document).ready(function() {
 	$(".btn-send-feedback").on('click', function() {
         var data = $(".submit-feedback").serialize(),
 		    base = $(".navbar").data('url'),
-            url = base + "Main/sendEmail";
+            url = base + "Main/sendEmail/";
         $.ajax({
             dataType: "json",
             url: url,
             data: data,
             type: "POST",
             success: function(result) {
-                
+                toastr[result.notice](result.message);
+                $(".btn-close").trigger('click');
             }
         });
 	});

@@ -52,8 +52,14 @@ class Main extends MY_Controller
         }
     }
 
-    public function sendEmail($to, $from, $from_name, $subject, $body)
+    public function sendEmail()
     {
+        $to = $_REQUEST['to'];
+        $from = $_REQUEST['email'];
+        $from_name = $_REQUEST['from_name'];
+        $subject = $_REQUEST['subject'];
+        $body = $_REQUEST['message'];
+
         global $error;
         $mail = new PHPMailer(); // create a new object
         $mail->IsSMTP(); // enable SMTP
@@ -73,12 +79,13 @@ class Main extends MY_Controller
         if (!$mail->Send()) {
             //echo $error = 'Mail error: '.$mail->ErrorInfo; 
             $error = "Error sending email. Try again later.";
-            return false;
+            $res = "error";
         }
         else {
-            echo $error = 'Message sent to ' . $to . " " . "\n";
-            return true;
+            $error = 'Message sent to ' . $to . " " . "\n";
+            $res = "success";
         }
+        echo json_encode(array("notice" => $res, "message" => $error));
     }
 
 }
