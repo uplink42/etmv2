@@ -1,4 +1,4 @@
-$(document).ready(function() {
+
 	function number_format(number, decimals, decPoint, thousandsSep){
 		decimals = decimals || 0;
 		number = parseFloat(number);
@@ -34,19 +34,10 @@ $(document).ready(function() {
 	    }, 0 );
 	} );
 
-	//english format
-	number_format( 1234.50, 2, '.', ',' ); // ~> "1,234.50"
-
-	//german format
-	number_format( 1234.50, 2, ',', '.' ); // ~> "1.234,50"
-
-	//french format
-	number_format( 1234.50, 2, '.', ' ' ); // ~> "1 234.50"
-
+$(document).ready(function() {
 	$(".go-back").on('click', function() {
 		window.history.back();
 	});
-
 
 	$(".btn-send-feedback").on('click', function() {
         var data = $(".submit-feedback").serialize(),
@@ -63,6 +54,4 @@ $(document).ready(function() {
             }
         });
 	});
-
-
 });

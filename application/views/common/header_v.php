@@ -1,5 +1,4 @@
 <!-- Header-->
-<script src="<?=base_url('assets/js/header.js')?>"></script>
 <nav class="navbar navbar-default navbar-fixed-top" data-url="<?=base_url()?>" data-id="<?=$character_id?>">
     <div class="container-fluid">
 	<div class="navbar-header">

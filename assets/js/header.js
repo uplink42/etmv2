@@ -4,7 +4,8 @@ $(document).ready(function() {
     var aggr = $(".profil-link").data('aggr');
     var url = domain + "Main/headerData/" + charid + "/" + aggr;
     //sends an ajax request to fill the top header data
-    $.ajax({
+    if (typeof(charid) !== "undefined") {
+        $.ajax({
         dataType: "json",
         url: url,
         success: function(result) {
@@ -12,8 +13,10 @@ $(document).ready(function() {
             $(".header-networth").html(result.networth);
             $(".header-orders").html(result.total_sell);
             $(".header-escrow").html(result.escrow);
-        }
-    });
+            }
+        });
+    } 
+    
 
     if(aggr == 1) {
         $(".profil-link a").css('color','#cc0044');
