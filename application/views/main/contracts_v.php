@@ -11,7 +11,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <?php
-for ($i = 0; $i < count($character_list); $i++) {
+for ($i = 0; $i < count($character_list['chars']); $i++) {
     ?>
                             <li>
                                 <a href="<?=base_url('Contracts/index/' . $character_list['chars'][$i]) . '?aggr=0'?>">

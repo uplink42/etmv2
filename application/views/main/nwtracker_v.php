@@ -16,7 +16,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <?php
-                            for ($i = 0; $i < count($character_list); $i++) {
+                            for ($i = 0; $i < count($character_list['chars']); $i++) {
                                 ?>
                             <li>
                                 <a href="<?=base_url('NetworthTracker/index/' . $character_list['chars'][$i]) . '?aggr=0'?>">

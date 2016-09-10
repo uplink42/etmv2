@@ -7,26 +7,41 @@ class Dashboard extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->db->cache_on();
         $this->load->library('session');
     }
 
     //returns all dashboard information to the relevant view
     public function index($character_id, $interval = 3)
     {
+        if($interval>7) $interval = 7;
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
             $aggregate = $this->aggregate;
             $data  = $this->loadViewDependencies($character_id, $user_id, $aggregate);
             $chars = $data['chars'];
 
+
             $data['selected'] = "dashboard";
-            $this->load->model('Dashboard_model');
+            
             $data['interval'] = $interval;
+
+            $this->load->model('Dashboard_model');
+            $profits = $this->Dashboard_model->getProfits($interval, $chars);
+            
+            $count = $profits['count'];
+            if($count>100) {
+                $img = false;
+            } else {
+                $img = true;
+            }
 
             $data['pie_data']       = $this->Dashboard_model->getPieData($chars);
             $data['week_profits']   = $this->Dashboard_model->getWeekProfits($chars);
             $data['new_info']       = $this->Dashboard_model->getNewInfo($chars);
-            $data['profits']        = $this->Dashboard_model->getProfits($interval, $chars);
+            
+            $data['img'] = $img;
+            $data['profits']        = $profits['result'];
             $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($chars);
 
             $data['view'] = 'main/dashboard_v';

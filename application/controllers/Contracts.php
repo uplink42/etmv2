@@ -9,6 +9,7 @@ class Contracts extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->db->cache_on();
         $this->load->library('session');
 
         if(isset($_GET['active'])) {

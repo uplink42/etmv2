@@ -11,7 +11,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <?php
-for ($i = 0; $i < count($character_list); $i++) {
+for ($i = 0; $i < count($character_list['chars']); $i++) {
     ?>
                             <li>
                                 <a href="<?=base_url('StockLists/index/' . $character_list['chars'][$i]) . '?aggr=0'?>">
@@ -76,7 +76,7 @@ for ($i = 0; $i < count($character_list); $i++) {
                         <h3 class="yellow">Create new Stock List</h3>
                         <form class="form-horizontal" data-url=<?=base_url()?>>
                             <div class="form-group"><label for="list-name" class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-10"><input type="text" class="form-control list-name" id="list-name" name="list-name" placeholder="Type your new list name here"></div>
+                                <div class="col-sm-10"><input type="text" class="form-control list-name" id="list-name" name="list-name" placeholder="Type your new list name here" autofocus></div>
                             </div>
                             <button type="submit" class="btn btn-default submit-list" name="submit-list">Submit</button>
                         </form>

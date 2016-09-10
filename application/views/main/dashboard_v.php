@@ -16,7 +16,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                         <?php 
-                            for($i=0; $i<count($character_list); $i++) {
+                            for($i=0; $i<count($character_list['chars']); $i++) {
                                 ?>
                             <li><a href="<?=base_url('Dashboard/index/'.$character_list['chars'][$i].'/'.$interval. '?aggr=0')?>"><?=$character_list['char_names'][$i]?></a></li>    
                         <?php
@@ -152,9 +152,12 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <?php
                                       foreach ($profits as $row) {
                                             if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
+                                            $id = $row['item_id'];
+                                            $img ? $url = "https://image.eveonline.com/Type/".$id."_32.png" : $url="";
                                           ?>
                                         <tr class="<?=$res?>">
-                                            <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item_name']?></td>
+                                            <td><?php echo $img ? "<img src=".$url."></img>" : ''?>
+                                                <?=$row['item_name']?></td>
                                             <td><?=$row['system_name']?></td>
                                             <td><?=$row['sell_time']?></td>
                                             <td><?=number_format($row['quantity'],0)?></td>

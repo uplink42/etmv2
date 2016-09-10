@@ -11,7 +11,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <?php
-for ($i = 0; $i < count($character_list); $i++) {
+for ($i = 0; $i < count($character_list['chars']); $i++) {
     ?>
                             <li>
                                 <a href="<?=base_url('Assets/index/' . $character_list['chars'][$i]) . '/'. $region_id . '?sig='.$sig.'&aggr=0'?>">
@@ -161,13 +161,15 @@ for ($i = 0; $i < count($character_list); $i++) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php 
+                                    <?php
                                     foreach ($asset_list as $asset) {
                                         $id = $asset['item_id'];
+                                        $img ? $url = "https://image.eveonline.com/Type/".$id."_32.png" : $url="";
 
                                         ?>
                                         <tr>
-                                            <td><?=$asset['item_name']?></td>
+                                            <td><?php echo $img ? "<img src=".$url."></img>" : ''?>
+                                                <?=$asset['item_name']?></td>
                                             <td><?=$asset['owner']?></td>
                                             <td><?=number_format($asset['quantity'],0)?></td>
                                             <td><?=$asset['loc_name']?></td>

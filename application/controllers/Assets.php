@@ -8,6 +8,7 @@ class Assets extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->db->cache_on();
         $this->load->library('session');
 
         if(isset($_GET['sig'])) {
@@ -44,7 +45,15 @@ class Assets extends MY_Controller
 
             $asset_totals = $this->Assets_model->getRegionData($chars);
             $region_name = $this->Assets_model->getRegionName($region_id);
-            $asset_list = $this->Assets_model->getAssetsList($region_id, $chars, $this->significant);
+            $res = $this->Assets_model->getAssetsList($region_id, $chars, $this->significant);
+            $asset_list = $res['result'];
+            
+            if($res['count'] >100) {
+                $img = false;
+            } else {
+                $img = true;
+            }
+
             $ratio = $this->Assets_model->getWorthSignificant($chars);
             
             if($region_name != "All") {
@@ -53,6 +62,7 @@ class Assets extends MY_Controller
                 $data['current_asset_value'] = $this->Assets_model->getCurrentAssetTotals($chars);
             }
             
+            $data['img'] = $img;
             $data['sig'] = $this->significant;
             $data['ratio'] = $ratio;
             $data['asset_list'] = $asset_list;

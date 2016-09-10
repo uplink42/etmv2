@@ -48,10 +48,10 @@
 				<tr>
 				    <td><a href='<?= base_url('Dashboard/index/'.$id)?>'><img src='https://image.eveonline.com/Character/<?=$id?>_32.jpg' alt='character portrait'></a></td>
 				    <td><?=$name?></td>
-				    <td class="text-right"><?=number_format($balance,2)?></td>
-				    <td class="text-right"><?=number_format($networth,2)?></td>
-				    <td class="text-right"><?=number_format($escrow,2)?></td>
-				    <td class="text-right"><?=number_format($sell,2)?></td>
+				    <td class="text-right"><?=number_format($balance)?></td>
+				    <td class="text-right"><?=number_format($networth)?></td>
+				    <td class="text-right"><?=number_format($escrow)?></td>
+				    <td class="text-right"><?=number_format($sell)?></td>
 				</tr>
 				<?php
 			    }
@@ -65,9 +65,9 @@
 				    <td></td>
 				    <td><strong>Total</strong></td>
 				    <td class="text-right"><strong><?=number_format($balance_total)?></strong></td>
-				    <td class="text-right"><strong><?=number_format($networth_total,2)?></strong></td>
-				    <td class="text-right"><strong><?=number_format($escrow_total,2)?></strong></td>
-				    <td class="text-right"><strong><?=number_format($sell_total,2)?></strong></td>
+				    <td class="text-right"><strong><?=number_format($networth_total)?></strong></td>
+				    <td class="text-right"><strong><?=number_format($escrow_total)?></strong></td>
+				    <td class="text-right"><strong><?=number_format($sell_total)?></strong></td>
 				</tr>
 				
 				<tr>

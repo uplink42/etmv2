@@ -33,9 +33,11 @@ class Transactions_model extends CI_Model
         $this->db->where('t.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
         $query = $this->db->get();
+        $count = $query->num_rows();
 
         $result = $query->result();
-        return $result;
+        $data = array("result" => $result, "count" => $count);
+        return $data;
     }
 
     public function checkOwnership($transaction_id, $user_id)

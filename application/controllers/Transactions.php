@@ -7,11 +7,14 @@ class Transactions extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->db->cache_off();
+        ini_set('memory_limit', '-1');
         $this->load->library('session');
     }
 
-    public function index($character_id, $interval = 30)
+    public function index($character_id, $interval = 14)
     {
+        if($interval>365) $interval = 365;
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
             $aggregate = $this->aggregate;
@@ -21,8 +24,15 @@ class Transactions extends MY_Controller
 
             $this->load->model('Transactions_model');
             $transactions = $this->Transactions_model->getTransactionList($chars, $interval);
+            $count = $transactions['count'];
+            if($transactions['count'] >100) {
+                $img = false;
+            } else {
+                $img = true;
+            }
 
-            $data['transactions'] = $transactions;
+            $data['img'] = $img;
+            $data['transactions'] = $transactions['result'];
             $data['interval'] = $interval;
             $data['view']           = 'main/transactions_v';
             $this->load->view('main/_template_v', $data);

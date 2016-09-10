@@ -131,6 +131,7 @@ class Assets_model extends CI_Model
 
         $query1  = $this->db->get();
         $result1 = $query1->result_array();
+        $count1 = $query1->num_rows();
 
         $this->db->select('a.item_eve_iditem as item_id,
             a.quantity as quantity,
@@ -158,9 +159,12 @@ class Assets_model extends CI_Model
 
         $query2  = $this->db->get();
         $result2 = $query2->result_array();
+        $count2 = $query2->num_rows();
+        $total = $count1+$count2;
 
         $result = array_merge($result1, $result2);
-        return $result;
+        $data = array("result" => $result, "count" => $total);
+        return $data;
     }
 
     public function getWorthSignificant($chars)

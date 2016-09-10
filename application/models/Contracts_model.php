@@ -49,8 +49,6 @@ class Contracts_model extends CI_Model
         $query = $this->db->get('contracts');
         $result = $query->result_array();
 
-        log_message('error', $this->db->last_query());
-
         //modify the query array to include character names
         for ($i=0; $i<count($result); $i++) {
             $issuer = $result[$i]['issuer_id'];

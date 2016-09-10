@@ -11,7 +11,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <?php
-for ($i = 0; $i < count($character_list); $i++) {
+for ($i = 0; $i < count($character_list['chars']); $i++) {
     ?>
                             <li>
                                 <a href="<?=base_url('Transactions/index/' . $character_list['chars'][$i]) . '/' . $interval . '?aggr=0'?>">
@@ -123,10 +123,13 @@ for ($i = 0; $i < count($character_list); $i++) {
                                                 $unlink = "<button type='button' class='btn btn-default btn-unlink' data-toggle='modal' data-target='#unlink' data-transaction='$row->transaction_id'> 
                                                 Unlink</button>";
                                             }
+                                            $id = $row->item_id;
+                                            $img ? $url = "https://image.eveonline.com/Type/".$id."_32.png" : $url="";
                                         ?>
                                     <tr>
                                         <td><?=$row->time?></td>
-                                        <td><img src="https://image.eveonline.com/Type/<?=$row->item_id?>_32.png" alt="item icon"><?=$row->item_name?></td>
+                                        <td><?php echo $img ? "<img src=".$url."></img>" : ''?>
+                                            <?=$row->item_name?></td>
                                         <td><?=number_format($row->quantity,0)?></td>
                                         <td><?=number_format($row->price_unit,2)?></td>
                                         <td><?=number_format($row->price_total,2)?></td>

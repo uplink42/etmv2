@@ -7,6 +7,7 @@ class Updater extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->db->cache_off();
         $this->load->library('session');
     }
 

@@ -8,12 +8,13 @@ class NetworthTracker extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->db->cache_on();
         $this->load->library('session');
-
     }
 
     public function index($character_id, $interval = 7)
     {
+        if($interval>365) $interval = 365;
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
             $aggregate = $this->aggregate;

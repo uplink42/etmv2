@@ -145,7 +145,9 @@ class Dashboard_model extends CI_Model
         $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
         $this->db->order_by('t2.time', 'desc');
+        $this->db->limit(5000);
         $query = $this->db->get();
+        $count = $query->num_rows();
 
         $result = $query->result_array();
 
@@ -169,6 +171,7 @@ class Dashboard_model extends CI_Model
             $result[$i]['url']          = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
         }
 
-        return $result;
+        $data = array("result" => $result, "count" => $count);
+        return $data;
     }
 }

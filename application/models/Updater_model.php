@@ -108,6 +108,7 @@ class Updater_model extends CI_Model {
         $sell_total     = 0;
         $grand_total    = 0;
 
+
         foreach ($this->account_characters as $char) {
             $this->db->where('eve_idcharacter', $char['character_eve_idcharacter']);
             $get_data = $this->db->get('characters');
@@ -341,10 +342,12 @@ class Updater_model extends CI_Model {
         }
 
         $this->character_corp_standings = $corpStandingsArray;
-        $this->db->query(
+        if(count($corpStandingsArray)>0) {
+            $this->db->query(
             batch("standings_corporation",
                 array('idstandings_corporation', 'characters_eve_idcharacters', 'corporation_eve_idcorporation', 'value'), $corpStandingsArray)
-        );
+            );
+        }
     }
 
     private function getFactionStandings()
@@ -363,10 +366,12 @@ class Updater_model extends CI_Model {
         }
 
         $this->character_faction_standings = $factionStandingsArray;
-        $this->db->query(
-            batch("standings_faction",
-                array('idstandings_faction', 'characters_eve_idcharacters', 'faction_eve_idfaction', 'value'), $factionStandingsArray)
-        );
+        if(count($factionStandingsArray)>0) {
+            $this->db->query(
+                batch("standings_faction",
+                    array('idstandings_faction', 'characters_eve_idcharacters', 'faction_eve_idfaction', 'value'), $factionStandingsArray)
+            );
+        }
     }
 
     private function getTransactions($refID = false)
@@ -382,7 +387,7 @@ class Updater_model extends CI_Model {
         $this->db->where('character_eve_idcharacter', $this->character_id);
         $query              = $this->db->get('transaction');
         $latest_transaction = $query->row()->val;
-
+        
         $transactions = array();
 
         //only update transactions not in db already
@@ -404,7 +409,7 @@ class Updater_model extends CI_Model {
         }
 
         if (!empty($transactions)) {
-            $this->db->query(batch("transaction",
+            $this->db->query(batch_ignore("transaction",
                 array('idbuy',
                     'time',
                     'quantity',
@@ -516,7 +521,7 @@ class Updater_model extends CI_Model {
     {
         $pheal    = new Pheal($this->apikey, $this->vcode, "char");
         $response = $pheal->MarketOrders(array("characterID" => $this->character_id));
-
+        $this->character_escrow = 0;
         $market_orders = [];
         $new_orders = [];
         $old_orders = [];
