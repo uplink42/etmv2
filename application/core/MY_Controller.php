@@ -18,7 +18,7 @@ class MY_Controller extends CI_Controller
         if ($this->Login_model->checkSession() &&
             $this->Login_model->checkCharacter($character_id, $user_id)) {
 
-            if(isset($_GET['aggr'])) {
+            if (isset($_GET['aggr'])) {
                 $aggr = $_GET['aggr'];
 
                 if ($aggr != 1 && $aggr != 0) {
@@ -29,7 +29,7 @@ class MY_Controller extends CI_Controller
             } else {
                 $this->aggregate = 0;
             }
-            
+
             return true;
         } else {
             $data['view'] = "login/login_v";
@@ -66,6 +66,8 @@ class MY_Controller extends CI_Controller
             $chars = "(" . $character_id . ")";
         }
 
+        $data['email']          = $this->session->email;
+        $data['username']       = $this->session->username;
         $data['chars']          = $chars;
         $character_list         = $this->getCharacterList($this->session->iduser);
         $data['aggregate']      = $aggregate;

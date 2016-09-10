@@ -87,3 +87,5 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 //Application specific constants
 define("FILESTORAGE", "C:/xampp/htdocs/phealcache/"); //pheal cache folder
 define("URL", "http://localhost/ETM_refactor/");
+define("GUSER", "test@gmail.com");
+define("GPWD", "test")

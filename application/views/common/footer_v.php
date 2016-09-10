@@ -11,18 +11,18 @@
     }
 ?>
     <div class="panel panel-filled panel-c-warning">
-	<div class="panel-heading text-center footer-links">
-	    <div class="panel-tools">
-		<a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
-		<a class="panel-close"><i class="fa fa-times"></i></a>
-	    </div>
-	    <ul class="list-inline">
-		<li>Home</li>
-		<li>Feedback and bug reports</li>
-		<li>Donate</li>
-		<li>Blog</li>
-	    </ul>
-	</div>
+		<div class="panel-heading text-center footer-links">
+		    <div class="panel-tools">
+				<a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+				<a class="panel-close"><i class="fa fa-times"></i></a>
+		    </div>
+		    <ul class="list-inline">
+				<li>Home</li>
+				<li><a data-toggle="modal" data-target="#modal-feedback">Feedback and bug reports</a></li>
+				<li>Donate</li>
+				<li>Blog</li>
+		    </ul>
+		</div>
 	<div class="panel-body text-center footer-desc" style="display: block;">
 	    ©Eve Trade Master 2016 - design and development by uplink42<br>
 	    Eve Online, the Eve logo and all associated logos and designs are intellectual property of CCP hf,

@@ -27,6 +27,7 @@ class Login_model extends CI_Model
             $data = array(
                 'username' => $row->username,
                 'password' => $row->password,
+                'email' => $row->email,
             );
             $this->session->set_userdata($data);
             return true;

@@ -146,7 +146,7 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                                     ?>
                                     <tr class="<?=$res?>">
                                         <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
-                                            <span class="item-name"><?=$row['item_name']?></span></td>
+                                            <a class="item-name" style="color: #fff"><?=$row['item_name']?></a></td>
                                         <td><span class="btn btn-xs btn-danger">B</span><br/><span class="btn btn-xs btn-success">S</span></td>
                                         <td><?=$row['sys_buy']?><br/>
                                             <?=$row['sys_sell']?></td>

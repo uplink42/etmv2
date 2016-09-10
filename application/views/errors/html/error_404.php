@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Main content-->
     <section class="content">
         <div class="back-link">
-            <a href="<?=URL?>Dashboard/index" class="btn btn-accent">Back to Dashboard</a>
+            <a onclick="window.history.back()" class="btn btn-accent go-back">Back to Dashboard</a>
         </div>
 
         <div class="container-center md animated slideInDown">

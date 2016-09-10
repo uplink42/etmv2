@@ -3176,3 +3176,7 @@ body.loading .modal-load {
 .add-list-item, .stocklist-content {
     display: none;
 }
+
+.footer-links a {
+    cursor: pointer;
+}
