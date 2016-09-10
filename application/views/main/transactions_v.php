@@ -128,7 +128,7 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                                         ?>
                                     <tr>
                                         <td><?=$row->time?></td>
-                                        <td><?php echo $img ? "<img src=".$url."></img>" : ''?>
+                                        <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
                                             <?=$row->item_name?></td>
                                         <td><?=number_format($row->quantity,0)?></td>
                                         <td><?=number_format($row->price_unit,2)?></td>

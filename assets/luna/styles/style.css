@@ -3033,12 +3033,22 @@ fieldset[disabled] .form-control {
     content: " %";
 }
 
-#profits-table {
+#profits-2-table td:nth-child(10)::after {
+    content: " %";
+}
+
+#profits-table, #profits-2-table {
     color: #fff;
     opacity: 0.7;
 }
 
-#profits-table .btn-default {
+.item-name:hover {
+    cursor: pointer;
+}
+
+#profits-table .btn-default,
+#profits-2-table .btn-default,
+#profits-2-table span {
     color: #fff;
 }
 

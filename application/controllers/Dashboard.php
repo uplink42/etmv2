@@ -30,7 +30,7 @@ class Dashboard extends MY_Controller
             $profits = $this->Dashboard_model->getProfits($interval, $chars);
             
             $count = $profits['count'];
-            if($count>100) {
+            if($count>200) {
                 $img = false;
             } else {
                 $img = true;

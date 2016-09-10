@@ -156,13 +156,13 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                             $img ? $url = "https://image.eveonline.com/Type/".$id."_32.png" : $url="";
                                           ?>
                                         <tr class="<?=$res?>">
-                                            <td><?php echo $img ? "<img src=".$url."></img>" : ''?>
+                                            <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
                                                 <?=$row['item_name']?></td>
                                             <td><?=$row['system_name']?></td>
                                             <td><?=$row['sell_time']?></td>
                                             <td><?=number_format($row['quantity'],0)?></td>
                                             <td><?=number_format($row['profit_total'],2)?></td>
-                                            <td><a href="#" class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
+                                            <td><a class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
                                       </tr>
                                           <?php }?>
                                 </tbody>

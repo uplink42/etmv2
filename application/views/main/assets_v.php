@@ -168,7 +168,7 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
 
                                         ?>
                                         <tr>
-                                            <td><?php echo $img ? "<img src=".$url."></img>" : ''?>
+                                            <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
                                                 <?=$asset['item_name']?></td>
                                             <td><?=$asset['owner']?></td>
                                             <td><?=number_format($asset['quantity'],0)?></td>

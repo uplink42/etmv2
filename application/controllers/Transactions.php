@@ -25,7 +25,7 @@ class Transactions extends MY_Controller
             $this->load->model('Transactions_model');
             $transactions = $this->Transactions_model->getTransactionList($chars, $interval);
             $count = $transactions['count'];
-            if($transactions['count'] >100) {
+            if($transactions['count'] >200) {
                 $img = false;
             } else {
                 $img = true;

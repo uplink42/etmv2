@@ -48,8 +48,8 @@
 	    <li class="dashboard">
 		<a href="<?=base_url('Dashboard/index/'.$character_id .'?aggr='.$aggregate)?>">Dashboard</a>
 	    </li>
-	    <li class="profit">
-		<a href="<?=base_url('Profit/index/'.$character_id .'?aggr='.$aggregate)?>">Profit Breakdown</a>
+	    <li class="profits">
+		<a href="<?=base_url('Profits/index/'.$character_id .'?aggr='.$aggregate)?>">Profit Breakdown</a>
 	    </li>
 	    <li class="statistics">
 		<a href="<?=base_url('Statistics/index/'.$character_id .'?aggr='.$aggregate)?>">Statistics</a>
