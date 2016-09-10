@@ -98,37 +98,44 @@ class Profits_model extends CI_Model
         $arrData = array( //graph parameters
                         "chart" => array(
                         "caption" => "Profit evolution",
-                        "subCaption" => "$subcaption",
+                        "subCaption" => "last " . $interval . " days",
                         "xAxisName"=> "Day",
                         "yAxisName"=> "ISK Profit",
-                        "lineThickness"=> "3",
-                        "paletteColors"=> "#0075c2",
-                        "baseFontColor"=> "#333333",
-                        "baseFont"=> "Helvetica Neue,Arial",
-                        "captionFontSize"=> "14",
-                        "subcaptionFontSize"=> "14",
-                        "subcaptionFontBold"=> "0",
-                        "showBorder"=> "0",
-                        "bgColor"=> "#ffffff",
-                        "showShadow"=> "0",
-                        "canvasBgColor"=> "#ffffff",
-                        "canvasBorderAlpha"=> "0",
-                        "divlineAlpha"=> "100",
-                        "divlineColor"=> "#999999",
-                        "divlineThickness"=> "1",
-                        "divLineDashed"=> "1",
-                        "divLineDashLen"=> "1",
-                        "divLineGapLen"=> "1",
-                        "showXAxisLine"=> "1",
-                        "xAxisLineThickness"=> "1",
-                        "xAxisLineColor"=> "#999999",
-                        "showAlternateHGridColor"=> "0"  
+                        "paletteColors" => "#f6a821",
+                        "showValues" => "0"
+
             )
         );
 
-
-
+        $index = -1;
         
+        $profits_list = array();
+        $days_list = array();
+        $arrData['data'] = array();
+        $today = new DateTime('now');
+        date_sub($today,date_interval_create_from_date_string($interval ." day"));
+
+        for($i=$interval; $i>0; $i--) {
+            $index = $index+1;
+            date_add($today,date_interval_create_from_date_string("1 day"));
+            $today_a = $today->format("Y-m-d");
+
+            $this->db->select('COALESCE(sum(total_profit),0) as profits, date');
+            $this->db->where('date', $today_a);
+            $this->db->where('characters_eve_idcharacters IN ' . $chars);
+            $this->db->order_by('date', 'asc');
+            $query1 = $this->db->get('history');
+            $result = $query1->row();
+
+            array_push($days_list, $result->date);
+            array_push($profits_list, $result->profits);
+            array_push($arrData['data'], array("label" => (string)$days_list[$index], "value" => (string)$profits_list[$index]));
+
+        }
+
+        $jsonEncodedData = json_encode($arrData);
+        return $jsonEncodedData;
+
     }
     
 

@@ -35,6 +35,9 @@ class Profits extends MY_Controller
                 $img = true;
             }
 
+            $chart = $this->Profits_model->getProfitChart($chars, $interval, $item_id = null);
+
+            $data['chart'] = $chart;
             $data['img'] = $img;
             $data['profits'] = $profits_r;
             $data['interval'] = $interval;

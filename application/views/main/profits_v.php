@@ -1,3 +1,8 @@
+<?php
+include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
+?>
+<!--Fusioncharts -->
+<script src="<?=base_url('assets/fusioncharts/js/fusioncharts.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <script src="<?=base_url('assets/js/profits-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
@@ -77,8 +82,11 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
             <div class="col-md-12">
                 <div class="panel panel-filled">
                     <div class="panel-heading">
-                        <div class="chart">
-                        </div>
+                        <?php 
+                        $columnChart = new FusionCharts("line", "profitchart" , "100%", 400, "chart-2", "json", $chart);
+                        $columnChart->render();?>
+                            <div id="chart-2">
+                            </div>
                     </div>
                 </div>
             </div>
@@ -110,7 +118,7 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                     <br>
                     <div class="panel-body profits-2-body">
                         <p class="yellow"></p>
-                        <p class="yellow-2"> Click an item name to filter the table.</p>
+                        <p class="yellow-2"> Click an item name to filter results.</p>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="profits-2-table">
                                 <thead>
