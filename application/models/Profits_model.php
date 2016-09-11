@@ -51,6 +51,7 @@ class Profits_model extends CI_Model
         $this->db->join('characters c2', 't2.character_eve_idcharacter = c2.eve_idcharacter');
         $this->db->join('item i', 't1.item_eve_iditem = i.eve_iditem', 'left');
         $this->db->where('p.characters_eve_idcharacters_OUT IN '.$chars);
+        $this->db->order_by('t2.time', 'desc');
         if($item_id) {
             $this->db->where('i.eve_iditem', $item_id);
         }
@@ -135,7 +136,7 @@ class Profits_model extends CI_Model
 
         $jsonEncodedData = json_encode($arrData);*/
         $inner = "";
-        $int = $interval-1;
+        $int = $interval;
         for($i=2; $i<$int; $i++) {
             $inner .= "SELECT ". $i . " UNION ALL ";
         }

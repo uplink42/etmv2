@@ -25,7 +25,7 @@ $(document).ready(function() {
             { 
             "bSearchable": false, "aTargets": [ 3 ] 
         }],
-        "aaSorting": []
+        "order": []
     });
 
     $(".profits-2-body p.yellow").html("<p>There are "+ table.rows().count() + " results for a total of "

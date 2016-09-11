@@ -10,6 +10,9 @@ $(document).ready(function() {
     window.location.hash = "";
     
     var table = $('#transactions-table').DataTable({
+        "order": [],
+        "bSortClasses": false,
+        "autoWidth": false,
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         "lengthMenu": [
             [50, 75, 100, -1],
@@ -30,7 +33,6 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [[ 0, "desc" ]],
         "aoColumnDefs": [
             { 
             "bSearchable": false, "aTargets": [ 6 ] 

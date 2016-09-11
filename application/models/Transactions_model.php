@@ -32,6 +32,7 @@ class Transactions_model extends CI_Model
         $this->db->join('transaction_processed tp', 'tp.transactionID = t.idbuy', 'left');
         $this->db->where('t.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
+        $this->db->order_by("t.time DESC");
         $query = $this->db->get();
         $count = $query->num_rows();
 
