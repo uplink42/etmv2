@@ -81,7 +81,7 @@
 		Trade Assistant
 	    </li>
 	    <li class="tradesimulator">
-		<a href="<?=base_url('Trade_simulator/index/'.$character_id .'?aggr='.$aggregate)?>"> Trade Simulator </a>
+		<a href="<?=base_url('TradeSimulator/index/'.$character_id .'?aggr='.$aggregate)?>"> Trade Simulator </a>
 	    </li>
 	    <li class="stocklists">
 		<a href="<?=base_url('StockLists/index/'.$character_id .'?aggr='.$aggregate)?>"> Stock Lists </a>

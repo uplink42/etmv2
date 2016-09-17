@@ -18,7 +18,6 @@ class TradeRoutes extends MY_Controller
 
             $aggregate = $this->aggregate;
             $data = $this->loadViewDependencies($character_id, $user_id, $aggregate);
-            $chars = $data['chars'];
 
             $data['selected'] = "traderoutes";
             
@@ -44,8 +43,13 @@ class TradeRoutes extends MY_Controller
         if($this->Login_model->checkCharacter($character_id, $this->session->iduser)) {
            $this->load->model('TradeRoutes_model');
            if (!empty($_REQUEST['origin']) && !empty($_REQUEST['destination'])) {
-                $origin = $_REQUEST['origin'];
-                $destination = $_REQUEST['destination'];
+                substr($_REQUEST['origin'],0,10) == "TRADE HUB:" ? 
+                    $origin = substr($_REQUEST['origin'],11) : $origin = $_REQUEST['origin'];;
+                substr($_REQUEST['destination'],0,10) == "TRADE HUB:" ? 
+                    $destination = substr($_REQUEST['destination'],11) : $destination = $_REQUEST['destination'];
+
+                    
+                
                 $data = $this->TradeRoutes_model->insertRoute($this->session->iduser, $origin, $destination);
            } else {
                 $data['message']   = "Missing stations provided";
