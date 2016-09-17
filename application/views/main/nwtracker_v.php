@@ -61,16 +61,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-filled panel-c-success">
-                    <div class="panel-heading">
-                        <div class="panel-tools">
-                            <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
-                            <a class="panel-close"><i class="fa fa-times"></i></a>
-                        </div>
-                        Net worth tracker
-                    </div>
                     <div class="panel-body">
                         <i class="fa fa-info"></i> Data is pulled once a day at 00.00 AM GMT time, and updates for every login past that point in each day.<br/>
-                        <i class="fa fa-info"></i> Item values are based on Eve's estimated prices
+                        <i class="fa fa-info"></i> Item values are based on Eve's estimated prices (updated several times a day)
                     </div>
                 </div>
             </div>

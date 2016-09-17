@@ -94,7 +94,7 @@
 		Options
 	    </li>
 	    <li class="settings">
-		<a href="<?=base_url('Settings/reports/'.$character_id .'?aggr='.$aggregate)?>">Account Settings</a>
+		<a href="<?=base_url('Settings/index/'.$character_id .'?aggr='.$aggregate)?>">Account Settings</a>
 	    </li>
 	    <li>
 		<a href="#api" data-toggle="collapse" aria-expanded="false">

@@ -52,9 +52,22 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                 <hr>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="panel panel-filled panel-c-success">
+                    <div class="panel-body">
+                        <i class="fa fa-info"></i> Here you can keep track of your assets (includes items inside stations, starbases and ships)<br/>
+                        <i class="fa fa-info"></i> Citadel assets are currently not supported by the API
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <div class="panel panel-filled panel-c-success">
+                <div class="panel panel-filled panel-c-white">
                     <div class="panel-heading">
                         <div class="panel-tools">
                             <a class="panel-toggle">
@@ -81,7 +94,7 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
-                <div class="panel panel-filled panel-c-success">
+                <div class="panel panel-filled panel-c-white">
                     <div class="panel-heading">
                         <div class="panel-tools">
                             <a class="panel-toggle">
@@ -123,10 +136,10 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
         </div>
         <div class="row">
             <div class="panel-body">
-                <div class="m-t-sm">
-                    <div class="c-white"><span class="label label-accent"></span> Recent Assets evolution (all regions for current characters)
+                <div class="panel panel-filled panel-c-success panel-collapse">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-area-chart"></i> Recent Assets Evolution (all regions)</h4>
                     </div>
-                        <!--<span class="sparkline"></span>-->
                 </div>
             </div>
             <div class="col-lg-12 col-xs-12">
@@ -134,19 +147,23 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                     <div style="position: absolute;bottom: 0;left: 0;right: 0">
                         <span class="sparkline" data-profit="<?= $graph_data?>"></span>
                     </div>
-                </div>
-            </div> 
+             
+                </div> 
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-filled">
                     <div class="panel-heading">
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-table"></i> Assets List</h4>
+                            </div>
+                        </div>
                         <div class="panel-tools">
                         </div>
                     </div>
                     <div class="panel-body assets-body">
-                        <p>This list contains all assets inside stations, POSes, hangars and containers. Citadel assets are currently not supported by the API.
-                        </p>
                         <p class="yellow"></p>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="assets-table">

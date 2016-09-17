@@ -29,11 +29,11 @@ gulp.task('js', function(){
   'assets/luna/vendor/bootstrap/js/bootstrap.min.js',
   'assets/luna/vendor/toastr/toastr.min.js',
   'assets/luna/vendor/sparkline/index.js',
-  'assets/luna/vendor/flot/jquery.flot.min.js',
+  /*'assets/luna/vendor/flot/jquery.flot.min.js',
   'assets/luna/vendor/flot/jquery.flot.resize.min.js',
-  'assets/luna/vendor/flot/jquery.flot.spline.js',
+  'assets/luna/vendor/flot/jquery.flot.spline.js',*/
   'assets/luna/vendor/jquery-ui/jquery-ui.min.js',
-  'assets/luna/vendor/angular/angular.min.js',
+  /*'assets/luna/vendor/angular/angular.min.js',*/
   'assets/luna/scripts/luna.js',
   'assets/js/toastr_options.js',
   'assets/js/app.js',

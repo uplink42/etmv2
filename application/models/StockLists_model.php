@@ -74,8 +74,6 @@ class StockLists_model extends CI_Model
             $this->db->where('itemlist_iditemlist', $list_id);
             $qtotal = $this->db->get('itemcontents');
 
-            log_message('error', $qtotal->row()->sum);
-
             if($qtotal->row()->sum <100) {
                 $item_id = $q1->row()->eve_iditem;
                 $data    = array("itemlist_iditemlist" => $list_id,
@@ -107,6 +105,38 @@ class StockLists_model extends CI_Model
             return true;
         }
         return false;
+    }
+
+    public function removeItem($item_id, $list_id)
+    {
+        $data = array("itemlist_iditemlist" => $list_id,
+                      "item_eve_iditem" => $item_id);
+
+        $query = $this->db->delete('itemcontents', $data);
+        if ($this->db->affected_rows() !=0) {
+            $notice = "success";
+            $message = "Item deleted successfully";
+        } else {
+            $notice = "error";
+            $message = "Could not delete item. Try again.";
+        }
+
+        return array("notice" => $notice, "message" => $message);
+    }
+
+    public function removeList($list_id)
+    {
+        $data = array('iditemlist' => $list_id);
+        $this->db->delete('itemlist', $data);
+        if ($this->db->affected_rows() !=0) {
+            $notice = "success";
+            $message = "Stock List deleted successfully";
+        } else {
+            $notice = "error";
+            $message = "Could not delete Stock List. Try again.";
+        }
+
+        return array("notice" => $notice, "message" => $message);
     }
 
 }

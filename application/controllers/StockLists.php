@@ -92,4 +92,29 @@ class StockLists extends MY_Controller
         }
     }
 
+    public function removeItem($item_id, $list_id)
+    {
+        $user_id = $this->session->iduser;
+
+        $this->load->model('StockLists_model');
+        if($this->StockLists_model->checkListBelong($list_id, $user_id)) {
+            $res = $this->StockLists_model->removeItem($item_id, $list_id);
+            echo json_encode($res);
+        } else {
+            echo json_encode(array("notice" => "error", "message" => "Invalid request"));
+        } 
+    }
+
+    public function removeList($list_id)
+    {
+        $user_id = $this->session->iduser;
+        $this->load->model('StockLists_model');
+        if($this->StockLists_model->checkListBelong($list_id, $user_id)) {
+            $res = $this->StockLists_model->removeList($list_id);
+            echo json_encode($res);
+        } else {
+            echo json_encode(array("notice" => "error", "message" => "Invalid request"));
+        } 
+    }
+
 }

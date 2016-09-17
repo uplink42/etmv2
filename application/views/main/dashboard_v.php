@@ -42,10 +42,13 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                 <hr>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-2 col-xs-6">
                 <div class="panel panel-filled">
+
                     <div class="panel-body">
+
                         <h2 class="m-b-none">
                             <i class="pe-7s-id"></i>
                             <?=$new_info->contracts?>
@@ -100,6 +103,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         <span class="sparkline" data-profit=<?= $week_profits?>></span>
                     </div>
                 <div class="panel-body">
+
                     <div class="m-t-sm">
                         <div class="c-white"><span class="label label-accent"></span> Last 7 day profits (all characters)</div>
                             <span class="small c-white">This week: <?=number_format($profits_trends['total_week'], 0) . " ISK";?>
@@ -117,25 +121,24 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         </div>
         <div class="row">
             <div class="col-md-8">
-                <div class="dropdown pull-right">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Time Interval
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                      <li  data-id="1"><a href="<?=base_url('Dashboard/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
-                      <li  data-id="3"><a href="<?=base_url('Dashboard/index/'.$character_id.'/3?aggr='.$aggregate)?>">Last 3 days</a></li>
-                      <li  data-id="60"><a href="<?=base_url('Dashboard/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
-                    </ul>
-                </div>
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h4>Latest profits - last <?=$interval?> day(s)</h4>
-                    </div>
-                </div>
-
                 <div class="panel panel-filled">
                     <div class="panel-body">
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="dropdown pull-right">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Time Interval
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
+                                  <li  data-id="1"><a href="<?=base_url('Dashboard/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
+                                  <li  data-id="3"><a href="<?=base_url('Dashboard/index/'.$character_id.'/3?aggr='.$aggregate)?>">Last 3 days</a></li>
+                                  <li  data-id="60"><a href="<?=base_url('Dashboard/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-line-chart"></i> Latest Profits - last <?=$interval?> day(s)</h4>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table id="profits-table" class="table table-striped table-hover">
                                 <thead>
@@ -178,9 +181,13 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                             $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "300", "pie", "json", $pie_data);
                             $pieChart->render();
                         ?>
-                        <h4>Asset distribution</h4>
                     </div>
                 </div>
+                <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-pie-chart"></i>  Assets Distribution:</h4>
+                            </div>
+                        </div>
                 <div id="pie">
                 </div>
             </div>

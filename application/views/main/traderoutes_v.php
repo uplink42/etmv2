@@ -48,13 +48,6 @@
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
-                    <div class="panel-heading">
-                        <div class="panel-tools">
-                            <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
-                            <a class="panel-close"><i class="fa fa-times"></i></a>
-                        </div>
-                        Trade Routes
-                    </div>
                     <div class="panel-body">
                         <i class="fa fa-info"></i> Here you can set predefined starting and destination stations you use often so you can later import them into the Trade Simulator<br/>
                         <i class="fa fa-info"></i> Trade Routes are shared among all account characters
@@ -66,8 +59,15 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
+                    <div class="panel-heading">
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-plane"></i> Create new Trade Route</h4>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="panel-body traderoute-creation-panel">
-                        <h3 class="yellow">Create new Trade Route</h3>
                         <form class="form-horizontal" data-url=<?=base_url()?>>
                             <div class="form-group"><label for="origin-station" class="col-sm-2 control-label">Origin</label>
                                 <div class="col-sm-10"><input type="text" class="form-control origin-station" id="origin-station" placeholder="Begin typing and select one of the highlighted stations"></div>
@@ -85,10 +85,16 @@
 
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
-                    <div class="panel-body traderoute-list-panel">
-                        <h3 class="yellow">Existing Trade Routes</h3>
+                    <div class="panel-heading">
+                        <div class="panel panel-filled panel-c-white panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-server"></i> Existing Trade Routes</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body traderoute-list-panel"> 
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-striped table-hover table-items">
                                 <thead>
                                     <tr>
                                         <th>Origin</th>

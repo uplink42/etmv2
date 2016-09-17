@@ -6,6 +6,7 @@ $(document).ready(function() {
 
     function populateDropdown() {
         var url = base + "StockLists/populateList/";
+
         $.ajax({
             dataType: "json",
             url: url,
@@ -25,17 +26,21 @@ $(document).ready(function() {
     //get items from a list
     function getItems(id) {
         var url = base + "StockLists/getItems/" + id;
+        $(".table-items").attr('data-id', id);
         $.ajax({
             dataType: "json",
             url: url,
             success: function(result) {
                 $(".table-items tr").remove();
                 $.each(result, function(k, v) {
-                    var id = result[k].id;
+                    var id_item = result[k].id;
+                    var url = "https://image.eveonline.com/Type/"+id_item+"_32.png";
+                    var $img = "<img src='"+url+"' alt='item'>";
                     var name = result[k].name;
-                    var vol = result[k].vol;
-                    var price = result[k].price;
-                    var $element = "<tr><td>" + name + "</td><td>" + vol + "</td><td>" + price + "</td><td>" + id + "</td><tr>";
+                    var vol = number_format(result[k].vol,2, '.', ',' );
+                    var price = number_format(result[k].price,2, '.', ',');
+                    var $btn = "<a href="+base+"StockLists/removeItem/"+id_item+"/"+id+"><button class='btn btn-danger btn-remove-item'>Remove</button></a>";
+                    var $element = "<tr><td> " + $img + name + "</td><td>" + vol + "</td><td>" + price + "</td><td>" + $btn + "</td><tr>";
                     $(".table tbody").append($element);
                 });
             }
@@ -58,6 +63,7 @@ $(document).ready(function() {
                 var id_list = result.id,
                     list_name = $("#list-name").val();
 
+                populateDropdown();
                 $(".add-list-item").show();
                 $(".stocklist-content").show();
                 $(".yellow.contents").text(list_name);
@@ -68,9 +74,9 @@ $(document).ready(function() {
     });
 
     //fetch dropdown data
-    $(".dropdown-list").focus(function() {
+    /*$(".dropdown-list").focus(function() {
         populateDropdown();
-    });
+    });*/
 
     //select list from dropdown
     $(".dropdown-list").change(function(e) {
@@ -123,6 +129,47 @@ $(document).ready(function() {
         });
 
         $("#item-name").val("");
+    });
+
+    //remove item
+    $(".table-items").on('click', 'a', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        var list_id = $(".table-items").data('id');
+
+        $.ajax({
+            dataType: "json",
+            url: url,
+            success: function(result) {
+                toastr[result.notice](result.message);
+                if(result.notice == "success") {
+                    getItems(list_id);
+                }
+            }
+        });
+
+    });
+
+    //remove List
+    $(".btn-delete-list-confirm").on('click', function(e) {
+        e.preventDefault();
+        var id = $(".table-items").attr('data-id');
+        var url = base + "StockLists/removeList/"+id;
+
+        $.ajax({
+            dataType: "json",
+            url: url,
+            success: function(result) {
+                toastr[result.notice](result.message);
+                if(result.notice == "success") {
+                    $(".modal-close").trigger('click');
+                    $(".add-list-item").hide();
+                    $(".stocklist-content").hide();
+                    $(".dropdown-list").val('0');
+                    populateDropdown();
+                }
+            }
+        });
     });
 
     

@@ -50,20 +50,10 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
-
-                    <div class="panel-heading">
-                        <div class="panel-tools">
-                            <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
-                            <a class="panel-close"><i class="fa fa-times"></i></a>
-                        </div>
-                        Stock Lists
-                    </div>
                     <div class="panel-body">
-                        <ul class="info-panel-main">
-                            <li><i class="fa fa-info yellow"></i> Here you can manage several items in bulk to simultaneaously check their prices with the Trade Simulator</li>
-                            <li><i class="fa fa-info yellow"></i> Stock lists are accessible to every character in your account</li>
-                            <li><i class="fa fa-info yellow"></i> You can store up to 100 items per list</li>
-                        </ul>
+                        <i class="fa fa-info"></i> Here you can manage several items in bulk to simultaneaously check their prices with the Trade Simulator <br />
+                        <i class="fa fa-info"></i> Stock Lists are accessible to every character in your account <br />
+                        <i class="fa fa-info"></i> You can store up to 100 items per list
                     </div>
                 </div> 
             </div>
@@ -73,7 +63,11 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-body stocklist-creation-panel">
-                        <h3 class="yellow">Create new Stock List</h3>
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-plane"></i> Create new Stock List</h4>
+                            </div>
+                        </div>
                         <form class="form-horizontal" data-url=<?=base_url()?>>
                             <div class="form-group"><label for="list-name" class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-10"><input type="text" class="form-control list-name" id="list-name" name="list-name" placeholder="Type your new list name here" autofocus></div>
@@ -86,10 +80,14 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-body traderoute-list-panel">
-                        <h3 class="yellow">Select Stock List</h3>
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-list-ol"></i> Select Stock List</h4>
+                            </div>
+                        </div>
                         <form>
                             <select class="form-control dropdown-list">
-                                <option class="default">Select a list</option>
+                                <option class="default" value="0">Select a list</option>
                             </select>
                         </form>
                     </div>
@@ -101,7 +99,11 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-body stocklist-panel">
-                        <h3 class="yellow">Add Item to List <span class="yellow contents"></span></h3>
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-arrow-up"></i> Add Item to Stock List <span class="yellow contents"></span></h4>
+                            </div>
+                        </div>
                         <form class="add-item">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="item-name" name="item-name" placeholder="Start typing an item name here and select an option below">
@@ -119,14 +121,18 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-body stocklist-panel">
-                        <h3 class="yellow">Contents: <span class="yellow contents"></span></h3>
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-th-list"></i> <span class="yellow contents"></span> Contents:</h4>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-responsive table-stripped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Item</th>
                                         <th>Volume</th>
-                                        <th>Avg Est. Price</th>
+                                        <th>Avg Est. Price (ISK)</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
@@ -134,6 +140,25 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                                     
                                 </tbody>
                             </table>
+                            <button class="btn btn-danger btn-delete-list pull-right" data-toggle='modal' data-target='#delete'>Delete Stock List</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" data-url="<?=base_url('StockLists/deleteList')?>">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title">Delete Stock List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="m-t-none"><i class="fa fa-warning"></i> Please make sure you know what you're doing!</h4>
+                        <p>This operation will remove the current stock List and all belonging items in it.</p>
+                        <p>Deleting this list is <span class="yellow">irreversible</span>. Are you sure you want to continue?</p>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-default modal-close" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-accent btn-delete-list-confirm" data-url="0">Save changes</button>
                         </div>
                     </div>
                 </div>
