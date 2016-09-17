@@ -3180,3 +3180,7 @@ body.loading .modal-load {
 .footer-links a {
     cursor: pointer;
 }
+
+.hourglass {
+    font-size: 28px;
+}

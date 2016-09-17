@@ -1,5 +1,4 @@
-
-	function number_format(number, decimals, decPoint, thousandsSep){
+function number_format(number, decimals, decPoint, thousandsSep){
 		decimals = decimals || 0;
 		number = parseFloat(number);
 
@@ -35,6 +34,7 @@
 	} );
 
 $(document).ready(function() {
+
 	$(".go-back").on('click', function() {
 		window.history.back();
 	});

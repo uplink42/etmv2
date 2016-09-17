@@ -48,8 +48,6 @@ class TradeRoutes extends MY_Controller
                 substr($_REQUEST['destination'],0,10) == "TRADE HUB:" ? 
                     $destination = substr($_REQUEST['destination'],11) : $destination = $_REQUEST['destination'];
 
-                    
-                
                 $data = $this->TradeRoutes_model->insertRoute($this->session->iduser, $origin, $destination);
            } else {
                 $data['message']   = "Missing stations provided";

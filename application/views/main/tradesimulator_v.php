@@ -23,7 +23,7 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
 ?>
                             <li class="divider" role="separator">
                             </li>
-                            <?php $url = "TradeSimulator/index/" . $character_id . "?aggr=1" ;?>
+                            <?php $url = "TradeSimulator/index/" . $character_id . "?aggr=1";?>
                             <li>
                                 <a href="<?=base_url($url)?>">
                                     <b>
@@ -68,69 +68,86 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                         <form name="tradesimulator" method="POST">
                             <div class="row">
                                 <div class="col-md-6">
+                                    <div class="text-center hourglass">
+                                        <i class="fa fa-hourglass-start"></i> BUY
+                                    </div>
                                     <div class="form-group">
                                         <label for="origin-station">Origin station: </label>
-                                        <input type="email" class="form-control" id="origin-station" placeholder="Type in a station name">
+                                        <input type="text" class="form-control" id="origin-station" placeholder="Type in a station name (or select a Trade Route below)">
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="buy-method" id="buy-method" checked>
+                                            <input type="radio" name="buy-method"  checked>
                                             I will purchase my items from buy orders
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="buy-method" id="buy-method">
+                                            <input type="radio" name="buy-method" >
                                             I will purchase my items from sell orders
                                         </label>
                                     </div>
                                     <div class="form-group">
                                         <label for="buyer">Buyer character: </label>
-                                        <select class="form-control" name="buyer">
-                                          
+                                        <select class="form-control" name="buyer" id="buyer">
+                                        <?php for ($i = 0; $i < count($character_list['chars']); $i++) {?>
+                                          <option value="<?=$character_list['chars'][$i]?>"><?=$character_list['char_names'][$i]?></option>
+                                           <?php }?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="text-center hourglass">
+                                        <i class="fa fa-hourglass-end"></i> SELL
+                                    </div>
                                     <div class="form-group">
                                         <label for="destination-station">Destination station: </label>
-                                        <input type="email" class="form-control" id="destination-station" placeholder="Type in a station name">
+                                        <input type="text" class="form-control" id="destination-station" placeholder="Type in a station name (or select a Trade Route below)">
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sell-method" id="sellsell-method">
+                                            <input type="radio" name="sell-method" >
                                             I will sell my items to buy orders
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sell-method" id="sell-method" checked>
+                                            <input type="radio" name="sell-method"  checked>
                                             I will sell my items to sell orders
                                         </label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="buyer">Seller character: </label>
-                                        <select class="form-control" name="buyer">
-                                          
+                                        <label for="seller">Seller character: </label>
+                                        <select class="form-control" name="seller" id="seller">
+                                         <?php for ($i = 0; $i < count($character_list['chars']); $i++) {?>
+                                          <option value="<?=$character_list['chars'][$i]?>"><?=$character_list['char_names'][$i]?></option>
+                                           <?php }?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 col-md-offset-3">
+                                <div class="col-md-8 col-md-offset-2">
                                     <div class="form-group">
                                         <label for="stocklist">Stock List: </label>
-                                        <select class="form-control" name="stocklist">
-                                          <option value="default">Select a Stock List</option>
+
+                                        <select class="form-control" name="stocklist" id="stocklist">
+                                        <?php foreach ($stocklists as $row) {?>
+                                            <option value="<?=$row->iditemlist?>"><?=$row->name?></option>
+                                        <?php }?>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="stocklist">Trade Route (optional): </label>
-                                        <select class="form-control" name="stocklist">
-                                          <option value="default">Select a Trade Route</option>
+                                        <label for="traderoute">Trade Route (optional): </label>
+                                        <select class="form-control" name="stocklist" id="traderoute">
+                                        <?php foreach ($traderoutes as $row) {?>
+                                          <option value="<?=$row->id?>"><?=$row->s1 . " >> " . $row->s2?></option>
+                                          <?php }?>
                                         </select>
+                                        <input type="hidden" name="from">
+                                        <input type="hidden" name="to">
                                     </div>
-                                    <p><i class="fa fa-info"></i> Trade Routes will auto-fill starting and destination stations</p>
+                                    <p><i class="fa fa-info"></i> Selecting a Trade Route will auto-fill starting and destination stations</p>
                                 </div>
                             </div>
                             <div class="row text-center">

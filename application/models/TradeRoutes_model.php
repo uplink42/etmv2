@@ -15,7 +15,7 @@ class TradeRoutes_model extends CI_Model
         $this->db->select('name as value');
         $this->db->where('eve_idstation < 1000000000000');
         $this->db->like('name', $input);
-        $this->db->limit('5');
+        $this->db->limit('10');
         $query = $this->db->get('station');
         $result = $query->result_array();
 
