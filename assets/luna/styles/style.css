@@ -3195,12 +3195,13 @@ body.loading .modal-load {
 }
 
 .panel-loading-common {
-  position: absolute; 
-  left: 0; 
-  right: 0; 
-  margin-left: auto; 
-  margin-right: auto; 
-  width: 300px;
-  top: 45%;
+    display: none;
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 300px;
+    top: 45%;
 }
 

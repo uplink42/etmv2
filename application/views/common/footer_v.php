@@ -24,7 +24,7 @@
             </ul>
         </div>
         <div class="panel-body text-center footer-desc" style="display: block;">
-            ©Eve Trade Master 2016 - design and development by uplink42<br>
+            © Eve Trade Master 2016 - design and development by uplink42<br>
             Eve Online, the Eve logo and all associated logos and designs are intellectual property of CCP hf,
             and are under copyright. That means copying them is not right. <br>
         </div>

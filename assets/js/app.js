@@ -35,7 +35,7 @@ function number_format(number, decimals, decPoint, thousandsSep){
 
 $(document).ready(function() {
 
-    $(".panel-loading-common").hide();
+    //$(".panel-loading-common").hide();
 
 	$(".go-back").on('click', function() {
 		window.history.back();
