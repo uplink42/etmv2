@@ -184,10 +184,10 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     </div>
                 </div>
                 <div class="panel panel-filled panel-c-success panel-collapse">
-                            <div class="panel-heading">
-                                <h4><i class="fa fa-pie-chart"></i>  Assets Distribution:</h4>
-                            </div>
-                        </div>
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-pie-chart"></i>  Assets Distribution:</h4>
+                    </div>
+                </div>
                 <div id="pie">
                 </div>
             </div>

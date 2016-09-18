@@ -51,7 +51,8 @@ class StockLists_model extends CI_Model
     {
         $this->db->select('name as value');
         $this->db->from('item');
-        $this->db->like('name', $input);
+        $this->db->where("name LIKE '%".$input."%'");
+        $this->db->where("type <> 0");
         $this->db->order_by('name', 'asc');
         $this->db->limit('20');
         $query  = $this->db->get();

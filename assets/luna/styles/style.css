@@ -3037,7 +3037,11 @@ fieldset[disabled] .form-control {
     content: " %";
 }
 
-#profits-table, #profits-2-table {
+#ts-table td:nth-child(9)::after {
+    content: " %";
+}
+
+#profits-table, #profits-2-table, #ts-table {
     color: #fff;
     opacity: 0.7;
 }
@@ -3047,6 +3051,7 @@ fieldset[disabled] .form-control {
 }
 
 #profits-table .btn-default,
+#ts-table .btn-default,
 #profits-2-table .btn-default,
 #profits-2-table span {
     color: #fff;
@@ -3183,4 +3188,8 @@ body.loading .modal-load {
 
 .hourglass {
     font-size: 28px;
+}
+
+.row-bordered {
+    border: 1px solid #fff;
 }
