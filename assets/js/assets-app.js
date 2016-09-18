@@ -16,7 +16,8 @@ $(document).ready(function() {
         }, {
             extend: 'pdf',
             title: 'assets',
-            className: 'btn-sm'
+            className: 'btn-sm',
+            orientation: 'landscape'
         }, {
             extend: 'print',
             className: 'btn-sm'

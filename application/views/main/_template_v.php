@@ -33,4 +33,36 @@
 ?>
     </div>
     <?php if(!empty($email)) {$this->load->view('common/feedback_v');} ?>
+
+        <div class="panel panel-filled panel-loading-common text-center">
+            <div class="panel-body">
+                Refreshing data... please wait
+                <div class="windows8">
+                    <br>
+                    <div class="wBall" id="wBall_1">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
+                    <div class="wBall" id="wBall_2">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
+                    <div class="wBall" id="wBall_3">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
+                    <div class="wBall" id="wBall_4">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
+                    <div class="wBall" id="wBall_5">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
 </body>
+    

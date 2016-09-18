@@ -51,10 +51,10 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
             <div class="col-md-12">
                  <div class="panel panel-filled panel-c-success">
                     <div class="panel-body">
-                        <i class="fa fa-info"></i> You can quickly check price differences between systems and regions here. <br/>
-                        <i class="fa fa-info"></i> You must first create Stock Lists for the items you wish to submit in this page <br />
-                        <i class="fa fa-info"></i> Broker fees and transaction taxes are automatically calculated based on your standings and skills for the chosen characters <br />
-                        <i class="fa fa-info"></i> Citadel market data is not available yet
+                        <i class="fa fa-info yellow"></i> You can quickly check price differences between systems and regions here. <br/>
+                        <i class="fa fa-info yellow"></i> You must first create Stock Lists for the items you wish to submit in this page <br />
+                        <i class="fa fa-info yellow"></i> Broker fees and transaction taxes are automatically calculated based on your standings and skills for the chosen characters <br />
+                        <i class="fa fa-info yellow"></i> Citadel market data is not available yet
                     </div>
                 </div>
             </div>
@@ -216,15 +216,16 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                                 <table id="ts-table" class="table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <td>Item</td>
-                                            <td>Buy Price</td>
-                                            <td>Broker Fee (B)</td>
-                                            <td>Sell Price</td>
-                                            <td>Broker Fee (S)</td>
-                                            <td>Transaction Tax (S)</td>
-                                            <td>Raw Profit</td>
-                                            <td>Profit/m<sup>3</sup></td>
-                                            <td>Margin(%)</td>
+                                            <th>Item</th>
+                                            <th>Vol (m<sup>3</sup>)</th>
+                                            <th class="yellow">Buy Price</th>
+                                            <th>Broker Fee (B)</th>
+                                            <th class="yellow">Sell Price</th>
+                                            <th>Broker Fee (S)</th>
+                                            <th>Transaction Tax (S)</th>
+                                            <th class="yellow">Raw Profit</th>
+                                            <th>Profit/m<sup>3</sup></th>
+                                            <th>Margin(%)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -237,6 +238,7 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                                         ?>
                                         <tr class="<?=$type?>">
                                             <td><img src="<?=$img?>" alt="icon"> <?=$name?></td>
+                                            <td><?=number_format($row['vol'], 2)?></td>
                                             <td><?=number_format($row['buy_price'], 2)?></td>
                                             <td><?=number_format($row['buy_broker'], 2)?></td>
                                             <td><?=number_format($row['sell_price'], 2)?></td>

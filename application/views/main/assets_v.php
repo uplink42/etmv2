@@ -57,8 +57,8 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
                     <div class="panel-body">
-                        <i class="fa fa-info"></i> Here you can keep track of your assets (includes items inside stations, starbases and ships)<br/>
-                        <i class="fa fa-info"></i> Citadel assets are currently not supported by the API
+                        <i class="fa fa-info yellow"></i> Here you can keep track of your assets (includes items inside stations, starbases and ships)<br/>
+                        <i class="fa fa-info yellow"></i> Citadel assets are currently not supported by the API
                     </div>
                 </div>
             </div>

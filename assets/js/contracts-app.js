@@ -15,6 +15,7 @@ $(document).ready(function() {
             className: 'btn-sm'
         }, {
             extend: 'pdf',
+            orientation: 'landscape',
             title: 'contracts_active',
             className: 'btn-sm'
         }, {

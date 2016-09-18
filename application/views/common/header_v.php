@@ -10,7 +10,7 @@
                     </a>
                 </div>
             </div>
-            <a class="navbar-brand" data-selected="<?=$selected?>" href="<?=base_url('Updater')?>">
+            <a class="navbar-brand nav-u" data-selected="<?=$selected?>" href="<?=base_url('Updater')?>">
                 ETM
                 <span>
                     v.2.0

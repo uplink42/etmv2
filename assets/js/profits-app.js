@@ -16,6 +16,7 @@ $(document).ready(function() {
         }, {
             extend: 'pdf',
             title: 'profits',
+            orientation: 'landscape',
             className: 'btn-sm'
         }, {
             extend: 'print',

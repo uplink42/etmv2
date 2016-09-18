@@ -12,7 +12,7 @@ class Transactions extends MY_Controller
         $this->load->library('session');
     }
 
-    public function index($character_id, $interval = 14)
+    public function index($character_id, $interval = 14, $transaction_id = 0, $latest = null)
     {
         if($interval>365) $interval = 365;
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {

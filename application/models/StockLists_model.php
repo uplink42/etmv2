@@ -64,6 +64,7 @@ class StockLists_model extends CI_Model
     public function insertItem($name, $list_id)
     {
         $item = "";
+        $limit = 100;
         $this->db->where('name', $name);
         $q1 = $this->db->get('item');
 
@@ -75,7 +76,7 @@ class StockLists_model extends CI_Model
             $this->db->where('itemlist_iditemlist', $list_id);
             $qtotal = $this->db->get('itemcontents');
 
-            if($qtotal->row()->sum <100) {
+            if($qtotal->row()->sum <$limit) {
                 $item_id = $q1->row()->eve_iditem;
                 $data    = array("itemlist_iditemlist" => $list_id,
                                  "item_eve_iditem"       => $item_id);
@@ -87,7 +88,7 @@ class StockLists_model extends CI_Model
                 $item = $item_id;
             } else {
                 $notice = "error";
-                $msg = "You've reached the maximum amount of items in this list (100)";
+                $msg = "You've reached the maximum amount of items in this list (". $limit .")";
             }
         }
         return array("notice" => $notice, "message" => $msg, "item" => $item);

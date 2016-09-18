@@ -62,8 +62,8 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="col-md-12">
                 <div class="panel panel-filled panel-c-success">
                     <div class="panel-body">
-                        <i class="fa fa-info"></i> Data is pulled once a day at 00.00 AM GMT time, and updates for every login past that point in each day.<br/>
-                        <i class="fa fa-info"></i> Item values are based on Eve's estimated prices (updated several times a day)
+                        <i class="fa fa-info yellow"></i> Data is pulled once a day at 00.00 AM GMT time, and updates for every login past that point in each day.<br/>
+                        <i class="fa fa-info yellow"></i> Item values are based on Eve's estimated prices (updated several times a day)
                     </div>
                 </div>
             </div>

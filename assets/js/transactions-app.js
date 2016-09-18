@@ -28,6 +28,7 @@ $(document).ready(function() {
         }, {
             extend: 'pdf',
             title: 'transactions',
+            orientation: 'landscape',
             className: 'btn-sm'
         }, {
             extend: 'print',

@@ -35,8 +35,16 @@ function number_format(number, decimals, decPoint, thousandsSep){
 
 $(document).ready(function() {
 
+    $(".panel-loading-common").hide();
+
 	$(".go-back").on('click', function() {
 		window.history.back();
+	});
+
+	$(".nav-u").on('click', function(e) {
+		$("section").hide();
+		$(".footer-panel").hide();
+		$(".panel-loading-common").show();
 	});
 
 	$(".btn-send-feedback").on('click', function() {

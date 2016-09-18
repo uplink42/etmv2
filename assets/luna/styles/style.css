@@ -3037,7 +3037,7 @@ fieldset[disabled] .form-control {
     content: " %";
 }
 
-#ts-table td:nth-child(9)::after {
+#ts-table td:nth-child(10)::after {
     content: " %";
 }
 
@@ -3193,3 +3193,14 @@ body.loading .modal-load {
 .row-bordered {
     border: 1px solid #fff;
 }
+
+.panel-loading-common {
+  position: absolute; 
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  width: 300px;
+  top: 45%;
+}
+

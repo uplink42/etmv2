@@ -61,18 +61,12 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
                     <div class="panel-heading">
-                        <div class="panel-tools">
-                            <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
-                            <a class="panel-close"><i class="fa fa-times"></i></a>
-                        </div>
                         Profits from last <?=$interval?> days
                     </div>
                     <div class="panel-body">
-                        <ul class="info-panel-main">
-                            <li><i class="fa fa-info yellow"></i> This view detects all item <span class="yellow">resales</span> and calculates profits made. Broker fees are always assumed regardless if you bought an item from a buy order or a sell order. </li>
-                            <li><i class="fa fa-info yellow"></i>  Broker fees and transaction taxes are already included in prices. </li>
-                            <li><i class="fa fa-info yellow"></i> Profits are calculated using a first-in, first-out <span class="yellow">(FIFO)</span> inventory management method.</li>
-                        </ul>
+                        <i class="fa fa-info yellow"></i> This page detects all item <span class="yellow">resales</span> and calculates profits made. Broker fees are always assumed regardless if you bought an item from a buy order or a sell order. <br />
+                        <i class="fa fa-info yellow"></i>  Broker fees and transaction taxes are already included in prices. <br />
+                        <i class="fa fa-info yellow"></i> Profits are calculated using a first-in, first-out <span class="yellow"><a href="https://en.wikipedia.org/wiki/FIFO_and_LIFO_accounting" target="_blank">(FIFO)</a></span> inventory management method.
                     </div>
                 </div> 
             </div>
@@ -152,7 +146,7 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
                                             <?=$row['sys_sell']?></td>
                                         <td><?=number_format($row['buy_price'],2)?><br />
                                             <?=number_format($row['sell_price'],2)?></td>
-                                        <td><?=$row['profit_quantity']?></td>
+                                        <td><?=number_format($row['profit_quantity'],0)?></td>
                                         <td><?=number_format($row['buy_price_total'],2)?><br />
                                             <?=number_format($row['sell_price_total'],2)?></td>
                                         <td><?=$row['time_buy']?> <br />

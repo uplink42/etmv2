@@ -51,9 +51,9 @@ for ($i = 0; $i < count($character_list['chars']); $i++) {
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
                     <div class="panel-body">
-                        <i class="fa fa-info"></i> Here you can manage several items in bulk to simultaneaously check their prices with the Trade Simulator <br />
-                        <i class="fa fa-info"></i> Stock Lists are accessible to every character in your account <br />
-                        <i class="fa fa-info"></i> You can store up to 100 items per list
+                        <i class="fa fa-info yellow"></i> Here you can manage several items in bulk to simultaneaously check their prices with the Trade Simulator <br />
+                        <i class="fa fa-info yellow"></i> Stock Lists are accessible to every character in your account <br />
+                        <i class="fa fa-info yellow"></i> You can store up to 100 items per list
                     </div>
                 </div> 
             </div>
