@@ -10,7 +10,7 @@ class Profits extends MY_Controller
         ini_set('memory_limit', '-1');
         $this->db->cache_on();
         $this->load->library('session');
-
+        $this->page = "Profits";
     }
 
     public function index($character_id, $interval = 1, $item_id = null)

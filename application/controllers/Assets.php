@@ -10,6 +10,7 @@ class Assets extends MY_Controller
         parent::__construct();
         $this->db->cache_on();
         $this->load->library('session');
+        $this->page = "Assets";
 
         if(isset($_GET['sig'])) {
             if($_GET['sig'] ==0 || $_GET['sig'] ==1) {

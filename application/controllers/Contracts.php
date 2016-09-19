@@ -11,6 +11,7 @@ class Contracts extends MY_Controller
         parent::__construct();
         $this->db->cache_on();
         $this->load->library('session');
+        $this->page = "Contracts";
 
         if(isset($_GET['active'])) {
             if ($_GET['active'] == "All" || 

@@ -10,6 +10,7 @@ class Transactions extends MY_Controller
         $this->db->cache_off();
         ini_set('memory_limit', '-1');
         $this->load->library('session');
+        $this->page = "Transactions";
     }
 
     public function index($character_id, $interval = 14, $transaction_id = 0, $latest = null)

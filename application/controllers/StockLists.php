@@ -9,6 +9,7 @@ class StockLists extends MY_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->load->library('session');
+        $this->page = "StockLists";
 
     }
 

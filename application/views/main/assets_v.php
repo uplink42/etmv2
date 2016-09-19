@@ -4,35 +4,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="view-header">
-                    <div class="dropdown pull-right">
-                        <button aria-expanded="true" aria-haspopup="true" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdownmenu-characters" type="button">
-                            Character
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <?php
-for ($i = 0; $i < count($character_list['chars']); $i++) {
-    ?>
-                            <li>
-                                <a href="<?=base_url('Assets/index/' . $character_list['chars'][$i]) . '/'. $region_id . '?sig='.$sig.'&aggr=0'?>">
-                                    <?=$character_list['char_names'][$i]?>
-                                </a>
-                            </li>
-                            <?php
-}
-?>
-                            <li class="divider" role="separator">
-                            </li>
-                            <?php $url = "Assets/index/" . $character_id . "/" . $region_id . "?sig='.$sig.'&aggr=1" ;?>
-                            <li>
-                                <a href="<?=base_url($url)?>">
-                                    <b>
-                                        All
-                                    </b>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <?php $this->load->view('common/selector_v');?>
                     <div class="header-icon">
                         <?php if ($aggregate == 0) {?>
                         <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/<?=$character_id?>_64.jpg">

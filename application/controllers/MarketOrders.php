@@ -10,6 +10,7 @@ class MarketOrders extends MY_Controller
         parent::__construct();
         $this->db->cache_on();
         $this->load->library('session');
+        $this->page = "MarketOrders";
     }
 
     public function index($character_id)

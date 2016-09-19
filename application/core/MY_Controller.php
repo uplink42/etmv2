@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class MY_Controller extends CI_Controller
 {
     protected $aggregate;
+    protected $page;
 
     public function __construct()
     {
@@ -40,6 +41,7 @@ class MY_Controller extends CI_Controller
             $this->session->unset_userdata('start');
             $this->session->unset_userdata('iduser');
             $this->load->view('main/_template_v', $data);
+
             return false;
         }
     }
@@ -77,6 +79,96 @@ class MY_Controller extends CI_Controller
         $this->load->model('Login_model');
         $data['character_name'] = $this->Login_model->getCharacterName($character_id);
         $data['character_id']   = $character_id;
+
+        $data['selector'] = $this->buildSelector();
+        return $data;
+    }
+
+    protected function buildSelector()
+    {
+        switch($this->page) {
+
+            case ('Dashboard'):
+                $data['hasInterval'] = true;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('Transactions'):
+                $data['hasInterval'] = true;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('Profits'):
+                $data['hasInterval'] = true;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('Statistics'):
+                $data['hasInterval'] = true;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('MarketOrders'):
+                $data['hasInterval'] = false;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('Contracts'):
+                $data['hasInterval'] = false;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('Assets'):
+                $data['hasInterval'] = false;
+                $data['hasRegion'] = true;
+                $data['gets'] = "sig";
+                break;
+
+            case ('NetworthTracker'):
+                $data['hasInterval'] = true;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('TradeSimulator'):
+                $data['hasInterval'] = false;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('StockLists'):
+                $data['hasInterval'] = false;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('TradeRoutes'):
+                $data['hasInterval'] = false;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('CitadelTax'):
+                $data['hasInterval'] = false;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+            case ('Settings'):
+                $data['hasInterval'] = false;
+                $data['hasRegion'] = false;
+                $data['gets'] = null;
+                break;
+
+        }
+        
+        $data['page'] = $this->page;
         return $data;
     }
 
