@@ -108,7 +108,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     $row['profit_total'] >0 ? $res = "success" : $res="danger";
                                     $row['character_buy'] == $row['character_sell'] ? $row['character_sell'] = "" : "";
                                     $row['sys_buy'] == $row['sys_sell'] ? $row['sys_sell'] = "" : "";
-                                    $img ? $url = "https://image.eveonline.com/Type/".$row['item_id']."_32.png" : $url="";
+                                    $img ? $url = $row['url'] : $url="";
                                     ?>
                                     <tr class="<?=$res?>">
                                         <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>

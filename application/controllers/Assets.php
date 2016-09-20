@@ -66,7 +66,7 @@ class Assets extends MY_Controller
             $data['img'] = $img;
             $data['sig'] = $this->significant;
             $data['ratio'] = $ratio;
-            $data['asset_list'] = $asset_list;
+            $data['asset_list'] = $this->injectIcons($asset_list);
             $data['region_name'] = $region_name;
             $data['region_id'] = $region_id;
             $data['totals'] = $asset_totals;

@@ -38,13 +38,12 @@ class Dashboard extends MY_Controller
                 $img = true;
             }
 
-
             $data['pie_data']     = $this->Dashboard_model->getPieData($chars);
             $data['week_profits'] = $this->Dashboard_model->getWeekProfits($chars);
             $data['new_info']     = $this->Dashboard_model->getNewInfo($chars);
 
             $data['img']            = $img;
-            $data['profits']        = $profits['result'];
+            $data['profits']        = $this->injectIcons($profits['result']);
             $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($chars);
 
             $data['view'] = 'main/dashboard_v';

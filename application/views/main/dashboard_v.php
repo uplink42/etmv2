@@ -138,7 +138,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                       foreach ($profits as $row) {
                                             if($row['profit_unit'] >0 ? $res = "success" : $res="danger");
                                             $id = $row['item_id'];
-                                            $img ? $url = "https://image.eveonline.com/Type/".$id."_32.png" : $url="";
+                                            $img ? $url = $row['url'] : $url="";
                                           ?>
                                         <tr class="<?=$res?>">
                                             <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>

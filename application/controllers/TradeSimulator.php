@@ -7,7 +7,7 @@ class TradeSimulator extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->db->cache_off();
+        $this->db->cache_on();
         $this->load->library('session');
         $this->page = "TradeSimulator";
     }

@@ -23,8 +23,12 @@ class MarketOrders extends MY_Controller
             $data['selected'] = "marketorders";
 
             $this->load->model('MarketOrders_model');
-            $transactions = $this->MarketOrders_model->getMarketOrders($chars);
-            
+            $orders_buy = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "buy"));
+            $orders_sell = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "sell"));
+
+
+            $data['buyorders'] = $orders_buy;
+            $data['sellorders'] = $orders_sell;
             $data['view']           = 'main/marketorders_v';
             $this->load->view('main/_template_v', $data);
         }

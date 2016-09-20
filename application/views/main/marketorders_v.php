@@ -29,21 +29,12 @@
                 <div class="panel panel-filled panel-c-success">
 
                     <div class="panel-heading">
-                        
-                        Market Orders from last <?=$interval?> days
+                        <button class="btn btn-default btn-success pull-right">Order Check</button>
+                        Market Orders
                     </div>
                     <div class="panel-body">
-           
-                            <i class="fa fa-info yellow"></i> You can check if your orders are still on top of the list or have been undercut by clicking here
-                
-                    </div>
-                </div> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-filled">
-                    <div class="panel-heading">
+                        <i class="fa fa-info yellow"></i> You can check the current state of your orders with Order Check at the right <br />
+                        <i class="fa fa-info yellow"></i> There is a 6 minute cache timer between requests 
                         <div class="dropdown pull-right">
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Time Interval
@@ -59,14 +50,22 @@
                                 <li><a href="<?=base_url('MarketOrders/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
                             </ul>
                         </div>
-                        <div class="panel-tools">
-                        </div>
+                    </div>
+
+                </div> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-filled">
+                    <div class="panel-heading">
+
                     </div>
                     <br>
-                    <div class="panel-body transactions-body">
+                    <div class="panel-body sellorders-body">
                         <p class="yellow"></p>
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover" id="transactions-table">
+                            <table class="table table-striped table-hover" id="sellorders-table">
                                 <thead>
                                     <tr>
                                         <th>Time</th>
@@ -75,14 +74,27 @@
                                         <th>ISK/unit</th>
                                         <th>ISK/total</th>
                                         <th>Type</th>
-                                        <th>Other party</th>
                                         <th>Station</th>
                                         <th>Character</th>
+                                        <th>Range</th>
                                         <th>State</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <?php foreach($buyorders as $buy) {?>
+                                        <tr>
+                                            <td><?=$buy['date']?></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>

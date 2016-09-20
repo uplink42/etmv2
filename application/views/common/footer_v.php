@@ -18,7 +18,9 @@
             </div>
             <ul class="list-inline">
                 <li>Home</li>
+                <?php if(isset($email)) { ?>
                 <li><a data-toggle="modal" data-target="#modal-feedback">Feedback and bug reports</a></li>
+                <?php } ?>
                 <li>Donate</li>
                 <li>Blog</li>
             </ul>

@@ -153,7 +153,7 @@
                                     <?php
                                     foreach ($asset_list as $asset) {
                                         $id = $asset['item_id'];
-                                        $img ? $url = "https://image.eveonline.com/Type/".$id."_32.png" : $url="";
+                                        $img ? $url = $asset['url'] : $url="";
 
                                         ?>
                                         <tr>

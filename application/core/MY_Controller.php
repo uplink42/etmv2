@@ -84,92 +84,116 @@ class MY_Controller extends CI_Controller
         return $data;
     }
 
-    protected function buildSelector()
+    private function buildSelector()
     {
         switch($this->page) {
 
             case ('Dashboard'):
                 $data['hasInterval'] = true;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('Transactions'):
                 $data['hasInterval'] = true;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('Profits'):
                 $data['hasInterval'] = true;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('Statistics'):
                 $data['hasInterval'] = true;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('MarketOrders'):
                 $data['hasInterval'] = false;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('Contracts'):
                 $data['hasInterval'] = false;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('Assets'):
                 $data['hasInterval'] = false;
                 $data['hasRegion'] = true;
                 $data['gets'] = "sig";
+                $data['gets'] = false;
                 break;
 
             case ('NetworthTracker'):
                 $data['hasInterval'] = true;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('TradeSimulator'):
                 $data['hasInterval'] = false;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('StockLists'):
                 $data['hasInterval'] = false;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('TradeRoutes'):
                 $data['hasInterval'] = false;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('CitadelTax'):
                 $data['hasInterval'] = false;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
             case ('Settings'):
                 $data['hasInterval'] = false;
                 $data['hasRegion'] = false;
-                $data['gets'] = null;
+                $data['gets'] = false;
                 break;
 
         }
         
         $data['page'] = $this->page;
         return $data;
+    }
+
+    public function generateIcon($item_id)
+    {
+        $url = "https://image.eveonline.com/Type/".$item_id."_32.png";
+        return $url;
+    }
+
+    public function injectIcons($dataset, $type = null)
+    {
+        //default array
+        $max = count($dataset);
+
+        if($max>0) {
+            for($i=0; $i<$max; $i++) {
+                if($type == "object") {
+                    $dataset[$i]->url = $this->generateIcon($dataset[$i]->item_id);
+                } else {
+                    $dataset[$i]['url'] = $this->generateIcon($dataset[$i]['item_id']);
+                }
+            }
+        }
+        return $dataset;
     }
 
 }

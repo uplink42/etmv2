@@ -33,11 +33,9 @@
                         Transactions from last <?=$interval?> days
                     </div>
                     <div class="panel-body">
-           
-                            <i class="fa fa-info yellow"></i> You can unlink certain transactions from being evaluated in the Profit calculator (e.g items for personal use or that you don't intend to re-sell) <br>
-                            <i class="fa fa-info yellow"></i> Transactions already processed as profits are marked with a <span class="yellow">P</span> and cannot be unlinked. You can unlink unprocessed buy transactions so that they aren't taken into account later on when calculating profits <br>
-                            <i class="fa fa-warning yellow"></i> Unlinking transactions is <span class="yellow">irreversible</span> and can negatively impact the profit calculations if done incorrectly. Please use caution!
-                
+                        <i class="fa fa-info yellow"></i> You can unlink certain transactions from being evaluated in the Profit calculator (e.g items for personal use or that you don't intend to re-sell) <br>
+                        <i class="fa fa-info yellow"></i> Transactions already processed as profits are marked with a <span class="yellow">P</span> and cannot be unlinked. You can unlink unprocessed buy transactions so that they aren't taken into account later on when calculating profits <br>
+                        <i class="fa fa-warning yellow"></i> Unlinking transactions is <span class="yellow">irreversible</span> and can negatively impact the profit calculations if done incorrectly. Please use caution!
                     </div>
                 </div> 
             </div>
@@ -93,7 +91,7 @@
                                                 Unlink</button>";
                                             }
                                             $id = $row->item_id;
-                                            $img ? $url = "https://image.eveonline.com/Type/".$id."_32.png" : $url="";
+                                            $img ? $url = $row->url : $url="";
                                         ?>
                                     <tr>
                                         <td><?=$row->time?></td>
