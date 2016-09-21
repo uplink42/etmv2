@@ -35,6 +35,12 @@ $(document).ready(function() {
             + number_format(table.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
     });
 
+    $(".assets-body .item-name").on('click', function() {
+        var name = $(this).text();
+        $(".assets-body input.form-control").val(name);
+        $(".assets-body input.form-control").trigger("keyup");
+    });
+
         
 
     // Sparkline charts

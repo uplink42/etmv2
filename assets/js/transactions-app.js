@@ -41,6 +41,12 @@ $(document).ready(function() {
     });
 
 
+    $(".transactions-body .item-name").on('click', function() {
+        var name = $(this).text();
+        $(".transactions-body input.form-control").val(name);
+        $(".transactions-body input.form-control").trigger("keyup");
+    });
+
     $(".transactions-body p.yellow").html("<p>There are "+ table.rows().count() + " results for a total of "
         + number_format(table.column(4).data().sum(),2, '.', ',' ) + " ISK</p>");
     $("#transactions-table_filter input").keyup(function () {

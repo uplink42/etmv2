@@ -14,6 +14,7 @@ class MarketOrders_model extends CI_Model
 		$this->db->select('o.eve_item_iditem as item_id, 
 						   i.name as item_name, 
 						   s.eve_idstation as station_id,
+                           s.name as station_name,
 						   o.price as price_unit,
 						   o.volume_remaining as vol,
 						   (o.price*o.volume_remaining) as price_total,
@@ -28,6 +29,7 @@ class MarketOrders_model extends CI_Model
 		$this->db->join('station s', 's.eve_idstation = o.station_eve_idstation');
         $this->db->join('characters c', 'c.eve_idcharacter = o.characters_eve_idcharacters');
         $this->db->join('system sys', 'sys.eve_idsystem = s.system_eve_idsystem');
+        $this->db->where('o.order_state', 'open');
         $this->db->where('o.characters_eve_idcharacters IN '.$chars);
         $this->db->where('o.type', $type);
         $query = $this->db->get();

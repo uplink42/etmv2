@@ -37,12 +37,12 @@
                         <i class="fa fa-info yellow"></i> Transactions already processed as profits are marked with a <span class="yellow">P</span> and cannot be unlinked. You can unlink unprocessed buy transactions so that they aren't taken into account later on when calculating profits <br>
                         <i class="fa fa-warning yellow"></i> Unlinking transactions is <span class="yellow">irreversible</span> and can negatively impact the profit calculations if done incorrectly. Please use caution!
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-filled">
+                <div class="panel panel-filled">             
                     <div class="panel-heading">
                         <div class="dropdown pull-right">
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -59,10 +59,9 @@
                                 <li><a href="<?=base_url('Transactions/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
                             </ul>
                         </div>
-                        <div class="panel-tools">
-                        </div>
-                    </div>
-                    <br>
+                        <button class="btn btn-default pull-right btn-clear">Clear filters</button>           
+                    </div>   
+
                     <div class="panel-body transactions-body">
                         <p class="yellow"></p>
                         <div class="table-responsive">
@@ -96,7 +95,7 @@
                                     <tr>
                                         <td><?=$row->time?></td>
                                         <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
-                                            <?=$row->item_name?></td>
+                                            <a class="item-name" style="color: #fff"><?=$row->item_name?></a></td>
                                         <td><?=number_format($row->quantity,0)?></td>
                                         <td><?=number_format($row->price_unit,2)?></td>
                                         <td><?=number_format($row->price_total,2)?></td>

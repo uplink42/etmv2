@@ -28,9 +28,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         <div class="row">
             <div class="col-lg-2 col-xs-6">
                 <div class="panel panel-filled">
-
                     <div class="panel-body">
-
                         <h2 class="m-b-none">
                             <i class="pe-7s-id"></i>
                             <?=$new_info->contracts?>
@@ -85,7 +83,6 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         <span class="sparkline" data-profit=<?= $week_profits?>></span>
                     </div>
                 <div class="panel-body">
-
                     <div class="m-t-sm">
                         <div class="c-white"><span class="label label-accent"></span> Last 7 day profits (all characters)</div>
                             <span class="small c-white">This week: <?=number_format($profits_trends['total_week'], 0) . " ISK";?>
@@ -170,6 +167,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         <h4><i class="fa fa-pie-chart"></i>  Assets Distribution:</h4>
                     </div>
                 </div>
+
                 <div id="pie">
                 </div>
             </div>

@@ -27,7 +27,6 @@
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
-
                     <div class="panel-heading">
                         <button class="btn btn-default btn-success pull-right">Order Check</button>
                         Market Orders
@@ -55,15 +54,71 @@
                 </div> 
             </div>
         </div>
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-filled">
                     <div class="panel-heading">
-
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="pe-7s-cart"></i> Buy Orders</h4>
+                            </div>
+                        </div>
+                        <button class="btn btn-default pull-right btn-clear">Clear filters</button>
                     </div>
-                    <br>
-                    <div class="panel-body sellorders-body">
+                    <div class="panel-body buyorders-body">
                         <p class="yellow"></p>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover" id="buyorders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Item</th>
+                                        <th>Q</th>
+                                        <th>ISK/unit</th>
+                                        <th>ISK/total</th>
+                                        <th>Station</th>
+                                        <th>Character</th>
+                                        <th>Range</th>
+                                        <th>State</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($buyorders as $buy) {
+                                        $url = $buy['url'];?>
+                                        <tr>
+                                            <td><?=$buy['date']?></td>
+                                            <td><img src="<?=$url?>" alt="icon"> <a class="item-name" style="color: #fff"><?=$buy['item_name'];?></a></td>
+                                            <td><?=number_format($buy['vol'],0)?></td>
+                                            <td><?=number_format($buy['price_unit'],2)?></td>
+                                            <td><?=number_format($buy['price_total'],2)?></td>
+                                            <td><?=$buy['station_name']?></td>
+                                            <td><?=$buy['character']?></td>
+                                            <td><?=$buy['range']?></td>
+                                            <td></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-filled">
+                    <div class="panel-heading">
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="pe-7s-cart"></i> Sell Orders</h4>
+                            </div>
+                        </div>
+                        <button class="btn btn-default pull-right btn-clear">Clear filters</button>
+                    </div>
+                    <div class="panel-body sellorders-body">
+                        <p class="yellow"></p> 
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="sellorders-table">
                                 <thead>
@@ -73,7 +128,6 @@
                                         <th>Q</th>
                                         <th>ISK/unit</th>
                                         <th>ISK/total</th>
-                                        <th>Type</th>
                                         <th>Station</th>
                                         <th>Character</th>
                                         <th>Range</th>
@@ -81,17 +135,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($buyorders as $buy) {?>
+                                    <?php foreach($sellorders as $sell) {
+                                        $url = $sell['url'];?>
                                         <tr>
-                                            <td><?=$buy['date']?></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td><?=$sell['date']?></td>
+                                            <td><img src="<?=$url?>" alt="icon"><a class="item-name" style="color: #fff"> <?=$sell['item_name'];?></a></td>
+                                            <td><?=number_format($sell['vol'],0)?></td>
+                                            <td><?=number_format($sell['price_unit'],2)?></td>
+                                            <td><?=number_format($sell['price_total'],2)?></td>
+                                            <td><?=$sell['station_name']?></td>
+                                            <td><?=$sell['character']?></td>
+                                            <td><?=$sell['range']?></td>
                                             <td></td>
                                         </tr>
                                     <?php } ?>

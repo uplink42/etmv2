@@ -40,7 +40,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         <i class="fa fa-info yellow"></i>  Broker fees and transaction taxes are already included in prices. <br />
                         <i class="fa fa-info yellow"></i> Profits are calculated using a first-in, first-out <span class="yellow"><a href="https://en.wikipedia.org/wiki/FIFO_and_LIFO_accounting" target="_blank">(FIFO)</a></span> inventory management method.
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
         
@@ -78,11 +78,10 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                 <li><a href="<?=base_url('Profits/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
                             </ul>
                         </div>
-                        <div class="panel-tools">
-                        </div>
                     </div>
                     <br>
                     <div class="panel-body profits-2-body">
+                        <button class="btn btn-default pull-right btn-clear">Clear filters</button>
                         <p class="yellow"></p>
                         <p class="yellow-2"> Click an item name to filter results.</p>
                         <div class="table-responsive">

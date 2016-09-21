@@ -35,8 +35,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled panel-c-white">
@@ -132,6 +130,7 @@
                                 <h4><i class="fa fa-table"></i> Assets List</h4>
                             </div>
                         </div>
+                        <button class="btn btn-default pull-right btn-clear">Clear filters</button>
                         <div class="panel-tools">
                         </div>
                     </div>
@@ -158,7 +157,7 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
-                                                <?=$asset['item_name']?></td>
+                                                <a class="item-name" style="color: #fff"><?=$asset['item_name']?></a></td>
                                             <td><?=$asset['owner']?></td>
                                             <td><?=number_format($asset['quantity'],0)?></td>
                                             <td><?=$asset['loc_name']?></td>

@@ -36,6 +36,11 @@ function number_format(number, decimals, decPoint, thousandsSep){
 $(document).ready(function() {
 
     //$(".panel-loading-common").hide();
+    $(".btn-clear").on('click', function() {
+        console.log("cl");
+    	$("input.form-control").val("");
+        $("input.form-control").trigger("keyup");
+    });
 
 	$(".go-back").on('click', function() {
 		window.history.back();
