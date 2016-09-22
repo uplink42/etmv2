@@ -566,7 +566,9 @@ class Updater_model extends CI_Model {
             );
 
             array_push($market_orders, $data);
-            array_push($new_orders, $row->orderID);
+            if($order_state == 'open') {
+                array_push($new_orders, $row->orderID);
+            }
         }
 
         $this->db->select('transkey');

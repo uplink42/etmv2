@@ -139,7 +139,10 @@ class MarketOrders_model extends CI_Model
 
     private function updateStatus($order_id, $status, $date_now)
     {
-        $this->db->query("REPLACE INTO order_status (orders_transkey, status, timestamp_check) VALUES ('$order_id', '1', '$date_now')");
+        $data = array ("orders_transkey" => $order_id,
+                       "status" => "1",
+                       "timestamp_check" => $date_now);
+        $this->db->replace('order_status', $data);
     }
 
 

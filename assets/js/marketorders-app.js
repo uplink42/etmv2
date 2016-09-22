@@ -84,5 +84,10 @@ $(document).ready(function() {
         $(".sellorders-body input.form-control").trigger("keyup");
     });
 
+    $(".btn-check").on('click', function() {
+        $(".main-panel-orders").hide();
+        $('.panel-loading').show();
+    });
+
 
 });
