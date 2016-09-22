@@ -79,18 +79,17 @@
                                             $status == 'OK' ? $class = 'success' : ($status == 'undercut' ? $class = "danger" : $class = '');
                                             switch($buy['range']) {
                                                 case '-1':
-                                                $range == "Station";
+                                                $range = "Station";
                                                 break;
                                                 case '0':
-                                                $range == "System";
+                                                $range = "System";
                                                 break;
                                                 case '32767':
-                                                $range == "Region";
+                                                $range = "Region";
                                                 default:
                                                 $range = $buy['range'] . " jumps";
                                             }
                                              ?>
-                                            }
                                             <tr class="<?=$class?>">
                                                 <td><?=$buy['date']?></td>
                                                 <td><img src="<?=$url?>" alt="icon"> <a class="item-name" style="color: #fff"><?=$buy['item_name'];?></a></td>
