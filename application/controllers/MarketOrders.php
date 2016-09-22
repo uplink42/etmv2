@@ -4,13 +4,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class MarketOrders extends MY_Controller
 {
     private $significant;
+    private $check;
 
     public function __construct()
     {
         parent::__construct();
-        $this->db->cache_on();
+        $this->db->cache_off();
         $this->load->library('session');
         $this->page = "MarketOrders";
+
+        if(!empty($_REQUEST['check'])) {
+            $this->check = $_REQUEST['check'];
+        } else {
+            $this->check = 0;
+        }
     }
 
     public function index($character_id)
@@ -23,8 +30,8 @@ class MarketOrders extends MY_Controller
             $data['selected'] = "marketorders";
 
             $this->load->model('MarketOrders_model');
-            $orders_buy = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "buy"));
-            $orders_sell = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "sell"));
+            $orders_buy = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "buy", $this->check));
+            $orders_sell = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "sell", $this->check));
 
 
             $data['buyorders'] = $orders_buy;

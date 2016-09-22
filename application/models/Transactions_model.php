@@ -10,7 +10,7 @@ class Transactions_model extends CI_Model
         parent::__construct();
     }
 
-    public function getTransactionList($chars, $interval)
+    public function getTransactionList($chars, $interval, $new = null)
     {
         $this->db->select('t.idbuy as transaction_id,
             t.time as time,
@@ -33,6 +33,9 @@ class Transactions_model extends CI_Model
         $this->db->where('t.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
         $this->db->order_by("t.time DESC");
+        if($new>0) {
+            $this->db->limit($new);
+        }
         $query = $this->db->get();
         $count = $query->num_rows();
 

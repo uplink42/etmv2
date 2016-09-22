@@ -3041,7 +3041,7 @@ fieldset[disabled] .form-control {
     content: " %";
 }
 
-#profits-table, #profits-2-table, #ts-table {
+#profits-table, #profits-2-table, #ts-table, #sellorders-table, #buyorders-table {
     color: #fff;
     opacity: 0.7;
 }

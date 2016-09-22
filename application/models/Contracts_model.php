@@ -16,7 +16,7 @@ class Contracts_model extends CI_Model
         parent::__construct();
     }
 
-    public function getContracts($chars, $filter = null, $state)
+    public function getContracts($chars, $filter = null, $state, $new = null)
     {
         $this->db->distinct();
         $this->db->select('c.eve_idcontracts as contract_id,
@@ -41,6 +41,9 @@ class Contracts_model extends CI_Model
         if($state == "active") {
             $this->db->where("c.status IN 
                 ('outstanding', 'inProgress')");
+                    if($new>0) {
+                        $this->db->limit($new);
+                    }
         } else {
                 $this->db->where("c.status IN 
                     ('deleted', 'completed', 'failed', 'completedByIssuer', 'completedByContractor', 'cancelled', 'rejected', 'reversed')");

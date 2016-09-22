@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Transactions extends MY_Controller
 {
+    protected $new;
 
     public function __construct()
     {
@@ -11,9 +12,13 @@ class Transactions extends MY_Controller
         ini_set('memory_limit', '-1');
         $this->load->library('session');
         $this->page = "Transactions";
+
+        if(isset($_REQUEST['new'])) {
+            $this->new = $_REQUEST['new'];
+        };
     }
 
-    public function index($character_id, $interval = 14, $transaction_id = 0, $latest = null)
+    public function index($character_id, $interval = 14, $transaction_id = 0)
     {
         if($interval>365) $interval = 365;
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
@@ -24,7 +29,7 @@ class Transactions extends MY_Controller
             $data['selected'] = "transactions";
 
             $this->load->model('Transactions_model');
-            $transactions = $this->Transactions_model->getTransactionList($chars, $interval);
+            $transactions = $this->Transactions_model->getTransactionList($chars, $interval, $this->new);
             $count = $transactions['count'];
             if($transactions['count'] >200) {
                 $img = false;

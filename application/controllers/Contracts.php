@@ -5,6 +5,7 @@ class Contracts extends MY_Controller
 {
     protected $active;
     protected $inactive;
+    protected $new;
 
     public function __construct()
     {
@@ -40,6 +41,10 @@ class Contracts extends MY_Controller
         } else {
             $this->inactive = false;
         }
+
+        if(isset($_REQUEST['new'])) {
+            $this->new = $_REQUEST['new'];
+        };
     }
 
     public function index($character_id)
@@ -52,8 +57,8 @@ class Contracts extends MY_Controller
             $data['selected'] = "contracts";
 
             $this->load->model('Contracts_model');
-            $actives = $this->Contracts_model->getContracts($chars, $this->active, "active");
-            $inactives = $this->Contracts_model->getContracts($chars, $this->inactive, "inactive");
+            $actives = $this->Contracts_model->getContracts($chars, $this->active, "active", $this->new);
+            $inactives = $this->Contracts_model->getContracts($chars, $this->inactive, "inactive", $this->new);
 
             $data['actives_filter'] = $this->active;
             $data['inactives_filter'] = $this->inactive;
