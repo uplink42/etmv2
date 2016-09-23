@@ -40,6 +40,7 @@ gulp.task('js', function(){
   'assets/js/pace_options.js',
   'assets/js/app.js',
   'assets/js/header.js',
+  //'assets/js/*.js'
 
 ])
    .pipe(concat('apps.js'))

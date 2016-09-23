@@ -129,7 +129,7 @@
             <li class="nav-category">
                 Options
             </li>
-            <li class="settings">
+            <li class="citadeltax">
                 <a href="<?=base_url('CitadelTax/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Citadel Taxes
                 </a>

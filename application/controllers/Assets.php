@@ -49,7 +49,7 @@ class Assets extends MY_Controller
             $res = $this->Assets_model->getAssetsList($region_id, $chars, $this->significant);
             $asset_list = $res['result'];
             
-            if($res['count'] >100) {
+            if($res['count'] >300) {
                 $img = false;
             } else {
                 $img = true;

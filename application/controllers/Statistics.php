@@ -12,7 +12,7 @@ class Statistics extends MY_Controller
         $this->page = "Statistics";
     }
 
-    public function index($character_id, $interval = 14)
+    public function index($character_id, $interval = 7)
     {
         if($interval>365) $interval = 365;
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
@@ -22,6 +22,10 @@ class Statistics extends MY_Controller
             $chars = $data['chars'];
             $data['selected'] = "statistics";
 
+            $this->load->model('Statistics_model');
+            $chart = $this->Statistics_model->buildVolumesChart($chars, $interval);
+
+            $data['chart'] = $chart;
             $data['interval'] = $interval;
             $data['view']           = 'main/statistics_v';
             $this->load->view('main/_template_v', $data);

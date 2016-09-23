@@ -137,11 +137,11 @@ class Profits_model extends CI_Model
         $jsonEncodedData = json_encode($arrData);*/
         $inner = "";
         $int = $interval;
-        for($i=2; $i<$int; $i++) {
+        for($i=1; $i<$int-1; $i++) {
             $inner .= "SELECT ". $i . " UNION ALL ";
         }
 
-        $fromStr = "(SELECT 1 i UNION ALL " . $inner . " SELECT " . $interval . ") i";
+        $fromStr = "(SELECT 0 i UNION ALL " . $inner . " SELECT " . $interval . ") i";
 
         $this->db->select("DATE_SUB(CURDATE(), INTERVAL i DAY) date, sum(total_profit) as sum");
         $this->db->from($fromStr);
