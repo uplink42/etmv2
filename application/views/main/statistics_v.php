@@ -85,6 +85,29 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     </div>
                                 </div>
                             </div>
+                            <div class="table-responsive">
+                                <table class="table table-responsive table-hover table-stripped">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Quantity</th>
+                                            <th>Profit</th>
+                                        </tr>
+                                        <?php foreach($best_raw as $row) {?>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <?php } ?>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-xs-12">
@@ -165,7 +188,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                             <div class="panel-heading">
                                 <div class="panel panel-filled panel-c-success panel-collapse">
                                     <div class="panel-heading">
-                                        <h4><i class="fa fa-frown-o"></i> Top Stations</h4>
+                                        <h4><i class="fa fa-frown-o"></i> Problematic Items</h4>
                                         <small>Items that resulted in a net loss</small>
                                     </div>
                                 </div>
