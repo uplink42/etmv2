@@ -37,6 +37,7 @@ class Statistics extends MY_Controller
             $best_iph      = $this->Statistics_model->getBestIPH($chars, $interval);
             $best_blunders = $this->Statistics_model->getMarketBlunders($chars, $interval);
             $best_stations = $this->Statistics_model->getTopStations($chars, $interval);
+            
 
             $data['chart']         = $chart;
             $data['problematic']   = $this->injectIcons($problematic);

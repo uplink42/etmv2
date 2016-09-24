@@ -74,6 +74,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         </div>            
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-md-6 col-xs-12">
                         <div class="panel panel-filled">
@@ -85,28 +86,158 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table table-responsive table-hover table-stripped">
-                                    <thead>
-                                        <tr>
-                                            <th>Item</th>
-                                            <th>Quantity</th>
-                                            <th>Profit</th>
-                                        </tr>
-                                        <?php foreach($best_raw as $row) {?>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <?php } ?>
-                                    </thead>
-                                </table>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover table-stripped" id="bestraw">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Quantity</th>
+                                                <th>Profit</th>
+                                            </tr>
+                                        </thead>    
+                                        <tbody>
+                                            <?php foreach($best_raw as $row) {?>
+                                            <tr>
+                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><?=number_format($row['quantity'],0)?></td>
+                                                <td><?=number_format($row['profit'],2)?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>  
+                            </div>
+                        </div>
+
+                        <div class="panel panel-filled">
+                            <div class="panel-heading">
+                                <div class="panel panel-filled panel-c-success panel-collapse">
+                                    <div class="panel-heading">
+                                        <h4><i class="fa fa-dollar"></i> Best ISK/h</h4>
+                                        <small>Items with the best profit for the time they took to resell</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover table-stripped" id="bestiph">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Quantity</th>
+                                                <th>Profit</th>
+                                                <th>ISK/h</th>
+                                            </tr>
+                                        </thead>    
+                                        <tbody>
+                                            <?php foreach($best_iph as $row) {?>
+                                            <tr>
+                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><?=number_format($row['quantity'],0)?></td>
+                                                <td><?=number_format($row['profit'],2)?></td>
+                                                <td><?=number_format($row['iph'],2)?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>  
+                            </div>
+                        </div>
+
+                        <div class="panel panel-filled">
+                            <div class="panel-heading">
+                                <div class="panel panel-filled panel-c-success panel-collapse">
+                                    <div class="panel-heading">
+                                        <h4><i class="fa fa-smile-o"></i> Best customers </h4>
+                                        <small>Players that made you the most profit with by purchasing your items</small> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover table-stripped" id="bestcus">
+                                        <thead>
+                                            <tr>
+                                                <th>Client</th>
+                                                <th>Profit</th>
+                                            </tr>
+                                        </thead>    
+                                        <tbody>
+                                            <?php foreach ($best_customer as $row) {?>
+                                            <tr> 
+                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['soldTo']?></td>
+                                                <td><?=number_format($row['profit'],2)?></td>
+                                            </tr>
+                                          <?php }?>
+                                        </tbody>
+                                    </table>
+                                </div>  
+                            </div>
+                        </div>
+                       
+
+                        <div class="panel panel-filled">
+                            <div class="panel-heading">
+                                <div class="panel panel-filled panel-c-success panel-collapse">
+                                    <div class="panel-heading">
+                                        <h4><i class="fa fa-rotate-left"></i> Top Stations</h4>
+                                        <small>Stations where you made the most profit</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover table-stripped" id="topstations">
+                                        <thead>
+                                            <tr>
+                                                <th>Station</th>
+                                                <th>Profit</th>
+                                            </tr>
+                                        </thead>    
+                                        <tbody>
+                                            <?php foreach($best_stations as $row) {?>
+                                            <tr>
+                                                <td><?=$row['station']?></td>
+                                                <td><?=number_format($row['quantity'],2)?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>  
+                            </div>
+                        </div>
+
+                        <div class="panel panel-filled">
+                            <div class="panel-heading">
+                                <div class="panel panel-filled panel-c-success panel-collapse">
+                                    <div class="panel-heading">
+                                        <h4><i class="fa fa-flag-checkered"></i> Possible blunders</h4>
+                                        <small>Items with abnormally high or low profit margin (possible typos on pricing)</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover table-stripped" id="blunders">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Profit</th>
+                                                <th>Margin</th>
+                                            </tr>
+                                        </thead>    
+                                        <tbody>
+                                            <?php foreach($best_blunders as $row) {?>
+                                            <tr>
+                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><?=number_format($row['profit'],2)?></td>
+                                                <td><?=number_format($row['margin'],2)?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>  
                             </div>
                         </div>
                     </div>
@@ -120,21 +251,30 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="panel panel-filled">
-                            <div class="panel-heading">
-                                <div class="panel panel-filled panel-c-success panel-collapse">
-                                    <div class="panel-heading">
-                                        <h4><i class="fa fa-dollar"></i> Best ISK/h</h4>
-                                        <small>Items with the best profit for the time they took to resell</small>
-                                    </div>
-                                </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover table-stripped" id="bestmargin">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Quantity</th>
+                                                <th>Margin</th>
+                                            </tr>
+                                        </thead>    
+                                        <tbody>
+                                            <?php foreach($best_margin as $row) {?>
+                                            <tr>
+                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><?=number_format($row['quantity'],0)?></td>
+                                                <td><?=number_format($row['margin'],2)?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>  
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
+                
                         <div class="panel panel-filled">
                             <div class="panel-heading">
                                 <div class="panel panel-filled panel-c-success panel-collapse">
@@ -144,21 +284,30 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="panel panel-filled">
-                            <div class="panel-heading">
-                                <div class="panel panel-filled panel-c-success panel-collapse">
-                                    <div class="panel-heading">
-                                        <h4><i class="fa fa-smile-o"></i> Best customers </h4>
-                                        <small>Players that made you the most profit with by purchasing your items</small> 
-                                    </div>
-                                </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover table-stripped" id="fastest">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Time</th>
+                                                <th>Profit</th>
+                                            </tr>
+                                        </thead>    
+                                        <tbody>
+                                            <?php foreach($best_to as $row) {?>
+                                            <tr>
+                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><?=$row['difference']?></td>
+                                                <td><?=number_format($row['total'],2)?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>  
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
+                 
                         <div class="panel panel-filled">
                             <div class="panel-heading">
                                 <div class="panel panel-filled panel-c-success panel-collapse">
@@ -169,21 +318,37 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="panel panel-filled">
-                            <div class="panel-heading">
-                                <div class="panel panel-filled panel-c-success panel-collapse">
-                                    <div class="panel-heading">
-                                        <h4><i class="fa fa-rotate-left"></i> Top Stations</h4>
-                                        <small>Stations where you made the most profit</small>
-                                    </div>
-                                </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover table-stripped" id="timezones">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 25%;">Timezone</th>
+                                                <th>Profit</th>
+                                            </tr>
+                                        </thead>    
+                                        <tbody>
+                                            <?php foreach($best_tz as $key => $value) {
+                                                if($key == "eu") {
+                                                    $url = base_url('assets/img/eu.png');
+                                                } else if($key == "us") {
+                                                    $url = base_url('assets/img/us.png');
+                                                } else {
+                                                    $key == "au" ? $url = base_url('assets/img/au.png') : '';
+                                                }
+
+                                                ?>
+                                            <tr>
+                                                <td><img src="<?=$url?>" alt="icon">
+                                                <td><?=number_format($value,2)?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>  
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
+
                         <div class="panel panel-filled">
                             <div class="panel-heading">
                                 <div class="panel panel-filled panel-c-success panel-collapse">
@@ -193,17 +358,27 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="panel panel-filled">
-                            <div class="panel-heading">
-                                <div class="panel panel-filled panel-c-success panel-collapse">
-                                    <div class="panel-heading">
-                                        <h4><i class="fa fa-flag-checkered"></i> Possible blunders</h4>
-                                        <small>Items with abnormally high or low profit margin (possible typos on pricing)</small>
-                                    </div>
-                                </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover table-stripped" id="problematic">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Quantity</th>
+                                                <th>Profit</th>
+                                            </tr>
+                                        </thead>    
+                                        <tbody>
+                                            <?php foreach($problematic as $row) {?>
+                                            <tr>
+                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><?=$row['quantity']?></td>
+                                                <td><?=$row['profit']?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>  
                             </div>
                         </div>
                     </div>
@@ -216,8 +391,10 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     <div class="panel-heading">
                         <h4><i class="fa fa-flag-checkered"></i> Last <?=$interval?> days recap</h4>
                     </div>
-                </div>
-                <div class="table-responsive">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
