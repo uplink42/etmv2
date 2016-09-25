@@ -20,6 +20,7 @@ class Statistics_model extends CI_Model
             "numberPrefix"  => "ISK",
             "plotFillAlpha" => "80",
             "paletteColors" => "#d9534f,#5cb85c",
+            "showValues" => "0"
 
         );
 
@@ -41,7 +42,6 @@ class Statistics_model extends CI_Model
         $this->db->order_by('date', 'asc');
         $query1           = $this->db->get();
         $expenses_per_day = $query1->result_array();
-        log_message('error', $this->db->last_query());
 
         $this->db->select("DATE_SUB(CURDATE(), INTERVAL i DAY) date, sum(total_sell) as sum");
         $this->db->from($fromStr);
@@ -50,8 +50,6 @@ class Statistics_model extends CI_Model
         $this->db->group_by('DATE_SUB(CURDATE(), INTERVAL i DAY)');
         $this->db->order_by('date', 'asc');
         $query2 = $this->db->get();
-
-        log_message('error', $this->db->last_query());
         $revenues_per_day = $query2->result_array();
 
         $this->db->select('days');
@@ -60,7 +58,6 @@ class Statistics_model extends CI_Model
         $this->db->order_by('days', 'asc');
         $query3 = $this->db->get();
         $dates  = $query3->result_array();
-        log_message('error', $this->db->last_query());
         //days
         $category = [];
 
@@ -113,13 +110,17 @@ class Statistics_model extends CI_Model
         $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit) ASC');
         $query = $this->db->get();
 
-        $result = $query->result();
+        $result = $query->result_array();
         return $result;
     }
 
     public function getProfitsTable($chars, $interval)
     {
-        $this->db->select('total_profit, total_buy, total_sell, margin');
+        $this->db->select('sum(total_profit) as total_profit, 
+                           sum(total_buy) as total_buy, 
+                           sum(total_sell) as total_sell, 
+                           avg(margin) as margin, 
+                           date');
         $this->db->from('history');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $this->db->where('date >DATE( DATE_SUB( NOW() , INTERVAL ' . $interval . ' DAY))');
@@ -129,12 +130,14 @@ class Statistics_model extends CI_Model
         $query1     = $this->db->get('');
         $result_day = $query1->result_array();
 
-        $this->db->select('sum(total_profit), sum(total_buy), sum(total_sell), avg(margin)');
+        $this->db->select('sum(total_profit) as total_profit, 
+                           sum(total_buy) as total_buy, 
+                           sum(total_sell) as total_sell, 
+                           avg(margin) as margin');
         $this->db->from('history');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $this->db->where('date >DATE( DATE_SUB( NOW() , INTERVAL ' . $interval . ' DAY))');
         $this->db->where('date <= curdate()');
-        $this->db->group_by('date');
         $this->db->order_by('date', 'desc');
         $query2 = $this->db->get('');
         $total  = $query2->result_array();
@@ -166,7 +169,7 @@ class Statistics_model extends CI_Model
     {
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
-                           sum(profit.profit_unit)/sum(t1.price_unit) as margin,
+                           sum(profit.profit_unit)/sum(t1.price_unit)*100 as margin,
                            sum(profit.quantity_profit) as quantity');
         $this->db->from('profit');
         $this->db->join('transaction t1', 't1.idbuy = profit.transaction_idbuy_buy');
@@ -174,14 +177,15 @@ class Statistics_model extends CI_Model
         $this->db->join('characters c1', 't1.character_eve_idcharacter = c1.eve_idcharacter');
         $this->db->join('characters c2', 't2.character_eve_idcharacter = c2.eve_idcharacter');
         $this->db->join('item', 't1.item_eve_iditem = item.eve_iditem');
-        $this->db->where('t2.time >= now() - INTERVAL ' . $interval . ' HOUR');
+        $this->db->where('t2.time >= now() - INTERVAL ' . $interval . ' DAY');
         $this->db->where('c2.eve_idcharacter IN ' . $chars);
         $this->db->where('profit.profit_unit > 0');
+        $this->db->group_by('item.eve_iditem');
         $this->db->having('sum(profit.quantity_profit*profit.profit_unit) > 0');
         $this->db->order_by('sum(profit.profit_unit)/sum(t1.price_unit)', 'DESC');
         $query  = $this->db->get('');
         $result = $query->result_array();
-
+        log_message('error', $this->db->last_query());
         return $result;
     }
 
@@ -199,15 +203,18 @@ class Statistics_model extends CI_Model
         $this->db->limit('5');
         $query  = $this->db->get('');
         $result = $query->result_array();
+        //print_r($result);
+
 
         for ($i = 0; $i < count($result); $i++) {
-            $this->db->where('name', $result['soldTo']);
+            $this->db->where('name', $result[$i]['soldTo']);
             $query = $this->db->get('characters_public');
             $count = $query->num_rows();
-
+            
             if ($count != 0) {
+                $customerID = $query->row()->eve_idcharacters;
             } else {
-                $url = "https://api.eveonline.com/eve/CharacterID.xml.aspx?names=" . $result['soldTo'];
+                $url = "https://api.eveonline.com/eve/CharacterID.xml.aspx?names=" . $result[$i]['soldTo'];
                 $xml = simplexml_load_file($url);
 
                 foreach ($xml->result->rowset->row as $r) {
@@ -215,11 +222,11 @@ class Statistics_model extends CI_Model
                 }
 
                 $data = ['eve_idcharacters' => $customerID,
-                         'name'             => $result['soldTo']];
+                         'name'             => $result[$i]['soldTo']];
 
                 $this->db->insert('characters_public', $data);
             }
-            $result['url'] = "https://image.eveonline.com/Character/". $result['id_char'] ."_32.jpg";
+            $result[$i]['url'] = "https://image.eveonline.com/Character/". $customerID ."_32.jpg";
         }
 
         return $result;
@@ -342,7 +349,7 @@ class Statistics_model extends CI_Model
         $this->db->join('transaction', 'profit.transaction_idbuy_sell = transaction.idbuy');
         $this->db->join('station', 'station.eve_idstation = transaction.station_eve_idstation');
         $this->db->join('item', 'item.eve_iditem = transaction.item_eve_iditem');
-        $this->db->where('profit.timestamp_sell >= now() - INTERVAL ' . $chars . ' DAY');
+        $this->db->where('profit.timestamp_sell >= now() - INTERVAL ' . $interval . ' DAY');
         $this->db->where('profit.characters_eve_idcharacters_OUT IN ' . $chars);
         $this->db->group_by('station.name');
         $this->db->having('SUM( profit.quantity_profit * profit.profit_unit ) >0');

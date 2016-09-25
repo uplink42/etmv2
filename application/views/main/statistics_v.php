@@ -45,6 +45,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                 <li><a href="<?=base_url('Statistics/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
                                 <li><a href="<?=base_url('Statistics/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
                                 <li><a href="<?=base_url('Statistics/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
+                                <li><a href="<?=base_url('Statistics/index/'.$character_id.'/180?aggr='.$aggregate)?>">Last 6 months</a></li>
                                 <li><a href="<?=base_url('Statistics/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
                             </ul>
                         </div>    
@@ -199,7 +200,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                             <?php foreach($best_stations as $row) {?>
                                             <tr>
                                                 <td><?=$row['station']?></td>
-                                                <td><?=number_format($row['quantity'],2)?></td>
+                                                <td><?=number_format($row['profit'],2)?></td>
                                             </tr>
                                             <?php } ?>
                                         </tbody>
@@ -372,8 +373,8 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                             <?php foreach($problematic as $row) {?>
                                             <tr>
                                                 <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
-                                                <td><?=$row['quantity']?></td>
-                                                <td><?=$row['profit']?></td>
+                                                <td><?=number_format($row['quantity'],0)?></td>
+                                                <td><?=number_format($row['profit'],2)?></td>
                                             </tr>
                                             <?php } ?>
                                         </tbody>
@@ -393,9 +394,44 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
+                            <table class="table table-hover table-responsive table-bordered table-stripped" id="daily">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Total Buy</th>
+                                        <th>Total Sell</th>
+                                        <th>Total Profit</th>
+                                        <th>Margin</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach($profits_table['daily'] as $row) {
+                                    $row['margin'] > 0 ? $class="success" : 
+                                        ($row['margin'] < 0 ? $class="danger" : $class="");
+                                    ?>
+                                    <tr class= "<?=$class?>">
+                                        <td><?=$row['date']?></td>
+                                        <td><?=number_format($row['total_buy'],2)?></td>
+                                        <td><?=number_format($row['total_sell'],2)?></td>
+                                        <td><?=number_format($row['total_profit'],2)?></td>
+                                        <td><?=number_format($row['margin'],2)?></td>
+                                    </tr>
+                                <?php } ?>
+                                <?php foreach($profits_table['total'] as $row) {?>
+                                    <tr class="yellow">
+                                        <td>GRAND TOTAL</td>
+                                        <td><b><?=number_format($row['total_buy'],2)?></b></td>
+                                        <td><b><?=number_format($row['total_sell'],2)?></b></td>
+                                        <td><b><?=number_format($row['total_profit'],2)?></b></td>
+                                        <td><b><?=number_format($row['margin'],2)?></b></td>
+                                    </tr>    
+                                <?php }?>
+                                </tbody>
+                            </table>    
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

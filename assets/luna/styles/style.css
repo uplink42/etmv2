@@ -3041,6 +3041,14 @@ fieldset[disabled] .form-control {
     content: " %";
 }
 
+#bestmargin td:nth-child(3)::after {
+    content: " %";
+}
+
+#daily td:nth-child(5)::after {
+    content: " %";
+}
+
 #profits-table, #profits-2-table, #ts-table, #sellorders-table, #buyorders-table {
     color: #fff;
     opacity: 0.7;
@@ -3050,6 +3058,7 @@ fieldset[disabled] .form-control {
     cursor: pointer;
 }
 
+#daily,
 #profits-table .btn-default,
 #ts-table .btn-default,
 #profits-2-table .btn-default,
