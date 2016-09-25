@@ -47,14 +47,14 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         <h4><i class="fa fa-pie-chart"></i> Assets Distribution by region</h4>
                     </div>
                 </div>
-                <div class="panel-body">
+            
                 <?php 
                     $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "500", "pie", "json", $pie_data);
                     $pieChart->render();
                 ?>
                     <div id="pie">
                     </div>
-                </div>
+         
             </div>
 
             <div class="col-md-6 col-xs-12">

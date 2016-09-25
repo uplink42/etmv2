@@ -71,8 +71,9 @@ gulp.task('uglify', function(){
 gulp.task('watch', function() {
   gulp.watch(paths.js, ['js']);
   gulp.watch(paths.css, ['css']);
+  gulp.watch(paths.app, ['uglify']);
 });
 
-gulp.task('default',['js','css', 'watch', 'uglify'], function () {
+gulp.task('default',['js','css', 'uglify', 'watch', 'uglify'], function () {
 
 });

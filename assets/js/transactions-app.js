@@ -41,7 +41,7 @@ $(document).ready(function() {
     });
 
 
-    $(".transactions-body .item-name").on('click', function() {
+    $("table").on('click', 'a', function() {
         var name = $(this).text();
         $(".transactions-body input.form-control").val(name);
         $(".transactions-body input.form-control").trigger("keyup");

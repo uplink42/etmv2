@@ -37,7 +37,7 @@ $(document).ready(function() {
             "filter": "applied"
         }).data().sum(), 2, '.', ',') + " ISK.");
     });
-    $(".item-name").on('click', function() {
+    $("table").on('click', 'a', function() {
         var name = $(this).text();
         $("input.form-control").val(name);
         $("input.form-control").trigger("keyup");
