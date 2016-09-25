@@ -5,7 +5,7 @@ var minify = require('gulp-minify-css');
 var livereload = require('gulp-livereload');
 
 var paths = {
-  js: ['assets/luna/vendor/pacejs/pace.min.js',
+    js: ['assets/luna/vendor/pacejs/pace.min.js',
        'assets/luna/vendor/jquery/dist/jquery.min.js',
        'assets/luna/vendor/datatables/datatables.min.js',
        'assets/luna/vendor/bootstrap/js/bootstrap.min.js',
@@ -16,8 +16,9 @@ var paths = {
        'assets/js/toastr_options.js',
        'assets/js/pace_options.js',
        'assets/js/app.js',
-       'assets/js/header.js'],
-  css: ['assets/luna/vendor/fontawesome/css/font-awesome.css',
+       'assets/js/header.js',
+       /*'assets/js/*.js'*/],
+    css: ['assets/luna/vendor/fontawesome/css/font-awesome.css',
         'assets/luna/vendor/animate.css/animate.css',
         'assets/luna/vendor/bootstrap/css/bootstrap.css',
         'assets/luna/vendor/toastr/toastr.min.css',
@@ -25,7 +26,18 @@ var paths = {
         'assets/luna/styles/pe-icons/pe-icon-7-stroke.css',
         'assets/luna/styles/pe-icons/helper.css',
         'assets/luna/styles/stroke-icons/style.css',
-        'assets/luna/styles/style.css']
+        'assets/luna/styles/style.css'],
+    app: ['assets/js/assets-app.js',
+          'assets/js/contracts-app.js',
+          'assets/js/dashboard-app.js',
+          'assets/js/marketorders-app.js',
+          'assets/js/nwtracker-app.js',
+          'assets/js/statistics-app.js',
+          'assets/js/stocklists-app.js',
+          'assets/js/profits-app.js',
+          'assets/js/traderoutes-app.js',
+          'assets/js/tradesimulator-app.js',
+          'assets/js/transactions-app.js']
 };
 
 gulp.task('css', function(){
@@ -46,12 +58,21 @@ gulp.task('js', function(){
    .pipe(gulp.dest('dist/js'))
 });
 
+gulp.task('uglify', function(){
+   gulp.src(paths.app
+
+)
+   .pipe(uglify())
+   .pipe(gulp.dest('dist/js/apps'))
+});
+
+
 
 gulp.task('watch', function() {
   gulp.watch(paths.js, ['js']);
   gulp.watch(paths.css, ['css']);
 });
 
-gulp.task('default',['js','css', 'watch'], function () {
+gulp.task('default',['js','css', 'watch', 'uglify'], function () {
 
 });

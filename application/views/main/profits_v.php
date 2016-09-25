@@ -3,7 +3,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
 ?>
 <!--Fusioncharts -->
 <script src="<?=base_url('assets/fusioncharts/js/fusioncharts.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
-<script src="<?=base_url('assets/js/profits-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+<script src="<?=base_url('dist/js/apps/profits-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
