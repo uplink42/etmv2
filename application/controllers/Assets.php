@@ -45,6 +45,7 @@ class Assets extends MY_Controller
             $graph .= "]";
 
             $asset_totals = $this->Assets_model->getRegionData($chars);
+            $chart = $this->Assets_model->buildAssetDistributionChart($asset_totals);
             $region_name = $this->Assets_model->getRegionName($region_id);
             $res = $this->Assets_model->getAssetsList($region_id, $chars, $this->significant);
             $asset_list = $res['result'];
@@ -63,6 +64,7 @@ class Assets extends MY_Controller
                 $data['current_asset_value'] = $this->Assets_model->getCurrentAssetTotals($chars);
             }
             
+            $data['pie_data'] = $chart;
             $data['img'] = $img;
             $data['sig'] = $this->significant;
             $data['ratio'] = $ratio;

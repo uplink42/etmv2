@@ -1,3 +1,8 @@
+<?php
+include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
+?>
+<!--Fusioncharts -->
+<script src="<?=base_url('assets/fusioncharts/js/fusioncharts.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <script src="<?=base_url('dist/js/apps/assets-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
@@ -37,7 +42,23 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-xs-12">
-                <div class="panel panel-filled panel-c-white">
+                <div class="panel panel-filled panel-c-success panel-collapse">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-pie-chart"></i> Assets Distribution by region</h4>
+                    </div>
+                </div>
+                <div class="panel-body">
+                <?php 
+                    $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "500", "pie", "json", $pie_data);
+                    $pieChart->render();
+                ?>
+                    <div id="pie">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-12">
+                <div class="panel panel-filled panel-c-success">
                     <div class="panel-heading">
                         <div class="panel-tools">
                             <a class="panel-toggle">
@@ -48,37 +69,9 @@
                         <table class="table table-hover table-responsive">
                             <tr>
                                 <th>Est Assets Value
-                                <strong class="m-t-xs yellow-2"><?=number_format($current_asset_value)?> ISK</strong></th>
-                            </tr>
-                            </table> 
-                        <div class="text-center">
-                            <?php if($sig==1) {?>
-                            <a href="<?=base_url('Assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=0')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently only displaying the most significant items which represent 
-                                <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> 
-                            of your asset value. Click here to see the full item list (page may be slower to load and export features may crash your browser if you have too many items).</p></a>
-                            <?php } else {?>
-                                <a href="<?=base_url('Assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=1')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently displaying all items. For faster page loads and exports you may request only the most significant items by clicking here, which would represent <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> of your  asset value.</p></a>
-                            <?php } ?>
-                        </div>       
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <div class="panel panel-filled panel-c-white">
-                    <div class="panel-heading">
-                        <div class="panel-tools">
-                            <a class="panel-toggle">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-hover table-responsive">
-                            <tr>
-                                <th>Selected Region: <span class="yellow-2"><?=$region_name?></span></th>
-                            </tr>
-                            <tr>
-                                <th>Region: 
-                                    <div class="dropdown pull-right">
+                                <strong class="m-t-xs yellow-2"><?=number_format($current_asset_value)?> ISK</strong>
+                                <br> Selected Region: <span class="yellow-2"><?=$region_name?></span>
+                                <div class="dropdown pull-right">
                                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         Region selection
                                             <span class="caret"></span>
@@ -99,8 +92,17 @@
                                     </div>
                                 </th>
                             </tr>
-                        </table>
-                    </div>    
+                            </table> 
+                        <div class="text-center">
+                            <?php if($sig==1) {?>
+                            <a href="<?=base_url('Assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=0')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently only displaying the most significant items which represent 
+                                <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> 
+                            of your asset value. Click here to see the full item list (page may be slower to load and export features may crash your browser if you have too many items).</p></a>
+                            <?php } else {?>
+                                <a href="<?=base_url('Assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=1')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently displaying all items. For faster page loads and exports you may request only the most significant items by clicking here, which would represent <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> of your  asset value.</p></a>
+                            <?php } ?>
+                        </div>       
+                    </div>
                 </div>
             </div>
         </div>

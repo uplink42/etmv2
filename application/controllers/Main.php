@@ -63,11 +63,11 @@ class Main extends MY_Controller
         global $error;
         $mail = new PHPMailer(); // create a new object
         $mail->IsSMTP(); // enable SMTP
-        $mail->SMTPDebug  = 0; // debugging: 1 = errors and messages, 2 = messages only
+        $mail->SMTPDebug  = SMTPDEBUG; // debugging: 1 = errors and messages, 2 = messages only
         $mail->SMTPAuth   = true; // authentication enabled
-        $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->Port       = 465;
+        $mail->SMTPSecure = SMTPSECURE; // secure transfer enabled REQUIRED for GMail
+        $mail->Host       = SMTPHOST;
+        $mail->Port       = SMTPPORT;
         $mail->Username   = GUSER;
         $mail->Password   = GPWD;
         $mail->SetFrom($from, $from_name);

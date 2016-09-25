@@ -17,7 +17,7 @@ class Assets_model extends CI_Model
         $this->db->where("date>= (now() - INTERVAL 30 DAY)");
         $this->db->group_by('date');
         $this->db->order_by('date', 'asc');
-        $query = $this->db->get('net_history', 'date');
+        $query  = $this->db->get('net_history', 'date');
         $result = $query->result_array();
 
         return $result;
@@ -102,7 +102,7 @@ class Assets_model extends CI_Model
 
     }
 
-    public function getAssetsList($region_id, $chars, $significant=1)
+    public function getAssetsList($region_id, $chars, $significant = 1)
     {
         $this->db->select('a.item_eve_iditem as item_id,
             a.quantity as quantity,
@@ -120,18 +120,18 @@ class Assets_model extends CI_Model
         $this->db->join('region r', 'r.eve_idregion = sys.region_eve_idregion');
         $this->db->join('item_price_data pr', 'pr.item_eve_iditem = a.item_eve_iditem');
         $this->db->where('c.eve_idcharacter IN ' . $chars);
-       
+
         if ($region_id != "all") {
             $this->db->where('r.eve_idregion', $region_id);
         }
 
-        if($significant==1) {
+        if ($significant == 1) {
             $this->db->having('(a.quantity*pr.price_evecentral) > 500000');
         }
 
         $query1  = $this->db->get();
         $result1 = $query1->result_array();
-        $count1 = $query1->num_rows();
+        $count1  = $query1->num_rows();
 
         $this->db->select('a.item_eve_iditem as item_id,
             a.quantity as quantity,
@@ -153,17 +153,17 @@ class Assets_model extends CI_Model
             $this->db->where('r.eve_idregion', $region_id);
         }
 
-        if($significant==1) {
+        if ($significant == 1) {
             $this->db->having('(a.quantity*pr.price_evecentral) > 500000');
         }
 
         $query2  = $this->db->get();
         $result2 = $query2->result_array();
-        $count2 = $query2->num_rows();
-        $total = $count1+$count2;
+        $count2  = $query2->num_rows();
+        $total   = $count1 + $count2;
 
         $result = array_merge($result1, $result2);
-        $data = array("result" => $result, "count" => $total);
+        $data   = array("result" => $result, "count" => $total);
         return $data;
     }
 
@@ -177,18 +177,77 @@ class Assets_model extends CI_Model
         $this->db->where('c.eve_idcharacter IN ' . $chars);
         $this->db->where('(a.quantity*pr.price_evecentral) > 500000');
 
-        $query1  = $this->db->get();
+        $query1      = $this->db->get();
         $significant = $query1->row()->total;
 
         //get total worth
         $this->db->select('sum(networth) as sum');
-        $this->db->where('eve_idcharacter IN '. $chars);
+        $this->db->where('eve_idcharacter IN ' . $chars);
         $query3 = $this->db->get('characters');
-        $total = $query3->row()->sum;
+        $total  = $query3->row()->sum;
 
-        $percent = ($significant/$total) *100;
+        $percent = ($significant / $total) * 100;
 
         return $percent;
+    }
+
+    public function buildAssetDistributionChart($data)
+    {
+        $arrData["chart"] = array(
+            "bgColor"                   => "#44464f",
+            "showBorder"                => "0",
+            "use3DLighting"             => "0",
+            "showShadow"                => "0",
+            "enableSmartLabels"         => "0",
+            "startingAngle"             => "0",
+            "showPercentValues"         => "1",
+            "showPercentInTooltip"      => "0",
+            "decimals"                  => "1",
+            "captionFontSize"           => "0",
+            "subcaptionFontSize"        => "0",
+            "subcaptionFontBold"        => "0",
+            "toolTipColor"              => "#000000",
+            "toolTipBorderThickness"    => "0",
+            "toolTipBgColor"            => "#ffffff",
+            "toolTipBgAlpha"            => "80",
+            "toolTipBorderRadius"       => "2",
+            "toolTipPadding"            => "5",
+            "showHoverEffect"           => "1",
+            "showLegend"                => "0",
+            "useDataPlotColorForLabels" => "1");
+
+        $arrData["data"] = array();
+        /*$assetTypes      = array("wallet", "assets", "escrow", "sellorders");
+        $assetValues     = array($result->balance, $result->networth, $result->escrow, $result->total_sell);
+
+        for ($i = 0; $i < count($assetTypes); $i++) {
+            array_push($arrData["data"], array("label" => (string) $assetTypes[$i],
+                "value"                                    => (string) $assetValues[$i]));
+        }
+        */
+       
+        $region_names = [];
+        $region_values = [];
+        foreach($data as $key => $value) {
+            array_push($region_names, $key);
+            array_push($region_values, $value[0]['total_value']);
+            /*print_r($value);
+            echo "<br>";*/
+        }
+        /*print_r($region_names);
+        print_r($region_values);*/
+
+        for ($i = 0; $i < count($region_names); $i++) {
+            array_push($arrData["data"], array("label" => (string) $region_names[$i],
+                "value"                                    => (string) $region_values[$i]));
+        }
+
+
+
+        $arrData["chart"];
+        $jsonEncodedData = json_encode($arrData);
+
+        return $jsonEncodedData;
     }
 
 }
