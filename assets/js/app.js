@@ -33,6 +33,7 @@ $(document).ready(function() {
         $("input.form-control").val("");
         $("input.form-control").trigger("keyup");
         window.location.hash = "";
+        //window.location.href.split('#')[0];
     });
     $(".go-back").on('click', function() {
         window.history.back();

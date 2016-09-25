@@ -29,7 +29,7 @@
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
                     <div class="panel-body">
-                        <i class="fa fa-info yellow"></i> Here you can set custom broker fees for transactions on certain Citadels of your choice<br />
+                        <i class="fa fa-info yellow"></i> Here you can set or unset custom broker fees for transactions on certain Citadels of your choice<br />
                     </div>
                 </div> 
             </div>
@@ -38,7 +38,32 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
-                    
+                    <div class="panel-heading">
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h4><i class="fa fa-usd"></i> Assign a Custom Tax</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body traderoute-creation-panel">
+                        <form class="form-horizontal" data-url=<?=base_url()?>>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="citadel" class="col-sm-2 control-label">Citadel</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control origin-station" id="citadel" placeholder="Begin typing and select one of the highlighted stations">
+                                    </div>
+                                    <label for="tax" class="col-sm-1 control-label">Tax</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" id="tax" pattern="/^(0(\.\d+)?|1(\.0+)?)$/" title="Must insert a decimal value (example: 0.01 for 1%"> 
+                                    </div>
+                                </div>  
+                            </div> 
+                            <div class="text-center"><i class="fa fa-info"></i> Broker fee must be inserted as a decimal (e.g 0.05 represents 5%)</div>
+                            <button type="submit" class="btn btn-default submit-traderoute" name="submit-traderoute">Submit</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">

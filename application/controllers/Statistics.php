@@ -37,19 +37,22 @@ class Statistics extends MY_Controller
             $best_iph      = $this->Statistics_model->getBestIPH($chars, $interval);
             $best_blunders = $this->Statistics_model->getMarketBlunders($chars, $interval);
             $best_stations = $this->Statistics_model->getTopStations($chars, $interval);
-            
 
-            $data['chart']         = $chart;
-            $data['problematic']   = $this->injectIcons($problematic);
-            $data['profits_table'] = $profits_table;
-            $data['best_raw']      = $this->injectIcons($best_raw);
-            $data['best_margin']   = $this->injectIcons($best_margin);
-            $data['best_customer'] = $best_customer;
-            $data['best_tz']       = $best_tz;
-            $data['best_to']       = $this->injectIcons($best_to);
-            $data['best_iph']      = $this->injectIcons($best_iph);
-            $data['best_blunders'] = $this->injectIcons($best_blunders);
-            $data['best_stations'] = $best_stations;
+            $raw_chart = $this->Statistics_model->buildDistributionChart($chars, $interval);
+
+            $data['raw_chart']      = $raw_chart;
+            $data['chart']          = $chart;
+            $data['problematic']    = $this->injectIcons($problematic);
+            $data['profits_table']  = $profits_table;
+            $data['best_raw']       = $this->injectIcons($best_raw);
+            $data['best_raw_chart'] = $raw_chart;
+            $data['best_margin']    = $this->injectIcons($best_margin);
+            $data['best_customer']  = $best_customer;
+            $data['best_tz']        = $best_tz;
+            $data['best_to']        = $this->injectIcons($best_to);
+            $data['best_iph']       = $this->injectIcons($best_iph);
+            $data['best_blunders']  = $this->injectIcons($best_blunders);
+            $data['best_stations']  = $best_stations;
 
             $data['interval'] = $interval;
             $data['view']     = 'main/statistics_v';

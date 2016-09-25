@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-define("HASH_CACHE", 15);
+define("HASH_CACHE", 17);
 $config['base_url'] = '//localhost/etm_refactor/';
 
 /*

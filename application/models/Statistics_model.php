@@ -145,7 +145,7 @@ class Statistics_model extends CI_Model
         return array("daily" => $result_day, "total" => $total);
     }
 
-    public function getBestItemsRaw($chars, $interval)
+    public function getBestItemsRaw($chars, $interval, $chart = null)
     {
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
@@ -159,6 +159,9 @@ class Statistics_model extends CI_Model
         $this->db->group_by('item.eve_iditem');
         $this->db->having('sum(profit.quantity_profit*profit.profit_unit) > 0');
         $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit)', 'desc');
+        if($chart) {
+            $this->db->limit(20);
+        }
         $query  = $this->db->get('');
         $result = $query->result_array();
 
@@ -196,7 +199,7 @@ class Statistics_model extends CI_Model
         $this->db->from('profit');
         $this->db->join('transaction t1', 'profit.transaction_idbuy_buy = t1.idbuy');
         $this->db->join('transaction t2', 'profit.transaction_idbuy_sell = t2.idbuy');
-        $this->db->where('t2.time >= now() - INTERVAL ' . $interval . ' HOUR');
+        $this->db->where('t2.time >= now() - INTERVAL ' . $interval . ' DAY');
         $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
         $this->db->group_by('t2.client');
         $this->db->order_by('sum(profit.profit_unit * profit.quantity_profit)', 'DESC');
@@ -359,5 +362,52 @@ class Statistics_model extends CI_Model
         $result = $query->result_array();
 
         return $result;
+    }
+
+    public function buildDistributionChart($chars, $interval)
+    {
+        $arrData["chart"] = array(
+            "bgColor"                   => "#44464f",
+            "showBorder"                => "0",
+            "use3DLighting"             => "0",
+            "showShadow"                => "0",
+            "enableSmartLabels"         => "0",
+            "startingAngle"             => "0",
+            "showPercentValues"         => "1",
+            "showPercentInTooltip"      => "0",
+            "decimals"                  => "1",
+            "captionFontSize"           => "0",
+            "subcaptionFontSize"        => "0",
+            "subcaptionFontBold"        => "0",
+            "toolTipColor"              => "#000000",
+            "toolTipBorderThickness"    => "0",
+            "toolTipBgColor"            => "#ffffff",
+            "toolTipBgAlpha"            => "80",
+            "toolTipBorderRadius"       => "2",
+            "toolTipPadding"            => "5",
+            "showHoverEffect"           => "1",
+            "showLegend"                => "0",
+            "useDataPlotColorForLabels" => "1");
+
+        $arrData["data"] = array();
+
+        $item_names = [];
+        $item_values = [];
+
+        $data = $this->getBestItemsRaw($chars, $interval, true);
+
+        foreach($data as $key => $value) {
+            array_push($item_names, $value['item']);
+            array_push($item_values, $value['profit']);
+        }
+
+        for ($i = 0; $i < count($item_names); $i++) {
+            array_push($arrData["data"], array("label" => (string) $item_names[$i],
+                "value"                                    => (string) $item_values[$i]));
+        }
+        $arrData["chart"];
+        $jsonEncodedData = json_encode($arrData);
+
+        return $jsonEncodedData;
     }
 }

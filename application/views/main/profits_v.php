@@ -46,92 +46,109 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-filled">
-                    <div class="panel-heading">
-                        <?php 
-                        $columnChart = new FusionCharts("line", "profitchart" , "100%", 400, "chart-2", "json", $chart);
-                        $columnChart->render();?>
-                            <div id="chart-2">
-                            </div>
-                    </div>
-                </div>
+                <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-2" aria-expanded="true"> Profits</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-1" aria-expanded="false"> Daily chart</a></li>
+                </ul>
+            </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-filled">
-                    <div class="panel-heading">
-                        <div class="dropdown pull-right">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Time Interval
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                <li><a href="<?=base_url('Profits/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
-                                <li><a href="<?=base_url('Profits/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
-                                <li><a href="<?=base_url('Profits/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
-                                <li><a href="<?=base_url('Profits/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
-                                <li><a href="<?=base_url('Profits/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
-                                <li><a href="<?=base_url('Profits/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
-                                <li><a href="<?=base_url('Profits/index/'.$character_id.'/180?aggr='.$aggregate)?>">Last 6 months</a></li>
-                                <li><a href="<?=base_url('Profits/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
-                            </ul>
+        <div class="tab-content">
+            <div id="tab-1" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-filled">
+                            <div class="panel-heading">
+                                <?php 
+                                $columnChart = new FusionCharts("line", "profitchart" , "100%", 400, "chart-2", "json", $chart);
+                                $columnChart->render();?>
+                                    <div id="chart-2">
+                                    </div>
+                            </div>
                         </div>
                     </div>
-                    <br>
-                    <div class="panel-body profits-2-body">
-                        <button class="btn btn-default pull-right btn-clear">Clear filters</button>
-                        <p class="yellow"></p>
-                        <p class="yellow-2"> Click an item name to filter results.</p>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover" id="profits-2-table">
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th style="width: 5%;"></th>
-                                        <th>System</th>
-                                        <th>ISK/unit</th>
-                                        <th>Q</th>
-                                        <th>ISK/total</th>
-                                        <th>Time</th>
-                                        <th>Character</th>
-                                        <th>ISK Profit</th>
-                                        <th>Margin</th>
-                                        <th>Duration</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php 
-                                foreach($profits as $row) {
-                                    $row['profit_total'] >0 ? $res = "success" : $res="danger";
-                                    $row['character_buy'] == $row['character_sell'] ? $row['character_sell'] = "" : "";
-                                    $row['sys_buy'] == $row['sys_sell'] ? $row['sys_sell'] = "" : "";
-                                    $img ? $url = $row['url'] : $url="";
-                                    ?>
-                                    <tr class="<?=$res?>">
-                                        <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
-                                            <a class="item-name" style="color: #fff"><?=$row['item_name']?></a></td>
-                                        <td><span class="btn btn-xs btn-danger">B</span><br/><span class="btn btn-xs btn-success">S</span></td>
-                                        <td><?=$row['sys_buy']?><br/>
-                                            <?=$row['sys_sell']?></td>
-                                        <td><?=number_format($row['buy_price'],2)?><br />
-                                            <?=number_format($row['sell_price'],2)?></td>
-                                        <td><?=number_format($row['profit_quantity'],0)?></td>
-                                        <td><?=number_format($row['buy_price_total'],2)?><br />
-                                            <?=number_format($row['sell_price_total'],2)?></td>
-                                        <td><?=$row['time_buy']?> <br />
-                                            <?=$row['time_sell']?></td>
-                                        <td><?=$row['character_buy']?> <br />
-                                            <?=$row['character_sell']?></td>    
-                                        <td><?=number_format($row['profit_total'],2)?></td>
-                                        <td><a class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
-                                        <td><?=$row['diff']?></td>
-                                    </tr>
-                                <?php } ?>
-                                    
-                                </tbody>
-                            </table>
+                </div>
+            </div>
+            <div id="tab-2" class="tab-pane active">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-filled">
+                            <div class="panel-heading">
+                                <div class="dropdown pull-right">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Time Interval
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
+                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
+                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
+                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
+                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
+                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
+                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
+                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/180?aggr='.$aggregate)?>">Last 6 months</a></li>
+                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
+                                    </ul>
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+                            <div class="panel-body profits-2-body">
+                                <button class="btn btn-default pull-right btn-clear">Clear filters</button>
+                                <p class="yellow"></p>
+                                <p class="yellow-2"> Click an item name to filter results.</p>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover" id="profits-2-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th style="width: 5%;"></th>
+                                                <th>System</th>
+                                                <th>ISK/unit</th>
+                                                <th>Q</th>
+                                                <th>ISK/total</th>
+                                                <th>Time</th>
+                                                <th>Character</th>
+                                                <th>ISK Profit</th>
+                                                <th>Margin</th>
+                                                <th>Duration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php 
+                                        foreach($profits as $row) {
+                                            $row['profit_total'] >0 ? $res = "success" : $res="danger";
+                                            $row['character_buy'] == $row['character_sell'] ? $row['character_sell'] = "" : "";
+                                            $row['sys_buy'] == $row['sys_sell'] ? $row['sys_sell'] = "" : "";
+                                            $img ? $url = $row['url'] : $url="";
+                                            ?>
+                                            <tr class="<?=$res?>">
+                                                <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
+                                                    <a class="item-name" style="color: #fff"><?=$row['item_name']?></a></td>
+                                                <td><span class="btn btn-xs btn-danger">B</span><br/><span class="btn btn-xs btn-success">S</span></td>
+                                                <td><?=$row['sys_buy']?><br/>
+                                                    <?=$row['sys_sell']?></td>
+                                                <td><?=number_format($row['buy_price'],2)?><br />
+                                                    <?=number_format($row['sell_price'],2)?></td>
+                                                <td><?=number_format($row['profit_quantity'],0)?></td>
+                                                <td><?=number_format($row['buy_price_total'],2)?><br />
+                                                    <?=number_format($row['sell_price_total'],2)?></td>
+                                                <td><?=$row['time_buy']?> <br />
+                                                    <?=$row['time_sell']?></td>
+                                                <td><?=$row['character_buy']?> <br />
+                                                    <?=$row['character_sell']?></td>    
+                                                <td><?=number_format($row['profit_total'],2)?></td>
+                                                <td><a class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
+                                                <td><?=$row['diff']?></td>
+                                            </tr>
+                                        <?php } ?>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

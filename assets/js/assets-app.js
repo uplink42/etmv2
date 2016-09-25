@@ -42,24 +42,36 @@ $(document).ready(function() {
         $(".assets-body input.form-control").trigger("keyup");
     });
 
-        
+    var i = 0;
 
-    // Sparkline charts
-    var sparklineCharts = function() {
-        $(".sparkline").sparkline($(".sparkline").data('profit'), {
-            type: 'line',
-            lineColor: '#f6a821',
-            fillColor: '#f6a821',
-            height: 100,
-            width: '100%'
-        });
-    };
-    var sparkResize;
-    // Resize sparkline charts on window resize
-    $(window).resize(function() {
-        clearTimeout(sparkResize);
-        sparkResize = setTimeout(sparklineCharts, 100);
+    $(".spark-tab").on('click', function() {
+        i++;
+        if(i<2) {
+            $(".spark-tab").trigger('click');
+            renderSparkline();
+        }
     });
-    // Run sparkline
-    sparklineCharts();
+
+    function renderSparkline() {
+        // Sparkline charts
+        var sparklineCharts = function() {
+            $(".sparkline").sparkline($(".sparkline").data('profit'), {
+                type: 'line',
+                lineColor: '#f6a821',
+                fillColor: '#f6a821',
+                height: 100,
+                width: '100%'
+            });
+        };
+        
+        var sparkResize;
+        // Resize sparkline charts on window resize
+        $(window).resize(function() {
+            clearTimeout(sparkResize);
+            sparkResize = setTimeout(sparklineCharts, 100);
+        });
+        // Run sparkline
+        sparklineCharts();
+    }
+    
 });

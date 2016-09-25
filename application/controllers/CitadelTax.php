@@ -30,5 +30,15 @@ class CitadelTax extends MY_Controller
         }
     }
 
+    public function searchCitadels()
+    {
+        $input = $_REQUEST['term'];
+
+        $this->load->model('CitadelTax_model');
+        $result = $this->CitadelTax_model->queryCitadels($input);
+
+        echo json_encode($result);
+    }
+
 
 }
