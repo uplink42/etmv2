@@ -40,7 +40,7 @@ $(document).ready(function() {
                     var vol = number_format(result[k].vol,2, '.', ',' );
                     var price = number_format(result[k].price,2, '.', ',');
                     var $btn = "<a href="+base+"StockLists/removeItem/"+id_item+"/"+id+"><button class='btn btn-danger btn-remove-item'>Remove</button></a>";
-                    var $element = "<tr><td> " + $img + name + "</td><td>" + vol + "</td><td>" + price + "</td><td>" + $btn + "</td><tr>";
+                    var $element = "<tr><td> " + $img + " " + name + "</td><td>" + vol + "</td><td>" + price + "</td><td>" + $btn + "</td><tr>";
                     $(".table tbody").append($element);
                 });
             }
