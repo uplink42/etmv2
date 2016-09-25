@@ -100,7 +100,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <tbody>
                                             <?php foreach($best_raw as $row) {?>
                                             <tr>
-                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                    <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
+                                                </td>
                                                 <td><?=number_format($row['quantity'],0)?></td>
                                                 <td><?=number_format($row['profit'],2)?></td>
                                             </tr>
@@ -134,7 +136,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <tbody>
                                             <?php foreach($best_iph as $row) {?>
                                             <tr>
-                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                    <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
+                                                </td>
                                                 <td><?=number_format($row['quantity'],0)?></td>
                                                 <td><?=number_format($row['profit'],2)?></td>
                                                 <td><?=number_format($row['iph'],2)?></td>
@@ -231,7 +235,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <tbody>
                                             <?php foreach($best_blunders as $row) {?>
                                             <tr>
-                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                    <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
+                                                </td>
                                                 <td><?=number_format($row['profit'],2)?></td>
                                                 <td><?=number_format($row['margin'],2)?></td>
                                             </tr>
@@ -265,7 +271,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <tbody>
                                             <?php foreach($best_margin as $row) {?>
                                             <tr>
-                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                    <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?>
+                                                </td>
                                                 <td><?=number_format($row['quantity'],0)?></td>
                                                 <td><?=number_format($row['margin'],2)?></td>
                                             </tr>
@@ -372,7 +380,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <tbody>
                                             <?php foreach($problematic as $row) {?>
                                             <tr>
-                                                <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                    <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?>
+                                                </td>
                                                 <td><?=number_format($row['quantity'],0)?></td>
                                                 <td><?=number_format($row['profit'],2)?></td>
                                             </tr>
