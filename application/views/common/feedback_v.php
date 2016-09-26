@@ -5,7 +5,7 @@
                 <h4 class="modal-title">Feedback & Bug Reports</h4>
             </div>
             <div class="modal-body">
-                <p>Here you can suggest new features or improvements for Eve Trade Master. I'm quite receptive to feedback and will usually provide an answer in a day at most. In case of bug reports, try to be specific.</p>
+                <p>Here you can suggest new features or improvements for Eve Trade Master. I'm quite receptive to feedback and will usually provide an answer in a day at most. In case of bug reports, try to be specific. <a href="https://www.imgur.com" target="_blank">Consider sending screenshots to relay any error messages or unwanted behaviour.</a> </p>
                 <div class="form-group">
                     <form class="submit-feedback" method="POST">
                         <input type="hidden" name="email" value="<?=$email?>">

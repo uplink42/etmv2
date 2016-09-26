@@ -16,11 +16,37 @@ class CitadelTax_model extends CI_Model
         $this->db->where('eve_idstation > 1000000000000');
         $this->db->like('name', $input);
         $this->db->limit('10');
-        $query = $this->db->get('station');
+        $query  = $this->db->get('station');
         $result = $query->result_array();
-        
+
         return $result;
     }
 
+    public function getCitadelID($name)
+    {
+        $this->db->where('name', $name);
+        $query = $this->db->get('station');
+        if ($query->num_rows() == 0) {
+            return false;
+        }
+
+        return $query->row()->eve_idstation;
+    }
+
+    public function setTax($citadel_id, $character_id, $tax)
+    {
+
+        $data = ["station_eve_idstation"     => $citadel_id,
+                 "character_eve_idcharacter" => $character_id,
+                 "value"                     => $tax];
+
+        $query = $this->db->replace('citadel_tax', $data);
+
+        if($query) {
+            return true;
+        }
+
+        return false;
+    }
 
 }

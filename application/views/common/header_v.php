@@ -15,6 +15,8 @@
                 <span>
                     v.2.0
                 </span>
+                <i class="fa fa-refresh">
+                </i>
             </a>
         </div>
         <div class="navbar-collapse collapse" id="navbar">
@@ -26,7 +28,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li class="profil-link" data-aggr="<?=$aggregate?>" data-character="<?=$character_id?>" data-url="<?=base_url()?>">
-                    <a>
+                    <a href="<?=base_url('Updater')?>">
                         <span class="profile-address">
                             <i class="pe-7s-piggy">
                             </i>
@@ -48,6 +50,7 @@
                             <span class="header-escrow" title="escrow">
                             </span>
                         </span>
+                        <i class="fa fa-refresh"></i>
                     </a>
                 </li>
             </ul>

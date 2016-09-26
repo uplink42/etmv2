@@ -46,52 +46,53 @@
                         </div>
                     </div>
 
-                    <div class="panel-body traderoute-creation-panel">
-                        <form class="form-horizontal" data-url=<?=base_url()?>>
+                    <div class="panel-body tax-creation-panel">
+                        <form class="form-horizontal add-tax" data-url="<?=base_url()?>" method="POST">
                             <div class="row">
                                 <div class="form-group">
                                     <label for="citadel" class="col-sm-2 control-label">Citadel</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control origin-station" id="citadel" placeholder="Begin typing and select one of the highlighted stations">
+                                        <input type="text" class="form-control origin-station" id="citadel" name="citadel" placeholder="Begin typing and select one of the highlighted stations" autofocus required>
                                     </div>
                                     <label for="tax" class="col-sm-1 control-label">Tax</label>
                                     <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="tax" pattern="/^(0(\.\d+)?|1(\.0+)?)$/" title="Must insert a decimal value (example: 0.01 for 1%"> 
+                                        <input type="text" class="form-control" id="tax" name="tax" pattern="^(0(\.\d+)?|1(\.0+)?)$" title="Must insert a decimal value (example: 0.01 for 1%" required> 
                                     </div>
                                 </div>  
-                            </div> 
+                            </div>
+                            <input type="hidden" value="<?=$character_id?>" name="character"> 
                             <div class="text-center"><i class="fa fa-info"></i> Broker fee must be inserted as a decimal (e.g 0.05 represents 5%)</div>
-                            <button type="submit" class="btn btn-default submit-traderoute" name="submit-traderoute">Submit</button>
+                            <button type="submit" class="btn btn-default submit-tax">Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
-                    <div class="panel-body tax-list-panel">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row add-list-item">
-            <div class="col-md-12 col-xs-12">
-                <div class="panel panel-filled">
-                    <div class="panel-body tax-panel">
+                    <div class="panel-heading">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-arrow-up"></i>  <span class="yellow contents"></span></h4>
+                                <h4><i class="fa fa-usd"></i> Existing entries</h4>
                             </div>
                         </div>
-                        
+                    </div>
+                    <div class="panel-body tax-list">
+                        <div class="table-responsive">
+                            <table class="table table-responsive table-bordered table-hover table-stripped">
+                                <thead>
+                                    <tr>
+                                        <th>Citadel</th>
+                                        <th style="width:20%">Broker fee</th>
+                                        <th style="width:20%">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-
-        
-        
+        </div>    
     </div>
 </section>
