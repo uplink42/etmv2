@@ -30,6 +30,7 @@
                 <div class="panel panel-filled panel-c-success">
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> Here you can set or unset custom broker fees for transactions on certain Citadels of your choice<br />
+                        <i class="fa fa-info yellow"></i> Setting a different tax for an existing entry will update it
                     </div>
                 </div> 
             </div>
@@ -60,7 +61,7 @@
                                     </div>
                                 </div>  
                             </div>
-                            <input type="hidden" value="<?=$character_id?>" name="character"> 
+                            <input type="hidden" value="<?=$character_id?>" name="character" class="characterid"> 
                             <div class="text-center"><i class="fa fa-info"></i> Broker fee must be inserted as a decimal (e.g 0.05 represents 5%)</div>
                             <button type="submit" class="btn btn-default submit-tax">Submit</button>
                         </form>
@@ -86,7 +87,7 @@
                                         <th style="width:20%">Remove</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="tax-entries">
                                 </tbody>
                             </table>
                         </div>

@@ -14,37 +14,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title>Eve Trade Master</title>
 
     <!-- Vendor styles -->
-    <link rel="stylesheet" href="<?=URL?>assets/luna/vendor/fontawesome/css/font-awesome.css"/>
-    <link rel="stylesheet" href="<?=URL?>assets/luna/vendor/animate.css/animate.css"/>
-    <link rel="stylesheet" href="<?=URL?>assets/luna/vendor/bootstrap/css/bootstrap.css"/>
-    <link rel="stylesheet" href="<?=URL?>assets/luna/vendor/toastr/toastr.min.css"/>
-
-    <!-- App styles -->
-    <link rel="stylesheet" href="<?=URL?>assets/luna/styles/pe-icons/pe-icon-7-stroke.css"/>
-    <link rel="stylesheet" href="<?=URL?>assets/luna/styles/pe-icons/helper.css"/>
-    <link rel="stylesheet" href="<?=URL?>assets/luna/styles/stroke-icons/style.css"/>
-    <link rel="stylesheet" href="<?=URL?>assets/luna/styles/style.css">
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="<?=URL?>/dist/luna/styles/css/styles.css?HASH_CACHE=<?=HASH_CACHE?>"/>
     
-    <!-- Vendor scripts -->
-    <script src="<?=URL?>assets/luna/vendor/pacejs/pace.min.js"></script>
-    <script src="<?=URL?>assets/luna/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="<?=URL?>assets/luna/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="<?=URL?>assets/luna/vendor/toastr/toastr.min.js"></script>
-    <script src="<?=URL?>assets/luna/vendor/sparkline/index.js"></script>
-    <script src="<?=URL?>assets/luna/vendor/flot/jquery.flot.min.js"></script>
-    <script src="<?=URL?>assets/luna/vendor/flot/jquery.flot.resize.min.js"></script>
-    <script src="<?=URL?>assets/luna/vendor/flot/jquery.flot.spline.js"></script>
-
-    <!-- App scripts -->
-    <script src="<?=URL?>assets/luna/scripts/luna.js"></script>
-    <script src="<?=URL?>assets/js/toastr_options.js"></script>
+    <script src="<?=URL?>/dist/js/apps.js??HASH_CACHE=<?=HASH_CACHE?>"></script>
 </head>
 <body class="blank">
 
 <!-- Wrapper-->
 <div class="wrapper">
-
-
     <!-- Main content-->
     <section class="content">
         <div class="back-link">

@@ -24,11 +24,12 @@ class CitadelTax extends MY_Controller
     {
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
-            $aggregate = $this->aggregate;
-            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
-            $chars     = $data['chars'];
+            $aggregate        = $this->aggregate;
+            $data             = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $chars            = $data['chars'];
+            $data['selected'] = "citadeltax";
 
-            $data['selected'] = "assets";
+            $this->getTaxList($character_id);
 
             $data['view'] = 'main/citadeltax_v';
             $this->load->view('main/_template_v', $data);
@@ -71,6 +72,31 @@ class CitadelTax extends MY_Controller
 
         echo json_encode(array("notice" => $notice, "message" => $msg));
         //echo json_encode(array("tnc" => $this->character_id));
+    }
+
+    public function getTaxList($character_id)
+    {
+        $this->load->model('CitadelTax_model');
+        echo json_encode($this->CitadelTax_model->taxList($character_id));
+    }
+
+    public function removeTax($character_id, $tax_id)
+    {
+        $this->load->model('CitadelTax_model');
+        if ($this->CitadelTax_model->checkOwnership($character_id, $tax_id)) {
+            if ($this->CitadelTax_model->removeTax($tax_id)) {
+                $msg    = "Sucessfully removed tax";
+                $notice = "success";
+            } else {
+                $msg    = "Unexpected failure connecting to database. Try again";
+                $notice = "error";
+            }
+        } else {
+            $msg    = "Invalid request";
+            $notice = "error";
+        }
+
+        echo json_encode(array("notice" => $notice, "message" => $msg));
     }
 
 }

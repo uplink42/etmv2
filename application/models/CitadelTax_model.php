@@ -36,16 +36,52 @@ class CitadelTax_model extends CI_Model
     public function setTax($citadel_id, $character_id, $tax)
     {
 
-        $data = ["station_eve_idstation"     => $citadel_id,
-                 "character_eve_idcharacter" => $character_id,
-                 "value"                     => $tax];
+        $data = ["station_eve_idstation" => $citadel_id,
+            "character_eve_idcharacter"      => $character_id,
+            "value"                          => $tax];
 
         $query = $this->db->replace('citadel_tax', $data);
 
-        if($query) {
+        if ($query) {
             return true;
         }
 
+        return false;
+    }
+
+    public function taxList($character_id)
+    {
+        $this->db->select('s.name, t.value, t.idcitadel_tax');
+        $this->db->from('citadel_tax t');
+        $this->db->join('station s', 's.eve_idstation = t.station_eve_idstation');
+        $this->db->where('t.character_eve_idcharacter', $character_id);
+        $query  = $this->db->get('');
+        $result = $query->result_array();
+
+        return $result;
+    }
+
+    public function checkOwnership($character_id, $tax_id)
+    {
+        $this->db->where('character_eve_idcharacter', $character_id);
+        $this->db->where('idcitadel_tax', $tax_id);
+        $query = $this->db->get('citadel_tax');
+
+        if ($query->num_rows() != 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function removeTax($tax_id)
+    {
+        $this->db->where('idcitadel_tax', $tax_id);
+        $this->db->delete('citadel_tax');
+
+        if ($this->db->affected_rows() != 0) {
+            return true;
+        }
         return false;
     }
 

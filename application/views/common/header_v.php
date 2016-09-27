@@ -136,9 +136,7 @@
                 <a href="<?=base_url('CitadelTax/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Citadel Taxes
                 </a>
-                <a href="<?=base_url('Settings/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Account Settings
-                </a>
+                
             </li>
             <li>
                 <a aria-expanded="false" data-toggle="collapse" href="#api">
