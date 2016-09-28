@@ -10,22 +10,22 @@ class Tax_Model extends CI_Model
         parent::__construct();
     }
 
-    public $stationFromID; 
+    public $stationFromID;
     public $stationToID;
 
     public $character_from;
-    public $character_to; 
+    public $character_to;
 
     public $transFrom;
-    public $transTo; 
+    public $transTo;
 
-    private $fromCorpStandingValue; 
-    private $toCorpStandingValue; 
-    private $fromFactionStandingValue; 
+    private $fromCorpStandingValue;
+    private $toCorpStandingValue;
+    private $fromFactionStandingValue;
     private $toFactionStandingValue;
 
     private $level_broker_from;
-    private $level_acc_from; 
+    private $level_acc_from;
 
     private $level_broker_to;
     private $level_acc_to;
@@ -38,12 +38,12 @@ class Tax_Model extends CI_Model
 
     public function tax($stationFromID, $stationToID, $character_from, $character_to, $transFrom, $transTo)
     {
-        $this->stationFromID = $stationFromID;
-        $this->stationToID   = $stationToID;
-        $this->transFrom     = $transFrom;
-        $this->transTo       = $transTo;
-        $this->character_from     = $character_from;
-        $this->character_to       = $character_to;
+        $this->stationFromID  = $stationFromID;
+        $this->stationToID    = $stationToID;
+        $this->transFrom      = $transFrom;
+        $this->transTo        = $transTo;
+        $this->character_from = $character_from;
+        $this->character_to   = $character_to;
 
         $this->getFromCorpStanding($this->getCorpOwnerIDFromStation());
         $this->getToCorpStanding($this->getCorpOwnerIDToStation());
@@ -187,20 +187,31 @@ class Tax_Model extends CI_Model
     public function calculateBrokerFrom()
     {
         if ($this->transFrom == 'buy') {
-            //todo: check if citadel has manual tax assigned
-            return
-            $this->brokerFeeFrom = 1 + ((3 - (0.1 * (float) $this->level_broker_from + 0.03 * (float) $this->fromFactionStandingValue + 0.02 * (float) $this->fromCorpStandingValue)) / 100);
+
+            if ($stationFromID > 1000000000000 && $this->getCitadelTax()) {
+                return
+                $this->brokerFeeFrom = $this->getCitadelTax();
+
+            } else {
+                return
+                $this->brokerFeeFrom = 1 + ((3 - (0.1 * (float) $this->level_broker_from + 0.03 * (float) $this->fromFactionStandingValue + 0.02 * (float) $this->fromCorpStandingValue)) / 100);
+            }
         } else {
-            return 1; //it's actually 0 but this makes our maths easier later
+            return 1; 
         }
     }
 
     public function calculateBrokerTo()
     {
         if ($this->transTo == 'sell') {
-            //todo: check if citadel has manual tax assigned
-            return
-            $this->brokerFeeTo = 1 - ((3 - (0.1 * (float) $this->level_broker_to + 0.03 * (float) $this->toFactionStandingValue + 0.02 * (float) $this->toCorpStandingValue)) / 100);
+            if ($stationFromID > 1000000000000 && $this->getCitadelTax()) {
+                return
+                $this->brokerFeeFrom = $this->getCitadelTax();
+
+            } else {
+                return
+                $this->brokerFeeTo = 1 - ((3 - (0.1 * (float) $this->level_broker_to + 0.03 * (float) $this->toFactionStandingValue + 0.02 * (float) $this->toCorpStandingValue)) / 100);
+            }
         } else {
             return 1;
         }
@@ -215,5 +226,20 @@ class Tax_Model extends CI_Model
     {
         return
         $this->transTaxTo = 1 - ((2 * (1 - (0.1 * $this->level_acc_to))) / 100); //returns in 0.x
+    }
+
+    private function getCitadelTax()
+    {
+        $this->db->select('value');
+        $this->db->where('character_eve_idcharacter', $this->character_from);
+        $this->db->where('station_eve_idstation', $this->stationFromID);
+        $query = $this->db->get('citadel_tax');
+
+        if ($query->num_rows != 0) {
+            return
+            $result = $query->row();
+        } else {
+            return false;
+        }
     }
 }
