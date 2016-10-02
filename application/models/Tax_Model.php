@@ -6,7 +6,6 @@ class Tax_Model extends CI_Model
 
     public function __construct()
     {
-
         parent::__construct();
     }
 
@@ -188,7 +187,7 @@ class Tax_Model extends CI_Model
     {
         if ($this->transFrom == 'buy') {
 
-            if ($stationFromID > 1000000000000 && $this->getCitadelTax()) {
+            if ($stationFromID > 1000000000000 && $this->getCitadelTax($stationFromID)) {
                 return
                 $this->brokerFeeFrom = $this->getCitadelTax();
 
@@ -197,14 +196,14 @@ class Tax_Model extends CI_Model
                 $this->brokerFeeFrom = 1 + ((3 - (0.1 * (float) $this->level_broker_from + 0.03 * (float) $this->fromFactionStandingValue + 0.02 * (float) $this->fromCorpStandingValue)) / 100);
             }
         } else {
-            return 1; 
+            return 1;
         }
     }
 
     public function calculateBrokerTo()
     {
         if ($this->transTo == 'sell') {
-            if ($stationFromID > 1000000000000 && $this->getCitadelTax()) {
+            if ($stationToID > 1000000000000 && $this->getCitadelTax($stationToID)) {
                 return
                 $this->brokerFeeFrom = $this->getCitadelTax();
 
@@ -228,11 +227,11 @@ class Tax_Model extends CI_Model
         $this->transTaxTo = 1 - ((2 * (1 - (0.1 * $this->level_acc_to))) / 100); //returns in 0.x
     }
 
-    private function getCitadelTax()
+    private function getCitadelTax($stationID)
     {
         $this->db->select('value');
         $this->db->where('character_eve_idcharacter', $this->character_from);
-        $this->db->where('station_eve_idstation', $this->stationFromID);
+        $this->db->where('station_eve_idstation', $stationID);
         $query = $this->db->get('citadel_tax');
 
         if ($query->num_rows != 0) {

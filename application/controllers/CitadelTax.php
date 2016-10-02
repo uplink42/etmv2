@@ -12,7 +12,6 @@ class CitadelTax extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
         $this->page = "CitadelTax";
 
         isset($_REQUEST['citadel']) ? $this->citadel        = $_REQUEST['citadel'] : '';
@@ -52,21 +51,20 @@ class CitadelTax extends MY_Controller
         $citadel_id = $this->CitadelTax_model->getCitadelID($this->citadel);
         if ($citadel_id) {
             //check if character belongs
-            $this->load->model('Nav_model');
-            if ($this->Nav_model->checkCharacterBelong($this->character_id, $this->session->iduser)) {
+            if ($this->ValidateRequest->checkCharacterBelong($this->character_id, $this->session->iduser)) {
                 if ($this->CitadelTax_model->setTax($citadel_id, $this->character_id, $this->tax)) {
-                    $msg    = "Tax set sucessfully.";
+                    $msg    = Msg::TAX_SET_SUCCESS;
                     $notice = "success";
                 } else {
-                    $msg    = "Unexpected failure connecting to database. Try again.";
+                    $msg    = Msg::DB_ERROR;
                     $notice = "error";
                 }
             } else {
-                $msg    = "Invalid request";
+                $msg    = Msg::INVALID_REQUEST;
                 $notice = "error";
             }
         } else {
-            $msg    = "Unable to find this Citadel.";
+            $msg    = Msg::CITADEL_NOT_FOUND;
             $notice = "error";
         }
 
@@ -85,14 +83,14 @@ class CitadelTax extends MY_Controller
         $this->load->model('CitadelTax_model');
         if ($this->CitadelTax_model->checkOwnership($character_id, $tax_id)) {
             if ($this->CitadelTax_model->removeTax($tax_id)) {
-                $msg    = "Sucessfully removed tax";
+                $msg    = Msg::TAX_REMOVE_SUCCESS;
                 $notice = "success";
             } else {
-                $msg    = "Unexpected failure connecting to database. Try again";
+                $msg    = Msg::DB_ERROR;
                 $notice = "error";
             }
         } else {
-            $msg    = "Invalid request";
+            $msg    = Msg::INVALID_REQUEST;
             $notice = "error";
         }
 

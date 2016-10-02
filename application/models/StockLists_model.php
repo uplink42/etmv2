@@ -51,7 +51,7 @@ class StockLists_model extends CI_Model
     {
         $this->db->select('name as value');
         $this->db->from('item');
-        $this->db->where("name LIKE '%".$input."%'");
+        $this->db->where("name LIKE '%" . $input . "%'");
         $this->db->where("type <> 0");
         $this->db->order_by('name', 'asc');
         $this->db->limit('20');
@@ -63,32 +63,32 @@ class StockLists_model extends CI_Model
 
     public function insertItem($name, $list_id)
     {
-        $item = "";
+        $item  = "";
         $limit = 100;
         $this->db->where('name', $name);
         $q1 = $this->db->get('item');
 
         if ($q1->num_rows() == 0) {
             $notice = "error";
-            $msg = "Invalid item provided";
+            $msg    = "Invalid item provided";
         } else {
             $this->db->select('count(iditemcontents) as sum');
             $this->db->where('itemlist_iditemlist', $list_id);
             $qtotal = $this->db->get('itemcontents');
 
-            if($qtotal->row()->sum <$limit) {
+            if ($qtotal->row()->sum < $limit) {
                 $item_id = $q1->row()->eve_iditem;
                 $data    = array("itemlist_iditemlist" => $list_id,
-                                 "item_eve_iditem"       => $item_id);
-                $q2 = $this->db->query("INSERT IGNORE INTO itemcontents (iditemcontents, itemlist_iditemlist, item_eve_iditem) 
+                    "item_eve_iditem"                      => $item_id);
+                $q2 = $this->db->query("INSERT IGNORE INTO itemcontents (iditemcontents, itemlist_iditemlist, item_eve_iditem)
                 VALUES ('NULL', '$list_id', '$item_id')");
-                
+
                 $notice = "success";
-                $msg = "Item added successfully";
-                $item = $item_id;
+                $msg    = Msg::ITEM_ADD_SUCCESS;
+                $item   = $item_id;
             } else {
                 $notice = "error";
-                $msg = "You've reached the maximum amount of items in this list (". $limit .")";
+                $msg    = Msg::ITEM_MAX_REACHED . "(" . $limit . ")";
             }
         }
         return array("notice" => $notice, "message" => $msg, "item" => $item);
@@ -112,15 +112,15 @@ class StockLists_model extends CI_Model
     public function removeItem($item_id, $list_id)
     {
         $data = array("itemlist_iditemlist" => $list_id,
-                      "item_eve_iditem" => $item_id);
+            "item_eve_iditem"                   => $item_id);
 
         $query = $this->db->delete('itemcontents', $data);
-        if ($this->db->affected_rows() !=0) {
-            $notice = "success";
-            $message = "Item deleted successfully";
+        if ($this->db->affected_rows() != 0) {
+            $notice  = "success";
+            $message = Msg::ITEM_DELETE_SUCCESS;
         } else {
-            $notice = "error";
-            $message = "Could not delete item. Try again.";
+            $notice  = "error";
+            $message = Msg::ITEM_REMOVE_FAILURE;
         }
 
         return array("notice" => $notice, "message" => $message);
@@ -130,12 +130,12 @@ class StockLists_model extends CI_Model
     {
         $data = array('iditemlist' => $list_id);
         $this->db->delete('itemlist', $data);
-        if ($this->db->affected_rows() !=0) {
-            $notice = "success";
-            $message = "Stock List deleted successfully";
+        if ($this->db->affected_rows() != 0) {
+            $notice  = "success";
+            $message = Msg::LIST_REMOVE_SUCCESS;
         } else {
-            $notice = "error";
-            $message = "Could not delete Stock List. Try again.";
+            $notice  = "error";
+            $message = Msg::ITEM_REMOVE_FAILURE;
         }
 
         return array("notice" => $notice, "message" => $message);

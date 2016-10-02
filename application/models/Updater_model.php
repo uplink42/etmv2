@@ -8,7 +8,8 @@ use Pheal\Pheal;
 Config::getInstance()->cache  = new \Pheal\Cache\FileStorage(FILESTORAGE);
 Config::getInstance()->access = new \Pheal\Access\StaticCheck();
 
-class Updater_model extends CI_Model {
+class Updater_model extends CI_Model
+{
 
     //account related
     private $user_id;
@@ -107,7 +108,6 @@ class Updater_model extends CI_Model {
         $escrow_total   = 0;
         $sell_total     = 0;
         $grand_total    = 0;
-
 
         foreach ($this->account_characters as $char) {
             $this->db->where('eve_idcharacter', $char['character_eve_idcharacter']);
@@ -342,10 +342,10 @@ class Updater_model extends CI_Model {
         }
 
         $this->character_corp_standings = $corpStandingsArray;
-        if(count($corpStandingsArray)>0) {
+        if (count($corpStandingsArray) > 0) {
             $this->db->query(
-            batch("standings_corporation",
-                array('idstandings_corporation', 'characters_eve_idcharacters', 'corporation_eve_idcorporation', 'value'), $corpStandingsArray)
+                batch("standings_corporation",
+                    array('idstandings_corporation', 'characters_eve_idcharacters', 'corporation_eve_idcorporation', 'value'), $corpStandingsArray)
             );
         }
     }
@@ -366,7 +366,7 @@ class Updater_model extends CI_Model {
         }
 
         $this->character_faction_standings = $factionStandingsArray;
-        if(count($factionStandingsArray)>0) {
+        if (count($factionStandingsArray) > 0) {
             $this->db->query(
                 batch("standings_faction",
                     array('idstandings_faction', 'characters_eve_idcharacters', 'faction_eve_idfaction', 'value'), $factionStandingsArray)
@@ -387,7 +387,7 @@ class Updater_model extends CI_Model {
         $this->db->where('character_eve_idcharacter', $this->character_id);
         $query              = $this->db->get('transaction');
         $latest_transaction = $query->row()->val;
-        
+
         $transactions = array();
 
         //only update transactions not in db already
@@ -444,11 +444,10 @@ class Updater_model extends CI_Model {
 
         $this->db->select('COALESCE(max(eve_idcontracts),0) AS val');
         $this->db->where('characters_eve_idcharacters', $this->character_id);
-        $query           = $this->db->get('contracts');
-        $contracts       = array();
+        $query         = $this->db->get('contracts');
+        $contracts     = array();
         $old_contracts = [];
         $new_contracts = [];
-
 
         foreach ($response->contractList as $row) {
             $data = array("eve_idcontracts" => $this->db->escape($row->contractID),
@@ -476,16 +475,16 @@ class Updater_model extends CI_Model {
         $this->db->select('eve_idcontracts');
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $query = $this->db->get('contracts');
-        $old = $query->result();
-        
-        foreach($old as $row) {
+        $old   = $query->result();
+
+        foreach ($old as $row) {
             array_push($old_contracts, $row->eve_idcontracts);
         }
 
         $duplicates = 0;
-        foreach($new_contracts as $new) {
-            foreach($old_contracts as $old) {
-                if($new == $old) {
+        foreach ($new_contracts as $new) {
+            foreach ($old_contracts as $old) {
+                if ($new == $old) {
                     $duplicates++;
                 }
             }
@@ -519,12 +518,12 @@ class Updater_model extends CI_Model {
 
     private function getMarketOrders()
     {
-        $pheal    = new Pheal($this->apikey, $this->vcode, "char");
-        $response = $pheal->MarketOrders(array("characterID" => $this->character_id));
+        $pheal                  = new Pheal($this->apikey, $this->vcode, "char");
+        $response               = $pheal->MarketOrders(array("characterID" => $this->character_id));
         $this->character_escrow = 0;
-        $market_orders = [];
-        $new_orders = [];
-        $old_orders = [];
+        $market_orders          = [];
+        $new_orders             = [];
+        $old_orders             = [];
 
         foreach ($response->orders as $row) {
             //Eve API reports order states with these codes
@@ -566,7 +565,7 @@ class Updater_model extends CI_Model {
             );
 
             array_push($market_orders, $data);
-            if($order_state == 'open') {
+            if ($order_state == 'open') {
                 array_push($new_orders, $row->orderID);
             }
         }
@@ -574,16 +573,16 @@ class Updater_model extends CI_Model {
         $this->db->select('transkey');
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $query = $this->db->get('orders');
-        $old = $query->result();
-        
-        foreach($old as $row) {
+        $old   = $query->result();
+
+        foreach ($old as $row) {
             array_push($old_orders, $row->transkey);
         }
 
         $duplicates = 0;
-        foreach($new_orders as $new) {
-            foreach($old_orders as $old) {
-                if($new == $old) {
+        foreach ($new_orders as $new) {
+            foreach ($old_orders as $old) {
+                if ($new == $old) {
                     $duplicates++;
                 }
             }
@@ -610,7 +609,6 @@ class Updater_model extends CI_Model {
         } else {
             $this->character_new_orders = 0;
         }
-
 
         $query = $this->db->query("SELECT coalesce(sum(orders.volume_remaining * item_price_data.price_evecentral),0) AS grand_total
                         FROM orders

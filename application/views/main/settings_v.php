@@ -50,9 +50,9 @@
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-heading">
-                        <div class="panel panel-filled panel-c-white panel-collapse">
+                        <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <i class="fa fa-envelope"></i> Change E-mail
+                                <h4><i class="fa fa-envelope"></i> Change E-mail</h4>
                             </div>
                         </div>
                     </div>

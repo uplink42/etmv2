@@ -138,6 +138,12 @@
                 </a>
                 
             </li>
+            <li class="settings">
+                <a href="<?=base_url('Settings/index/'.$character_id .'?aggr='.$aggregate)?>">
+                    Settings
+                </a>
+                
+            </li>
             <li>
                 <a aria-expanded="false" data-toggle="collapse" href="#api">
                     API Key Management

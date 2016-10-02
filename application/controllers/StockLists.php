@@ -8,7 +8,6 @@ class StockLists extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
         $this->page = "StockLists";
 
     }
@@ -34,12 +33,12 @@ class StockLists extends MY_Controller
         $res = $this->StockLists_model->createEmptyList($this->session->iduser, $name);
         if ($res) {
             $data['notice']  = "success";
-            $data['message'] = "Stock List created successfully. You may now add some items to it";
+            $data['message'] = Msg::LIST_CREATE_SUCCESS;
             $data['id'] = $res;
 
         } else {
             $data['notice']  = "error";
-            $data['message'] = "Could not create Stock List";
+            $data['message'] = Msg::LIST_CREATE_ERROR;
         }
 
         echo json_encode($data);
@@ -89,7 +88,7 @@ class StockLists extends MY_Controller
             $res = $this->StockLists_model->insertItem($name, $list_id);
             echo json_encode($res);
         } else {
-            echo json_encode(array("notice" => "error", "message" => "Invalid request"));
+            echo json_encode(array("notice" => "error", "message" => Msg::INVALID_REQUEST));
         }
     }
 
@@ -102,7 +101,7 @@ class StockLists extends MY_Controller
             $res = $this->StockLists_model->removeItem($item_id, $list_id);
             echo json_encode($res);
         } else {
-            echo json_encode(array("notice" => "error", "message" => "Invalid request"));
+            echo json_encode(array("notice" => "error", "message" => Msg::INVALID_REQUEST));
         } 
     }
 
@@ -114,7 +113,7 @@ class StockLists extends MY_Controller
             $res = $this->StockLists_model->removeList($list_id);
             echo json_encode($res);
         } else {
-            echo json_encode(array("notice" => "error", "message" => "Invalid request"));
+            echo json_encode(array("notice" => "error", "message" => Msg::INVALID_REQUEST));
         } 
     }
 

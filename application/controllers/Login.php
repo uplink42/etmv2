@@ -8,7 +8,6 @@ class Login extends CI_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
     }
 
     public function index($view = null)
@@ -43,7 +42,7 @@ class Login extends CI_Controller
             $this->session->set_userdata($session_data);
             redirect(base_url('Updater'));
         } else {
-            buildMessage("error", "Invalid credentials", 'login/login_v');
+            buildMessage("error", Msg::INVALID_LOGIN, 'login/login_v');
             $data['no_header'] = 1;
             $this->load->view('main/_template_v', $data);
         }

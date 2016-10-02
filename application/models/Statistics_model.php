@@ -20,7 +20,7 @@ class Statistics_model extends CI_Model
             "numberPrefix"  => "ISK",
             "plotFillAlpha" => "80",
             "paletteColors" => "#d9534f,#5cb85c",
-            "showValues" => "0"
+            "showValues"    => "0",
 
         );
 
@@ -49,7 +49,7 @@ class Statistics_model extends CI_Model
         $this->db->where('history.characters_eve_idcharacters IN ' . $chars);
         $this->db->group_by('DATE_SUB(CURDATE(), INTERVAL i DAY)');
         $this->db->order_by('date', 'asc');
-        $query2 = $this->db->get();
+        $query2           = $this->db->get();
         $revenues_per_day = $query2->result_array();
 
         $this->db->select('days');
@@ -116,10 +116,10 @@ class Statistics_model extends CI_Model
 
     public function getProfitsTable($chars, $interval)
     {
-        $this->db->select('sum(total_profit) as total_profit, 
-                           sum(total_buy) as total_buy, 
-                           sum(total_sell) as total_sell, 
-                           avg(margin) as margin, 
+        $this->db->select('sum(total_profit) as total_profit,
+                           sum(total_buy) as total_buy,
+                           sum(total_sell) as total_sell,
+                           avg(margin) as margin,
                            date');
         $this->db->from('history');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
@@ -130,9 +130,9 @@ class Statistics_model extends CI_Model
         $query1     = $this->db->get('');
         $result_day = $query1->result_array();
 
-        $this->db->select('sum(total_profit) as total_profit, 
-                           sum(total_buy) as total_buy, 
-                           sum(total_sell) as total_sell, 
+        $this->db->select('sum(total_profit) as total_profit,
+                           sum(total_buy) as total_buy,
+                           sum(total_sell) as total_sell,
                            avg(margin) as margin');
         $this->db->from('history');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
@@ -159,7 +159,7 @@ class Statistics_model extends CI_Model
         $this->db->group_by('item.eve_iditem');
         $this->db->having('sum(profit.quantity_profit*profit.profit_unit) > 0');
         $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit)', 'desc');
-        if($chart) {
+        if ($chart) {
             $this->db->limit(20);
         }
         $query  = $this->db->get('');
@@ -208,12 +208,11 @@ class Statistics_model extends CI_Model
         $result = $query->result_array();
         //print_r($result);
 
-
         for ($i = 0; $i < count($result); $i++) {
             $this->db->where('name', $result[$i]['soldTo']);
             $query = $this->db->get('characters_public');
             $count = $query->num_rows();
-            
+
             if ($count != 0) {
                 $customerID = $query->row()->eve_idcharacters;
             } else {
@@ -225,11 +224,11 @@ class Statistics_model extends CI_Model
                 }
 
                 $data = ['eve_idcharacters' => $customerID,
-                         'name'             => $result[$i]['soldTo']];
+                    'name'                      => $result[$i]['soldTo']];
 
                 $this->db->insert('characters_public', $data);
             }
-            $result[$i]['url'] = "https://image.eveonline.com/Character/". $customerID ."_32.jpg";
+            $result[$i]['url'] = "https://image.eveonline.com/Character/" . $customerID . "_32.jpg";
         }
 
         return $result;
@@ -327,7 +326,7 @@ class Statistics_model extends CI_Model
     {
         $this->db->select('(profit.profit_unit) / ( t1.price_unit ) AS margin,
                            item.eve_iditem AS item_id,
-                           item.name as name, 
+                           item.name as name,
                            profit.profit_unit as profit');
         $this->db->from('profit');
         $this->db->join('transaction t1', 't1.idbuy = profit.transaction_idbuy_buy');
@@ -391,12 +390,12 @@ class Statistics_model extends CI_Model
 
         $arrData["data"] = array();
 
-        $item_names = [];
+        $item_names  = [];
         $item_values = [];
 
         $data = $this->getBestItemsRaw($chars, $interval, true);
 
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             array_push($item_names, $value['item']);
             array_push($item_values, $value['profit']);
         }

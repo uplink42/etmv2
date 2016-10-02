@@ -50,20 +50,20 @@ class Profits_model extends CI_Model
         $this->db->join('characters c1', 't1.character_eve_idcharacter = c1.eve_idcharacter');
         $this->db->join('characters c2', 't2.character_eve_idcharacter = c2.eve_idcharacter');
         $this->db->join('item i', 't1.item_eve_iditem = i.eve_iditem', 'left');
-        $this->db->where('p.characters_eve_idcharacters_OUT IN '.$chars);
+        $this->db->where('p.characters_eve_idcharacters_OUT IN ' . $chars);
         $this->db->order_by('t2.time', 'desc');
-        if($item_id) {
+        if ($item_id) {
             $this->db->where('i.eve_iditem', $item_id);
         }
-        $this->db->where('p.timestamp_sell>= now() - INTERVAL '.$interval. ' DAY');
+        $this->db->where('p.timestamp_sell>= now() - INTERVAL ' . $interval . ' DAY');
         $this->db->order_by('t2.time DESC');
         $this->db->limit(20000);
-        $query = $this->db->get();
+        $query  = $this->db->get();
         $result = $query->result_array();
 
         $count = count($result);
-        for($i=0; $i<$count; $i++) {
-            $diff = $result[$i]['diff'];
+        for ($i = 0; $i < $count; $i++) {
+            $diff           = $result[$i]['diff'];
             $price_buy      = $result[$i]['buy_price'];
             $profit_unit    = $result[$i]['profit_unit'];
             $character_buy  = $result[$i]['char_buy_id'];
@@ -71,12 +71,12 @@ class Profits_model extends CI_Model
             $station_from   = $result[$i]['station_buy_id'];
             $station_to     = $result[$i]['station_sell_id'];
 
-            if($result[$i]['diff']<60) {
-                $result[$i]['diff'] = number_format($diff,1) . " m"; 
-            } else if($result[$i]['diff']<1440) {
-                $result[$i]['diff'] = number_format($diff/60,1) . " h"; 
+            if ($result[$i]['diff'] < 60) {
+                $result[$i]['diff'] = number_format($diff, 1) . " m";
+            } else if ($result[$i]['diff'] < 1440) {
+                $result[$i]['diff'] = number_format($diff / 60, 1) . " h";
             } else {
-                $result[$i]['diff'] = number_format($diff/1440,1) . " d"; 
+                $result[$i]['diff'] = number_format($diff / 1440, 1) . " d";
             }
 
             $CI = &get_instance();
@@ -98,18 +98,18 @@ class Profits_model extends CI_Model
     public function getProfitChart($chars, $interval, $item_id = null)
     {
         $arrData = array( //graph parameters
-                        "chart" => array(
-                        "caption" => "Profit evolution",
-                        "subCaption" => "last " . $interval . " days",
-                        "xAxisName"=> "Day",
-                        "yAxisName"=> "ISK Profit",
-                        "paletteColors" => "#f6a821"
+            "chart" => array(
+                "caption"       => "Profit evolution",
+                "subCaption"    => "last " . $interval . " days",
+                "xAxisName"     => "Day",
+                "yAxisName"     => "ISK Profit",
+                "paletteColors" => "#f6a821",
 
-            )
+            ),
         );
 
         $index = -1;
-        
+
         /*$profits_list = array();
         $days_list = array();
         $arrData['data'] = array();
@@ -117,28 +117,28 @@ class Profits_model extends CI_Model
         date_sub($today,date_interval_create_from_date_string($interval ." day"));
 
         for($i=$interval; $i>0; $i--) {
-            $index = $index+1;
-            date_add($today,date_interval_create_from_date_string("1 day"));
-            $today_a = $today->format("Y-m-d");
+        $index = $index+1;
+        date_add($today,date_interval_create_from_date_string("1 day"));
+        $today_a = $today->format("Y-m-d");
 
-            $this->db->select('COALESCE(sum(total_profit),0) as profits, date');
-            $this->db->where('date', $today_a);
-            $this->db->where('characters_eve_idcharacters IN ' . $chars);
-            $this->db->order_by('date', 'asc');
-            $query1 = $this->db->get('history');
-            $result = $query1->row();
+        $this->db->select('COALESCE(sum(total_profit),0) as profits, date');
+        $this->db->where('date', $today_a);
+        $this->db->where('characters_eve_idcharacters IN ' . $chars);
+        $this->db->order_by('date', 'asc');
+        $query1 = $this->db->get('history');
+        $result = $query1->row();
 
-            array_push($days_list, $result->date);
-            array_push($profits_list, $result->profits);
-            array_push($arrData['data'], array("label" => (string)$days_list[$index], "value" => (string)$profits_list[$index]));
+        array_push($days_list, $result->date);
+        array_push($profits_list, $result->profits);
+        array_push($arrData['data'], array("label" => (string)$days_list[$index], "value" => (string)$profits_list[$index]));
 
         }
 
         $jsonEncodedData = json_encode($arrData);*/
         $inner = "";
-        $int = $interval;
-        for($i=1; $i<$int-1; $i++) {
-            $inner .= "SELECT ". $i . " UNION ALL ";
+        $int   = $interval;
+        for ($i = 1; $i < $int - 1; $i++) {
+            $inner .= "SELECT " . $i . " UNION ALL ";
         }
 
         $fromStr = "(SELECT 0 i UNION ALL " . $inner . " SELECT " . $interval . ") i";
@@ -146,26 +146,24 @@ class Profits_model extends CI_Model
         $this->db->select("DATE_SUB(CURDATE(), INTERVAL i DAY) date, sum(total_profit) as sum");
         $this->db->from($fromStr);
         $this->db->join('history', 'date=DATE_SUB(CURDATE(), INTERVAL i DAY)', 'left');
-        $this->db->where('history.characters_eve_idcharacters IN '. $chars);
+        $this->db->where('history.characters_eve_idcharacters IN ' . $chars);
         $this->db->group_by('DATE_SUB(CURDATE(), INTERVAL i DAY)');
-        $query = $this->db->get();
+        $query  = $this->db->get();
         $result = $query->result();
 
-
-        $profits_list = array();
-        $days_list = array();
+        $profits_list    = array();
+        $days_list       = array();
         $arrData['data'] = array();
 
-        foreach($result as $row) {
+        foreach ($result as $row) {
             $index++;
             array_push($days_list, $row->date);
             array_push($profits_list, $row->sum);
-            array_push($arrData['data'], array("label" => (string)$days_list[$index], "value" => (string)$profits_list[$index]));
+            array_push($arrData['data'], array("label" => (string) $days_list[$index], "value" => (string) $profits_list[$index]));
         }
 
         $jsonEncodedData = json_encode($arrData);
         return $jsonEncodedData;
     }
-    
 
 }

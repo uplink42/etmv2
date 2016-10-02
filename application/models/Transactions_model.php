@@ -33,14 +33,14 @@ class Transactions_model extends CI_Model
         $this->db->where('t.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
         $this->db->order_by("t.time DESC");
-        if($new>0) {
+        if ($new > 0) {
             $this->db->limit($new);
         }
         $query = $this->db->get();
         $count = $query->num_rows();
 
         $result = $query->result();
-        $data = array("result" => $result, "count" => $count);
+        $data   = array("result" => $result, "count" => $count);
         return $data;
     }
 

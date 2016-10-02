@@ -8,7 +8,6 @@ class Settings extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
         $this->page = "Settings";
 
     }
@@ -26,5 +25,17 @@ class Settings extends MY_Controller
             $data['view']           = 'main/settings_v';
             $this->load->view('main/_template_v', $data);
         }
+    }
+
+    public function email($character_id)
+    {
+        $this->load->model('Nav_model');
+        if($this->Nav_model->checkCharacterBelong($character_id, $this->session->iduser)) {
+            $this->load->model('Settings_model');
+            $this->Settings_model->getEmail();
+        } else {
+            $result = "Invalid request";
+        }
+        
     }
 }

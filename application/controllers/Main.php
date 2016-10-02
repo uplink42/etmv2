@@ -8,7 +8,6 @@ class Main extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
     }
 
     //loads the template view with the required content
@@ -37,7 +36,7 @@ class Main extends MY_Controller
     public function headerData($character_id, $aggr = 0)
     {
         $this->load->model('Nav_model');
-        if ($this->Nav_model->checkCharacterBelong($character_id, $this->session->iduser)) {
+        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->session->iduser, true)) {
             if($aggr == 0) {
                 $result = json_encode($this->Nav_model->getHeaderData($character_id));
                 echo $result;
@@ -78,11 +77,11 @@ class Main extends MY_Controller
         //$mail->SMTPDebug = 2;
         if (!$mail->Send()) {
             //echo $error = 'Mail error: '.$mail->ErrorInfo; 
-            $error = "Error sending email. Try again later.";
+            $error = Msg::EMAIL_SEND_FAILURE;
             $res = "error";
         }
         else {
-            $error = 'Message sent to ' . $to . " " . "\n";
+            $error = Msg::EMAIL_SEND_SUCCESS . $to . " " . "\n";
             $res = "success";
         }
         echo json_encode(array("notice" => $res, "message" => $error));

@@ -81,7 +81,7 @@ class Register extends CI_Controller
             $this->load->model('register_model');
             $characters         = $this->register_model->getCharacters($apikey, $vcode);
             $data['characters'] = $characters;
-            buildMessage("error", "Please select at least 1 character", "register/register_characters_v");
+            buildMessage("error", Msg::NO_CHARACTER_SELECTED, "register/register_characters_v");
             $data['view']      = "register/register_characters_v";
             $data['no_header'] = 1;
             $this->load->view('main/_template_v', $data);
@@ -99,7 +99,7 @@ class Register extends CI_Controller
                 $data['no_header']  = 1;
                 $this->load->view('main/_template_v', $data);
             } else {
-                $data['message']   = "Account created sucessfully";
+                $data['message']   = Msg::ACCOUNT_CREATE_SUCCESS;
                 $data['notice']    = "success";
                 $data['view']      = "login/login_v";
                 $data['no_header'] = 1;

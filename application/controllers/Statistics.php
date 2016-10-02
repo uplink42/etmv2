@@ -8,7 +8,6 @@ class Statistics extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
         $this->page = "Statistics";
     }
 
@@ -20,26 +19,26 @@ class Statistics extends MY_Controller
 
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
-            $aggregate        = $this->aggregate;
-            $data             = $this->loadViewDependencies($character_id, $user_id, $aggregate);
-            $chars            = $data['chars'];
-            $data['selected'] = "statistics";
-
+            $aggregate              = $this->aggregate;
+            $data                   = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $chars                  = $data['chars'];
+            $data['selected']       = "statistics";
+            
             $this->load->model('Statistics_model');
-            $chart         = $this->Statistics_model->buildVolumesChart($chars, $interval);
-            $problematic   = $this->Statistics_model->getProblematicItems($chars, $interval);
-            $profits_table = $this->Statistics_model->getProfitsTable($chars, $interval);
-            $best_raw      = $this->Statistics_model->getBestItemsRaw($chars, $interval);
-            $best_margin   = $this->Statistics_model->getBestItemsMargin($chars, $interval);
-            $best_customer = $this->Statistics_model->getBestCustomersRawProfit($chars, $interval);
-            $best_tz       = $this->Statistics_model->getBestTZ($chars, $interval);
-            $best_to       = $this->Statistics_model->getFastestTurnovers($chars, $interval);
-            $best_iph      = $this->Statistics_model->getBestIPH($chars, $interval);
-            $best_blunders = $this->Statistics_model->getMarketBlunders($chars, $interval);
-            $best_stations = $this->Statistics_model->getTopStations($chars, $interval);
-
-            $raw_chart = $this->Statistics_model->buildDistributionChart($chars, $interval);
-
+            $chart                  = $this->Statistics_model->buildVolumesChart($chars, $interval);
+            $problematic            = $this->Statistics_model->getProblematicItems($chars, $interval);
+            $profits_table          = $this->Statistics_model->getProfitsTable($chars, $interval);
+            $best_raw               = $this->Statistics_model->getBestItemsRaw($chars, $interval);
+            $best_margin            = $this->Statistics_model->getBestItemsMargin($chars, $interval);
+            $best_customer          = $this->Statistics_model->getBestCustomersRawProfit($chars, $interval);
+            $best_tz                = $this->Statistics_model->getBestTZ($chars, $interval);
+            $best_to                = $this->Statistics_model->getFastestTurnovers($chars, $interval);
+            $best_iph               = $this->Statistics_model->getBestIPH($chars, $interval);
+            $best_blunders          = $this->Statistics_model->getMarketBlunders($chars, $interval);
+            $best_stations          = $this->Statistics_model->getTopStations($chars, $interval);
+            
+            $raw_chart              = $this->Statistics_model->buildDistributionChart($chars, $interval);
+            
             $data['raw_chart']      = $raw_chart;
             $data['chart']          = $chart;
             $data['problematic']    = $this->injectIcons($problematic);

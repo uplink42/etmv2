@@ -79,7 +79,7 @@ class Assets_model extends CI_Model
                 $result = $query->row();
                 return $result->name;
             } else {
-                return "Unknown region";
+                return Msg::REGION_NOT_FOUND;
             }
         } else {
             return "All";
@@ -221,18 +221,18 @@ class Assets_model extends CI_Model
         $assetValues     = array($result->balance, $result->networth, $result->escrow, $result->total_sell);
 
         for ($i = 0; $i < count($assetTypes); $i++) {
-            array_push($arrData["data"], array("label" => (string) $assetTypes[$i],
-                "value"                                    => (string) $assetValues[$i]));
+        array_push($arrData["data"], array("label" => (string) $assetTypes[$i],
+        "value"                                    => (string) $assetValues[$i]));
         }
-        */
-       
-        $region_names = [];
+         */
+
+        $region_names  = [];
         $region_values = [];
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             array_push($region_names, $key);
             array_push($region_values, $value[0]['total_value']);
             /*print_r($value);
-            echo "<br>";*/
+        echo "<br>";*/
         }
         /*print_r($region_names);
         print_r($region_values);*/
@@ -241,8 +241,6 @@ class Assets_model extends CI_Model
             array_push($arrData["data"], array("label" => (string) $region_names[$i],
                 "value"                                    => (string) $region_values[$i]));
         }
-
-
 
         $arrData["chart"];
         $jsonEncodedData = json_encode($arrData);

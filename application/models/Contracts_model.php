@@ -35,65 +35,63 @@ class Contracts_model extends CI_Model
         $this->db->from('contracts c');
         $this->db->join('station s', 's.eve_idstation = c.fromStation_eve_idstation');
         $this->db->where('c.characters_eve_idcharacters IN ' . $chars);
-        if($filter) {
+        if ($filter) {
             $this->db->where('c.type', $filter);
         }
-        if($state == "active") {
-            $this->db->where("c.status IN 
+        if ($state == "active") {
+            $this->db->where("c.status IN
                 ('outstanding', 'inProgress')");
-                    if($new>0) {
-                        $this->db->limit($new);
-                    }
+            if ($new > 0) {
+                $this->db->limit($new);
+            }
         } else {
-                $this->db->where("c.status IN 
+            $this->db->where("c.status IN
                     ('deleted', 'completed', 'failed', 'completedByIssuer', 'completedByContractor', 'cancelled', 'rejected', 'reversed')");
         }
 
-        $query = $this->db->get('contracts');
+        $query  = $this->db->get('contracts');
         $result = $query->result_array();
 
         //modify the query array to include character names
-        for ($i=0; $i<count($result); $i++) {
-            $issuer = $result[$i]['issuer_id'];
-            $acceptor = $result[$i]['acceptor_id'];
+        for ($i = 0; $i < count($result); $i++) {
+            $issuer      = $result[$i]['issuer_id'];
+            $acceptor    = $result[$i]['acceptor_id'];
             $contract_id = $result[$i]['contract_id'];
 
             $this->db->where('eve_idcharacters', $issuer);
-            $query = $this->db->get('characters_public');
+            $query           = $this->db->get('characters_public');
             $get_issuer_name = $query->row();
 
-            if($query->num_rows() ==1) {
+            if ($query->num_rows() == 1) {
                 $result[$i]['issuer_name'] = $get_issuer_name->name;
             } else {
-                $pheal    = new Pheal();
-                $response = $pheal->eveScope->CharacterName(array("ids" => $issuer));
-                $name = $response->characters[0]->name;
+                $pheal                     = new Pheal();
+                $response                  = $pheal->eveScope->CharacterName(array("ids" => $issuer));
+                $name                      = $response->characters[0]->name;
                 $result[$i]['issuer_name'] = $name;
 
                 $data = array("eve_idcharacters" => $issuer,
-                              "name" => $name);
+                    "name"                           => $name);
                 $this->db->insert('characters_public', $data);
             }
 
-
             $this->db->where('eve_idcharacters', $acceptor);
-            $query2 = $this->db->get('characters_public');
+            $query2            = $this->db->get('characters_public');
             $get_acceptor_name = $query->row();
 
-            if($query2->num_rows() ==1) {
+            if ($query2->num_rows() == 1) {
                 $result[$i]['acceptor_name'] = $get_acceptor_name->name;
             } else {
-                $pheal    = new Pheal();
-                $response = $pheal->eveScope->CharacterName(array("ids" => $acceptor));
-                $name = $response->characters[0]->name;
+                $pheal                       = new Pheal();
+                $response                    = $pheal->eveScope->CharacterName(array("ids" => $acceptor));
+                $name                        = $response->characters[0]->name;
                 $result[$i]['acceptor_name'] = $name;
 
                 $data = array("eve_idcharacters" => $acceptor,
-                              "name" => $name);
+                    "name"                           => $name);
                 $this->db->insert('characters_public', $data);
             }
         }
-        
 
         return $result;
     }

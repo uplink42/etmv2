@@ -3,6 +3,7 @@
 }
 
 use Pheal\Pheal;
+
 //load namespaced library
 
 class Register_model extends CI_Model
@@ -11,6 +12,7 @@ class Register_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Msg');
     }
 
     public function validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports)
@@ -28,35 +30,35 @@ class Register_model extends CI_Model
     private function validateUsername($username)
     {
         if (strlen($username) < 6) {
-            return "Username is too short (minimum 6 characters)";
+            return Msg::USERNAME_TOO_SHORT;
         }
 
         $this->db->where('username', $username);
         $existing_user = $this->db->get('user');
         if ($existing_user->num_rows() >= 1) {
-            return "Username is already taken";
+            return Msg::USER_ALREADY_EXISTS;
         }
     }
 
     private function validateEmail($email)
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            return "Invalid e-mail format";
+            return Msg::INVALID_EMAIL;
         }
 
         $this->db->where('email', $email);
         $existing_email = $this->db->get('user');
         if ($existing_email->num_rows() >= 1) {
-            return "E-mail is already taken";
+            return Msg::EMAIL_ALREADY_TAKEN;
         }
     }
 
     private function validatePassword($password, $repeatpassword)
     {
         if (strlen($password) < 6) {
-            return "Password too short (minimum 6 characters)";
+            return Msg::PASSWORD_TOO_SHORT;
         } else if ($password != $repeatpassword) {
-            return "Passwords don't match";
+            return Msg::PASSWORDS_MISMATCH;
         }
     }
 
@@ -82,20 +84,20 @@ class Register_model extends CI_Model
                 $this->checkXML($apiInfo->result->key);
                 $accessMask = (int) $apiInfo->result->key->attributes()->accessMask;
             } catch (Exception $e) {
-                return "Invalid API Key or vCode. Make sure you use the generation link";
+                return Msg::INVALID_API_KEY;
             }
         }
         curl_close($ch);
 
         if ($accessMask != '82317323') {
-            return "Invalid permissions for the API Key you supplied. Make sure you use the generation link";
+            return Msg::INVALID_API_MASK;
         }
     }
 
     private function checkXML($xml)
     {
         if ($xml == "") {
-            throw new Exception("Invalid API Key or vCode. Make sure you use the generation link");
+            throw new Exception(Msg::INVALID_API_KEY);
         }
         return true;
     }
@@ -103,7 +105,7 @@ class Register_model extends CI_Model
     private function validateReports($reports)
     {
         if (empty($reports)) {
-            return "Invalid report selection";
+            return Msg::INVALID_REPORT_SELECTION;
         }
     }
 
@@ -187,7 +189,7 @@ class Register_model extends CI_Model
             //check if character already exists in db
             if ($this->checkCharacterExists($character_id)) {
                 $this->db->trans_rollback();
-                $error = "One or more of the characters you selected already belongs to another account.";
+                $error = Msg::CHARACTER_ALREADY_TAKEN;
                 return $error;
             }
 
@@ -226,7 +228,7 @@ class Register_model extends CI_Model
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === false) {
-            return "Error contacting the database. Please try again.";
+            return Msg::DB_ERROR;
         } else {
             return "ok";
         }

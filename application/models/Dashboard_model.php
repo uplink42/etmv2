@@ -63,7 +63,7 @@ class Dashboard_model extends CI_Model
     }
 
     public function getWeekProfits($chars)
-    {  
+    {
         $this->db->select('total_profit');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $this->db->where("date>= (now() - INTERVAL 7 DAY)");
@@ -88,7 +88,7 @@ class Dashboard_model extends CI_Model
 
     public function getTotalProfitsTrends($chars)
     {
-       
+
         $this->db->select('coalesce(sum(total_profit),0) as sum');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $this->db->where("date>= (now() - INTERVAL 7 DAY)");
@@ -114,7 +114,7 @@ class Dashboard_model extends CI_Model
     public function getNewInfo($chars)
     {
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
-        $query = $this->db->get('new_info');
+        $query         = $this->db->get('new_info');
         return $result = $query->row();
     }
 

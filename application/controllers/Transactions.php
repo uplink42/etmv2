@@ -10,7 +10,6 @@ class Transactions extends MY_Controller
         parent::__construct();
         $this->db->cache_off();
         ini_set('memory_limit', '-1');
-        $this->load->library('session');
         $this->page = "Transactions";
 
         if(isset($_REQUEST['new'])) {
@@ -37,10 +36,10 @@ class Transactions extends MY_Controller
                 $img = true;
             }
 
-            $data['img'] = $img;
+            $data['img']          = $img;
             $data['transactions'] = $this->injectIcons($transactions['result'], 'object');
-            $data['interval'] = $interval;
-            $data['view']           = 'main/transactions_v';
+            $data['interval']     = $interval;
+            $data['view']         = 'main/transactions_v';
             $this->load->view('main/_template_v', $data);
         }
     }
@@ -50,12 +49,12 @@ class Transactions extends MY_Controller
         $this->load->model('Transactions_model');
         if($this->Transactions_model->checkOwnership($transaction_id, $this->session->iduser)) {
             if($this->Transactions_model->unlinkTransaction($transaction_id)) {
-                echo json_encode(array("result" => "true", "msg" => "Transaction unlinked successfully", "type" => "success"));
+                echo json_encode(array("result" => "true", "msg" => Msg::TRANSACTION_UNLINK_SUCCESS, "type" => "success"));
             } else {
-                echo json_encode(array("result" => "false", "msg" => "This transaction is already unlinked", "type" => "error"));
+                echo json_encode(array("result" => "false", "msg" => Msg::TRANSACTION_UNLINK_ERROR, "type" => "error"));
             }
         } else {
-            echo json_encode(array("result" => "false", "msg" => "This transaction does not belong to you.", "type" => "error"));
+            echo json_encode(array("result" => "false", "msg" => Msg::INVALID_REQUEST, "type" => "error"));
         }
     }
 }

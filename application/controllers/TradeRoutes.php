@@ -8,7 +8,6 @@ class TradeRoutes extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
         $this->page = "TradeRoutes";
     }
 
@@ -17,11 +16,11 @@ class TradeRoutes extends MY_Controller
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
             $aggregate = $this->aggregate;
-            $data = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
 
             $data['selected'] = "traderoutes";
-            
-            $data['view']           = 'main/traderoutes_v';
+
+            $data['view'] = 'main/traderoutes_v';
             $this->load->view('main/_template_v', $data);
         }
     }
@@ -38,24 +37,23 @@ class TradeRoutes extends MY_Controller
     }
 
     public function submitRoute($character_id)
-    {   
-        $this->load->model('Login_model');
-        if($this->Login_model->checkCharacter($character_id, $this->session->iduser)) {
-           $this->load->model('TradeRoutes_model');
-           if (!empty($_REQUEST['origin']) && !empty($_REQUEST['destination'])) {
-                substr($_REQUEST['origin'],0,10) == "TRADE HUB:" ? 
-                    $origin = substr($_REQUEST['origin'],11) : $origin = $_REQUEST['origin'];;
-                substr($_REQUEST['destination'],0,10) == "TRADE HUB:" ? 
-                    $destination = substr($_REQUEST['destination'],11) : $destination = $_REQUEST['destination'];
+    {
+        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->session->iduser)) {
+            $this->load->model('TradeRoutes_model');
+            if (!empty($_REQUEST['origin']) && !empty($_REQUEST['destination'])) {
+                substr($_REQUEST['origin'], 0, 10) == "TRADE HUB:" ?
+                $origin = substr($_REQUEST['origin'], 11) : $origin = $_REQUEST['origin'];
+                substr($_REQUEST['destination'], 0, 10) == "TRADE HUB:" ?
+                $destination = substr($_REQUEST['destination'], 11) : $destination = $_REQUEST['destination'];
 
                 $data = $this->TradeRoutes_model->insertRoute($this->session->iduser, $origin, $destination);
-           } else {
-                $data['message']   = "Missing stations provided";
-                $data['notice']    = "error";
-           }
+            } else {
+                $data['message'] = Msg::STATION_NOT_FOUND;
+                $data['notice']  = "error";
+            }
         } else {
-            $data['message']   = "Invalid request";
-            $data['notice']    = "error";
+            $data['message'] = Msg::INVALID_REQUEST;
+            $data['notice']  = "error";
         }
 
         echo json_encode($data);
@@ -63,8 +61,7 @@ class TradeRoutes extends MY_Controller
 
     public function listTradeRoutes($character_id)
     {
-        $this->load->model('Login_model');
-        if($this->Login_model->checkCharacter($character_id, $this->session->iduser)) {
+        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->session->iduser)) {
             $this->load->model('TradeRoutes_model');
             $result = $this->TradeRoutes_model->getRoutes($this->session->iduser);
 
@@ -76,16 +73,16 @@ class TradeRoutes extends MY_Controller
     {
         $this->load->model('TradeRoutes_model');
         if ($this->TradeRoutes_model->checkRouteBelong($id_route, $this->session->iduser)) {
-            if($this->TradeRoutes_model->deleteRoute($id_route)) {
-                $data['message']   = "Trade Route deleted successfully";
-                $data['notice']    = "success";
+            if ($this->TradeRoutes_model->deleteRoute($id_route)) {
+                $data['message'] = Msg::ROUTE_REMOVE_SUCCESS;
+                $data['notice']  = "success";
             } else {
-                $data['message']   = "Error. Try again";
-                $data['notice']    = "error";
+                $data['message'] = Msg::ROUTE_REMOVE_ERROR;
+                $data['notice']  = "error";
             }
         } else {
-            $data['message']   = "Invalid request";
-            $data['notice']    = "error";
+            $data['message'] = Msg::INVALID_REQUEST;
+            $data['notice']  = "error";
         }
 
         echo json_encode($data);

@@ -13,11 +13,11 @@ class NetworthTracker_model extends CI_Model
     private $chart_options   = [];
     private $categories_data = [];
 
-    private $wallet_data     = [];
-    private $assets_data     = [];
-    private $orders_data     = [];
-    private $escrow_data     = [];
-    private $total_data      = [];
+    private $wallet_data = [];
+    private $assets_data = [];
+    private $orders_data = [];
+    private $escrow_data = [];
+    private $total_data  = [];
 
     public function __construct()
     {
@@ -30,14 +30,14 @@ class NetworthTracker_model extends CI_Model
         $this->chars    = $chars;
 
         $this->chart_options = array(
-            'caption'                 => 'Networth Evolution',
-            'subcaption'              => 'for last ' . $interval . ' days',
-            'xaxisname'               => 'day',
-            'yaxisname'               => 'ISK',
-            'captionFontSize'         => '20',
-            'subcaptionFontSize'      => '14',
-            'subcaptionFontBold'      => '0',
-            'showValues'              => '0'
+            'caption'            => 'Networth Evolution',
+            'subcaption'         => 'for last ' . $interval . ' days',
+            'xaxisname'          => 'day',
+            'yaxisname'          => 'ISK',
+            'captionFontSize'    => '20',
+            'subcaptionFontSize' => '14',
+            'subcaptionFontBold' => '0',
+            'showValues'         => '0',
         );
 
         $this->styles = array(
@@ -101,9 +101,9 @@ class NetworthTracker_model extends CI_Model
             'data'       => $this->total_data,
         );
 
-        $this->full_array['chart'] = $this->chart_options;
+        $this->full_array['chart']      = $this->chart_options;
         $this->full_array['categories'] = $categoryValues;
-        $this->full_array['dataset'] = array($walletValues, $assetValues, $sellValues, $escrowValues, $totalValues);
+        $this->full_array['dataset']    = array($walletValues, $assetValues, $sellValues, $escrowValues, $totalValues);
 
         return json_encode($this->full_array, true);
     }

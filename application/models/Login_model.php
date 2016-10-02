@@ -27,7 +27,7 @@ class Login_model extends CI_Model
             $data = array(
                 'username' => $row->username,
                 'password' => $row->password,
-                'email' => $row->email,
+                'email'    => $row->email,
             );
             $this->session->set_userdata($data);
             return true;
@@ -61,33 +61,33 @@ class Login_model extends CI_Model
     }
 
     //check if the assigned character belongs to account,
-    public function checkCharacter($character_id, $user_id)
+    /*public function checkCharacter($character_id, $user_id)
     {
-        $this->db->where('character_eve_idcharacter', $character_id);
-        $this->db->where('iduser', $user_id);
-        $query = $this->db->get('v_user_characters');
-        if ($query->num_rows() == 0) {
-            return false;
-        }
-        return $query->result();
+    $this->db->where('character_eve_idcharacter', $character_id);
+    $this->db->where('iduser', $user_id);
+    $query = $this->db->get('v_user_characters');
+    if ($query->num_rows() == 0) {
+    return false;
     }
+    return $query->result();
+    }*/
 
     //retrieves a list of all characters associated with an account
     public function getCharacterList($user_id)
     {
         $this->db->select('name, character_eve_idcharacter as id');
         $this->db->where('iduser', $user_id);
-        $query = $this->db->get('v_user_characters');
+        $query  = $this->db->get('v_user_characters');
         $result = $query->result();
 
-        $chars = [];
+        $chars      = [];
         $char_names = [];
         foreach ($result as $row) {
             array_push($chars, $row->id);
             array_push($char_names, $row->name);
         }
 
-        $aggr = "(".implode(",", $chars).")";
+        $aggr = "(" . implode(",", $chars) . ")";
         return array("aggr" => $aggr, "char_names" => $char_names, "chars" => $chars);
     }
 

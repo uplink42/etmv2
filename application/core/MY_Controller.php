@@ -9,6 +9,8 @@ class MY_Controller extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Msg');
+        $this->load->model('ValidateRequest');
         $this->load->library('session');
     }
 
