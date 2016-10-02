@@ -55,7 +55,7 @@ class StockLists extends MY_Controller
     public function getItems($id_list)
     {
         $this->load->model('StockLists_model');
-        if($this->StockLists_model->checkListBelong($id_list, $this->session->iduser)) {
+        if($this->ValidateRequest->checkStockListOwnership($id_list, $this->session->iduser)) {
             $result = $this->StockLists_model->getItems($id_list);
             echo json_encode($result);
         } else {
@@ -84,7 +84,7 @@ class StockLists extends MY_Controller
         $user_id = $this->session->iduser;
 
         $this->load->model('StockLists_model');
-        if($this->StockLists_model->checkListBelong($list_id, $user_id)) {
+        if($this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
             $res = $this->StockLists_model->insertItem($name, $list_id);
             echo json_encode($res);
         } else {
@@ -97,7 +97,7 @@ class StockLists extends MY_Controller
         $user_id = $this->session->iduser;
 
         $this->load->model('StockLists_model');
-        if($this->StockLists_model->checkListBelong($list_id, $user_id)) {
+        if($this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
             $res = $this->StockLists_model->removeItem($item_id, $list_id);
             echo json_encode($res);
         } else {
@@ -109,7 +109,7 @@ class StockLists extends MY_Controller
     {
         $user_id = $this->session->iduser;
         $this->load->model('StockLists_model');
-        if($this->StockLists_model->checkListBelong($list_id, $user_id)) {
+        if($this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
             $res = $this->StockLists_model->removeList($list_id);
             echo json_encode($res);
         } else {

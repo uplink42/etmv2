@@ -94,20 +94,6 @@ class StockLists_model extends CI_Model
         return array("notice" => $notice, "message" => $msg, "item" => $item);
     }
 
-    public function checkListBelong($list_id, $user_id)
-    {
-        $this->db->select('itemlist.iditemlist');
-        $this->db->from('itemlist');
-        $this->db->join('user', 'user.iduser = itemlist.user_iduser');
-        $this->db->where('user.iduser', $user_id);
-        $this->db->where('itemlist.iditemlist', $list_id);
-        $query = $this->db->get();
-
-        if ($query->num_rows() != 0) {
-            return true;
-        }
-        return false;
-    }
 
     public function removeItem($item_id, $list_id)
     {

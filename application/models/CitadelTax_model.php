@@ -61,18 +61,6 @@ class CitadelTax_model extends CI_Model
         return $result;
     }
 
-    public function checkOwnership($character_id, $tax_id)
-    {
-        $this->db->where('character_eve_idcharacter', $character_id);
-        $this->db->where('idcitadel_tax', $tax_id);
-        $query = $this->db->get('citadel_tax');
-
-        if ($query->num_rows() != 0) {
-            return true;
-        }
-
-        return false;
-    }
 
     public function removeTax($tax_id)
     {

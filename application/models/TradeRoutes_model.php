@@ -90,17 +90,6 @@ class TradeRoutes_model extends CI_Model
         return $result;
     }
 
-    public function checkRouteBelong($route_id, $user_id)
-    {
-        $this->db->where('user_iduser', $user_id);
-        $this->db->where('idtraderoute', $route_id);
-        $query = $this->db->get('traderoutes');
-        if ($query->num_rows() != 0) {
-            return true;
-        }
-        return false;
-    }
-
     public function deleteRoute($route_id)
     {
         $this->db->where('idtraderoute', $route_id);

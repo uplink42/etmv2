@@ -81,7 +81,7 @@ class CitadelTax extends MY_Controller
     public function removeTax($character_id, $tax_id)
     {
         $this->load->model('CitadelTax_model');
-        if ($this->CitadelTax_model->checkOwnership($character_id, $tax_id)) {
+        if ($this->ValidateRequest->checkCitadelOwnership($character_id, $tax_id)) {
             if ($this->CitadelTax_model->removeTax($tax_id)) {
                 $msg    = Msg::TAX_REMOVE_SUCCESS;
                 $notice = "success";

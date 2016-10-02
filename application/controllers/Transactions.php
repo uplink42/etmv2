@@ -47,7 +47,7 @@ class Transactions extends MY_Controller
     public function unlink($transaction_id)
     {
         $this->load->model('Transactions_model');
-        if($this->Transactions_model->checkOwnership($transaction_id, $this->session->iduser)) {
+        if($this->ValidateRequest->checkTransactionOwnership($transaction_id, $this->session->iduser)) {
             if($this->Transactions_model->unlinkTransaction($transaction_id)) {
                 echo json_encode(array("result" => "true", "msg" => Msg::TRANSACTION_UNLINK_SUCCESS, "type" => "success"));
             } else {

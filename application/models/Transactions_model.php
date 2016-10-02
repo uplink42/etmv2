@@ -44,28 +44,6 @@ class Transactions_model extends CI_Model
         return $data;
     }
 
-    public function checkOwnership($transaction_id, $user_id)
-    {
-        $this->load->model('Login_model');
-        $result = $this->Login_model->getCharacterList($user_id);
-        $chars  = $result['aggr'];
-        log_message('error', $chars);
-
-        if (strlen($chars) == 0) {
-            return false;
-        } else {
-            $this->db->select('character_eve_idcharacter, idbuy');
-            $this->db->where('character_eve_idcharacter IN ' . $chars);
-            $this->db->where('idbuy', $transaction_id);
-            $query = $this->db->get('transaction');
-
-            if ($query->num_rows() != 0) {
-                return true;
-            }
-            return false;
-        }
-    }
-
     public function unlinkTransaction($transaction_id)
     {
         $this->db->select('character_eve_idcharacter as c');

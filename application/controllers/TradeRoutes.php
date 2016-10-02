@@ -72,7 +72,7 @@ class TradeRoutes extends MY_Controller
     public function deleteRoute($id_route)
     {
         $this->load->model('TradeRoutes_model');
-        if ($this->TradeRoutes_model->checkRouteBelong($id_route, $this->session->iduser)) {
+        if ($this->ValidateRequest->checkTradeRouteOwnership($id_route, $this->session->iduser)) {
             if ($this->TradeRoutes_model->deleteRoute($id_route)) {
                 $data['message'] = Msg::ROUTE_REMOVE_SUCCESS;
                 $data['notice']  = "success";
