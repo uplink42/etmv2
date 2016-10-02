@@ -71,7 +71,6 @@ class ValidateRequest extends CI_Model
         $this->load->model('Login_model');
         $result = $this->Login_model->getCharacterList($user_id);
         $chars  = $result['aggr'];
-        log_message('error', $chars);
 
         if (strlen($chars) == 0) {
             return false;
@@ -87,5 +86,4 @@ class ValidateRequest extends CI_Model
             return false;
         }
     }
-
 }

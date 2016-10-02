@@ -9,33 +9,29 @@ class Settings extends MY_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->page = "Settings";
-
     }
 
     public function index($character_id)
     {
+
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
             $aggregate = $this->aggregate;
-            $data = $this->loadViewDependencies($character_id, $user_id, $aggregate);
-            $chars = $data['chars'];
+            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $chars     = $data['chars'];
 
             $data['selected'] = "settings";
-            
-            $data['view']           = 'main/settings_v';
+
+            $data['view'] = 'main/settings_v';
             $this->load->view('main/_template_v', $data);
         }
     }
 
-    public function email($character_id)
+    public function email()
     {
-        $this->load->model('Nav_model');
-        if($this->Nav_model->checkCharacterBelong($character_id, $this->session->iduser)) {
-            $this->load->model('Settings_model');
-            $this->Settings_model->getEmail();
-        } else {
-            $result = "Invalid request";
-        }
-        
+        $this->load->model('Settings_model');
+        $data = $this->Settings_model->getEmail($this->session->iduser);
+
+        echo json_encode(array("email" => $data));
     }
 }

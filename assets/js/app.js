@@ -15,6 +15,7 @@ function number_format(number, decimals, decPoint, thousandsSep) {
     }
     return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
 }
+
 jQuery.fn.dataTable.Api.register('sum()', function() {
     return this.flatten().reduce(function(a, b) {
         if (typeof a === 'string') {
@@ -27,7 +28,26 @@ jQuery.fn.dataTable.Api.register('sum()', function() {
     }, 0);
 });
 
+//load error messages
+var errHandle = (function() {
+    var data;
+    var base = "http://localhost/etm_refactor/";
+    $.ajax({
+        dataType: "json",
+        url: base + "Main/getMsgHandles",
+        success: function(result) {
+            data = result;
+        }
+    });
+    return {
+        get: function() {
+            if (data) return data;
+        }
+    };
+})();
+
 $(document).ready(function() {
+    var base = $(".navbar").data('url');
     //$(".panel-loading-common").hide();
     $(".btn-clear").on('click', function() {
         $("input.form-control").val("");
@@ -45,7 +65,6 @@ $(document).ready(function() {
     });
     $(".btn-send-feedback").on('click', function() {
         var data = $(".submit-feedback").serialize(),
-            base = $(".navbar").data('url'),
             url = base + "Main/sendEmail/";
         $.ajax({
             dataType: "json",

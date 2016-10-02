@@ -32,6 +32,7 @@ $(document).ready(function() {
         var apikey = $("#apikey").val();
         var vcode = $("#vcode").val();
         var reports = $("#reports").attr('id');
+        
         $("#username").parent('div').removeClass('has-error');
         $("#email").parent('div').removeClass('has-error');
         $("#password").parent('div').removeClass('has-error');

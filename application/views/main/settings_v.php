@@ -1,4 +1,4 @@
-
+<script src="<?=base_url('dist/js/apps/settings-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -22,16 +22,6 @@
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
                     <div class="panel-heading">
-                        <div class="panel-tools">
-                            <a class="panel-toggle">
-                                <i class="fa fa-chevron-up">
-                                </i>
-                            </a>
-                            <a class="panel-close">
-                                <i class="fa fa-times">
-                                </i>
-                            </a>
-                        </div>
                         Account Settings
                     </div>
                     <div class="panel-body">
@@ -63,7 +53,7 @@
                                     Current e-mail:
                                 </label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" id="ch-email-current" value="current" type="text" disabled>
+                                    <input class="form-control" id="ch-email-current" type="text" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -84,7 +74,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button class="btn btn-default" type="submit">
+                                    <button class="btn btn-default btn-change-email" type="submit">
                                         Submit
                                     </button>
                                 </div>

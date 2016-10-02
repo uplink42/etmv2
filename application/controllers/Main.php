@@ -88,4 +88,11 @@ class Main extends MY_Controller
         echo json_encode(array("notice" => $res, "message" => $error));
     }
 
+    public function getMsgHandles()
+    {
+        $refl = new ReflectionClass('Msg');
+        $data = $refl->getConstants();
+        echo json_encode($data);
+    }
+
 }

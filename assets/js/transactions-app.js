@@ -1,11 +1,11 @@
 $(document).ready(function() {
 
     if(window.location.hash == "#success") {
-        toastr["success"]("Transaction unlinked successfully", "Notice");
+        toastr["success"](errHandle.get().TRANSACTION_UNLINK_SUCCESS, "Notice");
     }
 
     if(window.location.hash == "#error") {
-        toastr["error"]("Unable to unlink transaction. This transaction is already unlinked or does not belong to you.", "Error");
+        toastr["error"](errHandle.get().TRANSACTION_UNLINK_ERROR, "Error");
     }
     window.location.hash = "";
     

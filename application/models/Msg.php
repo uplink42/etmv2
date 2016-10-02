@@ -16,8 +16,8 @@ class Msg extends CI_Model
     const PASSWORDS_MISMATCH         = "Passwords are not identical";
     const PASSWORD_TOO_SHORT         = "Password too short (5 characters minimum)";
     
-    const INVALID_API_MASK           = "Your provided API Key does not match the required permissions. 
-                                        Please use the generation link provided in the registration page";
+    const INVALID_API_MASK           = "Your provided API Key does not match the required permissions. \n Please use the generation link provided in the registration page";
+
     const INVALID_API_KEY            = "Invalid API Key";
     const INVALID_REPORT_SELECTION   = "Invalid report selection";
     const CHARACTER_ACCOUNT_MISMATCH = "One or more characters you selected do not belong to this account";
@@ -26,8 +26,9 @@ class Msg extends CI_Model
     const ACCOUNT_CREATE_SUCCESS     = "Account created successfully";
     
     const MISSING_INFO               = "Missing information provided";
+    const INVALID_FORM               = "Invalid information provided";
     const REGION_NOT_FOUND           = "Unknown Region";
-    // 
+
     const CITADELS_NOT_FOUND         = "Unable to load Citadel list";
     const TAX_SET_SUCCESS            = "Tax value set sucessfully";
     const TAX_SET_FAILURE            = "Unable to set tax value";
@@ -66,10 +67,10 @@ class Msg extends CI_Model
     const EMAIL_SEND_SUCCESS         = "E-mail sent to ";
 
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
+        //log_message('error', get_object_vars($this));
     }
-
 
 }

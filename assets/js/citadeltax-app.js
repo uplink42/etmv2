@@ -1,9 +1,11 @@
 $(document).ready(function() {
+
     var base = $(".navbar").data('url');
     var url_autocomplete = base + "CitadelTax/searchCitadels/";
     var url_req = base + "CitadelTax/addTax/";
     var charid = $(".characterid").val();
     updateTable();
+    
     $("#citadel").autocomplete({
         source: url_autocomplete,
         minLength: 2,
@@ -33,7 +35,8 @@ $(document).ready(function() {
                 }
             });
         } else {
-            toastr["error"]("Please fill in the form correctly");
+            toastr["error"](errHandle.get().INVALID_FORM);
+
         }
     });
 

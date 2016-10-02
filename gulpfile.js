@@ -38,7 +38,8 @@ var paths = {
           'assets/js/traderoutes-app.js',
           'assets/js/tradesimulator-app.js',
           'assets/js/transactions-app.js',
-          'assets/js/citadeltax-app.js']
+          'assets/js/citadeltax-app.js',
+          'assets/js/settings-app.js']
 };
 
 gulp.task('css', function(){
