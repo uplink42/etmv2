@@ -15,6 +15,7 @@ class Msg extends CI_Model
     const EMAIL_ALREADY_TAKEN        = "E-mail is already taken";
     const PASSWORDS_MISMATCH         = "Passwords are not identical";
     const PASSWORD_TOO_SHORT         = "Password too short (5 characters minimum)";
+    
     const INVALID_API_MASK           = "Your provided API Key does not match the required permissions. 
                                         Please use the generation link provided in the registration page";
     const INVALID_API_KEY            = "Invalid API Key";

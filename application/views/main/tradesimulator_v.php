@@ -1,4 +1,5 @@
 <script src="<?=base_url('dist/js/apps/tradesimulator-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -133,6 +134,7 @@
                         <div class="tradesim-res">
                             <div class="row">
                                 <div class="text-center col-md-12">
+                                    <?php if(!empty($results)) { ?>
                                     <b>Stock List:</b> <?=$results['req']['list']?>
                                 </div>
                             </div>
@@ -221,6 +223,7 @@
                                             <td><a class= "btn btn-default btn-xs"><?=number_format($row['profit_margin'], 2)?></a></td>
                                         </tr>
                                         <?php }?>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>

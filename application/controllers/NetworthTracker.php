@@ -29,8 +29,9 @@ class NetworthTracker extends MY_Controller
 
             $data['selected'] = "networth";
 
-            $data['chart'] = $chart;
-            $data['view']  = 'main/nwtracker_v';
+            $data['chart']    = $chart;
+            $data['interval'] = $interval;
+            $data['view']     = 'main/nwtracker_v';
             $this->load->view('main/_template_v', $data);
         }
     }

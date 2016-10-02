@@ -19,7 +19,7 @@ class MY_Controller extends CI_Controller
     {
         $this->load->model('Login_model');
         if ($this->Login_model->checkSession() &&
-            $this->Login_model->checkCharacter($character_id, $user_id)) {
+            $this->ValidateRequest->checkCharacterBelong($character_id, $user_id)) {
 
             if (isset($_GET['aggr'])) {
                 $aggr = $_GET['aggr'];

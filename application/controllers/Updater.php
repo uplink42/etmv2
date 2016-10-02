@@ -9,6 +9,8 @@ class Updater extends CI_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->db->cache_delete_all();
+        $this->load->library('session');
+        $this->load->model('Msg');
     }
 
     public function index()

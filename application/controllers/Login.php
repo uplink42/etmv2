@@ -8,6 +8,8 @@ class Login extends CI_Controller
     {
         parent::__construct();
         $this->db->cache_off();
+        $this->load->library('session');
+        $this->load->model('Msg');
     }
 
     public function index($view = null)

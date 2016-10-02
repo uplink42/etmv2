@@ -8,6 +8,7 @@ class Main extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Msg');
     }
 
     //loads the template view with the required content
