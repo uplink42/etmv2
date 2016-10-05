@@ -10,7 +10,7 @@ class Login_model extends CI_Model
         parent::__construct();
     }
 
-    public function validate($username, $password)
+    public function validate($username, $password, $nosession = null)
     {
         $this->db->where('username', $username);
         $query_salt                             = $this->db->get('user');
@@ -29,7 +29,9 @@ class Login_model extends CI_Model
                 'password' => $row->password,
                 'email'    => $row->email,
             );
-            $this->session->set_userdata($data);
+            if(!$nosession) {
+                $this->session->set_userdata($data);
+            }
             return true;
         }
 

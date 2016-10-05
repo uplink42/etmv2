@@ -17,11 +17,7 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
-    //validate email
-    function isEmail(email) {
-        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        return regex.test(email);
-    }
+
     //form client validation
     $(".submit-register").on('click', 'input', function(e) {
         //client side validation

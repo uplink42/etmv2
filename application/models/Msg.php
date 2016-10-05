@@ -14,7 +14,7 @@ class Msg extends CI_Model
     const INVALID_EMAIL              = "Invalid e-mail";
     const EMAIL_ALREADY_TAKEN        = "E-mail is already taken";
     const PASSWORDS_MISMATCH         = "Passwords are not identical";
-    const PASSWORD_TOO_SHORT         = "Password too short (5 characters minimum)";
+    const PASSWORD_TOO_SHORT         = "Password too short (6 characters minimum)";
     
     const INVALID_API_MASK           = "Your provided API Key does not match the required permissions. \n Please use the generation link provided in the registration page";
 
@@ -65,6 +65,10 @@ class Msg extends CI_Model
     
     const EMAIL_SEND_FAILURE         = "Failed to send e-mail";
     const EMAIL_SEND_SUCCESS         = "E-mail sent to ";
+
+    const EMAIL_CHANGE_SUCCESS       = "E-mail changed sucessfully";
+    const REPORT_CHANGE_SUCCESS      = "Report selection changed successfully";
+    const REPORT_CHANGE_ERROR        = "Unable to change report selection";
 
 
     public function __construct()

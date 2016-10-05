@@ -16,6 +16,12 @@ function number_format(number, decimals, decPoint, thousandsSep) {
     return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
 }
 
+//validate email
+function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
+
 jQuery.fn.dataTable.Api.register('sum()', function() {
     return this.flatten().reduce(function(a, b) {
         if (typeof a === 'string') {
@@ -27,7 +33,6 @@ jQuery.fn.dataTable.Api.register('sum()', function() {
         return a + b;
     }, 0);
 });
-
 //load error messages
 var errHandle = (function() {
     var data;
@@ -45,7 +50,6 @@ var errHandle = (function() {
         }
     };
 })();
-
 $(document).ready(function() {
     var base = $(".navbar").data('url');
     //$(".panel-loading-common").hide();
