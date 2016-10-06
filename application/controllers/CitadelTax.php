@@ -13,6 +13,7 @@ class CitadelTax extends MY_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->page = "CitadelTax";
+        $this->load->model('CitadelTax_model');
 
         isset($_REQUEST['citadel']) ? $this->citadel        = $_REQUEST['citadel'] : '';
         isset($_REQUEST['tax']) ? $this->tax                = $_REQUEST['tax'] : '';
@@ -38,8 +39,6 @@ class CitadelTax extends MY_Controller
     public function searchCitadels()
     {
         $input = $_REQUEST['term'];
-
-        $this->load->model('CitadelTax_model');
         $result = $this->CitadelTax_model->queryCitadels($input);
 
         echo json_encode($result);
@@ -47,7 +46,6 @@ class CitadelTax extends MY_Controller
 
     public function addTax()
     {
-        $this->load->model('CitadelTax_model');
         $citadel_id = $this->CitadelTax_model->getCitadelID($this->citadel);
         if ($citadel_id) {
             //check if character belongs
@@ -74,13 +72,11 @@ class CitadelTax extends MY_Controller
 
     public function getTaxList($character_id)
     {
-        $this->load->model('CitadelTax_model');
         echo json_encode($this->CitadelTax_model->taxList($character_id));
     }
 
     public function removeTax($character_id, $tax_id)
     {
-        $this->load->model('CitadelTax_model');
         if ($this->ValidateRequest->checkCitadelOwnership($character_id, $tax_id)) {
             if ($this->CitadelTax_model->removeTax($tax_id)) {
                 $msg    = Msg::TAX_REMOVE_SUCCESS;
@@ -96,5 +92,4 @@ class CitadelTax extends MY_Controller
 
         echo json_encode(array("notice" => $notice, "message" => $msg));
     }
-
 }

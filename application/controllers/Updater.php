@@ -10,7 +10,7 @@ class Updater extends CI_Controller
         $this->db->cache_off();
         $this->db->cache_delete_all();
         $this->load->library('session');
-        $this->load->model('Msg');
+        $this->load->model('common/Msg');
     }
 
     public function index()

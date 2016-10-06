@@ -10,7 +10,7 @@ class ValidateRequest extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Msg');
+        $this->load->model('common/Msg');
     }
 
     public function checkCharacterBelong($character_id, $user_id, $json = null)
@@ -26,7 +26,6 @@ class ValidateRequest extends CI_Model
         } else {
             return false;
         }
-
     }
 
     public function checkCitadelOwnership($character_id, $tax_id)

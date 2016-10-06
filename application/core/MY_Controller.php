@@ -9,15 +9,15 @@ class MY_Controller extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Msg');
-        $this->load->model('ValidateRequest');
+        $this->load->model('common/Msg');
+        $this->load->model('common/ValidateRequest');
+        $this->load->model('Login_model');
         $this->load->library('session');
     }
 
     //logs off if either session or character request is invalid
     protected function enforce($character_id, $user_id = "")
     {
-        $this->load->model('Login_model');
         if ($this->Login_model->checkSession() &&
             $this->ValidateRequest->checkCharacterBelong($character_id, $user_id)) {
 
@@ -50,7 +50,6 @@ class MY_Controller extends CI_Controller
 
     protected function getCharacterList($user_id)
     {
-        $this->load->model('Login_model');
         $data = $this->Login_model->getCharacterList($user_id);
         return $data;
     }
@@ -61,7 +60,6 @@ class MY_Controller extends CI_Controller
         $char_names = [];
 
         if ($aggregate == true) {
-            $this->load->model('Login_model');
             $characters = $this->Login_model->getCharacterList($user_id);
 
             $chars      = $characters['aggr'];
@@ -77,8 +75,6 @@ class MY_Controller extends CI_Controller
         $data['aggregate']      = $aggregate;
         $data['char_names']     = $char_names;
         $data['character_list'] = $character_list;
-
-        $this->load->model('Login_model');
         $data['character_name'] = $this->Login_model->getCharacterName($character_id);
         $data['character_id']   = $character_id;
 

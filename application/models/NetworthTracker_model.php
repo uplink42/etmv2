@@ -4,7 +4,6 @@
 
 class NetworthTracker_model extends CI_Model
 {
-
     private $chars;
     private $interval;
 

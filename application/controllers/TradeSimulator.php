@@ -3,16 +3,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class TradeSimulator extends MY_Controller
 {
+    private $stationFrom;
+    private $stationTo;
 
     public function __construct()
     {
         parent::__construct();
         $this->db->cache_on();
         $this->page = "TradeSimulator";
+        $this->load->model('TradeSimulator_model');
     }
-
-    private $stationFrom;
-    private $stationTo;
 
     public function index($character_id, $msg = null, $res = null)
     {
@@ -66,7 +66,6 @@ class TradeSimulator extends MY_Controller
             !empty($_REQUEST['seller']) &&
             !empty($_REQUEST['stocklist'])) {
 
-            $this->load->model('TradeSimulator_model');
             $this->stationFrom = $this->TradeSimulator_model->getStationID($_REQUEST['origin-station']);
             $this->stationTo   = $this->TradeSimulator_model->getStationID($_REQUEST['destination-station']);
 

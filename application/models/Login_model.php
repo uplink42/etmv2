@@ -10,33 +10,6 @@ class Login_model extends CI_Model
         parent::__construct();
     }
 
-    public function validate($username, $password, $nosession = null)
-    {
-        $this->db->where('username', $username);
-        $query_salt                             = $this->db->get('user');
-        isset($query_salt->row()->salt) ? $salt = $query_salt->row()->salt : $salt = "";
-
-        $password_salt = crypt($password, $salt);
-
-        $this->db->where('username', $username);
-        $this->db->where('password', $password_salt);
-        $query_pw = $this->db->get('user');
-
-        if ($query_pw->num_rows() == 1) {
-            $row  = $query_pw->row();
-            $data = array(
-                'username' => $row->username,
-                'password' => $row->password,
-                'email'    => $row->email,
-            );
-            if(!$nosession) {
-                $this->session->set_userdata($data);
-            }
-            return true;
-        }
-
-        return false;
-    }
 
     public function getUserData($username)
     {

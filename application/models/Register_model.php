@@ -12,7 +12,8 @@ class Register_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Msg');
+        $this->load->model('common/Msg');
+        $this->load->model('ValidateRequest');
     }
 
     public function validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports)
@@ -29,7 +30,6 @@ class Register_model extends CI_Model
 
     private function validateUsername($username)
     {
-        $this->load->model('ValidateRequest');
         if(!$this->ValidateRequest->validateUsernameLength($username)) {
             return Msg::USERNAME_TOO_SHORT;
         }
@@ -42,7 +42,6 @@ class Register_model extends CI_Model
 
     private function validateEmail($email)
     {
-        $this->load->model('ValidateRequest');
         if(!$this->ValidateRequest->validateEmailFormat($email)) {
             return Msg::INVALID_EMAIL;
         }
@@ -55,7 +54,6 @@ class Register_model extends CI_Model
 
     private function validatePassword($password, $repeatpassword)
     {
-        $this->load->model('ValidateRequest');
         if(!$this->ValidateRequest->validatePasswordLength($password)) {
             return Msg::PASSWORD_TOO_SHORT;
         }
@@ -67,7 +65,6 @@ class Register_model extends CI_Model
 
     private function validateAPI($apikey, $vcode)
     {
-        $this->load->model('ValidateRequest');
         return $this->ValidateRequest->validateAPI($apikey, $vcode);
     }
 
@@ -122,12 +119,8 @@ class Register_model extends CI_Model
         $dt->setTimezone($tz);
         $datetime = $dt->format('Y-m-d H:i:s');
 
-        $cost = 10;
-        $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
-        // "$2a$" Means we're using the Blowfish algorithm. The following two digits are the cost parameter.
-        $salt = sprintf("$2a$%02d$", $cost) . $salt;
-        // Hash the password with the salt
-        $password_final = crypt($password, $salt);
+        $this->load->model('common/Auth');
+        $password_final = $this->Auth->createHashedPassword($password);
 
         $this->db->trans_start();
 

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Tax_Model extends CI_Model
+class Tax_model extends CI_Model
 {
 
     public function __construct()

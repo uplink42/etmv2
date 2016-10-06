@@ -9,7 +9,7 @@ class StockLists extends MY_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->page = "StockLists";
-
+        $this->load->model('StockLists_model');
     }
 
     public function index($character_id)
@@ -29,7 +29,6 @@ class StockLists extends MY_Controller
     public function newList()
     {
         $name = $this->security->xss_clean($this->input->post('list-name'));
-        $this->load->model('StockLists_model');
         $res = $this->StockLists_model->createEmptyList($this->session->iduser, $name);
         if ($res) {
             $data['notice']  = "success";
@@ -46,7 +45,6 @@ class StockLists extends MY_Controller
 
     public function populateList()
     {
-        $this->load->model('StockLists_model');
         $lists = $this->StockLists_model->getStockLists($this->session->iduser);
 
         echo json_encode($lists);
@@ -54,7 +52,6 @@ class StockLists extends MY_Controller
 
     public function getItems($id_list)
     {
-        $this->load->model('StockLists_model');
         if($this->ValidateRequest->checkStockListOwnership($id_list, $this->session->iduser)) {
             $result = $this->StockLists_model->getItems($id_list);
             echo json_encode($result);
@@ -67,8 +64,6 @@ class StockLists extends MY_Controller
     public function searchItems()
     {
         $input = $_REQUEST['term'];
-
-        $this->load->model('StockLists_model');
         $result = $this->StockLists_model->queryItems($input);
 
         echo json_encode($result);
@@ -83,7 +78,6 @@ class StockLists extends MY_Controller
         $name    = $_REQUEST['item-name'];
         $user_id = $this->session->iduser;
 
-        $this->load->model('StockLists_model');
         if($this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
             $res = $this->StockLists_model->insertItem($name, $list_id);
             echo json_encode($res);
@@ -95,8 +89,6 @@ class StockLists extends MY_Controller
     public function removeItem($item_id, $list_id)
     {
         $user_id = $this->session->iduser;
-
-        $this->load->model('StockLists_model');
         if($this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
             $res = $this->StockLists_model->removeItem($item_id, $list_id);
             echo json_encode($res);
@@ -108,7 +100,6 @@ class StockLists extends MY_Controller
     public function removeList($list_id)
     {
         $user_id = $this->session->iduser;
-        $this->load->model('StockLists_model');
         if($this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
             $res = $this->StockLists_model->removeList($list_id);
             echo json_encode($res);

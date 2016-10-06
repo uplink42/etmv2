@@ -9,7 +9,7 @@ class Login extends CI_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->load->library('session');
-        $this->load->model('Msg');
+        $this->load->model('common/Msg');
     }
 
     public function index($view = null)
@@ -27,7 +27,8 @@ class Login extends CI_Controller
         $data['password'] = $password;
 
         $this->load->model('Login_model');
-        if ($this->Login_model->validate($username, $password)) {
+        $this->load->model('common/Auth');
+        if ($this->Auth->validateLogin($username, $password)) {
             //login success
             $user_data = $this->Login_model->getUserData($username);
             $id_user   = $user_data->iduser;
@@ -51,16 +52,6 @@ class Login extends CI_Controller
     }
 
     public function logout()
-    {
-
-    }
-
-    public function recoverUsername()
-    {
-
-    }
-
-    public function recoverPassword()
     {
 
     }

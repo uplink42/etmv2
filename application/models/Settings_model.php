@@ -51,6 +51,11 @@ class Settings_model extends CI_Model
 		}
 		return true;
 	}
+
+	public function changePassword($id_user, $password)
+	{
+		
+	}
     
 
 }

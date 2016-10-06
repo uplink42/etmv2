@@ -16,6 +16,7 @@ class Settings extends MY_Controller
         $this->db->cache_off();
         $this->page = "Settings";
         $this->load->model('Settings_model');
+        $this->load->model('common/ValidateRequest');
 
         if (!empty($_REQUEST['password']) && !empty($_REQUEST['email'])) {
             $this->email    = $_REQUEST['email'];
@@ -107,18 +108,22 @@ class Settings extends MY_Controller
 
     public function changePassword()
     {
-        if($this->password_new1 == $this->password_new2) {
-            if(strlen($this->password_new1) < 6) {
-                if($this->validatePassword($password_old)) {
-                    //proceed
+        $this->load->model('common/Auth');
+        if($this->ValidateRequest->validateIdenticalPasswords($this->password_new1, $this->password_new2)) {
+            if($this->ValidateRequest->validatePasswordLength($this->password_new1) {
+                if($this->Auth->validateLogin($this->session->username, $password_old, true)) {
+                    $this->Settings_model->changePassword($this->session->iduser, $this->password_new1);
                 } else {
-                    //wrong pw
+                    $notice = "error";
+                    $msg    = Msg::INVALID_LOGIN;
                 }
             } else {
-                //too short
+                $notice = "error";
+                $msg    = Msg::PASSWORD_TOO_SHORT;
             }
         } else {
-            //not match
+            $notice = "error";
+            $msg    = Msg::PASSWORDS_MISMATCH;
         }
     }
 }
