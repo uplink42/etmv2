@@ -26,12 +26,12 @@ class Register extends CI_Controller
         $vcode          = $this->security->xss_clean($this->input->post('vcode'));
         $reports        = $this->security->xss_clean($this->input->post('reports'));
 
-        $this->load->model('register_model');
-        $result = $this->register_model->validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports);
+        $this->load->model('Register_model');
+        $result = $this->Register_model->validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports);
 
         if (!isset($result['username']) && !isset($result['password']) && !isset($result['email']) && !isset($result['api']) && !isset($result['reports'])) {
-            $this->load->model('register_model');
-            $result = $this->register_model->getCharacters($apikey, $vcode);
+            $this->load->model('Register_model');
+            $result = $this->Register_model->getCharacters($apikey, $vcode);
 
             $data['characters'] = $result;
             $data['view']       = "register/register_characters_v";

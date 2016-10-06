@@ -9,6 +9,7 @@ class Msg extends CI_Model
     //transaction or query error
     const DB_ERROR                   = "Unexpected failure connecting to database. Try again"; 
     
+    const API_ALREADY_EXISTS         = "API key is already taken";
     const USER_ALREADY_EXISTS        = "Username is already taken";
     const USERNAME_TOO_SHORT         = "Username is too short (minimum 6 characters)";
     const INVALID_EMAIL              = "Invalid e-mail";

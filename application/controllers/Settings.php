@@ -6,6 +6,9 @@ class Settings extends MY_Controller
     private $email;
     private $password;
     private $reports;
+    private $password_old;
+    private $password_new1;
+    private $password_new2;
 
     public function __construct()
     {
@@ -21,6 +24,12 @@ class Settings extends MY_Controller
 
         if(!empty($_REQUEST['reports'])) {
             $this->reports = $_REQUEST['reports'];
+        }
+
+        if(!empty($_REQUEST['password-old']) && !empty($_REQUEST['password-new1']) && !empty($_REQUEST['password-new2'])) {
+            $this->password_old  = $_REQUEST['password-old'];
+            $this->password_new1 = $_REQUEST['password-new1'];
+            $this->password_new2 = $_REQUEST['password-new2'];
         }
     }
 
@@ -94,5 +103,22 @@ class Settings extends MY_Controller
         $data = ["notice" => $notice, "message" => $message];
         echo json_encode($data);
         
+    }
+
+    public function changePassword()
+    {
+        if($this->password_new1 == $this->password_new2) {
+            if(strlen($this->password_new1) < 6) {
+                if($this->validatePassword($password_old)) {
+                    //proceed
+                } else {
+                    //wrong pw
+                }
+            } else {
+                //too short
+            }
+        } else {
+            //not match
+        }
     }
 }

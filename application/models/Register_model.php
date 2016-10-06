@@ -17,7 +17,7 @@ class Register_model extends CI_Model
 
     public function validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports)
     {
-        $result = array("username" => $this->validateUsername($username),
+        $result = array("username"     => $this->validateUsername($username),
             "password"                 => $this->validatePassword($password, $repeatpassword),
             "email"                    => $this->validateEmail($email),
             "api"                      => $this->validateAPI($apikey, $vcode),
@@ -29,78 +29,48 @@ class Register_model extends CI_Model
 
     private function validateUsername($username)
     {
-        if (strlen($username) < 6) {
+        $this->load->model('ValidateRequest');
+        if(!$this->ValidateRequest->validateUsernameLength($username)) {
             return Msg::USERNAME_TOO_SHORT;
         }
 
-        $this->db->where('username', $username);
-        $existing_user = $this->db->get('user');
-        if ($existing_user->num_rows() >= 1) {
+        if(!$this->ValidateRequest->validateUsernameAvailability($username)) {
             return Msg::USER_ALREADY_EXISTS;
         }
+        
     }
 
     private function validateEmail($email)
     {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+        $this->load->model('ValidateRequest');
+        if(!$this->ValidateRequest->validateEmailFormat($email)) {
             return Msg::INVALID_EMAIL;
         }
 
-        $this->db->where('email', $email);
-        $existing_email = $this->db->get('user');
-        if ($existing_email->num_rows() >= 1) {
+        if(!$this->ValidateRequest->validateEmailAvailability($email)) {
             return Msg::EMAIL_ALREADY_TAKEN;
         }
+
     }
 
     private function validatePassword($password, $repeatpassword)
     {
-        if (strlen($password) < 6) {
+        $this->load->model('ValidateRequest');
+        if(!$this->ValidateRequest->validatePasswordLength($password)) {
             return Msg::PASSWORD_TOO_SHORT;
-        } else if ($password != $repeatpassword) {
+        }
+
+        if(!$this->ValidateRequest->validateIdenticalPasswords($password, $repeatpassword)) {
             return Msg::PASSWORDS_MISMATCH;
         }
     }
 
     private function validateAPI($apikey, $vcode)
     {
-        //Using CURL to fetch API Access Mask
-        $curl_url = "https://api.eveonline.com/account/APIKeyInfo.xml.aspx?keyID=" . $apikey . "&vCode=" . $vcode;
-
-        $ch = curl_init($curl_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-
-        $response = curl_exec($ch);
-
-        // If curl_exec() fails/throws an error, the function will return false
-        if ($response === false) {
-            echo 'Curl error: ' . curl_error($ch);
-        } else {
-            $apiInfo = new SimpleXMLElement($response);
-
-            try {
-                $this->checkXML($apiInfo->result->key);
-                $accessMask = (int) $apiInfo->result->key->attributes()->accessMask;
-            } catch (Exception $e) {
-                return Msg::INVALID_API_KEY;
-            }
-        }
-        curl_close($ch);
-
-        if ($accessMask != '82317323') {
-            return Msg::INVALID_API_MASK;
-        }
+        $this->load->model('ValidateRequest');
+        return $this->ValidateRequest->validateAPI($apikey, $vcode);
     }
 
-    private function checkXML($xml)
-    {
-        if ($xml == "") {
-            throw new Exception(Msg::INVALID_API_KEY);
-        }
-        return true;
-    }
 
     private function validateReports($reports)
     {
