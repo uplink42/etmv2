@@ -54,7 +54,21 @@ class Settings_model extends CI_Model
 
 	public function changePassword($id_user, $password)
 	{
-		
+		$this->load->model('common/Auth');
+		$hashed = $this->Auth->createHashedPassword($password);
+
+		$data = ["password" => $hashed['password'],
+		         "salt"     => $hashed['salt']];
+
+		$this->db->trans_start();
+		$this->db->where('iduser', $id_user);     
+		$this->db->update('user', $data);
+		$this->db->trans_complete();
+
+		if($this->db->trans_status() === FALSE) {
+			return false;
+		}
+		return true;
 	}
     
 

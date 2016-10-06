@@ -120,19 +120,18 @@ class Register_model extends CI_Model
         $datetime = $dt->format('Y-m-d H:i:s');
 
         $this->load->model('common/Auth');
-        $password_final = $this->Auth->createHashedPassword($password);
+        $hashed = $this->Auth->createHashedPassword($password);
 
         $this->db->trans_start();
 
         //query1
         $data1 = array(
-            "iduser"            => null,
             "username"          => $username,
             "registration_date" => $datetime,
-            "password"          => $password_final,
+            "password"          => $hashed['password'],
             "reports"           => $reports,
             "email"             => $email,
-            "salt"              => $salt,
+            "salt"              => $hashed['salt'],
             "login_count"       => 0,
             "updating"          => 0,
         );

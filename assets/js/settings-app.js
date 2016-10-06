@@ -101,7 +101,9 @@ $(document).ready(function() {
                     success: function(result) {
                         console.log(result);
                         toastr[result.notice](result.message);
-
+                        $("#ch-pw-new1").val("");
+                        $("#ch-pw-new2").val("");
+                        $("#ch-pw-old").val("");
                     }
                 });
             } else {

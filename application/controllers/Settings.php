@@ -110,9 +110,15 @@ class Settings extends MY_Controller
     {
         $this->load->model('common/Auth');
         if($this->ValidateRequest->validateIdenticalPasswords($this->password_new1, $this->password_new2)) {
-            if($this->ValidateRequest->validatePasswordLength($this->password_new1) {
-                if($this->Auth->validateLogin($this->session->username, $password_old, true)) {
-                    $this->Settings_model->changePassword($this->session->iduser, $this->password_new1);
+            if($this->ValidateRequest->validatePasswordLength($this->password_new1)) {
+                if($this->Auth->validateLogin($this->session->username, $this->password_old, true)) {
+                    if($this->Settings_model->changePassword($this->session->iduser, $this->password_new1)) {
+                        $notice = "success";
+                        $msg    = Msg::CHANGE_PASSWORD_SUCCESS;
+                    } else {
+                        $notice = "error";
+                        $msg    = Msg::CHANGE_PASSWORD_ERROR;
+                    }
                 } else {
                     $notice = "error";
                     $msg    = Msg::INVALID_LOGIN;
@@ -125,5 +131,8 @@ class Settings extends MY_Controller
             $notice = "error";
             $msg    = Msg::PASSWORDS_MISMATCH;
         }
+
+        $data = ["notice" => $notice, "message" => $msg];
+        echo json_encode($data);
     }
 }

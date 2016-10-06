@@ -95,7 +95,7 @@
                         </div>
                     </div>
                     <div class="panel-body password">
-                        <form class="form-horizontal change-password" method="POST">
+                        <form class="form-horizontal change-password" method="POST" autocomplete="off">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="ch-pw-old">
                                     Current Password:

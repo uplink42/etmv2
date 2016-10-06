@@ -5,7 +5,7 @@
 class Auth extends CI_Model
 {
     const COST = 10;
-    const BLOWFISH = $2a$%02d$;
+    const BLOWFISH = "$2a$%02d$";
 
     public function __construct()
     {
@@ -13,15 +13,15 @@ class Auth extends CI_Model
         $this->load->model('common/Msg');
     }
 
-    public function createHashedPassword()
+    public function createHashedPassword($password)
     {
         $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
         // "$2a$" Means we're using the Blowfish algorithm. The following two digits are the cost parameter.
-        $salt = sprintf(self::BLOWFISH, $self::COST) . $salt;
+        $salt = sprintf(self::BLOWFISH, self::COST) . $salt;
         // Hash the password with the salt
         $password_final = crypt($password, $salt);
 
-        return $password_final;
+        return array("password" => $password_final, "salt" => $salt);
     }
 
     public function generateRandomPassword()

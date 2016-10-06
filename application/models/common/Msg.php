@@ -71,6 +71,9 @@ class Msg extends CI_Model
     const REPORT_CHANGE_SUCCESS      = "Report selection changed successfully";
     const REPORT_CHANGE_ERROR        = "Unable to change report selection";
 
+    const CHANGE_PASSWORD_SUCCESS    = "Sucessfully changed password";
+    const CHANGE_PASSWORD_ERROR      = "Unable to change password";
+
 
     public function __construct()
     {
