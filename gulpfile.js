@@ -40,7 +40,8 @@ var paths = {
           'assets/js/tradesimulator-app.js',
           'assets/js/transactions-app.js',
           'assets/js/citadeltax-app.js',
-          'assets/js/settings-app.js'],
+          'assets/js/settings-app.js',
+          'assets/js/apikeymanagement-app.js'],
 
     home_css: ['assets/vendor/bootstrap/css/bootstrap.css',
               'assets/vendor/fontawesome/css/font-awesome.css',

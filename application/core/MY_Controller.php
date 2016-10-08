@@ -10,6 +10,7 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
         $this->load->model('common/Msg');
+        $this->load->model('common/Log');
         $this->load->model('common/ValidateRequest');
         $this->load->model('Login_model');
         $this->load->library('session');
@@ -33,6 +34,7 @@ class MY_Controller extends CI_Controller
                 $this->aggregate = 0;
             }
 
+            $this->Log->addEntry("visit ". $this->page, $this->session->iduser);
             return true;
         } else {
             $data['view'] = "login/login_v";
@@ -160,6 +162,12 @@ class MY_Controller extends CI_Controller
                 break;
 
             case ('Settings'):
+                $data['hasInterval'] = false;
+                $data['hasRegion'] = false;
+                $data['gets'] = false;
+                break;
+
+            case ('APIKeyManagement'):
                 $data['hasInterval'] = false;
                 $data['hasRegion'] = false;
                 $data['gets'] = false;

@@ -34,7 +34,7 @@
                     <div class="panel-heading">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h5><i class="fa fa-plane"></i> Create new Trade Route</h4>
+                                <h5><i class="fa fa-plane"></i> Create new Trade Route</h5>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                     <div class="panel-heading">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h5><i class="fa fa-server"></i> Existing Trade Routes</h4>
+                                <h5><i class="fa fa-server"></i> Existing Trade Routes</h5>
                             </div>
                         </div>
                     </div>

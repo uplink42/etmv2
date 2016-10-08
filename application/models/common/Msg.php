@@ -75,6 +75,9 @@ class Msg extends CI_Model
     const CHANGE_PASSWORD_SUCCESS    = "Sucessfully changed password";
     const CHANGE_PASSWORD_ERROR      = "Unable to change password";
 
+    const CHARACTER_REMOVE_SUCCESS   = "Sucessfully removed character from account";
+    const CHARACTER_REMOVE_ERROR     = "Unable to remove character";
+
 
     public function __construct()
     {

@@ -15,7 +15,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/<?=$character_id?>_64.jpg">
                             <?php } else {
     ?>
-                            <i class="pe page-header-icon pe-7s-graph1">
+                            <i class="pe page-header-icon pe-7s-display2">
                             </i>
                             <?php }?>
                     </div>

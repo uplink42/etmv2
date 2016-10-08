@@ -62,6 +62,7 @@ class Updater extends CI_Controller
                     $this->removeDirectory($path);
                     $this->Log->addEntry('clear', $this->session->iduser);
                 }
+                $this->index();
             }
 
             //calculate profits

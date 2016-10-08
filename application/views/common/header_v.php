@@ -30,12 +30,12 @@
                 <li class="profil-link" data-aggr="<?=$aggregate?>" data-character="<?=$character_id?>" data-url="<?=base_url()?>">
                     <a href="<?=base_url('Updater')?>">
                         <span class="profile-address">
-                            <i class="pe-7s-piggy">
+                            <i class="fa fa-balance-scale">
                             </i>
                             <span class="header-balance" title="balance">
                             </span>
                             |
-                            <i class="pe-7s-plugin">
+                            <i class="fa fa-briefcase">
                             </i>
                             <span class="header-networth" title="assets">
                             </span>
