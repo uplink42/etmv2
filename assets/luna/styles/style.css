@@ -1425,13 +1425,19 @@ sup {
 .luna-nav.nav li.active a {
     border-left: 6px solid #f6a821;
     padding-left: 19px;
-    color: #c0c4c8;
+    color: #f6a821;
+}
+
+.luna-nav.nav li.active a:hover,
+.luna-nav.nav li.active a:focus {
+    color: #f6a821;
 }
 
 .luna-nav.nav li a:hover,
 .luna-nav.nav li a:focus {
     color: #c0c4c8;
     background: inherit;
+    font-size: 15px;
 }
 
 .luna-nav.nav .nav-category {

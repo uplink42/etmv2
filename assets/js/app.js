@@ -35,11 +35,13 @@ jQuery.fn.dataTable.Api.register('sum()', function() {
 });
 //load error messages
 var errHandle = (function() {
+    var loc = window.location.href
+    var base = loc.substr(0, loc.indexOf('etm_refactor'));
     var data;
-    var base = "http://localhost/etm_refactor/";
+
     $.ajax({
         dataType: "json",
-        url: base + "Main/getMsgHandles",
+        url: base + "etm_refactor/main/getMsgHandles",
         success: function(result) {
             data = result;
         }

@@ -68,13 +68,13 @@
                 <li class="page-scroll">
                     <a href="#etm2">ETM 2.0</a>
                 </li>
-                
-                <li class="page-scroll">
-                    <a href="#features">Features</a>
-                </li>
 
                 <li class="page-scroll">
                     <a href="#stats">Stats</a>
+                </li>
+
+                <li class="page-scroll">
+                    <a href="#features">Features</a>
                 </li>
 
                 <li class="page-scroll">

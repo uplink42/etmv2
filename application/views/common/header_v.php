@@ -67,66 +67,66 @@
             </li>
             <li class="dashboard">
                 <a href="<?=base_url('dashboard/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Dashboard
+                     <i class="fa fa-tachometer"></i> Dashboard
                 </a>
             </li>
             <li class="profits">
                 <a href="<?=base_url('profits/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Profit Breakdown
+                    <i class="fa fa-line-chart"></i> Profit Breakdown
                 </a>
             </li>
             <li class="statistics">
                 <a href="<?=base_url('statistics/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Statistics
+                    <i class="fa fa-area-chart"></i> Statistics
                 </a>
             </li>
             <li class="nav-category">
-                Information
+                Archive
             </li>
             <li class="transactions">
                 <a href="<?=base_url('transactions/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Transactions
+                    <i class="fa fa-list-ol"></i> Transactions
                 </a>
             </li>
             <li class="marketorders">
                 <a href="<?=base_url('marketOrders/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Market Orders
+                    <i class="fa fa-shopping-cart"></i> Market Orders
                 </a>
             </li>
             <li class="contracts">
                 <a href="<?=base_url('contracts/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Contracts
+                    <i class="fa fa-files-o"></i> Contracts
                 </a>
             </li>
             <li class="nav-category">
-                Net worth
+                Net Worth Evaluation
             </li>
             <li class="assets">
                 <a href="<?=base_url('assets/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Assets
+                    <i class="fa fa-suitcase"></i> Assets
                 </a>
             </li>
             <li class="networth">
                 <a href="<?=base_url('networthtracker/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Net worth Tracker
+                    <i class="fa fa-bar-chart"></i> Net worth Tracker
                 </a>
             </li>
             <li class="nav-category">
-                Trade Assistant
+                <i class="fa fa-magic"></i> Trade Assistant
             </li>
             <li class="tradesimulator">
                 <a href="<?=base_url('tradesimulator/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Trade Simulator
+                    <i class="fa fa-files-o"></i> Trade Simulator
                 </a>
             </li>
             <li class="stocklists">
                 <a href="<?=base_url('stocklists/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Stock Lists
+                    <i class="fa fa-list-ol"></i> Stock Lists
                 </a>
             </li>
             <li class="traderoutes">
                 <a href="<?=base_url('traderoutes/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Trade Routes
+                    <i class="fa fa-plane"></i> Trade Routes
                 </a>
             </li>
             <li class="nav-category">
@@ -134,36 +134,21 @@
             </li>
             <li class="citadeltax">
                 <a href="<?=base_url('citadeltax/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Citadel Taxes
+                    <i class="fa fa-eraser"></i> Citadel Taxes
                 </a>
                 
             </li>
             <li class="settings">
                 <a href="<?=base_url('settings/index/'.$character_id .'?aggr='.$aggregate)?>">
-                    Settings
+                    <i class="fa fa-wrench"></i> Settings
                 </a>
                 
             </li>
-            <li>
-                <a aria-expanded="false" data-toggle="collapse" href="#api">
-                    API Key Management
-                    <span class="sub-nav-icon">
-                        <i class="stroke-arrow">
-                        </i>
-                    </span>
+            <li class="apikey">
+                <a href="<?=base_url('apikeymanagement/index/'.$character_id .'?aggr='.$aggregate)?>">
+                    <i class="fa fa-users"></i> API Key Management
                 </a>
-                <ul class="nav nav-second collapse" id="api">
-                    <li class="api-add">
-                        <a href="<?=base_url('api/add/'.$character_id .'?aggr='.$aggregate)?>">
-                            Add Key/character
-                        </a>
-                    </li>
-                    <li class="api-remove">
-                        <a href="<?=base_url('api/remove/'.$character_id .'?aggr='.$aggregate)?>">
-                            Remove Key/character
-                        </a>
-                    </li>
-                </ul>
+                
             </li>
         </ul>
     </nav>
