@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Transactions extends MY_Controller
 {
     protected $new;
+    protected $transID;
 
     public function __construct()
     {
@@ -15,20 +16,36 @@ class Transactions extends MY_Controller
         if(isset($_REQUEST['new'])) {
             $this->new = $_REQUEST['new'];
         };
+
+        if(isset($_REQUEST['transID'])) {
+            $this->transID = $_REQUEST['transID'];
+        };
     }
 
-    public function index($character_id, $interval = 14, $transaction_id = 0)
+    public function index($character_id, $interval = 14)
     {
         if($interval>365) $interval = 365;
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
+            $res = true;
             $aggregate = $this->aggregate;
             $data = $this->loadViewDependencies($character_id, $user_id, $aggregate);
             $chars = $data['chars'];
             $data['selected'] = "transactions";
 
             $this->load->model('Transactions_model');
-            $transactions = $this->Transactions_model->getTransactionList($chars, $interval, $this->new);
+
+            if($this->transID) {
+                $this->load->model('ValidateRequest');
+                $res = $this->ValidateRequest->checkTransactionOwnership($this->transID, $this->session->iduser);
+                if(!$res) {
+                    $data["notice"]  = "error";
+                    $data["message"] = Msg::TRANSACTION_NOT_BELONG;
+                }
+            }
+
+                $transactions = $this->Transactions_model->getTransactionList($chars, $interval, $this->new, $this->transID, $res);
+                
             $count = $transactions['count'];
             if($transactions['count'] >200) {
                 $img = false;

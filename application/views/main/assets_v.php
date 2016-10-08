@@ -62,13 +62,13 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                        <?php $url = "Assets/index/".$character_id."/all?sig=".$sig."&aggr=".$aggregate;?>
+                                        <?php $url = "assets/index/".$character_id."/all?sig=".$sig."&aggr=".$aggregate;?>
                                         <li><a href="<?=base_url($url)?>"><b>All</b></a></li>
                                         <li role="separator" class="divider"></li>
                                     <?php 
                                     foreach($totals as $key => $row) {
                                         ?>
-                                        <li  data-id=""><a href="<?=base_url('Assets/index/'.$character_id.'/'.$row[0]['region_id']."?sig=".$sig."&aggr=".$aggregate)?>">
+                                        <li  data-id=""><a href="<?=base_url('assets/index/'.$character_id.'/'.$row[0]['region_id']."?sig=".$sig."&aggr=".$aggregate)?>">
                                         <?php echo $key . " (" . number_format($row[0]['total_value']/1000000000,3) . " b)"?></a></li>
                                         <?php } ?>
                                     </ul>
@@ -78,11 +78,11 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         </table> 
                         <div class="text-center">
                             <?php if($sig==1) {?>
-                            <a href="<?=base_url('Assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=0')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently only displaying the most significant items which represent 
+                            <a href="<?=base_url('assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=0')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently only displaying the most significant items which represent 
                                 <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> 
                             of your asset value. Click here to see the full item list (page may be slower to load and export features may crash your browser if you have too many items).</p></a>
                             <?php } else {?>
-                                <a href="<?=base_url('Assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=1')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently displaying all items. For faster page loads and exports you may request only the most significant items by clicking here, which would represent <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> of your  asset value.</p></a>
+                                <a href="<?=base_url('assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=1')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently displaying all items. For faster page loads and exports you may request only the most significant items by clicking here, which would represent <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> of your  asset value.</p></a>
                             <?php } ?>
                         </div>       
                     </div>

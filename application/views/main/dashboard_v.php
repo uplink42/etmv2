@@ -109,9 +109,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                  <li  data-id="1"><a href="<?=base_url('Dashboard/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
-                                  <li  data-id="3"><a href="<?=base_url('Dashboard/index/'.$character_id.'/3?aggr='.$aggregate)?>">Last 3 days</a></li>
-                                  <li  data-id="60"><a href="<?=base_url('Dashboard/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
+                                  <li  data-id="1"><a href="<?=base_url('dashboard/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
+                                  <li  data-id="3"><a href="<?=base_url('dashboard/index/'.$character_id.'/3?aggr='.$aggregate)?>">Last 3 days</a></li>
+                                  <li  data-id="60"><a href="<?=base_url('dashboard/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
                                 </ul>
                             </div>
                             <div class="panel-heading">

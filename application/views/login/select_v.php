@@ -111,7 +111,7 @@
             				$sell = $char['sell'];
             				?>
             				<tr>
-            				    <td><a href='<?= base_url('Dashboard/index/'.$id)?>'><img src='https://image.eveonline.com/Character/<?=$id?>_32.jpg' alt='character portrait'></a></td>
+            				    <td><a href='<?= base_url('dashboard/index/'.$id)?>'><img src='https://image.eveonline.com/Character/<?=$id?>_32.jpg' alt='character portrait'></a></td>
             				    <td><?=$name?></td>
             				    <td class="text-right"><?=number_format($balance)?></td>
             				    <td class="text-right"><?=number_format($networth)?></td>

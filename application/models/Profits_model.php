@@ -25,6 +25,8 @@ class Profits_model extends CI_Model
                            s2.eve_idstation as station_sell_id,
                            t1.time as time_buy,
                            t2.time as time_sell,
+                           t1.idbuy as trans_buy,
+                           t2.idbuy as trans_sell,
                            t1.price_unit as buy_price,
                            t2.price_unit as sell_price,
                            (t1.price_unit * p.quantity_profit) as buy_price_total,

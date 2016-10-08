@@ -39,14 +39,14 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                <li><a href="<?=base_url('Statistics/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
-                                <li><a href="<?=base_url('Statistics/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
-                                <li><a href="<?=base_url('Statistics/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
-                                <li><a href="<?=base_url('Statistics/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
-                                <li><a href="<?=base_url('Statistics/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
-                                <li><a href="<?=base_url('Statistics/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
-                                <li><a href="<?=base_url('Statistics/index/'.$character_id.'/180?aggr='.$aggregate)?>">Last 6 months</a></li>
-                                <li><a href="<?=base_url('Statistics/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
+                                <li><a href="<?=base_url('statistics/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
+                                <li><a href="<?=base_url('statistics/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
+                                <li><a href="<?=base_url('statistics/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
+                                <li><a href="<?=base_url('statistics/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
+                                <li><a href="<?=base_url('statistics/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
+                                <li><a href="<?=base_url('statistics/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
+                                <li><a href="<?=base_url('statistics/index/'.$character_id.'/180?aggr='.$aggregate)?>">Last 6 months</a></li>
+                                <li><a href="<?=base_url('statistics/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
                             </ul>
                         </div>    
                         Statistics from last <?=$interval?> days
@@ -139,7 +139,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                 <tbody>
                                                     <?php foreach($best_raw as $row) {?>
                                                     <tr>
-                                                        <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                        <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
                                                             <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['quantity'],0)?></td>
@@ -175,7 +175,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                 <tbody>
                                                     <?php foreach($best_iph as $row) {?>
                                                     <tr>
-                                                        <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                        <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
                                                             <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['quantity'],0)?></td>
@@ -274,7 +274,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                 <tbody>
                                                     <?php foreach($best_blunders as $row) {?>
                                                     <tr>
-                                                        <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                        <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
                                                             <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['profit'],2)?></td>
@@ -310,7 +310,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                 <tbody>
                                                     <?php foreach($best_margin as $row) {?>
                                                     <tr>
-                                                        <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                        <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
                                                             <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['quantity'],0)?></td>
@@ -419,7 +419,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                 <tbody>
                                                     <?php foreach($problematic as $row) {?>
                                                     <tr>
-                                                        <td><a href="<?=base_url('Profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
+                                                        <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
                                                             <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['quantity'],0)?></td>

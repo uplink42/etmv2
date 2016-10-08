@@ -118,7 +118,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" data-url="<?=base_url('StockLists/deleteList')?>">
+        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" data-url="<?=base_url('stocklists/deleteList')?>">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header text-center">

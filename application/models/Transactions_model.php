@@ -10,7 +10,7 @@ class Transactions_model extends CI_Model
         parent::__construct();
     }
 
-    public function getTransactionList($chars, $interval, $new = null)
+    public function getTransactionList($chars, $interval, $new = null, $transID = null, $res = true)
     {
         $this->db->select('t.idbuy as transaction_id,
             t.time as time,
@@ -30,12 +30,23 @@ class Transactions_model extends CI_Model
         $this->db->join('item i', 'i.eve_iditem = t.item_eve_iditem', 'left');
         $this->db->join('station s', 's.eve_idstation = t.station_eve_idstation', 'left');
         $this->db->join('transaction_processed tp', 'tp.transactionID = t.idbuy', 'left');
-        $this->db->where('t.character_eve_idcharacter IN ' . $chars);
-        $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
+        
+        if(!$transID) {
+            $this->db->where('t.character_eve_idcharacter IN ' . $chars);
+            $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
+        }
         $this->db->order_by("t.time DESC");
+
         if ($new > 0) {
             $this->db->limit($new);
         }
+        if ($transID) {
+            $this->db->where('idbuy', $transID);
+        }
+        if(!$res) {
+            $this->db->limit(0);
+        }
+
         $query = $this->db->get();
         $count = $query->num_rows();
 

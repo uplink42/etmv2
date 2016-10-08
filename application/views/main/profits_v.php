@@ -82,14 +82,14 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
-                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
-                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
-                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
-                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
-                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
-                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/180?aggr='.$aggregate)?>">Last 6 months</a></li>
-                                        <li><a href="<?=base_url('Profits/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
+                                        <li><a href="<?=base_url('profits/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
+                                        <li><a href="<?=base_url('profits/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
+                                        <li><a href="<?=base_url('profits/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
+                                        <li><a href="<?=base_url('profits/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
+                                        <li><a href="<?=base_url('profits/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
+                                        <li><a href="<?=base_url('profits/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
+                                        <li><a href="<?=base_url('profits/index/'.$character_id.'/180?aggr='.$aggregate)?>">Last 6 months</a></li>
+                                        <li><a href="<?=base_url('profits/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
                                     </ul>
                                 </div>
                                 <br>
@@ -127,7 +127,11 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                             <tr class="<?=$res?>">
                                                 <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
                                                     <a class="item-name" style="color: #fff"><?=$row['item_name']?></a></td>
-                                                <td><span class="btn btn-xs btn-danger">B</span><br/><span class="btn btn-xs btn-success">S</span></td>
+                                                <td>
+                                                    <a href="<?=base_url("transactions/index/".$character_id."?transID=".$row['trans_buy'])?>" target="_blank"><span class="btn btn-xs btn-danger">B</span></a>
+                                                    <br/>
+                                                    <a href="<?=base_url("transactions/index/".$character_id."?transID=".$row['trans_sell'])?>" target="_blank"><span class="btn btn-xs btn-success">S</span></a>
+                                                </td>
                                                 <td><?=$row['sys_buy']?><br/>
                                                     <?=$row['sys_sell']?></td>
                                                 <td><?=number_format($row['buy_price'],2)?><br />

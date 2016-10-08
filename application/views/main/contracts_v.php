@@ -35,11 +35,11 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-contracts-active">
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?active=all&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">All</a></li>
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?active=ItemExchange&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">Item Exchange</a></li>
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?active=Courier&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">Courier</a></li>
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?active=Loan&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">Loan</a></li>
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?active=Auction&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">Auction</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?active=all&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">All</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?active=ItemExchange&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">Item Exchange</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?active=Courier&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">Courier</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?active=Loan&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">Loan</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?active=Auction&inactive='.$inactives_filter.'&aggr='.$aggregate)?>">Auction</a></li>
                             </ul>
                         </div>
                         <div class="panel-tools">
@@ -116,11 +116,11 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-contracts">
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?inactive=all&active='.$actives_filter.'&aggr='.$aggregate)?>">All</a></li>
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?inactive=ItemExchange&active='.$actives_filter.'&aggr='.$aggregate)?>">Item Exchange</a></li>
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?inactive=Courier&active='.$actives_filter.'&aggr='.$aggregate)?>">Courier</a></li>
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?inactive=Loan&active='.$actives_filter.'&aggr='.$aggregate)?>">Loan</a></li>
-                                <li><a href="<?=base_url('Contracts/index/'.$character_id.'?inactive=Auction&active='.$actives_filter.'&aggr='.$aggregate)?>">Auction</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?inactive=all&active='.$actives_filter.'&aggr='.$aggregate)?>">All</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?inactive=ItemExchange&active='.$actives_filter.'&aggr='.$aggregate)?>">Item Exchange</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?inactive=Courier&active='.$actives_filter.'&aggr='.$aggregate)?>">Courier</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?inactive=Loan&active='.$actives_filter.'&aggr='.$aggregate)?>">Loan</a></li>
+                                <li><a href="<?=base_url('contracts/index/'.$character_id.'?inactive=Auction&active='.$actives_filter.'&aggr='.$aggregate)?>">Auction</a></li>
                             </ul>
                         </div>
                         <div class="panel-tools">

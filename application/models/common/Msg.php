@@ -63,6 +63,7 @@ class Msg extends CI_Model
     
     const TRANSACTION_UNLINK_SUCCESS = "Transaction unlinked successfully";
     const TRANSACTION_UNLINK_ERROR   = "Unable to unlink Transaction. It may already be unlinked";
+    const TRANSACTION_NOT_BELONG     = "This transaction does not belong to you";
     
     const EMAIL_SEND_FAILURE         = "Failed to send e-mail";
     const EMAIL_SEND_SUCCESS         = "E-mail sent to ";

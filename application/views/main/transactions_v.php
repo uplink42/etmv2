@@ -50,13 +50,13 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
-                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
-                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
-                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
-                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
-                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
-                                <li><a href="<?=base_url('Transactions/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
+                                <li><a href="<?=base_url('transactions/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 24 hours</a></li>
+                                <li><a href="<?=base_url('transactions/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
+                                <li><a href="<?=base_url('transactions/index/'.$character_id.'/14?aggr='.$aggregate)?>">Last 14 days</a></li>
+                                <li><a href="<?=base_url('transactions/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
+                                <li><a href="<?=base_url('transactions/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
+                                <li><a href="<?=base_url('transactions/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
+                                <li><a href="<?=base_url('transactions/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
                             </ul>
                         </div>
                         <button class="btn btn-default pull-right btn-clear">Clear filters</button>           

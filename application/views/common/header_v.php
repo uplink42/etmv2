@@ -66,17 +66,17 @@
                 Profit Tracking
             </li>
             <li class="dashboard">
-                <a href="<?=base_url('Dashboard/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('dashboard/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Dashboard
                 </a>
             </li>
             <li class="profits">
-                <a href="<?=base_url('Profits/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('profits/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Profit Breakdown
                 </a>
             </li>
             <li class="statistics">
-                <a href="<?=base_url('Statistics/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('statistics/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Statistics
                 </a>
             </li>
@@ -84,17 +84,17 @@
                 Information
             </li>
             <li class="transactions">
-                <a href="<?=base_url('Transactions/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('transactions/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Transactions
                 </a>
             </li>
             <li class="marketorders">
-                <a href="<?=base_url('MarketOrders/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('marketOrders/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Market Orders
                 </a>
             </li>
             <li class="contracts">
-                <a href="<?=base_url('Contracts/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('contracts/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Contracts
                 </a>
             </li>
@@ -102,12 +102,12 @@
                 Net worth
             </li>
             <li class="assets">
-                <a href="<?=base_url('Assets/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('assets/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Assets
                 </a>
             </li>
             <li class="networth">
-                <a href="<?=base_url('NetworthTracker/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('networthtracker/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Net worth Tracker
                 </a>
             </li>
@@ -115,17 +115,17 @@
                 Trade Assistant
             </li>
             <li class="tradesimulator">
-                <a href="<?=base_url('TradeSimulator/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('tradesimulator/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Trade Simulator
                 </a>
             </li>
             <li class="stocklists">
-                <a href="<?=base_url('StockLists/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('stocklists/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Stock Lists
                 </a>
             </li>
             <li class="traderoutes">
-                <a href="<?=base_url('TradeRoutes/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('traderoutes/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Trade Routes
                 </a>
             </li>
@@ -133,13 +133,13 @@
                 Options
             </li>
             <li class="citadeltax">
-                <a href="<?=base_url('CitadelTax/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('citadeltax/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Citadel Taxes
                 </a>
                 
             </li>
             <li class="settings">
-                <a href="<?=base_url('Settings/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('settings/index/'.$character_id .'?aggr='.$aggregate)?>">
                     Settings
                 </a>
                 
@@ -154,12 +154,12 @@
                 </a>
                 <ul class="nav nav-second collapse" id="api">
                     <li class="api-add">
-                        <a href="<?=base_url('API/add/'.$character_id .'?aggr='.$aggregate)?>">
+                        <a href="<?=base_url('api/add/'.$character_id .'?aggr='.$aggregate)?>">
                             Add Key/character
                         </a>
                     </li>
                     <li class="api-remove">
-                        <a href="<?=base_url('API/remove/'.$character_id .'?aggr='.$aggregate)?>">
+                        <a href="<?=base_url('api/remove/'.$character_id .'?aggr='.$aggregate)?>">
                             Remove Key/character
                         </a>
                     </li>

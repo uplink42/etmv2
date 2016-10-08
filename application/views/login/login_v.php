@@ -2,7 +2,7 @@
 </script>
 <section class="content">
     <div class="back-link">
-        <a class="btn btn-accent" href="<?=base_url('index.php/Main')?>">
+        <a class="btn btn-accent" href="<?=base_url('index/main')?>">
             Back to main page
         </a>
     </div>
@@ -23,7 +23,7 @@
         </div>
         <div class="panel panel-filled">
             <div class="panel-body panel-login">
-                <form action="<?=base_url('Login/process')?>" id="loginForm" method="POST" name="login">
+                <form action="<?=base_url('login/process')?>" id="loginForm" method="POST" name="login">
                     <div class="form-group">
                         <label class="control-label" for="username">
                             Username
