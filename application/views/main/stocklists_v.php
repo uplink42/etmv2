@@ -37,7 +37,7 @@
                     <div class="panel-body stocklist-creation-panel">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-plane"></i> Create new Stock List</h4>
+                                <h5><i class="fa fa-plane"></i> Create new Stock List</h4>
                             </div>
                         </div>
                         <form class="form-horizontal" data-url=<?=base_url()?>>
@@ -54,7 +54,7 @@
                     <div class="panel-body traderoute-list-panel">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-list-ol"></i> Select Stock List</h4>
+                                <h5><i class="fa fa-list-ol"></i> Select Stock List</h4>
                             </div>
                         </div>
                         <form>
@@ -73,7 +73,7 @@
                     <div class="panel-body stocklist-panel">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-arrow-up"></i> Add Item to Stock List <span class="yellow contents"></span></h4>
+                                <h5><i class="fa fa-arrow-up"></i> Add Item to Stock List <span class="yellow contents"></span></h4>
                             </div>
                         </div>
                         <form class="add-item">
@@ -95,7 +95,7 @@
                     <div class="panel-body stocklist-panel">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-th-list"></i> <span class="yellow contents"></span> Contents:</h4>
+                                <h5><i class="fa fa-th-list"></i> <span class="yellow contents"></span> Contents:</h4>
                             </div>
                         </div>
                         <div class="table-responsive">

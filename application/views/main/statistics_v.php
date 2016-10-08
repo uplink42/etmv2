@@ -81,7 +81,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-area-chart"></i> Profit distribution per item</h4>
+                                                <h5><i class="fa fa-area-chart"></i> Profit distribution per item</h4>
                                             </div>
                                         </div>
                                         <div class="panel-body">
@@ -101,7 +101,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                             <div class="panel-heading">
                                 <div class="panel panel-filled panel-c-success panel-collapse">
                                     <div class="panel-heading">
-                                        <h4><i class="fa fa-bar-chart-o fa-fw"></i> Trade Volumes</h4>
+                                        <h5><i class="fa fa-bar-chart-o fa-fw"></i> Trade Volumes</h4>
                                 </div>
                                 </div>   
                             </div>   
@@ -121,7 +121,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-thumbs-o-up"></i> Best Items (by raw profit)</h4>
+                                                <h5><i class="fa fa-thumbs-o-up"></i> Best Items (by raw profit)</h4>
                                                 <small>Items that made you the highest profit with their combined sales</small>
                                             </div>
                                         </div>
@@ -156,7 +156,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-dollar"></i> Best ISK/h</h4>
+                                                <h5><i class="fa fa-dollar"></i> Best ISK/h</h4>
                                                 <small>Items with the best profit for the time they took to resell</small>
                                             </div>
                                         </div>
@@ -193,7 +193,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-smile-o"></i> Best customers </h4>
+                                                <h5><i class="fa fa-smile-o"></i> Best customers </h4>
                                                 <small>Players that made you the most profit with by purchasing your items</small> 
                                             </div>
                                         </div>
@@ -225,7 +225,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-rotate-left"></i> Top Stations</h4>
+                                                <h5><i class="fa fa-rotate-left"></i> Top Stations</h4>
                                                 <small>Stations where you made the most profit</small>
                                             </div>
                                         </div>
@@ -256,7 +256,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-flag-checkered"></i> Possible blunders</h4>
+                                                <h5><i class="fa fa-flag-checkered"></i> Possible blunders</h4>
                                                 <small>Items with abnormally high or low profit margin (possible typos on pricing)</small>
                                             </div>
                                         </div>
@@ -292,7 +292,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-money"></i> Best Items (by margin)</h4>
+                                                <h5><i class="fa fa-money"></i> Best Items (by margin)</h4>
                                                 <small> Items with the highest average profit margin with their combined sales</small>
                                             </div>
                                         </div>
@@ -327,7 +327,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-clock-o"></i> Fastest turnovers</h4>
+                                                <h5><i class="fa fa-clock-o"></i> Fastest turnovers</h4>
                                                 <small> Individual transactions that resold the fastest</small>
                                             </div>
                                         </div>
@@ -360,7 +360,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-rotate-left"></i> Best timezones </h4>
+                                                <h5><i class="fa fa-rotate-left"></i> Best timezones </h4>
                                                 <small>Profit distribution according to timezone</small> <br>
                                                 <b>US:</b> 00PM ~ 08AM, <b>AU:</b> 08AM ~ 4PM, <b>EU:</b> 4PM ~ 00PM (UTC time)
                                             </div>
@@ -401,7 +401,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                     <div class="panel-heading">
                                         <div class="panel panel-filled panel-c-success panel-collapse">
                                             <div class="panel-heading">
-                                                <h4><i class="fa fa-frown-o"></i> Problematic Items</h4>
+                                                <h5><i class="fa fa-frown-o"></i> Problematic Items</h4>
                                                 <small>Items that resulted in a net loss</small>
                                             </div>
                                         </div>
@@ -440,7 +440,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                             <div class="col-md-12 col-xs-12">
                                 <div class="panel panel-filled panel-c-success panel-collapse">
                                     <div class="panel-heading">
-                                        <h4><i class="fa fa-flag-checkered"></i> Last <?=$interval?> days recap</h4>
+                                        <h5><i class="fa fa-flag-checkered"></i> Last <?=$interval?> days recap</h4>
                                     </div>
                                     <div class="panel-body">
                                         <div class="table-responsive">

@@ -115,7 +115,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                 </ul>
                             </div>
                             <div class="panel-heading">
-                                <h4><i class="fa fa-line-chart"></i> Latest Profits - last <?=$interval?> day(s)</h4>
+                                <h5><i class="fa fa-line-chart"></i> Latest Profits - last <?=$interval?> day(s)</h5>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -164,7 +164,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                 </div>
                 <div class="panel panel-filled panel-c-success panel-collapse">
                     <div class="panel-heading">
-                        <h4><i class="fa fa-pie-chart"></i>  Assets Distribution:</h4>
+                        <h5><i class="fa fa-pie-chart"></i>  Assets Distribution:</h5>
                     </div>
                 </div>
 

@@ -1,0 +1,165 @@
+.style-switch {
+    opacity: 1;
+    position: fixed;
+    z-index: 9999;
+    top: 85px;
+    background: #FFFFFF;
+    -webkit-backface-visibility: hidden;
+}
+
+.style-switch.left {
+    left: -210px;
+}
+
+.style-switch.right {
+    right: -210px;
+}
+
+.style-switch:hover {
+    opacity: 1 !important;
+}
+
+.style-switch .switched-options {
+    position: relative;
+    width: 210px;
+    text-align: left;
+    padding: 20px;
+}
+
+.style-switch .config-title {
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.style-switch ul {
+    margin-bottom: 20px;
+}
+
+.style-switch ul .active a {
+    color: #1abc9c;
+    font-weight: 400;
+}
+
+.style-switch ul .p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    margin-top: 10px;
+}
+
+.style-switch ul li:hover {
+    cursor: pointer;
+}
+
+.style-switch ul li a {
+    font-size: 14px;
+    color: #808080;
+    letter-spacing: 0.1px;
+}
+
+.style-switch ul li a:hover {
+    color: #808080;
+    text-decoration: none;
+}
+
+.style-switch ul.styles {
+    margin-top: 15px;
+}
+
+.style-switch ul.styles li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.style-switch ul.styles li .color {
+    display: block;
+    width: 48px;
+    height: 25px;
+}
+
+.style-switch ul.styles li .green {
+    background: #1abc9c;
+}
+
+.style-switch ul.styles li .blue {
+    background: #3996cc;
+}
+
+.style-switch ul.styles li .red {
+    background: #ec6952;
+}
+
+.style-switch ul.styles li .yellow {
+    background: #f89d29;
+}
+
+.style-switch ul.styles li .pink {
+    background: #f06060;
+}
+
+.style-switch ul.styles li .purple {
+    background: #a06081;
+}
+
+.style-switch .switch-button {
+    opacity: 1 !important;
+    background: #FFF;
+    padding: 10px;
+    font-size: 24px;
+    padding-bottom: 8px;
+    color: #272727;
+    position: absolute;
+    overflow: hidden;
+    right: -40px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.style-switch.right .switch-button {
+    left: -40px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.style-switch .switch-button:hover {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.style-switch .navbar-style li {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.style-switch .navbar-style li a {
+    padding: 5px;
+    font-size: 12px;
+    letter-spacing: inherit;
+    border: 1px solid #ececec;
+}
+
+.style-switch .navbar-style .active {
+    border: none;
+}
+
+.style-switch .navbar-style .active a {
+    border: 1px solid #1abc9c;
+    background: #1abc9c;
+    color: #ffffff;
+}
+
+.style-switch .font-selection li {
+    color: #808080;
+    font-size: 12px;
+    letter-spacing: 0.1px;
+}
+
+.style-switch .font-selection li div:hover {
+    color: #008ed6;
+}

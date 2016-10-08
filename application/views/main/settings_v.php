@@ -42,7 +42,7 @@
                     <div class="panel-heading">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-envelope"></i> Change E-mail</h4>
+                                <h5><i class="fa fa-envelope"></i> Change E-mail</h5>
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                     <div class="panel-heading">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-key"></i> Change Password</h4>
+                                <h5><i class="fa fa-key"></i> Change Password</h5>
                             </div>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                     <div class="panel-heading">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-file-excel-o"></i> Automated Reports</h4>
+                                <h5><i class="fa fa-file-excel-o"></i> Automated Reports</h5>
                             </div>
                         </div>
                     </div>

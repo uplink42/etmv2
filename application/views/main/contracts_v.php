@@ -47,7 +47,7 @@
                     </div>
                     <br>
                     <div class="panel-body contracts-active-body">
-                        <h4>Active <?=$actives_filter?> Contracts</h4>
+                        <h5>Active <?=$actives_filter?> Contracts</h5>
                         <p class="yellow"></p>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="contracts-active-table">
@@ -128,7 +128,7 @@
                     </div>
                     <br>
                     <div class="panel-body contracts-inactive-body">
-                        <h4>Inactive <?=$inactives_filter?> Contracts</h4>
+                        <h5>Inactive <?=$inactives_filter?> Contracts</h5>
                         <p class="yellow"></p>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover" id="contracts-inactive-table">

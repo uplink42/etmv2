@@ -50,7 +50,7 @@
                         <div class="panel-heading">
                             <div class="panel panel-filled panel-c-success panel-collapse">
                                 <div class="panel-heading">
-                                    <h4><i class="pe-7s-cart"></i> Buy Orders</h4>
+                                    <h5><i class="pe-7s-cart"></i> Buy Orders</h5>
                                 </div>
                             </div>
                             <button class="btn btn-default pull-right btn-clear">Clear filters</button>
@@ -114,7 +114,7 @@
                         <div class="panel-heading">
                             <div class="panel panel-filled panel-c-success panel-collapse">
                                 <div class="panel-heading">
-                                    <h4><i class="pe-7s-cart"></i> Sell Orders</h4>
+                                    <h5><i class="pe-7s-cart"></i> Sell Orders</h5>
                                 </div>
                             </div>
                             <button class="btn btn-default pull-right btn-clear">Clear filters</button>

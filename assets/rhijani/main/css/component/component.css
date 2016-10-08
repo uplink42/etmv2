@@ -1,0 +1,1974 @@
+/*-----------------------------------------------------------------------
+/*  COMPONENT
+/*  assets/css/component/component.css
+/*-----------------------------------------------------------------------
+
+1. BUTTON
+
+2. ACCORDION
+	2.1 ACCORDION - STYLE ONE
+	2.2 ACCORDION - STYLE TWO
+	2.3 ACCORDION - STYLE THREE
+	2.4 ACCORDION - STYLE FOUR
+
+3. BAR CHART
+
+4. CONTENT BOXES
+	4.1 CONTENT BOXES - STYLE ONE
+	4.2 CONTENT BOXES - STYLE TWO
+	4.3 CONTENT BOXES - STYLE THREE
+
+5. COUNTDOWN
+
+6. COUNTERS
+
+7. FANCY TABLE
+
+8. FUNNY BOXES
+	8.1 FUNNY BOXES HOVER EFFECT 1 - FLOAT SHADOW
+	8.2 FUNNY BOXES HOVER EFFECT 2 - TRIM
+	8.3 FUNNY BOXES HOVER EFFECT 3 - OUTLINE INWARD
+	8.4 FUNNY BOXES HOVER EFFECT 4 - OUTLINE OUTWARD
+	8.5 FUNNY BOXES HOVER EFFECT 5 - BUZZ
+
+9. PIE CHART
+
+10. PORTFOLIO
+	10.1 PORTFOLIO HOVER EFFECT 1 - GROW
+	10.2 PORTFOLIO HOVER EFFECT 2 - GROW ROTATE
+	10.3 PORTFOLIO HOVER EFFECT 3 - SHRINK
+	10.4 PORTFOLIO HOVER EFFECT 4 - SHRINK ROTATE
+	10.5 PORTFOLIO HOVER EFFECT 5 - SLIDE IN LEFT
+	10.6 PORTFOLIO HOVER EFFECT 6 - POP
+	10.7 PORTFOLIO HOVER EFFECT 7 - POP ROTATE
+	10.8 PORTFOLIO HOVER EFFECT 8 - PUSH
+	10.9 PORTFOLIO HOVER EFFECT 9 - PUSH ROTATE
+
+11. PRICING TABLES
+	11.1 PRICING TABLES - STYLE ONE
+	11.2 PRICING TABLES - STYLE TWO
+	11.3 PRICING TABLES - STYLE THREE
+	11.4 PRICING TABLES - STYLE FOUR
+	11.5 PRICING TABLES - STYLE FIVE
+	11.6 PRICING TABLES - STYLE SIX
+
+12. TABULAR CONTENT
+	12.1 TABULAR CONTENT - STYLE ONE
+	12.2 TABULAR CONTENT - STYLE TWO
+	12.3 TABULAR CONTENT - STYLE THREE
+	12.4 TABULAR CONTENT - STYLE FOUR
+
+13. TESTIMONIALS
+
+14. TIMELINE
+
+-----------------------------------------------------------------------*/
+
+
+/*---------------------------------------------------------------------*/
+/*  1. BUTTON
+/*---------------------------------------------------------------------*/
+.btn.btn-rj {
+  background-color: #f6a821;
+  color: #fff;
+  border-color: #f6a830;
+  text-transform: uppercase;
+}
+.btn.btn-rj:hover,
+.btn.btn-rj:focus {
+  color: #fff;
+  background-color: #dc8f09;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  2. ACCORDION
+/*---------------------------------------------------------------------*/
+.accordion.accordion-rj .panel-group > .panel {
+  border-color: #28e1bd;
+  border-radius: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.accordion.accordion-rj .panel-group > .panel > .panel-heading {
+  padding: 0px;
+  background-color: #f6a821;
+  border-color: #f6a821;
+  border-radius: 0px;
+}
+.accordion.accordion-rj .panel-group > .panel > .panel-heading > .panel-title > a {
+  display: inline-block;
+  padding: 10px 15px;
+  width: 100%;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+.accordion.accordion-rj .panel-group > .panel > .panel-heading > .panel-title > a.collapsed {
+  font-weight: 400;
+}
+.accordion.accordion-rj .panel-group > .panel > .panel-collapse > .panel-body {
+  background-color: #fff;
+  border-color: #28e1bd;
+}
+.accordion.accordion-rj .panel-group > .panel > .panel-collapse > .panel-body > p {
+  color: #222;
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+.accordion.accordion-rj .panel-group .panel + .panel {
+  margin-top: 2px;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  2.1. ACCORDION - STYLE ONE
+/*---------------------------------------------------------------------*/
+.accordion.accordion-rj.style-one .panel-group > .panel > .panel-heading > .panel-title > a:after {
+  position: absolute;
+  right: 30px;
+  font-family: FontAwesome;
+  font-weight: 400;
+  font-size: 18px;
+  content: "\f068";
+  text-decoration: inherit;
+}
+.accordion.accordion-rj.style-one .panel-group > .panel > .panel-heading > .panel-title > a.collapsed:after {
+  content: "\f067";
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  2.2. ACCORDION - STYLE TWO
+/*---------------------------------------------------------------------*/
+.accordion.accordion-rj.style-two .panel-group > .panel > .panel-heading > .panel-title > a {
+  padding: 10px 30px;
+}
+.accordion.accordion-rj.style-two .panel-group > .panel > .panel-heading > .panel-title > a:before {
+  position: absolute;
+  left: 30px;
+  font-family: FontAwesome;
+  font-weight: 400;
+  font-size: 18px;
+  content: "\f0d7";
+  text-decoration: inherit;
+}
+.accordion.accordion-rj.style-two .panel-group > .panel > .panel-heading > .panel-title > a.collapsed:before {
+  content: "\f0da";
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  2.3. ACCORDION - STYLE THREE
+/*---------------------------------------------------------------------*/
+.accordion.accordion-rj.style-three .panel-group {
+  border-top: 1px solid #f6a821;
+}
+.accordion.accordion-rj.style-three .panel-group > .panel {
+  border: none;
+  border-bottom: 1px solid #f6a821;
+}
+.accordion.accordion-rj.style-three .panel-group > .panel > .panel-heading {
+  background-color: #fff;
+}
+.accordion.accordion-rj.style-three .panel-group > .panel > .panel-heading > .panel-title > a {
+  color: #222;
+}
+.accordion.accordion-rj.style-three .panel-group > .panel > .panel-heading > .panel-title > a:after {
+  color: #f6a821;
+  font-family: FontAwesome;
+  content: "\f068";
+  text-decoration: inherit;
+  font-size: 18px;
+  position: absolute;
+  right: 30px;
+}
+.accordion.accordion-rj.style-three .panel-group > .panel > .panel-heading > .panel-title > a.collapsed:after {
+  content: "\f067";
+}
+.accordion.accordion-rj.style-three .panel-group > .panel > .panel-collapse > .panel-body {
+  border-color: #eee;
+}
+.accordion.accordion-rj.style-three .panel-group .panel + .panel {
+  margin-top: 0px;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  2.4. ACCORDION - STYLE FOUR
+/*---------------------------------------------------------------------*/
+.accordion.accordion-rj.style-four .panel-group {
+  border-top: 1px solid #f6a821;
+}
+.accordion.accordion-rj.style-four .panel-group > .panel {
+  border: none;
+  border-bottom: 1px solid #f6a821;
+}
+.accordion.accordion-rj.style-four .panel-group > .panel > .panel-heading {
+  background-color: #fff;
+}
+.accordion.accordion-rj.style-four .panel-group > .panel > .panel-heading > .panel-title > a {
+  padding: 10px 30px;
+  color: #222;
+}
+.accordion.accordion-rj.style-four .panel-group > .panel > .panel-heading > .panel-title > a:before {
+  color: #f6a821;
+  position: absolute;
+  left: 30px;
+  font-family: FontAwesome;
+  font-weight: 400;
+  font-size: 18px;
+  content: "\f0d7";
+  text-decoration: inherit;
+}
+.accordion.accordion-rj.style-four .panel-group > .panel > .panel-heading > .panel-title > a.collapsed:before {
+  content: "\f0da";
+}
+.accordion.accordion-rj.style-four .panel-group > .panel > .panel-collapse > .panel-body {
+  border-color: #eee;
+}
+.accordion.accordion-rj.style-four .panel-group .panel + .panel {
+  margin-top: 0px;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  3. BAR CHART
+/*---------------------------------------------------------------------*/
+.bar-chart {
+  margin-top: 40px;
+}
+@media (min-width: 992px) {
+  .bar-chart {
+    margin-top: 5px;
+    padding-left: 30px;
+  }
+}
+.bar-chart .bar-chart-item {
+  margin-bottom: 8px;
+  height: 45px;
+  background: #f6a821;
+  border-radius: 2px;
+  opacity: 0.8;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.bar-chart .bar-chart-item > p {
+  color: #fff;
+  font-size: 14px;
+  line-height: 45px;
+  padding-left: 15px;
+}
+.bar-chart .bar-chart-legend {
+  margin-top: 20px;
+}
+.bar-chart .bar-chart-legend:before {
+  display: block;
+  position: relative;
+  content: "";
+  width: 100%;
+  height: 1px;
+  margin-bottom: -10px;
+  background: rgba(255, 255, 255, 0.8);
+}
+.bar-chart .bar-chart-legend > .legend {
+  display: inline-block;
+  float: left;
+  width: 25%;
+}
+.bar-chart .bar-chart-legend > .legend p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+.bar-chart .bar-chart-legend > .legend:before {
+  display: block;
+  position: relative;
+  content: "";
+  width: 1px;
+  height: 10px;
+  margin: auto;
+  margin-bottom: 5px;
+  background: rgba(255, 255, 255, 0.8);
+}
+.bar-chart .bar-chart-legend > .legend.legend-left:before {
+  margin-left: 0;
+}
+.bar-chart .bar-chart-legend > .legend.legend-right {
+  text-align: right;
+}
+.bar-chart .bar-chart-legend > .legend.legend-right:before {
+  margin-right: 0;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  4. CONTENT BOXES
+/*---------------------------------------------------------------------*/
+.content-boxes {
+  text-align: center;
+}
+@media (min-width: 1024px) {
+  .content-boxes {
+    text-align: left;
+  }
+}
+.content-boxes:hover {
+  cursor: pointer;
+}
+.content-boxes:hover > .content-boxes-icon > i {
+  color: #222;
+}
+.content-boxes > .content-boxes-icon > i {
+  padding-bottom: 15px;
+  color: #f6a821;
+  font-size: 40px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+@media (min-width: 1024px) {
+  .content-boxes > .content-boxes-icon > i {
+    float: left;
+    font-size: 30px;
+    padding-bottom: 0px;
+  }
+}
+@media (min-width: 1024px) {
+  .content-boxes > .content-boxes-text {
+    margin-left: 50px;
+  }
+}
+.content-boxes > .content-boxes-text > h4 {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-size: 25px;
+  letter-spacing: 0.2em;
+}
+.content-boxes > .content-boxes-text > p {
+  font-size: 18px;
+}
+@media (min-width: 768px) {
+  .content-boxes > .content-boxes-text > p {
+    font-size: 15px;
+  }
+}
+.content-boxes.top-column {
+  padding-bottom: 40px;
+}
+@media (min-width: 1024px) {
+  .content-boxes.top-column {
+    padding-bottom: 50px;
+  }
+}
+@media (min-width: 768px) {
+  .content-boxes.bottom-column {
+    padding-bottom: 0px;
+  }
+}
+.content-boxes.bottom-column.not-right-column {
+  padding-bottom: 40px;
+}
+@media (min-width: 768px) {
+  .content-boxes.bottom-column.not-right-column {
+    padding-bottom: 0px;
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  4.1.  CONTENT BOXES - STYLE ONE
+/*---------------------------------------------------------------------*/
+.content-boxes.style-one > .content-boxes-icon > i {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  margin-bottom: 15px;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  4.2.  CONTENT BOXES - STYLE TWO
+/*---------------------------------------------------------------------*/
+.content-boxes.style-two > .content-boxes-icon > i {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 3px;
+  background-color: #f6a821;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.content-boxes.style-two:hover > .content-boxes-icon > i {
+  background-color: #222;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  4.3.  CONTENT BOXES - STYLE THREE
+/*---------------------------------------------------------------------*/
+.content-boxes.style-three > .content-boxes-icon > i {
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  border-radius: 50%;
+  background-color: #f6a821;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.content-boxes.style-three:hover > .content-boxes-icon > i {
+  background-color: #222;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  5. COUNTDOWN
+/*---------------------------------------------------------------------*/
+.countdown .cd-content .cd-element {
+  border-bottom: 1px solid #f6a821;
+  padding-bottom: 15px;
+}
+.countdown .cd-content .cd-element > .cd-value {
+  color: #f6a821;
+  font-size: 40px;
+  font-weight: 300;
+}
+@media (min-width: 360px) {
+  .countdown .cd-content .cd-element > .cd-value {
+    font-size: 60px;
+  }
+}
+.countdown .cd-content .cd-element > .cd-label {
+  color: #b7ada4;
+  font-size: 20px;
+  font-weight: 300;
+}
+@media (min-width: 360px) {
+  .countdown .cd-content .cd-element > .cd-label {
+    font-size: 30px;
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  6. COUNTERS
+/*---------------------------------------------------------------------*/
+.counter-item > i {
+  color: #f6a821;
+  font-size: 40px;
+}
+@media (min-width: 480px) {
+  .counter-item > i {
+    font-size: 60px;
+  }
+}
+@media (min-width: 768px) {
+  .counter-item > i {
+    font-size: 70px;
+  }
+}
+.counter-item > .inner-content {
+  padding-top: 10px;
+}
+.counter-item > .inner-content .number {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+@media (min-width: 480px) {
+  .counter-item > .inner-content .number {
+    font-size: 50px;
+  }
+}
+@media (min-width: 768px) {
+  .counter-item > .inner-content .number {
+    font-size: 60px;
+  }
+}
+.counter-item > p {
+  color: #f6a821;
+  font-size: 20px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+@media (min-width: 480px) {
+  .counter-item > p {
+    font-size: 30px;
+  }
+}
+@media (min-width: 768px) {
+  .counter-item > p {
+    font-size: 35px;
+  }
+}
+.counter-item.not-right-column.top-column {
+  padding-bottom: 30px;
+}
+@media (min-width: 1024px) {
+  .counter-item.not-right-column.top-column {
+    padding-bottom: 0px;
+  }
+}
+.counter-item.not-right-column {
+  padding-bottom: 30px;
+}
+@media (min-width: 768px) {
+  .counter-item.not-right-column {
+    padding-bottom: 0px;
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  7. FANCY TABLE
+/*---------------------------------------------------------------------*/
+.table.table-rj {
+  border-bottom: 2px solid #f6a821;
+}
+.table.table-rj > caption {
+  color: #111;
+  font-weight: 700;
+  padding-bottom: 2px;
+}
+.table.table-rj > thead {
+  background-color: #f6a821;
+}
+.table.table-rj > thead > tr > th {
+  color: #fff;
+  border-bottom: 2px solid #17a689;
+}
+.table.table-rj > tbody > tr > td {
+  background-color: #f2f2f4;
+  color: #24242a;
+  border-top: 1px solid #d6d6dd;
+}
+.table.table-striped.table-rj > tbody > tr > td {
+  background-color: #f2f2f4;
+}
+.table.table-striped.table-rj > tbody > tr:nth-child(even) > td {
+  background-color: #f8f8f9;
+}
+.table.table-hover.table-rj > tbody > tr:hover > td {
+  background-color: #e4e4e8;
+  cursor: pointer;
+}
+.table.table-bordered.table-rj {
+  border-bottom: none;
+}
+.table.table-bordered.table-rj > thead > tr > th {
+  border: 1px solid #1fe0ba;
+}
+.table.table-bordered.table-rj > tbody > tr > td {
+  border: 1px solid #d6d6dd;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  8. FUNNY BOXES
+/*---------------------------------------------------------------------*/
+.funny-boxes:hover {
+  cursor: pointer;
+}
+.funny-boxes:hover > .funny-boxes-icon {
+  color: #fff;
+  background-color: #f6a821;
+}
+.funny-boxes > .funny-boxes-icon {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 30px;
+  width: 75px;
+  height: 75px;
+  line-height: 90px;
+  border: 1px solid #f6a821;
+  border-radius: 50%;
+  color: #f6a821;
+}
+.funny-boxes > .funny-boxes-icon > i {
+  font-size: 35px;
+}
+.funny-boxes > .funny-boxes-text > h4 {
+  position: relative;
+  padding-bottom: 25px;
+  font-size: 25px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.funny-boxes > .funny-boxes-text > h4:after {
+  margin-left: -30px;
+  left: 50%;
+  background-color: #f6a821;
+  width: 60px;
+  height: 1px;
+  content: "";
+  position: absolute;
+  display: inline-block;
+  max-width: 100%;
+  bottom: -1px;
+}
+.funny-boxes > .funny-boxes-text > p {
+  font-size: 18px;
+}
+@media (min-width: 768px) {
+  .funny-boxes > .funny-boxes-text > p {
+    font-size: 15px;
+  }
+}
+.funny-boxes.not-right-column {
+  padding-bottom: 40px;
+}
+@media (min-width: 768px) {
+  .funny-boxes.not-right-column {
+    padding-bottom: 0px;
+  }
+}
+@media (min-width: 1024px) {
+  .funny-boxes.not-right-column:before {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    height: 90%;
+    width: 1px;
+    right: -1px;
+    top: 5%;
+    background: -moz-linear-gradient(top, rgba(246, 168, 33, 0) 0%, rgba(246, 168, 33, 0.9) 15%, rgba(246, 168, 33, 0.9) 85%, rgba(246, 168, 33, 0) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(246, 168, 33, 0)), color-stop(15%, rgba(246, 168, 33, 0.9)), color-stop(85%, #dddddd), color-stop(100%, rgba(246, 168, 33, 0)));
+    background: -webkit-linear-gradient(top, rgba(246, 168, 33, 0) 0%, rgba(246, 168, 33, 0.9) 15%, rgba(246, 168, 33, 0.9) 85%, rgba(246, 168, 33, 0) 100%);
+    background: -o-linear-gradient(top, rgba(246, 168, 33, 0) 0%, rgba(246, 168, 33, 0.9) 15%, rgba(246, 168, 33, 0.9) 85%, rgba(246, 168, 33, 0) 100%);
+    background: -ms-linear-gradient(top, rgba(246, 168, 33, 0) 0%, rgba(246, 168, 33, 0.9) 15%, rgba(246, 168, 33, 0.9) 85%, rgba(246, 168, 33, 0) 100%);
+    background: linear-gradient(to bottom, rgba(246, 168, 33, 0) 0%, rgba(246, 168, 33, 0.9) 15%, rgba(246, 168, 33, 0.9) 85%, rgba(246, 168, 33, 0) 100%);
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  8.1. FUNNY BOXES HOVER EFFECT 1 - FLOAT SHADOW
+/*---------------------------------------------------------------------*/
+.funny-boxes.float-shadow:hover > .funny-boxes-icon {
+  -webkit-transform: translateY(-5px);
+  transform: translateY(-5px);
+}
+.funny-boxes.float-shadow:hover > .funny-boxes-icon:before {
+  opacity: 1;
+  -webkit-transform: translateY(5px);
+  transform: translateY(5px);
+}
+.funny-boxes.float-shadow > .funny-boxes-icon {
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.funny-boxes.float-shadow > .funny-boxes-icon:before {
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  content: '';
+  top: 100%;
+  left: 5%;
+  height: 10px;
+  width: 90%;
+  opacity: 0;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+  -webkit-transition-property: transform, opacity;
+  transition-property: transform, opacity;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  8.2. FUNNY BOXES HOVER EFFECT 2 - TRIM
+/*---------------------------------------------------------------------*/
+.funny-boxes.trim:hover > .funny-boxes-icon:before {
+  opacity: 1;
+}
+.funny-boxes.trim > .funny-boxes-icon {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.funny-boxes.trim > .funny-boxes-icon:before {
+  content: '';
+  position: absolute;
+  border: #fff solid 4px;
+  border-radius: 50%;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  opacity: 0;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: opacity;
+  transition-property: opacity;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  8.3. FUNNY BOXES HOVER EFFECT 3 - OUTLINE INWARD
+/*---------------------------------------------------------------------*/
+.funny-boxes.outline-inward:hover > .funny-boxes-icon:before {
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -8px;
+  opacity: 1;
+}
+.funny-boxes.outline-inward > .funny-boxes-icon {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.funny-boxes.outline-inward > .funny-boxes-icon:before {
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  border: #f6a821 solid 4px;
+  border-radius: 50%;
+  top: -16px;
+  right: -16px;
+  bottom: -16px;
+  left: -16px;
+  opacity: 0;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: top, right, bottom, left;
+  transition-property: top, right, bottom, left;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  8.4. FUNNY BOXES HOVER EFFECT 4 - OUTLINE OUTWARD
+/*---------------------------------------------------------------------*/
+.funny-boxes.outline-outward:hover > .funny-boxes-icon:before {
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -8px;
+  opacity: 1;
+}
+.funny-boxes.outline-outward > .funny-boxes-icon {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.funny-boxes.outline-outward > .funny-boxes-icon:before {
+  content: '';
+  position: absolute;
+  border: #f6a821 solid 4px;
+  border-radius: 50%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: top, right, bottom, left;
+  transition-property: top, right, bottom, left;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  8.5. FUNNY BOXES HOVER EFFECT 5 - BUZZ
+/*---------------------------------------------------------------------*/
+.funny-boxes.buzz:hover > .funny-boxes-icon {
+  -webkit-animation-name: buzz;
+  animation-name: buzz;
+  -webkit-animation-duration: 0.75s;
+  animation-duration: 0.75s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+.funny-boxes.buzz > .funny-boxes-icon {
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+@-webkit-keyframes buzz {
+  10% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  20% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  30% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  40% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  50% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  60% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  70% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  80% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  90% {
+    -webkit-transform: translateX(1px) rotate(0);
+    transform: translateX(1px) rotate(0);
+  }
+  100% {
+    -webkit-transform: translateX(-1px) rotate(0);
+    transform: translateX(-1px) rotate(0);
+  }
+}
+@keyframes buzz {
+  10% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  20% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  30% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  40% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  50% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  60% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  70% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  80% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  90% {
+    -webkit-transform: translateX(1px) rotate(0);
+    transform: translateX(1px) rotate(0);
+  }
+  100% {
+    -webkit-transform: translateX(-1px) rotate(0);
+    transform: translateX(-1px) rotate(0);
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  9. PIE CHART
+/*---------------------------------------------------------------------*/
+.pie-chart-item > .pie-chart-content {
+  margin: auto;
+  width: 210px;
+  min-height: 263px;
+}
+.pie-chart-item > .pie-chart-content > .pie-chart > .percent {
+  position: absolute;
+  height: 210px;
+  width: 210px;
+  line-height: 210px;
+  border-radius: 100%;
+  color: #fff;
+  font-size: 60px;
+  font-weight: 300;
+  letter-spacing: -3px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
+}
+.pie-chart-item .pie-chart-text > h4 {
+  padding-top: 20px;
+  color: #f6a821;
+  font-size: 25px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.chart-item.not-right-column.top-column {
+  padding-bottom: 40px;
+}
+@media (min-width: 1024px) {
+  .chart-item.not-right-column.top-column {
+    padding-bottom: 0px;
+  }
+}
+.chart-item.not-right-column {
+  padding-bottom: 40px;
+}
+@media (min-width: 768px) {
+  .chart-item.not-right-column {
+    padding-bottom: 0px;
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10. PORTFOLIO
+/*---------------------------------------------------------------------*/
+.filter-portfolio ul {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.filter-portfolio ul > li {
+  display: inline-block;
+  margin: 0px 3px 10px 3px;
+}
+.filter-portfolio ul > li.active > a {
+  font-weight: 700;
+}
+.popup-portfolio {
+  margin: 0 auto;
+}
+.popup-portfolio .portfolio-item {
+  width: 270px;
+}
+@media (min-width: 600px) {
+  .popup-portfolio .portfolio-item {
+    width: 320px;
+  }
+}
+@media (min-width: 992px) {
+  .popup-portfolio .portfolio-item {
+    width: 273px;
+  }
+}
+@media (min-width: 1024px) {
+  .popup-portfolio .portfolio-item {
+    width: 370px;
+  }
+}
+.portfolio-item {
+  margin-bottom: 15px;
+}
+.portfolio-item > .inner-content {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.portfolio-item > .inner-content:hover {
+  cursor: pointer;
+}
+.portfolio-item > .inner-content:hover > .portfolio-content {
+  display: block;
+}
+.portfolio-item > .inner-content > .portfolio-content {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  background-color: #000;
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=70)";
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.portfolio-item > .inner-content > .portfolio-content > .portfolio-detail {
+  width: 100%;
+  height: 100%;
+}
+.portfolio-item > .inner-content > .portfolio-content > .portfolio-detail a {
+  text-align: center;
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+.portfolio-item > .inner-content > .portfolio-content > .portfolio-detail a > .portfolio-text {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 15px;
+  color: #fff;
+  letter-spacing: 0.2em;
+}
+.portfolio-item > .inner-content > .portfolio-content > .portfolio-detail a > .portfolio-text h4 {
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+.portfolio-item > .inner-content > .portfolio-content > .portfolio-detail a > .portfolio-text p {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 0px;
+}
+.portfolio-item > .inner-content > img {
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10.1. PORTFOLIO HOVER EFFECT 1 - GROW 
+/*---------------------------------------------------------------------*/
+.portfolio-item.grow > .inner-content:hover > img {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10.2. PORTFOLIO HOVER EFFECT 2 - GROW ROTATE
+/*---------------------------------------------------------------------*/
+.portfolio-item.grow-rotate > .inner-content:hover > img {
+  -webkit-transform: scale(1.2) rotate(4deg);
+  transform: scale(1.2) rotate(4deg);
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10.3. PORTFOLIO HOVER EFFECT 3 - SHRINK
+/*---------------------------------------------------------------------*/
+.portfolio-item.shrink > .inner-content:hover > img {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+.portfolio-item.shrink > .inner-content > img {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10.4. PORTFOLIO HOVER EFFECT 4 - SHRINK ROTATE
+/*---------------------------------------------------------------------*/
+.portfolio-item.shrink-rotate > .inner-content:hover > img {
+  -webkit-transform: scale(1.1) rotate(4deg);
+  transform: scale(1.1) rotate(4deg);
+}
+.portfolio-item.shrink-rotate > .inner-content > img {
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10.5. PORTFOLIO HOVER EFFECT 5 - SLIDE IN LEFT
+/*---------------------------------------------------------------------*/
+.portfolio-item.slide-in-left > .inner-content:hover > .portfolio-content {
+  -webkit-transform: translateX(0%);
+  transform: translateX(0%);
+}
+.portfolio-item.slide-in-left > .inner-content > .portfolio-content {
+  display: block;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10.6. PORTFOLIO HOVER EFFECT 6 - POP
+/*---------------------------------------------------------------------*/
+.portfolio-item.pop > .inner-content:hover > img {
+  -webkit-animation-name: pop;
+  animation-name: pop;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+.portfolio-item.pop > .inner-content > img {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+@-webkit-keyframes pop {
+  50% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes pop {
+  50% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10.7. PORTFOLIO HOVER EFFECT 7 - POP ROTATE
+/*---------------------------------------------------------------------*/
+.portfolio-item.pop-rotate > .inner-content:hover > img {
+  -webkit-animation-name: pop-rotate;
+  animation-name: pop-rotate;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+.portfolio-item.pop-rotate > .inner-content > img {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+@-webkit-keyframes pop-rotate {
+  50% {
+    -webkit-transform: scale(1.3) rotate(4deg);
+    transform: scale(1.3) rotate(4deg);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes pop-rotate {
+  50% {
+    -webkit-transform: scale(1.3) rotate(4deg);
+    transform: scale(1.3) rotate(4deg);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10.8. PORTFOLIO HOVER EFFECT 8 - PUSH
+/*---------------------------------------------------------------------*/
+.portfolio-item.push > .inner-content:hover > img {
+  -webkit-animation-name: push;
+  animation-name: push;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+.portfolio-item.push > .inner-content > img {
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
+}
+@-webkit-keyframes push {
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+}
+@keyframes push {
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  10.9. PORTFOLIO HOVER EFFECT 9 - PUSH ROTATE
+/*---------------------------------------------------------------------*/
+.portfolio-item.push-rotate > .inner-content:hover > img {
+  -webkit-animation-name: push-rotate;
+  animation-name: push-rotate;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+.portfolio-item.push-rotate > .inner-content > img {
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
+}
+@-webkit-keyframes push-rotate {
+  50% {
+    -webkit-transform: scale(1.1) rotate(4deg);
+    transform: scale(1.1) rotate(4deg);
+  }
+  100% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+}
+@keyframes push-rotate {
+  50% {
+    -webkit-transform: scale(1.1) rotate(4deg);
+    transform: scale(1.1) rotate(4deg);
+  }
+  100% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  11. PRICING TABLES
+/*---------------------------------------------------------------------*/
+.pricing-table .pricing-wrapper > .pricing-column > .plan-title {
+  display: block;
+  background-color: #1d1d1d;
+  color: #fff;
+}
+.pricing-table .pricing-wrapper > .pricing-column > .plan-title > h2 {
+  display: block;
+  margin: 0;
+  height: 74px;
+  line-height: 74px;
+  background-color: #f6a821;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+.pricing-table .pricing-wrapper > .pricing-column > .plan-title > .pricing-box {
+  padding: 30px;
+  height: 216px;
+  border-bottom: 3px solid #f6a821;
+}
+.pricing-table .pricing-wrapper > .pricing-column > .plan-title > .pricing-box > .price {
+  position: relative;
+  display: inline-block;
+  padding: 0 0 0 10px;
+  color: #fff;
+  font-size: 100px;
+  font-weight: 300;
+  line-height: 100px;
+}
+.pricing-table .pricing-wrapper > .pricing-column > .plan-title > .pricing-box > .price > .symbol {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 300;
+}
+.pricing-table .pricing-wrapper > .pricing-column > .plan-title > .pricing-box > .month {
+  position: relative;
+  display: inline-block;
+  bottom: 0px;
+  left: 0px;
+  font-size: 14px;
+  font-weight: normal;
+  color: #fff;
+}
+.pricing-table .pricing-wrapper > .pricing-column > .plan-title > .pricing-box > .price-info {
+  margin-top: 20px;
+  font-size: 13px;
+  font-style: italic;
+  color: #aaa;
+}
+.pricing-table .pricing-wrapper > .pricing-column > .item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+}
+.pricing-table .pricing-wrapper > .pricing-column > .item-list > li {
+  display: block;
+  padding: 20px 15px;
+  font-size: 16px;
+  list-style-type: none;
+  border-right: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  border-left: 1px solid #e8e8e8;
+}
+.pricing-table .pricing-wrapper > .pricing-column > .plan-footer {
+  background-color: #f6f6f6;
+  padding: 20px 10px;
+  border-right: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  border-left: 1px solid #e8e8e8;
+}
+.pricing-table .pricing-wrapper.not-right-column {
+  margin-bottom: 50px;
+}
+@media (min-width: 1024px) {
+  .pricing-table .pricing-wrapper.not-right-column {
+    margin-bottom: 0px;
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  11.1 PRICING TABLES - STYLE ONE
+/*---------------------------------------------------------------------*/
+.pricing-table.style-one {
+    
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  11.2 PRICING TABLES - STYLE TWO
+/*---------------------------------------------------------------------*/
+@media (min-width: 768px) {
+  .pricing-table.style-two .pricing-wrapper {
+    padding: 0px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.2);
+  }
+}
+@media (min-width: 768px) {
+  .pricing-table.style-two .pricing-wrapper > .pricing-column > .item-list > li {
+    border-right: none;
+    border-left: none;
+  }
+}
+@media (min-width: 768px) {
+  .pricing-table.style-two .pricing-wrapper > .pricing-column > .plan-footer {
+    border-right: none;
+    border-left: none;
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  11.3 PRICING TABLES - STYLE THREE
+/*---------------------------------------------------------------------*/
+@media (min-width: 768px) {
+  .pricing-table.style-three .pricing-wrapper {
+    padding: 0px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.2);
+  }
+}
+@media (min-width: 1024px) {
+  .pricing-table.style-three .pricing-wrapper {
+    margin-top: 25px;
+  }
+}
+@media (min-width: 1024px) {
+  .pricing-table.style-three .pricing-wrapper.recomended {
+    margin-top: 1px;
+  }
+}
+@media (min-width: 768px) {
+  .pricing-table.style-three .pricing-wrapper.recomended > .pricing-column > .item-list > li {
+    border-right: none;
+    border-left: none;
+  }
+}
+@media (min-width: 768px) {
+  .pricing-table.style-three .pricing-wrapper.recomended > .pricing-column > .plan-footer {
+    border-right: none;
+    border-left: none;
+  }
+}
+@media (min-width: 1024px) {
+  .pricing-table.style-three .pricing-wrapper.recomended > .pricing-column > .plan-footer {
+    padding: 32px 10px;
+  }
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  11.4 PRICING TABLES - STYLE FOUR
+/*---------------------------------------------------------------------*/
+@media (min-width: 768px) {
+  .pricing-table.style-four .pricing-wrapper {
+    padding: 0px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.2);
+  }
+}
+@media (min-width: 768px) {
+  .pricing-table.style-four .pricing-wrapper > .pricing-column > .item-list > li {
+    border-right: none;
+    border-left: none;
+  }
+}
+.pricing-table.style-four .pricing-wrapper > .pricing-column > .item-list > li > i {
+  font-size: 20px;
+}
+.pricing-table.style-four .pricing-wrapper > .pricing-column > .item-list > li > i.fa-check {
+  color: #7ea95e;
+}
+.pricing-table.style-four .pricing-wrapper > .pricing-column > .item-list > li > i.fa-times {
+  color: #8d1c31;
+}
+@media (min-width: 768px) {
+  .pricing-table.style-four .pricing-wrapper > .pricing-column > .plan-footer {
+    border-right: none;
+    border-left: none;
+  }
+}
+.pricing-table.style-four .pricing-wrapper.features {
+  box-shadow: none;
+}
+.pricing-table.style-four .pricing-wrapper.features > .pricing-column > .item-list {
+  border-top: 3px solid #f6a821;
+  margin-top: 287px;
+  box-shadow: 0 0 13px rgba(0, 0, 0, 0.2);
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  11.5 PRICING TABLES - STYLE FIVE
+/*---------------------------------------------------------------------*/
+.pricing-table.style-five .pricing-wrapper > .pricing-column {
+  border-top: 6px solid #f6a821;
+}
+.pricing-table.style-five .pricing-wrapper > .pricing-column > .plan-title > h2 {
+  background-color: #1d1d1d;
+}
+.pricing-table.style-five .pricing-wrapper > .pricing-column > .plan-title > .pricing-box {
+  height: auto;
+  padding: 0px 15px 25px 15px;
+}
+.pricing-table.style-five .pricing-wrapper > .pricing-column > .item-list {
+  background-color: #f9f9f9;
+}
+.pricing-table.style-five .pricing-wrapper > .pricing-column > .item-list > li:nth-child(odd) {
+  background-color: #e5e5e5;
+}
+.pricing-table.style-five .pricing-wrapper > .pricing-column > .plan-footer {
+  padding: 0px;
+  background-color: #f6a821;
+  border-right: 1px solid #19b395;
+  border-bottom: 1px solid #19b395;
+  border-left: 1px solid #19b395;
+}
+.pricing-table.style-five .pricing-wrapper > .pricing-column > .plan-footer a.btn {
+  width: 100%;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border: none;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  11.6 PRICING TABLES - STYLE SIX
+/*---------------------------------------------------------------------*/
+@media (min-width: 768px) {
+  .pricing-table.style-six .pricing-wrapper {
+    padding: 0px;
+    box-shadow: 0 0 13px rgba(0, 0, 0, 0.2);
+  }
+}
+.pricing-table.style-six .pricing-wrapper > .pricing-column {
+  border-top: 6px solid #f6a821;
+}
+.pricing-table.style-six .pricing-wrapper > .pricing-column > .plan-title > h2 {
+  background-color: #1d1d1d;
+}
+.pricing-table.style-six .pricing-wrapper > .pricing-column > .plan-title > .pricing-box {
+  height: auto;
+  padding: 0px 15px 25px 15px;
+}
+.pricing-table.style-six .pricing-wrapper > .pricing-column > .item-list {
+  background-color: #f9f9f9;
+}
+@media (min-width: 768px) {
+  .pricing-table.style-six .pricing-wrapper > .pricing-column > .item-list > li {
+    border-right: none;
+    border-left: none;
+  }
+}
+.pricing-table.style-six .pricing-wrapper > .pricing-column > .item-list > li:nth-child(odd) {
+  background-color: #e5e5e5;
+}
+.pricing-table.style-six .pricing-wrapper > .pricing-column > .plan-footer {
+  padding: 0px;
+  background-color: #f6a821;
+  border-right: 1px solid #19b395;
+  border-bottom: 1px solid #19b395;
+  border-left: 1px solid #19b395;
+}
+@media (min-width: 768px) {
+  .pricing-table.style-six .pricing-wrapper > .pricing-column > .plan-footer {
+    border-right: none;
+    border-left: none;
+  }
+}
+.pricing-table.style-six .pricing-wrapper > .pricing-column > .plan-footer a.btn {
+  width: 100%;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border: none;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  12. TABULAR CONTENT
+/*---------------------------------------------------------------------*/
+.tabular-content {
+  position: relative;
+  background-color: transparent;
+  border: none;
+}
+.tabular-content > ul.nav-tabs {
+  border: none;
+}
+.tabular-content > ul.nav-tabs > li > a {
+  background-color: #fcfcfc;
+  color: #222;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-top: 5px solid #ddd;
+  padding: 10px 25px;
+}
+.tabular-content > ul.nav-tabs > li > a:hover {
+  border: 1px solid #ddd;
+  border-top: 5px solid #dddddd;
+}
+.tabular-content > ul.nav-tabs > li.active > a {
+  background-color: #fff;
+  font-weight: 700;
+  border-top: 5px solid #f6a821;
+  border-bottom: 1px solid #fff;
+}
+.tabular-content > .tab-content {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.tabular-content > .tab-content > .tab-pane > p {
+  margin-bottom: 0px;
+  padding: 15px;
+  font-size: 14px;
+  text-align: left;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  12.1. TABULAR CONTENT - STYLE ONE
+/*---------------------------------------------------------------------*/
+.tabular-content.style-one > .tab-content {
+  border-top-left-radius: 0px;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  12.2. TABULAR CONTENT - STYLE TWO
+/*---------------------------------------------------------------------*/
+.tabular-content.style-two {
+  text-align: center;
+}
+.tabular-content.style-two > ul.nav-tabs {
+  display: inline-block;
+  margin-bottom: -5px;
+}
+.tabular-content.style-two > .tab-content {
+  border: none;
+  border-top: 1px solid #ddd;
+  border-radius: 0px;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  12.3. TABULAR CONTENT - STYLE THREE
+/*---------------------------------------------------------------------*/
+.tabular-content.style-three {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.tabular-content.style-three > ul.nav-tabs {
+  padding: 15px 15px 0px 15px;
+}
+.tabular-content.style-three > .tab-content {
+  border: none;
+  border-top: 1px solid #ddd;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  12.4. TABULAR CONTENT - STYLE FOUR
+/*---------------------------------------------------------------------*/
+.tabular-content.style-four {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+.tabular-content.style-four > ul.nav-tabs {
+  display: inline-block;
+  margin-bottom: -5px;
+  padding: 15px 15px 0px 15px;
+}
+.tabular-content.style-four > .tab-content {
+  border: none;
+  border-top: 1px solid #ddd;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  13. TESTIMONIALS
+/*---------------------------------------------------------------------*/
+.testimonial-item > .testimonial-content {
+  position: relative;
+  padding: 15px;
+  background: #f6a821;
+}
+.testimonial-item > .testimonial-content:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left-style: inset;
+  border-right-style: inset;
+  border-top: 22px solid;
+  border-right: 22px solid transparent;
+  border-left: 0 solid transparent;
+  border-top-color: #f6a821;
+  left: 100px;
+  bottom: -22px;
+}
+@media (min-width: 480px) {
+  .testimonial-item > .testimonial-content:after {
+    left: 100px;
+  }
+}
+@media (min-width: 640px) {
+  .testimonial-item > .testimonial-content:after {
+    left: 120px;
+  }
+}
+@media (min-width: 992px) {
+  .testimonial-item > .testimonial-content:after {
+    left: 100px;
+  }
+}
+.testimonial-item > .testimonial-content .testimonial-title {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+@media (min-width: 480px) {
+  .testimonial-item > .testimonial-content .testimonial-title {
+    font-size: 22px;
+  }
+}
+@media (min-width: 640px) {
+  .testimonial-item > .testimonial-content .testimonial-title {
+    font-size: 28px;
+  }
+}
+@media (min-width: 992px) {
+  .testimonial-item > .testimonial-content .testimonial-title {
+    font-size: 16px;
+  }
+}
+.testimonial-item > .testimonial-content blockquote {
+  border-left: none;
+  margin-bottom: 0px;
+  padding: 0;
+}
+.testimonial-item > .testimonial-content blockquote p {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+}
+@media (min-width: 480px) {
+  .testimonial-item > .testimonial-content blockquote p {
+    font-size: 16px;
+  }
+}
+@media (min-width: 640px) {
+  .testimonial-item > .testimonial-content blockquote p {
+    font-size: 18px;
+  }
+}
+@media (min-width: 992px) {
+  .testimonial-item > .testimonial-content blockquote p {
+    font-size: 14px;
+  }
+}
+.testimonial-item > .testimonial-info {
+  margin-top: 18px;
+  height: 80px;
+}
+@media (min-width: 480px) {
+  .testimonial-item > .testimonial-info {
+    height: 100px;
+  }
+}
+@media (min-width: 640px) {
+  .testimonial-item > .testimonial-info {
+    height: 120px;
+  }
+}
+@media (min-width: 992px) {
+  .testimonial-item > .testimonial-info {
+    height: 80px;
+  }
+}
+.testimonial-item > .testimonial-info img {
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+@media (min-width: 480px) {
+  .testimonial-item > .testimonial-info img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+  }
+}
+@media (min-width: 640px) {
+  .testimonial-item > .testimonial-info img {
+    width: 120px;
+    height: 120px;
+    margin-right: 30px;
+  }
+}
+@media (min-width: 992px) {
+  .testimonial-item > .testimonial-info img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+  }
+}
+.testimonial-item > .testimonial-info .img-thumbnail {
+  padding: 2px;
+}
+.testimonial-item > .testimonial-info .testimonial-author {
+  color: #fff;
+  font-size: 16px;
+  margin-top: 10px;
+}
+@media (min-width: 480px) {
+  .testimonial-item > .testimonial-info .testimonial-author {
+    font-size: 22px;
+  }
+}
+@media (min-width: 640px) {
+  .testimonial-item > .testimonial-info .testimonial-author {
+    font-size: 28px;
+  }
+}
+@media (min-width: 992px) {
+  .testimonial-item > .testimonial-info .testimonial-author {
+    font-size: 16px;
+  }
+}
+.testimonial-item > .testimonial-info .testimonial-author em {
+  font-size: 13px;
+}
+@media (min-width: 480px) {
+  .testimonial-item > .testimonial-info .testimonial-author em {
+    font-size: 18px;
+  }
+}
+@media (min-width: 640px) {
+  .testimonial-item > .testimonial-info .testimonial-author em {
+    font-size: 22px;
+  }
+}
+@media (min-width: 992px) {
+  .testimonial-item > .testimonial-info .testimonial-author em {
+    font-size: 13px;
+  }
+}
+.testimonial-item.not-right-column {
+  margin-bottom: 65px;
+}
+@media (min-width: 992px) {
+  .testimonial-item.not-right-column {
+    margin-bottom: 0px;
+  }
+}
+.testimonial-item.not-bottom-column {
+  margin-bottom: 65px;
+}
+
+
+/*---------------------------------------------------------------------*/
+/*  14. TIMELINE
+/*---------------------------------------------------------------------*/
+.timeline {
+  position: relative;
+  padding: 20px 0 20px;
+  list-style: none;
+}
+@media (min-width: 768px) {
+  .timeline:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    margin-left: -1px;
+    background-color: #e1e1e1;
+  }
+}
+.timeline > li {
+  position: relative;
+  margin-bottom: 40px;
+}
+@media (min-width: 768px) {
+  .timeline > li {
+    margin-bottom: 20px;
+  }
+}
+.timeline > li:last-child {
+  margin-bottom: 0px;
+}
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+.timeline > li:after {
+  clear: both;
+}
+.timeline > li > .timeline-panel {
+  position: relative;
+  width: 100%;
+  background-color: #f9f9f9;
+  border: 1px solid #d6dddd;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+@media (min-width: 768px) {
+  .timeline > li > .timeline-panel {
+    float: left;
+    width: 44%;
+  }
+}
+@media (min-width: 768px) {
+  .timeline > li > .timeline-panel:before {
+    content: " ";
+    display: inline-block;
+    position: absolute;
+    top: 26px;
+    right: -15px;
+    border-top: 15px solid transparent;
+    border-right: 0 solid #d6dddd;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #d6dddd;
+  }
+}
+@media (min-width: 768px) {
+  .timeline > li > .timeline-panel:after {
+    content: " ";
+    display: inline-block;
+    position: absolute;
+    top: 27px;
+    right: -14px;
+    border-top: 14px solid transparent;
+    border-right: 0 solid #f6a821;
+    border-bottom: 14px solid transparent;
+    border-left: 14px solid #f6a821;
+  }
+}
+.timeline > li > .timeline-panel > .timeline-heading > img {
+  margin-bottom: 20px;
+}
+.timeline > li > .timeline-panel > .timeline-heading > .timeline-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 400;
+  color: #fff;
+  background: #f6a821;
+  padding: 20px;
+}
+.timeline > li > .timeline-panel > .timeline-body > p {
+  color: #222222;
+  font-size: 18px;
+  padding: 0px 20px 10px 20px;
+}
+.timeline > li > .timeline-badge {
+  display: none;
+}
+@media (min-width: 768px) {
+  .timeline > li > .timeline-badge {
+    display: block;
+    z-index: 100;
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    margin-left: -25px;
+    border-radius: 50% 50% 50% 50%;
+    text-align: center;
+    font-size: 50px;
+    line-height: 50px;
+    color: #ccc;
+  }
+}
+@media (min-width: 992px) {
+  .timeline > li > .timeline-badge {
+    top: 0;
+    width: 80px;
+    height: 80px;
+    margin-left: -40px;
+    font-size: 80px;
+    line-height: 80px;
+  }
+}
+@media (min-width: 768px) {
+  .timeline > li.timeline-inverted > .timeline-panel {
+    float: right;
+  }
+}
+@media (min-width: 768px) {
+  .timeline > li.timeline-inverted > .timeline-panel:before {
+    right: auto;
+    left: -15px;
+    border-right-width: 15px;
+    border-left-width: 0;
+  }
+}
+@media (min-width: 768px) {
+  .timeline > li.timeline-inverted > .timeline-panel:after {
+    right: auto;
+    left: -14px;
+    border-right-width: 14px;
+    border-left-width: 0;
+  }
+}

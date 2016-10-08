@@ -42,7 +42,7 @@
                     <div class="panel-heading">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-usd"></i> Assign a Custom Tax</h4>
+                                <h5><i class="fa fa-usd"></i> Assign a Custom Tax</h5>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                     <div class="panel-heading">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h4><i class="fa fa-usd"></i> Existing entries</h4>
+                                <h5><i class="fa fa-usd"></i> Existing entries</h5>
                             </div>
                         </div>
                     </div>
