@@ -18,18 +18,25 @@ class TradeSimulator extends MY_Controller
     {
         if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
 
-            $aggregate           = $this->aggregate;
-            $data                = $this->loadViewDependencies($character_id, $user_id, $aggregate);
-            $data['selected']    = "tradesimulator";
-            $data['traderoutes'] = $this->listTradeRoutes($character_id);
-            $data['stocklists']  = $this->getLists();
+            $aggregate        = $this->aggregate;
+            $data             = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data['selected'] = "tradesimulator";
+            $data['status']   = $this->TradeSimulator_model->getCrestStatus();
+            
+            if ($data['status']) {
+                $data['traderoutes'] = $this->listTradeRoutes($character_id);
+                $data['stocklists']  = $this->getLists();
 
-            if (isset($msg)) {
-                buildMessage($msg['notice'], $msg['message'], 'main/tradesimulator_v');
-            }
+                if (isset($msg)) {
+                    buildMessage($msg['notice'], $msg['message'], 'main/tradesimulator_v');
+                }
 
-            if (isset($res)) {
-                $data['results'] = $res;
+                if (isset($res)) {
+                    $data['results'] = $res;
+                }
+            } else {
+                $data["notice"] = "error";
+                $data["message"] = Msg::CREST_CONNECT_FAILURE;
             }
 
             $data['view'] = 'main/tradesimulator_v';

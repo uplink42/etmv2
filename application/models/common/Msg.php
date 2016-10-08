@@ -41,7 +41,7 @@ class Msg extends CI_Model
     const LOGIN_NO_CHARS             = "It seems you have no characters in your account. Please insert a new API Key below";
     
     const XML_CONNECT_FAILURE        = "Unable to connect to XML API";
-    const CREST_CONNECT_FAILURE      = "Unable to connect to CREST API";
+    const CREST_CONNECT_FAILURE      = "Unable to connect to CREST API. Eve Online might be under maintenance";
     const CREST_TIMEOUT              = "Timeout of 10 seconds per request exceeded";
     
     const ITEM_NOT_FOUND             = "Unknown item provided";

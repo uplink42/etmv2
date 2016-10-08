@@ -1,45 +1,46 @@
 $(document).ready(function() {
-
     var base = $(".navbar").data('url');
     var url = base + "TradeRoutes/searchStations";
 
-	$("#origin-station, #destination-station").autocomplete({
+    $("#origin-station, #destination-station").autocomplete({
         source: url,
         minLength: 2,
         messages: {
             noResults: '',
         },
-        select: function( event, ui ) {
-            if($(this).hasClass('origin-station')) {
+        select: function(event, ui) {
+            if ($(this).hasClass('origin-station')) {
                 $(".origin").val(ui.item.value);
             } else {
                 $(".destination").val(ui.item.value);
             }
         }
     });
-    
-    $("#traderoute").change(function() {
-        var fromStationName = $("#traderoute option:selected").text().substring(0, $("#traderoute option:selected").text().indexOf('>>')-1);
-        var toStationName = $("#traderoute option:selected").text().substr($("#traderoute option:selected").text().indexOf(">>")+3);
 
+    $("#traderoute").change(function() {
+        var fromStationName = $("#traderoute option:selected").text().substring(0, $("#traderoute option:selected").text().indexOf('>>') - 1);
+        var toStationName = $("#traderoute option:selected").text().substr($("#traderoute option:selected").text().indexOf(">>") + 3);
         $("#origin-station").val(fromStationName);
         $("#destination-station").val(toStationName);
     });
 
     $(".btn-submit-ts").on('click', function(e) {
-        var origin = $("#origin-station").val();
-        var destination = $("#destination-station").val();
-        var buyer = $("#buyer").val();
-        var seller = $("#seller").val();
+        if (!$(this).hasClass('disabled')) {
 
-        if(origin && destination && buyer && seller) {
-            $(".tradesim").hide();
-            $('.panel-loading').show();
+            var origin = $("#origin-station").val();
+            var destination = $("#destination-station").val();
+            var buyer = $("#buyer").val();
+            var seller = $("#seller").val();
+            if (origin && destination && buyer && seller) {
+                $(".tradesim").hide();
+                $('.panel-loading').show();
+            } else {
+                e.preventDefault();
+                toastr["error"]("Missing information");
+            }
         } else {
             e.preventDefault();
-            toastr["error"]("Missing information");
         }
-
     });
 
     if ($(".tradesim").data('res')) {
@@ -49,7 +50,6 @@ $(document).ready(function() {
         $(".tradesim").show();
         $(".tradesim-res").hide();
     }
-
     var table = $('#ts-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         "lengthMenu": [
@@ -71,12 +71,9 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "aoColumnDefs": [
-            { 
-            "bSearchable": false, "aTargets": [ 3 ] 
+        "aoColumnDefs": [{
+            "bSearchable": false,
+            "aTargets": [3]
         }]
     });
-
-
-
 });

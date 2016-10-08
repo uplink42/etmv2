@@ -1,5 +1,5 @@
 <script src="<?=base_url('dist/js/apps/tradesimulator-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
-
+<?php $status ? $class = "" : $class = "disabled" ?>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -127,7 +127,7 @@
                                     </div>
                                 </div>
                                 <div class="row text-center">
-                                    <button class="btn btn-default btn-submit-ts">Submit</button>
+                                    <button class="btn btn-default btn-submit-ts <?=$class?>">Submit</button>
                                 </div>
                             </form>
                         </div>

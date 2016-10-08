@@ -30,6 +30,19 @@ class TradeSimulator_model extends CI_Model
     private $stockListID;
     private $stockListName;
 
+
+    public function getCrestStatus()
+    {
+        $url    = "https://crest-tq.eveonline.com/market/10000002/orders/sell/?type=https://crest-tq.eveonline.com/inventory/types/34/";
+        $result = json_decode(file_get_contents($url), true);
+
+        if($result) {
+            return true;
+        } 
+
+        return false;
+    }
+
     public function getStationID($station_name)
     {
         $this->db->select('eve_idstation');
@@ -97,7 +110,9 @@ class TradeSimulator_model extends CI_Model
         ];
 
         foreach ($contents as $row) {
-            sleep(0.07);
+            $this->load->model('common/RateLimiter');
+            $this->RateLimiter->rateLimit();
+            
             $item_id                   = $row->id;
             $item_name                 = $row->name;
             $row->vol == 0 ? $item_vol = 1 : $item_vol = $row->vol;

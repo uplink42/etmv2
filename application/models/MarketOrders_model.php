@@ -80,6 +80,8 @@ class MarketOrders_model extends CI_Model
                 }
             }
         } else {
+            $this->load->model('common/RateLimiter');
+            $this->RateLimiter->rateLimit();
             //get crest data
             $url    = "https://crest-tq.eveonline.com/market/" . $region_id . "/orders/" . $type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
             $result = json_decode(file_get_contents($url), true);
@@ -110,18 +112,19 @@ class MarketOrders_model extends CI_Model
                 $bestPrice = min($orderPrices);
             }
 
-            if ($bestPrice == $myPrice) {
-                $this->updateStatus($order_id, 1, $date_now);
-                return "OK";
+            if (!isset($myPrice)) {
+                return "expired";
             } else {
-                //order expired or fullfilled
-                if (!isset($myPrice)) {
-                    return "expired";
-                } else {
-                    $this->updateStatus($order_id, 0, $date_now);
-                    return "undercut";
+
+                if ($bestPrice == $myPrice) {
+                    $this->updateStatus($order_id, 1, $date_now);
+                    return "OK";
+                }   //order expired or fullfilled
+                     else {
+                        $this->updateStatus($order_id, 0, $date_now);
+                        return "undercut";
+                    }
                 }
-            }
         }
     }
 
