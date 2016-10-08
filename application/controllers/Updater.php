@@ -11,6 +11,7 @@ class Updater extends CI_Controller
         $this->db->cache_delete_all();
         $this->load->library('session');
         $this->load->model('common/Msg');
+        $this->load->model('common/Log');
     }
 
     public function index()
@@ -52,13 +53,20 @@ class Updater extends CI_Controller
                     get_class($e),
                     $e->getMessage()
                 );
-                //To-do: remove cache folder
-                //add log entry
+
+                $problematicKeys = $this->Updater_model->getAPIKeys($this->session->iduser);
+
+                foreach ($problematicKeys as $row) {
+                    $key = $row->key;
+                    $dir = FILESTORAGE . $key;
+                    $this->removeDirectory($path);
+                    $this->Log->addEntry('clear', $this->session->iduser);
+                }
             }
 
             //calculate profits
             $this->db->trans_start();
-            $this->Updater_model->calculateProfits();               
+            $this->Updater_model->calculateProfits();
             //iterate
             $this->Updater_model->updateTotals();
             $this->db->trans_complete();
@@ -73,6 +81,7 @@ class Updater extends CI_Controller
             } else {
                 //transaction success, show the result table
                 $table = $this->Updater_model->resultTable();
+                $this->Log->addEntry('update', $this->session->iduser);
 
                 buildMessage("success", Msg::LOGIN_SUCCESS, $view);
                 $data['table']     = array($table);
@@ -81,5 +90,15 @@ class Updater extends CI_Controller
                 $this->load->view('main/_template_v', $data);
             }
         }
+    }
+
+    private function removeDirectory($path)
+    {
+        $files = glob($path . '/*');
+        foreach ($files as $file) {
+            is_dir($file) ? removeDirectory($file) : unlink($file);
+        }
+        rmdir($path);
+        return;
     }
 }

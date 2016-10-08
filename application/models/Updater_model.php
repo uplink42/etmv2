@@ -952,4 +952,17 @@ class Updater_model extends CI_Model
 
         return $character_list->result();
     }
+
+    public function getAPIKeys($id_user)
+    {
+        $this->db->select('api.apikey as key');
+        $this->db->from('api');
+        $this->db->join('characters', 'characters.api_apikey = api.apikey');
+        $this->db->join('aggr', 'aggr.character_eve_idcharacter = characters.eve_idcharacter');
+        $this->db->join('user', 'user.iduser = aggr.user_iduser');
+        $query = $this->db->where('user.iduser', $id_user);
+
+        $result = $query->result();
+        return $result;
+    }
 }

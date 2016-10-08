@@ -32,6 +32,11 @@ class MarketOrders extends MY_Controller
             $orders_buy  = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "buy", $this->check));
             $orders_sell = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "sell", $this->check));
 
+            if($this->check) {
+                $this->load->model('common/Log');
+                $this->Log->addEntry('ordercheck', $this->session->iduser);
+            }
+
             $data['buyorders']  = $orders_buy;
             $data['sellorders'] = $orders_sell;
             $data['view']       = 'main/marketorders_v';

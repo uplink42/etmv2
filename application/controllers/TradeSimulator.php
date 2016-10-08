@@ -84,6 +84,9 @@ class TradeSimulator extends MY_Controller
                     $_REQUEST['buy-method'],
                     $_REQUEST['sell-method'],
                     $_REQUEST['stocklist']);
+
+                $this->load->model('common/Log');
+                $this->Log->addEntry('tradesim', $this->session->iduser);
                 $this->index($character_id, null, $res);
 
             } else {

@@ -10,10 +10,13 @@ class Log extends CI_Model
         parent::__construct();
     }
 
-    public function generateLogEntry()
+    public function addEntry($type, $id_user)
     {
-        
-    }
+        $data = ["type"        => $type,
+        	     "user_iduser" => $id_user];
+
+      	$this->db->insert('log', $data);
+    }	
 
 
 
