@@ -110,8 +110,8 @@ class ValidateRequest extends CI_Model
     {
         if (strlen($username) < self::MIN_USERNAME_LENGTH) {
             return false;
-        } 
-        
+        }
+
         return true;
     }
 
@@ -119,7 +119,7 @@ class ValidateRequest extends CI_Model
     {
         $this->db->where('username', $username);
         $existing_user = $this->db->get('user');
-        
+
         if ($existing_user->num_rows() >= 1) {
             return false;
         }
@@ -178,7 +178,7 @@ class ValidateRequest extends CI_Model
             return Msg::INVALID_API_MASK;
         }
 
-        if(!$this->validateAPIAvailability($apikey)) {
+        if (!$this->validateAPIAvailability($apikey)) {
             return Msg::API_ALREADY_EXISTS;
         }
     }
@@ -188,7 +188,7 @@ class ValidateRequest extends CI_Model
         $this->db->where('apikey', $apikey);
         $query = $this->db->get('api');
 
-        if($query->num_rows() == 0) {
+        if ($query->num_rows() == 0) {
             return true;
         }
 
@@ -204,5 +204,4 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
-    
 }

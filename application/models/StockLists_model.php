@@ -4,6 +4,7 @@
 
 class StockLists_model extends CI_Model
 {
+    const ITEMLIMIT = 100; 
 
     public function __construct()
     {
@@ -64,7 +65,7 @@ class StockLists_model extends CI_Model
     public function insertItem($name, $list_id)
     {
         $item  = "";
-        $limit = 100;
+        $limit = self::ITEMLIMIT;
         $this->db->where('name', $name);
         $q1 = $this->db->get('item');
 

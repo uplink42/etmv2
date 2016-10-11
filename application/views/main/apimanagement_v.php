@@ -32,20 +32,53 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
-                    <div class="panel-heading">
+                    <div class="panel-body">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
                                 <h5><i class="fa fa-plus"></i> Add API Key/character</h5>
                             </div>
                         </div>
+                        <form class="form-horizontal add-apikey" data-url="<?=base_url()?>" name="apiform">
+                            <div class="api-insert-1">
+                                <div>
+                                    <span class="help-block small text-center">
+                                        <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask=82317323" target="_blank">Generate key HERE</a>. ETM only accepts keys created with this link.
+                                    </span><br>
+                                </div>
+                                <div class="form-group"><label for="keyid" class="col-sm-2 control-label">KeyID</label>
+                                    <div class="col-sm-10"><input type="number" class="form-control list-name" id="keyid" name="keyid" placeholder="Type your Key ID here" autofocus></div>
+                                </div>
+                                <div class="form-group"><label for="keyid" class="col-sm-2 control-label">vCode</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control list-name" id="vcode" name="vcode" placeholder="Type your vCode here" autofocus></div>
+                                </div>
+                                <button type="submit" class="btn btn-default submit-add" name="submit-add">Submit</button>
+                            </div>
+                            <div class="api-insert-2">
+                                <span class="help-block small text-center">Select which characters you would like to import to your account: </span>
+                                <div class="table-responsive">
+                                    <form class="form-horizontal add-character" autofill="false" name="apiform">
+                                        <table class="table table-responsive table-stripped table-hover table-character-selection">
+                                            <thead>
+                                                <tr>
+                                                    <th>Character</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-chars">
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                                <button type="submit" class="btn btn-default submit-add-2" name="submit-add">Submit</button>
+                            </div>
+                        </form>
                     </div>
-
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-heading">
-                        <div class="panel-body stocklist-panel">
+                        <div class="panel-body">
                             <div class="panel panel-filled panel-c-success panel-collapse">
                                 <div class="panel-heading">
                                     <h5><i class="fa fa-minus"></i> Remove API Key/character</h5>
@@ -53,12 +86,12 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-responsive table-stripped table-hover">
+                            <table class="table table-responsive table-stripped table-hover table-character-list">
                                 <thead>
                                     <tr>
                                         <th>Character</th>
                                         <th>Key</th>
-                                        <th>Delete</th>
+                                        <th>Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-chars">

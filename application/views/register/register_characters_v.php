@@ -53,6 +53,7 @@
 			<input type="hidden" name="reports" value="<?=set_value('reports')?>">
 
 			<div class="text-center submit-register">
+				<span>You can add up to 20 characters to your account after registering</span><br>
 			    <input type="Submit" class="btn btn-accent pull-right" name="register" value="Continue">
 			</div>
 		    </form>

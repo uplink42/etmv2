@@ -1,6 +1,9 @@
 $(document).ready(function() {
     
+    $(".api-insert-2").hide();
     var base = $(".navbar").data('url');
+    var apikey;
+    var vcode;
     list();
 
     function list() {
@@ -9,18 +12,18 @@ $(document).ready(function() {
             dataType: "json",
             url: url,
             success: function(result) {
-                $("table tbody tr").empty();
+                $(".table-character-list tbody tr").empty();
                 if (result.length == 0) {
                     $row = "<tr><td colspan='3' class='text-center'>No characters found</td></tr>";
-                    $("table").prepend($row);
+                    $(".table-character-list tbody tr").prepend($row);
                 } else {
                     $.each(result, function(k, v) {
                         var id = result[k].charid;
                         var img = "<img src='https://image.eveonline.com/Character/" + id + "_32.jpg'></img>"; 
                         $row = "<tr><td>" + img + " " + result[k].name + "</td><td>" + result[k].api + 
-                            "</td><td><button class='btn btn-danger btn-delete' data-iddel=" + id + 
-                            " data-toggle='modal' data-target='#delete'>Delete</button></tr></tr>";
-                        $("table").prepend($row);
+                               "</td><td><button class='btn btn-danger btn-delete' data-iddel=" + id + 
+                               " data-toggle='modal' data-target='#delete'>Remove</button></tr></tr>";
+                        $(".table-character-list").prepend($row);
                     });
                 }
             }
@@ -33,15 +36,12 @@ $(document).ready(function() {
         var full_url = url + "/" + id;
 
         $(".btn-delete-confirm").attr('data-url', full_url);
-
-        console.log(full_url);
     });
 
     $(".btn-delete-confirm").on('click', function() {
-
         var url = $(this).attr('data-url');
            console.log(url);
-           //console.log($(".btn-delete-confirm"));
+
         $.ajax({
             dataType: "json",
             url: url,
@@ -53,7 +53,65 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(".submit-add").on('click', function(e) {
+        apikey = $("#keyid").val();
+        vcode = $("#vcode").val();
+        e.preventDefault();
+        var url = base + "ApiKeyManagement/addCharacters/";
+        var data = $(".add-apikey").serialize();
+
+        $.ajax({
+            dataType: "json",
+            url: url,
+            data: data,
+            type: "POST",
+            success: function(result) {
+                if (typeof(result.notice) != "undefined") {
+                    toastr[result.notice](result.message);
+                } else {
+                    $(".api-insert-1").toggle();
+                    $(".api-insert-2").toggle();
+                        
+                        var count = 1;
+                    $.each(result, function(k, v) {
+                        console.log(count);
+                        var id = result[k][1].id;
+                        var name = result[k][0].name;
+                        var url = "https://image.eveonline.com/Character/" + id + "_32.jpg";
+                        var cl = "character" + count;
+                        var $element = "<tr><td><img src='" + url + "'alt='icon'></img>" + " " + name + "</td>"+
+                                       "<td><input type='checkbox' class='" + cl + "' data-id='" + id + "'></td></tr>";
+                        count++;
+                        $(".table-character-selection tbody").append($element);
+                    });
+                }
+            }
+        });
+    })
+
+    $(".submit-add-2").on('click', function(e) {
+        e.preventDefault();
+
+        var selected = [];
+        $(".character1").is(':checked') ? selected.push($(".character1").attr('data-id')) : "";
+        $(".character2").is(':checked') ? selected.push($(".character2").attr('data-id')) : "";
+        $(".character3").is(':checked') ? selected.push($(".character3").attr('data-id')) : "";
+        
+        var args = selected.join('/');
+        var url = base + "ApiKeyManagement/addCharactersStep/" + apikey + "/" + vcode + "/" + args;
+
+        $.ajax({
+            dataType: "json",
+            url: url,
+            success: function(result) {
+                if (result.notice === 'error') {
+                    toastr[result.notice](result.message);
+                } else {
+
+                }
+            }
+        });
+    })
     
-
-
 });

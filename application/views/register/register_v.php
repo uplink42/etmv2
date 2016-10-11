@@ -58,7 +58,7 @@
 			</div>
 			<div class="form-group col-lg-6">
 			    <label>API Key</label>
-			    <input type="text" id="apikey" placeholder="Generate an API Key with the link below" class="form-control" name="apikey" required='required' value="<?=set_value('apikey')?>">
+			    <input type="number" id="apikey" placeholder="Paste the KeyID generated below here" class="form-control" name="apikey" required='required' value="<?=set_value('apikey')?>">
 			    <span class="help-block small"><a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask=82317323" target="_blank">Generate key HERE</a>. ETM only accepts keys created with this link.</span>
 			</div>
 			<div class="form-group col-lg-6">

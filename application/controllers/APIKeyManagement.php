@@ -4,6 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class ApiKeyManagement extends MY_Controller
 {
     private $significant;
+    private $keyid;
+    private $vcode;
 
     public function __construct()
     {
@@ -11,6 +13,11 @@ class ApiKeyManagement extends MY_Controller
         $this->db->cache_on();
         $this->page = "APIKeyManagement";
         $this->load->model('ApiKeyManagement_model');
+
+        if(!empty($_REQUEST['keyid']) && !empty($_REQUEST['vcode'])) {
+            $this->keyid = $_REQUEST['keyid'];
+            $this->vcode = $_REQUEST['vcode'];
+        }
     }
 
     public function index($character_id)
@@ -47,6 +54,62 @@ class ApiKeyManagement extends MY_Controller
         } else {
             $notice = "error";
             $msg = Msg::INVALID_REQUEST;
+        }
+
+        $data = array("notice" => $notice, "message" => $msg);
+        echo json_encode($data);
+    }
+
+    public function addCharacters()
+    {
+        $this->load->model('ValidateRequest');
+        $result = $this->ValidateRequest->validateAPI($this->keyid, $this->vcode);
+
+        if($result) {
+            $notice = "error";
+            $msg = $result;
+            $data = array("notice" => $notice, "message" => $msg);
+            echo json_encode($data);
+        } else {
+            $this->load->model('Register_model');
+            $characters = $this->Register_model->getCharacters($this->keyid, $this->vcode);
+            echo json_encode($characters);
+            //proceed
+        }
+    }
+
+    public function addCharactersStep($apikey, $vcode, $char1 = null, $char2 = null, $char3 = null)
+    {
+        $chars = array();
+
+        if ($char1) {
+            array_push($chars, $char1);
+        }
+
+        if ($char2) {
+            array_push($chars, $char2);
+        }
+
+        if ($char3) {
+            array_push($chars, $char3);
+        }
+
+        if(count($chars) != 0) {
+            $this->load->model('register_model');
+            if($this->register_model->verifyCharacters($chars, $apikey, $vcode)) {
+                //add characters
+                $this->ApiKeyManagement_model->addCharacters($chars, $apikey, $vcode, $this->session->iduser);
+                
+
+            } else {
+                $notice = "error";
+                $msg = Msg::CHARACTER_ACCOUNT_MISMATCH;
+            }
+
+
+        } else {
+            $notice = "error";
+            $msg = Msg::NO_CHARACTER_SELECTED;
         }
 
         $data = array("notice" => $notice, "message" => $msg);

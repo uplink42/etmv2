@@ -36,4 +36,9 @@ class ApiKeyManagement_model extends CI_Model
 
         return false;
     }
+
+    public function addCharacters($chars, $apikey, $vcode, $id_user) 
+    {
+
+    }
 }

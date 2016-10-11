@@ -7,6 +7,7 @@ class TradeSimulator_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/RateLimiter');
     }
 
     private $stationFromName;
@@ -110,7 +111,6 @@ class TradeSimulator_model extends CI_Model
         ];
 
         foreach ($contents as $row) {
-            $this->load->model('common/RateLimiter');
             $this->RateLimiter->rateLimit();
             
             $item_id                   = $row->id;

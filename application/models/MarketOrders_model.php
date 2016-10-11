@@ -7,6 +7,7 @@ class MarketOrders_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/RateLimiter');
     }
 
     public function getMarketOrders($chars, $type, $check = false)
@@ -80,7 +81,6 @@ class MarketOrders_model extends CI_Model
                 }
             }
         } else {
-            $this->load->model('common/RateLimiter');
             $this->RateLimiter->rateLimit();
             //get crest data
             $url    = "https://crest-tq.eveonline.com/market/" . $region_id . "/orders/" . $type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
