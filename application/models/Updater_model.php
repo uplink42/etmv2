@@ -15,7 +15,6 @@ class Updater_model extends CI_Model
     private $user_id;
     private $username;
     private $account_characters = [];
-    private $update_state;
     private $is_updating;
 
     //character specific
@@ -55,21 +54,6 @@ class Updater_model extends CI_Model
         $this->db->where('username', $username);
         $query                    = $this->db->get('v_user_characters');
         $this->account_characters = $query->result_array();
-
-        //check if user is already in update process (to prevent deadlocks)
-        $this->db->where('username', $username);
-        $query             = $this->db->get('user');
-        $this->is_updating = $query->row()->updating;
-
-        if ($this->is_updating == '1') {
-            $this->resultTable();
-            return;
-        } else {
-            $this->update_state = 1;
-            $data               = array("updating" => 1);
-            $this->db->where('username', $username);
-            $this->db->update('user', $data);
-        }
     }
 
     //checks if the eve API is online and throws an exception if not
@@ -95,7 +79,7 @@ class Updater_model extends CI_Model
     }
 
     //retrurns a list of current database characters
-    public function resultTable()
+    public function resultTable($username)
     {
         $data = array(
             "character"   => array(),
@@ -108,6 +92,11 @@ class Updater_model extends CI_Model
         $escrow_total   = 0;
         $sell_total     = 0;
         $grand_total    = 0;
+
+        $this->db->select('character_eve_idcharacter');
+        $this->db->where('username', $username);
+        $query                    = $this->db->get('v_user_characters');
+        $this->account_characters = $query->result_array();
 
         foreach ($this->account_characters as $char) {
             $this->db->where('eve_idcharacter', $char['character_eve_idcharacter']);
@@ -142,6 +131,8 @@ class Updater_model extends CI_Model
         $grand_total += $balance_total + $networth_total + $escrow_total + $sell_total;
         $data['grand_total'] = $grand_total;
 
+        $this->release($username);
+        log_message('error', $username .' released table');
         return $data;
     }
 
@@ -251,44 +242,49 @@ class Updater_model extends CI_Model
             return "noChars";
         }
 
-        foreach ($this->account_characters as $characters) {
-            //begin character specific operations
-            $this->character_id = $characters['character_eve_idcharacter'];
+        //if ($this->isLocked($this->username)) {
+            //$this->resultTable();
+        //} else {
+            foreach ($this->account_characters as $characters) {
+                //begin character specific operations
+                $this->character_id = $characters['character_eve_idcharacter'];
 
-            $this->db->where('eve_idcharacter', $this->character_id);
-            $query = $this->db->get('characters');
+                $this->db->where('eve_idcharacter', $this->character_id);
+                $query = $this->db->get('characters');
 
-            $this->character_name     = $query->row()->name;
-            $this->character_balance  = $query->row()->balance;
-            $this->character_escrow   = $query->row()->escrow;
-            $this->character_networth = $query->row()->networth;
-            $this->character_orders   = $query->row()->total_sell;
-            $this->apikey             = $query->row()->api_apikey;
+                $this->character_name     = $query->row()->name;
+                $this->character_balance  = $query->row()->balance;
+                $this->character_escrow   = $query->row()->escrow;
+                $this->character_networth = $query->row()->networth;
+                $this->character_orders   = $query->row()->total_sell;
+                $this->apikey             = $query->row()->api_apikey;
 
-            $this->db->where('apikey', $this->apikey);
-            $query       = $this->db->get('api');
-            $vcode       = $query->row()->vcode;
-            $this->vcode = $vcode;
+                $this->db->where('apikey', $this->apikey);
+                $query       = $this->db->get('api');
+                $vcode       = $query->row()->vcode;
+                $this->vcode = $vcode;
 
-            //get character data
-            $this->getWalletBalance();
-            $this->getBrokerRelationsLevel();
-            $this->getAccountingLevel();
-            $this->getCorpStandings();
-            $this->getFactionStandings();
-            $this->getTransactions();
-            $this->getContracts();
-            $this->getMarketOrders();
-            $this->getAssets();
-            $this->setNewInfo();
-            $this->updateCharacterInfo();
+                //get character data
+                $this->getWalletBalance();
+                $this->getBrokerRelationsLevel();
+                $this->getAccountingLevel();
+                $this->getCorpStandings();
+                $this->getFactionStandings();
+                $this->getTransactions();
+                $this->getContracts();
+                $this->getMarketOrders();
+                $this->getAssets();
+                $this->setNewInfo();
+                $this->updateCharacterInfo();
 
-            $this->db->trans_complete();
+                $this->db->trans_complete();
 
-            if ($this->db->trans_status() === false) {
-                return "dberror";
+                if ($this->db->trans_status() === false) {
+                    return "dberror";
+                }
             }
-        }
+        //}
+
     }
 
     private function getWalletBalance()
@@ -945,10 +941,11 @@ class Updater_model extends CI_Model
             $this->db->replace('history', $data);
         }
 
-        $this->is_updating = 0;
+        /*$this->is_updating = 0;
         $data              = ["updating" => $this->is_updating];
         $this->db->where('username', $this->username);
         $this->db->update("user", $data);
+        log_message('error', $this->db->last_query());*/
 
         return $character_list->result();
     }
@@ -964,5 +961,34 @@ class Updater_model extends CI_Model
 
         $result = $query->result();
         return $result;
+    }
+
+    public function lock($username)
+    {
+        $data = array("updating" => 1);
+        $this->db->where('username', $username);
+        $this->db->update('user', $data);
+    }
+
+    public function release($username)
+    {
+        $data = array("updating" => 0);
+        $this->db->where('username', $username);
+        $this->db->update('user', $data);
+    }
+
+    public function isLocked($username)
+    {
+        $this->db->select('updating');
+        $this->db->where('username', $username);
+        $query = $this->db->get('user');
+
+        $result = $query->row()->updating;
+
+        if ($result == '1') {
+            return true;
+        }
+
+        return false;
     }
 }

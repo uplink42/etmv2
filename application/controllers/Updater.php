@@ -28,41 +28,51 @@ class Updater extends CI_Controller
             buildMessage("error", Msg::XML_CONNECT_FAILURE, $view);
         } else {
 
-            try {
-                //catch the API acess violation bug
-                $result_iterate = $this->Updater_model->iterateAccountCharacters();
-                if ($result_iterate == "noChars") {
-                    //in case user has no characters in account
-                    $data['view']      = "login/select_nocharacter_v";
-                    $data['no_header'] = 1;
-                    buildMessage("error", Msg::LOGIN_NO_CHARS, $data['view']);
-                    $this->load->view('main/_template_v', $data);
-                    return;
-                } else if ($result_iterate == "dberror") {
-                    //in case the transaction fails
-                    buildMessage("error", Msg::DB_ERROR, "login/login_v");
-                    $data['view']      = "login/login_v";
-                    $data['no_header'] = 1;
-                    $this->load->view('main/_template_v', $data);
-                    return;
-                }
-            } catch (\Pheal\Exceptions\PhealException $e) {
-                //in case the API throws an exception
-                echo sprintf(
-                    "an exception was caught! Type: %s Message: %s",
-                    get_class($e),
-                    $e->getMessage()
-                );
+            if ($this->Updater_model->isLocked($username)) {
+                log_message('error', $username . ' is locked');
+            } else {
+                try {
+                    $this->Updater_model->lock($username);
+                    log_message('error', $username . ' locked initial');
+                    //catch the API acess violation bug
+                    $result_iterate = $this->Updater_model->iterateAccountCharacters();
 
-                $problematicKeys = $this->Updater_model->getAPIKeys($this->session->iduser);
+                    if ($result_iterate == "noChars") {
+                        //in case user has no characters in account
+                        $data['view']      = "login/select_nocharacter_v";
+                        $data['no_header'] = 1;
+                        buildMessage("error", Msg::LOGIN_NO_CHARS, $data['view']);
+                        $this->load->view('main/_template_v', $data);
+                        return;
 
-                foreach ($problematicKeys as $row) {
-                    $key = $row->key;
-                    $dir = FILESTORAGE . $key;
-                    $this->removeDirectory($path);
-                    $this->Log->addEntry('clear', $this->session->iduser);
+                    } else if ($result_iterate == "dberror") {
+                        //in case the transaction fails
+                        buildMessage("error", Msg::DB_ERROR, "login/login_v");
+                        $data['view']      = "login/login_v";
+                        $data['no_header'] = 1;
+                        $this->load->view('main/_template_v', $data);
+                        return;
+                    }
+                } catch (\Pheal\Exceptions\PhealException $e) {
+                    //in case the API throws an exception
+                    echo sprintf(
+                        "an exception was caught! Type: %s Message: %s",
+                        get_class($e),
+                        $e->getMessage()
+                    );
+
+                    $problematicKeys = $this->Updater_model->getAPIKeys($this->session->iduser);
+
+                    foreach ($problematicKeys as $row) {
+                        $key = $row->key;
+                        $dir = FILESTORAGE . $key;
+                        $this->removeDirectory($path);
+                        $this->Log->addEntry('clear', $this->session->iduser);
+                        $this->Updater_model->release($username);
+                        log_message('error', $username . ' released errpr');
+                    }
+                    $this->index();
                 }
-                $this->index();
             }
 
             //calculate profits
@@ -75,14 +85,14 @@ class Updater extends CI_Controller
             if ($this->db->trans_status() === false) {
                 log_message('error', 'transaction2 fail');
                 buildMessage("error", Msg::DB_ERROR, "login/login_v");
+
                 $data['view']      = "login/login_v";
                 $data['no_header'] = 1;
                 $this->load->view('main/_template_v', $data);
                 return;
             } else {
+                $table = $this->finish($username);
                 //transaction success, show the result table
-                $table = $this->Updater_model->resultTable();
-                $this->Log->addEntry('update', $this->session->iduser);
 
                 buildMessage("success", Msg::LOGIN_SUCCESS, $view);
                 $data['table']     = array($table);
@@ -101,5 +111,12 @@ class Updater extends CI_Controller
         }
         rmdir($path);
         return;
+    }
+
+    public function finish($username)
+    {
+        $table = $this->Updater_model->resultTable($username);
+        $this->Log->addEntry('update', $this->session->iduser);
+        return $table;
     }
 }
