@@ -13,7 +13,11 @@ class Autoexec_updater_model extends CI_Model
 
     public function getAllUsers()
     {
-        $query = $this->db->get('user');
+        $this->db->select('username');
+        $this->db->from('user');
+        $this->db->order_by('iduser', 'desc');
+        $query = $this->db->get();
+
         $result = $query->result();
 
         return $result;

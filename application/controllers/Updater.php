@@ -54,13 +54,14 @@ class Updater extends CI_Controller
                         return;
                     }
                 } catch (\Pheal\Exceptions\PhealException $e) {
-                    //in case the API throws an exception
+                    //in case the API throws an exception (usually a bug)
                     echo sprintf(
                         "an exception was caught! Type: %s Message: %s",
                         get_class($e),
                         $e->getMessage()
                     );
 
+                    //remove cache and try again
                     $problematicKeys = $this->Updater_model->getAPIKeys($this->session->iduser);
 
                     foreach ($problematicKeys as $row) {
@@ -78,7 +79,7 @@ class Updater extends CI_Controller
             //calculate profits
             $this->db->trans_start();
             $this->Updater_model->calculateProfits();
-            //iterate
+            //totals and history
             $this->Updater_model->updateTotals();
             $this->db->trans_complete();
 
@@ -91,9 +92,13 @@ class Updater extends CI_Controller
                 $this->load->view('main/_template_v', $data);
                 return;
             } else {
-                $table = $this->finish($username);
-                //transaction success, show the result table
+                $table = $this->Updater_model->resultTable($username);
 
+                $this->Updater_model->release($username);
+                log_message('error', $username .' released');
+                $this->Log->addEntry('update', $this->session->iduser);
+                
+                //transaction success, show the result table
                 buildMessage("success", Msg::LOGIN_SUCCESS, $view);
                 $data['table']     = array($table);
                 $data['view']      = "login/select_v";
@@ -111,12 +116,5 @@ class Updater extends CI_Controller
         }
         rmdir($path);
         return;
-    }
-
-    public function finish($username)
-    {
-        $table = $this->Updater_model->resultTable($username);
-        $this->Log->addEntry('update', $this->session->iduser);
-        return $table;
     }
 }

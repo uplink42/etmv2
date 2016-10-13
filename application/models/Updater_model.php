@@ -131,8 +131,6 @@ class Updater_model extends CI_Model
         $grand_total += $balance_total + $networth_total + $escrow_total + $sell_total;
         $data['grand_total'] = $grand_total;
 
-        $this->release($username);
-        log_message('error', $username .' released table');
         return $data;
     }
 
@@ -143,12 +141,20 @@ class Updater_model extends CI_Model
     {
         $removed_characters = array();
 
-        $query = $this->db->query("SELECT api.apikey, api.vcode, characters.eve_idcharacter
+        $this->db->select('api.apikey, api.vcode, characters.eve_idcharacter');
+        $this->db->from('api');
+        $this->db->join('characters', 'characters.api_apikey = api.apikey');
+        $this->db->join('aggr', 'aggr.character_eve_idcharacter = characters.eve_idcharacter');
+        $this->db->join('user', 'aggr.user_iduser = user.iduser');
+        $this->db->where('user.username', $username);
+        $query = $this->db->get('');
+
+        /*$query = $this->db->query("SELECT api.apikey, api.vcode, characters.eve_idcharacter
                 FROM api
                 JOIN characters on characters.api_apikey = api.apikey
                 JOIN aggr on aggr.character_eve_idcharacter = characters.eve_idcharacter
                 JOIN user on aggr.user_iduser = user.iduser
-                WHERE user.username = '$username'");
+                WHERE user.username = '$username'");*/
 
         $user_keys = $query->result_array();
 
