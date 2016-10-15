@@ -53,7 +53,6 @@ class Autoexec_updater extends CI_Controller
 
                         } else if ($result_iterate == "dberror") {
                             echo Msg::DB_ERROR;
-                            return;
                         }
                     } catch (\Pheal\Exceptions\PhealException $e) {
                         //in case the API throws an exception (usually a bug)
@@ -64,19 +63,19 @@ class Autoexec_updater extends CI_Controller
                         );
 
                         //remove cache and try again
+                        //remove cache by character, not user!
                         $problematicKeys = $this->Updater_model->getAPIKeys($iduser);
 
                         foreach ($problematicKeys as $row) {
                             $key = $row->key;
                             $dir = FILESTORAGE . $key;
-                            $this->removeDirectory($path);
+                            $this->removeDirectory($dir);
                             $this->Log->addEntry('clear', $iduser);
 
                             $this->Updater_model->release($username);
                             echo "API cache flushed \n";
                             log_message('error', $username . ' released errpr');
                         }
-                        return;
                     }
                 }
 
@@ -102,11 +101,14 @@ class Autoexec_updater extends CI_Controller
 
     private function removeDirectory($path)
     {
-        $files = glob($path . '/*');
-        foreach ($files as $file) {
-            is_dir($file) ? removeDirectory($file) : unlink($file);
+        if (is_dir($path)) {
+            $files = glob($path . '/*');
+            foreach ($files as $file) {
+                is_dir($file) ? $this->removeDirectory($file) : unlink($file);
+            }
+            rmdir($path);
+            return;
         }
-        rmdir($path);
-        return;
     }
+
 }

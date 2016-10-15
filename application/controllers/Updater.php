@@ -54,6 +54,9 @@ class Updater extends CI_Controller
                         $this->load->view('main/_template_v', $data);
                         return;
                     }
+
+                    
+
                 } catch (\Pheal\Exceptions\PhealException $e) {
                     //in case the API throws an exception (usually a bug)
                     echo sprintf(
@@ -62,13 +65,14 @@ class Updater extends CI_Controller
                         $e->getMessage()
                     );
 
+
                     //remove cache and try again
                     $problematicKeys = $this->Updater_model->getAPIKeys($this->session->iduser);
 
                     foreach ($problematicKeys as $row) {
                         $key = $row->key;
                         $dir = FILESTORAGE . $key;
-                        $this->removeDirectory($path);
+                        $this->removeDirectory($dir);
                         $this->Log->addEntry('clear', $this->session->iduser);
                         $this->Updater_model->release($username);
                         log_message('error', $username . ' released errpr');
@@ -101,6 +105,9 @@ class Updater extends CI_Controller
                 
                 //transaction success, show the result table
                 buildMessage("success", Msg::LOGIN_SUCCESS, $view);
+
+                $data['cl']        = $this->Updater_model->getChangeLog();
+                $data['cl_recent'] = $this->Updater_model->getChangeLog(true);
                 $data['table']     = array($table);
                 $data['view']      = "login/select_v";
                 $data['no_header'] = 1;
@@ -111,11 +118,13 @@ class Updater extends CI_Controller
 
     private function removeDirectory($path)
     {
-        $files = glob($path . '/*');
-        foreach ($files as $file) {
-            is_dir($file) ? removeDirectory($file) : unlink($file);
+        if (is_dir($path)) {
+            $files = glob($path . '/*');
+            foreach ($files as $file) {
+                is_dir($file) ? $this->removeDirectory($file) : unlink($file);
+            }
+            rmdir($path);
+            return;
         }
-        rmdir($path);
-        return;
     }
 }

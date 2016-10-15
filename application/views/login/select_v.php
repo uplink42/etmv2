@@ -28,13 +28,17 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active">
                     <div class="panel-body">
-                        <strong class="c-white">Latest News</strong>
-                        <?php $this->load->view('login/changelog_recent_v');?>
+                        <h5><strong class="c-white">Latest News</strong></h5>
+                        <?php foreach($cl_recent as $row) {
+                            echo "<b>" . $row->date . "</b> - ";
+                            echo $row->content . "<br>";
+                            }
+                        ?>
                     </div>
                 </div>
                 <div id="tab-2" class="tab-pane">
                     <div class="panel-body">
-                        <strong class="c-white">Frequently Asked Questions</strong>
+                        <h5><strong class="c-white">Frequently Asked Questions</strong></h5>
                         <p><b>Q: Is this service free?</b></p>
                                 A: Yes, and there are no plans for charging players or displaying ads. If you would like to support this work or server costs and encourage further development feel free to Donate (ISK or $) trough the link in the footer. Disabling your ad-block is also a great help!
                         <br><br>
@@ -74,8 +78,12 @@
                 </div>
                 <div id="tab-3" class="tab-pane">
                     <div class="panel-body">
-                        <strong class="c-white">Changelog</strong>
-                        <?php $this->load->view('login/changelog_v');?>
+                        <h5><strong class="c-white">Changelog</strong></h5>
+                        <?php foreach($cl as $row) {
+                            echo "<b>" . $row->date . "</b> - ";
+                            echo $row->content . "<br>";
+                            }
+                        ?>
                     </div>
                 </div>
             </div>

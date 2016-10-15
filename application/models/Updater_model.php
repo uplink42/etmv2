@@ -1039,4 +1039,17 @@ class Updater_model extends CI_Model
 
         return false;
     }
+
+    public function getChangeLog($recent = false)
+    {
+        $this->db->select('*');
+        $this->db->from('changelog');
+
+        $recent ? $this->db->limit('3') : "";
+        $this->db->order_by('date', 'desc');
+        $query = $this->db->get('');
+        $result = $query->result();
+
+        return $result;
+    }
 }
