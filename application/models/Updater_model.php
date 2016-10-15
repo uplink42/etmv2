@@ -962,7 +962,8 @@ class Updater_model extends CI_Model
         $this->db->join('characters', 'characters.api_apikey = api.apikey');
         $this->db->join('aggr', 'aggr.character_eve_idcharacter = characters.eve_idcharacter');
         $this->db->join('user', 'user.iduser = aggr.user_iduser');
-        $query = $this->db->where('user.iduser', $id_user);
+        $this->db->where('user.iduser', $id_user);
+        $query = $this->db->get('');
 
         $result = $query->result();
         return $result;

@@ -18,6 +18,7 @@ class Autoexec_updater extends CI_Controller
         $this->load->model('common/Msg');
         $this->load->model('internal/Autoexec_updater_model');
         $this->load->model('Updater_model');
+        $this->load->model('common/ValidateRequest');
     }
 
     public function index()
@@ -32,7 +33,7 @@ class Autoexec_updater extends CI_Controller
 
             $this->Updater_model->init($username);
 
-            if (!$this->Updater_model->testEndpoint()) {
+            if (!$this->ValidateRequest->testEndpoint()) {
                 echo Msg::XML_CONNECT_FAILURE;
             } else if (!$this->Updater_model->processAPIKeys($username)) {
                 echo Msg::XML_CONNECT_FAILURE;
@@ -69,7 +70,7 @@ class Autoexec_updater extends CI_Controller
                             $key = $row->key;
                             $dir = FILESTORAGE . $key;
                             $this->removeDirectory($path);
-                            $this->Log->addEntry('clear', $this->iduser);
+                            $this->Log->addEntry('clear', $iduser);
 
                             $this->Updater_model->release($username);
                             log_message('error', $username . ' released errpr');

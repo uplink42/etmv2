@@ -30,9 +30,26 @@ class Autoexec_pricedata_model extends CI_Model
             array_push($priceData, array("item_eve_iditem" => $typeID, "price_evecentral" => $price));
         }
 
+        //hardcoded item prices
+        $query = $this->db->get('fixed_prices');
+        $result = $query->result();
+        $fixedPriceData = array();
+
+        foreach($result as $price) {
+            array_push($fixedPriceData, array("item_eve_iditem" => $price->item_eve_iditem, "price_evecentral" => $price->price));
+        }
+
+        //$priceData = array_unique($priceData); //remove duplicates 
+        //$priceData = array_map("unserialize", array_unique(array_map("serialize", $priceData)));
+        
         $this->db->trans_start();
+        
         $this->db->empty_table('item_price_data');
         $this->db->insert_batch('item_price_data', $priceData);
+        $this->db->query(
+                batch("item_price_data",
+                    array('item_eve_iditem', 'price_evecentral'), $fixedPriceData)
+            );
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === false) {

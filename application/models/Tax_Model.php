@@ -44,10 +44,15 @@ class Tax_model extends CI_Model
         $this->character_from = $character_from;
         $this->character_to   = $character_to;
 
-        $this->getFromCorpStanding($this->getCorpOwnerIDFromStation());
-        $this->getToCorpStanding($this->getCorpOwnerIDToStation());
-        $this->getFromFactionStanding($this->getFactionOwnerIDFromStation($this->getCorpOwnerIDFromStation()));
-        $this->getToFactionStanding($this->getFactionOwnerIDToStation($this->getCorpOwnerIDToStation()));
+        if($stationFromID < 1000000000000) {
+            $this->getFromCorpStanding($this->getCorpOwnerIDFromStation());
+            $this->getFromFactionStanding($this->getFactionOwnerIDFromStation($this->getCorpOwnerIDFromStation()));
+        }
+
+        if($stationToID < 1000000000000) { 
+            $this->getToCorpStanding($this->getCorpOwnerIDToStation());
+            $this->getToFactionStanding($this->getFactionOwnerIDToStation($this->getCorpOwnerIDToStation()));
+        }
 
         $this->getBrokerFromLevel();
         $this->getAccountingFromLevel();
