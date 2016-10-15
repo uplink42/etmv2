@@ -788,20 +788,21 @@ class Updater_model extends CI_Model
                     $sell_stack[$k]['quantity'] = $sell_stack[$k]['quantity'] - min($quantity_s, $quantity_b);
                     $buy_stack[$i]['quantity']  = $buy_stack[$i]['quantity'] - min($quantity_s, $quantity_b);
 
-                    $query_buy = $this->db->query("SELECT item.name as itemname,
+                    $this->db->select('item.name as itemname,
                         item.eve_iditem as iditem,
                         station.name as stationname,
                         transaction.station_eve_idstation as stationid,
                         characters.eve_idcharacter as characterid,
                         characters.name as charactername,
-                        transaction.time as transactiontime
-                        FROM transaction
-                        JOIN characters ON transaction.character_eve_idcharacter = characters.eve_idcharacter
-                        LEFT JOIN station ON transaction.station_eve_idstation = station.eve_idstation
-                        LEFT JOIN item ON transaction.item_eve_iditem = item.eve_iditem
-                            WHERE transaction.idbuy = '$idbuy_b'");
+                        transaction.time as transactiontime');
+                    $this->db->from('transaction');
+                    $this->db->join('characters', 'transaction.character_eve_idcharacter = characters.eve_idcharacter');
+                    $this->db->join('station', 'transaction.station_eve_idstation = station.eve_idstation', 'left');
+                    $this->db->join('item', 'transaction.item_eve_iditem = item.eve_iditem', 'left');
+                    $this->db->where('transaction.idbuy', $idbuy_b);
+                    $query_buy = $this->db->get('');
 
-                    $query_sell = $this->db->query("SELECT item.name as itemname,
+                    /*$query_buy = $this->db->query("SELECT item.name as itemname,
                         item.eve_iditem as iditem,
                         station.name as stationname,
                         transaction.station_eve_idstation as stationid,
@@ -812,7 +813,35 @@ class Updater_model extends CI_Model
                         JOIN characters ON transaction.character_eve_idcharacter = characters.eve_idcharacter
                         LEFT JOIN station ON transaction.station_eve_idstation = station.eve_idstation
                         LEFT JOIN item ON transaction.item_eve_iditem = item.eve_iditem
-                            WHERE transaction.idbuy = '$idbuy_s'");
+                            WHERE transaction.idbuy = '$idbuy_b'");*/
+
+
+                    $this->db->select('item.name as itemname,
+                        item.eve_iditem as iditem,
+                        station.name as stationname,
+                        transaction.station_eve_idstation as stationid,
+                        characters.eve_idcharacter as characterid,
+                        characters.name as charactername,
+                        transaction.time as transactiontime');
+                    $this->db->from('transaction');
+                    $this->db->join('characters', 'transaction.character_eve_idcharacter = characters.eve_idcharacter');
+                    $this->db->join('station', 'transaction.station_eve_idstation = station.eve_idstation', 'left');
+                    $this->db->join('item', 'transaction.item_eve_iditem = item.eve_iditem', 'left');
+                    $this->db->where('transaction.idbuy', $idbuy_s);
+                    $query_sell = $this->db->get('');
+
+                    /*$query_sell = $this->db->query("SELECT item.name as itemname,
+                        item.eve_iditem as iditem,
+                        station.name as stationname,
+                        transaction.station_eve_idstation as stationid,
+                        characters.eve_idcharacter as characterid,
+                        characters.name as charactername,
+                        transaction.time as transactiontime
+                        FROM transaction
+                        JOIN characters ON transaction.character_eve_idcharacter = characters.eve_idcharacter
+                        LEFT JOIN station ON transaction.station_eve_idstation = station.eve_idstation
+                        LEFT JOIN item ON transaction.item_eve_iditem = item.eve_iditem
+                            WHERE transaction.idbuy = '$idbuy_s'");*/
 
                     $stationFromID   = $query_buy->row()->stationid;
                     $stationToID     = $query_sell->row()->stationid;
@@ -878,11 +907,19 @@ class Updater_model extends CI_Model
     }
 
     //Update each character's total profit, sales, etc for this day
-    public function updateTotals()
+    public function updateTotals($global = false, $user = false)
     {
+        if(!$global) {
+            $username = $this->username;
+        } else {
+            $username = $user;
+        }
+
         $this->db->select('name, character_eve_idcharacter');
-        $this->db->where('username', $this->username);
+        $this->db->where('username', $username);
         $character_list = $this->db->get('v_user_characters');
+
+        log_message('error', $this->db->last_query());
 
         $dt = new DateTime();
         $tz = new DateTimeZone('Europe/Lisbon');
@@ -891,6 +928,8 @@ class Updater_model extends CI_Model
 
         foreach ($character_list->result() as $row) {
             $this->character_id = $row->character_eve_idcharacter;
+
+            $this->character_id;
 
             //sum of sales
             $this->db->select('coalesce(sum(price_total),0) as sum');
@@ -943,6 +982,7 @@ class Updater_model extends CI_Model
                 "margin"                      => $margin_val,
             );
 
+
             $this->db->replace('history', $data);
         }
 
@@ -951,8 +991,10 @@ class Updater_model extends CI_Model
         $this->db->where('username', $this->username);
         $this->db->update("user", $data);
         log_message('error', $this->db->last_query());*/
-
-        return $character_list->result();
+        if(!$global) {
+            return $character_list->result();
+        }
+        
     }
 
     public function getAPIKeys($id_user)

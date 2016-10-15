@@ -73,6 +73,7 @@ class Autoexec_updater extends CI_Controller
                             $this->Log->addEntry('clear', $iduser);
 
                             $this->Updater_model->release($username);
+                            echo "API cache flushed \n";
                             log_message('error', $username . ' released errpr');
                         }
                         return;
@@ -83,7 +84,7 @@ class Autoexec_updater extends CI_Controller
                 $this->db->trans_start();
                 $this->Updater_model->calculateProfits();
                 //totals and history
-                $this->Updater_model->updateTotals();
+                //$this->Updater_model->updateTotals();
                 $this->db->trans_complete();
 
                 if ($this->db->trans_status() === false) {
