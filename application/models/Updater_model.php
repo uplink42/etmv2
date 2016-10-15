@@ -56,27 +56,6 @@ class Updater_model extends CI_Model
         $this->account_characters = $query->result_array();
     }
 
-    //checks if the eve API is online and throws an exception if not
-    public function testEndpoint()
-    {
-        try {
-            $pheal    = new Pheal();
-            $response = $pheal->serverScope->ServerStatus();
-
-            if (!is_numeric($response->onlinePlayers)) {
-                return false;
-            }
-            return true;
-
-        } catch (\Pheal\Exceptions\PhealException $e) {
-            echo sprintf(
-                "an exception was caught! Type: %s Message: %s",
-                get_class($e),
-                $e->getMessage()
-            );
-            return false;
-        }
-    }
 
     //retrurns a list of current database characters
     public function resultTable($username)
@@ -612,10 +591,17 @@ class Updater_model extends CI_Model
             $this->character_new_orders = 0;
         }
 
-        $query = $this->db->query("SELECT coalesce(sum(orders.volume_remaining * item_price_data.price_evecentral),0) AS grand_total
+        $this->db->select('coalesce(sum(orders.volume_remaining * item_price_data.price_evecentral),0) AS grand_total');
+        $this->db->from('orders');
+        $this->db->join('item_price_data', 'item_price_data.item_eve_iditem = orders.eve_item_iditem');
+        $this->db->where('characters_eve_idcharacters', $this->character_id);
+        $this->db->where('orders.order_state', 'open');
+        $this->db->where('orders.type', 'sell');
+        $query = $this->db->get('');
+        /*$query = $this->db->query("SELECT coalesce(sum(orders.volume_remaining * item_price_data.price_evecentral),0) AS grand_total
                         FROM orders
                         JOIN item_price_data ON item_price_data.item_eve_iditem = orders.eve_item_iditem
-                        WHERE characters_eve_idcharacters = '$this->character_id' AND orders.order_state = 'open' AND orders.type = 'sell'");
+                        WHERE characters_eve_idcharacters = '$this->character_id' AND orders.order_state = 'open' AND orders.type = 'sell'");*/
 
         $this->character_orders = $query->row()->grand_total;
     }
@@ -695,10 +681,15 @@ class Updater_model extends CI_Model
             );
         }
 
-        $query = $this->db->query("SELECT coalesce(SUM(assets.quantity * item_price_data.price_evecentral),0) AS grand_total
+        $this->db->select('coalesce(SUM(assets.quantity * item_price_data.price_evecentral),0) AS grand_total');
+        $this->db->from('assets');
+        $this->db->join('item_price_data', 'item_price_data.item_eve_iditem = assets.item_eve_iditem');
+        $this->db->where('characters_eve_idcharacters', $this->character_id);
+        $query = $this->db->get('');
+        /*$query = $this->db->query("SELECT coalesce(SUM(assets.quantity * item_price_data.price_evecentral),0) AS grand_total
             FROM assets
             JOIN item_price_data ON item_price_data.item_eve_iditem = assets.item_eve_iditem
-            WHERE assets.`characters_eve_idcharacters` =  '$this->character_id'");
+            WHERE assets.`characters_eve_idcharacters` =  '$this->character_id'");*/
 
         $this->character_networth = $query->row()->grand_total;
     }
@@ -925,17 +916,25 @@ class Updater_model extends CI_Model
             $profits_sum_val = $profits_sum->row()->sum;
 
             //profit margin
-            $margin = $this->db->query("select coalesce(((sum(profit.profit_unit*profit.quantity_profit)/sum(t1.price_unit*profit.quantity_profit))*100),0) as margin
+            $this->db->select('coalesce(((sum(profit.profit_unit*profit.quantity_profit)/sum(t1.price_unit*profit.quantity_profit))*100),0) as margin');
+            $this->db->from('profit');
+            $this->db->join('transaction t1', 'profit.transaction_idbuy_buy = t1.idbuy');
+            $this->db->join('transaction t2', 'profit.transaction_idbuy_sell = t2.idbuy');
+            $this->db->join('characters', 't2.character_eve_idcharacter = characters.eve_idcharacter');
+            $this->db->where('characters.eve_idcharacter', $this->character_id);
+            $this->db->where('date(t2.time)', $date_today);
+            $margin = $this->db->get('');
+
+            /*$margin = $this->db->query("select coalesce(((sum(profit.profit_unit*profit.quantity_profit)/sum(t1.price_unit*profit.quantity_profit))*100),0) as margin
                 from profit
                 join transaction t1 on profit.transaction_idbuy_buy = t1.idbuy
                 join transaction t2 on profit.transaction_idbuy_sell = t2.idbuy
                 join characters on t2.character_eve_idcharacter = characters.eve_idcharacter
                 where characters.eve_idcharacter = '$this->character_id'
-                and date(t2.time) = '$date_today'");
+                and date(t2.time) = '$date_today'");*/
             $margin_val = $margin->row()->margin;
 
             $data = array(
-                "idhistory"                   => "null",
                 "characters_eve_idcharacters" => $this->character_id,
                 "date"                        => $date_today,
                 "total_buy"                   => $purchases_sum_val,

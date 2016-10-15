@@ -12,6 +12,7 @@ class Updater extends CI_Controller
         $this->load->library('session');
         $this->load->model('common/Msg');
         $this->load->model('common/Log');
+        $this->load->model('common/ValidateRequest');
     }
 
     public function index()
@@ -22,7 +23,7 @@ class Updater extends CI_Controller
 
         $this->Updater_model->init($username);
 
-        if (!$this->Updater_model->testEndpoint()) {
+        if (!$this->ValidateRequest->testEndpoint()) {
             buildMessage("error", Msg::XML_CONNECT_FAILURE, $view);
         } else if (!$this->Updater_model->processAPIKeys($username)) {
             buildMessage("error", Msg::XML_CONNECT_FAILURE, $view);

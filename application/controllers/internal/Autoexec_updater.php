@@ -27,14 +27,15 @@ class Autoexec_updater extends CI_Controller
         foreach ($chars as $row) {
             $start    = microtime(true);
             $username = $row->username;
+            $iduser = $row->iduser;
             echo $username . "\n";
 
             $this->Updater_model->init($username);
 
             if (!$this->Updater_model->testEndpoint()) {
-                echo XML_CONNECT_FAILURE;
+                echo Msg::XML_CONNECT_FAILURE;
             } else if (!$this->Updater_model->processAPIKeys($username)) {
-                echo XML_CONNECT_FAILURE;
+                echo Msg::XML_CONNECT_FAILURE;
             } else {
 
                 if ($this->Updater_model->isLocked($username)) {
@@ -62,13 +63,13 @@ class Autoexec_updater extends CI_Controller
                         );
 
                         //remove cache and try again
-                        $problematicKeys = $this->Updater_model->getAPIKeys($this->session->iduser);
+                        $problematicKeys = $this->Updater_model->getAPIKeys($iduser);
 
                         foreach ($problematicKeys as $row) {
                             $key = $row->key;
                             $dir = FILESTORAGE . $key;
                             $this->removeDirectory($path);
-                            $this->Log->addEntry('clear', $this->session->iduser);
+                            $this->Log->addEntry('clear', $this->iduser);
 
                             $this->Updater_model->release($username);
                             log_message('error', $username . ' released errpr');

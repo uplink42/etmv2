@@ -2,6 +2,9 @@
     exit('No direct script access allowed');
 }
 
+use Pheal\Core\Config;
+use Pheal\Pheal;
+
 class ValidateRequest extends CI_Model
 {
     const MIN_PASSWORD_LENGTH = 6;
@@ -202,6 +205,39 @@ class ValidateRequest extends CI_Model
             throw new Exception(Msg::INVALID_API_KEY);
         }
         return true;
+    }
+
+    public function getCrestStatus()
+    {
+        $url    = "https://crest-tq.eveonline.com/market/10000002/orders/sell/?type=https://crest-tq.eveonline.com/inventory/types/34/";
+        $result = json_decode(file_get_contents($url), true);
+
+        if($result) {
+            return true;
+        } 
+
+        return false;
+    }
+
+    public function testEndpoint()
+    {
+        try {
+            $pheal    = new Pheal();
+            $response = $pheal->serverScope->ServerStatus();
+
+            if (!is_numeric($response->onlinePlayers)) {
+                return false;
+            }
+            return true;
+
+        } catch (\Pheal\Exceptions\PhealException $e) {
+            echo sprintf(
+                "an exception was caught! Type: %s Message: %s",
+                get_class($e),
+                $e->getMessage()
+            );
+            return false;
+        }
     }
 
 }

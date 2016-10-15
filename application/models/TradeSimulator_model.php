@@ -32,18 +32,6 @@ class TradeSimulator_model extends CI_Model
     private $stockListName;
 
 
-    public function getCrestStatus()
-    {
-        $url    = "https://crest-tq.eveonline.com/market/10000002/orders/sell/?type=https://crest-tq.eveonline.com/inventory/types/34/";
-        $result = json_decode(file_get_contents($url), true);
-
-        if($result) {
-            return true;
-        } 
-
-        return false;
-    }
-
     public function getStationID($station_name)
     {
         $this->db->select('eve_idstation');
