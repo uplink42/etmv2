@@ -1,3 +1,4 @@
+"use strict";
 $(document).ready(function() {
     var charid = $(".profil-link").data('character');
     var domain = $(".profil-link").data('url');

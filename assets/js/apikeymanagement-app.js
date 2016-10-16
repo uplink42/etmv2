@@ -1,3 +1,4 @@
+"use strict";
 $(document).ready(function() {
     
     $(".api-insert-2").hide();
@@ -14,13 +15,13 @@ $(document).ready(function() {
             success: function(result) {
                 $(".table-character-list tbody tr").empty();
                 if (result.length == 0) {
-                    $row = "<tr><td colspan='3' class='text-center'>No characters found</td></tr>";
+                    var $row = "<tr><td colspan='3' class='text-center'>No characters found</td></tr>";
                     $(".table-character-list tbody tr").prepend($row);
                 } else {
                     $.each(result, function(k, v) {
                         var id = result[k].charid;
                         var img = "<img src='https://image.eveonline.com/Character/" + id + "_32.jpg'></img>"; 
-                        $row = "<tr><td>" + img + " " + result[k].name + "</td><td>" + result[k].api + 
+                        var $row = "<tr><td>" + img + " " + result[k].name + "</td><td>" + result[k].api + 
                                "</td><td><button class='btn btn-danger btn-delete' data-iddel=" + id + 
                                " data-toggle='modal' data-target='#delete'>Remove</button></tr></tr>";
                         $(".table-character-list").prepend($row);

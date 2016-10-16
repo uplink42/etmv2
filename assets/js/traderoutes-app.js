@@ -1,3 +1,4 @@
+"use strict";
 $(document).ready(function() {
     $(".origin-station").focus().select();
     var base = $(".navbar").data('url');
@@ -10,15 +11,15 @@ $(document).ready(function() {
             dataType: "json",
             url: listurl,
             success: function(result) {
-                console.log(result);
+
                 $("table tbody tr").empty();
                 if (result.length == 0) {
-                    $row = "<tr><td colspan='3' class='text-center'>No trade routes present. Create one at the left</td></tr>";
+                    var $row = "<tr><td colspan='3' class='text-center'>No trade routes present. Create one at the left</td></tr>";
                     $("table").prepend($row);
                 } else {
                     $.each(result, function(k, v) {
                         var iddel = result[k].id;
-                        $row = "<tr><td>" + result[k].s1 + "</td><td>" + result[k].s2 + 
+                        var $row = "<tr><td>" + result[k].s1 + "</td><td>" + result[k].s2 + 
                             "</td><td><button class='btn btn-danger btn-delete' data-iddel=" + iddel + ">Delete</button></tr></tr>";
                         $("table").prepend($row);
                     });
@@ -44,12 +45,13 @@ $(document).ready(function() {
     //put base url and char id on header
     $(".submit-traderoute").on('click', function(e) {
         e.preventDefault();
+
         var origin_val = $(".origin-station").val();
         var dest_val = $(".destination-station").val();
         $(".origin").val(origin_val);
         $(".destination").val(dest_val);
         url = base + "TradeRoutes/submitRoute/" + id;
-        console.log(url);
+
         var data = $(".form-horizontal").serialize();
         $.ajax({
             dataType: "json",
@@ -66,7 +68,7 @@ $(document).ready(function() {
     $("table").on('click', 'button', function() {
         var $this = $(this);
         var url = base + "TradeRoutes/" + "deleteRoute/" + $(this).data('iddel');
-        console.log(url);
+
         $.ajax({
             dataType: "json",
             url: url,

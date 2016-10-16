@@ -1,3 +1,4 @@
+"use strict";
 function number_format(number, decimals, decPoint, thousandsSep) {
     decimals = decimals || 0;
     number = parseFloat(number);

@@ -1,3 +1,4 @@
+"use strict";
 $(document).ready(function() {
     
     var base = $(".navbar").data('url');
@@ -23,7 +24,6 @@ $(document).ready(function() {
             url: report_req,
             success: function(result) {
                 var res = result.data.reports;
-                console.log(res);
                 $(".report-options").val(res);
                 //$("#ch-email-current").val(result.email.email);
             }
@@ -64,7 +64,6 @@ $(document).ready(function() {
                     data: data,
                     url: base + req,
                     success: function(result) {
-                        console.log(result);
                         toastr[result.notice](result.message);
                         getEmail();
                         $("#ch-email-new").val("");
@@ -95,7 +94,6 @@ $(document).ready(function() {
                     data: data,
                     url: base + req,
                     success: function(result) {
-                        console.log(result);
                         toastr[result.notice](result.message);
                         $("#ch-pw-new1").val("");
                         $("#ch-pw-new2").val("");

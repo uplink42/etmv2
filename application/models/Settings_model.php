@@ -18,6 +18,7 @@ class Settings_model extends CI_Model
 	public function changeEmail($id_user, $email)
 	{
 		$data = array("email" => $email);
+		$this->db->where('iduser', $id_user);
 		$this->db->update('user', $data);
 		
 		if($this->db->affected_rows() != 0) {

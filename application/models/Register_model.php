@@ -16,9 +16,21 @@ class Register_model extends CI_Model
         $this->load->model('ValidateRequest');
     }
 
+    /**
+     * Begins the validation routine for account creation
+     * Returns an array with the result of each validation step
+     * @param  [string] $username       [user submited username]
+     * @param  [string] $password       [user submited password]
+     * @param  [string] $repeatpassword [user submited repeated password]
+     * @param  [string] $email          [user submited email]
+     * @param  [string] $apikey         [user submited apikey]
+     * @param  [string] $vcode          [user submited vcode]
+     * @param  [string] $reports        [user submited reports]
+     * @return [array]                  [validation result]
+     */
     public function validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports)
     {
-        $result = array("username"     => $this->validateUsername($username),
+        $result = array("username" => $this->validateUsername($username),
             "password"                 => $this->validatePassword($password, $repeatpassword),
             "email"                    => $this->validateEmail($email),
             "api"                      => $this->validateAPI($apikey, $vcode),
@@ -28,47 +40,78 @@ class Register_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Username validation
+     * Returns false if successful, or an error message otherwise
+     * @param  [string] $username [user submited username]
+     * @return [string]           [error message]
+     */
     private function validateUsername($username)
     {
-        if(!$this->ValidateRequest->validateUsernameLength($username)) {
+        if (!$this->ValidateRequest->validateUsernameLength($username)) {
             return Msg::USERNAME_TOO_SHORT;
         }
 
-        if(!$this->ValidateRequest->validateUsernameAvailability($username)) {
+        if (!$this->ValidateRequest->validateUsernameAvailability($username)) {
             return Msg::USER_ALREADY_EXISTS;
         }
-        
+
     }
 
+    /**
+     * Email validation
+     * Returns false if successful, or an error message otherwise
+     * @param  [string] $email [user submitted email]
+     * @return [string]        [error message]
+     */
     private function validateEmail($email)
     {
-        if(!$this->ValidateRequest->validateEmailFormat($email)) {
+        if (!$this->ValidateRequest->validateEmailFormat($email)) {
             return Msg::INVALID_EMAIL;
         }
 
-        if(!$this->ValidateRequest->validateEmailAvailability($email)) {
+        if (!$this->ValidateRequest->validateEmailAvailability($email)) {
             return Msg::EMAIL_ALREADY_TAKEN;
         }
 
     }
 
+    /**
+     * Password validation
+     * Returns false if successful, or an error message otherwise
+     * @param  [string] $password       [user submitted password]
+     * @param  [string] $repeatpassword [user submitted repeated password]
+     * @return [string]                 [error message]
+     */
     private function validatePassword($password, $repeatpassword)
     {
-        if(!$this->ValidateRequest->validatePasswordLength($password)) {
+        if (!$this->ValidateRequest->validatePasswordLength($password)) {
             return Msg::PASSWORD_TOO_SHORT;
         }
 
-        if(!$this->ValidateRequest->validateIdenticalPasswords($password, $repeatpassword)) {
+        if (!$this->ValidateRequest->validateIdenticalPasswords($password, $repeatpassword)) {
             return Msg::PASSWORDS_MISMATCH;
         }
     }
 
+    /**
+     * APIkey validation
+     * Returns false if successful, or an error message otherwise
+     * @param  [string] $apikey [user submitted apikey]
+     * @param  [string] $vcode  [user submitted vcode]
+     * @return [string]         [error message]
+     */
     private function validateAPI($apikey, $vcode)
     {
         return $this->ValidateRequest->validateAPI($apikey, $vcode);
     }
 
-
+    /**
+     * Report selection validation
+     * Returns false if successful, or an error message otherwise
+     * @param  [string] $reports [user submitted report selection]
+     * @return [string]          [error message]
+     */
     private function validateReports($reports)
     {
         if (empty($reports)) {
@@ -76,6 +119,12 @@ class Register_model extends CI_Model
         }
     }
 
+    /**
+     * Returns a list of all characters within a valid apikey
+     * @param  [string] $apikey [user submitted apikey]
+     * @param  [string] $vcode  [user submitted vcode]
+     * @return [array]          [character list]
+     */
     public function getCharacters($apikey, $vcode)
     {
         $pheal  = new Pheal($apikey, $vcode);
@@ -83,13 +132,22 @@ class Register_model extends CI_Model
 
         $characters = array();
         foreach ($result->key->characters as $character) {
-            array_push($characters, array(array("name" => $character->characterName), array("id" => $character->characterID)));
+            array_push($characters, array(
+                array("name" => $character->characterName), array("id" => $character->characterID),
+                )
+            );
         }
 
         return $characters;
     }
 
-    //check if a character belongs to the API supplied
+    /**
+     * Checks if a list of characters belongs to the supplied API key
+     * @param  [array]  $chars  [user submitted characters]
+     * @param  [string] $apikey [user submitted apikey]
+     * @param  [string] $vcode  [user submitted vcode]
+     * @return [bool]           [validation result]
+     */
     public function verifyCharacters($chars, $apikey, $vcode)
     {
         $pheal  = new Pheal($apikey, $vcode);
@@ -104,12 +162,26 @@ class Register_model extends CI_Model
             array_push($chars_name, $character->characterName);
         }
 
+        //calculate differences between api result and selected characters
+        //and intersect the result
         if (array_intersect(array_diff($chars, $chars_api), $chars_api) != $empty) {
-            return false; //character does not belong
+            return false;
         }
         return true;
     }
 
+    /**
+     * Creates an account after all validations are completed
+     * Returns an error message if something goes wrong
+     * @param  [string] $username [user submitted username]
+     * @param  [string] $password [user submitted password]
+     * @param  [string] $email    [user submitted email]
+     * @param  [string] $apikey   [user submitted apikey]
+     * @param  [string] $vcode    [user submitted vcode]
+     * @param  [string] $reports  [user submitted reports]
+     * @param  [array]  $chars    [user submitted character list]
+     * @return [string]           [error message]
+     */
     public function createAccount($username, $password, $email, $apikey, $vcode, $reports, $chars)
     {
         $error = "";
@@ -124,7 +196,6 @@ class Register_model extends CI_Model
 
         $this->db->trans_start();
 
-        //query1
         $data1 = array(
             "username"          => $username,
             "registration_date" => $datetime,
@@ -138,14 +209,12 @@ class Register_model extends CI_Model
         $this->db->insert('user', $data1);
         $user_id = $this->db->insert_id();
 
-        //query2
         $data2 = array(
             "apikey" => $apikey,
             "vcode"  => $vcode,
         );
         $this->db->query("INSERT IGNORE INTO api(apikey, vcode) VALUES ('$apikey', '$vcode')");
 
-        //print_r($chars);
         foreach ($chars as $row) {
             $character_id = $row;
             //check if character already exists in db
@@ -159,7 +228,6 @@ class Register_model extends CI_Model
             $result         = $pheal->CharacterSheet(array("characterID" => $character_id));
             $character_name = $this->security->xss_clean($result->name);
 
-            //query3
             $eve_idcharacter  = $character_id;
             $name             = $this->db->escape($character_name);
             $balance          = 0;
@@ -170,20 +238,18 @@ class Register_model extends CI_Model
             $broker_relations = 0;
             $accounting       = 0;
 
-            //$this->db->replace('characters', $data3);
             $this->db->query("INSERT INTO characters
                 (eve_idcharacter, name, balance, api_apikey, networth, escrow, total_sell, broker_relations, accounting)
                   VALUES ('$eve_idcharacter', " . $name . ", '$balance', '$api_apikey', '$networth', '$escrow', '$total_sell', '$broker_relations', '$accounting')
                       ON DUPLICATE KEY UPDATE eve_idcharacter = '$eve_idcharacter', name=" . $name . ", api_apikey = '$api_apikey', networth='$networth',
                           escrow='$escrow', total_sell='$total_sell', broker_relations='$broker_relations', accounting='$accounting'");
-            log_message('error', $this->db->last_query());
 
-            //query4
             $data4 = array(
                 "idaggr"                    => null,
                 "user_iduser"               => $user_id,
                 "character_eve_idcharacter" => $character_id,
             );
+
             $this->db->insert('aggr', $data4);
         }
 
@@ -196,14 +262,18 @@ class Register_model extends CI_Model
         }
     }
 
-    //check if a character already BELONGS to another account
+    /**
+     * Checks if a character already belongs to another user account
+     * We don't allow this to happen
+     * @param  [int]  $character_id [eve character id]
+     * @return [bool]               [result]
+     */
     private function checkCharacterExists($character_id)
     {
         $this->db->where('character_eve_idcharacter', $character_id);
         $check_user = $this->db->get('v_user_characters');
 
         if ($check_user->num_rows() >= 1) {
-            log_message('error', 'wtf');
             return true;
         }
         return false;

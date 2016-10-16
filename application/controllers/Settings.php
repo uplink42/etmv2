@@ -67,15 +67,19 @@ class Settings extends MY_Controller
 
     public function changeEmail()
     {
-        //check pw
-        $this->load->model('Login_model');
-        if ($this->Login_model->validate($this->session->username, $this->password, true)) {
-            if($this->Settings_model->changeEmail($this->session->iduser, $this->email)) {
+        $this->load->model('common/Auth');
+        if ($this->Auth->validateLogin($this->session->username, $this->password, true)) {
+            if ($this->ValidateRequest->validateEmailAvailability($this->email)) {
+                if ($this->Settings_model->changeEmail($this->session->iduser, $this->email)) {
                 $notice = "success";
                 $message = Msg::EMAIL_CHANGE_SUCCESS;
             } else {
                 $notice = "error";
                 $message = Msg::DB_ERROR;
+                }
+            } else {
+                $notice = "error";
+                $message = Msg::EMAIL_ALREADY_TAKEN;
             }
         } else {
             $notice = "error";

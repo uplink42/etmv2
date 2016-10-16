@@ -1,3 +1,4 @@
+"use strict";
 $(document).ready(function() {
 
     var table1 = $('#buyorders-table').DataTable({

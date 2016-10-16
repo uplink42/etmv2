@@ -1,3 +1,4 @@
+"use strict";
 $(document).ready(function() {
 
     var base = $(".navbar").data('url');
@@ -22,14 +23,12 @@ $(document).ready(function() {
         var taxregex = /^(0(\.\d+)?|1(\.0+)?)$/;
         if (taxregex.test(tax)) {
             var data = $(".add-tax").serialize();
-            console.log("valid");
             $.ajax({
                 dataType: "json",
                 url: url_req,
                 data: data,
                 type: "POST",
                 success: function(result) {
-                    console.log(result);
                     toastr[result.notice](result.message);
                     updateTable();
                 }
@@ -48,10 +47,9 @@ $(document).ready(function() {
             success: function(result) {
                 $(".tax-entries tr").remove();
                 if (result.length == 0) {
-                    $row = "<tr><td colspan='3' class='text-center'>No tax rules present. Create one at the left</td></tr>";
+                    var $row = "<tr><td colspan='3' class='text-center'>No tax rules present. Create one at the left</td></tr>";
                     $(".tax-entries").append($row);
                 } else {
-                    
                     $.each(result, function(k, v) {
                             var id = result[k].idcitadel_tax;
                             var name = result[k].name;
@@ -74,7 +72,6 @@ $(document).ready(function() {
             dataType: "json",
             url: url_req,
             success: function(result) {
-                console.log(result);
                 toastr[result.notice](result.message);
                 updateTable();
             }

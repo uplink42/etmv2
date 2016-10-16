@@ -1,3 +1,4 @@
+"use strict";
 toastr.options = {
     "closeButton": false,
     "debug": false,

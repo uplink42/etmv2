@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
 use Pheal\Core\Config;
 use Pheal\Pheal;
@@ -16,6 +14,14 @@ class Contracts_model extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * Queries the database for all contracts that meet the given filters
+     * @param  [string] $chars  [selected characters filter]
+     * @param  [string] $filter [contract type filter]
+     * @param  [bool]   $state  [contract state filter]
+     * @param  [bool]   $new    [first n contracts filter]
+     * @return [array]          [contract list]
+     */
     public function getContracts($chars, $filter = null, $state, $new = null)
     {
         $this->db->distinct();
@@ -39,12 +45,14 @@ class Contracts_model extends CI_Model
             $this->db->where('c.type', $filter);
         }
         if ($state == "active") {
+            //active contract types
             $this->db->where("c.status IN
                 ('outstanding', 'inProgress')");
             if ($new > 0) {
                 $this->db->limit($new);
             }
         } else {
+            //inactive contract types
             $this->db->where("c.status IN
                     ('deleted', 'completed', 'failed', 'completedByIssuer', 'completedByContractor', 'cancelled', 'rejected', 'reversed')");
         }
@@ -52,13 +60,16 @@ class Contracts_model extends CI_Model
         $query  = $this->db->get('contracts');
         $result = $query->result_array();
 
-        //modify the query array to include character names
+        //modify the result array to include character names
         for ($i = 0; $i < count($result); $i++) {
             $issuer      = $result[$i]['issuer_id'];
             $acceptor    = $result[$i]['acceptor_id'];
             $contract_id = $result[$i]['contract_id'];
 
             $this->db->where('eve_idcharacters', $issuer);
+
+            //check if a character name is already in the public table
+            //we cache every new character name in the database for faster lookups in future
             $query           = $this->db->get('characters_public');
             $get_issuer_name = $query->row();
 
@@ -75,6 +86,7 @@ class Contracts_model extends CI_Model
                 $this->db->insert('characters_public', $data);
             }
 
+            //repeat the process for acceptor characters
             $this->db->where('eve_idcharacters', $acceptor);
             $query2            = $this->db->get('characters_public');
             $get_acceptor_name = $query->row();
@@ -95,5 +107,4 @@ class Contracts_model extends CI_Model
 
         return $result;
     }
-
 }

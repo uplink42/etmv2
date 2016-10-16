@@ -11,11 +11,10 @@ class Register extends CI_Controller
         $this->load->library('session');
     }
 
-    public function index($view = null)
-    {
-
-    }
-
+    /**
+     * Recieves user input and begins the registration process
+     * Dispatches relevant validations to the registration model
+     */
     public function processData()
     {
         $username       = $this->security->xss_clean($this->input->post('username'));
@@ -48,6 +47,9 @@ class Register extends CI_Controller
 
     }
 
+    /**
+     * Validates the chosen characters before creating an account
+     */
     public function processCharacters()
     {
         $username = $this->security->xss_clean($this->input->post('username'));
@@ -77,6 +79,7 @@ class Register extends CI_Controller
             $char3 = "";
         }
 
+        //no characters selected
         if (count($chars) == 0) {
             $this->load->model('register_model');
             $characters         = $this->register_model->getCharacters($apikey, $vcode);
