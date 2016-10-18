@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Updater extends CI_Controller
 {
+    private $user_id;
 
     public function __construct()
     {
@@ -13,6 +14,7 @@ class Updater extends CI_Controller
         $this->load->model('common/Msg');
         $this->load->model('common/Log');
         $this->load->model('common/ValidateRequest');
+        $this->user_id = (int) $this->session->iduser;
     }
 
     public function index()
@@ -67,13 +69,13 @@ class Updater extends CI_Controller
 
 
                     //remove cache and try again
-                    $problematicKeys = $this->Updater_model->getAPIKeys($this->session->iduser);
+                    $problematicKeys = $this->Updater_model->getAPIKeys($this->user_id);
 
                     foreach ($problematicKeys as $row) {
                         $key = $row->key;
                         $dir = FILESTORAGE . $key;
                         $this->removeDirectory($dir);
-                        $this->Log->addEntry('clear', $this->session->iduser);
+                        $this->Log->addEntry('clear', $this->user_id);
                         $this->Updater_model->release($username);
                         log_message('error', $username . ' released errpr');
                     }
@@ -101,7 +103,7 @@ class Updater extends CI_Controller
 
                 $this->Updater_model->release($username);
                 log_message('error', $username .' released');
-                $this->Log->addEntry('update', $this->session->iduser);
+                $this->Log->addEntry('update', $this->user_id);
                 
                 //transaction success, show the result table
                 buildMessage("success", Msg::LOGIN_SUCCESS, $view);
@@ -116,7 +118,7 @@ class Updater extends CI_Controller
         }
     }
 
-    private function removeDirectory($path)
+    private function removeDirectory(string $path)
     {
         if (is_dir($path)) {
             $files = glob($path . '/*');

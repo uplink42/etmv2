@@ -35,7 +35,7 @@ class Updater_model extends CI_Model
     private $character_new_orders;
     private $character_new_profits;
 
-    public function init($username)
+    public function init(string $username)
     {
         $this->username = $username;
 
@@ -59,7 +59,7 @@ class Updater_model extends CI_Model
 
 
     //retrurns a list of current database characters
-    public function resultTable($username)
+    public function resultTable(string $username) : array
     {
         $data = array(
             "character"   => array(),
@@ -117,7 +117,7 @@ class Updater_model extends CI_Model
     //gets the assigned API keys for each character in the current account
     //and validates them accordingly, removing any characters with invalid permissions
     //returns a list of characters removed, otherwise returns false
-    public function processAPIKeys($username)
+    public function processAPIKeys(string $username)
     {
         $removed_characters = array();
 
@@ -143,7 +143,7 @@ class Updater_model extends CI_Model
         }
 
         foreach ($user_keys as $apis) {
-            $apikey = $apis['apikey'];
+            $apikey = (int) $apis['apikey'];
             $vcode  = $apis['vcode'];
 
             $char_id = $apis['eve_idcharacter'];
@@ -186,7 +186,7 @@ class Updater_model extends CI_Model
     }
 
     //checks if the current API key is valid and has all necessary permissions for the current character
-    public function validateAPIKey($apikey, $vcode, $char)
+    public function validateAPIKey(int $apikey, string $vcode, string $char)
     {
         try {
             $phealAPI = new Pheal($apikey, $vcode, "account");
@@ -908,7 +908,7 @@ class Updater_model extends CI_Model
     }
 
     //Update each character's total profit, sales, etc for this day
-    public function updateTotals($global = false, $user = false)
+    public function updateTotals(bool $global = false, bool $user = false) : array
     {
         if(!$global) {
             $username = $this->username;
@@ -998,7 +998,7 @@ class Updater_model extends CI_Model
         
     }
 
-    public function getAPIKeys($id_user)
+    public function getAPIKeys(int $id_user) : array
     {
         $this->db->select('api.apikey as key');
         $this->db->from('api');
@@ -1012,21 +1012,21 @@ class Updater_model extends CI_Model
         return $result;
     }
 
-    public function lock($username)
+    public function lock(string $username)
     {
         $data = array("updating" => 1);
         $this->db->where('username', $username);
         $this->db->update('user', $data);
     }
 
-    public function release($username)
+    public function release(string $username)
     {
         $data = array("updating" => 0);
         $this->db->where('username', $username);
         $this->db->update('user', $data);
     }
 
-    public function isLocked($username)
+    public function isLocked(string $username) : bool
     {
         $this->db->select('updating');
         $this->db->where('username', $username);
@@ -1041,7 +1041,7 @@ class Updater_model extends CI_Model
         return false;
     }
 
-    public function getChangeLog($recent = false)
+    public function getChangeLog(bool $recent = false) : array
     {
         $this->db->select('*');
         $this->db->from('changelog');

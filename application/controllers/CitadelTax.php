@@ -1,12 +1,10 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class CitadelTax extends MY_Controller
 {
     private $citadel;
-
     private $tax;
-
     private $character_id;
 
     public function __construct()
@@ -16,18 +14,18 @@ class CitadelTax extends MY_Controller
         $this->page = "CitadelTax";
         $this->load->model('CitadelTax_model');
 
-        isset($_REQUEST['citadel']) ? $this->citadel        = $_REQUEST['citadel'] : '';
-        isset($_REQUEST['tax']) ? $this->tax                = $_REQUEST['tax'] : '';
-        isset($_REQUEST['character']) ? $this->character_id = $_REQUEST['character'] : '';
+        $this->citadel      = $_REQUEST['citadel'] ?? '';
+        $this->tax          = $_REQUEST['tax'] ?? '';
+        $this->character_id = $_REQUEST['character'] ?? '';
+
+        settype($this->citadel, 'string');
+        settype($this->tax, 'float');
+        settype($this->character_id, 'int');
     }
 
-    /**
-     * Retrieves all necessary data before loading the page
-     * @param  [int] $character_id  [eve character id]
-     */
-    public function index($character_id)
+    public function index(int $character_id)
     {
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $user_id = $this->user_id)) {
 
             $aggregate        = $this->aggregate;
             $data             = $this->loadViewDependencies($character_id, $user_id, $aggregate);
@@ -41,10 +39,6 @@ class CitadelTax extends MY_Controller
         }
     }
 
-    /**
-     * Citadel autocomplete endpoint
-     * @return [json] [autocomplete result]
-     */
     public function searchCitadels()
     {
         $input  = $_REQUEST['term'];
@@ -53,17 +47,12 @@ class CitadelTax extends MY_Controller
         echo json_encode($result);
     }
 
-    /**
-     * Begins the tax validation before inserting
-     * Returns a notification depending on the result
-     * @return [json] [tax insertion result]
-     */
     public function addTax()
     {
         $citadel_id = $this->CitadelTax_model->getCitadelID($this->citadel);
         if ($citadel_id) {
             //check if character belongs
-            if ($this->ValidateRequest->checkCharacterBelong($this->character_id, $this->session->iduser)) {
+            if ($this->ValidateRequest->checkCharacterBelong($this->character_id, $this->user_id)) {
                 if ($this->CitadelTax_model->setTax($citadel_id, $this->character_id, $this->tax)) {
                     $msg    = Msg::TAX_SET_SUCCESS;
                     $notice = "success";
@@ -83,25 +72,12 @@ class CitadelTax extends MY_Controller
         echo json_encode(array("notice" => $notice, "message" => $msg));
     }
 
-    /**
-     * Loads all previously created taxes
-     * @param  [int]  $character_id [eve character id]
-     * @return [json]               [tax list]
-     */
-    public function getTaxList($character_id)
+    public function getTaxList(int $character_id)
     {
         echo json_encode($this->CitadelTax_model->taxList($character_id));
     }
 
-    /**
-     * Tax removal endpoint
-     * Validates and removes a specified tax entry
-     * Returns a notification depending on the result
-     * @param  [int] $character_id [eve character id]
-     * @param  [int] $tax_id       [tax internal id]
-     * @return [json]              [tax removal result]
-     */
-    public function removeTax($character_id, $tax_id)
+    public function removeTax(int $character_id, int $tax_id)
     {
         if ($this->ValidateRequest->checkCitadelOwnership($character_id, $tax_id)) {
             if ($this->CitadelTax_model->removeTax($tax_id)) {

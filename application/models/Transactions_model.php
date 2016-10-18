@@ -11,7 +11,7 @@ class Transactions_model extends CI_Model
         parent::__construct();
     }
 
-    public function getTransactionList($chars, $interval, $new = null, $transID = null, $res = true)
+    public function getTransactionList(string $chars, int $interval, int $new = null, string $transID = null, bool $res = true)
     {
         $this->db->select('t.idbuy as transaction_id,
             t.time as time,

@@ -11,7 +11,7 @@ class Email extends CI_Model
         $this->load->model('common/Msg');
     }
 
-    public function send($to, $from, $from_name, $subject, $body)
+    public function send(string $to, string $from, string $from_name, string $subject, string $body) : bool
     {
 
         global $error;

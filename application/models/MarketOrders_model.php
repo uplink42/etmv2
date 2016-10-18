@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -11,7 +11,7 @@ class MarketOrders_model extends CI_Model
         $this->load->model('common/RateLimiter');
     }
 
-    public function getMarketOrders(string $chars, string $type, bool $check = false) : array
+    public function getMarketOrders(string $chars, string $type, bool $check = false): array
     {
         $this->db->select('o.eve_item_iditem as item_id,
                            i.name as item_name,
@@ -42,10 +42,10 @@ class MarketOrders_model extends CI_Model
 
         if ($check) {
             for ($i = 0; $i < count($result); $i++) {
-                $orderID = (int)$result[$i]['order_id'];
-                $stationID =(int)$result[$i]['station_id'];
-                $regionID = (int)$result[$i]['region_id'];
-                $itemID = (int)$result[$i]['item_id'];
+                $orderID              = (int) $result[$i]['order_id'];
+                $stationID            = (int) $result[$i]['station_id'];
+                $regionID             = (int) $result[$i]['region_id'];
+                $itemID               = (int) $result[$i]['item_id'];
                 $result[$i]['status'] = $this->checkOrder($orderID,
                     $stationID,
                     $regionID,
@@ -56,7 +56,7 @@ class MarketOrders_model extends CI_Model
         return $result;
     }
 
-    public function checkOrder(int $order_id, int $station_id, int $region_id, string $type, int $item_id) : string
+    public function checkOrder(int $order_id, int $station_id, int $region_id, string $type, int $item_id): string
     {
         $dt = new DateTime();
         $tz = new DateTimeZone('Europe/Lisbon');
@@ -124,16 +124,16 @@ class MarketOrders_model extends CI_Model
                 if ($bestPrice == $myPrice) {
                     $this->updateStatus($order_id, 1, $date_now);
                     return "OK";
-                }   //order expired or fullfilled
-                     else {
-                        $this->updateStatus($order_id, 0, $date_now);
-                        return "undercut";
-                    }
+                } //order expired or fullfilled
+                else {
+                    $this->updateStatus($order_id, 0, $date_now);
+                    return "undercut";
                 }
+            }
         }
     }
 
-    private function getCachedValue() : stdClass
+    private function getCachedValue(): stdClass
     {
         $this->db->select('status');
         $this->db->where('orders_transkey', $order_id);

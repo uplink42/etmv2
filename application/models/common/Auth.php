@@ -13,7 +13,7 @@ class Auth extends CI_Model
         $this->load->model('common/Msg');
     }
 
-    public function createHashedPassword($password)
+    public function createHashedPassword(string $password) : array
     {
         $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
         $salt = sprintf(self::BLOWFISH, self::COST) . $salt;
@@ -28,7 +28,7 @@ class Auth extends CI_Model
 
     }
 
-    public function validateLogin($username, $password, $nosession = null)
+    public function validateLogin(string $username, string $password, bool $nosession = false) : bool
     {
         $this->db->where('username', $username);
         $query_salt                             = $this->db->get('user');

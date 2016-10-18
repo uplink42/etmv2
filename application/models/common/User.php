@@ -12,7 +12,7 @@ class User extends CI_Model
         $this->load->model('common/Msg');
     }
 
-    public function getUsers()
+    public function getUsers() : array
     {
     	$query = $this->db->get('user');
     	$result = $query->result();
@@ -20,7 +20,7 @@ class User extends CI_Model
     	return $result;
     }
 
-    public function getUsersByReports($interval)
+    public function getUsersByReports(int $interval) : array
     {
         $this->db->select('username, iduser');
         $this->db->where('reports', $interval);

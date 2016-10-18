@@ -11,7 +11,7 @@ class CitadelTax_model extends CI_Model
         parent::__construct();
     }
 
-    public function queryCitadels($input)
+    public function queryCitadels(string $input) : array
     {
         $this->db->select('name as value');
         $this->db->where('eve_idstation > 1000000000000');
@@ -23,7 +23,7 @@ class CitadelTax_model extends CI_Model
         return $result;
     }
 
-    public function getCitadelID($name)
+    public function getCitadelID(string $name) : string
     {
         $this->db->where('name', $name);
         $query = $this->db->get('station');
@@ -34,10 +34,10 @@ class CitadelTax_model extends CI_Model
         return $query->row()->eve_idstation;
     }
 
-    public function setTax($citadel_id, $character_id, $tax)
+    public function setTax(string $citadel_id, int $character_id, float $tax) : bool
     {
 
-        $data = ["station_eve_idstation" => $citadel_id,
+        $data = ["station_eve_idstation"     => $citadel_id,
             "character_eve_idcharacter"      => $character_id,
             "value"                          => $tax];
 
@@ -50,7 +50,7 @@ class CitadelTax_model extends CI_Model
         return false;
     }
 
-    public function taxList($character_id)
+    public function taxList(int $character_id) : array
     {
         $this->db->select('s.name, t.value, t.idcitadel_tax');
         $this->db->from('citadel_tax t');
@@ -63,7 +63,7 @@ class CitadelTax_model extends CI_Model
     }
 
 
-    public function removeTax($tax_id)
+    public function removeTax(int $tax_id) : bool
     {
         $this->db->where('idcitadel_tax', $tax_id);
         $this->db->delete('citadel_tax');

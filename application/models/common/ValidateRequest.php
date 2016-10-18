@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-use Pheal\Core\Config;
 use Pheal\Pheal;
 
 class ValidateRequest extends CI_Model
@@ -17,7 +16,7 @@ class ValidateRequest extends CI_Model
         $this->load->model('common/Msg');
     }
 
-    public function checkCharacterBelong($character_id, $user_id, $json = null)
+    public function checkCharacterBelong(int $character_id, int $user_id, bool $json = null): bool
     {
         $this->db->where('character_eve_idcharacter', $character_id);
         $this->db->where('iduser', $user_id);
@@ -32,7 +31,7 @@ class ValidateRequest extends CI_Model
         }
     }
 
-    public function checkCitadelOwnership($character_id, $tax_id)
+    public function checkCitadelOwnership(int $character_id, int $tax_id): bool
     {
         $this->db->where('character_eve_idcharacter', $character_id);
         $this->db->where('idcitadel_tax', $tax_id);
@@ -45,7 +44,7 @@ class ValidateRequest extends CI_Model
         return false;
     }
 
-    public function checkStockListOwnership($list_id, $user_id)
+    public function checkStockListOwnership(int $list_id, int $user_id): bool
     {
         $this->db->select('itemlist.iditemlist');
         $this->db->from('itemlist');
@@ -60,7 +59,7 @@ class ValidateRequest extends CI_Model
         return false;
     }
 
-    public function checkTradeRouteOwnership($route_id, $user_id)
+    public function checkTradeRouteOwnership(int $route_id, int $user_id): bool
     {
         $this->db->where('user_iduser', $user_id);
         $this->db->where('idtraderoute', $route_id);
@@ -71,7 +70,7 @@ class ValidateRequest extends CI_Model
         return false;
     }
 
-    public function checkTransactionOwnership($transaction_id, $user_id)
+    public function checkTransactionOwnership(string $transaction_id, int $user_id): bool
     {
         $this->load->model('Login_model');
         $result = $this->Login_model->getCharacterList($user_id);
@@ -92,7 +91,7 @@ class ValidateRequest extends CI_Model
         }
     }
 
-    public function validatePasswordLength($password)
+    public function validatePasswordLength(string $password): bool
     {
         if (strlen($password) < self::MIN_PASSWORD_LENGTH) {
             return false;
@@ -101,7 +100,7 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
-    public function validateIdenticalPasswords($password, $repeatpassword)
+    public function validateIdenticalPasswords(string $password, string $repeatpassword): bool
     {
         if ($password != $repeatpassword) {
             return false;
@@ -110,7 +109,7 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
-    public function validateUsernameLength($username)
+    public function validateUsernameLength(string $username): bool
     {
         if (strlen($username) < self::MIN_USERNAME_LENGTH) {
             return false;
@@ -119,7 +118,7 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
-    public function validateUsernameAvailability($username)
+    public function validateUsernameAvailability(string $username): bool
     {
         $this->db->where('username', $username);
         $existing_user = $this->db->get('user');
@@ -131,7 +130,7 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
-    public function validateEmailFormat($email)
+    public function validateEmailFormat(string $email): bool
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             return false;
@@ -140,7 +139,7 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
-    public function validateEmailAvailability($email)
+    public function validateEmailAvailability(string $email): bool
     {
         $this->db->where('email', $email);
         $existing_email = $this->db->get('user');
@@ -151,7 +150,7 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
-    public function validateAPI($apikey, $vcode)
+    public function validateAPI(int $apikey, string $vcode): string
     {
         //Using CURL to fetch API Access Mask
         $curl_url = "https://api.eveonline.com/account/APIKeyInfo.xml.aspx?keyID=" . $apikey . "&vCode=" . $vcode;
@@ -187,7 +186,7 @@ class ValidateRequest extends CI_Model
         }
     }
 
-    public function validateAPIAvailability($apikey)
+    public function validateAPIAvailability(int $apikey): bool
     {
         $this->db->where('apikey', $apikey);
         $query = $this->db->get('api');
@@ -200,7 +199,7 @@ class ValidateRequest extends CI_Model
 
     }
 
-    private function checkXML($xml)
+    private function checkXML(string $xml): bool
     {
         if ($xml == "") {
             throw new Exception(Msg::INVALID_API_KEY);
@@ -208,19 +207,19 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
-    public function getCrestStatus()
+    public function getCrestStatus(): bool
     {
         $url    = "https://crest-tq.eveonline.com/market/10000002/orders/sell/?type=https://crest-tq.eveonline.com/inventory/types/34/";
         $result = json_decode(file_get_contents($url), true);
 
-        if($result) {
+        if ($result) {
             return true;
-        } 
+        }
 
         return false;
     }
 
-    public function testEndpoint()
+    public function testEndpoint(): bool
     {
         try {
             $pheal    = new Pheal();

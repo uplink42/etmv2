@@ -15,15 +15,7 @@ class Contracts_model extends CI_Model
         parent::__construct();
     }
 
-    /**
-     * Queries the database for all contracts that meet the given filters
-     * @param  [string] $chars  [selected characters filter]
-     * @param  [string] $filter [contract type filter]
-     * @param  [bool]   $state  [contract state filter]
-     * @param  [bool]   $new    [first n contracts filter]
-     * @return [array]          [contract list]
-     */
-    public function getContracts($chars, $filter = null, $state, $new = null)
+    public function getContracts(string $chars, string $filter = null, string $state, int $new = null)
     {
         $this->db->distinct();
         $this->db->select('c.eve_idcontracts as contract_id,
@@ -101,7 +93,7 @@ class Contracts_model extends CI_Model
                 $result[$i]['acceptor_name'] = $name;
 
                 $data = array("eve_idcharacters" => $acceptor,
-                    "name"                           => $name);
+                              "name"             => $name);
                 $this->db->insert('characters_public', $data);
             }
         }

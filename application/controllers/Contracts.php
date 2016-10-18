@@ -4,9 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Contracts extends MY_Controller
 {
     protected $active;
-
     protected $inactive;
-
     protected $new;
 
     public function __construct()
@@ -23,10 +21,10 @@ class Contracts extends MY_Controller
                 $_GET['active'] == "Auction") {
                 $this->active = $_GET['active'];
             } else {
-                $this->active = false;
+                $this->active = null;
             }
         } else {
-            $this->active = false;
+            $this->active = null;
         }
 
         if (isset($_GET['inactive'])) {
@@ -37,24 +35,20 @@ class Contracts extends MY_Controller
                 $_GET['inactive'] == "Auction") {
                 $this->inactive = $_GET['inactive'];
             } else {
-                $this->inactive = false;
+                $this->inactive = null;
             }
         } else {
-            $this->inactive = false;
+            $this->inactive = null;
         }
 
         if (isset($_REQUEST['new'])) {
-            $this->new = $_REQUEST['new'];
+            $this->new = (int)$_REQUEST['new'];
         };
     }
 
-    /**
-     * Retrieves all necessary data before loading the page
-     * @param  [int] $character_id [eve character id]
-     */
-    public function index($character_id)
+    public function index(int $character_id)
     {
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $user_id = $this->user_id)) {
 
             $aggregate        = $this->aggregate;
             $data             = $this->loadViewDependencies($character_id, $user_id, $aggregate);
