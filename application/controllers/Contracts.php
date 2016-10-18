@@ -1,24 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Contracts extends MY_Controller
 {
-    /**
-     * Active contract filter
-     * @var [bool]
-     */
     protected $active;
 
-    /**
-     * Inactive contract filter
-     * @var [bool]
-     */
     protected $inactive;
 
-    /**
-     * New contract filter (dashboard link)
-     * @var [int]
-     */
     protected $new;
 
     public function __construct()

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Register extends CI_Controller
@@ -11,10 +11,6 @@ class Register extends CI_Controller
         $this->load->library('session');
     }
 
-    /**
-     * Recieves user input and begins the registration process
-     * Dispatches relevant validations to the registration model
-     */
     public function processData()
     {
         $username       = $this->security->xss_clean($this->input->post('username'));
@@ -47,11 +43,10 @@ class Register extends CI_Controller
 
     }
 
-    /**
-     * Validates the chosen characters before creating an account
-     */
     public function processCharacters()
     {
+        $this->load->model('register_model');
+
         $username = $this->security->xss_clean($this->input->post('username'));
         $password = $this->security->xss_clean($this->input->post('password'));
         $email    = $this->security->xss_clean($this->input->post('email'));
@@ -81,7 +76,6 @@ class Register extends CI_Controller
 
         //no characters selected
         if (count($chars) == 0) {
-            $this->load->model('register_model');
             $characters         = $this->register_model->getCharacters($apikey, $vcode);
             $data['characters'] = $characters;
             buildMessage("error", Msg::NO_CHARACTER_SELECTED, "register/register_characters_v");
@@ -91,7 +85,6 @@ class Register extends CI_Controller
             return;
         }
 
-        $this->load->model('register_model');
         if ($this->register_model->verifyCharacters($chars, $apikey, $vcode)) {
             $result = $this->register_model->createAccount($username, $password, $email, $apikey, $vcode, $reports, $chars);
             if ($result != "ok") {

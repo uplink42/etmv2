@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 require_once(APPPATH.'libraries/PHPMailer/PHPMailerAutoload.php');
 
@@ -11,13 +11,11 @@ class Main extends MY_Controller
         $this->load->model('common/Msg');
     }
 
-    //loads the template view with the required content
-    public function index($view = null)
+    public function index(string $view = null)
     {
         $data['no_header'] = 1;
         $data['view']      = 'login/login_v';
         $this->load->view('main/_template_v', $data);
-        //$this->load->view('main/header_v', $data);
     }
 
     public function login()
@@ -34,16 +32,16 @@ class Main extends MY_Controller
         $this->load->view('main/_template_v', $data);
     }
 
-    public function headerData($character_id, $aggr = 0)
+    public function headerData(int $character_id, bool $aggr = null)
     {
         $this->load->model('Nav_model');
-        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->session->iduser, true)) {
-            if($aggr == 0) {
+        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id, true)) {
+            if(!$aggr) {
                 $result = json_encode($this->Nav_model->getHeaderData($character_id));
                 echo $result;
             } else {
                 $this->load->model('Login_model');
-                $characters = $this->Login_model->getCharacterList($this->session->iduser);
+                $characters = $this->Login_model->getCharacterList($this->user_id);
                 $chars = $characters['aggr'];
                 $result = json_encode($this->Nav_model->getHeaderData($character_id, $chars));
                 echo $result;
@@ -64,7 +62,6 @@ class Main extends MY_Controller
         $mail = $this->Email->send($to, $from, $from_name, $subject, $body);
         //$mail->SMTPDebug = 2;
         if (!$mail) {
-            //echo $error = 'Mail error: '.$mail->ErrorInfo; 
             $error = Msg::EMAIL_SEND_FAILURE;
             $res = "error";
         }

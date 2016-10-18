@@ -1,10 +1,11 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
 class Settings_model extends CI_Model
 {
-	public function getEmail($id_user)
+	public function getEmail(int $id_user) : stdClass
 	{
 		$this->db->select('email');
 		$this->db->where('iduser', $id_user);
@@ -15,7 +16,7 @@ class Settings_model extends CI_Model
 	}
 
 
-	public function changeEmail($id_user, $email)
+	public function changeEmail(int $id_user, string $email) : bool
 	{
 		$data = array("email" => $email);
 		$this->db->where('iduser', $id_user);
@@ -28,7 +29,7 @@ class Settings_model extends CI_Model
 		return false;
 	}
 
-	public function getReportSelection($id_user)
+	public function getReportSelection(int $id_user) : stdClass
 	{
 		$this->db->select('reports');
 		$this->db->where('iduser', $id_user);
@@ -38,7 +39,7 @@ class Settings_model extends CI_Model
 		return $result;
 	}
 
-	public function changeReports($id_user, $value)
+	public function changeReports(int $id_user, string $value) : bool
 	{
 		$data = ["reports" => $value];
 
@@ -53,7 +54,7 @@ class Settings_model extends CI_Model
 		return true;
 	}
 
-	public function changePassword($id_user, $password)
+	public function changePassword(int $id_user, string $password) : bool
 	{
 		$this->load->model('common/Auth');
 		$hashed = $this->Auth->createHashedPassword($password);

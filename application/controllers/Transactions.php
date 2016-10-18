@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+declare(strict_types=1);
 
 class Transactions extends MY_Controller
 {

@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -11,7 +12,8 @@ class StockLists_model extends CI_Model
         parent::__construct();
     }
 
-    public function getStockLists($user_id)
+    //wtf?
+    public function getStockLists(int $user_id) : array
     {
         $this->db->where('user_iduser', $user_id);
         $this->db->order_by('iditemlist', 'desc');
@@ -21,7 +23,7 @@ class StockLists_model extends CI_Model
         return $result;
     }
 
-    public function createEmptyList($user_id, $name)
+    public function createEmptyList(int $user_id, string $name)
     {
         $data = array("user_iduser" => $user_id,
             "name"                      => $name);
@@ -34,7 +36,7 @@ class StockLists_model extends CI_Model
         return false;
     }
 
-    public function getItems($id_list)
+    public function getItems(int $id_list) : array
     {
         $this->db->select('i.name as name, i.volume as vol, COALESCE(p.price_evecentral,0) as price, i.eve_iditem as id');
         $this->db->from('itemcontents c');
@@ -48,7 +50,7 @@ class StockLists_model extends CI_Model
         return $query->result();
     }
 
-    public function queryItems($input)
+    public function queryItems(string $input) : array
     {
         $this->db->select('name as value');
         $this->db->from('item');
@@ -62,7 +64,7 @@ class StockLists_model extends CI_Model
         return $result;
     }
 
-    public function insertItem($name, $list_id)
+    public function insertItem(string $name, int $list_id) : array
     {
         $item  = "";
         $limit = self::ITEMLIMIT;
@@ -96,7 +98,7 @@ class StockLists_model extends CI_Model
     }
 
 
-    public function removeItem($item_id, $list_id)
+    public function removeItem(int $item_id, int $list_id) : array
     {
         $data = array("itemlist_iditemlist" => $list_id,
             "item_eve_iditem"                   => $item_id);
@@ -113,10 +115,11 @@ class StockLists_model extends CI_Model
         return array("notice" => $notice, "message" => $message);
     }
 
-    public function removeList($list_id)
+    public function removeList(int $list_id) : array
     {
         $data = array('iditemlist' => $list_id);
         $this->db->delete('itemlist', $data);
+
         if ($this->db->affected_rows() != 0) {
             $notice  = "success";
             $message = Msg::LIST_REMOVE_SUCCESS;

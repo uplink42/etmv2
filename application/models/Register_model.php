@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -16,18 +17,6 @@ class Register_model extends CI_Model
         $this->load->model('ValidateRequest');
     }
 
-    /**
-     * Begins the validation routine for account creation
-     * Returns an array with the result of each validation step
-     * @param  [string] $username       [user submited username]
-     * @param  [string] $password       [user submited password]
-     * @param  [string] $repeatpassword [user submited repeated password]
-     * @param  [string] $email          [user submited email]
-     * @param  [string] $apikey         [user submited apikey]
-     * @param  [string] $vcode          [user submited vcode]
-     * @param  [string] $reports        [user submited reports]
-     * @return [array]                  [validation result]
-     */
     public function validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports)
     {
         $result = array("username" => $this->validateUsername($username),
@@ -40,12 +29,6 @@ class Register_model extends CI_Model
         return $result;
     }
 
-    /**
-     * Username validation
-     * Returns false if successful, or an error message otherwise
-     * @param  [string] $username [user submited username]
-     * @return [string]           [error message]
-     */
     private function validateUsername($username)
     {
         if (!$this->ValidateRequest->validateUsernameLength($username)) {
@@ -58,12 +41,6 @@ class Register_model extends CI_Model
 
     }
 
-    /**
-     * Email validation
-     * Returns false if successful, or an error message otherwise
-     * @param  [string] $email [user submitted email]
-     * @return [string]        [error message]
-     */
     private function validateEmail($email)
     {
         if (!$this->ValidateRequest->validateEmailFormat($email)) {
@@ -76,13 +53,6 @@ class Register_model extends CI_Model
 
     }
 
-    /**
-     * Password validation
-     * Returns false if successful, or an error message otherwise
-     * @param  [string] $password       [user submitted password]
-     * @param  [string] $repeatpassword [user submitted repeated password]
-     * @return [string]                 [error message]
-     */
     private function validatePassword($password, $repeatpassword)
     {
         if (!$this->ValidateRequest->validatePasswordLength($password)) {
@@ -94,24 +64,11 @@ class Register_model extends CI_Model
         }
     }
 
-    /**
-     * APIkey validation
-     * Returns false if successful, or an error message otherwise
-     * @param  [string] $apikey [user submitted apikey]
-     * @param  [string] $vcode  [user submitted vcode]
-     * @return [string]         [error message]
-     */
     private function validateAPI($apikey, $vcode)
     {
         return $this->ValidateRequest->validateAPI($apikey, $vcode);
     }
 
-    /**
-     * Report selection validation
-     * Returns false if successful, or an error message otherwise
-     * @param  [string] $reports [user submitted report selection]
-     * @return [string]          [error message]
-     */
     private function validateReports($reports)
     {
         if (empty($reports)) {
@@ -119,12 +76,6 @@ class Register_model extends CI_Model
         }
     }
 
-    /**
-     * Returns a list of all characters within a valid apikey
-     * @param  [string] $apikey [user submitted apikey]
-     * @param  [string] $vcode  [user submitted vcode]
-     * @return [array]          [character list]
-     */
     public function getCharacters($apikey, $vcode)
     {
         $pheal  = new Pheal($apikey, $vcode);
@@ -141,13 +92,6 @@ class Register_model extends CI_Model
         return $characters;
     }
 
-    /**
-     * Checks if a list of characters belongs to the supplied API key
-     * @param  [array]  $chars  [user submitted characters]
-     * @param  [string] $apikey [user submitted apikey]
-     * @param  [string] $vcode  [user submitted vcode]
-     * @return [bool]           [validation result]
-     */
     public function verifyCharacters($chars, $apikey, $vcode)
     {
         $pheal  = new Pheal($apikey, $vcode);
@@ -170,18 +114,6 @@ class Register_model extends CI_Model
         return true;
     }
 
-    /**
-     * Creates an account after all validations are completed
-     * Returns an error message if something goes wrong
-     * @param  [string] $username [user submitted username]
-     * @param  [string] $password [user submitted password]
-     * @param  [string] $email    [user submitted email]
-     * @param  [string] $apikey   [user submitted apikey]
-     * @param  [string] $vcode    [user submitted vcode]
-     * @param  [string] $reports  [user submitted reports]
-     * @param  [array]  $chars    [user submitted character list]
-     * @return [string]           [error message]
-     */
     public function createAccount($username, $password, $email, $apikey, $vcode, $reports, $chars)
     {
         $error = "";
@@ -262,12 +194,6 @@ class Register_model extends CI_Model
         }
     }
 
-    /**
-     * Checks if a character already belongs to another user account
-     * We don't allow this to happen
-     * @param  [int]  $character_id [eve character id]
-     * @return [bool]               [result]
-     */
     private function checkCharacterExists($character_id)
     {
         $this->db->where('character_eve_idcharacter', $character_id);

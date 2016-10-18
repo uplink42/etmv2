@@ -1,19 +1,10 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php declare(strict_types=1);
+defined('BASEPATH') or exit('No direct script access allowed');
 
-/**
- * Main authentication controller
- * Takes care of all login and password recovery operations
- */
 class Auth extends CI_Model
 {
-    /**
-     * Password encryption cost (higher cost takes longer to perform)
-     */
     const COST = 10;
 
-    /**
-     * Indicates blowfish algorithm for password encryption
-     */
     const BLOWFISH = "$2a$%02d$";
 
     public function __construct()
@@ -22,11 +13,6 @@ class Auth extends CI_Model
         $this->load->model('common/Msg');
     }
 
-    /**
-     * Generates a secure password according to our configuration
-     * @param  [string] $password [initial password]
-     * @return [array]            [encrypted password and salt]
-     */
     public function createHashedPassword($password)
     {
         $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
@@ -37,23 +23,11 @@ class Auth extends CI_Model
         return array("password" => $password_final, "salt" => $salt);
     }
 
-    /**
-     * Randomly generates a new password for password recovery
-     * @return [type] [description]
-     */
     public function generateRandomPassword()
     {
 
     }
 
-    /**
-     * Validates user/password according to database records
-     * Starts a session if successful
-     * @param  [string] $username  [form submitted username]
-     * @param  [string] $password  [form submitted password]
-     * @param  [bool]   $nosession [wether to create a session or not]
-     * @return [bool]              [validation result]
-     */
     public function validateLogin($username, $password, $nosession = null)
     {
         $this->db->where('username', $username);

@@ -1,4 +1,5 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php declare(strict_types=1);
+defined('BASEPATH') or exit('No direct script access allowed');
 
 use Pheal\Core\Config;
 use Pheal\Pheal;

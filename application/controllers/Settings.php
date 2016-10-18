@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Settings extends MY_Controller
@@ -18,29 +18,23 @@ class Settings extends MY_Controller
         $this->load->model('Settings_model');
         $this->load->model('common/ValidateRequest');
 
-        if (!empty($_REQUEST['password']) && !empty($_REQUEST['email'])) {
-            $this->email    = $_REQUEST['email'];
-            $this->password = $_REQUEST['password'];
-        }
+        $this->email = $_REQUEST['email'] ?? '';
+        $this->password = $_REQUEST['password'] ?? '';
+        $this->reports = $_REQUEST['reports'] ?? '';
 
-        if(!empty($_REQUEST['reports'])) {
-            $this->reports = $_REQUEST['reports'];
-        }
+        $this->password_old = $_REQUEST['password-old'] ?? '';
+        $this->password_new1 = $_REQUEST['password-new1'] ?? '';
+        $this->password_new2 = $_REQUEST['password-new2'] ?? '';
 
-        if(!empty($_REQUEST['password-old']) && !empty($_REQUEST['password-new1']) && !empty($_REQUEST['password-new2'])) {
-            $this->password_old  = $_REQUEST['password-old'];
-            $this->password_new1 = $_REQUEST['password-new1'];
-            $this->password_new2 = $_REQUEST['password-new2'];
-        }
     }
 
-    public function index($character_id)
+    public function index(int $character_id)
     {
 
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate = $this->aggregate;
-            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
 
             $data['selected'] = "settings";
@@ -52,14 +46,14 @@ class Settings extends MY_Controller
 
     public function email()
     {
-        $data = $this->Settings_model->getEmail($this->session->iduser);
+        $data = $this->Settings_model->getEmail($this->user_id);
 
         echo json_encode(array("email" => $data));
     }
 
     public function reports()
     {
-        $result = $this->Settings_model->getReportSelection($this->session->iduser);
+        $result = $this->Settings_model->getReportSelection($this->user_id);
         $data = array("data" => $result);
 
         echo json_encode($data);
@@ -70,7 +64,7 @@ class Settings extends MY_Controller
         $this->load->model('common/Auth');
         if ($this->Auth->validateLogin($this->session->username, $this->password, true)) {
             if ($this->ValidateRequest->validateEmailAvailability($this->email)) {
-                if ($this->Settings_model->changeEmail($this->session->iduser, $this->email)) {
+                if ($this->Settings_model->changeEmail($this->user_id, $this->email)) {
                 $notice = "success";
                 $message = Msg::EMAIL_CHANGE_SUCCESS;
             } else {
@@ -93,7 +87,7 @@ class Settings extends MY_Controller
     public function changeReports()
     {
         if($this->reports == 'none' || $this->reports == 'daily' || $this->reports == 'weekly' || $this->reports == 'monthly') {
-            if($this->Settings_model->changeReports($this->session->iduser, $this->reports)) {
+            if($this->Settings_model->changeReports($this->user_id, $this->reports)) {
                 $notice = "success";
                 $message = Msg::REPORT_CHANGE_SUCCESS;
             } else {
@@ -116,7 +110,7 @@ class Settings extends MY_Controller
         if($this->ValidateRequest->validateIdenticalPasswords($this->password_new1, $this->password_new2)) {
             if($this->ValidateRequest->validatePasswordLength($this->password_new1)) {
                 if($this->Auth->validateLogin($this->session->username, $this->password_old, true)) {
-                    if($this->Settings_model->changePassword($this->session->iduser, $this->password_new1)) {
+                    if($this->Settings_model->changePassword($this->user_id, $this->password_new1)) {
                         $notice = "success";
                         $msg    = Msg::CHANGE_PASSWORD_SUCCESS;
                     } else {

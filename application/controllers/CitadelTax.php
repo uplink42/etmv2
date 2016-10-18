@@ -1,29 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class CitadelTax extends MY_Controller
 {
-    /**
-     * User submitted Citadel name
-     * @var [string]
-     */
     private $citadel;
 
-    /**
-     * User submitted tax value
-     * @var [float]
-     */
     private $tax;
 
-    /**
-     * Character id that made the request
-     * @var [int]
-     */
     private $character_id;
 
-    /**
-     * Checks for form submit state and loads result data into class properties
-     */
     public function __construct()
     {
         parent::__construct();

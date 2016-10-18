@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+ini_set('memory_limit', '-1');
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Profits extends MY_Controller
@@ -7,18 +8,17 @@ class Profits extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        ini_set('memory_limit', '-1');
         $this->db->cache_on();
         $this->page = "Profits";
     }
 
-    public function index($character_id, $interval = 1, $item_id = null)
+    public function index(int $character_id, int $interval = 1, int $item_id = null)
     {
         if ($interval > 365) {$interval = 365;}
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate = $this->aggregate;
-            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
 
             $data['selected'] = "profits";

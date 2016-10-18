@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -10,7 +11,7 @@ class Dashboard_model extends CI_Model
         parent::__construct();
     }
 
-    public function getPieData($chars)
+    public function getPieData(string $chars) : string
     {
         $this->db->select('sum(networth) as networth, sum(escrow) as escrow, sum(total_sell) as total_sell, sum(balance) as balance');
         $this->db->where('eve_idcharacter IN ' . $chars);
@@ -62,7 +63,7 @@ class Dashboard_model extends CI_Model
         return $jsonEncodedData;
     }
 
-    public function getWeekProfits($chars)
+    public function getWeekProfits(string $chars) : string
     {
         $this->db->select('total_profit');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
@@ -86,7 +87,7 @@ class Dashboard_model extends CI_Model
         return $data;
     }
 
-    public function getTotalProfitsTrends($chars)
+    public function getTotalProfitsTrends(string $chars) : array
     {
 
         $this->db->select('coalesce(sum(total_profit),0) as sum');
@@ -111,14 +112,14 @@ class Dashboard_model extends CI_Model
         return $data;
     }
 
-    public function getNewInfo($chars)
+    public function getNewInfo(string $chars) : stdClass
     {
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $query         = $this->db->get('new_info');
         return $result = $query->row();
     }
 
-    public function getProfits($interval = 1, $chars = null)
+    public function getProfits(int $interval = 1, string $chars = null) : array
     //redo this query, profit data
     {
         $this->db->select('p.profit_unit as profit_unit,

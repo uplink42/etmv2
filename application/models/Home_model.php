@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -10,7 +11,7 @@ class Home_model extends CI_Model
         parent::__construct();
     }
 
-    public function getStats()
+    public function getStats() : array
     {
         //profit
         $this->db->select('sum(profit_unit * quantity_profit) as profit');

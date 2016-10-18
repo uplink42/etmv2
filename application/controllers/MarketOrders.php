@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class MarketOrders extends MY_Controller
@@ -12,19 +12,16 @@ class MarketOrders extends MY_Controller
         $this->db->cache_off();
         $this->page = "MarketOrders";
 
-        if (!empty($_REQUEST['check'])) {
-            $this->check = $_REQUEST['check'];
-        } else {
-            $this->check = 0;
-        }
+        $this->check = $_REQUEST['check'] ?? 0;
+        settype($this->check, 'bool');
     }
 
-    public function index($character_id)
+    public function index(int $character_id)
     {
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $user_id = $this->user_id)) {
 
             $aggregate        = $this->aggregate;
-            $data             = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data             = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars            = $data['chars'];
             $data['selected'] = "marketorders";
 
@@ -34,7 +31,7 @@ class MarketOrders extends MY_Controller
 
             if($this->check) {
                 $this->load->model('common/Log');
-                $this->Log->addEntry('ordercheck', $this->session->iduser);
+                $this->Log->addEntry('ordercheck', $this->user_id);
             }
 
             $data['buyorders']  = $orders_buy;
@@ -42,11 +39,6 @@ class MarketOrders extends MY_Controller
             $data['view']       = 'main/marketorders_v';
             $this->load->view('main/_template_v', $data);
         }
-    }
-
-    public function checkCrest()
-    {
-
     }
 
 }

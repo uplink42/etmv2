@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -10,7 +11,7 @@ class MarketOrders_model extends CI_Model
         $this->load->model('common/RateLimiter');
     }
 
-    public function getMarketOrders($chars, $type, $check = false)
+    public function getMarketOrders(string $chars, string $type, bool $check = false) : array
     {
         $this->db->select('o.eve_item_iditem as item_id,
                            i.name as item_name,
@@ -41,17 +42,21 @@ class MarketOrders_model extends CI_Model
 
         if ($check) {
             for ($i = 0; $i < count($result); $i++) {
-                $result[$i]['status'] = $this->checkOrder($result[$i]['order_id'],
-                    $result[$i]['station_id'],
-                    $result[$i]['region_id'],
+                $orderID = (int)$result[$i]['order_id'];
+                $stationID =(int)$result[$i]['station_id'];
+                $regionID = (int)$result[$i]['region_id'];
+                $itemID = (int)$result[$i]['item_id'];
+                $result[$i]['status'] = $this->checkOrder($orderID,
+                    $stationID,
+                    $regionID,
                     $type,
-                    $result[$i]['item_id']);
+                    $itemID);
             }
         }
         return $result;
     }
 
-    public function checkOrder($order_id, $station_id, $region_id, $type, $item_id)
+    public function checkOrder(int $order_id, int $station_id, int $region_id, string $type, int $item_id) : string
     {
         $dt = new DateTime();
         $tz = new DateTimeZone('Europe/Lisbon');
@@ -128,7 +133,7 @@ class MarketOrders_model extends CI_Model
         }
     }
 
-    private function getCachedValue()
+    private function getCachedValue() : stdClass
     {
         $this->db->select('status');
         $this->db->where('orders_transkey', $order_id);
@@ -138,10 +143,10 @@ class MarketOrders_model extends CI_Model
         return $cached_value;
     }
 
-    private function updateStatus($order_id, $status, $date_now)
+    private function updateStatus(int $order_id, int $status, date $date_now)
     {
         $data = array("orders_transkey" => $order_id,
-            "status"                        => "1",
+            "status"                        => $status,
             "timestamp_check"               => $date_now);
         $this->db->replace('order_status', $data);
     }

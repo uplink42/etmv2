@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dashboard extends MY_Controller
@@ -12,16 +12,16 @@ class Dashboard extends MY_Controller
     }
 
     //returns all dashboard information to the relevant view
-    public function index($character_id, $interval = 3)
+    public function index(int $character_id, int $interval = 3)
     {
         if ($interval > 7) {
             $interval = 7;
         }
 
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate = $this->aggregate;
-            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
 
             $data['selected'] = "dashboard";

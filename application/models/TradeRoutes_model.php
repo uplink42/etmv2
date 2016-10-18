@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -10,7 +11,7 @@ class TradeRoutes_model extends CI_Model
         parent::__construct();
     }
 
-    public function queryStations($input)
+    public function queryStations(string $input) : array
     {
         $this->db->select('name as value');
         $this->db->where('eve_idstation < 1000000000000');
@@ -32,7 +33,7 @@ class TradeRoutes_model extends CI_Model
         return $result;
     }
 
-    public function insertRoute($user_id, $station_from, $station_to)
+    public function insertRoute(int $user_id, string $station_from, string $station_to) : array
     {
         $this->db->select('eve_idstation as s');
         $this->db->where('name', $station_from);
@@ -78,7 +79,7 @@ class TradeRoutes_model extends CI_Model
         return array("message" => $msg, "notice" => $res);
     }
 
-    public function getRoutes($user_id)
+    public function getRoutes(int $user_id) : array
     {
         $this->db->select('s1.name as s1, s2.name as s2, idtraderoute as id');
         $this->db->join('station s1', 's1.eve_idstation = traderoutes.station_eve_idstation_from');
@@ -90,7 +91,7 @@ class TradeRoutes_model extends CI_Model
         return $result;
     }
 
-    public function deleteRoute($route_id)
+    public function deleteRoute(int $route_id) : bool
     {
         $this->db->where('idtraderoute', $route_id);
         $query = $this->db->delete('traderoutes');

@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -11,7 +12,7 @@ class Login_model extends CI_Model
     }
 
 
-    public function getUserData($username)
+    public function getUserData(string $username) : stdClass
     {
         $this->db->where('username', $username);
         $query = $this->db->get('user');
@@ -19,7 +20,7 @@ class Login_model extends CI_Model
     }
 
     //checks if session is valid
-    public function checkSession()
+    public function checkSession() : bool
     {
         if (empty($this->session->username) || empty($this->session->iduser)) {
             return false;
@@ -48,7 +49,7 @@ class Login_model extends CI_Model
     }*/
 
     //retrieves a list of all characters associated with an account
-    public function getCharacterList($user_id)
+    public function getCharacterList(int $user_id) : array
     {
         $this->db->select('name, character_eve_idcharacter as id');
         $this->db->where('iduser', $user_id);
@@ -67,7 +68,7 @@ class Login_model extends CI_Model
     }
 
     //returns the character name
-    public function getCharacterName($character_id)
+    public function getCharacterName(int $character_id) : string
     {
         $this->db->select('name');
         $this->db->where('eve_idcharacter', $character_id);

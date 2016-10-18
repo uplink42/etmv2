@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -10,7 +11,7 @@ class Profits_model extends CI_Model
         parent::__construct();
     }
 
-    public function getProfits($chars, $interval, $item_id = null)
+    public function getProfits(string $chars, int $interval, int $item_id = null) : array
     {
         $this->db->select("p.profit_unit as profit_unit,
                            p.characters_eve_idcharacters_IN as char_in,
@@ -97,7 +98,7 @@ class Profits_model extends CI_Model
 
     }
 
-    public function getProfitChart($chars, $interval, $item_id = null)
+    public function getProfitChart(string $chars, int $interval, int $item_id = null) : string
     {
         $arrData = array( //graph parameters
             "chart" => array(
@@ -111,32 +112,6 @@ class Profits_model extends CI_Model
         );
 
         $index = -1;
-
-        /*$profits_list = array();
-        $days_list = array();
-        $arrData['data'] = array();
-        $today = new DateTime('now');
-        date_sub($today,date_interval_create_from_date_string($interval ." day"));
-
-        for($i=$interval; $i>0; $i--) {
-        $index = $index+1;
-        date_add($today,date_interval_create_from_date_string("1 day"));
-        $today_a = $today->format("Y-m-d");
-
-        $this->db->select('COALESCE(sum(total_profit),0) as profits, date');
-        $this->db->where('date', $today_a);
-        $this->db->where('characters_eve_idcharacters IN ' . $chars);
-        $this->db->order_by('date', 'asc');
-        $query1 = $this->db->get('history');
-        $result = $query1->row();
-
-        array_push($days_list, $result->date);
-        array_push($profits_list, $result->profits);
-        array_push($arrData['data'], array("label" => (string)$days_list[$index], "value" => (string)$profits_list[$index]));
-
-        }
-
-        $jsonEncodedData = json_encode($arrData);*/
         $inner = "";
         $int   = $interval;
         for ($i = 1; $i < $int - 1; $i++) {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class StockLists extends MY_Controller
@@ -12,12 +12,12 @@ class StockLists extends MY_Controller
         $this->load->model('StockLists_model');
     }
 
-    public function index($character_id)
+    public function index(int $character_id)
     {
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate = $this->aggregate;
-            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
 
             $data['selected'] = "stocklists";
@@ -29,7 +29,7 @@ class StockLists extends MY_Controller
     public function newList()
     {
         $name = $this->security->xss_clean($this->input->post('list-name'));
-        $res = $this->StockLists_model->createEmptyList($this->session->iduser, $name);
+        $res = $this->StockLists_model->createEmptyList($this->user_id, $name);
         if ($res) {
             $data['notice']  = "success";
             $data['message'] = Msg::LIST_CREATE_SUCCESS;
@@ -45,25 +45,24 @@ class StockLists extends MY_Controller
 
     public function populateList()
     {
-        $lists = $this->StockLists_model->getStockLists($this->session->iduser);
+        $lists = $this->StockLists_model->getStockLists($this->user_id);
 
         echo json_encode($lists);
     }
 
-    public function getItems($id_list)
+    public function getItems(int $id_list)
     {
-        if($this->ValidateRequest->checkStockListOwnership($id_list, $this->session->iduser)) {
+        if($this->ValidateRequest->checkStockListOwnership($id_list, $this->user_id)) {
             $result = $this->StockLists_model->getItems($id_list);
             echo json_encode($result);
         } else {
             echo "error";
         }
-        
     }
 
     public function searchItems()
     {
-        $input = $_REQUEST['term'];
+        $input = $_REQUEST['term'] ?? '';
         $result = $this->StockLists_model->queryItems($input);
 
         echo json_encode($result);
@@ -74,11 +73,11 @@ class StockLists extends MY_Controller
         if (empty($_REQUEST['item-name']) || empty($_REQUEST['list-id'])) {
             return false;
         }
-        $list_id = $_REQUEST['list-id'];
+        $list_id = (int)$_REQUEST['list-id'];
         $name    = $_REQUEST['item-name'];
         $user_id = $this->session->iduser;
 
-        if($this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
+        if($this->ValidateRequest->checkStockListOwnership($list_id, $this->user_id)) {
             $res = $this->StockLists_model->insertItem($name, $list_id);
             echo json_encode($res);
         } else {
@@ -86,10 +85,9 @@ class StockLists extends MY_Controller
         }
     }
 
-    public function removeItem($item_id, $list_id)
+    public function removeItem(int $item_id, int $list_id)
     {
-        $user_id = $this->session->iduser;
-        if($this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
+        if($this->ValidateRequest->checkStockListOwnership($list_id, $this->user_id)) {
             $res = $this->StockLists_model->removeItem($item_id, $list_id);
             echo json_encode($res);
         } else {
@@ -97,10 +95,9 @@ class StockLists extends MY_Controller
         } 
     }
 
-    public function removeList($list_id)
+    public function removeList(int $list_id)
     {
-        $user_id = $this->session->iduser;
-        if($this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
+        if($this->ValidateRequest->checkStockListOwnership($list_id, $this->user_id)) {
             $res = $this->StockLists_model->removeList($list_id);
             echo json_encode($res);
         } else {

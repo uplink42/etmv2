@@ -1,23 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
-/**
- * Main application controller which validates and logs every page request
- * and loads commonly used variables into views
- */
 class MY_Controller extends CI_Controller
 {
-    /**
-     * Account characters tuple
-     * @var [string]
-     */
     protected $aggregate;
-
-    /**
-     * Current page shortcode
-     * @var [string]
-     */
     protected $page;
+    protected $user_id;
 
     public function __construct()
     {
@@ -27,17 +15,11 @@ class MY_Controller extends CI_Controller
         $this->load->model('common/ValidateRequest');
         $this->load->model('Login_model');
         $this->load->library('session');
+        $this->user_id = (int)$this->session->iduser;
     }
 
-    /**
-     * Enforces user/character validation
-     * Terminates session if something goes wrong
-     * This method is first called by all public controllers
-     * @param  [type] $character_id [eve character id]
-     * @param  [type] $user_id      [internal user id]
-     * @return [boolean]            [validation result]
-     */
-    protected function enforce($character_id, $user_id = null)
+
+    protected function enforce(int $character_id, int $user_id = null) : bool
     {
         if ($this->Login_model->checkSession() &&
             $this->ValidateRequest->checkCharacterBelong($character_id, $user_id)) {
@@ -46,15 +28,15 @@ class MY_Controller extends CI_Controller
                 $aggr = $_GET['aggr'];
 
                 if ($aggr != 1 && $aggr != 0) {
-                    $this->aggregate = 0;
+                    $this->aggregate = false;
                 } else {
-                    $this->aggregate = $aggr;
+                    $this->aggregate = (bool)$aggr;
                 }
             } else {
-                $this->aggregate = 0;
+                $this->aggregate = false;
             }
 
-            $this->Log->addEntry("visit " . $this->page, $this->session->iduser);
+            $this->Log->addEntry("visit " . $this->page, $user_id);
             return true;
         } else {
             $data['view'] = "login/login_v";
@@ -75,7 +57,7 @@ class MY_Controller extends CI_Controller
      * @param  [int] $user_id  [internal user id]
      * @return [array]         [character list]
      */
-    protected function getCharacterList($user_id)
+    protected function getCharacterList(int $user_id)
     {
         $data = $this->Login_model->getCharacterList($user_id);
         return $data;
@@ -89,7 +71,7 @@ class MY_Controller extends CI_Controller
      * @param  [string] $aggregate    [account characters tuple]
      * @return [array]                [view dependencies]
      */
-    protected function loadViewDependencies($character_id, $user_id, $aggregate)
+    protected function loadViewDependencies(int $character_id, int $user_id, bool $aggregate)
     {
         $chars      = [];
         $char_names = [];
@@ -106,7 +88,7 @@ class MY_Controller extends CI_Controller
         $data['email']          = $this->session->email;
         $data['username']       = $this->session->username;
         $data['chars']          = $chars;
-        $character_list         = $this->getCharacterList($this->session->iduser);
+        $character_list         = $this->getCharacterList($this->user_id);
         $data['aggregate']      = $aggregate;
         $data['char_names']     = $char_names;
         $data['character_list'] = $character_list;
@@ -121,7 +103,7 @@ class MY_Controller extends CI_Controller
      * Loads the required data to build each page's character selector dropdown
      * @return [array] [selector data]
      */
-    private function buildSelector()
+    private function buildSelector() : array
     {
         switch ($this->page) {
 
@@ -216,25 +198,12 @@ class MY_Controller extends CI_Controller
         return $data;
     }
 
-    /**
-     * Creates an icon url from eve's image server
-     * @param  [int] $item_id  [eve item id]
-     * @return [string]        [image url]
-     */
-    public function generateIcon($item_id)
+    public function generateIcon(int $item_id) : string
     {
         $url = "https://image.eveonline.com/Type/" . $item_id . "_32.png";
         return $url;
     }
 
-    /**
-     * Adds a new element to result lists which contains an item's icon url
-     * This is commonly used to avoid having to build urls on the views
-     * Works for both arrays or objects
-     * @param  [array or object] $dataset [result dataset]
-     * @param  [boolean] $type            [dataset type]
-     * @return [array]                    [modified dataset with item url added]
-     */
     public function injectIcons($dataset, $type = false)
     {
         //default array
@@ -243,9 +212,9 @@ class MY_Controller extends CI_Controller
         if ($max > 0) {
             for ($i = 0; $i < $max; $i++) {
                 if ($type == "object") {
-                    $dataset[$i]->url = $this->generateIcon($dataset[$i]->item_id);
+                    $dataset[$i]->url = $this->generateIcon((int)$dataset[$i]->item_id);
                 } else {
-                    $dataset[$i]['url'] = $this->generateIcon($dataset[$i]['item_id']);
+                    $dataset[$i]['url'] = $this->generateIcon((int)$dataset[$i]['item_id']);
                 }
             }
         }

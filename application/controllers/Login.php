@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Login extends CI_Controller
@@ -12,7 +12,7 @@ class Login extends CI_Controller
         $this->load->model('common/Msg');
     }
 
-    public function index($view = null)
+    public function index(string $view = null)
     {
 
     }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Statistics extends MY_Controller
@@ -11,16 +11,16 @@ class Statistics extends MY_Controller
         $this->page = "Statistics";
     }
 
-    public function index($character_id, $interval = 7)
+    public function index(int $character_id, int $interval = 7)
     {
         if ($interval > 365) {
             $interval = 365;
         }
 
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate              = $this->aggregate;
-            $data                   = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data                   = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars                  = $data['chars'];
             $data['selected']       = "statistics";
             

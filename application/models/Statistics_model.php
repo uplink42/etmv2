@@ -1,4 +1,5 @@
-<?php if (!defined('BASEPATH')) {
+<?php declare(strict_types=1);
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -10,7 +11,7 @@ class Statistics_model extends CI_Model
         parent::__construct();
     }
 
-    public function buildVolumesChart($chars, $interval)
+    public function buildVolumesChart(string $chars, int $interval) : string
     {
         $chart = array(
             "caption"       => "Trading volumes",
@@ -89,12 +90,12 @@ class Statistics_model extends CI_Model
         $JSON['chart']      = $chart;
         $JSON['categories'] = $categories;
         $JSON['dataset']    = $dataset;
-        $jsonEncodedData    = json_encode($JSON, true);
+        $jsonEncodedData    = json_encode($JSON, 1);
 
         return $jsonEncodedData;
     }
 
-    public function getProblematicItems($chars, $interval)
+    public function getProblematicItems(string $chars, int $interval) : array
     {
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
@@ -114,7 +115,7 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getProfitsTable($chars, $interval)
+    public function getProfitsTable(string $chars, int $interval) : array
     {
         $this->db->select('sum(total_profit) as total_profit,
                            sum(total_buy) as total_buy,
@@ -145,7 +146,7 @@ class Statistics_model extends CI_Model
         return array("daily" => $result_day, "total" => $total);
     }
 
-    public function getBestItemsRaw($chars, $interval, $chart = null)
+    public function getBestItemsRaw(string $chars, int $interval, bool $chart = false) : array
     {
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
@@ -168,7 +169,7 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getBestItemsMargin($chars, $interval)
+    public function getBestItemsMargin(string $chars, int $interval) : array
     {
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
@@ -188,11 +189,11 @@ class Statistics_model extends CI_Model
         $this->db->order_by('sum(profit.profit_unit)/sum(t1.price_unit)', 'DESC');
         $query  = $this->db->get('');
         $result = $query->result_array();
-        log_message('error', $this->db->last_query());
+
         return $result;
     }
 
-    public function getBestCustomersRawProfit($chars, $interval)
+    public function getBestCustomersRawProfit(string $chars, int $interval) : array
     {
         $this->db->select('t2.client AS soldTo,
                            sum(profit.profit_unit * profit.quantity_profit) as profit');
@@ -206,7 +207,6 @@ class Statistics_model extends CI_Model
         $this->db->limit('5');
         $query  = $this->db->get('');
         $result = $query->result_array();
-        //print_r($result);
 
         for ($i = 0; $i < count($result); $i++) {
             $this->db->where('name', $result[$i]['soldTo']);
@@ -234,13 +234,7 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    /*public function getCustomerName($character_id)
-    {
-    //check if exists in db
-    $this->db->select('')
-    }
-     */
-    public function getBestTZ($chars, $interval)
+    public function getBestTZ(string $chars, int $interval) : array
     {
         $this->db->select('t2.time as time_sell,
                            (profit.quantity_profit*profit.profit_unit) as profit_total');
@@ -280,7 +274,7 @@ class Statistics_model extends CI_Model
         return $tz_profits;
     }
 
-    public function getFastestTurnovers($chars, $interval)
+    public function getFastestTurnovers(string $chars, int $interval) : array
     {
         $this->db->select('item.name as item,
                             timediff(t2.time,t1.time) as difference,
@@ -301,7 +295,7 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getBestIPH($chars, $interval)
+    public function getBestIPH(string $chars, int $interval) : array
     {
         $this->db->select('item.name AS item,
                            item.eve_iditem AS item_id,
@@ -322,7 +316,7 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getMarketBlunders($chars, $interval)
+    public function getMarketBlunders(string $chars, int $interval) : array
     {
         $this->db->select('(profit.profit_unit) / ( t1.price_unit ) AS margin,
                            item.eve_iditem AS item_id,
@@ -343,7 +337,7 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getTopStations($chars, $interval)
+    public function getTopStations(string $chars, int $interval) : array
     {
         $this->db->select('station.name AS station,
                            SUM( profit.quantity_profit * profit.profit_unit ) AS profit');
@@ -363,7 +357,7 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function buildDistributionChart($chars, $interval)
+    public function buildDistributionChart(string $chars, int $interval) : string
     {
         $arrData["chart"] = array(
             "bgColor"                   => "#44464f",

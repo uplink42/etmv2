@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class TradeRoutes extends MY_Controller
@@ -12,12 +12,12 @@ class TradeRoutes extends MY_Controller
         $this->load->model('TradeRoutes_model');
     }
 
-    public function index($character_id)
+    public function index(int $character_id)
     {
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate = $this->aggregate;
-            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
 
             $data['selected'] = "traderoutes";
 
@@ -35,16 +35,16 @@ class TradeRoutes extends MY_Controller
 
     }
 
-    public function submitRoute($character_id)
+    public function submitRoute(int $character_id)
     {
-        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->session->iduser)) {
+        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id)) {
             if (!empty($_REQUEST['origin']) && !empty($_REQUEST['destination'])) {
                 substr($_REQUEST['origin'], 0, 10) == "TRADE HUB:" ?
                 $origin = substr($_REQUEST['origin'], 11) : $origin = $_REQUEST['origin'];
                 substr($_REQUEST['destination'], 0, 10) == "TRADE HUB:" ?
                 $destination = substr($_REQUEST['destination'], 11) : $destination = $_REQUEST['destination'];
 
-                $data = $this->TradeRoutes_model->insertRoute($this->session->iduser, $origin, $destination);
+                $data = $this->TradeRoutes_model->insertRoute($this->user_id, $origin, $destination);
             } else {
                 $data['message'] = Msg::STATION_NOT_FOUND;
                 $data['notice']  = "error";
@@ -57,18 +57,18 @@ class TradeRoutes extends MY_Controller
         echo json_encode($data);
     }
 
-    public function listTradeRoutes($character_id)
+    public function listTradeRoutes(int $character_id)
     {
-        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->session->iduser)) {
-            $result = $this->TradeRoutes_model->getRoutes($this->session->iduser);
+        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id)) {
+            $result = $this->TradeRoutes_model->getRoutes($this->user_id);
 
             echo json_encode($result);
         }
     }
 
-    public function deleteRoute($id_route)
+    public function deleteRoute(int $id_route)
     {
-        if ($this->ValidateRequest->checkTradeRouteOwnership($id_route, $this->session->iduser)) {
+        if ($this->ValidateRequest->checkTradeRouteOwnership($id_route, $this->user_id)) {
             if ($this->TradeRoutes_model->deleteRoute($id_route)) {
                 $data['message'] = Msg::ROUTE_REMOVE_SUCCESS;
                 $data['notice']  = "success";

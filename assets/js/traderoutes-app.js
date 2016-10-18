@@ -11,7 +11,7 @@ $(document).ready(function() {
             dataType: "json",
             url: listurl,
             success: function(result) {
-
+                console.log(result);
                 $("table tbody tr").empty();
                 if (result.length == 0) {
                     var $row = "<tr><td colspan='3' class='text-center'>No trade routes present. Create one at the left</td></tr>";
@@ -75,8 +75,8 @@ $(document).ready(function() {
             success: function(result) {
                 $this.closest("tr").remove();
                 toastr[result.notice](result.message);
+                list();
             }
         });
-        list();
     });
 });
