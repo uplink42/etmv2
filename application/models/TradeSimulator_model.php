@@ -1,8 +1,7 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
-declare(strict_types=1);
 
 class TradeSimulator_model extends CI_Model
 {
@@ -33,8 +32,7 @@ class TradeSimulator_model extends CI_Model
     private $stockListID;
     private $stockListName;
 
-
-    public function getStationID($station_name)
+    public function getStationID(string $station_name)
     {
         $this->db->select('eve_idstation');
         $this->db->where('name', $station_name);
@@ -49,20 +47,20 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
-    public function init($origin, $destination, $buyer, $seller, $buy_method, $sell_method, $stocklist)
+    public function init(string $origin, string $destination, int $buyer, int $seller, string $buy_method, string $sell_method, int $stocklist)
     {
-        $this->stationFromName     = $origin;
-        $this->stationToName       = $destination;
-        $this->stationFromID       = $this->getStationID($origin)->eve_idstation;
-        $this->stationToID         = $this->getStationID($destination)->eve_idstation;
-        $this->characterFrom       = $buyer;
-        $this->characterTo         = $seller;
-        $this->characterFromName   = $this->getCharacterName($buyer);
-        $this->characterToName     = $this->getCharacterName($seller);
-        $this->characterFromMethod = $buy_method;
-        $this->characterToMethod   = $sell_method;
-        $this->stocklistID         = $stocklist;
-        $this->stockListName       = $this->getStockListName($stocklist)->name;
+        $this->stationFromName     = (string) $origin;
+        $this->stationToName       = (string) $destination;
+        $this->stationFromID       = (int) $this->getStationID($origin)->eve_idstation;
+        $this->stationToID         = (int) $this->getStationID($destination)->eve_idstation;
+        $this->characterFrom       = (string) $buyer;
+        $this->characterTo         = (string) $seller;
+        $this->characterFromName   = (string) $this->getCharacterName($buyer);
+        $this->characterToName     = (string) $this->getCharacterName($seller);
+        $this->characterFromMethod = (string) $buy_method;
+        $this->characterToMethod   = (string) $sell_method;
+        $this->stocklistID         = (int) $stocklist;
+        $this->stockListName       = (string) $this->getStockListName($stocklist)->name;
 
         $CI = &get_instance();
         $CI->load->model('Tax_Model');
@@ -75,7 +73,7 @@ class TradeSimulator_model extends CI_Model
         return $this->generateResults();
     }
 
-    private function generateResults()
+    private function generateResults(): array
     {
         $contents = $this->getStockListContents();
 
@@ -102,8 +100,8 @@ class TradeSimulator_model extends CI_Model
 
         foreach ($contents as $row) {
             $this->RateLimiter->rateLimit();
-            
-            $item_id                   = $row->id;
+
+            $item_id                   = (int) $row->id;
             $item_name                 = $row->name;
             $row->vol == 0 ? $item_vol = 1 : $item_vol = $row->vol;
 
@@ -138,7 +136,7 @@ class TradeSimulator_model extends CI_Model
         return array("results" => $results, "req" => $taxes);
     }
 
-    private function getStockListContents()
+    private function getStockListContents(): array
     {
         $list = $this->stocklistID;
 
@@ -153,7 +151,7 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
-    private function getCrestData($item_id, $station_id, $order_type)
+    private function getCrestData(int $item_id, int $station_id, string $order_type): float
     {
         $regionID = $this->getRegionID($station_id)->id;
         $url      = "https://crest-tq.eveonline.com/market/" . $regionID . "/orders/" . $order_type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
@@ -184,7 +182,7 @@ class TradeSimulator_model extends CI_Model
         return $price;
     }
 
-    private function getRegionID($station_id)
+    private function getRegionID(int $station_id): stdClass
     {
         $this->db->select('r.eve_idregion as id');
         $this->db->from('region r');
@@ -197,7 +195,7 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
-    private function getStockListName($stocklist)
+    private function getStockListName(int $stocklist): stdClass
     {
         $this->db->select('name');
         $this->db->where('iditemlist', $stocklist);
@@ -207,7 +205,7 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
-    private function getCharacterName($id_character)
+    private function getCharacterName(int $id_character): string
     {
         $this->db->select('name');
         $this->db->where('eve_idcharacter', $id_character);

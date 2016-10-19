@@ -41,7 +41,6 @@ $(document).ready(function() {
 
     $(".btn-delete-confirm").on('click', function() {
         var url = $(this).attr('data-url');
-           console.log(url);
 
         $.ajax({
             dataType: "json",
@@ -50,7 +49,6 @@ $(document).ready(function() {
                 $('#delete').modal('toggle');
                 toastr[result.notice](result.message);
                 list();
-                window.location.href = window.location.hostname;
             }
         });
     });
@@ -74,9 +72,8 @@ $(document).ready(function() {
                     $(".api-insert-1").toggle();
                     $(".api-insert-2").toggle();
                         
-                        var count = 1;
+                    var count = 1;
                     $.each(result, function(k, v) {
-                        console.log(count);
                         var id = result[k][1].id;
                         var name = result[k][0].name;
                         var url = "https://image.eveonline.com/Character/" + id + "_32.jpg";

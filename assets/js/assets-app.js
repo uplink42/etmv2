@@ -37,7 +37,6 @@ $(document).ready(function() {
     });
 
     $("table").on('click', 'a', function() {
-        console.log("clicked");
         var name = $(this).text();
         $(".assets-body input.form-control").val(name);
         $(".assets-body input.form-control").trigger("keyup");

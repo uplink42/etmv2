@@ -11,7 +11,7 @@ class Assets_model extends CI_Model
         parent::__construct();
     }
 
-    public function getAssetEvolution($chars)
+    public function getAssetEvolution(string $chars) : array
     {
         $this->db->select('sum(total_assets) as a');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
@@ -24,7 +24,7 @@ class Assets_model extends CI_Model
         return $result;
     }
 
-    public function getRegionData($chars)
+    public function getRegionData(string $chars) : array
     {
         $this->db->where('isKS', '1');
         $this->db->order_by('name');
@@ -61,15 +61,15 @@ class Assets_model extends CI_Model
 
                 array_push($data[$region_name],
                     array("total_items" => $total_items,
-                        "total_value"       => $total_value,
-                        "region_id"         => $region_id));
+                          "total_value" => $total_value,
+                          "region_id"   => $region_id));
             }
 
         }
         return $data;
     }
 
-    public function getRegionName($region_id)
+    public function getRegionName(int $region_id) : string
     {
         if ($region_id != 0) {
             $this->db->select('name');
@@ -87,12 +87,13 @@ class Assets_model extends CI_Model
         }
     }
 
-    public function getCurrentAssetTotals($chars)
+    public function getCurrentAssetTotals(string $chars) : string
     {
         $this->db->select('sum(networth) as a');
         $this->db->where('eve_idcharacter IN ' . $chars);
         $query  = $this->db->get('characters');
         $result = $query->row()->a;
+
         return $result;
     }
 
@@ -103,7 +104,7 @@ class Assets_model extends CI_Model
 
     }
 
-    public function getAssetsList($region_id, $chars, $significant = 1)
+    public function getAssetsList(int $region_id, string $chars, bool $significant = true) : array
     {
         $this->db->select('a.item_eve_iditem as item_id,
             a.quantity as quantity,
@@ -122,7 +123,7 @@ class Assets_model extends CI_Model
         $this->db->join('item_price_data pr', 'pr.item_eve_iditem = a.item_eve_iditem');
         $this->db->where('c.eve_idcharacter IN ' . $chars);
 
-        if ($region_id != "all") {
+        if ($region_id != 0) {
             $this->db->where('r.eve_idregion', $region_id);
         }
 
@@ -150,7 +151,7 @@ class Assets_model extends CI_Model
         $this->db->join('item_price_data pr', 'pr.item_eve_iditem = a.item_eve_iditem');
         $this->db->where('c.eve_idcharacter IN' . $chars);
 
-        if ($region_id != "all") {
+        if ($region_id != 0) {
             $this->db->where('r.eve_idregion', $region_id);
         }
 
@@ -168,7 +169,7 @@ class Assets_model extends CI_Model
         return $data;
     }
 
-    public function getWorthSignificant($chars)
+    public function getWorthSignificant(string $chars) : float
     {
         $this->db->select('sum(a.quantity*pr.price_evecentral) as total');
         $this->db->from('assets a');
@@ -192,7 +193,7 @@ class Assets_model extends CI_Model
         return $percent;
     }
 
-    public function buildAssetDistributionChart($data)
+    public function buildAssetDistributionChart(array $data) : string
     {
         $arrData["chart"] = array(
             "bgColor"                   => "#44464f",

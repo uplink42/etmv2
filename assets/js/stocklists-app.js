@@ -59,7 +59,6 @@ $(document).ready(function() {
             data: data,
             type: "POST",
             success: function(result) {
-                console.log(result);
                 toastr[result.notice](result.message);
                 var id_list = result.id,
                     list_name = $("#list-name").val();

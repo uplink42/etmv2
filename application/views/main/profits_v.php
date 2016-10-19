@@ -147,8 +147,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                 <td><a class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
                                                 <td><?=$row['diff']?></td>
                                             </tr>
-                                        <?php } ?>
-                                            
+                                        <?php } ?>  
                                         </tbody>
                                     </table>
                                 </div>

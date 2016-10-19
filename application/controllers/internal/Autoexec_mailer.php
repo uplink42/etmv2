@@ -17,13 +17,14 @@ class Autoexec_mailer extends CI_Controller
     }
 
     //daily, weekly, monthly
-    public function index($interval)
+    public function index(int $interval)
     {
         $this->load->model('common/User');
         $users = $this->User->getUsersByReports($interval);
 
         foreach($users as $row) {
-            $characters = $this->Login_model->getCharacterList($row->iduser);
+            $user_id = (int) $row->iduser
+            $characters = $this->Login_model->getCharacterList($user_id);
             foreach($characters as $char) {
                 $chars      = $characters['aggr'];
                 $char_names = $characters['char_names'];

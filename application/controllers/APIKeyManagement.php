@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ApiKeyManagement extends MY_Controller
 {
-    private $significant;
     private $keyid;
     private $vcode;
 
@@ -14,18 +13,20 @@ class ApiKeyManagement extends MY_Controller
         $this->page = "APIKeyManagement";
         $this->load->model('ApiKeyManagement_model');
 
-        if(!empty($_REQUEST['keyid']) && !empty($_REQUEST['vcode'])) {
-            $this->keyid = $_REQUEST['keyid'];
-            $this->vcode = $_REQUEST['vcode'];
-        }
+        $this->keyid = $_REQUEST['keyid'] ?? '';
+        $this->vcode = $_REQUEST['vcode'] ?? '';
+
+        settype($this->keyid, 'int');
+        settype($this->vcode, 'string');
     }
 
     public function index($character_id)
     {
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        settype($character_id, 'int');
+        if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate = $this->aggregate;
-            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
             $data['selected'] = "apikey";
 
@@ -36,15 +37,15 @@ class ApiKeyManagement extends MY_Controller
 
     public function getCharacters()
     {
-        $data = $this->ApiKeyManagement_model->getCharacterList($this->session->iduser);
+        $data = $this->ApiKeyManagement_model->getCharacterList($this->user_id);
         echo json_encode($data);
     }
 
-    public function removeCharacter($id_character)
+    public function removeCharacter(int $character_id_r)
     {
         $this->load->model('ValidateRequest');
-        if ($this->ValidateRequest->checkCharacterBelong($id_character, $this->session->iduser)) {
-            if($this->ApiKeyManagement_model->removeCharacter($id_character)) {
+        if ($this->ValidateRequest->checkCharacterBelong($character_id_r, $this->user_id)) {
+            if($this->ApiKeyManagement_model->removeCharacterProcess($character_id_r)) {
                 $notice = "success";
                 $msg = Msg::CHARACTER_REMOVE_SUCCESS;
             } else {
@@ -98,7 +99,7 @@ class ApiKeyManagement extends MY_Controller
             $this->load->model('register_model');
             if($this->register_model->verifyCharacters($chars, $apikey, $vcode)) {
                 //add characters
-                $this->ApiKeyManagement_model->addCharacters($chars, $apikey, $vcode, $this->session->iduser);
+                $this->ApiKeyManagement_model->addCharacters($chars, $apikey, $vcode, $this->user_id);
                 
 
             } else {

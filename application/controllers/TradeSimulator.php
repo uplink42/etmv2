@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class TradeSimulator extends MY_Controller
@@ -14,16 +14,16 @@ class TradeSimulator extends MY_Controller
         $this->load->model('TradeSimulator_model');
     }
 
-    public function index($character_id, $msg = null, $res = null)
+    public function index(int $character_id, array $msg = null, $res = null)
     {
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate        = $this->aggregate;
-            $data             = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data             = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $data['selected'] = "tradesimulator";
             $this->load->model('common/ValidateRequest');
-            $data['status']   = $this->ValidateRequest->getCrestStatus();
-            
+            $data['status'] = $this->ValidateRequest->getCrestStatus();
+
             if ($data['status']) {
                 $data['traderoutes'] = $this->listTradeRoutes($character_id);
                 $data['stocklists']  = $this->getLists();
@@ -32,11 +32,10 @@ class TradeSimulator extends MY_Controller
                     buildMessage($msg['notice'], $msg['message'], 'main/tradesimulator_v');
                 }
 
-                if (isset($res)) {
-                    $data['results'] = $res;
-                }
+                $res ? $data['results'] = $res : '';
+
             } else {
-                $data["notice"] = "error";
+                $data["notice"]  = "error";
                 $data["message"] = Msg::CREST_CONNECT_FAILURE;
             }
 
@@ -46,25 +45,25 @@ class TradeSimulator extends MY_Controller
         }
     }
 
-    public function listTradeRoutes($character_id)
+    public function listTradeRoutes(int $character_id): array
     {
-        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->session->iduser)) {
+        if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id)) {
             $this->load->model('TradeRoutes_model');
-            $result = $this->TradeRoutes_model->getRoutes($this->session->iduser);
+            $result = $this->TradeRoutes_model->getRoutes($this->user_id);
 
             return $result;
         }
     }
 
-    public function getLists()
+    public function getLists(): array
     {
         $this->load->model('StockLists_model');
-        $lists = $this->StockLists_model->getStockLists($this->session->iduser);
+        $lists = $this->StockLists_model->getStockLists($this->user_id);
 
         return $lists;
     }
 
-    public function process($character_id)
+    public function process(int $character_id)
     {
         if (!empty($_REQUEST['origin-station']) &&
             !empty($_REQUEST['buy-method']) &&
@@ -74,20 +73,29 @@ class TradeSimulator extends MY_Controller
             !empty($_REQUEST['seller']) &&
             !empty($_REQUEST['stocklist'])) {
 
+            $origin_station      = (string) $_REQUEST['origin-station'];
+            $destination_station = (string) $_REQUEST['destination-station'];
+            $buyer               = (int) $_REQUEST['buyer'];
+            $seller              = (int) $_REQUEST['seller'];
+            $buy_method          = (string) $_REQUEST['buy-method'];
+            $sell_method         = (string) $_REQUEST['sell-method'];
+            $stocklist           = (int) $_REQUEST['stocklist'];
+
             $this->stationFrom = $this->TradeSimulator_model->getStationID($_REQUEST['origin-station']);
             $this->stationTo   = $this->TradeSimulator_model->getStationID($_REQUEST['destination-station']);
 
             if ($this->stationFrom && $this->stationTo) {
-                $res = $this->TradeSimulator_model->init($_REQUEST['origin-station'],
-                    $_REQUEST['destination-station'],
-                    $_REQUEST['buyer'],
-                    $_REQUEST['seller'],
-                    $_REQUEST['buy-method'],
-                    $_REQUEST['sell-method'],
-                    $_REQUEST['stocklist']);
+                $res = $this->TradeSimulator_model->init(
+                    $origin_station,
+                    $destination_station,
+                    $buyer,
+                    $seller,
+                    $buy_method,
+                    $sell_method,
+                    $stocklist);
 
                 $this->load->model('common/Log');
-                $this->Log->addEntry('tradesim', $this->session->iduser);
+                $this->Log->addEntry('tradesim', $this->user_id);
                 $this->index($character_id, null, $res);
 
             } else {

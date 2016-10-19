@@ -11,8 +11,7 @@ class ApiKeyManagement_model extends CI_Model
         parent::__construct();
     }
 
- 
-    public function getCharacterList($id_user)
+    public function getCharacterList(int $id_user) : array
     {
         $this->db->select('a.apikey as api, c.eve_idcharacter as charid, c.name as name');
         $this->db->from('api a');
@@ -26,7 +25,7 @@ class ApiKeyManagement_model extends CI_Model
         return $result;
     }
 
-    public function removeCharacter($id_character)
+    public function removeCharacterProcess(int $id_character) : bool
     {
         $this->db->where('character_eve_idcharacter', $id_character);
         $this->db->delete('aggr');
@@ -38,7 +37,7 @@ class ApiKeyManagement_model extends CI_Model
         return false;
     }
 
-    public function addCharacters($chars, $apikey, $vcode, $id_user) 
+    public function addCharacters(string $chars, int $apikey, string $vcode, int $id_user) 
     {
 
     }

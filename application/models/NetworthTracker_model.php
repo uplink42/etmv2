@@ -24,7 +24,7 @@ class NetworthTracker_model extends CI_Model
         parent::__construct();
     }
 
-    public function init($chars, $interval)
+    public function init(string $chars, int $interval) : string
     {
         $this->interval = $interval;
         $this->chars    = $chars;
@@ -68,7 +68,7 @@ class NetworthTracker_model extends CI_Model
         return $this->chartBuilder();
     }
 
-    public function chartBuilder()
+    public function chartBuilder() : string
     {
         $categoryValues = array(
             array(
@@ -105,7 +105,7 @@ class NetworthTracker_model extends CI_Model
         $this->full_array['categories'] = $categoryValues;
         $this->full_array['dataset']    = array($walletValues, $assetValues, $sellValues, $escrowValues, $totalValues);
 
-        return json_encode($this->full_array, true);
+        return json_encode($this->full_array, 1);
     }
 
     private function daysDataset()
@@ -124,7 +124,7 @@ class NetworthTracker_model extends CI_Model
             );
         }
 
-        json_encode($this->categories_data, true);
+        json_encode($this->categories_data, 1);
     }
 
     private function walletDataset()

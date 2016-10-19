@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -57,9 +57,8 @@ class Updater_model extends CI_Model
         $this->account_characters = $query->result_array();
     }
 
-
     //retrurns a list of current database characters
-    public function resultTable(string $username) : array
+    public function resultTable(string $username): array
     {
         $data = array(
             "character"   => array(),
@@ -130,11 +129,11 @@ class Updater_model extends CI_Model
         $query = $this->db->get('');
 
         /*$query = $this->db->query("SELECT api.apikey, api.vcode, characters.eve_idcharacter
-                FROM api
-                JOIN characters on characters.api_apikey = api.apikey
-                JOIN aggr on aggr.character_eve_idcharacter = characters.eve_idcharacter
-                JOIN user on aggr.user_iduser = user.iduser
-                WHERE user.username = '$username'");*/
+        FROM api
+        JOIN characters on characters.api_apikey = api.apikey
+        JOIN aggr on aggr.character_eve_idcharacter = characters.eve_idcharacter
+        JOIN user on aggr.user_iduser = user.iduser
+        WHERE user.username = '$username'");*/
 
         $user_keys = $query->result_array();
 
@@ -229,46 +228,46 @@ class Updater_model extends CI_Model
         }
 
         //if ($this->isLocked($this->username)) {
-            //$this->resultTable();
+        //$this->resultTable();
         //} else {
-            foreach ($this->account_characters as $characters) {
-                //begin character specific operations
-                $this->character_id = $characters['character_eve_idcharacter'];
+        foreach ($this->account_characters as $characters) {
+            //begin character specific operations
+            $this->character_id = $characters['character_eve_idcharacter'];
 
-                $this->db->where('eve_idcharacter', $this->character_id);
-                $query = $this->db->get('characters');
+            $this->db->where('eve_idcharacter', $this->character_id);
+            $query = $this->db->get('characters');
 
-                $this->character_name     = $query->row()->name;
-                $this->character_balance  = $query->row()->balance;
-                $this->character_escrow   = $query->row()->escrow;
-                $this->character_networth = $query->row()->networth;
-                $this->character_orders   = $query->row()->total_sell;
-                $this->apikey             = $query->row()->api_apikey;
+            $this->character_name     = $query->row()->name;
+            $this->character_balance  = $query->row()->balance;
+            $this->character_escrow   = $query->row()->escrow;
+            $this->character_networth = $query->row()->networth;
+            $this->character_orders   = $query->row()->total_sell;
+            $this->apikey             = $query->row()->api_apikey;
 
-                $this->db->where('apikey', $this->apikey);
-                $query       = $this->db->get('api');
-                $vcode       = $query->row()->vcode;
-                $this->vcode = $vcode;
+            $this->db->where('apikey', $this->apikey);
+            $query       = $this->db->get('api');
+            $vcode       = $query->row()->vcode;
+            $this->vcode = $vcode;
 
-                //get character data
-                $this->getWalletBalance();
-                $this->getBrokerRelationsLevel();
-                $this->getAccountingLevel();
-                $this->getCorpStandings();
-                $this->getFactionStandings();
-                $this->getTransactions();
-                $this->getContracts();
-                $this->getMarketOrders();
-                $this->getAssets();
-                $this->setNewInfo();
-                $this->updateCharacterInfo();
+            //get character data
+            $this->getWalletBalance();
+            $this->getBrokerRelationsLevel();
+            $this->getAccountingLevel();
+            $this->getCorpStandings();
+            $this->getFactionStandings();
+            $this->getTransactions();
+            $this->getContracts();
+            $this->getMarketOrders();
+            $this->getAssets();
+            $this->setNewInfo();
+            $this->updateCharacterInfo();
 
-                $this->db->trans_complete();
+            $this->db->trans_complete();
 
-                if ($this->db->trans_status() === false) {
-                    return "dberror";
-                }
+            if ($this->db->trans_status() === false) {
+                return "dberror";
             }
+        }
         //}
 
     }
@@ -600,9 +599,9 @@ class Updater_model extends CI_Model
         $this->db->where('orders.type', 'sell');
         $query = $this->db->get('');
         /*$query = $this->db->query("SELECT coalesce(sum(orders.volume_remaining * item_price_data.price_evecentral),0) AS grand_total
-                        FROM orders
-                        JOIN item_price_data ON item_price_data.item_eve_iditem = orders.eve_item_iditem
-                        WHERE characters_eve_idcharacters = '$this->character_id' AND orders.order_state = 'open' AND orders.type = 'sell'");*/
+        FROM orders
+        JOIN item_price_data ON item_price_data.item_eve_iditem = orders.eve_item_iditem
+        WHERE characters_eve_idcharacters = '$this->character_id' AND orders.order_state = 'open' AND orders.type = 'sell'");*/
 
         $this->character_orders = $query->row()->grand_total;
     }
@@ -688,9 +687,9 @@ class Updater_model extends CI_Model
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $query = $this->db->get('');
         /*$query = $this->db->query("SELECT coalesce(SUM(assets.quantity * item_price_data.price_evecentral),0) AS grand_total
-            FROM assets
-            JOIN item_price_data ON item_price_data.item_eve_iditem = assets.item_eve_iditem
-            WHERE assets.`characters_eve_idcharacters` =  '$this->character_id'");*/
+        FROM assets
+        JOIN item_price_data ON item_price_data.item_eve_iditem = assets.item_eve_iditem
+        WHERE assets.`characters_eve_idcharacters` =  '$this->character_id'");*/
 
         $this->character_networth = $query->row()->grand_total;
     }
@@ -804,18 +803,17 @@ class Updater_model extends CI_Model
                     $query_buy = $this->db->get('');
 
                     /*$query_buy = $this->db->query("SELECT item.name as itemname,
-                        item.eve_iditem as iditem,
-                        station.name as stationname,
-                        transaction.station_eve_idstation as stationid,
-                        characters.eve_idcharacter as characterid,
-                        characters.name as charactername,
-                        transaction.time as transactiontime
-                        FROM transaction
-                        JOIN characters ON transaction.character_eve_idcharacter = characters.eve_idcharacter
-                        LEFT JOIN station ON transaction.station_eve_idstation = station.eve_idstation
-                        LEFT JOIN item ON transaction.item_eve_iditem = item.eve_iditem
-                            WHERE transaction.idbuy = '$idbuy_b'");*/
-
+                    item.eve_iditem as iditem,
+                    station.name as stationname,
+                    transaction.station_eve_idstation as stationid,
+                    characters.eve_idcharacter as characterid,
+                    characters.name as charactername,
+                    transaction.time as transactiontime
+                    FROM transaction
+                    JOIN characters ON transaction.character_eve_idcharacter = characters.eve_idcharacter
+                    LEFT JOIN station ON transaction.station_eve_idstation = station.eve_idstation
+                    LEFT JOIN item ON transaction.item_eve_iditem = item.eve_iditem
+                    WHERE transaction.idbuy = '$idbuy_b'");*/
 
                     $this->db->select('item.name as itemname,
                         item.eve_iditem as iditem,
@@ -832,17 +830,17 @@ class Updater_model extends CI_Model
                     $query_sell = $this->db->get('');
 
                     /*$query_sell = $this->db->query("SELECT item.name as itemname,
-                        item.eve_iditem as iditem,
-                        station.name as stationname,
-                        transaction.station_eve_idstation as stationid,
-                        characters.eve_idcharacter as characterid,
-                        characters.name as charactername,
-                        transaction.time as transactiontime
-                        FROM transaction
-                        JOIN characters ON transaction.character_eve_idcharacter = characters.eve_idcharacter
-                        LEFT JOIN station ON transaction.station_eve_idstation = station.eve_idstation
-                        LEFT JOIN item ON transaction.item_eve_iditem = item.eve_iditem
-                            WHERE transaction.idbuy = '$idbuy_s'");*/
+                    item.eve_iditem as iditem,
+                    station.name as stationname,
+                    transaction.station_eve_idstation as stationid,
+                    characters.eve_idcharacter as characterid,
+                    characters.name as charactername,
+                    transaction.time as transactiontime
+                    FROM transaction
+                    JOIN characters ON transaction.character_eve_idcharacter = characters.eve_idcharacter
+                    LEFT JOIN station ON transaction.station_eve_idstation = station.eve_idstation
+                    LEFT JOIN item ON transaction.item_eve_iditem = item.eve_iditem
+                    WHERE transaction.idbuy = '$idbuy_s'");*/
 
                     $stationFromID   = $query_buy->row()->stationid;
                     $stationToID     = $query_sell->row()->stationid;
@@ -908,9 +906,9 @@ class Updater_model extends CI_Model
     }
 
     //Update each character's total profit, sales, etc for this day
-    public function updateTotals(bool $global = false, bool $user = false) : array
+    public function updateTotals(bool $global = false, bool $user = false): array
     {
-        if(!$global) {
+        if (!$global) {
             $username = $this->username;
         } else {
             $username = $user;
@@ -966,12 +964,12 @@ class Updater_model extends CI_Model
             $margin = $this->db->get('');
 
             /*$margin = $this->db->query("select coalesce(((sum(profit.profit_unit*profit.quantity_profit)/sum(t1.price_unit*profit.quantity_profit))*100),0) as margin
-                from profit
-                join transaction t1 on profit.transaction_idbuy_buy = t1.idbuy
-                join transaction t2 on profit.transaction_idbuy_sell = t2.idbuy
-                join characters on t2.character_eve_idcharacter = characters.eve_idcharacter
-                where characters.eve_idcharacter = '$this->character_id'
-                and date(t2.time) = '$date_today'");*/
+            from profit
+            join transaction t1 on profit.transaction_idbuy_buy = t1.idbuy
+            join transaction t2 on profit.transaction_idbuy_sell = t2.idbuy
+            join characters on t2.character_eve_idcharacter = characters.eve_idcharacter
+            where characters.eve_idcharacter = '$this->character_id'
+            and date(t2.time) = '$date_today'");*/
             $margin_val = $margin->row()->margin;
 
             $data = array(
@@ -983,7 +981,6 @@ class Updater_model extends CI_Model
                 "margin"                      => $margin_val,
             );
 
-
             $this->db->replace('history', $data);
         }
 
@@ -992,13 +989,13 @@ class Updater_model extends CI_Model
         $this->db->where('username', $this->username);
         $this->db->update("user", $data);
         log_message('error', $this->db->last_query());*/
-        if(!$global) {
+        if (!$global) {
             return $character_list->result();
         }
-        
+
     }
 
-    public function getAPIKeys(int $id_user) : array
+    public function getAPIKeys(int $id_user): array
     {
         $this->db->select('api.apikey as key');
         $this->db->from('api');
@@ -1026,7 +1023,7 @@ class Updater_model extends CI_Model
         $this->db->update('user', $data);
     }
 
-    public function isLocked(string $username) : bool
+    public function isLocked(string $username): bool
     {
         $this->db->select('updating');
         $this->db->where('username', $username);
@@ -1041,14 +1038,14 @@ class Updater_model extends CI_Model
         return false;
     }
 
-    public function getChangeLog(bool $recent = false) : array
+    public function getChangeLog(bool $recent = false): array
     {
         $this->db->select('*');
         $this->db->from('changelog');
 
         $recent ? $this->db->limit('3') : "";
         $this->db->order_by('date', 'desc');
-        $query = $this->db->get('');
+        $query  = $this->db->get('');
         $result = $query->result();
 
         return $result;

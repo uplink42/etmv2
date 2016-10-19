@@ -10,24 +10,23 @@ class Assets extends MY_Controller
         parent::__construct();
         $this->db->cache_on();
         $this->page = "Assets";
+        $this->significant = true;
 
         if (isset($_GET['sig'])) {
             if ($_GET['sig'] == 0 || $_GET['sig'] == 1) {
-                $this->significant = $_GET['sig'];
+                $this->significant = (bool) $_GET['sig'];
             } else {
-                $this->significant = 1;
+                $this->significant = true;
             }
-        } else {
-            $this->significant = 1;
         }
     }
 
-    public function index($character_id, $region_id = "all")
+    public function index(int $character_id, int $region_id = 0)
     {
-        if ($this->enforce($character_id, $user_id = $this->session->iduser)) {
+        if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate = $this->aggregate;
-            $data      = $this->loadViewDependencies($character_id, $user_id, $aggregate);
+            $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
 
             $data['selected'] = "assets";
@@ -49,16 +48,13 @@ class Assets extends MY_Controller
             $res          = $this->Assets_model->getAssetsList($region_id, $chars, $this->significant);
             $asset_list   = $res['result'];
 
-            if ($res['count'] > 300) {
-                $img = false;
-            } else {
-                $img = true;
-            }
+            $res['count'] > 300 ? $img = false : $img = true;
 
             $ratio = $this->Assets_model->getWorthSignificant($chars);
 
+
             if ($region_name != "All") {
-                $data['current_asset_value'] = $asset_totals[$region_name][0]['total_value'];
+                $data['current_asset_value'] = isset($asset_totals[$region_name]) ? $asset_totals[$region_name][0]['total_value'] : 0;
             } else {
                 $data['current_asset_value'] = $this->Assets_model->getCurrentAssetTotals($chars);
             }

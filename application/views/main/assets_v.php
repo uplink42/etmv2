@@ -62,7 +62,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                        <?php $url = "assets/index/".$character_id."/all?sig=".$sig."&aggr=".$aggregate;?>
+                                        <?php $url = "assets/index/".$character_id."/0?sig=".$sig."&aggr=".$aggregate;?>
                                         <li><a href="<?=base_url($url)?>"><b>All</b></a></li>
                                         <li role="separator" class="divider"></li>
                                     <?php 
