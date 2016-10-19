@@ -1,9 +1,8 @@
 <?php declare(strict_types=1);
 defined('BASEPATH') or exit('No direct script access allowed');
-
-ini_set('mysql.connect_timeout', 3000);
-ini_set('default_socket_timeout', 3000);
-ini_set('max_execution_time', 0);
+ini_set('mysql.connect_timeout', '3000');
+ini_set('default_socket_timeout', '3000');
+ini_set('max_execution_time', '0');
 
 class Autoexec_dailysum extends CI_Controller
 {

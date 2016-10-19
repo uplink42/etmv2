@@ -85,10 +85,11 @@ $(function() {
         if (jQuery.browser.mobile === false && !isAndroid) 
         {
             $.backstretch([
-                "dist/img/bg-slideshow-1.jpg",
-                "dist/img/bg-slideshow-2.jpg",
-                "dist/img/bg-slideshow-3.jpg"
-            ], {duration: 2000, fade: 2000});
+                "dist/img/bg-slideshow-1.gif",
+                "dist/img/bg-slideshow-2.gif",
+                "dist/img/bg-slideshow-3.gif",
+                "dist/img/bg-slideshow-4.gif"
+            ], {duration: 5000, fade: 500});
         }
     });
     

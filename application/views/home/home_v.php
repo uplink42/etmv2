@@ -78,15 +78,11 @@
                 </li>
 
                 <li class="page-scroll">
-                    <a href="#">Demo</a>
-                </li>
-                
-                <li class="page-scroll">
-                    <a href="#gallery">Gallery</a>
+                    <a href="#tryit">Try it out</a>
                 </li>
 
                 <li class="page-scroll">
-                    <a href="#tryit">Try it out</a>
+                    <a href="#gallery">Gallery</a>
                 </li>
 
                 <li class="page-scroll">
@@ -147,12 +143,9 @@
 
                 <div class="col-md-6">
                     <div class="who-we-are-text">
-                        <h4>About</h4>
-
-                        <p class="about-etm">Eve Trade Master is a trading manager application for the popular MMORPG Eve Online. Eve Trade Master first started as personal project back in August 2015. With growing interest for web development and Eve Online's fascinating economy, it has been massively improved overtime, thanks to Eve's vibrant community's support. <br>
+                        <p class="about-etm">Eve Trade Master is a trading manager application for the popular MMORPG Eve Online. Eve Trade Master first started as personal project back in August 2015. With growing interest for Eve Online's intricate economy, it has been massively improved overtime, thanks to Eve's vibrant community and support. <br>
                         ETM 2.0 represents a major milestone both in back and front-end improvements, which will hopefully empower your trading activity in New Eden to a whole new level.</p>
-
-                        <div class="page-scroll">
+                        <div class="page-scroll text-center">
                             <a href="#" class="btn btn-lg btn-rj">Check it out!</a>
                         </div>
                         <!-- //.page-scroll -->
@@ -387,6 +380,36 @@
 </section>
 <!-- //End Our Services Section -->
 
+<!-- Begin Quote Section -->
+<section id="tryit" class="section section-bgimage-yes">
+    <div class="section-inner">
+        <div class="section-overlay"></div>
+
+        <div class="container section-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="quote-text text-center">
+                        <!--<span class="quote-icon">
+                            <i class="fa fa-quote-right fa-4x"></i>
+                        </span>-->
+
+                        <h2>Try it out! Free to use and install.</h2>
+                        <h2>All you need is a working API Key</h2>
+                        <a class="btn btn-lg btn-rj">Register</a>
+                        
+                    </div>
+                    <!-- //.quote-text -->
+                </div>
+                <!-- //.col-md-12 -->
+            </div>    
+            <!-- //.row -->
+        </div>
+        <!-- //.section-content -->
+    </div>
+    <!-- //.section-inner -->
+</section>
+<!-- //End Quote Section -->
+
 <!-- Begin Our Latest Work Section -->
 <section id="gallery" class="section">
     <div class="section-inner">
@@ -436,7 +459,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/portfolio/portfolio-image-1.jpg')?>" title="Project Title 1 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-1.jpg')?>" title="Project Title 1 - Lorem Ipsum">
                                             <div class="portfolio-text">
                                                 <h4>Dashboard</h4>
 
@@ -449,7 +472,7 @@
                                 </div>
                                 <!-- //.portfolio-content -->
 
-                                <img src="<?=base_url('dist/img/portfolio/portfolio-image-1.jpg')?>" alt="" class="img-responsive"/>
+                                <img src="<?=base_url('dist/img/gallery/portfolio-image-1.jpg')?>" alt="" class="img-responsive"/>
                             </div>
                             <!-- //.inner-content -->
                         </div>
@@ -459,7 +482,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="../assets/img/portfolio/portfolio-image-2.jpg" title="Project Title 2 - Lorem Ipsum">
+                                        <a href="../assets/img/gallery/portfolio-image-2.jpg" title="Project Title 2 - Lorem Ipsum">
                                             <div class="portfolio-text">
                                                 <h4>Profit Tracker</h4>
 
@@ -472,7 +495,7 @@
                                 </div>
                                 <!-- //.portfolio-content -->
 
-                                <img src="<?=base_url('dist/img/portfolio/portfolio-image-2.jpg')?>" alt="" class="img-responsive"/>
+                                <img src="<?=base_url('dist/img/gallery/portfolio-image-2.jpg')?>" alt="" class="img-responsive"/>
                             </div>
                             <!-- //.inner-content -->
                         </div>
@@ -482,7 +505,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/portfolio/portfolio-image-3.jpg')?>" title="Project Title 3 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-3.jpg')?>" title="Project Title 3 - Lorem Ipsum">
                                             <div class="portfolio-text">
                                                 <h4>Assets List</h4>
 
@@ -495,7 +518,7 @@
                                 </div>
                                 <!-- //.portfolio-content -->
 
-                                <img src="<?=base_url('dist/img/portfolio/portfolio-image-3.jpg')?>" alt="" class="img-responsive"/>
+                                <img src="<?=base_url('dist/img/gallery/portfolio-image-3.jpg')?>" alt="" class="img-responsive"/>
                             </div>
                             <!-- //.inner-content -->
                         </div>
@@ -505,7 +528,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/portfolio/portfolio-image-4.jpg')?>" title="Project Title 4 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-4.jpg')?>" title="Project Title 4 - Lorem Ipsum">
                                             <div class="portfolio-text">
                                                 <h4>Net worth tracker</h4>
 
@@ -518,7 +541,7 @@
                                 </div>
                                 <!-- //.portfolio-content -->
 
-                                <img src="<?=base_url('dist/img/portfolio/portfolio-image-4.jpg')?>" alt="" class="img-responsive"/>
+                                <img src="<?=base_url('dist/img/gallery/portfolio-image-4.jpg')?>" alt="" class="img-responsive"/>
                             </div>
                             <!-- //.inner-content -->
                         </div>
@@ -528,7 +551,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/portfolio/portfolio-image-5.jpg')?>" title="Project Title 5 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-5.jpg')?>" title="Project Title 5 - Lorem Ipsum">
                                             <div class="portfolio-text">
                                                 <h4>Statistics</h4>
 
@@ -541,7 +564,7 @@
                                 </div>
                                 <!-- //.portfolio-content -->
 
-                                <img src="<?=base_url('dist/img/portfolio/portfolio-image-5.jpg')?>" alt="" class="img-responsive"/>
+                                <img src="<?=base_url('dist/img/gallery/portfolio-image-5.jpg')?>" alt="" class="img-responsive"/>
                             </div>
                             <!-- //.inner-content -->
                         </div>
@@ -551,7 +574,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/portfolio/portfolio-image-6.jpg')?>" title="Project Title 6 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-6.jpg')?>" title="Project Title 6 - Lorem Ipsum">
                                             <div class="portfolio-text">
                                                 <h4>Trade Simulator</h4>
 
@@ -564,7 +587,7 @@
                                 </div>
                                 <!-- //.portfolio-content -->
 
-                                <img src="<?=base_url('dist/img/portfolio/portfolio-image-6.jpg')?>" alt="" class="img-responsive"/>
+                                <img src="<?=base_url('dist/img/gallery/portfolio-image-6.jpg')?>" alt="" class="img-responsive"/>
                             </div>
                             <!-- //.inner-content -->
                         </div>
@@ -574,7 +597,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/portfolio/portfolio-image-7.jpg')?>" title="Project Title 7 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-7.jpg')?>" title="Project Title 7 - Lorem Ipsum">
                                             <div class="portfolio-text">
                                                 <h4>Order Check</h4>
 
@@ -587,7 +610,7 @@
                                 </div>
                                 <!-- //.portfolio-content -->
 
-                                <img src="<?=base_url('dist/img/portfolio/portfolio-image-7.jpg')?>" alt="" class="img-responsive"/>
+                                <img src="<?=base_url('dist/img/gallery/portfolio-image-7.jpg')?>" alt="" class="img-responsive"/>
                             </div>
                             <!-- //.inner-content -->
                         </div>
@@ -597,7 +620,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/portfolio/portfolio-image-8.jpg')?>" title="Project Title 8 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-8.jpg')?>" title="Project Title 8 - Lorem Ipsum">
                                             <div class="portfolio-text">
                                                 <h4>Citadel Taxes</h4>
 
@@ -610,7 +633,7 @@
                                 </div>
                                 <!-- //.portfolio-content -->
 
-                                <img src="<?=base_url('dist/img/portfolio/portfolio-image-8.jpg')?>" alt="" class="img-responsive"/>
+                                <img src="<?=base_url('dist/img/gallery/portfolio-image-8.jpg')?>" alt="" class="img-responsive"/>
                             </div>
                             <!-- //.inner-content -->
                         </div>
@@ -633,7 +656,7 @@
                                 </div>
                                 <!-- //.portfolio-content -->
 
-                                <img src="<?=base_url('dist/img/portfolio/portfolio-image-9.jpg')?>" alt="" class="img-responsive"/>
+                                <img src="<?=base_url('dist/img/gallery/portfolio-image-9.jpg')?>" alt="" class="img-responsive"/>
                             </div>
                             <!-- //.inner-content -->
                         </div>
@@ -650,147 +673,6 @@
     <!-- //.section-inner -->
 </section>
 <!-- //End Our Latest Work Section -->
-
-
-<!-- Begin Quote Section -->
-<section id="tryit" class="section section-bgimage-yes">
-    <div class="section-inner">
-        <div class="section-overlay"></div>
-
-        <div class="container section-content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="quote-text text-center">
-                        <!--<span class="quote-icon">
-                            <i class="fa fa-quote-right fa-4x"></i>
-                        </span>-->
-
-                        <h2>Try it out! Free to use and install.</h2>
-                        <h2>All you need is a working API Key</h2>
-                        <a class="btn btn-lg btn-rj">Register</a>
-                        
-                    </div>
-                    <!-- //.quote-text -->
-                </div>
-                <!-- //.col-md-12 -->
-            </div>    
-            <!-- //.row -->
-        </div>
-        <!-- //.section-content -->
-    </div>
-    <!-- //.section-inner -->
-</section>
-<!-- //End Quote Section -->
-
-
-<!-- Begin Testimonials Section -->
-<section id="testimonials" class="section section-bgimage-yes">
-    <div class="section-inner">
-        <div class="section-overlay"></div>
-
-        <div class="container section-content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-title text-center">
-                        <h2 class="main-title">Testimonials</h2>
-
-                        <h3 class="sub-title">What some players have to say:</h3>
-
-                        <span class="section-line"></span>
-                    </div>
-                    <!-- //.section-title -->
-                </div>
-                <!-- //.col-md-12 -->
-            </div>    
-            <!-- //.row -->
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="testimonial-item not-right-column not-bottom-column">
-                        <div class="testimonial-content">
-                            <p class="testimonial-title">Lorem Ipsum Title</p>
-
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                            </blockquote>
-                        </div>
-                        <!-- //.testimonial-content -->
-
-                        <div class="testimonial-info clearfix">
-                            <img width="100" src="<?=base_url('dist/img/testimonial-image-1.jpg')?>" alt="" class="img-circle img-thumbnail"/>
-
-                            <p class="testimonial-author">
-                                @Jane Doe, Jakarta
-                                <br>
-                                <em>Co-Founder at Cisco</em>
-                            </p>
-                        </div>
-                        <!-- //.testimonial-info -->
-                    </div>
-                    <!-- //.testimonial-item -->
-                </div>
-                <!-- //.col-md-4 -->
-
-                <div class="col-md-4">
-                    <div class="testimonial-item not-right-column not-bottom-column">
-                        <div class="testimonial-content">
-                            <p class="testimonial-title">Lorem Ipsum Title</p>
-
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                            </blockquote>
-                        </div>
-                        <!-- //.testimonial-content -->
-
-                        <div class="testimonial-info clearfix">
-                            <img width="100" src="<?=base_url('dist/img/testimonial-image-2.jpg')?>" alt="" class="img-circle img-thumbnail"/>
-
-                            <p class="testimonial-author">
-                                @John Doe, Jakarta
-                                <br>
-                                <em>Creative Director at Apple</em>
-                            </p>
-                        </div>
-                        <!-- //.testimonial-info -->
-                    </div>
-                    <!-- //.testimonial-item -->
-                </div>
-                <!-- //.col-md-4 -->
-
-                <div class="col-md-4">
-                    <div class="testimonial-item not-bottom-column">
-                        <div class="testimonial-content">
-                            <p class="testimonial-title">Lorem Ipsum Title</p>
-
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                            </blockquote>
-                        </div>
-                        <!-- //.testimonial-content -->
-
-                        <div class="testimonial-info clearfix">
-                            <img width="100" src="<?=base_url('dist/img/testimonial-image-3.jpg')?>" alt="" class="img-circle img-thumbnail"/>
-
-                            <p class="testimonial-author">
-                                @John Doe, Jakarta
-                                <br>
-                                <em>Managet at Microsoft</em>
-                            </p>
-                        </div>
-                        <!-- //.testimonial-info -->
-                    </div>
-                    <!-- //.testimonial-item -->
-                </div>
-                <!-- //.col-md-4 -->
-            </div>
-            <!-- //.row -->
-            
-        </div>
-        <!-- //.section-container -->
-    </div>
-    <!-- //.section-inner -->
-</section>
-<!-- //End Testimonials Section -->
 
 <!-- Begin Coming Soon Section -->
 <section id="coming-soon" class="section section-bgimage-yes">
@@ -845,13 +727,6 @@
                         Any help is appreciated, but never mandatory. <br>
                         I'm also interested in your feedback for bug reports or feature requests!</p>
                         <span class="section-line"></span>
-                        <div class="row donate">
-                            <div class="col-md-4 col-md-offset-4">
-                                <div class="text-center">
-                                    <h2 class="section-title title-donate"><i class="fa fa-paypal"></i> Donate</h2>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-md-4 col-md-offset-2">
                         <div class="text-center">

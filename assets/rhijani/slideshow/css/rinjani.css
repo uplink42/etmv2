@@ -59,7 +59,7 @@ html {
   height: 100%;
 }
 body {
-  background-color: #f2f4f4;
+  background-color: #24262d;
   font-family: 'Lato', sans-serif;
   color: #fff;
   overflow-x: hidden;
@@ -113,7 +113,7 @@ p {
   }
 }
 .section {
-  background-color: #2f323b;
+  background-color: #24262d;
 }
 .section > .section-inner {
   position: relative;
@@ -314,7 +314,7 @@ p {
   margin: 0;
   border: 0;
   min-height: 60px;
-  background-color: #2f323b;
+  background-color: #24262d;
   box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.2);
   z-index: 1030 !important;
 }
@@ -540,7 +540,6 @@ span.navbar-trigger-close a:hover {
   width: 100%;
   height: auto;
   color: #fff;
-  background-image: url("../../../dist/img/bg-intro.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   -webkit-background-size: cover;
@@ -560,7 +559,7 @@ span.navbar-trigger-close a:hover {
   content: " ";
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.7);
 }
 #intro .intro-body {
   position: relative;
@@ -759,8 +758,10 @@ span.navbar-trigger-close a:hover {
 /*---------------------------------------------------------------------*/
 /*  14. CONTACT US SECTION
 /*---------------------------------------------------------------------*/
-#contact-us {
 
+
+#contact-us .section-title{
+  padding-bottom: 0;
 }
 #contact-us > .section-inner .section-content .section-title {
   color: #b7ada4;

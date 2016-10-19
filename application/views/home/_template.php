@@ -25,7 +25,6 @@
     <script src="../assets/plugins/modernizr.min.js"></script>
     <![endif]-->
 </head>
-<!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" data-offset="51">
 
 <?php $this->load->view('home/home_v'); ?>
