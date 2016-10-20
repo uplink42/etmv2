@@ -12,7 +12,7 @@ class Autoexec_outposts_model extends CI_Model
         parent::__construct();
     }
 
-    public function getOutposts()
+    public function getOutposts() : int
     {
         $pheal        = new Pheal();
         $response     = $pheal->eveScope->ConquerableStationList();
@@ -34,10 +34,10 @@ class Autoexec_outposts_model extends CI_Model
         return $this->insertData($outpostsList);
     }
 
-    public function getCitadels()
+    public function getCitadels() : int
     {
         $url = "https://stop.hammerti.me.uk/api/citadel/all";
-        $result = json_decode(file_get_contents($url), JSON_UNESCAPED_SLASHES);
+        $result = json_decode(file_get_contents($url), true);
 
         $citadelList = [];
 
@@ -61,7 +61,7 @@ class Autoexec_outposts_model extends CI_Model
         return $this->insertData($citadelList);
     }
 
-    public function insertData($data)
+    public function insertData(array $data) : int
     {
         $this->db->trans_start();
         $this->db->query(
@@ -70,10 +70,8 @@ class Autoexec_outposts_model extends CI_Model
         );
         $this->db->trans_complete();
 
-        if ($this->db->trans_status() === false) {
-            return false;
-        } else {
-            $count = count($data);
+        if ($this->db->trans_status() === true) {
+            $count = (int)count($data);
             return $count;
         }
     }

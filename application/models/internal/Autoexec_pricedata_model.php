@@ -12,7 +12,7 @@ class Autoexec_pricedata_model extends CI_Model
     }
 
 
-    public function getPrices()
+    public function getPrices() : int
     {
         $url = "https://crest-tq.eveonline.com/market/prices/";
         $response = json_decode(file_get_contents($url),true);
@@ -39,9 +39,6 @@ class Autoexec_pricedata_model extends CI_Model
         foreach($result as $price) {
             array_push($fixedPriceData, array("item_eve_iditem" => $price->item_eve_iditem, "price_evecentral" => $price->price));
         }
-
-        //$priceData = array_unique($priceData); //remove duplicates 
-        //$priceData = array_map("unserialize", array_unique(array_map("serialize", $priceData)));
         
         $this->db->trans_start();
         
@@ -53,14 +50,9 @@ class Autoexec_pricedata_model extends CI_Model
             );
         $this->db->trans_complete();
 
-        if ($this->db->trans_status() === false) {
-            return false;
-        } else {
+        if ($this->db->trans_status() === true) {
             $count = count($priceData);
             return $count;
         }
-        //var_dump($priceList);
-
-
     }
 }

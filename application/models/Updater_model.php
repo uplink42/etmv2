@@ -910,7 +910,7 @@ class Updater_model extends CI_Model
     }
 
     //Update each character's total profit, sales, etc for this day
-    public function updateTotals(bool $global = false, bool $user = false): array
+    public function updateTotals(bool $global = false, string $user = null)
     {
         if (!$global) {
             $username = $this->username;

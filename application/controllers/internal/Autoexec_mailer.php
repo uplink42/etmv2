@@ -27,7 +27,7 @@ class Autoexec_mailer extends CI_Controller
             foreach($characters as $char) {
                 $chars      = $characters['aggr'];
                 $char_names = $characters['char_names'];
-                $chars = "(" . $character_id . ")";
+                $chars_list = "(" . $character_id . ")";
             }
             
         

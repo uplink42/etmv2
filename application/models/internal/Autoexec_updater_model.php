@@ -16,7 +16,6 @@ class Autoexec_updater_model extends CI_Model
     {
         $this->db->select('username, iduser');
         $this->db->from('user');
-        //$this->db->where('iduser<=605');
         $this->db->order_by('iduser', 'desc');
         $query = $this->db->get();
 
