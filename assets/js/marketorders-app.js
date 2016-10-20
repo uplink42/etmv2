@@ -31,10 +31,10 @@ $(document).ready(function() {
     });
 
     $(".buyorders-body p.yellow").html("<p>There are "+ table1.rows().count() + " results for a total of "
-        + number_format(table1.column(5).data().sum(),2, '.', ',' ) + " ISK</p>");
+        + number_format(table1.column(4).data().sum(),2, '.', ',' ) + " ISK</p>");
     $("#buyorders-table_filter input").keyup(function () {
         $(".buyorders-body p.yellow").html("There are "+ table1.rows({filter: 'applied'}).count() + " results for a total of "
-            + number_format(table1.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK.");
+            + number_format(table1.column(4, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK.");
     });
 
     $(".buyorders-body .item-name").on('click', function() {

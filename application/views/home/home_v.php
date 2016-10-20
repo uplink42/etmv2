@@ -697,7 +697,7 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="countdown-text text-center">
-                        <p class="lead">Stay up to date with new features and bug fixes and contribute for future development in Eve Trade Master</p>
+                        <p class="lead">Stay up to date with new features and bug fixes and contribute for the future development in Eve Trade Master</p>
                         <a href="#" class="btn btn-lg btn-rj">Dev Blog</a>
                     </div>
                     <!-- //.countdown-text -->
@@ -731,13 +731,13 @@
                     <div class="col-md-4 col-md-offset-2">
                         <div class="text-center">
                             <h2 class="lead"><i class="fa fa-envelope-o"></i></h2>
-                            <h3 class="lead">etmdevelopment42@gmail.com</h3>
+                            <h3 class="lead"><a href="mailto:etmdevelopment42@gmail.com">etmdevelopment42@gmail.com</a></h3>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="text-center">
                             <h2 class="lead"><i class="fa fa-twitter"></i></h2>
-                            <h3 class="lead">@nickstarkey</h3>
+                            <h3 class="lead"><a href="//twitter.com/intent/tweet?screen_name=uplink42">@uplink42</a></h3>
                         </div>
                     </div>
                     <!-- //.section-title -->

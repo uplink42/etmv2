@@ -570,6 +570,10 @@ class Updater_model extends CI_Model
         }
         $this->character_new_orders = count($new_orders) - $duplicates;
 
+        //remove old orders
+        $this->db->where('characters_eve_idcharacters', $this->character_id);
+        $this->db->delete('orders');
+
         if (!empty($market_orders)) {
             $this->db->query(batch("orders",
                 array('idorders',

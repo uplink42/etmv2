@@ -763,6 +763,10 @@ span.navbar-trigger-close a:hover {
 #contact-us .section-title{
   padding-bottom: 0;
 }
+
+#contact-us a {
+  color: #fff;
+}
 #contact-us > .section-inner .section-content .section-title {
   color: #b7ada4;
 }
