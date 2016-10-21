@@ -52,25 +52,12 @@ class MY_Controller extends CI_Controller
         }
     }
 
-    /**
-     * Returns all characters who belong to a specified user account
-     * @param  [int] $user_id  [internal user id]
-     * @return [array]         [character list]
-     */
     protected function getCharacterList(int $user_id)
     {
         $data = $this->Login_model->getCharacterList($user_id);
         return $data;
     }
 
-    /**
-     * Loads all common view variables, such as current page, session data, character list
-     * and character names.
-     * @param  [int] $character_id    [eve character id]
-     * @param  [int] $user_id         [internal user id]
-     * @param  [string] $aggregate    [account characters tuple]
-     * @return [array]                [view dependencies]
-     */
     protected function loadViewDependencies(int $character_id, int $user_id, bool $aggregate)
     {
         $chars      = [];
@@ -99,10 +86,6 @@ class MY_Controller extends CI_Controller
         return $data;
     }
 
-    /**
-     * Loads the required data to build each page's character selector dropdown
-     * @return [array] [selector data]
-     */
     private function buildSelector() : array
     {
         switch ($this->page) {

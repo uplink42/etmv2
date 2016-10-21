@@ -20,7 +20,7 @@ class User extends CI_Model
     	return $result;
     }
 
-    public function getUsersByReports(int $interval) : array
+    public function getUsersByReports(string $interval) : array
     {
         $this->db->select('username, iduser');
         $this->db->where('reports', $interval);
