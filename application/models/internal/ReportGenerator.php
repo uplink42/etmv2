@@ -17,18 +17,18 @@ class ReportGenerator extends CI_Model
         $chars = substr($chars, 1);
         $chars = substr($chars, 0, -1);
 
-        $group   = explode(',', $chars);
+        $group  = explode(',', $chars);
 
-        $final = [];
-        $ind = [];
+        $final  = [];
+        $ind    = [];
         $totals = [];
+
+        $total_profit = 0;
+        $total_sell   = 0;
+        $total_buy    = 0;
 
         foreach ($group as $row) {
             $id           = (int) $row;
-            $total_profit = 0;
-            $total_sell   = 0;
-            $total_buy    = 0;
-
             $profit = $this->getTotalProfit($id, $interval);
             $sell   = $this->getTotalSales($id, $interval);
             $buy    = $this->getTotalExpenses($id, $interval);
@@ -37,9 +37,9 @@ class ReportGenerator extends CI_Model
             $total_sell   += $sell;
             $total_buy    += $buy;
 
-            $values = ["buy"    => $buy,
+            $values = ["profit" => $profit,
                        "sell"   => $sell,
-                       "profit" => $profit];
+                       "buy"    => $buy];
 
             array_push($ind, [$id => $values]);
         }
@@ -47,7 +47,6 @@ class ReportGenerator extends CI_Model
         array_push($totals, ["total_profit" => $total_profit,
                              "total_sell"   => $total_sell,
                              "total_buy"    => $total_buy]);
-
 
         array_push($final, $ind);
         array_push($final, $totals);
@@ -92,19 +91,19 @@ class ReportGenerator extends CI_Model
 
     public function calculateBestRaw(string $chars, int $interval): array
     {
-        $result = $this->stats->getBestItemsRaw($chars, $interval, false);
+        $result = $this->stats->getBestItemsRaw($chars, $interval, false, 5);
         return $result;
     }
 
     public function calculateBestMargin(string $chars, int $interval): array
     {
-        $result = $this->stats->getBestItemsMargin($chars, $interval);
+        $result = $this->stats->getBestItemsMargin($chars, $interval, 5);
         return $result;
     }
 
     public function calculateProblematicItems(string $chars, int $interval): array
     {
-        $result = $this->stats->getProblematicItems($chars, $interval);
+        $result = $this->stats->getProblematicItems($chars, $interval, 5);
         return $result;
     }
 
@@ -122,7 +121,7 @@ class ReportGenerator extends CI_Model
 
     public function calculateBestIPH(string $chars, int $interval): array
     {
-        $result = $this->stats->getBestIPH($chars, $interval);
+        $result = $this->stats->getBestIPH($chars, $interval, 5);
         return $result;
     }
 

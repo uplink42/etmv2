@@ -95,7 +95,7 @@ class Statistics_model extends CI_Model
         return $jsonEncodedData;
     }
 
-    public function getProblematicItems(string $chars, int $interval) : array
+    public function getProblematicItems(string $chars, int $interval, int $limit = null) : array
     {
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
@@ -109,6 +109,9 @@ class Statistics_model extends CI_Model
         $this->db->group_by('item.eve_iditem');
         $this->db->having('sum(profit.quantity_profit*profit.profit_unit) < 0');
         $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit) ASC');
+        if ($limit) {
+            $this->db->limit($limit);
+        }
         $query = $this->db->get();
 
         $result = $query->result_array();
@@ -146,7 +149,7 @@ class Statistics_model extends CI_Model
         return array("daily" => $result_day, "total" => $total);
     }
 
-    public function getBestItemsRaw(string $chars, int $interval, bool $chart = false) : array
+    public function getBestItemsRaw(string $chars, int $interval, bool $chart = false, int $limit = null) : array
     {
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
@@ -160,16 +163,21 @@ class Statistics_model extends CI_Model
         $this->db->group_by('item.eve_iditem');
         $this->db->having('sum(profit.quantity_profit*profit.profit_unit) > 0');
         $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit)', 'desc');
+        
         if ($chart) {
             $this->db->limit(20);
         }
+        if ($limit) {
+            $this->db->limit($limit);
+        }
+
         $query  = $this->db->get('');
         $result = $query->result_array();
 
         return $result;
     }
 
-    public function getBestItemsMargin(string $chars, int $interval) : array
+    public function getBestItemsMargin(string $chars, int $interval, int $limit = null) : array
     {
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
@@ -187,6 +195,11 @@ class Statistics_model extends CI_Model
         $this->db->group_by('item.eve_iditem');
         $this->db->having('sum(profit.quantity_profit*profit.profit_unit) > 0');
         $this->db->order_by('sum(profit.profit_unit)/sum(t1.price_unit)', 'DESC');
+
+        if ($limit) {
+            $this->db->limit($limit);
+        }
+
         $query  = $this->db->get('');
         $result = $query->result_array();
 
@@ -295,7 +308,7 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getBestIPH(string $chars, int $interval) : array
+    public function getBestIPH(string $chars, int $interval, int $limit = null) : array
     {
         $this->db->select('item.name AS item,
                            item.eve_iditem AS item_id,
@@ -310,13 +323,18 @@ class Statistics_model extends CI_Model
         $this->db->group_by('item.eve_iditem');
         $this->db->having('SUM( profit.quantity_profit * profit.profit_unit ) >0');
         $this->db->order_by('iph', 'desc');
+
+        if ($limit) {
+            $this->db->limit($limit);
+        }
+
         $query  = $this->db->get('');
         $result = $query->result_array();
 
         return $result;
     }
 
-    public function getMarketBlunders(string $chars, int $interval) : array
+    public function getMarketBlunders(string $chars, int $interval, int $limit = null) : array
     {
         $this->db->select('(profit.profit_unit) / ( t1.price_unit ) AS margin,
                            item.eve_iditem AS item_id,
@@ -331,6 +349,11 @@ class Statistics_model extends CI_Model
         $this->db->where('c2.eve_idcharacter IN ' . $chars);
         $this->db->having('(margin < -10 AND profit < -10000000)
                            OR (margin >10 AND profit >10000000)');
+
+        if ($limit) {
+            $this->db->limit($limit);
+        }
+        
         $query  = $this->db->get('');
         $result = $query->result_array();
 

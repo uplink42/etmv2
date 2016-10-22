@@ -30,7 +30,23 @@ class User extends CI_Model
         return $result;
     }
 
+    public function getUsername(int $user_id) : string
+    {
+        $this->db->where('iduser', $user_id);
+        $query = $this->db->get('user');
+        $result = $query->row()->username;
+
+        return $result;
+    }
+
+    public function getUserEmail(int $user_id) : string
+    {
+        $this->db->where('iduser', $user_id);
+        $query = $this->db->get('user');
+        $result = $query->row()->email;
+
+        return $result;
+    }
+
     
-
-
 }

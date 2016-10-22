@@ -53,6 +53,7 @@ class Login_model extends CI_Model
     {
         $this->db->select('name, character_eve_idcharacter as id');
         $this->db->where('iduser', $user_id);
+        $this->db->order_by('character_eve_idcharacter');
         $query  = $this->db->get('v_user_characters');
         $result = $query->result();
 
