@@ -1,9 +1,9 @@
-var gulp = require('gulp');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var minify = require('gulp-minify-css');
-var livereload = require('gulp-livereload');
-var imagemin = require('gulp-imagemin');
+var gulp = require('gulp'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
+    minify = require('gulp-minify-css'),
+    imagemin = require('gulp-imagemin'),
+    connect = require('gulp-connect');
 
 var paths = {
     js: ['assets/vendor/pacejs/pace.min.js',
@@ -87,6 +87,7 @@ gulp.task('css', function(){
    .pipe(concat('styles.css'))
    .pipe(minify())
    .pipe(gulp.dest('dist/luna/styles/css'))
+   .pipe(connect.reload())
 });
 
 
@@ -97,6 +98,7 @@ gulp.task('js', function(){
    .pipe(concat('apps.js'))
    .pipe(uglify())
    .pipe(gulp.dest('dist/js'))
+   .pipe(connect.reload())
 });
 
 
@@ -106,6 +108,7 @@ gulp.task('uglify', function(){
 )
    .pipe(uglify())
    .pipe(gulp.dest('dist/js/apps'))
+   .pipe(connect.reload());
 });
 
 
@@ -116,6 +119,7 @@ gulp.task('home_css', function(){
    .pipe(concat('styles.css'))
    .pipe(minify())
    .pipe(gulp.dest('dist/home/styles/css'))
+   .pipe(connect.reload());
 });
 
 gulp.task('home_js', function(){
@@ -125,13 +129,21 @@ gulp.task('home_js', function(){
    .pipe(concat('apps.js'))
    .pipe(uglify())
    .pipe(gulp.dest('dist/home/js'))
+   .pipe(connect.reload())
 });
 
 gulp.task('img', () =>
     gulp.src(paths.img)
         .pipe(imagemin())
         .pipe(gulp.dest('dist/img'))
+        .pipe(connect.reload())
 );
+
+gulp.task('connect', function() {
+  connect.server({
+    livereload: true
+  });
+});
 
 
 gulp.task('watch', function() {
@@ -144,6 +156,6 @@ gulp.task('watch', function() {
   gulp.watch(paths.img, ['img']);
 });
 
-gulp.task('default',['js','css', 'uglify', 'watch', 'home_js', 'home_css', 'img'], function () {
+gulp.task('default',['js','css', 'uglify', 'watch', 'home_js', 'home_css', 'img', 'connect'], function () {
 
 });

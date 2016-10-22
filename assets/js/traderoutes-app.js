@@ -3,10 +3,10 @@ $(document).ready(function() {
     $(".origin-station").focus().select();
     var base = $(".navbar").data('url');
     var url = base + "TradeRoutes/searchStations";
-    var id = $(".navbar").data('id');
+    var id = $(".navbar").data('id'); 
 
     function list() {
-        var listurl = base + "TradeRoutes/listTradeRoutes/" + id;
+        var listurl = base + "TradeRoutes/listTradeRoutes/" + id; 
         $.ajax({
             dataType: "json",
             url: listurl,
@@ -24,7 +24,7 @@ $(document).ready(function() {
                     });
                 }
             }
-        });
+        }); 
     }
     list();
     $(".origin-station, .destination-station").autocomplete({
