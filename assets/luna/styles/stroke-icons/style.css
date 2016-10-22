@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'stroke';
-	src:url('stroke798b.eot?-yg5sl9');
-	src:url('stroked41d.eot?#iefix-yg5sl9') format('embedded-opentype'),
-		url('stroke798b.woff?-yg5sl9') format('woff'),
-		url('stroke798b.ttf?-yg5sl9') format('truetype'),
-		url('stroke798b.svg?-yg5sl9#stroke') format('svg');
+	src:url('stroke-icons/stroke798b.eot?-yg5sl9');
+	src:url('stroke-icons/stroked41d.eot?#iefix-yg5sl9') format('embedded-opentype'),
+		url('stroke-icons/stroke798b.woff?-yg5sl9') format('woff'),
+		url('stroke-icons/stroke798b.ttf?-yg5sl9') format('truetype'),
+		url('stroke-icons/stroke798b.svg?-yg5sl9#stroke') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }

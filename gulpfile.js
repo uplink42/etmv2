@@ -3,10 +3,12 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     minify = require('gulp-minify-css'),
     imagemin = require('gulp-imagemin'),
-    connect = require('gulp-connect');
+    connect = require('gulp-connect'),
+    clean = require('gulp-clean'),
+    mainBowerFiles = require('gulp-main-bower-files');
 
 var paths = {
-    js: ['assets/vendor/pacejs/pace.min.js',
+     js: ['assets/vendor/pacejs/pace.min.js',
        'assets/vendor/jquery/dist/jquery.min.js',
        'assets/vendor/datatables/datatables.min.js',
        'assets/vendor/bootstrap/js/bootstrap.min.js',
@@ -17,18 +19,25 @@ var paths = {
        'assets/js/toastr_options.js',
        'assets/js/pace_options.js',
        'assets/js/app.js',
-       'assets/js/header.js',
-       /*'assets/js/*.js'*/],
-    css: ['assets/vendor/fontawesome/css/font-awesome.css',
+       'assets/js/header.js'],
+
+       /*'assets/js/*.js'],*/
+    css: ['assets/luna/styles/fontawesome/css/font-awesome.css',
         'assets/vendor/animate.css/animate.css',
-        'assets/vendor/bootstrap/css/bootstrap.css',
+        'assets/luna/styles/bootstrap/css/bootstrap.css',
         'assets/vendor/toastr/toastr.min.css',
         'assets/vendor/datatables/datatables.min.css',
         'assets/luna/styles/pe-icons/pe-icon-7-stroke.css',
         'assets/luna/styles/pe-icons/helper.css',
         'assets/luna/styles/stroke-icons/style.css',
         'assets/luna/styles/style.css'],
-    app: ['assets/js/assets-app.js',
+
+    app: ['assets/luna/scripts/luna.js',
+         'assets/js/toastr_options.js',
+         'assets/js/pace_options.js',
+         'assets/js/app.js',
+         'assets/js/header.js',
+          'assets/js/assets-app.js',
           'assets/js/contracts-app.js',
           'assets/js/dashboard-app.js',
           'assets/js/marketorders-app.js',
@@ -50,8 +59,15 @@ var paths = {
               'assets/vendor/owl-carousel/owl.theme.css',
               'assets/vendor/jquery-magnificPopup/magnific-popup.css',
               'assets/rhijani/main/css/component/component.css',
-              'assets/rhijani/slideshow/css/rinjani.css',
-              ],
+              'assets/rhijani/slideshow/css/rinjani.css'],
+
+    home_fonts: ['assets/vendor/fontawesome/fonts/*.*'],
+
+    fonts: ['assets/luna/styles/pe-icons/*.*',
+            'assets/luna/styles/stroke-icons/*.*',
+            'assets/luna/styles/fontawesome/fonts/*.*',
+            'assets/luna/styles/bootstrap/fonts/*.*',],
+
     home_js: ['assets/vendor/jquery/dist/jquery.min.js',
               'assets/vendor/jquery-easing/jquery.easing.min.js',
               'assets/vendor/bootstrap/js/bootstrap.min.js',
@@ -61,36 +77,40 @@ var paths = {
               'assets/vendor/jquery-sticky/jquery.sticky.js',
               'assets/vendor/jquery-inview/jquery.inview.min.js',
               'assets/vendor/jquery-countTo/jquery.countTo.js',
-              //'assets/vendor/jquery-easypiechart/jquery.easypiechart.min.js',
               'assets/vendor/jquery-countdown/jquery.plugin.min.js',
               'assets/vendor/jquery-countdown/jquery.countdown.min.js',
               'assets/vendor/owl-carousel/owl.carousel.min.js',
               'assets/vendor/isotope/isotope.pkgd.min.js',
               'assets/vendor/jquery-magnificPopup/jquery.magnific-popup.min.js',
-              //'assets/vendor/jquery-validation/jquery.validate.min.js',
               'assets/rhijani/slideshow/js/main.js',
               'assets/rhijani/slideshow/js/animation.js',
-              //'assets/rhijani/main/js/component/bar-chart.js',
               'assets/rhijani/main/js/component/countdown.js',
               'assets/rhijani/main/js/component/counters.js',
-              //'assets/rhijani/main/js/component/pie-chart.js',
               'assets/rhijani/main/js/component/portfolio.js',
-              'assets/rhijani/main/js/component/animation.js'],
+              'assets/rhijani/main/js/component/animation.js'
+              ],
+
     img: ['assets/rhijani/main/img/*',
           'assets/rhijani/main/img/*/*']
 
 };
 
+gulp.task('clean', function () {
+    return gulp.src('dist', {read: false})
+        .pipe(clean());
+});
+
+//css
 gulp.task('css', function(){
    gulp.src(paths.css
 )
    .pipe(concat('styles.css'))
    .pipe(minify())
-   .pipe(gulp.dest('dist/luna/styles/css'))
+   .pipe(gulp.dest('dist/luna/styles'))
    .pipe(connect.reload())
 });
 
-
+//js dependencies
 gulp.task('js', function(){
    gulp.src(paths.js
 
@@ -101,7 +121,7 @@ gulp.task('js', function(){
    .pipe(connect.reload())
 });
 
-
+//app files
 gulp.task('uglify', function(){
    gulp.src(paths.app
 
@@ -110,6 +130,15 @@ gulp.task('uglify', function(){
    .pipe(gulp.dest('dist/js/apps'))
    .pipe(connect.reload());
 });
+
+
+//fonts
+gulp.task('fonts', function() {
+  gulp.src(paths.fonts, {base: './assets/luna/styles'})
+
+  .pipe(gulp.dest('dist/luna/styles'))
+});
+
 
 
 /*Homepage tasks*/
@@ -122,6 +151,7 @@ gulp.task('home_css', function(){
    .pipe(connect.reload());
 });
 
+//homejs
 gulp.task('home_js', function(){
    gulp.src(paths.home_js
 
@@ -132,6 +162,7 @@ gulp.task('home_js', function(){
    .pipe(connect.reload())
 });
 
+//home img
 gulp.task('img', () =>
     gulp.src(paths.img)
         .pipe(imagemin())
@@ -139,6 +170,15 @@ gulp.task('img', () =>
         .pipe(connect.reload())
 );
 
+//home fonts
+gulp.task('home_fonts', function() {
+  gulp.src(paths.home_fonts)
+
+  .pipe(gulp.dest('dist/home/styles/fonts'))
+});
+
+
+//livereload
 gulp.task('connect', function() {
   connect.server({
     livereload: true
@@ -156,6 +196,6 @@ gulp.task('watch', function() {
   gulp.watch(paths.img, ['img']);
 });
 
-gulp.task('default',['js','css', 'uglify', 'watch', 'home_js', 'home_css', 'img', 'connect'], function () {
+gulp.task('default',['js','css', 'uglify', 'watch', 'home_js', 'home_css', 'img', 'connect', 'home_fonts', 'fonts'], function () {
 
 });

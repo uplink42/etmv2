@@ -14,7 +14,7 @@
     <title>Eve Trade Master</title>
 
     <!-- Vendor styles -->
-    <link rel="stylesheet" href="<?=base_url('dist/luna/styles/css/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
+    <link rel="stylesheet" href="<?=base_url('dist/luna/styles/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
     
     <script src="<?=base_url('dist/js/apps.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 </head>
