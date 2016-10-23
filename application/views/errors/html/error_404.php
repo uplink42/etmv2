@@ -15,9 +15,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Vendor styles -->
     <!-- Vendor styles -->
-    <link rel="stylesheet" href="<?=URL?>/dist/luna/styles/css/styles.css?HASH_CACHE=<?=HASH_CACHE?>"/>
+    <link rel="stylesheet" href="<?=URL?>dist/luna/styles/styles.css?HASH_CACHE=<?=HASH_CACHE?>"/>
     
-    <script src="<?=URL?>/dist/js/apps.js??HASH_CACHE=<?=HASH_CACHE?>"></script>
+    <script src="<?=URL?>dist/js/apps.js??HASH_CACHE=<?=HASH_CACHE?>"></script>
 </head>
 <body class="blank">
 
@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
             <div>
-                <a href="<?=URL?>Main/Login" class="btn btn-accent">Back to Login</a>
+                <a href="<?=URL?>main/login" class="btn btn-accent">Back to Login</a>
             </div>
 
         </div>

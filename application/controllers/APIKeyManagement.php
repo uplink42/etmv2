@@ -79,34 +79,30 @@ class ApiKeyManagement extends MY_Controller
         }
     }
 
-    public function addCharactersStep($apikey, $vcode, $char1 = null, $char2 = null, $char3 = null)
+    public function addCharactersStep(int $apikey, string $vcode, string $char1 = null, string $char2 = null, string $char3 = null)
     {
         $chars = array();
-
-        if ($char1) {
-            array_push($chars, $char1);
-        }
-
-        if ($char2) {
-            array_push($chars, $char2);
-        }
-
-        if ($char3) {
-            array_push($chars, $char3);
-        }
+        $char1 ? array_push($chars, $char1) : '';
+        $char2 ? array_push($chars, $char2) : '';
+        $char3 ? array_push($chars, $char3) : '';
 
         if(count($chars) != 0) {
             $this->load->model('register_model');
             if($this->register_model->verifyCharacters($chars, $apikey, $vcode)) {
+                $create = $this->ApiKeyManagement_model->addCharacters($chars, $apikey, $vcode, $this->user_id);
                 //add characters
-                $this->ApiKeyManagement_model->addCharacters($chars, $apikey, $vcode, $this->user_id);
-                
+                if ($create == "ok") {
+                    $notice = "success";
+                    $msg = Msg::CHARACTER_CREATE_SUCCESS;
 
+                } else {
+                    $notice = "error";
+                    $msg = $create;
+                }
             } else {
                 $notice = "error";
                 $msg = Msg::CHARACTER_ACCOUNT_MISMATCH;
             }
-
 
         } else {
             $notice = "error";
@@ -115,5 +111,6 @@ class ApiKeyManagement extends MY_Controller
 
         $data = array("notice" => $notice, "message" => $msg);
         echo json_encode($data);
+        
     }
 }

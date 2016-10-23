@@ -25,7 +25,7 @@ class Auth extends CI_Model
 
     public function generateRandomPassword()
     {
-
+        return $this->getRandomString("abcdefghijklmnopqrstuwxyz1234567890_!#$%&=", 7);
     }
 
     public function validateLogin(string $username, string $password, bool $nosession = false) : bool
@@ -56,4 +56,17 @@ class Auth extends CI_Model
         return false;
     }
 
+    private function getRandomString($valid_chars, $length)
+    {
+        $random_string = "";
+        $num_valid_chars = strlen($valid_chars);
+        
+        for ($i = 0; $i < $length; $i++) {
+            $random_pick = mt_rand(1, $num_valid_chars);
+            $random_char = $valid_chars[$random_pick-1];
+            $random_string .= $random_char;
+        }
+        
+        return $random_string;
+    }
 }

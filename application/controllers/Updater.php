@@ -113,6 +113,8 @@ class Updater extends CI_Controller
                 $data['table']     = array($table);
                 $data['view']      = "login/select_v";
                 $data['no_header'] = 1;
+
+                //$data['view']      = "login/select_nocharacter_v";
                 $this->load->view('main/_template_v', $data);
             }
         }

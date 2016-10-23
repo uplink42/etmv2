@@ -922,8 +922,6 @@ class Updater_model extends CI_Model
         $this->db->where('username', $username);
         $character_list = $this->db->get('v_user_characters');
 
-        log_message('error', $this->db->last_query());
-
         $dt = new DateTime();
         $tz = new DateTimeZone('Europe/Lisbon');
         $dt->setTimezone($tz);
@@ -996,7 +994,6 @@ class Updater_model extends CI_Model
         if (!$global) {
             return $character_list->result();
         }
-
     }
 
     public function getAPIKeys(int $id_user): array

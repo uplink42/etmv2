@@ -3226,3 +3226,7 @@ body.loading .modal-load {
     top: 45%;
 }
 
+.table-nochars .char {
+    float: left;
+}
+

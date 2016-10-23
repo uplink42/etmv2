@@ -150,7 +150,7 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
-    public function validateAPI(int $apikey, string $vcode): string
+    public function validateAPI(int $apikey, string $vcode)
     {
         //Using CURL to fetch API Access Mask
         $curl_url = "https://api.eveonline.com/account/APIKeyInfo.xml.aspx?keyID=" . $apikey . "&vCode=" . $vcode;
@@ -199,7 +199,7 @@ class ValidateRequest extends CI_Model
 
     }
 
-    private function checkXML(string $xml): bool
+    private function checkXML($xml)
     {
         if ($xml == "") {
             throw new Exception(Msg::INVALID_API_KEY);

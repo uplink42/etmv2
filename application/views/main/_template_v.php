@@ -20,7 +20,7 @@
 </head>
 
     <?php echo isset($no_header) ? "<body class='blank'>" : "" ?>
-    <div class="wrapper">
+    <div class="wrapper mainwrapper" data-url="<?=base_url()?>">
 	
     <!-- toastr notification -->
     <?php if(isset($message)) {?>

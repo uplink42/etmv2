@@ -29,9 +29,12 @@
                 <div id="tab-1" class="tab-pane active">
                     <div class="panel-body">
                         <h5><strong class="c-white">Latest News</strong></h5>
-                        <?php foreach($cl_recent as $row) {
-                            echo "<b>" . $row->date . "</b> - ";
-                            echo $row->content . "<br>";
+                        <?php 
+                            if(isset($cl_recent)) {
+                                foreach($cl_recent as $row) {
+                                    echo "<b>" . $row->date . "</b> - ";
+                                    echo $row->content . "<br>";
+                                }  
                             }
                         ?>
                     </div>
@@ -79,10 +82,12 @@
                 <div id="tab-3" class="tab-pane">
                     <div class="panel-body">
                         <h5><strong class="c-white">Changelog</strong></h5>
-                        <?php foreach($cl as $row) {
-                            echo "<b>" . $row->date . "</b> - ";
-                            echo $row->content . "<br>";
+                        <?php if(isset($cl)) {
+                            foreach($cl as $row) {
+                                echo "<b>" . $row->date . "</b> - ";
+                                echo $row->content . "<br>";
                             }
+                        }
                         ?>
                     </div>
                 </div>

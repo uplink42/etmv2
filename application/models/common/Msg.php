@@ -22,9 +22,10 @@ class Msg extends CI_Model
     const INVALID_API_KEY            = "Invalid API Key";
     const INVALID_REPORT_SELECTION   = "Invalid report selection";
     const CHARACTER_ACCOUNT_MISMATCH = "One or more characters you selected do not belong to this account";
-    const CHARACTER_ALREADY_TAKEN    = "One of more characters you selected already exist in the database";
+    const CHARACTER_ALREADY_TAKEN    = "One of more characters you selected already exists in the database";
     const NO_CHARACTER_SELECTED      = "Please select at least one character";
     const ACCOUNT_CREATE_SUCCESS     = "Account created successfully";
+    const CHARACTER_CREATE_SUCCESS   = "Character added successfully";
     
     const MISSING_INFO               = "Missing information provided";
     const INVALID_FORM               = "Invalid information provided";
@@ -77,7 +78,10 @@ class Msg extends CI_Model
     const CHANGE_PASSWORD_ERROR      = "Unable to change password";
 
     const CHARACTER_REMOVE_SUCCESS   = "Sucessfully removed character from account";
+    const CHARACTER_LIMIT_EXCEEDED   = "Character limit of 20 exceeded";
     const CHARACTER_REMOVE_ERROR     = "Unable to remove character";
+
+    const PASSWORD_RECOVERY_SUCCESS  = "If the e-mail you provided is correct you will soon recieve your new password";
 
 
     public function __construct()

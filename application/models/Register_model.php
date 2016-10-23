@@ -194,7 +194,7 @@ class Register_model extends CI_Model
         }
     }
 
-    private function checkCharacterExists($character_id)
+    public function checkCharacterExists($character_id)
     {
         $this->db->where('character_eve_idcharacter', $character_id);
         $check_user = $this->db->get('v_user_characters');

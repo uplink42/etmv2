@@ -148,7 +148,14 @@
                 <a href="<?=base_url('apikeymanagement/index/'.$character_id .'?aggr='.$aggregate)?>">
                     <i class="fa fa-users"></i> API Key Management
                 </a>
-                
+            </li>
+             <li class="nav-category">
+                Logout
+            </li>
+            <li class="logout">
+                <a href="<?=base_url('main/login/logout')?>">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
             </li>
         </ul>
     </nav>

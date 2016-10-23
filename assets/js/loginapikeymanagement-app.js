@@ -1,62 +1,15 @@
 "use strict";
 $(document).ready(function() {
 
-    $(".api-insert-2").hide();
-    var base = $(".navbar").data('url');
+	$(".api-insert-2").hide();
+    var base = $(".mainwrapper").data('url');
     var apikey;
     var vcode;
-    list();
 
-    function list() {
-        var url = base + "ApiKeyManagement/getCharacters/";
-        $.ajax({
-            dataType: "json",
-            url: url,
-            success: function(result) {
-                $(".table-character-list tbody tr").empty();
-                if (result.length == 0) {
-                    var $row = "<tr><td colspan='3' class='text-center'>No characters found</td></tr>";
-                    $(".table-character-list tbody tr").prepend($row);
-                } else {
-                    $.each(result, function(k, v) {
-                        var id = result[k].charid;
-                        var img = "<img src='https://image.eveonline.com/Character/" + id + "_32.jpg'></img>"; 
-                        var $row = "<tr><td>" + img + " " + result[k].name + "</td><td>" + result[k].api + 
-                               "</td><td><button class='btn btn-danger btn-delete' data-iddel=" + id + 
-                               " data-toggle='modal' data-target='#delete'>Remove</button></tr></tr>";
-                        $(".table-character-list").prepend($row);
-                    });
-                }
-            }
-        });
-    }
-
-    $("table").on('click', 'button', function() {
-        var id = $(this).data('iddel');
-        var url = $("#delete").data('url');
-        var full_url = url + "/" + id;
-
-        $(".btn-delete-confirm").attr('data-url', full_url);
-    });
-
-    $(".btn-delete-confirm").on('click', function() {
-        var url = $(this).attr('data-url');
-
-        $.ajax({
-            dataType: "json",
-            url: url,
-            success: function(result) {
-                $('#delete').modal('toggle');
-                toastr[result.notice](result.message);
-                list();
-            }
-        });
-    });
-
-    $(".submit-add").on('click', function(e) {
+	$(".submit-add").on('click', function(e) {
+		e.preventDefault();
         apikey = $("#keyid").val();
         vcode = $("#vcode").val();
-        e.preventDefault();
         var url = base + "ApiKeyManagement/addCharacters/";
         var data = $(".add-apikey").serialize();
 
@@ -78,7 +31,7 @@ $(document).ready(function() {
                         var name = result[k][0].name;
                         var url = "https://image.eveonline.com/Character/" + id + "_32.jpg";
                         var cl = "character" + count;
-                        var $element = "<tr><td><img src='" + url + "'alt='icon'></img>" + " " + name + "</td>"+
+                        var $element = "<tr><td class='char'><img src='" + url + "'alt='icon'></img>" + " " + name + "</td>"+
                                        "<td><input type='checkbox' class='" + cl + "' data-id='" + id + "'></td></tr>";
                         count++;
                         $(".table-character-selection tbody").append($element);
@@ -110,5 +63,4 @@ $(document).ready(function() {
             }
         });
     })
-    
 });
