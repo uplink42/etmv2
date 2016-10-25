@@ -42,7 +42,7 @@ class MarketOrders_model extends CI_Model
 
         if ($check) {
             for ($i = 0; $i < count($result); $i++) {
-                $orderID              = (int) $result[$i]['order_id'];
+                $orderID              = (string) $result[$i]['order_id'];
                 $stationID            = (int) $result[$i]['station_id'];
                 $regionID             = (int) $result[$i]['region_id'];
                 $itemID               = (int) $result[$i]['item_id'];
@@ -56,7 +56,7 @@ class MarketOrders_model extends CI_Model
         return $result;
     }
 
-    public function checkOrder(int $order_id, int $station_id, int $region_id, string $type, int $item_id): string
+    public function checkOrder(string $order_id, int $station_id, int $region_id, string $type, int $item_id): string
     {
         $dt = new DateTime();
         $tz = new DateTimeZone('Europe/Lisbon');
@@ -110,6 +110,7 @@ class MarketOrders_model extends CI_Model
                 }
             }
 
+
             //sell orders = search for lowest price, buy orders = search for highest price
             if ($buy_status) {
                 $bestPrice = max($orderPrices);
@@ -143,7 +144,7 @@ class MarketOrders_model extends CI_Model
         return $cached_value;
     }
 
-    private function updateStatus(int $order_id, int $status, date $date_now)
+    private function updateStatus(string $order_id, int $status, string $date_now)
     {
         $data = array("orders_transkey" => $order_id,
             "status"                        => $status,

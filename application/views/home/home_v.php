@@ -131,10 +131,6 @@
                             <img src="<?=base_url('dist/img/who-we-are-image-2.jpg')?>" alt="" class="img-responsive img-rounded"/>
                         </div>
                         <!-- //.item -->
-
-                        <div class="item">
-                            <img src="<?=base_url('dist/img/who-we-are-image-3.jpg')?>" alt="" class="img-responsive img-rounded"/>
-                        </div>
                         <!-- //.item -->
                     </div>
                     <!-- //.owl-carousel -->
@@ -381,7 +377,7 @@
 </section>
 <!-- //End Our Services Section -->
 
-<!-- Begin Quote Section -->
+
 <section id="tryit" class="section section-bgimage-yes">
     <div class="section-inner">
         <div class="section-overlay"></div>
@@ -408,9 +404,9 @@
     </div>
     <!-- //.section-inner -->
 </section>
-<!-- //End Quote Section -->
 
-<!-- Begin Our Latest Work Section -->
+
+
 <section id="gallery" class="section">
     <div class="section-inner">
         <div class="container section-content">
@@ -459,7 +455,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-1.jpg')?>" title="Project Title 1 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-1.jpg')?>" title="Dashboard">
                                             <div class="portfolio-text">
                                                 <h4>Dashboard</h4>
 
@@ -482,7 +478,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="../assets/img/gallery/portfolio-image-2.jpg" title="Project Title 2 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-2.jpg')?>" title="Profit Tracker">
                                             <div class="portfolio-text">
                                                 <h4>Profit Tracker</h4>
 
@@ -505,7 +501,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-3.jpg')?>" title="Project Title 3 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-3.jpg')?>" title="Assets List">
                                             <div class="portfolio-text">
                                                 <h4>Assets List</h4>
 
@@ -528,7 +524,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-4.jpg')?>" title="Project Title 4 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-4.jpg')?>" title="Net worth tracker">
                                             <div class="portfolio-text">
                                                 <h4>Net worth tracker</h4>
 
@@ -551,7 +547,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-5.jpg')?>" title="Project Title 5 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-5.jpg')?>" title="Statistics">
                                             <div class="portfolio-text">
                                                 <h4>Statistics</h4>
 
@@ -574,7 +570,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-6.jpg')?>" title="Project Title 6 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-6.jpg')?>" title="Trade Simulator">
                                             <div class="portfolio-text">
                                                 <h4>Trade Simulator</h4>
 
@@ -597,7 +593,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-7.jpg')?>" title="Project Title 7 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-7.jpg')?>" title="Order Check">
                                             <div class="portfolio-text">
                                                 <h4>Order Check</h4>
 
@@ -620,7 +616,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-8.jpg')?>" title="Project Title 8 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-8.jpg')?>" title="Citadel Taxes">
                                             <div class="portfolio-text">
                                                 <h4>Citadel Taxes</h4>
 
@@ -643,7 +639,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/portfolio/portfolio-image-9.jpg')?>" title="Project Title 9 - Lorem Ipsum">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-9.jpg')?>" title="Transactions">
                                             <div class="portfolio-text">
                                                 <h4>Transactions</h4>
 
@@ -672,7 +668,7 @@
     </div>
     <!-- //.section-inner -->
 </section>
-<!-- //End Our Latest Work Section -->
+
 
 <!-- Begin Coming Soon Section -->
 <section id="coming-soon" class="section section-bgimage-yes">
