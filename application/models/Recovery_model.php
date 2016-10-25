@@ -20,4 +20,14 @@ class Recovery_model extends CI_Model
 
         return $result;
     }
+
+    public function getUsernameByEmail(string $email)
+    {
+        $this->db->select('username');
+        $this->db->where('email', $email);
+        $query = $this->db->get('user');
+        $result = $query->row();
+
+        return $result;
+    }
 }

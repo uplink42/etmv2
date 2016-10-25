@@ -55,30 +55,60 @@ class Recovery extends CI_Controller
             $data['pw'] = $new_password;
 
             $email_body = $this->load->view('recovery/email/recover_password_v', $data, true);
-            $to = $user_data->email;
-            $from = FROM_EMAIL;
-            $from_name = FROM_NAME;
-            $subject = "Eve Trade Master - Password Recovery";
+            $to         = $user_data->email;
+            $from       = FROM_EMAIL;
+            $from_name  = FROM_NAME;
+            $subject    = "Eve Trade Master - Password Recovery";
 
             $this->Email->send($to, $from, $from_name, $subject, $email_body);
             $this->doRecoveryMsg("success");
         } else {
             $this->doRecoveryMsg("error");
         }
+    }
 
+    public function recoverUsername()
+    {
+        $this->load->model('Recovery_model');
+        $result = $this->Recovery_model->getUsernameByEmail($this->email);
+
+        if ($result) {
+            $this->startUsernameRecovery($result->username, $this->email);
+        } else {
+            sleep(3);
+            $this->doRecoveryMsg("success");
+        }
+    }
+
+    private function startUsernameRecovery(string $username, string $email)
+    {
+        $this->load->model('common/Email');
+        $data['user'] = $username;
+
+        $email_body = $this->load->view('recovery/email/recover_username_v', $data, true);
+        $to         = $email;
+        $from       = FROM_EMAIL;
+        $from_name  = FROM_NAME;
+        $subject    = "Eve Trade Master - Username Recovery";
+
+        if($this->Email->send($to, $from, $from_name, $subject, $email_body)) {
+            $this->doRecoveryMsg("success");
+        } else {
+            $this->doRecoveryMsg("error");
+        }
     }
 
     private function doRecoveryMsg(string $type)
     {
         if ($type == "success") {
             $notice = "success";
-            $msg    = Msg::PASSWORD_RECOVERY_SUCCESS;
+            $msg    = Msg::RECOVERY_SUCCESS;
         } else {
             $notice = "error";
-            $msg    = Msg::PASSWORD_RECOVERY_ERROR;
+            $msg    = Msg::RECOVERY_ERROR;
         }
-        
-        echo json_encode(array("notice" => $notice, "message" => $msg)); 
-    } 
+
+        echo json_encode(array("notice" => $notice, "message" => $msg));
+    }
 
 }

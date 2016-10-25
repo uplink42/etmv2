@@ -67,6 +67,7 @@ $(document).ready(function() {
             }
         });
     });
+    
     $("table").on('click', 'button', function() {
         var $this = $(this);
         var url = base + "TradeRoutes/" + "deleteRoute/" + $(this).data('iddel');

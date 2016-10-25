@@ -14,7 +14,7 @@
                 <div class="header-title">
                     <h3>Forgot password?</h3>
                     <small>
-                        No problem! Just fill in the username and e-mail associated with your account and you'll be sent a new password.
+                        No problem! Just fill in the username and e-mail associated with your account to proceed
                     </small>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                             <span class="help-block small">Your address email to send the new password</span>
                         </div>
                         <div>
-                            <button class="btn btn-accent reset-password">Send new password</button>
+                            <button class="btn btn-accent reset-password">Submit</button>
                             <a class="btn btn-default" href="<?=base_url('main')?>">Cancel</a>
                         </div>
                     </form>
