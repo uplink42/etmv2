@@ -9,6 +9,7 @@ $(document).ready(function() {
         $.ajax({
         dataType: "json",
         url: url,
+        global: false,
         success: function(result) {
             $(".header-balance").html(result.balance);
             $(".header-networth").html(result.networth);
@@ -18,7 +19,6 @@ $(document).ready(function() {
         });
     } 
     
-
     if(aggr == 1) {
         $(".profil-link a").css('color','#cc0044');
     }

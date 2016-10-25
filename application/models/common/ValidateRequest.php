@@ -240,4 +240,17 @@ class ValidateRequest extends CI_Model
         }
     }
 
+    public function validateUserEmail(string $username, string $email) : bool
+    {
+        $this->db->where('username', $username);
+        $this->db->where('email', $email);
+        $query = $this->db->get('user');
+        
+        if ($query->num_rows() != 0) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

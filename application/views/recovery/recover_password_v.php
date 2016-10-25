@@ -12,9 +12,9 @@
                     <i class="pe page-header-icon pe-7s-id"></i>
                 </div>
                 <div class="header-title">
-                    <h3>Forgot username or password?</h3>
+                    <h3>Forgot password?</h3>
                     <small>
-                        No problem! Just fill in the e-mail associated with this account and you'll be sent instructions to reset your password.
+                        No problem! Just fill in the username and e-mail associated with your account and you'll be sent a new password.
                     </small>
                 </div>
             </div>
@@ -23,8 +23,12 @@
                 <div class="panel-body">
                     <form method="POST" id="recovery" novalidate>
                         <div class="form-group">
+                            <label class="control-label" for="user">Username</label>
+                            <input type="text" placeholder="Please enter your username" name="user" id="user" class="form-control" required autofocus>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label" for="email">Email adress</label>
-                            <input type="text" placeholder="Please enter your e-mail address" required name="email" id="email" class="form-control" autofocus>
+                            <input type="text" placeholder="Please enter your e-mail address" required name="email" id="email" class="form-control">
                             <span class="help-block small">Your address email to send the new password</span>
                         </div>
                         <div>

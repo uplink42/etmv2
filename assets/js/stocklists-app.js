@@ -1,6 +1,5 @@
 "use strict";
 $(document).ready(function() {
-    
 
     var base = $(".navbar").data('url');
     var url_autocomplete = base + "StockLists/searchItems/";
@@ -11,6 +10,7 @@ $(document).ready(function() {
         $.ajax({
             dataType: "json",
             url: url,
+            global: false,
             success: function(result) {
                 $(".dropdown-list option.value").remove();
                 $.each(result, function(k, v) {
@@ -31,6 +31,7 @@ $(document).ready(function() {
         $.ajax({
             dataType: "json",
             url: url,
+            global: false,
             success: function(result) {
                 $(".table-items tr").remove();
                 $.each(result, function(k, v) {
@@ -97,6 +98,7 @@ $(document).ready(function() {
 
     //item name autocomplete
     $("#item-name").autocomplete({
+        global: false,
         source: url_autocomplete,
         minLength: 2,
         messages: {
@@ -120,6 +122,7 @@ $(document).ready(function() {
             url: url,
             data: data,
             type: "POST",
+            global: false,
             success: function(result) {
                 toastr[result.notice](result.message);
                 if(result.notice == "success") {
@@ -140,6 +143,7 @@ $(document).ready(function() {
         $.ajax({
             dataType: "json",
             url: url,
+            global: false,
             success: function(result) {
                 toastr[result.notice](result.message);
                 if(result.notice == "success") {

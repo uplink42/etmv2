@@ -2673,8 +2673,16 @@ fieldset[disabled] .form-control {
     padding: 6px 12px !important;
 }
 
-.panel-loading {
+.panel-loading, .panel-loading-ajax {
     display: none;
+}
+
+.panel-loading-ajax {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -25px;
+    margin-top: -25px;
 }
 
 .yellow {
@@ -3229,4 +3237,10 @@ body.loading .modal-load {
 .table-nochars .char {
     float: left;
 }
+
+.loading-body {
+    opacity: 0.3;
+}
+
+
 

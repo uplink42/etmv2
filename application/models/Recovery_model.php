@@ -11,8 +11,9 @@ class Recovery_model extends CI_Model
         parent::__construct();
     }
 
-    public function getUserByEmail(string $email)
+    public function getUserByEmail(string $username, string $email)
     {
+        $this->db->where('username', $username);
         $this->db->where('email', $email);
         $query = $this->db->get('user');
         $result = $query->row();

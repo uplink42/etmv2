@@ -81,7 +81,8 @@ class Msg extends CI_Model
     const CHARACTER_LIMIT_EXCEEDED   = "Character limit of 20 exceeded";
     const CHARACTER_REMOVE_ERROR     = "Unable to remove character";
 
-    const PASSWORD_RECOVERY_SUCCESS  = "If the e-mail you provided is correct you will soon recieve your new password";
+    const PASSWORD_RECOVERY_SUCCESS  = "If the username and e-mail you provided are correct you will soon recieve your new password in your inbox";
+    const PASSWORD_RECOVERY_ERROR    = "Unexpected failure. Try again";
 
 
     public function __construct()

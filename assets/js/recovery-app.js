@@ -15,6 +15,7 @@ $(document).ready(function() {
             data: data,
             success: function(result) {
                 console.log(result);
+                toastr[result.notice](result.message);
             }
         });
     });

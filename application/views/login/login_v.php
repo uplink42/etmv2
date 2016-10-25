@@ -49,7 +49,7 @@
                             </a>
                     </div>
                     <span class="help-block small text-center help-forgot">
-                        <a href="<?=base_url('recovery')?>">Forgot username or password?</a> 
+                        <a href="<?=base_url('recovery/index/username')?>">Forgot username</a> | <a href="<?=base_url('recovery/index/password')?>">Forgot password</a>
                     </span>
                 </form>
             </div>

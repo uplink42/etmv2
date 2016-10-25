@@ -1,6 +1,6 @@
 "use strict";
 $(document).ready(function() {
-    
+
     var base = $(".navbar").data('url');
     var email_req = base + "Settings/email/";
     getEmail();

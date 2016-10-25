@@ -6,7 +6,7 @@ $(document).ready(function() {
     var url_req = base + "CitadelTax/addTax/";
     var charid = $(".characterid").val();
     updateTable();
-    
+
     $("#citadel").autocomplete({
         source: url_autocomplete,
         minLength: 2,
@@ -17,6 +17,7 @@ $(document).ready(function() {
             $("#citadel").val(ui.item.value);
         }
     });
+
     $(".submit-tax").on('click', function(e) {
         e.preventDefault();
         var tax = $("#tax").val();
@@ -28,6 +29,7 @@ $(document).ready(function() {
                 url: url_req,
                 data: data,
                 type: "POST",
+                global: false,
                 success: function(result) {
                     toastr[result.notice](result.message);
                     updateTable();
@@ -40,10 +42,12 @@ $(document).ready(function() {
     });
 
     function updateTable() {
+        $(document).bind(".go");
         var url_req = base + "CitadelTax/getTaxList/" + charid;
         $.ajax({
             dataType: "json",
             url: url_req,
+            global: false,
             success: function(result) {
                 $(".tax-entries tr").remove();
                 if (result.length == 0) {
@@ -71,6 +75,7 @@ $(document).ready(function() {
         $.ajax({
             dataType: "json",
             url: url_req,
+            global: false,
             success: function(result) {
                 toastr[result.notice](result.message);
                 updateTable();

@@ -1,5 +1,6 @@
 "use strict";
 $(document).ready(function() {
+
     $(".origin-station").focus().select();
     var base = $(".navbar").data('url');
     var url = base + "TradeRoutes/searchStations";
@@ -10,6 +11,7 @@ $(document).ready(function() {
         $.ajax({
             dataType: "json",
             url: listurl,
+            global: false,
             success: function(result) {
                 $("table tbody tr").empty();
                 if (result.length == 0) {
@@ -55,6 +57,7 @@ $(document).ready(function() {
         $.ajax({
             dataType: "json",
             url: url,
+            global: false,
             data: data,
             type: "POST",
             success: function(result) {
@@ -71,6 +74,7 @@ $(document).ready(function() {
         $.ajax({
             dataType: "json",
             url: url,
+            global: false,
             success: function(result) {
                 $this.closest("tr").remove();
                 toastr[result.notice](result.message);
