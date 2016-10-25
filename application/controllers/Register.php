@@ -102,7 +102,5 @@ class Register extends CI_Controller
                 $this->load->view('main/_template_v', $data);
             }
         }
-
     }
-
 }

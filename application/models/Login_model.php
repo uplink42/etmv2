@@ -12,7 +12,7 @@ class Login_model extends CI_Model
     }
 
 
-    public function getUserData(string $username) : stdClass
+    public function getUserData(string $username)
     {
         $this->db->where('username', $username);
         $query = $this->db->get('user');
@@ -22,7 +22,10 @@ class Login_model extends CI_Model
     //checks if session is valid
     public function checkSession() : bool
     {
-        if (empty($this->session->username) || empty($this->session->iduser)) {
+        log_message('error', $this->session->username);
+        log_message('error', $this->session->iduser);
+
+        if (!$this->session->has_userdata('username') || !$this->session->has_userdata('iduser')) {
             return false;
         } else {
             $this->db->where('username', $this->session->username);

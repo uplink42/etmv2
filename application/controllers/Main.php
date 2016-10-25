@@ -1,6 +1,6 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 defined('BASEPATH') or exit('No direct script access allowed');
-require_once(APPPATH.'libraries/PHPMailer/PHPMailerAutoload.php');
+require_once APPPATH . 'libraries/PHPMailer/PHPMailerAutoload.php';
 
 class Main extends MY_Controller
 {
@@ -36,38 +36,36 @@ class Main extends MY_Controller
     {
         $this->load->model('Nav_model');
         if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id, true)) {
-            if(!$aggr) {
+            if (!$aggr) {
                 $result = json_encode($this->Nav_model->getHeaderData($character_id));
                 echo $result;
             } else {
                 $this->load->model('Login_model');
                 $characters = $this->Login_model->getCharacterList($this->user_id);
-                $chars = $characters['aggr'];
-                $result = json_encode($this->Nav_model->getHeaderData($character_id, $chars));
+                $chars      = $characters['aggr'];
+                $result     = json_encode($this->Nav_model->getHeaderData($character_id, $chars));
                 echo $result;
             }
-            
         }
     }
 
     public function sendEmail()
     {
-        $to = $_REQUEST['to'];
-        $from = $_REQUEST['email'];
+        $to        = $_REQUEST['to'];
+        $from      = $_REQUEST['email'];
         $from_name = $_REQUEST['from_name'];
-        $subject = $_REQUEST['subject'];
-        $body = $_REQUEST['message'];
+        $subject   = $_REQUEST['subject'];
+        $body      = $_REQUEST['message'];
 
         $this->load->model('common/Email');
         $mail = $this->Email->send($to, $from, $from_name, $subject, $body);
         //$mail->SMTPDebug = 2;
         if (!$mail) {
             $error = Msg::EMAIL_SEND_FAILURE;
-            $res = "error";
-        }
-        else {
+            $res   = "error";
+        } else {
             $error = Msg::EMAIL_SEND_SUCCESS . $to . " " . "\n";
-            $res = "success";
+            $res   = "success";
         }
         echo json_encode(array("notice" => $res, "message" => $error));
     }

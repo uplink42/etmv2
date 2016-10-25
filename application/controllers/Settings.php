@@ -81,7 +81,6 @@ class Settings extends MY_Controller
         }
 
         echo json_encode(array("notice" => $notice, "message" => $message));
-
     }
 
     public function changeReports()

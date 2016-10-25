@@ -110,7 +110,7 @@ class Updater extends CI_Controller
                 $this->Log->addEntry('update', $this->user_id);
                 
                 //transaction success, show the result table
-                buildMessage("success", Msg::LOGIN_SUCCESS, $view);
+                //buildMessage("success", Msg::LOGIN_SUCCESS, $view);
 
                 $data['cl']        = $this->Updater_model->getChangeLog();
                 $data['cl_recent'] = $this->Updater_model->getChangeLog(true);

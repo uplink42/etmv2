@@ -33,8 +33,8 @@
                     <div class="page-scroll">
                         <a href="#etm2" class="btn btn-lg btn-rj">Learn More</a>
                         <br><br>
-                        <p class="lead">Login | Register</p>
                     </div>
+                    <p class="lead"><a href="<?=base_url('main/login')?>">Login</a> | <a href="<?=base_url('main/register')?>">Register</a></p>
                     <!-- //.page-scroll -->
                 </div>
                 <!-- //.intro-content -->
@@ -146,7 +146,8 @@
                         <p class="about-etm">Eve Trade Master is a trading manager application for the popular MMORPG Eve Online. Eve Trade Master first started as personal project back in August 2015. With growing interest for Eve Online's intricate economy, it has been massively improved overtime, thanks to Eve's vibrant community and support. <br>
                         ETM 2.0 represents a major milestone both in back and front-end improvements, which will hopefully empower your trading activity in New Eden to a whole new level.</p>
                         <div class="page-scroll text-center">
-                            <a href="#" class="btn btn-lg btn-rj">Check it out!</a>
+                            <br>
+                            <a href="<?=base_url('main/register')?>" class="btn btn-lg btn-rj">Check it out!</a>
                         </div>
                         <!-- //.page-scroll -->
                     </div>
@@ -393,10 +394,9 @@
                             <i class="fa fa-quote-right fa-4x"></i>
                         </span>-->
 
-                        <h2>Try it out! Free to use and install.</h2>
+                        <h2>Try it out! Free to use forever.</h2>
                         <h2>All you need is a working API Key</h2>
-                        <a class="btn btn-lg btn-rj">Register</a>
-                        
+                        <a class="btn btn-lg btn-rj" href="<?=base_url('main/register')?>">Register</a>
                     </div>
                     <!-- //.quote-text -->
                 </div>
@@ -698,7 +698,7 @@
                 <div class="col-md-8 col-md-offset-2">
                     <div class="countdown-text text-center">
                         <p class="lead">Stay up to date with new features and bug fixes and contribute for the future development in Eve Trade Master</p>
-                        <a href="#" class="btn btn-lg btn-rj">Dev Blog</a>
+                        <a href="http://www.evetrademaster.com/blog" class="btn btn-lg btn-rj">Dev Blog</a>
                     </div>
                     <!-- //.countdown-text -->
                 </div>
@@ -714,7 +714,6 @@
 <!-- //End Coming Soon Section -->
 
 
-<!-- Begin Contact Us Section -->
 <section id="contact-us" class="section section-bgimage-yes">
     <div class="section-inner">
         <div class="section-overlay"></div>
@@ -751,7 +750,6 @@
     </div>
     <!-- //.section-inner -->
 </section>
-<!-- //End Contact Us Section -->
 
 <!-- Begin Footer -->
 <footer class="footer">

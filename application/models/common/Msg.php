@@ -39,6 +39,7 @@ class Msg extends CI_Model
     const TAX_REMOVE_SUCCESS         = "Tax removed successfully";
     
     const INVALID_LOGIN              = "Invalid credentials";
+    const INVALID_REQUEST_SESSION    = "Invalid session or character request";
     const LOGIN_SUCCESS              = "Login success";
     const LOGIN_NO_CHARS             = "It seems you have no characters in your account. Please insert a new API Key below";
     
@@ -83,6 +84,8 @@ class Msg extends CI_Model
 
     const RECOVERY_SUCCESS           = "If the information you provided is correct you will soon recieve an e-mail with your information";
     const RECOVERY_ERROR             = "Unexpected failure. Try again";
+
+    const LOGOUT                     = "You have logged out";
 
 
     public function __construct()

@@ -40,7 +40,7 @@ class MY_Controller extends CI_Controller
             return true;
         } else {
             $data['view'] = "login/login_v";
-            buildMessage("error", "Invalid session or character request", $data['view']);
+            buildMessage("error", Msg::INVALID_REQUEST_SESSION, $data['view']);
             $data['no_header'] = 1;
 
             $this->session->unset_userdata('username');

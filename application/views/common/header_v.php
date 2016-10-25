@@ -153,7 +153,7 @@
                 Logout
             </li>
             <li class="logout">
-                <a href="<?=base_url('main/login/logout')?>">
+                <a href="<?=base_url('logout')?>">
                     <i class="fa fa-sign-out"></i> Logout
                 </a>
             </li>

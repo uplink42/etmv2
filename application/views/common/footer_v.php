@@ -17,12 +17,12 @@
                 <a class="panel-close"><i class="fa fa-times"></i></a>
             </div>
             <ul class="list-inline">
-                <li>Home</li>
+                <li><a href="<?=base_url()?>">Home</a></li>
                 <?php if(isset($email)) { ?>
                 <li><a data-toggle="modal" data-target="#modal-feedback">Feedback and bug reports</a></li>
                 <?php } ?>
-                <li>Donate</li>
-                <li>Blog</li>
+                <li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=E92PVNRT3L9EQ" target="_blank">Donate</a></li>
+                <li><a href="https://www.evetrademaster.com/blog" target="_blank">Blog</a></li>
             </ul>
         </div>
         <div class="panel-body text-center footer-desc" style="display: block;">
@@ -31,6 +31,4 @@
             and are under copyright. That means copying them is not right. <br>
         </div>
     </div>
-
-
 </div>

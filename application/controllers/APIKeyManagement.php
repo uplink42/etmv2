@@ -94,7 +94,6 @@ class ApiKeyManagement extends MY_Controller
                 if ($create == "ok") {
                     $notice = "success";
                     $msg = Msg::CHARACTER_CREATE_SUCCESS;
-
                 } else {
                     $notice = "error";
                     $msg = $create;
@@ -103,7 +102,6 @@ class ApiKeyManagement extends MY_Controller
                 $notice = "error";
                 $msg = Msg::CHARACTER_ACCOUNT_MISMATCH;
             }
-
         } else {
             $notice = "error";
             $msg = Msg::NO_CHARACTER_SELECTED;

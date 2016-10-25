@@ -34,7 +34,6 @@ class Login extends CI_Controller
             $id_user   = $user_data->iduser;
 
             $session_start = date('Y-m-d H:i:s');
-            $this->load->library('session');
             $session_data = array("username" => $username,
                 "start"                          => $session_start,
                 "iduser"                         => $id_user,
@@ -50,14 +49,4 @@ class Login extends CI_Controller
             $this->load->view('main/_template_v', $data);
         }
     }
-
-    public function logout()
-    {
-        $this->session->unset_userdata('username');
-        $this->session->unset_userdata('iduser');
-        $this->session->unset_userdata('start');
-
-        header(base_url());
-    }
-
 }

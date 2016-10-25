@@ -69,9 +69,9 @@ class Profits_model extends CI_Model
 
         $count = count($result);
         for ($i = 0; $i < $count; $i++) {
-            $diff           = $result[$i]['diff'];
-            $price_buy      = $result[$i]['buy_price'];
-            $profit_unit    = $result[$i]['profit_unit'];
+            $diff           = (float)$result[$i]['diff'];
+            $price_buy      = (float)$result[$i]['buy_price'];
+            $profit_unit    = (float)$result[$i]['profit_unit'];
             $character_buy  = $result[$i]['char_buy_id'];
             $character_sell = $result[$i]['char_sell_id'];
             $station_from   = $result[$i]['station_buy_id'];
