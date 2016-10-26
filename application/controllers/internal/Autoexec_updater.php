@@ -28,7 +28,7 @@ class Autoexec_updater extends CI_Controller
         foreach ($chars as $row) {
             $start    = microtime(true);
             $username = $row->username;
-            $iduser = $row->iduser;
+            $iduser = (int) $row->iduser;
             echo $username . "\n";
 
             $this->Updater_model->init($username);
@@ -36,17 +36,16 @@ class Autoexec_updater extends CI_Controller
             if (!$this->ValidateRequest->testEndpoint()) {
                 echo Msg::XML_CONNECT_FAILURE;
             } else if (!$this->Updater_model->processAPIKeys($username)) {
-                echo Msg::XML_CONNECT_FAILURE;
+                echo Msg::ERROR_REMOVED_CHARACTERS;
             } else {
-
                 if ($this->Updater_model->isLocked($username)) {
-                    log_message('error', $username . ' is locked');
+                    log_message('error', $username . ' is locked. aborting');
                 } else {
                     try {
                         $this->Updater_model->lock($username);
                         log_message('error', $username . ' locked initial');
                         //catch the API acess violation bug
-                        $result_iterate = $this->Updater_model->iterateAccountCharacters();
+                        $result_iterate = $this->Updater_model->iterateAccountCharacters($username);
 
                         if ($result_iterate == "noChars") {
                             echo Msg::LOGIN_NO_CHARS;

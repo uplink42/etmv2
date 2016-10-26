@@ -14,12 +14,12 @@ class Register_model extends CI_Model
     {
         parent::__construct();
         $this->load->model('common/Msg');
-        $this->load->model('ValidateRequest');
+        $this->load->model('common/ValidateRequest');
     }
 
-    public function validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports)
+    public function validate(string $username, string $password, string $repeatpassword, string $email, int $apikey, string $vcode, string $reports) : array
     {
-        $result = array("username" => $this->validateUsername($username),
+        $result = array("username"     => $this->validateUsername($username),
             "password"                 => $this->validatePassword($password, $repeatpassword),
             "email"                    => $this->validateEmail($email),
             "api"                      => $this->validateAPI($apikey, $vcode),
@@ -29,7 +29,7 @@ class Register_model extends CI_Model
         return $result;
     }
 
-    private function validateUsername($username)
+    private function validateUsername(string $username)
     {
         if (!$this->ValidateRequest->validateUsernameLength($username)) {
             return Msg::USERNAME_TOO_SHORT;
@@ -41,7 +41,7 @@ class Register_model extends CI_Model
 
     }
 
-    private function validateEmail($email)
+    private function validateEmail(string $email)
     {
         if (!$this->ValidateRequest->validateEmailFormat($email)) {
             return Msg::INVALID_EMAIL;
@@ -53,7 +53,7 @@ class Register_model extends CI_Model
 
     }
 
-    private function validatePassword($password, $repeatpassword)
+    private function validatePassword(string $password, string $repeatpassword)
     {
         if (!$this->ValidateRequest->validatePasswordLength($password)) {
             return Msg::PASSWORD_TOO_SHORT;
@@ -64,7 +64,7 @@ class Register_model extends CI_Model
         }
     }
 
-    private function validateAPI($apikey, $vcode)
+    private function validateAPI(int $apikey, string $vcode)
     {
         return $this->ValidateRequest->validateAPI($apikey, $vcode);
     }
@@ -76,7 +76,7 @@ class Register_model extends CI_Model
         }
     }
 
-    public function getCharacters($apikey, $vcode)
+    public function getCharacters(int $apikey, string $vcode)
     {
         $pheal  = new Pheal($apikey, $vcode);
         $result = $pheal->accountScope->APIKeyInfo();
@@ -92,7 +92,7 @@ class Register_model extends CI_Model
         return $characters;
     }
 
-    public function verifyCharacters($chars, $apikey, $vcode)
+    public function verifyCharacters(array $chars, int $apikey, string $vcode)
     {
         $pheal  = new Pheal($apikey, $vcode);
         $result = $pheal->accountScope->APIKeyInfo();
@@ -114,7 +114,7 @@ class Register_model extends CI_Model
         return true;
     }
 
-    public function createAccount($username, $password, $email, $apikey, $vcode, $reports, $chars)
+    public function createAccount(string $username, string $password, string $email, int $apikey, string $vcode, string $reports, array $chars) : string
     {
         $error = "";
 
@@ -148,7 +148,7 @@ class Register_model extends CI_Model
         $this->db->query("INSERT IGNORE INTO api(apikey, vcode) VALUES ('$apikey', '$vcode')");
 
         foreach ($chars as $row) {
-            $character_id = $row;
+            $character_id = (int) $row;
             //check if character already exists in db
             if ($this->checkCharacterExists($character_id)) {
                 $this->db->trans_rollback();
@@ -194,7 +194,7 @@ class Register_model extends CI_Model
         }
     }
 
-    public function checkCharacterExists($character_id)
+    public function checkCharacterExists(int $character_id) : bool
     {
         $this->db->where('character_eve_idcharacter', $character_id);
         $check_user = $this->db->get('v_user_characters');

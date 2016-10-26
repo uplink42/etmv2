@@ -159,29 +159,32 @@ class Updater_model extends CI_Model
             if (!isset($response) || $response == "") {
                 return false;
             } else {
-
                 if ($this->validateAPIKey($apikey, $vcode, $char_id) < 1) {
                     $this->db->select('name');
                     $this->db->where('eve_idcharacter', $char_id);
                     $query          = $this->db->get('characters');
-                    $character_name = $query->result_array();
+                    $character_name = $query->row()->name;
+
+                    $this->db->where('character_eve_idcharacter', $char_id);
+                    $query = $this->db->get('aggr');
+                    $res = $query->row()->user_iduser;
 
                     //Invalid access mask or API key not found. Delete API from account
                     //Note that none of the characters data is actually removed from the account,
                     //but only the user association
                     $data = array(
-                        "user_iduser"               => $this->id_user,
-                        "character_eve_idcharacter" => $character_name,
+                        "user_iduser"               => $res,
+                        "character_eve_idcharacter" => $char_id,
                     );
 
                     $this->db->delete('aggr', $data);
-                    array_push($removed_characters);
+                    array_push($removed_characters, $character_name);
                 } else {
                     return true;
                 }
             }
         }
-        return $removed_characters;
+        //return $removed_characters;
     }
 
     //checks if the current API key is valid and has all necessary permissions for the current character
@@ -221,11 +224,11 @@ class Updater_model extends CI_Model
     //and begin the update procedure
     public function iterateAccountCharacters()
     {
-        $this->db->trans_start();
-
         if (count($this->account_characters) == 0) {
             return "noChars";
         }
+
+        $this->db->trans_start();
 
         //if ($this->isLocked($this->username)) {
         //$this->resultTable();

@@ -3155,10 +3155,11 @@ fieldset[disabled] .form-control {
 .ui-state-hover, .ui-state-active {
     color: #ffffff;
     text-decoration: none;
-    background-color: #494b54;
+    background-color: #f6a821 !important;
     border-radius: 0px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
+    background-color: red;
     background-image: none;
 
 

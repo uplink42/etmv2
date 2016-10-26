@@ -2,7 +2,7 @@
 </script>
 <section class="content">
     <div class="back-link">
-        <a class="btn btn-accent" href="<?=base_url('index/main')?>">
+        <a class="btn btn-accent" href="<?=base_url()?>">
             Back to main page
         </a>
     </div>

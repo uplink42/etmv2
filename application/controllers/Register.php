@@ -17,7 +17,7 @@ class Register extends CI_Controller
         $password       = $this->security->xss_clean($this->input->post('password'));
         $repeatpassword = $this->security->xss_clean($this->input->post('repeatpassword'));
         $email          = $this->security->xss_clean($this->input->post('email'));
-        $apikey         = $this->security->xss_clean($this->input->post('apikey'));
+        $apikey         = (int) $this->security->xss_clean($this->input->post('apikey'));
         $vcode          = $this->security->xss_clean($this->input->post('vcode'));
         $reports        = $this->security->xss_clean($this->input->post('reports'));
 
@@ -50,7 +50,7 @@ class Register extends CI_Controller
         $username = $this->security->xss_clean($this->input->post('username'));
         $password = $this->security->xss_clean($this->input->post('password'));
         $email    = $this->security->xss_clean($this->input->post('email'));
-        $apikey   = $this->security->xss_clean($this->input->post('apikey'));
+        $apikey   = (int) $this->security->xss_clean($this->input->post('apikey'));
         $vcode    = $this->security->xss_clean($this->input->post('vcode'));
         $reports  = $this->security->xss_clean($this->input->post('reports'));
 

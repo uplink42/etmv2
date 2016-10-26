@@ -26,6 +26,7 @@ class Msg extends CI_Model
     const NO_CHARACTER_SELECTED      = "Please select at least one character";
     const ACCOUNT_CREATE_SUCCESS     = "Account created successfully";
     const CHARACTER_CREATE_SUCCESS   = "Character added successfully";
+    const ERROR_REMOVED_CHARACTERS   = "Expired or invalid permissions detected on your API key. Removed the following characters from your account:";
     
     const MISSING_INFO               = "Missing information provided";
     const INVALID_FORM               = "Invalid information provided";

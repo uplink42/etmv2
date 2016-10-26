@@ -72,17 +72,25 @@ class MarketOrders_model extends CI_Model
         $query = $this->db->get('order_status');
 
         //die($query->row());
-        if ($query->num_rows() > 1) {
+        if ($query->num_rows() != 0) {
+            log_message('error', 'cached');
             $last_timestamp = $query->row()->timestamp_check;
 
             if ($last_timestamp > $date) {
                 $cached_value = $this->getCachedValue($order_id);
 
-                //value is cached
-                if ($cached_value) {
+                switch($cached_value) {
+                    case '1':
                     return "OK";
-                } else {
+                    break;
+
+                    case '0':
                     return "undercut";
+                    break;
+
+                    case '2':
+                    return "N/A";
+                    break;
                 }
             }
         } else {
@@ -99,6 +107,11 @@ class MarketOrders_model extends CI_Model
 
             $orderPrices = [];
 
+            if ($station_id > 1000000000000) {
+                $this->updateStatus($order_id, 2, $date_now);
+                return "n/a";
+            }
+
             for ($i = 0; $i < count($result['items']); $i++) {
                 //find all orders with stationID of desired type
                 if ($result['items'][$i]['location']['id_str'] == $station_id && $result['items'][$i]['buy'] == $buy_status) {
@@ -110,11 +123,11 @@ class MarketOrders_model extends CI_Model
                 }
             }
 
-
             //sell orders = search for lowest price, buy orders = search for highest price
-            if ($buy_status) {
+            $bestPrice = 0;
+            if ($buy_status && count($orderPrices) > 0) {
                 $bestPrice = max($orderPrices);
-            } else if (!$buy_status) {
+            } else if (!$buy_status && count($orderPrices) > 0) {
                 $bestPrice = min($orderPrices);
             }
 
@@ -134,7 +147,7 @@ class MarketOrders_model extends CI_Model
         }
     }
 
-    private function getCachedValue(): stdClass
+    private function getCachedValue(string $order_id): string
     {
         $this->db->select('status');
         $this->db->where('orders_transkey', $order_id);
@@ -147,8 +160,8 @@ class MarketOrders_model extends CI_Model
     private function updateStatus(string $order_id, int $status, string $date_now)
     {
         $data = array("orders_transkey" => $order_id,
-            "status"                        => $status,
-            "timestamp_check"               => $date_now);
+            "status"                    => $status,
+            "timestamp_check"           => $date_now);
         $this->db->replace('order_status', $data);
     }
 
