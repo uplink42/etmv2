@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" data-url="<?=base_url('ApiKeyManagement/removeCharacter')?>">
+            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" data-url="<?=base_url('Apikeymanagement/removeCharacter')?>">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header text-center">

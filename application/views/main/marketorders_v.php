@@ -29,7 +29,7 @@
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
                     <div class="panel-heading">
-                        <a href="<?=base_url('MarketOrders/index/'.$character_id.'?aggr='.$aggregate.'&check=1')?>">
+                        <a href="<?=base_url('Marketorders/index/'.$character_id.'?aggr='.$aggregate.'&check=1')?>">
                             <button class="btn btn-default btn-success pull-right btn-lg btn-check">Order Check</button>
                         </a>
                         Market Orders

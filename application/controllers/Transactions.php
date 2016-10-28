@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Transactions extends MY_Controller
@@ -10,7 +10,6 @@ class Transactions extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        ini_set('memory_limit', '-1');
         $this->page = "Transactions";
 
         $this->new     = $_REQUEST['new'] ?? '';

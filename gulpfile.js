@@ -89,7 +89,8 @@ var paths = {
               'assets/rhijani/main/js/component/countdown.js',
               'assets/rhijani/main/js/component/counters.js',
               'assets/rhijani/main/js/component/portfolio.js',
-              'assets/rhijani/main/js/component/animation.js'
+              'assets/rhijani/main/js/component/animation.js',
+              'assets/js/home-app.js'
               ],
 
     img: ['assets/rhijani/main/img/*',

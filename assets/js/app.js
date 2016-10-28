@@ -70,12 +70,12 @@ jQuery.fn.dataTable.Api.register('sum()', function() {
 //load error messages
 var errHandle = (function() {
     var loc = window.location.href
-    var base = loc.substr(0, loc.indexOf('etm_refactor'));
+    var base = loc.substr(0, loc.indexOf('v2'));
     var data;
 
     $.ajax({
         dataType: "json",
-        url: base + "etm_refactor/main/getMsgHandles",
+        url: base + "v2/main/getMsgHandles",
         success: function(result) {
             data = result;
         }

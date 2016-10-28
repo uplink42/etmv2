@@ -8,7 +8,7 @@ $(document).ready(function() {
     list();
 
     function list() {
-        var url = base + "ApiKeyManagement/getCharacters/";
+        var url = base + "Apikeymanagement/getCharacters/";
         $.ajax({
             dataType: "json",
             url: url,
@@ -57,7 +57,7 @@ $(document).ready(function() {
         apikey = $("#keyid").val();
         vcode = $("#vcode").val();
         e.preventDefault();
-        var url = base + "ApiKeyManagement/addCharacters/";
+        var url = base + "Apikeymanagement/addCharacters/";
         var data = $(".add-apikey").serialize();
 
         $.ajax({
@@ -97,7 +97,7 @@ $(document).ready(function() {
         $(".character3").is(':checked') ? selected.push($(".character3").attr('data-id')) : "";
         
         var args = selected.join('/');
-        var url = base + "ApiKeyManagement/addCharactersStep/" + apikey + "/" + vcode + "/" + args;
+        var url = base + "Apikeymanagement/addCharactersStep/" + apikey + "/" + vcode + "/" + args;
 
         $.ajax({ 
             dataType: "json",
@@ -105,7 +105,7 @@ $(document).ready(function() {
             success: function(result) {
                 toastr[result.notice](result.message);
                 if(result.notice === 'success') {
-                    window.location.href = '/etm_refactor/main/login/logout';
+                    window.location.href = '../../logout';
                 }
             }
         });

@@ -1,7 +1,7 @@
-<?php declare(strict_types=1);
+<?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class ApiKeyManagement extends MY_Controller
+class Apikeymanagement extends MY_Controller
 {
     private $keyid;
     private $vcode;
@@ -9,7 +9,7 @@ class ApiKeyManagement extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->db->cache_on();
+        $this->db->cache_off();
         $this->page = "APIKeyManagement";
         $this->load->model('ApiKeyManagement_model');
 

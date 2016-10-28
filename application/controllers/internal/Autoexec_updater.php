@@ -1,13 +1,16 @@
-<?php declare(strict_types=1);
+<?php
 ini_set('mysql.connect_timeout', '3000');
 ini_set('default_socket_timeout', '3000');
 ini_set('max_execution_time', '0');
+ini_set('memory_limit', '1024M');
 
-defined('BASEPATH') or exit('No direct script access allowed');
+use Pheal\Core\Config;
+use Pheal\Pheal;
+
+//defined('BASEPATH') or exit('No direct script access allowed');
 
 class Autoexec_updater extends CI_Controller
 {
-
     //update all totals, apis and character data
     public function __construct()
     {

@@ -1,9 +1,9 @@
 "use strict";
 $(document).ready(function() {
 
-    var base = $(".navbar").data('url');
-    var url_autocomplete = base + "CitadelTax/searchCitadels/";
-    var url_req = base + "CitadelTax/addTax/";
+    var base = $(".navbar").attr('data-url');
+    var url_autocomplete = base + "Citadeltax/searchCitadels/";
+    var url_req = base + "Citadeltax/addTax/";
     var charid = $(".characterid").val();
     updateTable();
 
@@ -19,6 +19,7 @@ $(document).ready(function() {
     });
 
     $(".submit-tax").on('click', function(e) {
+        $("#citadel, #tax").val("");
         e.preventDefault();
         var tax = $("#tax").val();
         var taxregex = /^(0(\.\d+)?|1(\.0+)?)$/;
@@ -43,7 +44,7 @@ $(document).ready(function() {
 
     function updateTable() {
         $(document).bind(".go");
-        var url_req = base + "CitadelTax/getTaxList/" + charid;
+        var url_req = base + "Citadeltax/getTaxList/" + charid;
         $.ajax({
             dataType: "json",
             url: url_req,
@@ -58,7 +59,7 @@ $(document).ready(function() {
                             var id = result[k].idcitadel_tax;
                             var name = result[k].name;
                             var value = result[k].value;
-                            var rm = "<a  data-id=" + id + " href=" + base + "CitadelTax/removeTax/" + charid + "/" + id + "><button class='btn btn-danger btn-remove-tax'>Remove</button></a>";
+                            var rm = "<a  data-id=" + id + " href=" + base + "Citadeltax/removeTax/" + charid + "/" + id + "><button class='btn btn-danger btn-remove-tax'>Remove</button></a>";
                             var $element = "<tr><td>" + name + "</td><td>" + value + "</td><td>" + rm + "</td></tr>";
                             $(".table tbody").append($element);
                         });
@@ -70,8 +71,8 @@ $(document).ready(function() {
     $(".tax-list").on('click', "a", function(e) {
         e.preventDefault();
         var charid = $(".characterid").val();
-        var taxid = $(this).data('id');
-        var url_req = base + "CitadelTax/removeTax/" + charid + "/" + taxid;
+        var taxid = $(this).attr('data-id');
+        var url_req = base + "Citadeltax/removeTax/" + charid + "/" + taxid;
         $.ajax({
             dataType: "json",
             url: url_req,

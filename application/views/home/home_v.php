@@ -13,7 +13,7 @@
 <!-- //End Page Loader -->
 
 <!-- Begin Intro Section -->
-<section id="intro">
+<section id="intro" data-url="<?=base_url()?>">
     <div class="intro-body text-center">
         <div class="container">
             <div class="row">
@@ -182,8 +182,8 @@
                     <div class="counter-item not-right-column top-column">
                         <i class="fa fa-list"></i>
                         <div class="inner-content">
-                            <span class="number" data-from="0" data-to="<?=$stats['data']['transactions']?>" data-refresh-interval="100">
-                                <?=$stats['data']['transactions']?>
+                            <span class="number transactions" data-from="0" data-to="" data-refresh-interval="100">
+                                
                             </span>
                         </div>
                         <!-- //.inner-content -->
@@ -197,14 +197,14 @@
                     <div class="counter-item not-right-column top-column">
                         <i class="fa fa-usd"></i>
                         <div class="inner-content">
-                            <span class="number" data-from="0" data-to="<?=$stats['data']['profit']?>" 
+                            <span class="number profit" data-from="0" data-to="" 
                             data-refresh-interval="100">
-                                <?$stats['data']['profit']?>
+                                
                             </span>
                         </div>
                         <!-- //.inner-content -->
 
-                        <p>Total Profit (millions ISK)</p>
+                        <p>Profit (M ISK)</p>
                     </div>
                     <!-- //.counter-item -->
                 </div>
@@ -215,8 +215,8 @@
                         <i class="fa fa-key"></i>
 
                         <div class="inner-content">
-                            <span class="number" data-from="0" data-to="<?=$stats['data']['keys']?>" data-refresh-interval="100">
-                                <?=$stats['data']['keys']?>
+                            <span class="number keys" data-from="0" data-to="" data-refresh-interval="100">
+                                
                             </span>
                         </div>
                         <!-- //.inner-content -->
@@ -232,8 +232,8 @@
                         <i class="fa fa-smile-o"></i>
 
                         <div class="inner-content">
-                            <span class="number" data-from="0" data-to="<?=$stats['data']['characters']?>" data-refresh-interval="100">
-                                <?=$stats['data']['characters']?>
+                            <span class="number characters" data-from="0" data-to="" data-refresh-interval="100">
+                                
                             </span>
                         </div>
                         <!-- //.inner-content -->

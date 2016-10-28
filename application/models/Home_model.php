@@ -11,39 +11,45 @@ class Home_model extends CI_Model
         parent::__construct();
     }
 
-    public function getStats() : array
-    {
-        //profit
-        $this->db->select('sum(profit_unit * quantity_profit) as profit');
-        $query  = $this->db->get('profit');
-        $profit = $query->row();
 
-        //transactions
+    public function getTransactions() : array
+    {
         $this->db->select('count(idbuy) as transaction');
         $query        = $this->db->get('transaction');
         $transactions = $query->row();
 
-        //api keys
-        $this->db->select('count(apikey) as apikey');
-        $query = $this->db->get('api');
-        $keys  = $query->row();
+        $data = array("transactions" => $transactions->transaction);
+        return $data;
+    }
 
-        //characters
+    public function getProfits() : array
+    {
+        $this->db->select('sum(profit_unit * quantity_profit) as profit');
+        $query  = $this->db->get('profit');
+        $profit = $query->row();
+
+        $data = array("profit" => round($profit->profit)/1000000);
+        return $data;
+    }
+
+    public function getCharacters() : array
+    {
         $this->db->select('count(eve_idcharacter) as cha');
         $query      = $this->db->get('characters');
         $characters = $query->row();
 
-        $data = array("profit"     => round($profit->profit)/1000000,
-            "transactions"         => $transactions->transaction,
-            "keys"                 => $keys->apikey,
-            "characters"           => $characters->cha);
+        $data = array("characters" => $characters->cha);
+        return $data;
+    }
 
-        $interval = array("profit" => round(($profit->profit)/10),
-            "transactions"         => ($transactions->transaction)/10,
-            "keys"                 => ($keys->apikey)/10,
-            "characters"           => ($characters->cha)/10);
+    public function getKeys() : array
+    {
+        $this->db->select('count(apikey) as apikey');
+        $query = $this->db->get('api');
+        $keys  = $query->row();
 
-        return array("data" => $data, "interval" => $interval);
+        $data = array("keys" => $keys->apikey);
+        return $data;
     }
 
 }

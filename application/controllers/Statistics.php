@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Statistics extends MY_Controller
@@ -7,7 +7,7 @@ class Statistics extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->db->cache_off();
+        $this->db->cache_on();
         $this->page = "Statistics";
     }
 

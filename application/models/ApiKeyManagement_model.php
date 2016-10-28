@@ -52,7 +52,7 @@ class ApiKeyManagement_model extends CI_Model
         $this->db->query("INSERT IGNORE INTO api(apikey, vcode) VALUES ('$apikey', '$vcode')");
 
         foreach ($chars as $row) {
-            $character_id = $row;
+            $character_id = (int) $row;
             //check if character already exists in db
             if ($this->Register_model->checkCharacterExists($character_id)) {
                 $this->db->trans_rollback();

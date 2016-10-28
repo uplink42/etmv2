@@ -2,12 +2,12 @@
 $(document).ready(function() {
 
     $(".origin-station").focus().select();
-    var base = $(".navbar").data('url');
-    var url = base + "TradeRoutes/searchStations";
-    var id = $(".navbar").data('id'); 
+    var base = $(".navbar").attr('data-url');
+    var url = base + "Traderoutes/searchStations";
+    var id = $(".navbar").attr('data-id'); 
 
     function list() {
-        var listurl = base + "TradeRoutes/listTradeRoutes/" + id; 
+        var listurl = base + "Traderoutes/listTradeRoutes/" + id; 
         $.ajax({
             dataType: "json",
             url: listurl,
@@ -29,6 +29,7 @@ $(document).ready(function() {
         }); 
     }
     list();
+
     $(".origin-station, .destination-station").autocomplete({
         source: url,
         minLength: 2,
@@ -43,6 +44,7 @@ $(document).ready(function() {
             }
         }
     });
+
     //put base url and char id on header
     $(".submit-traderoute").on('click', function(e) {
         e.preventDefault();
@@ -51,7 +53,7 @@ $(document).ready(function() {
         var dest_val = $(".destination-station").val();
         $(".origin").val(origin_val);
         $(".destination").val(dest_val);
-        url = base + "TradeRoutes/submitRoute/" + id;
+        url = base + "Traderoutes/submitRoute/" + id;
 
         var data = $(".form-horizontal").serialize();
         $.ajax({
@@ -70,7 +72,7 @@ $(document).ready(function() {
     
     $("table").on('click', 'button', function() {
         var $this = $(this);
-        var url = base + "TradeRoutes/" + "deleteRoute/" + $(this).data('iddel');
+        var url = base + "Traderoutes/" + "deleteRoute/" + $(this).attr('data-iddel');
 
         $.ajax({
             dataType: "json",

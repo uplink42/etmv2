@@ -40,7 +40,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="tradesim" data-res="<?php echo isset($results) ? 'true' : 'false' ?>">
-                            <form name="tradesimulator" method="POST" action="<?=base_url('TradeSimulator/process/' . $character_id . '?aggr=' . $aggregate)?>">
+                            <form name="tradesimulator" method="POST" action="<?=base_url('tradesimulator/process/' . $character_id . '?aggr=' . $aggregate)?>">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="text-center hourglass">

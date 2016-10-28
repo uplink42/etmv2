@@ -57,6 +57,7 @@ class Msg extends CI_Model
     const LIST_CREATE_SUCCESS        = "Stock List created successfully";
     const LIST_REMOVE_ERROR          = "Unable to remove Stock List. It may already be removed";
     const LIST_CREATE_ERROR          = "Unable to create Stock List";
+    const LIST_NOT_BELONG            = "Stock List not found";
     
     const ROUTE_CREATE_SUCCESS       = "Trade Route created successfully";
     const ROUTE_CREATE_ERROR         = "Unable to create Trade Route";

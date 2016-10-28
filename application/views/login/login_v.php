@@ -57,23 +57,23 @@
                 Logging in... updating data
                 <div class="windows8">
                     <br>
-                    <div class="wBall" id="wBall_1">
+                    <div class="wBall" class="wBall_1">
                         <div class="wInnerBall">
                         </div>
                     </div>
-                    <div class="wBall" id="wBall_2">
+                    <div class="wBall" class="wBall_2">
                         <div class="wInnerBall">
                         </div>
                     </div>
-                    <div class="wBall" id="wBall_3">
+                    <div class="wBall" class="wBall_3">
                         <div class="wInnerBall">
                         </div>
                     </div>
-                    <div class="wBall" id="wBall_4">
+                    <div class="wBall" class="wBall_4">
                         <div class="wInnerBall">
                         </div>
                     </div>
-                    <div class="wBall" id="wBall_5">
+                    <div class="wBall" class="wBall_5">
                         <div class="wInnerBall">
                         </div>
                     </div>

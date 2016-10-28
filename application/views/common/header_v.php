@@ -89,7 +89,7 @@
                 </a>
             </li>
             <li class="marketorders">
-                <a href="<?=base_url('marketOrders/index/'.$character_id .'?aggr='.$aggregate)?>">
+                <a href="<?=base_url('marketorders/index/'.$character_id .'?aggr='.$aggregate)?>">
                     <i class="fa fa-shopping-cart"></i> Market Orders
                 </a>
             </li>

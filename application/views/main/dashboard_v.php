@@ -63,7 +63,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="col-lg-2 col-xs-6">
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        <a href="<?=base_url('MarketOrders/index/'.$character_id.'?aggr='.$aggregate)?>"><h2 class="m-b-none">
+                        <a href="<?=base_url('Marketorders/index/'.$character_id.'?aggr='.$aggregate)?>"><h2 class="m-b-none">
                         <i class="pe-7s-cart"></i>
                             <?=$new_info->orders?>
                         <span class="slight">

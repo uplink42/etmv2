@@ -1,7 +1,7 @@
-<?php declare(strict_types=1);
+<?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller
+final class Dashboard extends MY_Controller
 {
 
     public function __construct()

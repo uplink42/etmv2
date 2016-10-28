@@ -1,7 +1,7 @@
-<?php declare (strict_types = 1);
+<?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class TradeSimulator extends MY_Controller
+class Tradesimulator extends MY_Controller
 {
     private $stationFrom;
     private $stationTo;
@@ -9,7 +9,7 @@ class TradeSimulator extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->db->cache_on();
+        $this->db->cache_off();
         $this->page = "TradeSimulator";
         $this->load->model('TradeSimulator_model');
     }
@@ -72,6 +72,15 @@ class TradeSimulator extends MY_Controller
             !empty($_REQUEST['sell-method']) &&
             !empty($_REQUEST['seller']) &&
             !empty($_REQUEST['stocklist'])) {
+
+            $this->load->model('common/ValidateRequest');
+            $list_id = (int) $_REQUEST['stocklist'];
+            $user_id = (int) $this->user_id;
+            
+            if(!$this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
+                $msg = array("notice" => "error", "message" => Msg::LIST_NOT_BELONG);
+                $this->index($character_id, $msg);
+            }
 
             $origin_station      = (string) $_REQUEST['origin-station'];
             $destination_station = (string) $_REQUEST['destination-station'];

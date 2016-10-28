@@ -10,7 +10,7 @@ $(document).ready(function() {
 		e.preventDefault();
         apikey = $("#keyid").val();
         vcode = $("#vcode").val();
-        var url = base + "ApiKeyManagement/addCharacters/";
+        var url = base + "Apikeymanagement/addCharacters/";
         var data = $(".add-apikey").serialize();
 
         $.ajax({
@@ -50,7 +50,7 @@ $(document).ready(function() {
         $(".character3").is(':checked') ? selected.push($(".character3").attr('data-id')) : "";
         
         var args = selected.join('/');
-        var url = base + "ApiKeyManagement/addCharactersStep/" + apikey + "/" + vcode + "/" + args;
+        var url = base + "Apikeymanagement/addCharactersStep/" + apikey + "/" + vcode + "/" + args;
 
         $.ajax({ 
             dataType: "json",

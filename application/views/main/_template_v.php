@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
     <!-- Page title -->
     <title>Eve Trade Master</title>
 
@@ -39,23 +39,23 @@
                 Refreshing data... please wait
                 <div class="windows8">
                     <br>
-                    <div class="wBall" id="wBall_1">
+                    <div class="wBall" class="wBall_1">
                         <div class="wInnerBall">
                         </div>
                     </div>
-                    <div class="wBall" id="wBall_2">
+                    <div class="wBall" class="wBall_2">
                         <div class="wInnerBall">
                         </div>
                     </div>
-                    <div class="wBall" id="wBall_3">
+                    <div class="wBall" class="wBall_3">
                         <div class="wInnerBall">
                         </div>
                     </div>
-                    <div class="wBall" id="wBall_4">
+                    <div class="wBall" class="wBall_4">
                         <div class="wInnerBall">
                         </div>
                     </div>
-                    <div class="wBall" id="wBall_5">
+                    <div class="wBall" class="wBall_5">
                         <div class="wInnerBall">
                         </div>
                     </div>
@@ -68,23 +68,23 @@
         <div class="panel-loading-ajax">
             <div class="windows8">
                 <br>
-                <div class="wBall" id="wBall_1">
+                <div class="wBall" class="wBall_1">
                     <div class="wInnerBall">
                     </div>
                 </div>
-                <div class="wBall" id="wBall_2">
+                <div class="wBall" class="wBall_2">
                     <div class="wInnerBall">
                     </div>
                 </div>
-                <div class="wBall" id="wBall_3">
+                <div class="wBall" class="wBall_3">
                     <div class="wInnerBall">
                     </div>
                 </div>
-                <div class="wBall" id="wBall_4">
+                <div class="wBall" class="wBall_4">
                     <div class="wInnerBall">
                     </div>
                 </div>
-                <div class="wBall" id="wBall_5">
+                <div class="wBall" class="wBall_5">
                     <div class="wInnerBall">
                     </div>
                 </div>
@@ -92,6 +92,5 @@
             <br>
             <br>
         </div>
-
 </body>
     

@@ -2,10 +2,10 @@
 $(document).ready(function() {
 
     var base = $(".navbar").data('url');
-    var url_autocomplete = base + "StockLists/searchItems/";
+    var url_autocomplete = base + "Stocklists/searchItems/";
 
     function populateDropdown() {
-        var url = base + "StockLists/populateList/";
+        var url = base + "Stocklists/populateList/";
 
         $.ajax({
             dataType: "json",
@@ -26,7 +26,7 @@ $(document).ready(function() {
 
     //get items from a list
     function getItems(id) {
-        var url = base + "StockLists/getItems/" + id;
+        var url = base + "Stocklists/getItems/" + id;
         $(".table-items").attr('data-id', id);
         $.ajax({
             dataType: "json",
@@ -41,7 +41,7 @@ $(document).ready(function() {
                     var name = result[k].name;
                     var vol = number_format(result[k].vol,2, '.', ',' );
                     var price = number_format(result[k].price,2, '.', ',');
-                    var $btn = "<a href="+base+"StockLists/removeItem/"+id_item+"/"+id+"><button class='btn btn-danger btn-remove-item'>Remove</button></a>";
+                    var $btn = "<a href="+base+"Stocklists/removeItem/"+id_item+"/"+id+"><button class='btn btn-danger btn-remove-item'>Remove</button></a>";
                     var $element = "<tr><td> " + $img + " " + name + "</td><td>" + vol + "</td><td>" + price + "</td><td>" + $btn + "</td><tr>";
                     $(".table tbody").append($element);
                 });
@@ -52,7 +52,7 @@ $(document).ready(function() {
     //submit new list
     $(".submit-list").on('click', function(e) {
         e.preventDefault();
-        var url = base + "StockLists/newList/";
+        var url = base + "Stocklists/newList/";
         var data = $(".form-horizontal").serialize();
         $.ajax({
             dataType: "json",
@@ -114,7 +114,7 @@ $(document).ready(function() {
         e.preventDefault();
         var list_id =  $("#list-id").val();
         
-        var url = base + "StockLists/addItem/";
+        var url = base + "Stocklists/addItem/";
         var data = $(".add-item").serialize();
 
         $.ajax({
@@ -138,7 +138,7 @@ $(document).ready(function() {
     $(".table-items").on('click', 'a', function(e) {
         e.preventDefault();
         var url = $(this).attr('href');
-        var list_id = $(".table-items").data('id');
+        var list_id = $(".table-items").attr('data-id');
 
         $.ajax({
             dataType: "json",
@@ -158,7 +158,7 @@ $(document).ready(function() {
     $(".btn-delete-list-confirm").on('click', function(e) {
         e.preventDefault();
         var id = $(".table-items").attr('data-id');
-        var url = base + "StockLists/removeList/"+id;
+        var url = base + "Stocklists/removeList/"+id;
 
         $.ajax({
             dataType: "json",

@@ -1,7 +1,7 @@
-<?php declare(strict_types=1);
+<?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class StockLists extends MY_Controller
+class Stocklists extends MY_Controller
 {
 
     public function __construct()

@@ -1,6 +1,6 @@
 <section class="content">
     <div class="back-link">
-    <a href="<?=base_url('index.php/Main')?>" class="btn btn-accent">Back to main page</a>
+    <a href="<?=base_url()?>" class="btn btn-accent">Back to main page</a>
 </div>
 
     <div class="container lg animated slideInDown tabs-container">

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -97,6 +97,11 @@ class StockLists_model extends CI_Model
         return array("notice" => $notice, "message" => $msg, "item" => $item);
     }
 
+
+    private function checkItemExists(string $name, int $list_id) : bool
+    {
+        $this->db->select('')
+    }
 
     public function removeItem(int $item_id, int $list_id) : array
     {
