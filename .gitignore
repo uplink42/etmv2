@@ -1,5 +1,8 @@
 /application/logs/
 /dist/
 /node_modules/
+/application/config/config.php
+/application/config/database.php
+/application/config/constants.php
 /home
 /luna_admin-v1.1
