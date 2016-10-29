@@ -29,7 +29,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="col-lg-2 col-xs-6">
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        <a href="<?=base_url('Contracts/index/'.$character_id.'?aggr='.$aggregate.'&new='.$new_info->contracts)?>"><h2 class="m-b-none">
+                        <a href="<?=base_url('contracts/index/'.$character_id.'?aggr='.$aggregate.'&new='.$new_info->contracts)?>"><h2 class="m-b-none">
                             <i class="pe-7s-id"></i>
                             <?=$new_info->contracts?>
                         <span class="slight">
@@ -46,7 +46,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="col-lg-2 col-xs-6">
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        <a href="<?=base_url('Transactions/index/'.$character_id.'?aggr='.$aggregate.'&new='.$new_info->transactions)?>"><h2 class="m-b-none">
+                        <a href="<?=base_url('transactions/index/'.$character_id.'?aggr='.$aggregate.'&new='.$new_info->transactions)?>"><h2 class="m-b-none">
                             <i class="pe-7s-menu"></i>
                             <?=$new_info->transactions?>
                         <span class="slight">
@@ -63,7 +63,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="col-lg-2 col-xs-6">
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        <a href="<?=base_url('Marketorders/index/'.$character_id.'?aggr='.$aggregate)?>"><h2 class="m-b-none">
+                        <a href="<?=base_url('marketorders/index/'.$character_id.'?aggr='.$aggregate)?>"><h2 class="m-b-none">
                         <i class="pe-7s-cart"></i>
                             <?=$new_info->orders?>
                         <span class="slight">

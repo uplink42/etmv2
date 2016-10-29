@@ -86,6 +86,7 @@ var errHandle = (function() {
         }
     };
 })();
+
 $(document).ready(function() {
     $("body").removeClass('loading-body');
     var base = $(".navbar").data('url');

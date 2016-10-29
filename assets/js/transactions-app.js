@@ -1,14 +1,17 @@
 "use strict";
 $(document).ready(function() {
 
-    if(window.location.hash == "#success") {
-        toastr["success"](errHandle.get().TRANSACTION_UNLINK_SUCCESS, "Notice");
-    }
+    setTimeout(function(){
+        if(window.location.hash == "#success") {
+            toastr["success"](errHandle.get().TRANSACTION_UNLINK_SUCCESS, "Notice");
+        }
 
-    if(window.location.hash == "#error") {
-        toastr["error"](errHandle.get().TRANSACTION_UNLINK_ERROR, "Error");
-    }
+        if(window.location.hash == "#error") {
+            toastr["error"](errHandle.get().TRANSACTION_UNLINK_ERROR, "Error");
+        }
     window.location.hash = "";
+    }, 3000);
+    
     
     var table = $('#transactions-table').DataTable({
         "order": [],

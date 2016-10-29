@@ -151,40 +151,49 @@ class Updater_model extends CI_Model
             try {
                 $response = $pheal->APIKeyInfo();
             } catch (\Pheal\Exceptions\PhealException $e) {
-                $e->getMessage();
-                return false;
+                //log_message('error', $e->getMessage());
+                if ($e->getMessage() == 'Key has expired. Contact key owner for access renewal.') {
+                    $this->checkCharacterKeys($apikey, $vcode, $char_id);
+                } else {
+                    return false;
+                }
+
             }
+            $this->checkCharacterKeys($apikey, $vcode, $char_id);
+            return true;
 
             //Important! Must ensure the reply from the server is not empty
-            if (!isset($response) || $response == "") {
+            /*if (!isset($response) || $response == "") {
                 return false;
-            } else {
-                if ($this->validateAPIKey($apikey, $vcode, $char_id) < 1) {
-                    $this->db->select('name');
-                    $this->db->where('eve_idcharacter', $char_id);
-                    $query          = $this->db->get('characters');
-                    $character_name = $query->row()->name;
-
-                    $this->db->where('character_eve_idcharacter', $char_id);
-                    $query = $this->db->get('aggr');
-                    $res = $query->row()->user_iduser;
-
-                    //Invalid access mask or API key not found. Delete API from account
-                    //Note that none of the characters data is actually removed from the account,
-                    //but only the user association
-                    $data = array(
-                        "user_iduser"               => $res,
-                        "character_eve_idcharacter" => $char_id,
-                    );
-
-                    $this->db->delete('aggr', $data);
-                    array_push($removed_characters, $character_name);
-                } else {
-                    return true;
-                }
-            }
+            } else {*/
+            //}
         }
         //return $removed_characters;
+    }
+
+    public function checkCharacterKeys($apikey, $vcode, $char_id) 
+    {
+        if ($this->validateAPIKey($apikey, $vcode, $char_id) < 1) {
+            $this->db->select('name');
+            $this->db->where('eve_idcharacter', $char_id);
+            $query          = $this->db->get('characters');
+            $character_name = $query->row()->name;
+
+            $this->db->where('character_eve_idcharacter', $char_id);
+            $query = $this->db->get('aggr');
+            $res = $query->row()->user_iduser;
+
+            //Invalid access mask or API key not found. Delete API from account
+            //Note that none of the characters data is actually removed from the account,
+            //but only the user association
+            $data = array(
+                "user_iduser"               => $res,
+                "character_eve_idcharacter" => $char_id,
+            );
+
+            $this->db->delete('aggr', $data);
+            array_push($removed_characters, $character_name);
+        }
     }
 
     //checks if the current API key is valid and has all necessary permissions for the current character

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -22,9 +22,6 @@ class Login_model extends CI_Model
     //checks if session is valid
     public function checkSession() : bool
     {
-        log_message('error', $this->session->username);
-        log_message('error', $this->session->iduser);
-
         if (!$this->session->has_userdata('username') || !$this->session->has_userdata('iduser')) {
             return false;
         } else {

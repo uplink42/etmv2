@@ -3,14 +3,14 @@
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->    
 
-<!-- Begin Page Loader -->
+<!-- 
 <div id="page-loader">
     <div class="preload">
         <img src="<?=base_url('dist/img/preloader.gif')?>" alt="Loading"/>
     </div>
-    <!-- //.preload -->
+
 </div>
-<!-- //End Page Loader -->
+-->
 
 <!-- Begin Intro Section -->
 <section id="intro" data-url="<?=base_url()?>">

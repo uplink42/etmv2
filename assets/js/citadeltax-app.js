@@ -19,7 +19,6 @@ $(document).ready(function() {
     });
 
     $(".submit-tax").on('click', function(e) {
-        $("#citadel, #tax").val("");
         e.preventDefault();
         var tax = $("#tax").val();
         var taxregex = /^(0(\.\d+)?|1(\.0+)?)$/;
@@ -33,6 +32,7 @@ $(document).ready(function() {
                 global: false,
                 success: function(result) {
                     toastr[result.notice](result.message);
+                    $("#citadel, #tax").val("");
                     updateTable();
                 }
             });

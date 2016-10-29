@@ -37,6 +37,10 @@ class TradeSimulator_model extends CI_Model
 
     public function getStationID(string $station_name)
     {
+        if (substr($station_name, 0, 11) === "TRADE HUB: ") {
+            $station_name = substr($station_name, 11);
+        }
+
         $this->db->select('eve_idstation');
         $this->db->where('name', $station_name);
         $query = $this->db->get('station');

@@ -189,7 +189,7 @@ class ValidateRequest extends CI_Model
     public function validateAPIAvailability(int $apikey): bool
     {
         $this->db->where('apikey', $apikey);
-        $query = $this->db->get('api');
+        $query = $this->db->get('v_user_characters');
 
         if ($query->num_rows() == 0) {
             return true;

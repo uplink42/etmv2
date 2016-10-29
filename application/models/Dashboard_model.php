@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -101,7 +101,6 @@ class Dashboard_model extends CI_Model
         $this->db->where("date>= (now() - INTERVAL 24 HOUR)");
         $this->db->order_by('date', 'asc');
         $query2 = $this->db->get('history');
-        log_message('error', $this->db->last_query());
 
         $result                  = $query1->row()->sum;
         $result == 0 ? $week_avg = 0 : $week_avg = $result / 7;

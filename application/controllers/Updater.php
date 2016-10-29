@@ -32,15 +32,13 @@ class Updater extends CI_Controller
         if (!$this->ValidateRequest->testEndpoint()) {
             buildMessage("error", Msg::XML_CONNECT_FAILURE, $view);
         } else if (!$this->Updater_model->processAPIKeys($username)) {
+            log_message('error', 'errr');
             buildMessage("error", Msg::XML_CONNECT_FAILURE, $view);
         } else {
-
             if ($this->Updater_model->isLocked($username)) {
-                log_message('error', $username . ' is locked');
             } else {
                 try {
                     $this->Updater_model->lock($username);
-                    log_message('error', $username . ' locked initial');
                     //catch the API acess violation bug
                     $result_iterate = $this->Updater_model->iterateAccountCharacters();
 
@@ -61,7 +59,6 @@ class Updater extends CI_Controller
                         return;
                     }
 
-                    
 
                 } catch (\Pheal\Exceptions\PhealException $e) {
                     //in case the API throws an exception (usually a bug)
@@ -81,7 +78,6 @@ class Updater extends CI_Controller
                         $this->removeDirectory($dir);
                         $this->Log->addEntry('clear', $this->user_id);
                         $this->Updater_model->release($username);
-                        log_message('error', $username . ' released errpr');
                     }
                     $this->index();
                 }
@@ -95,7 +91,6 @@ class Updater extends CI_Controller
             $this->db->trans_complete();
 
             if ($this->db->trans_status() === false) {
-                log_message('error', 'transaction2 fail');
                 buildMessage("error", Msg::DB_ERROR, "login/login_v");
 
                 $data['view']      = "login/login_v";
@@ -106,7 +101,6 @@ class Updater extends CI_Controller
                 $table = $this->Updater_model->resultTable($username);
 
                 $this->Updater_model->release($username);
-                log_message('error', $username .' released');
                 $this->Log->addEntry('update', $this->user_id);
                 
                 //transaction success, show the result table
@@ -118,9 +112,10 @@ class Updater extends CI_Controller
                 $data['view']      = "login/select_v";
                 $data['no_header'] = 1;
 
+
                 //$data['view']      = "login/select_nocharacter_v";
-                $this->load->view('main/_template_v', $data);
             }
+            $this->load->view('main/_template_v', $data);
         }
     }
 

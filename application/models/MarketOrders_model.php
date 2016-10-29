@@ -73,7 +73,6 @@ class MarketOrders_model extends CI_Model
 
         //die($query->row());
         if ($query->num_rows() != 0) {
-            log_message('error', 'cached');
             $last_timestamp = $query->row()->timestamp_check;
 
             if ($last_timestamp > $date) {
