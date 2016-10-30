@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 30-Out-2016 às 11:54
--- Versão do servidor: 10.1.13-MariaDB
+-- Generation Time: Oct 30, 2016 at 12:05 PM
+-- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `aggr`
+-- Table structure for table `aggr`
 --
 
 CREATE TABLE `aggr` (
@@ -35,7 +35,7 @@ CREATE TABLE `aggr` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `api`
+-- Table structure for table `api`
 --
 
 CREATE TABLE `api` (
@@ -46,7 +46,7 @@ CREATE TABLE `api` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `assets`
+-- Table structure for table `assets`
 --
 
 CREATE TABLE `assets` (
@@ -60,7 +60,7 @@ CREATE TABLE `assets` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `calendar`
+-- Table structure for table `calendar`
 --
 
 CREATE TABLE `calendar` (
@@ -68,7 +68,7 @@ CREATE TABLE `calendar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `calendar`
+-- Dumping data for table `calendar`
 --
 
 INSERT INTO `calendar` (`days`) VALUES
@@ -3730,7 +3730,7 @@ INSERT INTO `calendar` (`days`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `changelog`
+-- Table structure for table `changelog`
 --
 
 CREATE TABLE `changelog` (
@@ -3740,7 +3740,7 @@ CREATE TABLE `changelog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `changelog`
+-- Dumping data for table `changelog`
 --
 
 INSERT INTO `changelog` (`idchangelog`, `date`, `content`) VALUES
@@ -3786,7 +3786,7 @@ INSERT INTO `changelog` (`idchangelog`, `date`, `content`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `characters`
+-- Table structure for table `characters`
 --
 
 CREATE TABLE `characters` (
@@ -3802,7 +3802,7 @@ CREATE TABLE `characters` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Acionadores `characters`
+-- Triggers `characters`
 --
 DELIMITER $$
 CREATE TRIGGER `update_net_history_insert` AFTER INSERT ON `characters` FOR EACH ROW BEGIN
@@ -3833,7 +3833,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `characters_public`
+-- Table structure for table `characters_public`
 --
 
 CREATE TABLE `characters_public` (
@@ -3844,7 +3844,7 @@ CREATE TABLE `characters_public` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `citadel_tax`
+-- Table structure for table `citadel_tax`
 --
 
 CREATE TABLE `citadel_tax` (
@@ -3857,7 +3857,7 @@ CREATE TABLE `citadel_tax` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contracts`
+-- Table structure for table `contracts`
 --
 
 CREATE TABLE `contracts` (
@@ -3883,7 +3883,7 @@ CREATE TABLE `contracts` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `corporation`
+-- Table structure for table `corporation`
 --
 
 CREATE TABLE `corporation` (
@@ -3892,7 +3892,7 @@ CREATE TABLE `corporation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Extraindo dados da tabela `corporation`
+-- Dumping data for table `corporation`
 --
 
 INSERT INTO `corporation` (`eve_idcorporation`, `faction_eve_idfaction`) VALUES
@@ -4135,7 +4135,7 @@ INSERT INTO `corporation` (`eve_idcorporation`, `faction_eve_idfaction`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `faction`
+-- Table structure for table `faction`
 --
 
 CREATE TABLE `faction` (
@@ -4144,7 +4144,7 @@ CREATE TABLE `faction` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Extraindo dados da tabela `faction`
+-- Dumping data for table `faction`
 --
 
 INSERT INTO `faction` (`eve_idfaction`, `name`) VALUES
@@ -4175,7 +4175,7 @@ INSERT INTO `faction` (`eve_idfaction`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `history`
+-- Table structure for table `history`
 --
 
 CREATE TABLE `history` (
@@ -4191,7 +4191,7 @@ CREATE TABLE `history` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `item`
+-- Table structure for table `item`
 --
 
 CREATE TABLE `item` (
@@ -4202,7 +4202,7 @@ CREATE TABLE `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `item`
+-- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`eve_iditem`, `name`, `volume`, `type`) VALUES
@@ -31125,7 +31125,7 @@ INSERT INTO `item` (`eve_iditem`, `name`, `volume`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `itemcontents`
+-- Table structure for table `itemcontents`
 --
 
 CREATE TABLE `itemcontents` (
@@ -31137,7 +31137,7 @@ CREATE TABLE `itemcontents` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `itemlist`
+-- Table structure for table `itemlist`
 --
 
 CREATE TABLE `itemlist` (
@@ -31149,7 +31149,7 @@ CREATE TABLE `itemlist` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `item_price_data`
+-- Table structure for table `item_price_data`
 --
 
 CREATE TABLE `item_price_data` (
@@ -31158,7 +31158,7 @@ CREATE TABLE `item_price_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `item_price_data`
+-- Dumping data for table `item_price_data`
 --
 
 INSERT INTO `item_price_data` (`item_eve_iditem`, `price_evecentral`) VALUES
@@ -41379,7 +41379,7 @@ INSERT INTO `item_price_data` (`item_eve_iditem`, `price_evecentral`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `log`
+-- Table structure for table `log`
 --
 
 CREATE TABLE `log` (
@@ -41392,7 +41392,7 @@ CREATE TABLE `log` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `net_history`
+-- Table structure for table `net_history`
 --
 
 CREATE TABLE `net_history` (
@@ -41407,7 +41407,7 @@ CREATE TABLE `net_history` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `new_info`
+-- Table structure for table `new_info`
 --
 
 CREATE TABLE `new_info` (
@@ -41420,7 +41420,7 @@ CREATE TABLE `new_info` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `orders`
+-- Table structure for table `orders`
 --
 
 CREATE TABLE `orders` (
@@ -41442,7 +41442,7 @@ CREATE TABLE `orders` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `order_status`
+-- Table structure for table `order_status`
 --
 
 CREATE TABLE `order_status` (
@@ -41454,7 +41454,7 @@ CREATE TABLE `order_status` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `profit`
+-- Table structure for table `profit`
 --
 
 CREATE TABLE `profit` (
@@ -41472,7 +41472,7 @@ CREATE TABLE `profit` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `region`
+-- Table structure for table `region`
 --
 
 CREATE TABLE `region` (
@@ -41482,7 +41482,7 @@ CREATE TABLE `region` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `region`
+-- Dumping data for table `region`
 --
 
 INSERT INTO `region` (`eve_idregion`, `name`, `isKS`) VALUES
@@ -41590,7 +41590,7 @@ INSERT INTO `region` (`eve_idregion`, `name`, `isKS`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `ship_volumes`
+-- Table structure for table `ship_volumes`
 --
 
 CREATE TABLE `ship_volumes` (
@@ -41601,7 +41601,7 @@ CREATE TABLE `ship_volumes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `ship_volumes`
+-- Dumping data for table `ship_volumes`
 --
 
 INSERT INTO `ship_volumes` (`marketGroupID`, `marketGroupName`, `description`, `vol`) VALUES
@@ -41733,7 +41733,7 @@ INSERT INTO `ship_volumes` (`marketGroupID`, `marketGroupName`, `description`, `
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `standings_corporation`
+-- Table structure for table `standings_corporation`
 --
 
 CREATE TABLE `standings_corporation` (
@@ -41746,7 +41746,7 @@ CREATE TABLE `standings_corporation` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `standings_faction`
+-- Table structure for table `standings_faction`
 --
 
 CREATE TABLE `standings_faction` (
@@ -41759,7 +41759,7 @@ CREATE TABLE `standings_faction` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `station`
+-- Table structure for table `station`
 --
 
 CREATE TABLE `station` (
@@ -41770,7 +41770,7 @@ CREATE TABLE `station` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `station`
+-- Dumping data for table `station`
 --
 
 INSERT INTO `station` (`eve_idstation`, `name`, `system_eve_idsystem`, `corporation_eve_idcorporation`) VALUES
@@ -48520,7 +48520,7 @@ INSERT INTO `station` (`eve_idstation`, `name`, `system_eve_idsystem`, `corporat
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `system`
+-- Table structure for table `system`
 --
 
 CREATE TABLE `system` (
@@ -48530,7 +48530,7 @@ CREATE TABLE `system` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `system`
+-- Dumping data for table `system`
 --
 
 INSERT INTO `system` (`eve_idsystem`, `name`, `region_eve_idregion`) VALUES
@@ -56577,7 +56577,7 @@ INSERT INTO `system` (`eve_idsystem`, `name`, `region_eve_idregion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `traderoutes`
+-- Table structure for table `traderoutes`
 --
 
 CREATE TABLE `traderoutes` (
@@ -56592,7 +56592,7 @@ CREATE TABLE `traderoutes` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `transaction`
+-- Table structure for table `transaction`
 --
 
 CREATE TABLE `transaction` (
@@ -56612,7 +56612,7 @@ CREATE TABLE `transaction` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `transaction_processed`
+-- Table structure for table `transaction_processed`
 --
 
 CREATE TABLE `transaction_processed` (
@@ -56623,7 +56623,7 @@ CREATE TABLE `transaction_processed` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -57096,95 +57096,95 @@ ALTER TABLE `user`
 --
 
 --
--- Limitadores para a tabela `aggr`
+-- Constraints for table `aggr`
 --
 ALTER TABLE `aggr`
   ADD CONSTRAINT `fk_aggr_character1` FOREIGN KEY (`character_eve_idcharacter`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_aggr_user1` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`);
 
 --
--- Limitadores para a tabela `assets`
+-- Constraints for table `assets`
 --
 ALTER TABLE `assets`
   ADD CONSTRAINT `fk_assets_character` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `characters`
+-- Constraints for table `characters`
 --
 ALTER TABLE `characters`
   ADD CONSTRAINT `fk_character_api1` FOREIGN KEY (`api_apikey`) REFERENCES `api` (`apikey`) ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `citadel_tax`
+-- Constraints for table `citadel_tax`
 --
 ALTER TABLE `citadel_tax`
   ADD CONSTRAINT `fk_citadel_tax` FOREIGN KEY (`character_eve_idcharacter`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_citadel_tax_station` FOREIGN KEY (`station_eve_idstation`) REFERENCES `station` (`eve_idstation`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `contracts`
+-- Constraints for table `contracts`
 --
 ALTER TABLE `contracts`
   ADD CONSTRAINT `fk_contracts_character` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `corporation`
+-- Constraints for table `corporation`
 --
 ALTER TABLE `corporation`
   ADD CONSTRAINT `fk_corp_faction` FOREIGN KEY (`faction_eve_idfaction`) REFERENCES `faction` (`eve_idfaction`);
 
 --
--- Limitadores para a tabela `history`
+-- Constraints for table `history`
 --
 ALTER TABLE `history`
   ADD CONSTRAINT `fk_history_characters` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_history_date` FOREIGN KEY (`date`) REFERENCES `calendar` (`days`);
 
 --
--- Limitadores para a tabela `itemcontents`
+-- Constraints for table `itemcontents`
 --
 ALTER TABLE `itemcontents`
   ADD CONSTRAINT `fk_content_list` FOREIGN KEY (`itemlist_iditemlist`) REFERENCES `itemlist` (`iditemlist`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `itemlist`
+-- Constraints for table `itemlist`
 --
 ALTER TABLE `itemlist`
   ADD CONSTRAINT `fk_list_user` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `log`
+-- Constraints for table `log`
 --
 ALTER TABLE `log`
   ADD CONSTRAINT `fk_log_user` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `net_history`
+-- Constraints for table `net_history`
 --
 ALTER TABLE `net_history`
   ADD CONSTRAINT `fk_net_calendar` FOREIGN KEY (`date`) REFERENCES `calendar` (`days`),
   ADD CONSTRAINT `fk_net_character` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `new_info`
+-- Constraints for table `new_info`
 --
 ALTER TABLE `new_info`
   ADD CONSTRAINT `fk_new_info_character_id` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `orders`
+-- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `fk_order_char` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `order_status`
+-- Constraints for table `order_status`
 --
 ALTER TABLE `order_status`
   ADD CONSTRAINT `fk_status_order` FOREIGN KEY (`orders_transkey`) REFERENCES `orders` (`transkey`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `profit`
+-- Constraints for table `profit`
 --
 ALTER TABLE `profit`
   ADD CONSTRAINT `fk_profit_buy` FOREIGN KEY (`transaction_idbuy_buy`) REFERENCES `transaction` (`idbuy`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -57193,34 +57193,34 @@ ALTER TABLE `profit`
   ADD CONSTRAINT `fk_profit_sell` FOREIGN KEY (`transaction_idbuy_sell`) REFERENCES `transaction` (`idbuy`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `standings_corporation`
+-- Constraints for table `standings_corporation`
 --
 ALTER TABLE `standings_corporation`
   ADD CONSTRAINT `standings_corp_corp` FOREIGN KEY (`corporation_eve_idcorporation`) REFERENCES `corporation` (`eve_idcorporation`),
   ADD CONSTRAINT `standings_corporation_ibfk_1` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `standings_faction`
+-- Constraints for table `standings_faction`
 --
 ALTER TABLE `standings_faction`
   ADD CONSTRAINT `fk_standinds_faction_faction` FOREIGN KEY (`faction_eve_idfaction`) REFERENCES `faction` (`eve_idfaction`),
   ADD CONSTRAINT `fk_standings_faction_ib_1` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `station`
+-- Constraints for table `station`
 --
 ALTER TABLE `station`
   ADD CONSTRAINT `fk_station_corp` FOREIGN KEY (`corporation_eve_idcorporation`) REFERENCES `corporation` (`eve_idcorporation`),
   ADD CONSTRAINT `fk_station_system1` FOREIGN KEY (`system_eve_idsystem`) REFERENCES `system` (`eve_idsystem`);
 
 --
--- Limitadores para a tabela `system`
+-- Constraints for table `system`
 --
 ALTER TABLE `system`
   ADD CONSTRAINT `fk_system_region1` FOREIGN KEY (`region_eve_idregion`) REFERENCES `region` (`eve_idregion`);
 
 --
--- Limitadores para a tabela `traderoutes`
+-- Constraints for table `traderoutes`
 --
 ALTER TABLE `traderoutes`
   ADD CONSTRAINT `fk_character_to` FOREIGN KEY (`destination_character`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -57229,13 +57229,13 @@ ALTER TABLE `traderoutes`
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `transaction`
+-- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
   ADD CONSTRAINT `fk_transaction_character1` FOREIGN KEY (`character_eve_idcharacter`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `transaction_processed`
+-- Constraints for table `transaction_processed`
 --
 ALTER TABLE `transaction_processed`
   ADD CONSTRAINT `fk_transaction_character` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE,
