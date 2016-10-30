@@ -113,13 +113,8 @@ class Updater_model extends CI_Model
         return $data;
     }
 
-    //gets the assigned API keys for each character in the current account
-    //and validates them accordingly, removing any characters with invalid permissions
-    //returns a list of characters removed, otherwise returns false
-    public function processAPIKeys(string $username)
+    public function getKeys(string $username)
     {
-        $removed_characters = array();
-
         $this->db->select('api.apikey, api.vcode, characters.eve_idcharacter');
         $this->db->from('api');
         $this->db->join('characters', 'characters.api_apikey = api.apikey');
@@ -128,18 +123,23 @@ class Updater_model extends CI_Model
         $this->db->where('user.username', $username);
         $query = $this->db->get('');
 
+        $user_keys = $query->result_array();
+        return $user_keys;
+    }
+
+
+    //gets the assigned API keys for each character in the current account
+    //and validates them accordingly, removing any characters with invalid permissions
+    //returns a list of characters removed, otherwise returns false
+    public function processAPIKeys(array $user_keys, string $username)
+    {
+
         /*$query = $this->db->query("SELECT api.apikey, api.vcode, characters.eve_idcharacter
         FROM api
         JOIN characters on characters.api_apikey = api.apikey
         JOIN aggr on aggr.character_eve_idcharacter = characters.eve_idcharacter
         JOIN user on aggr.user_iduser = user.iduser
         WHERE user.username = '$username'");*/
-
-        $user_keys = $query->result_array();
-
-        if ($query->num_rows() < 1) {
-            return "noChars";
-        }
 
         foreach ($user_keys as $apis) {
             $apikey = (int) $apis['apikey'];
@@ -151,17 +151,25 @@ class Updater_model extends CI_Model
             try {
                 $response = $pheal->APIKeyInfo();
             } catch (\Pheal\Exceptions\PhealException $e) {
-                //log_message('error', $e->getMessage());
+                //check if expired
                 if ($e->getMessage() == 'Key has expired. Contact key owner for access renewal.') {
                     $this->checkCharacterKeys($apikey, $vcode, $char_id);
                 } else {
+                    //unknown error
                     return false;
                 }
 
             }
+            //proceed to check permissions and remove any invalid keys
             $this->checkCharacterKeys($apikey, $vcode, $char_id);
-            return true;
 
+            //count user keys again (check if none left)
+            if (count($this->getKeys($username)) != 0) {
+                return true;
+            } 
+
+            return false;
+            
             //Important! Must ensure the reply from the server is not empty
             /*if (!isset($response) || $response == "") {
                 return false;
@@ -173,7 +181,10 @@ class Updater_model extends CI_Model
 
     public function checkCharacterKeys($apikey, $vcode, $char_id) 
     {
-        if ($this->validateAPIKey($apikey, $vcode, $char_id) < 1) {
+        //check if permissions are correct
+        //if not, we remove any invalid keys and characters
+        $result = $this->validateAPIKey($apikey, $vcode, $char_id);
+        if ($result < 1 && $result != false) {
             $this->db->select('name');
             $this->db->where('eve_idcharacter', $char_id);
             $query          = $this->db->get('characters');
@@ -192,7 +203,6 @@ class Updater_model extends CI_Model
             );
 
             $this->db->delete('aggr', $data);
-            array_push($removed_characters, $character_name);
         }
     }
 
@@ -213,6 +223,7 @@ class Updater_model extends CI_Model
                 array_push($apichars, $char_api);
             }
         } catch (\Pheal\Exceptions\PhealException $e) {
+            //communication error, abort
             return false;
         }
 
@@ -233,10 +244,6 @@ class Updater_model extends CI_Model
     //and begin the update procedure
     public function iterateAccountCharacters()
     {
-        if (count($this->account_characters) == 0) {
-            return "noChars";
-        }
-
         $this->db->trans_start();
 
         //if ($this->isLocked($this->username)) {
@@ -277,8 +284,10 @@ class Updater_model extends CI_Model
             $this->db->trans_complete();
 
             if ($this->db->trans_status() === false) {
-                return "dberror";
+                return false;
             }
+
+            return true;
         }
         //}
 
