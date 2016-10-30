@@ -84,4 +84,5 @@ There are several crons used to maintain the application. These can be found ins
 - Improve gulp tasks
 - Port to Laravel (maybe)
 - Automatic item list update cron from CREST (right now I have to manually update the database everytime new items are added into Eve)
+- Bower/composer integration
 - ??
