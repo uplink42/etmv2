@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 30-Out-2016 às 08:47
+-- Generation Time: 30-Out-2016 às 11:54
 -- Versão do servidor: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -3726,6 +3726,62 @@ INSERT INTO `calendar` (`days`) VALUES
 ('2020-12-29'),
 ('2020-12-30'),
 ('2020-12-31');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `changelog`
+--
+
+CREATE TABLE `changelog` (
+  `idchangelog` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `content` mediumtext
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `changelog`
+--
+
+INSERT INTO `changelog` (`idchangelog`, `date`, `content`) VALUES
+(1, '2015-11-24', 'Beta is released'),
+(2, '2015-11-25', 'Fixed a bug that would crash the page when players bought items on player-owned outposts. Fixed several day-1 issues.'),
+(3, '2015-11-30', 'Significantly reduced login times due to better caching mechanism. More statistical data added.'),
+(4, '2015-12-04', 'Detailed profits page is now fully filterable and sortable (sorry it can''t be client sided)'),
+(5, '2015-12-06', 'Several back-end improvements to improve server stability and response times'),
+(7, '2015-12-17', 'Automated reports are now fully functional. More data and graphs added to statistics page.'),
+(8, '2015-12-20', 'Rescaled some UI elements to better fit mobile devices and some browsers like Firefox'),
+(9, '2016-01-03', 'Small UI usability improvements. Item list updated. More accurate asset value calculation formula (experimental)'),
+(10, '2016-01-05', 'Small layout changes and performance enhancements (e.g page loading times).'),
+(11, '2016-01-20', 'New permanent login option - experimental (requires cookies). Main webpage improvements. Fixed a bug with new orders count.'),
+(12, '2016-01-27', 'Greatly enhanced background optimization for detailed profits and statistics pages'),
+(13, '2016-01-30', 'Fixed occasional bug with wrong graph data, and wrong profit margins in detailed profits. Updated item list to most recent SDE.'),
+(14, '2016-02-01', 'New region sorting and asset evaluation functionality added to Assets page. Statistics page can now be filtered for 1, 7 and 30 days data'),
+(15, '2016-02-08', 'To fix some recent stability issues, ETM server has been scaled up and now has twice the resources available! If you enjoy this service, consider donating a small amount to help with server costs.'),
+(16, '2016-02-10', 'Improved functionality and mobile layout for Detailed profits. Statistics and detailed profits can now be browsed for 3 months and 6 months worth of data.'),
+(17, '2016-02-12', 'Fixed a bug that would occasionally send out wrong sales/profit totals in email reports. Regional Trader Assistant now uses CREST API live market data endpoint (experimental) from Eve-Online instead of Eve Central, resulting in much more accurate prices.'),
+(18, '2016-02-13', 'New feature! You can now save item lists and submit them to the Regional Trade Assistant. Up to 50 items can be compared at once between any 2 stations in New Eden using real-time market data!'),
+(19, '2016-02-22', 'ETM has reached over 1 million total transactions! Thanks to everyone for participating!'),
+(20, '2016-02-23', 'Removed blueprint and blueprint copies price estimate.'),
+(21, '2016-02-27', 'New method for calculating profits which is much faster than the old one (experimental). Let me know if you find any wrong or inconsistent data.'),
+(22, '2016-04-29', 'Updated tax formulas and item list for the Citadel expansion. Fixed an issue that would lead to slow login times.'),
+(23, '2016-05-02', 'Presenting Networth tracker: a history of your wealth overtime. This will be expanded upon in future, but the basic functionality is here for now.'),
+(24, '2016-05-04', 'Some minor UI changes. Improved mobile experience.'),
+(25, '2016-05-05', 'Fixed wrong repackaged ship volumes. Updated e-mail reports with new layout and features.'),
+(26, '2016-05-07', 'Added some more metrics to the statistics page and automated reports: best isk/h items, possible blunders, top stations by profit. Feel free to suggest any others.'),
+(27, '2016-05-09', 'Redesigned homepage'),
+(28, '2016-05-12', 'Fixed an intermitent issue where characters would sometimes fail to load when logging in.'),
+(29, '2016-05-22', 'Updated Regional Trader, Asset price check and Order check to the new CREST API domain.'),
+(30, '2016-06-11', 'Small improvements to profit calculation methods. All previous data is being calculated retroactively so the website may be slower than usual today. Let me know if you find any inconsistent results.'),
+(31, '2016-06-14', 'Updated RTA and Market orders to the new CREST structure. Fixed an issue with the contact form in the footer not working sometimes.'),
+(32, '2016-06-16', 'New feature: Create predefined starting and destination station templates for Regional Trade Assistant.'),
+(33, '2016-06-27', 'Enhanced the statistics page with added functionality and result filtering.'),
+(34, '2016-07-10', 'Partial Citadel support added: transactions and profits originating from citadel markets should now be visible.'),
+(35, '2016-07-17', 'New Transaction page improvements: aggregation(all characters) and individual (current character) toggle. <br> Transaction unlinking is now possible, which excludes an individual transaction from the profits calculation queue (useful for  personal use purchases that you dont want to be associated with future sales). Please be careful when unlinking transactions, and only use it if you know what youre doing, as this can have negative consequences on profit accuracy if done incorrectly!\r\nAlso improved performance for the transactions page significantly. <br>\r\nStatistics page now links to the detailed profits results for each featured item and has a new volumes graph.'),
+(36, '2016-07-19', ' Due to the steady growth of new features and new users, ETM might need another server upgrade for which I had to setup some ads to help out with expenses.  <br>\r\nIf you would like to support this website and dont mind some footer banners being displayed then turning off your ad-blocker would be a great help. Thank you!'),
+(37, '2016-07-23', 'Presenting the ETM blog! New features, discussions, sneak peaks and some insights into this project and contributors.'),
+(38, '2016-08-15', 'Added Excel, CSV and PDF export feature to Transactions, Profits list and Regional Trade Assistant.'),
+(39, '2016-10-15', 'Eve Trade Master 2.0 is almost ready and should be released before November. Read up on the new changes in the <a href=''http://www.evetrademaster.com/blog'' target=''_blank''>Developers Blog</a>');
 
 -- --------------------------------------------------------
 
@@ -56716,6 +56772,12 @@ ALTER TABLE `calendar`
   ADD PRIMARY KEY (`days`);
 
 --
+-- Indexes for table `changelog`
+--
+ALTER TABLE `changelog`
+  ADD PRIMARY KEY (`idchangelog`);
+
+--
 -- Indexes for table `characters`
 --
 ALTER TABLE `characters`
@@ -56954,6 +57016,11 @@ ALTER TABLE `aggr`
 --
 ALTER TABLE `assets`
   MODIFY `idassets` bigint(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `changelog`
+--
+ALTER TABLE `changelog`
+  MODIFY `idchangelog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT for table `citadel_tax`
 --
