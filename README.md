@@ -62,7 +62,7 @@ Gulp should now watch over and update any css/javascript files you change.
     $config['base_url'] = 'http://localhost/etm_refactor/'; <- replace this with your ETM path (don't forget the trailing slash)
 
     /application/config/constants.php
-    define("FILESTORAGE", "var/www/html/your_cache_folder"); <- replace this with the folder path you created earlier.
+    define("FILESTORAGE", "path/to/your_cache_folder"); <- replace this with the folder path you created earlier.
 
     /application/config/database.php
     'username' => 'root' <- replace this with your database user
