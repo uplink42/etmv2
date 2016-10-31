@@ -8,7 +8,7 @@ class Statistics extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_on();
-        $this->page = "Statistics";
+        $this->page = "statistics";
     }
 
     public function index(int $character_id, int $interval = 7)

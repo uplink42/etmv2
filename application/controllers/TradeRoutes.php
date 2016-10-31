@@ -8,7 +8,7 @@ class Traderoutes extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->page = "TradeRoutes";
+        $this->page = "traderoutes";
         $this->load->model('TradeRoutes_model');
     }
 

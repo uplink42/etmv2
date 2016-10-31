@@ -10,7 +10,7 @@ class Apikeymanagement extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->page = "APIKeyManagement";
+        $this->page = "apikeymanagement";
         $this->load->model('ApiKeyManagement_model');
 
         $this->keyid = $_REQUEST['keyid'] ?? '';

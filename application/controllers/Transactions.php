@@ -10,7 +10,7 @@ class Transactions extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->page = "Transactions";
+        $this->page = "transactions";
 
         $this->new     = $_REQUEST['new'] ?? '';
         $this->transID = $_REQUEST['transID'] ?? '';

@@ -8,7 +8,7 @@ final class Dashboard extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_on();
-        $this->page = "Dashboard";
+        $this->page = "dashboard";
     }
 
     //returns all dashboard information to the relevant view

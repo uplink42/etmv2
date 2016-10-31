@@ -65,7 +65,7 @@ class Autoexec_outposts_model extends CI_Model
     {
         $this->db->trans_start();
         $this->db->query(
-            batch("station",
+            batch_ignore("station",
                 array('eve_idstation', 'name', 'system_eve_idsystem', 'corporation_eve_idcorporation'), $data)
         );
         $this->db->trans_complete();

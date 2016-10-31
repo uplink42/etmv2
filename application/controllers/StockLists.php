@@ -8,8 +8,8 @@ class Stocklists extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->page = "StockLists";
-        $this->load->model('StockLists_model');
+        $this->page = "stocklists";
+        $this->load->model('stocklists_model');
     }
 
     public function index(int $character_id)

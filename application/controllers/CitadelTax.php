@@ -11,7 +11,7 @@ class Citadeltax extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->page = "CitadelTax";
+        $this->page = "citadeltax";
         $this->load->model('CitadelTax_model');
 
         $this->citadel      = $_REQUEST['citadel'] ?? '';
