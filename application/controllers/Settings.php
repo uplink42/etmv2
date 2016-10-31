@@ -14,7 +14,7 @@ class Settings extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->page = "Settings";
+        $this->page = "settings";
         $this->load->model('Settings_model');
         $this->load->model('common/ValidateRequest');
 

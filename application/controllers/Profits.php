@@ -11,7 +11,7 @@ class Profits extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_on();
-        $this->page = "Profits";
+        $this->page = "profits";
     }
 
     public function index(int $character_id, int $interval = 1, int $item_id = null)

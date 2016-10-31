@@ -192,9 +192,10 @@ class Tax_model extends CI_Model
     {
         if ($this->transFrom == 'buy') {
 
-            if ($this->stationFromID > 1000000000000 && $this->getCitadelTax($this->stationFromID)) {
+            $fromCitadelTax = $this->getCitadelTax($this->stationFromID);
+            if ($this->stationFromID > 1000000000000 && $fromCitadelTax) {
                 return
-                $this->brokerFeeFrom = $this->getCitadelTax();
+                $this->brokerFeeFrom = $fromCitadelTax;
 
             } else {
                 return
@@ -208,10 +209,11 @@ class Tax_model extends CI_Model
     public function calculateBrokerTo()
     {
         if ($this->transTo == 'sell') {
-            if ($this->stationToID > 1000000000000 && $this->getCitadelTax($this->stationToID)) {
+            $toCitadelTax = $this->getCitadelTax($this->stationToID);
+            if ($this->stationToID > 1000000000000 && $toCitadelTax) {
                 return
-                $this->brokerFeeFrom = $this->getCitadelTax();
-
+                $this->brokerFeeFrom = $toCitadelTax;
+                
             } else {
                 return
                 $this->brokerFeeTo = 1 - ((3 - (0.1 * (float) $this->level_broker_to + 0.03 * (float) $this->toFactionStandingValue + 0.02 * (float) $this->toCorpStandingValue)) / 100);

@@ -13,7 +13,7 @@ class Marketorders extends MY_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->page = "MarketOrders";
+        $this->page = "marketorders";
 
         $this->check = $_REQUEST['check'] ?? 0;
         settype($this->check, 'bool');

@@ -25,6 +25,7 @@ class Autoexec_outposts extends CI_Controller
             echo "Outpost list updated. Total: " . $count;
 
             $citadels = $this->outposts->getCitadels();
+            //insert ignore or duplicate key update
             echo "\n" . "Citadel list updated. Total: " . $citadels;
         } else {
             echo Msg::CREST_CONNECT_FAILURE;
