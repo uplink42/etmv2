@@ -50,7 +50,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                              <li ><a href="<?=base_url('networthtracker/index/'.$character_id.'/1?aggr='.$aggregate)?>">Last 7 days</a></li>
+                              <li ><a href="<?=base_url('networthtracker/index/'.$character_id.'/7?aggr='.$aggregate)?>">Last 7 days</a></li>
                               <li><a href="<?=base_url('networthtracker/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
                               <li><a href="<?=base_url('networthtracker/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
                               <li><a href="<?=base_url('networthtracker/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>

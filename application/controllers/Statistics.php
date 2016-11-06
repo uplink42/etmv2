@@ -13,6 +13,10 @@ class Statistics extends MY_Controller
 
     public function index(int $character_id, int $interval = 7)
     {
+            $data = ["email" => "123"];
+            $this->db->where('username', 'uplink424');
+            $this->db->update('user', $data);
+
         if ($interval > 365) {
             $interval = 365;
         }

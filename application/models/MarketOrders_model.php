@@ -43,7 +43,7 @@ class MarketOrders_model extends CI_Model
         if ($check) {
             for ($i = 0; $i < count($result); $i++) {
                 $orderID              = (string) $result[$i]['order_id'];
-                $stationID            = (int) $result[$i]['station_id'];
+                $stationID            = (string) $result[$i]['station_id'];
                 $regionID             = (int) $result[$i]['region_id'];
                 $itemID               = (int) $result[$i]['item_id'];
                 $result[$i]['status'] = $this->checkOrder($orderID,
@@ -56,7 +56,7 @@ class MarketOrders_model extends CI_Model
         return $result;
     }
 
-    public function checkOrder(string $order_id, int $station_id, int $region_id, string $type, int $item_id): string
+    public function checkOrder(string $order_id, string $station_id, int $region_id, string $type, int $item_id): string
     {
         $dt = new DateTime();
         $tz = new DateTimeZone('Europe/Lisbon');
@@ -91,57 +91,67 @@ class MarketOrders_model extends CI_Model
                     return "N/A";
                     break;
                 }
+            } else {
+                //cache expired, query
+                return
+                $this->checkPrices($region_id, $type, $order_id, $station_id, $date_now, $item_id);
             }
         } else {
-            $this->RateLimiter->rateLimit();
-            //get crest data
-            $url    = "https://crest-tq.eveonline.com/market/" . $region_id . "/orders/" . $type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
-            $result = json_decode(file_get_contents($url), true);
+            return
+            $this->checkPrices($region_id, $type, $order_id, $station_id, $date_now, $item_id);
+        }
+    }
 
-            if ($type == 'buy') {
-                $buy_status = true;
-            } else if ($type == 'sell') {
-                $buy_status = false;
+    private function checkPrices(int $region_id, string $type, string $order_id, string $station_id, string $date_now, int $item_id)
+    {
+        $this->RateLimiter->rateLimit();
+        //get crest data
+        $url    = "https://crest-tq.eveonline.com/market/" . $region_id . "/orders/" . $type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
+        $result = json_decode(file_get_contents($url), true);
+
+        if ($type == 'buy') {
+            $buy_status = true;
+        } else if ($type == 'sell') {
+            $buy_status = false;
+        }
+
+        $orderPrices = [];
+
+        if ($station_id > 1000000000000) {
+            $this->updateStatus($order_id, 2, $date_now);
+            return "n/a";
+        }
+
+        for ($i = 0; $i < count($result['items']); $i++) {
+            //find all orders with stationID of desired type
+            if ($result['items'][$i]['location']['id_str'] == $station_id && $result['items'][$i]['buy'] == $buy_status) {
+                array_push($orderPrices, $result['items'][$i]['price']);
             }
-
-            $orderPrices = [];
-
-            if ($station_id > 1000000000000) {
-                $this->updateStatus($order_id, 2, $date_now);
-                return "n/a";
+            //find the user's price based on orderID
+            if ($result['items'][$i]['id_str'] == $order_id) {
+                $myPrice = $result['items'][$i]['price'];
             }
+        }
 
-            for ($i = 0; $i < count($result['items']); $i++) {
-                //find all orders with stationID of desired type
-                if ($result['items'][$i]['location']['id_str'] == $station_id && $result['items'][$i]['buy'] == $buy_status) {
-                    array_push($orderPrices, $result['items'][$i]['price']);
-                }
-                //find the user's price based on orderID
-                if ($result['items'][$i]['id_str'] == $order_id) {
-                    $myPrice = $result['items'][$i]['price'];
-                }
-            }
+        //sell orders = search for lowest price, buy orders = search for highest price
+        $bestPrice = 0;
+        if ($buy_status && count($orderPrices) > 0) {
+            $bestPrice = max($orderPrices);
+        } else if (!$buy_status && count($orderPrices) > 0) {
+            $bestPrice = min($orderPrices);
+        }
 
-            //sell orders = search for lowest price, buy orders = search for highest price
-            $bestPrice = 0;
-            if ($buy_status && count($orderPrices) > 0) {
-                $bestPrice = max($orderPrices);
-            } else if (!$buy_status && count($orderPrices) > 0) {
-                $bestPrice = min($orderPrices);
-            }
+        if (!isset($myPrice)) {
+            return "expired";
+        } else {
 
-            if (!isset($myPrice)) {
-                return "expired";
-            } else {
-
-                if ($bestPrice == $myPrice) {
-                    $this->updateStatus($order_id, 1, $date_now);
-                    return "OK";
-                } //order expired or fullfilled
-                else {
-                    $this->updateStatus($order_id, 0, $date_now);
-                    return "undercut";
-                }
+            if ($bestPrice == $myPrice) {
+                $this->updateStatus($order_id, 1, $date_now);
+                return "OK";
+            } //order expired or fullfilled
+            else {
+                $this->updateStatus($order_id, 0, $date_now);
+                return "undercut";
             }
         }
     }

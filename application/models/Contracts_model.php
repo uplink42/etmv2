@@ -76,7 +76,7 @@ class Contracts_model extends CI_Model
 
                 $data = array("eve_idcharacters" => $issuer,
                     "name"                           => $name);
-                $this->db->insert('characters_public', $data);
+                $this->db->replace('characters_public', $data);
             }
 
             //repeat the process for acceptor characters
@@ -94,7 +94,7 @@ class Contracts_model extends CI_Model
 
                 $data = array("eve_idcharacters" => $acceptor,
                               "name"             => $name);
-                $this->db->insert('characters_public', $data);
+                $this->db->replace('characters_public', $data);
             }
         }
 

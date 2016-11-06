@@ -228,7 +228,11 @@ class Updater_model extends CI_Model
             return false;
         }
 
-        if ($accessMask == "" && $response) {
+        if (!$response) {
+            return false;
+        }
+
+        if ($accessMask == "") {
             return -4; //api key does not exist
         } else if ($accessMask != '82317323' && $accessMask != '1073741823' && $response) {
             return -3; //api key has invalid permissions
