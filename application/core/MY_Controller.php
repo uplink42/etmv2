@@ -73,6 +73,7 @@ class MY_Controller extends CI_Controller
         }
 
         $data['email']          = $this->session->email;
+
         $data['username']       = $this->session->username;
         $data['chars']          = $chars;
         $character_list         = $this->getCharacterList($this->user_id);

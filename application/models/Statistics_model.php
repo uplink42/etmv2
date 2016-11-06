@@ -239,7 +239,7 @@ class Statistics_model extends CI_Model
                 $data = ['eve_idcharacters' => $customerID,
                     'name'                      => $result[$i]['soldTo']];
 
-                $this->db->insert('characters_public', $data);
+                $this->db->replace('characters_public', $data);
             }
             $result[$i]['url'] = "https://image.eveonline.com/Character/" . $customerID . "_32.jpg";
         }

@@ -49,18 +49,16 @@
 
                     <div class="panel-body tax-creation-panel">
                         <form class="form-horizontal add-tax" data-url="<?=base_url()?>" method="POST">
-                            <div class="row">
-                                <div class="form-group">
-                                    <label for="citadel" class="col-sm-2 control-label">Citadel</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control origin-station" id="citadel" name="citadel" placeholder="Begin typing and select one of the highlighted stations" autofocus required>
-                                    </div>
-                                    <label for="tax" class="col-sm-1 control-label">Tax</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" id="tax" name="tax" pattern="^(0(\.\d+)?|1(\.0+)?)$" title="Must insert a decimal value (example: 0.01 for 1%" required> 
-                                    </div>
-                                </div>  
-                            </div>
+                            <div class="form-group">
+                                <label for="citadel" class="col-sm-2 control-label">Citadel</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control origin-station" id="citadel" name="citadel" placeholder="Begin typing and select one of the highlighted stations" autofocus required>
+                                </div>
+                                <label for="tax" class="col-sm-1 control-label">Tax</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="tax" name="tax" pattern="^(0(\.\d+)?|1(\.0+)?)$" title="Must insert a decimal value (example: 0.01 for 1%" required> 
+                                </div>
+                            </div>  
                             <input type="hidden" value="<?=$character_id?>" name="character" class="characterid"> 
                             <div class="text-center"><i class="fa fa-info"></i> Broker fee must be inserted as a decimal (e.g 0.05 represents 5%)</div>
                             <button type="submit" class="btn btn-default submit-tax">Submit</button>

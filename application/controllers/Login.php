@@ -32,11 +32,13 @@ class Login extends CI_Controller
             //login success
             $user_data = $this->Login_model->getUserData($username);
             $id_user   = $user_data->iduser;
+            $email     = $user_data->email;
 
             $session_start = date('Y-m-d H:i:s');
             $session_data = array("username" => $username,
                 "start"                          => $session_start,
                 "iduser"                         => $id_user,
+                "email"                          => $email
             );
 
             //set cookie
