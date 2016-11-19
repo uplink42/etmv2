@@ -8,7 +8,6 @@ use Pheal\Pheal;
 
 Config::getInstance()->cache  = new \Pheal\Cache\FileStorage(FILESTORAGE);
 Config::getInstance()->access = new \Pheal\Access\StaticCheck();
-Config::getInstance()->log = new \Pheal\Log\FileStorage(FILESTORAGE);
 
 class Updater_model extends CI_Model
 {
@@ -204,6 +203,7 @@ class Updater_model extends CI_Model
             );
 
             $this->db->delete('aggr', $data);
+            log_message('error', 'deleted '. $char_id .' from ' . $res);
         }
     }
 
@@ -228,11 +228,7 @@ class Updater_model extends CI_Model
             return false;
         }
 
-        if (!$response) {
-            return false;
-        }
-
-        if ($accessMask == "") {
+        if ($accessMask == "" && $response) {
             return -4; //api key does not exist
         } else if ($accessMask != '82317323' && $accessMask != '1073741823' && $response) {
             return -3; //api key has invalid permissions
@@ -249,8 +245,7 @@ class Updater_model extends CI_Model
     //and begin the update procedure
     public function iterateAccountCharacters()
     {
-        $this->db->trans_start();
-
+        
         //if ($this->isLocked($this->username)) {
         //$this->resultTable();
         //} else {
@@ -279,24 +274,25 @@ class Updater_model extends CI_Model
             $this->getAccountingLevel();
             $this->getCorpStandings();
             $this->getFactionStandings();
+
+            $this->db->trans_start();
             $this->getTransactions();
+            $this->db->trans_complete();
+            if ($this->db->trans_status() === false) {
+                return false;
+            }
+
             $this->getContracts();
             $this->getMarketOrders();
             $this->getAssets();
             $this->setNewInfo();
             $this->updateCharacterInfo();
-
-            $this->db->trans_complete();
-
-            if ($this->db->trans_status() === false) {
-                return false;
-            }
-
-            return true;
         }
-        //}
-
+        
+        
+        return true;
     }
+
 
     private function getWalletBalance()
     {
@@ -350,10 +346,8 @@ class Updater_model extends CI_Model
 
         $this->character_corp_standings = $corpStandingsArray;
         if (count($corpStandingsArray) > 0) {
-            $this->db->query(
-                batch("standings_corporation",
-                    array('idstandings_corporation', 'characters_eve_idcharacters', 'corporation_eve_idcorporation', 'value'), $corpStandingsArray)
-            );
+            batch("standings_corporation",
+                array('idstandings_corporation', 'characters_eve_idcharacters', 'corporation_eve_idcorporation', 'value'), $corpStandingsArray);
         }
     }
 
@@ -374,10 +368,8 @@ class Updater_model extends CI_Model
 
         $this->character_faction_standings = $factionStandingsArray;
         if (count($factionStandingsArray) > 0) {
-            $this->db->query(
-                batch("standings_faction",
-                    array('idstandings_faction', 'characters_eve_idcharacters', 'faction_eve_idfaction', 'value'), $factionStandingsArray)
-            );
+            batch("standings_faction",
+                array('idstandings_faction', 'characters_eve_idcharacters', 'faction_eve_idfaction', 'value'), $factionStandingsArray);
         }
     }
 
@@ -410,13 +402,14 @@ class Updater_model extends CI_Model
                     "station_eve_idstation"     => $this->db->escape($row->stationID),
                     "item_eve_iditem"           => $this->db->escape($row->typeID),
                     "transkey"                  => $this->db->escape($row->transactionID),
-                    "client"                    => $this->db->escape($row->clientName));
+                    "client"                    => $this->db->escape($row->clientName),
+                    "remaining"                 => $this->db->escape($row->quantity));
                 array_push($transactions, $data);
             }
         }
 
         if (!empty($transactions)) {
-            $this->db->query(batch_ignore("transaction",
+            batch_ignore("transaction",
                 array('idbuy',
                     'time',
                     'quantity',
@@ -427,9 +420,9 @@ class Updater_model extends CI_Model
                     'station_eve_idstation',
                     'item_eve_iditem',
                     'transkey',
-                    'client'),
-                $transactions)
-            );
+                    'client',
+                    'remaining'),
+                $transactions);
 
             $this->character_new_transactions = count($transactions);
 
@@ -500,7 +493,7 @@ class Updater_model extends CI_Model
         $this->character_new_contracts = count($new_contracts) - $duplicates;
 
         if (!empty($contracts)) {
-            $this->db->query(batch("contracts",
+            batch("contracts",
                 array('eve_idcontracts',
                     'issuer_id',
                     'acceptor_id',
@@ -516,8 +509,7 @@ class Updater_model extends CI_Model
                     'fromStation_eve_idstation',
                     'toStation_eve_idstation',
                     'characters_eve_idcharacters'),
-                $contracts)
-            );
+                $contracts);
         } else {
             $this->character_new_contracts = 0;
         }
@@ -601,7 +593,7 @@ class Updater_model extends CI_Model
         $this->db->delete('orders');
 
         if (!empty($market_orders)) {
-            $this->db->query(batch("orders",
+            batch("orders",
                 array('idorders',
                     'eve_item_iditem',
                     'station_eve_idstation',
@@ -615,8 +607,7 @@ class Updater_model extends CI_Model
                     'order_range',
                     'date',
                     'transkey'),
-                $market_orders)
-            );
+                $market_orders);
         } else {
             $this->character_new_orders = 0;
         }
@@ -696,19 +687,19 @@ class Updater_model extends CI_Model
             }
         }
 
+        //first, delete existing assets
+        $this->db->where('characters_eve_idcharacters', $this->character_id);
+        $this->db->delete('assets');
+            
         if (!empty($assetList)) {
-            //first, delete existing assets
-            $this->db->where('characters_eve_idcharacters', $this->character_id);
-            $this->db->delete('assets');
-
-            $this->db->query(batch("assets",
+            
+            batch("assets",
                 array('idassets',
                     'characters_eve_idcharacters',
                     'item_eve_iditem',
                     'quantity',
                     'locationID'),
-                $assetList)
-            );
+                $assetList);
         }
 
         $this->db->select('coalesce(SUM(assets.quantity * item_price_data.price_evecentral),0) AS grand_total');
@@ -756,68 +747,74 @@ class Updater_model extends CI_Model
         $buy_stack  = array();
         $sell_stack = array();
 
-        $username    = $this->db->escape($this->username);
         $num_profits = 0;
 
-        $buy_list = $this->db->query("SELECT transaction.idbuy, transaction.item_eve_iditem, transaction.quantity, transaction.price_unit, transaction.time
-                FROM transaction
-                INNER JOIN aggr ON transaction.character_eve_idcharacter = aggr.character_eve_idcharacter
-                INNER JOIN user ON aggr.user_iduser = user.iduser
-                    WHERE NOT
-                    EXISTS (
-                        SELECT transactionID, characters_eve_idcharacters
-                        FROM transaction_processed
-                        WHERE transaction_processed.transactionID = transaction.idbuy
-                    )
-                    AND transaction_type =  'Buy'
-                    AND user.username = $username
-                    ORDER BY TIME ASC ");
-
+        //buy list
+        $this->db->select('transaction.idbuy, transaction.item_eve_iditem, transaction.quantity, transaction.price_unit, transaction.time, transaction.remaining');
+        $this->db->from('transaction');
+        $this->db->join('aggr', 'transaction.character_eve_idcharacter = aggr.character_eve_idcharacter');
+        $this->db->join('user', 'aggr.user_iduser = user.iduser');
+        $this->db->where('transaction.remaining > 0');
+        $this->db->where('transaction.transaction_type', 'Buy');
+        $this->db->where('user.username', $this->username);
+        $this->db->order_by('time', 'asc');
+        $buy_list = $this->db->get('');
         $buy_stack = $buy_list->result_array();
 
-        $sell_list = $this->db->query("SELECT transaction.idbuy, transaction.item_eve_iditem, transaction.quantity, transaction.price_unit, transaction.time
-                FROM transaction
-                INNER JOIN aggr ON transaction.character_eve_idcharacter = aggr.character_eve_idcharacter
-                INNER JOIN user ON aggr.user_iduser = user.iduser
-                    WHERE NOT
-                    EXISTS (
-                        SELECT transactionID, characters_eve_idcharacters
-                        FROM transaction_processed
-                        WHERE transaction_processed.transactionID = transaction.idbuy
-                        )
-                AND transaction_type =  'Sell'
-                AND user.username =  $username
-                ORDER BY TIME ASC ");
-
+        //sell list
+        $this->db->select('transaction.idbuy, transaction.item_eve_iditem, transaction.quantity, transaction.price_unit, transaction.time, transaction.remaining');
+        $this->db->from('transaction');
+        $this->db->join('aggr', 'transaction.character_eve_idcharacter = aggr.character_eve_idcharacter');
+        $this->db->join('user', 'aggr.user_iduser = user.iduser');
+        $this->db->where('transaction.remaining > 0');
+        $this->db->where('transaction.transaction_type', 'Sell');
+        $this->db->where('user.username', $this->username);
+        $this->db->order_by('time', 'asc');
+        $sell_list = $this->db->get('');
         $sell_stack = $sell_list->result_array();
 
         $size_buy  = sizeof($buy_stack);
         $size_sell = sizeof($sell_stack);
 
         for ($i = 0; $i <= $size_buy - 1; $i++) {
-            $idbuy_b      = $buy_stack[$i]['idbuy'];
-            $itemid_b     = $buy_stack[$i]['item_eve_iditem'];
-            $quantity_b   = $buy_stack[$i]['quantity'];
-            $time_b       = $buy_stack[$i]['time'];
-            $price_unit_b = $buy_stack[$i]['price_unit'];
+            $buy_stack[$i]['idbuy'];
+            $buy_stack[$i]['item_eve_iditem'];
+            $buy_stack[$i]['remaining'];
+            $buy_stack[$i]['time'];
+            $buy_stack[$i]['price_unit'];
 
             $quantity_b_calc = $buy_stack[$i]['quantity'];
 
             for ($k = 0; $k <= $size_sell - 1; $k++) {
-                $idbuy_s      = $sell_stack[$k]['idbuy'];
-                $itemid_s     = $sell_stack[$k]['item_eve_iditem'];
-                $quantity_s   = $sell_stack[$k]['quantity'];
-                $time_s       = $sell_stack[$k]['time'];
-                $price_unit_s = $sell_stack[$k]['price_unit'];
+                $sell_stack[$k]['idbuy'];
+                $sell_stack[$k]['item_eve_iditem'];
+                $sell_stack[$k]['remaining'];
+                $sell_stack[$k]['time'];
+                $sell_stack[$k]['price_unit'];
 
                 //found a match
-                if ($itemid_s == $itemid_b && $time_s > $time_b && $quantity_b > 0 && $quantity_s > 0) {
+                if ($sell_stack[$k]['item_eve_iditem'] == $buy_stack[$i]['item_eve_iditem'] 
+                    && $sell_stack[$k]['time'] > $buy_stack[$i]['time'] 
+                    && $buy_stack[$i]['remaining'] > 0 
+                    && $sell_stack[$k]['remaining'] > 0) {
 
                     $num_profits++;
+                    $profit_q = min($buy_stack[$i]['remaining'], $sell_stack[$k]['remaining']);
 
-                    $sell_stack[$k]['quantity'] = $sell_stack[$k]['quantity'] - min($quantity_s, $quantity_b);
-                    $buy_stack[$i]['quantity']  = $buy_stack[$i]['quantity'] - min($quantity_s, $quantity_b);
+                    //update remaining quantity
+                    $data_buy = ["remaining" => $buy_stack[$i]['remaining'] - $profit_q];
+                    $this->db->where('idbuy', $buy_stack[$i]['idbuy']);
+                    $this->db->update('transaction', $data_buy);
 
+                    $data_sell = ["remaining" => $sell_stack[$k]['remaining'] - $profit_q];
+                    $this->db->where('idbuy', $sell_stack[$k]['idbuy']);
+                    $this->db->update('transaction', $data_sell);
+
+                    //update array
+                    $sell_stack[$k]['remaining'] = $sell_stack[$k]['remaining'] - $profit_q;
+                    $buy_stack[$i]['remaining']  = $buy_stack[$i]['remaining'] - $profit_q;
+
+                    //find profit data
                     $this->db->select('item.name as itemname,
                         item.eve_iditem as iditem,
                         station.name as stationname,
@@ -829,21 +826,9 @@ class Updater_model extends CI_Model
                     $this->db->join('characters', 'transaction.character_eve_idcharacter = characters.eve_idcharacter');
                     $this->db->join('station', 'transaction.station_eve_idstation = station.eve_idstation', 'left');
                     $this->db->join('item', 'transaction.item_eve_iditem = item.eve_iditem', 'left');
-                    $this->db->where('transaction.idbuy', $idbuy_b);
+                    $this->db->where('transaction.idbuy', $buy_stack[$i]['idbuy']);
                     $query_buy = $this->db->get('');
 
-                    /*$query_buy = $this->db->query("SELECT item.name as itemname,
-                    item.eve_iditem as iditem,
-                    station.name as stationname,
-                    transaction.station_eve_idstation as stationid,
-                    characters.eve_idcharacter as characterid,
-                    characters.name as charactername,
-                    transaction.time as transactiontime
-                    FROM transaction
-                    JOIN characters ON transaction.character_eve_idcharacter = characters.eve_idcharacter
-                    LEFT JOIN station ON transaction.station_eve_idstation = station.eve_idstation
-                    LEFT JOIN item ON transaction.item_eve_iditem = item.eve_iditem
-                    WHERE transaction.idbuy = '$idbuy_b'");*/
 
                     $this->db->select('item.name as itemname,
                         item.eve_iditem as iditem,
@@ -856,22 +841,11 @@ class Updater_model extends CI_Model
                     $this->db->join('characters', 'transaction.character_eve_idcharacter = characters.eve_idcharacter');
                     $this->db->join('station', 'transaction.station_eve_idstation = station.eve_idstation', 'left');
                     $this->db->join('item', 'transaction.item_eve_iditem = item.eve_iditem', 'left');
-                    $this->db->where('transaction.idbuy', $idbuy_s);
+                    $this->db->where('transaction.idbuy', $sell_stack[$k]['idbuy']);
                     $query_sell = $this->db->get('');
 
-                    /*$query_sell = $this->db->query("SELECT item.name as itemname,
-                    item.eve_iditem as iditem,
-                    station.name as stationname,
-                    transaction.station_eve_idstation as stationid,
-                    characters.eve_idcharacter as characterid,
-                    characters.name as charactername,
-                    transaction.time as transactiontime
-                    FROM transaction
-                    JOIN characters ON transaction.character_eve_idcharacter = characters.eve_idcharacter
-                    LEFT JOIN station ON transaction.station_eve_idstation = station.eve_idstation
-                    LEFT JOIN item ON transaction.item_eve_iditem = item.eve_iditem
-                    WHERE transaction.idbuy = '$idbuy_s'");*/
-
+                    
+                    //calulate taxes
                     $stationFromID   = $query_buy->row()->stationid;
                     $stationToID     = $query_sell->row()->stationid;
                     $date_buy        = $query_buy->row()->transactiontime;
@@ -879,7 +853,6 @@ class Updater_model extends CI_Model
                     $characterBuyID  = $query_buy->row()->characterid;
                     $characterSellID = $query_sell->row()->characterid;
 
-                    //call the tax calculator model
                     $CI = &get_instance();
                     $CI->load->model('Tax_Model');
                     $CI->Tax_Model->tax($stationFromID, $stationToID, $characterBuyID, $characterSellID, "buy", "sell");
@@ -888,15 +861,18 @@ class Updater_model extends CI_Model
                     $transTaxTo    = $CI->Tax_Model->calculateTaxTo();
                     $brokerFeeTo   = $CI->Tax_Model->calculateBrokerTo();
 
-                    $price_unit_b_taxed  = $price_unit_b * $brokerFeeFrom * $transTaxFrom;
-                    $price_total_b_taxed = $price_unit_b_taxed * min($quantity_b, $quantity_s);
-                    $price_unit_s_taxed  = $price_unit_s * $brokerFeeTo * $transTaxTo;
-                    $price_total_s_taxed = $price_unit_s_taxed * min($quantity_s, $quantity_b);
+                    $price_unit_b_taxed  = $buy_stack[$i]['price_unit'] * $brokerFeeFrom * $transTaxFrom;
+                    $price_total_b_taxed = $price_unit_b_taxed * $profit_q;
+                    $price_unit_s_taxed  = $sell_stack[$k]['price_unit'] * $brokerFeeTo * $transTaxTo;
+                    $price_total_s_taxed = $price_unit_s_taxed * $profit_q;
 
-                    $profit      = ($price_unit_s_taxed - $price_unit_b_taxed) * min($quantity_b, $quantity_s);
+                    //calculate final profit
+                    $profit      = ($price_unit_s_taxed - $price_unit_b_taxed) * $profit_q;
                     $profit_unit = ($price_unit_s_taxed - $price_unit_b_taxed);
-                    $min         = min($quantity_s, $quantity_b);
+                    $trans_b = $buy_stack[$i]["idbuy"];
+                    $trans_s = $sell_stack[$k]["idbuy"];
 
+                    //insert profit
                     $add_profit = $this->db->query("INSERT IGNORE profit
                         (idprofit,
                         transaction_idbuy_buy,
@@ -908,26 +884,15 @@ class Updater_model extends CI_Model
                         characters_eve_idcharacters_OUT,
                         quantity_profit) VALUES
                         (NULL,
-                        '$idbuy_b',
-                        '$idbuy_s',
+                        '$trans_b',
+                        '$trans_s',
                         '$profit_unit',
                         '$date_buy',
                         '$date_sell',
                         '$characterBuyID',
                         '$characterSellID',
-                        '$min')");
+                        '$profit_q')");
 
-                    $quantity_b = $quantity_b - min($quantity_b, $quantity_s);
-
-                    if ($sell_stack[$k]['quantity'] <= 0) {
-                        $remove = $this->db->query("INSERT ignore into transaction_processed (transactionID, characters_eve_idcharacters)
-                        VALUES ('$idbuy_s', '$characterSellID');"); //remove the buy transaction from future calculations
-                    }
-
-                    if ($buy_stack[$i]['quantity'] <= 0) {
-                        $remove = $this->db->query("INSERT ignore into transaction_processed (transactionID, characters_eve_idcharacters)
-                        VALUES ('$idbuy_b', '$characterBuyID');"); //remove the buy transaction from future calculations
-                    }
                 }
             }
         }

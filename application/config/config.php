@@ -25,6 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 define("HASH_CACHE", 189);
 $config['base_url'] = 'http://localhost/etm_refactor/';
+$config['maintenance'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -214,7 +215,7 @@ $config['directory_trigger'] = 'd';
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 4;
+$config['log_threshold'] = 1;
 
 /*
 |--------------------------------------------------------------------------

@@ -18,6 +18,7 @@ class Transactions_model extends CI_Model
     {
         $this->db->select('t.idbuy as transaction_id,
             t.time as time,
+            t.remaining as remaining,
             t.quantity as quantity,
             t.price_unit as price_unit,
             t.price_total as price_total,
@@ -27,13 +28,11 @@ class Transactions_model extends CI_Model
             t.transkey as transkey,
             t.client as client,
             i.name as item_name,
-            i.eve_iditem as item_id,
-            tp.transactionID as proc');
+            i.eve_iditem as item_id');
         $this->db->from('transaction t');
         $this->db->join('characters c', 'c.eve_idcharacter = t.character_eve_idcharacter');
         $this->db->join('item i', 'i.eve_iditem = t.item_eve_iditem', 'left');
         $this->db->join('station s', 's.eve_idstation = t.station_eve_idstation', 'left');
-        $this->db->join('transaction_processed tp', 'tp.transactionID = t.idbuy', 'left');
         
         if(!$transID) {
             $this->db->where('t.character_eve_idcharacter IN ' . $chars);
@@ -66,11 +65,11 @@ class Transactions_model extends CI_Model
         $query        = $this->db->get('transaction');
         $character_id = $query->row()->c;
 
-        $data = array("transactionID" => $transaction_id,
-            "characters_eve_idcharacters" => $character_id);
+        $data = array("remaining" => 0);
 
-        $sql = $this->db->insert_string('transaction_processed', $data) . ' ON DUPLICATE KEY UPDATE transactionID=transactionID';
-        $this->db->query($sql);
+        $this->db->where('idbuy', $transaction_id);
+        $this->db->update('transaction', $data);
+
         if ($this->db->affected_rows() == 1) {
             return true;
         }

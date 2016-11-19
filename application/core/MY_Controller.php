@@ -16,6 +16,10 @@ class MY_Controller extends CI_Controller
         $this->load->model('Login_model');
         $this->load->library('session');
         $this->user_id = (int)$this->session->iduser;
+
+        if($this->config->item('maintenance') == TRUE) {
+            redirect('internal/maintenance');
+        }
     }
 
 
@@ -91,86 +95,86 @@ class MY_Controller extends CI_Controller
     {
         switch ($this->page) {
 
-            case ('Dashboard'):
+            case ('dashboard'):
                 $data['hasInterval'] = true;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('Transactions'):
+            case ('transactions'):
                 $data['hasInterval'] = true;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('Profits'):
+            case ('profits'):
                 $data['hasInterval'] = true;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('Statistics'):
+            case ('statistics'):
                 $data['hasInterval'] = true;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('MarketOrders'):
+            case ('marketorders'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('Contracts'):
+            case ('contracts'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('Assets'):
+            case ('assets'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = true;
                 $data['gets']        = "sig";
                 $data['gets']        = false;
                 break;
 
-            case ('NetworthTracker'):
+            case ('networthtracker'):
                 $data['hasInterval'] = true;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('TradeSimulator'):
+            case ('tradesimulator'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('StockLists'):
+            case ('stocklists'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('TradeRoutes'):
+            case ('traderoutes'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('CitadelTax'):
+            case ('citadeltax'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('Settings'):
+            case ('settings'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
 
-            case ('APIKeyManagement'):
+            case ('apikeymanagement'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
