@@ -56,6 +56,7 @@
                                 <li><a href="<?=base_url('transactions/index/'.$character_id.'/30?aggr='.$aggregate)?>">Last 30 days</a></li>
                                 <li><a href="<?=base_url('transactions/index/'.$character_id.'/60?aggr='.$aggregate)?>">Last 2 months</a></li>
                                 <li><a href="<?=base_url('transactions/index/'.$character_id.'/90?aggr='.$aggregate)?>">Last 3 months</a></li>
+                                <li><a href="<?=base_url('transactions/index/'.$character_id.'/180?aggr='.$aggregate)?>">Last 6 months</a></li>
                                 <li><a href="<?=base_url('transactions/index/'.$character_id.'/365?aggr='.$aggregate)?>">Last 12 months</a></li>
                             </ul>
                         </div>
@@ -84,7 +85,7 @@
                                     <?php 
                                     foreach($transactions as $row) {
                                             $row->type == 'Buy' ? $button = 'btn-danger' : $button = 'btn-success';
-                                            !empty($row->proc) ? $unlink = "P" : ($row->type == 'Buy' ? $unlink = 1 : $unlink = "-");
+                                            $unlink = $row->remaining == 0 || $row->type == 'Sell' ? '-' : 1;
                                             if($unlink == 1) {
                                                 $unlink = "<button type='button' class='btn btn-default btn-unlink' data-toggle='modal' data-target='#unlink' data-transaction='$row->transaction_id'> 
                                                 Unlink</button>";
