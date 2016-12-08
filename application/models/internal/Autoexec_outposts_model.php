@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 use Pheal\Pheal;
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 class Autoexec_outposts_model extends CI_Model
 {
@@ -65,7 +68,7 @@ class Autoexec_outposts_model extends CI_Model
     {
         $this->db->trans_start();
         $this->db->query(
-            batch_ignore("station",
+            chunk_ignore("station",
                 array('eve_idstation', 'name', 'system_eve_idsystem', 'corporation_eve_idcorporation'), $data)
         );
         $this->db->trans_complete();

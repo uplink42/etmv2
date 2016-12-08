@@ -11,6 +11,14 @@
 
 </div>
 -->
+<style>
+.counter-item.not-right-column.top-column {
+     padding-bottom: 0px; 
+}
+.counter-item.not-right-column {
+     padding-bottom: 0px; 
+}
+</style>
 
 <!-- Begin Intro Section -->
 <section id="intro" data-url="<?=base_url()?>">
@@ -182,8 +190,7 @@
                     <div class="counter-item not-right-column top-column">
                         <i class="fa fa-list"></i>
                         <div class="inner-content">
-                            <span class="number transactions" data-from="0" data-to="" data-refresh-interval="100">
-                                
+                            <span class="number transactions">
                             </span>
                         </div>
                         <!-- //.inner-content -->
@@ -197,8 +204,7 @@
                     <div class="counter-item not-right-column top-column">
                         <i class="fa fa-usd"></i>
                         <div class="inner-content">
-                            <span class="number profit" data-from="0" data-to="" 
-                            data-refresh-interval="100">
+                            <span class="number profit">
                                 
                             </span>
                         </div>
@@ -215,7 +221,7 @@
                         <i class="fa fa-key"></i>
 
                         <div class="inner-content">
-                            <span class="number keys" data-from="0" data-to="" data-refresh-interval="100">
+                            <span class="number keys">
                                 
                             </span>
                         </div>
@@ -232,7 +238,7 @@
                         <i class="fa fa-smile-o"></i>
 
                         <div class="inner-content">
-                            <span class="number characters" data-from="0" data-to="" data-refresh-interval="100">
+                            <span class="number characters">
                                 
                             </span>
                         </div>

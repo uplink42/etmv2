@@ -30,6 +30,7 @@ class StockLists_model extends CI_Model
         $query = $this->db->insert('itemlist', $data);
 
         if ($this->db->affected_rows() != 0) {
+            log_message('error', $this->db->insert_id());
             return $this->db->insert_id();
         }
         return false;
@@ -51,17 +52,38 @@ class StockLists_model extends CI_Model
 
     public function queryItems(string $input) : array
     {
+        /*$query = $this->db->query('select name as value from item where name = ' . $input . ' limit 1'
+            ' union ' . 
+            'select name as value from item where name like %'. $input . '% limit 10');*/
+
+        $this->db->select('name as value');
+        $this->db->from('item');
+        $this->db->where('name', $input);
+        $this->db->where("type <> 0");
+        $this->db->order_by('name', 'asc');
+        $this->db->limit('1');
+        $query1  = $this->db->get()->result();
+
         $this->db->select('name as value');
         $this->db->from('item');
         $this->db->like('name', $input);
         $this->db->where("type <> 0");
         $this->db->order_by('name', 'asc');
-        $this->db->limit('20');
-        $query  = $this->db->get();
-        $result = $query->result_array();
+        $this->db->limit('15');
+        $query2  = $this->db->get()->result();
+
+        if(($key = array_search($query1[0], $query2)) !== false) {
+            unset($query2[$key]);
+        }
+
+        $result = array_merge($query1, $query2);
+        //remove identical items
+        log_message('error', $this->db->last_query());
+        //$result = $query->result_array();
 
         return $result;
     }
+    
 
     public function insertItem(string $name, int $list_id) : array
     {
@@ -97,10 +119,10 @@ class StockLists_model extends CI_Model
     }
 
 
-    private function checkItemExists(string $name, int $list_id) : bool
+    /*private function checkItemExists(string $name, int $list_id) : bool
     {
         $this->db->select('')
-    }
+    }*/
 
     public function removeItem(int $item_id, int $list_id) : array
     {

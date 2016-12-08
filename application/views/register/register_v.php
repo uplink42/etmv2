@@ -11,7 +11,7 @@
 		<i class="pe page-header-icon pe-7s-add-user"></i>
 	    </div>
 	    <div class="header-title">
-		<h3>Register</h3>
+		<h3>Register in Eve Trade Master </h3>
 		<small>
 		    Make sure you set your API Key as "no expiry" to prevent possible errors.
 		</small>

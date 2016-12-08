@@ -17,7 +17,7 @@
                     Login
                 </h3>
                 <small>
-                    Please enter your credentials to login.
+                    Please enter your Eve Trade Master credentials to login.
                 </small>
             </div>
         </div>

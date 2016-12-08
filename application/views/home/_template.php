@@ -6,16 +6,17 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Eve Trade Master 2</title>
-    <meta name="description" content="">    
+    <title>Eve Trade Master 2 - A web based Eve Online profit tracker</title>
+    <meta name="keywords" content="eve trading, trading tool, eve online isk, eve online market"/>    
+    <meta name="description" content="A web based Eve Online profit tracker, asset manager and trade analysis tool">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Google Font -->
-    <link href='//fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css' async>
-    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' async>
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css' defer async lazyload>
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' defer async lazyload>
     
-    <link rel="stylesheet" href="<?=base_url('dist/home/styles/css/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
-    
+    <link rel="stylesheet" href="<?=base_url('dist/home/styles/css/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/ defer async lazyload>
+
     <!-- Color CSS -->
     <!--<link href="assets/css/colors/blue.css" rel="stylesheet" type="text/css">-->
     <!--<link href="../assets/css/component/colors/blue.css" rel="stylesheet" type="text/css">-->
@@ -28,7 +29,8 @@
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" data-offset="51">
 
 <?php $this->load->view('home/home_v'); ?>
+<script src="<?=base_url('dist/home/js/apps.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 
-    <script src="<?=base_url('dist/home/js/apps.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 </body>
+    <?php include_once("analyticstracking.php") ?>
 </html>

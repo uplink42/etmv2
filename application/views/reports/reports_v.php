@@ -39,8 +39,8 @@
 <body>
     <center><h2>Daily earnings report for <?=$username?></h2></center><br>
     
-    <center><h2>From: <?=$date_now?> GMT</h2></center>
-    <center><h2>To: <?=$date_prev?> GMT</h2><br></center>
+    <center><h2>From: <?=$date_prev?> GMT</h2></center>
+    <center><h2>To: <?=$date_now?> GMT</h2><br></center>
     <center><p align='center'><h3>Last 24 hours snapshot: </h3></p></center>
     
     <table>
@@ -264,7 +264,7 @@
         <?php $this->load->view('reports/info_v');?>
 
         <br><br>
-            <h5><strong class="c-white">Latest News</strong></h5>
+            <h4><strong class="c-white">Latest News</strong></h4>
             <?php foreach($cl_recent as $row) {
                 echo "<b>" . $row->date . "</b> - ";
                 echo $row->content . "<br>";
