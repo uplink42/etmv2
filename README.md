@@ -17,25 +17,27 @@ a web based profit tracker, trading and asset manager tool for Eve Online.
 - new! browse the market in real time trough all regions in New Eden
 
 #Requirements:
-- Apache 2.2+
+- Apache 2.2+ web server
 - PHP 7
-- AngularJS 1.6
 - MariaDB or MySQL database
 - Gulp task runner (requires NodeJS)
 - Should work on any OS, but Windows users will need some extra tweaking with certificates to get the API calls working: 
 [http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok](http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok)
+
+
+#Dependencies (packages included):
+- AngularJS 1.6
+- [PhealNG (XML API library)](https://github.com/3rdpartyeve/phealng)
+- [CodeIgniter 3](https://github.com/bcit-ci/CodeIgniter)
+- Fusioncharts
+- Bootstrap 3
+- jQuery 1.9 (and several jquery plugins)
 
 #3rd party APIs:
 - Eve XML API
 - Eve CREST API
 - Citadel data https://stop.hammerti.me.uk/api/ (unofficial)
 
-#Dependencies (packages included):
-- [PhealNG (XML API library)](https://github.com/3rdpartyeve/phealng)
-- [CodeIgniter 3](https://github.com/bcit-ci/CodeIgniter)
-- Fusioncharts
-- Bootstrap 3
-- jQuery 1.9 (and several jquery plugins like datatables and PACE)
 
 #Installation
 - Download/clone the repo onto your local web server.
