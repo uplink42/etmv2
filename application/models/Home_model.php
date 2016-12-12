@@ -33,7 +33,7 @@ class Home_model extends CI_Model
         $query      = $this->db->get('characters');
         $characters = $query->row();
 
-        $data = array("profit"     => round($profit->profit)/1000000,
+        $data = array("profit"     => (int)(($profit->profit)/1000000),
             "transactions"         => $transactions->transaction,
             "keys"                 => $keys->apikey,
             "characters"           => $characters->cha);
@@ -46,5 +46,4 @@ class Home_model extends CI_Model
         return array("data" => $data, "interval" => $interval);
         return array();
     }
-
 }

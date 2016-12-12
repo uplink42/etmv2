@@ -1,0 +1,14 @@
+<ul class="nav nav-pills nav-stacked nav-secondary nav-primary">
+	<li ng-repeat="grp in groups track by $index" ng-class="{active: subcatItems[grp.id].items.length > 0}" ng-if="isLoadedItems" class="animation">
+		<a ng-click="openSubCat(grp.id)" ng-class="{'selected-item': isSelected[grp.id]}">{{grp.name}}</a>
+		<ul class="nav nav-pills nav-stacked nav-secondary">
+			<li ng-repeat="sub in subcatItems[grp.id].items track by $index" ng-class="{active: subcatItems[sub.id].items.length > 0}" class="animation">
+				<a ng-click="openSubCat(sub.id)" ng-class="{'selected-item': isSelected[sub.id]}">{{sub.name}}</a>
+				<div ng-include="subcatsView"></div>
+			</li>
+		</ul>
+	</li>
+	<li ng-if="!isLoadedItems">
+		<span class="glyphicon glyphicon-refresh spin"></span> Loading items...
+	</li>
+</ul>

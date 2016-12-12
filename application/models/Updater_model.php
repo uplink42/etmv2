@@ -131,8 +131,12 @@ class Updater_model extends CI_Model
     //gets the assigned API keys for each character in the current account
     //and validates them accordingly, removing any characters with invalid permissions
     //returns a list of characters removed, otherwise returns false
+    //gets the assigned API keys for each character in the current account
+    //and validates them accordingly, removing any characters with invalid permissions
+    //returns a list of characters removed, otherwise returns false
     public function processAPIKeys(array $user_keys, string $username)
     {
+        log_message('error', $username . ' processing keys');
 
         /*$query = $this->db->query("SELECT api.apikey, api.vcode, characters.eve_idcharacter
         FROM api
@@ -142,6 +146,7 @@ class Updater_model extends CI_Model
         WHERE user.username = '$username'");*/
 
         foreach ($user_keys as $apis) {
+
             $apikey = (int) $apis['apikey'];
             $vcode  = $apis['vcode'];
 
@@ -151,40 +156,29 @@ class Updater_model extends CI_Model
             try {
                 $response = $pheal->APIKeyInfo();
             } catch (\Pheal\Exceptions\PhealException $e) {
+                log_message('error', $e->getMessage());
                 //check if expired
-                if ($e->getMessage() == 'Key has expired. Contact key owner for access renewal.') {
-                    $this->checkCharacterKeys($apikey, $vcode, $char_id);
-                } else {
-                    //unknown error
-                    return false;
-                }
-
-            }
-            //proceed to check permissions and remove any invalid keys
-            $this->checkCharacterKeys($apikey, $vcode, $char_id);
-
-            //count user keys again (check if none left)
-            if (count($this->getKeys($username)) != 0) {
-                return true;
-            } 
-
-            return false;
-            
-            //Important! Must ensure the reply from the server is not empty
-            /*if (!isset($response) || $response == "") {
+                $this->checkCharacterKeys($apikey, $vcode, $char_id);
                 return false;
-            } else {*/
-            //}
-        }
+                }
+            }
+        //count user keys again (check if none left)
+        if (count($this->getKeys($username)) != 0) {
+            return true;
+        } 
+
+        return false;
         //return $removed_characters;
     }
+    
 
     public function checkCharacterKeys($apikey, $vcode, $char_id) 
     {
         //check if permissions are correct
         //if not, we remove any invalid keys and characters
         $result = $this->validateAPIKey($apikey, $vcode, $char_id);
-        if ($result < 1 && $result != false) {
+
+        if ($result < 1 || !$result) {
             $this->db->select('name');
             $this->db->where('eve_idcharacter', $char_id);
             $query          = $this->db->get('characters');
@@ -290,9 +284,9 @@ class Updater_model extends CI_Model
         }
         
         
+
         return true;
     }
-
 
     private function getWalletBalance()
     {
@@ -917,6 +911,7 @@ class Updater_model extends CI_Model
         $tz = new DateTimeZone('Europe/Lisbon');
         $dt->setTimezone($tz);
         $date_today = $dt->format('Y-m-d');
+        if ($global) $date_today = date('Y-m-d',strtotime("-1 days"));
 
         foreach ($character_list->result() as $row) {
             $this->character_id = $row->character_eve_idcharacter;

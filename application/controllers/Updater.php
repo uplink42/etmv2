@@ -13,7 +13,6 @@ class Updater extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->clear = 0;
         $this->db->cache_off();
         $this->db->cache_delete_all();
         $this->load->library('session');
@@ -25,7 +24,7 @@ class Updater extends CI_Controller
 
     public function index()
     {
-
+        $count = 0;
         $username = $this->session->username;
         
         if (empty($username)) {
@@ -73,6 +72,25 @@ class Updater extends CI_Controller
                             } else {
                                 //working as expected
                                 $this->Updater_model->release($username);
+
+                                //if we arrived here, that means nothing went wrong (yet)
+                                //calculate profits
+                                $this->db->trans_start();
+                                $this->Updater_model->calculateProfits();
+                                //totals and history
+                                $this->Updater_model->updateTotals();
+                                $this->db->trans_complete();
+
+                                if ($this->db->trans_status() === false) {
+                                    //something went wrong while calculating profits, abort
+                                    buildMessage("error", Msg::DB_ERROR, "login/login_v");
+                                    $data['view']      = "login/login_v";
+                                    $data['no_header'] = 1;
+                                    $this->load->view('main/_template_v', $data);
+                                    return;
+                                } else {
+                                    $this->displayResultTable($username);
+                                }
                             }
                         } catch (\Pheal\Exceptions\PhealException $e) {
                             //if an exception happens during update (this is a bug on Eve's API)
@@ -89,14 +107,20 @@ class Updater extends CI_Controller
                             log_message('error', 'delete cache ' . $this->user_id);
                             $this->Log->addEntry('clear', $this->user_id);
 
-                            if ($this->clear < 3) {
+                            if ($count < 3) {
+                                $count++;
+                                log_message('error', 'delete Cache');
                                 foreach ($problematicKeys as $row) {
-                                    $this->clear++;
+
                                     $key = $row->key;
                                     $dir = FILESTORAGE . $key;
                                     $this->removeDirectory($dir);
                                     //release the lock
                                     $this->Updater_model->release($username);
+
+                                    $this->session->unset_userdata('username');
+                                    $this->session->unset_userdata('start');
+                                    $this->session->unset_userdata('iduser');
                                 }
                                 $this->index();
                             } else {
@@ -110,26 +134,10 @@ class Updater extends CI_Controller
                     }
                 }
             }
+            $this->Updater_model->release($username);
         }
 
-        //if we arrived here, that means nothing went wrong (yet)
-        //calculate profits
-        $this->db->trans_start();
-        $this->Updater_model->calculateProfits();
-        //totals and history
-        $this->Updater_model->updateTotals();
-        $this->db->trans_complete();
 
-        if ($this->db->trans_status() === false) {
-            //something went wrong while calculating profits, abort
-            buildMessage("error", Msg::DB_ERROR, "login/login_v");
-            $data['view']      = "login/login_v";
-            $data['no_header'] = 1;
-            $this->load->view('main/_template_v', $data);
-            return;
-        } else {
-            $this->displayResultTable($username);
-        }
     }
 
 

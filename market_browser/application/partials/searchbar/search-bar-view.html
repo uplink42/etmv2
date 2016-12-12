@@ -1,0 +1,21 @@
+<div class="container pt-30 pb-30" ng-if="isLoadedRegions">
+    <div class="form-inline">
+        <div class="form-group pr-15">    
+            <label for="item">Item</label>
+            <input type="text" id="item" ng-model="search.item" uib-typeahead="item as item.value for item in getItems($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control" typeahead-on-select="itemSelected($item)" typeahead-editable="false">
+        </div>
+        <div class="form-group pr-15">    
+            <label for="region">Region</label>
+            <select id="region" ng-model="search.region" ng-options="sregion['id'] as sregion['name'] for sregion in regions" class="form-control" ng-disabled="search.item.length == '0' || !search.item"></select>
+        </div>
+        <div class="form-group">    
+            <label for="station">Station</label>
+            <select ng-model="station" id="station" ng-options="station['id'] as station['name'] for station in stations" class="form-control" ng-disabled="!region"></select>
+        </div>
+    </div>
+</div>
+<div ng-if="!isLoadedRegions">
+    <span class="glyphicon glyphicon-refresh spin"></span>
+    Loading Regions...
+</div>
+{{region}}

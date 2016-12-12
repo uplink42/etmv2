@@ -49,7 +49,7 @@ class ApiKeyManagement_model extends CI_Model
             "vcode"  => $vcode,
         );
 
-        $this->db->query("INSERT IGNORE INTO api(apikey, vcode) VALUES ('$apikey', '$vcode')");
+        $this->db->query("INSERT INTO api(apikey, vcode) VALUES ('$apikey', '$vcode') ON DUPLICATE KEY UPDATE apikey='$apikey', vcode='$vcode'");
 
         foreach ($chars as $row) {
             $character_id = (int) $row;

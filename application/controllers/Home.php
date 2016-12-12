@@ -18,28 +18,10 @@ class Home extends CI_Controller
         $this->load->view('home/_template');
     }
 
-    public function getTransactionCount()
+    public function getAll()
     {
-        $result = $this->Home_model->getTransactions();
-        echo json_encode($result);            
-    }
-
-    public function getProfitTotal()
-    {
-        $result = $this->Home_model->getProfits();
-        echo json_encode($result);        
-    }
-
-    public function getCharacterCount()
-    {
-        $result = $this->Home_model->getCharacters();
-        echo json_encode($result);
-    }
-
-    public function getKeysCount()
-    {
-        $result = $this->Home_model->getKeys();
-        echo json_encode($result);
+        $data = $this->Home_model->getStats();
+        echo json_encode($data);
     }
 
 }

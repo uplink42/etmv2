@@ -80,17 +80,14 @@ var paths = {
               'assets/vendor/jquery-inview/jquery.inview.min.js',
               'assets/vendor/jquery-countTo/jquery.countTo.js',
               'assets/vendor/jquery-countdown/jquery.plugin.min.js',
-              'assets/vendor/jquery-countdown/jquery.countdown.min.js',
               'assets/vendor/owl-carousel/owl.carousel.min.js',
               'assets/vendor/isotope/isotope.pkgd.min.js',
               'assets/vendor/jquery-magnificPopup/jquery.magnific-popup.min.js',
               'assets/rhijani/slideshow/js/main.js',
               'assets/rhijani/slideshow/js/animation.js',
-              'assets/rhijani/main/js/component/countdown.js',
-              'assets/rhijani/main/js/component/counters.js',
               'assets/rhijani/main/js/component/portfolio.js',
               'assets/rhijani/main/js/component/animation.js',
-              'assets/js/home-app.js'
+              'assets/js/home.js'
               ],
 
     img: ['assets/rhijani/main/img/*',
