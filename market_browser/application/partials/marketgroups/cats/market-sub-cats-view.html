@@ -1,0 +1,6 @@
+<ul class="nav nav-pills nav-stacked nav-secondary">
+	<li ng-repeat="sub in subcatItems[sub.id].items track by $index" ng-class="{active: subcatItems[sub.id].items.length > 0}" class="animation">
+		<a ng-click="openSubCat(sub.id)" ng-class="{'selected-item': isSelected[sub.id]}">{{sub.name}}</a>
+		<div ng-include="subcatsView"></div>
+	</li>
+</ul>

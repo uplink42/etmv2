@@ -1,0 +1,41 @@
+.spin {
+    animation: spin .5s infinite linear;
+    transform-origin:50% 58%;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+//ng repeat
+.animation {
+	transition: 0.2s;
+}
+
+.animation.ng-enter {
+	opacity: 0;
+}
+
+.animation.ng-leave {
+	opacity: 1;
+}
+
+.animation.ng-enter.ng-enter-active {
+	opacity: 1;
+}
+
+.animation.ng-leave.ng-leave-active {
+	opacity: 0;
+}
+.ng-move {
+	transition: 1.75s;
+	opacity: 0;
+}
+.ng-move.ng-move-active {
+	opacity: 1;
+}

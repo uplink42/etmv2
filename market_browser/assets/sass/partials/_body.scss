@@ -1,0 +1,44 @@
+.market {
+	.item-name {
+		font-size: 16px;
+		font-weight: 700;
+	}
+
+    .orders-title {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .header {
+        font-weight: 700;
+    }
+
+    table {
+        tbody {
+            th, td, tr {
+                padding-top: 3px;
+                padding-bottom: 3px;
+                font-size: 12px;
+            }
+        }
+    }
+
+    .totals {
+        font-size: 12px;
+    }
+
+    .yellow {
+        color: #f8bb52;
+    }
+
+    /*table {
+        max-height: 500px;
+        display: block;
+        overflow-y: scroll;
+    }*/
+}
+
+.market-groups {
+    overflow-y: auto;
+    max-height: 740px;
+}
