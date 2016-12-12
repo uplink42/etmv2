@@ -14,10 +14,12 @@ a web based profit tracker, trading and asset manager tool for Eve Online.
 - can create stock lists up to 100 items, simulate profits with the above method and display best margins, best profit/m3, etc
 - updates your data daily even if you don't login (for e-mail reports and more accurate net-worth evolution charts)
 - can set custom broker fees for citadels of your choosing until ccp gives us proper crest support
+- new! browse the market in real time trough all regions in New Eden
 
 #Requirements:
 - Apache 2.2+
 - PHP 7
+- AngularJS 1.6
 - MariaDB or MySQL database
 - Gulp task runner (requires NodeJS)
 - Should work on any OS, but Windows users will need some extra tweaking with certificates to get the API calls working: 
