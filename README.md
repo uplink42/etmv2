@@ -84,11 +84,10 @@ There are several crons used to maintain the application. These can be found ins
 #To-do:
 - Documentation
 - Rewrite api key storage and validation rules
-- Rewrite css files into sass
-- Fix the rare profit hanging bug...
 - Restructure and normalize database
 - Improve gulp tasks
 - Port to Laravel (maybe)
 - Automatic item list update cron from CREST (right now I have to manually update the database everytime new items are added into Eve)
 - Bower/composer integration
+- Unit testing
 - ??
