@@ -5,25 +5,24 @@ app.directive('marketGroups', [
     function(config, marketGroupsFact, marketTypesFact) {
 
         return {
-            templateUrl: 'application/partials/marketgroups/market-groups-view.html',
+            templateUrl: config.dist + '/partials/marketgroups/market-groups-view.html',
             restrict: 'E',
             scope: {
                 region: '=',
                 item: '=',
                 name: '='
             },
-            controller: function($scope) {
+            controller: ['$scope', function($scope) {
 
                 var allGroups;
                 var allTypes = [];
                 $scope.subcatItems = {};
                 $scope.item = {};
-                $scope.subcatsView = 'application/partials/marketgroups/cats/market-sub-cats-view.html';
+                $scope.subcatsView = config.dist + '/partials/marketgroups/cats/market-sub-cats-view.html';
 
                 marketGroupsFact
                 .getAll()
                 .then(function(response) {
-                    //console.log(response);
                     recursiveGrpSorting(response);
                 })
                 .catch(function(error) {
@@ -37,7 +36,6 @@ app.directive('marketGroups', [
                     //console.log(response);
                     angular.forEach(response, function(cValue, cKey) {
                         var key = cValue.marketGroup.id;
-                        //allTypes[key] = [];
                         if (angular.isUndefined(allTypes[key])) {
                             allTypes[key] = [];
                         }
@@ -78,7 +76,6 @@ app.directive('marketGroups', [
                             items: []
                         };
 
-                        console.log(allTypes[id]);
                         angular.forEach(allTypes[id], function(cValue, cKey) {
                             $scope.subcatItems[id].items.push(cValue);
                             $scope.subcatItems[cValue.id] = {
@@ -91,7 +88,6 @@ app.directive('marketGroups', [
 
 
                 $scope.openSubCat = function(id) {
-                    console.log(id);
                     if (!$scope.subcatItems[id] || $scope.subcatItems[id].length == 0) {
                         $scope.subcatItems[id] = {
                             items: []
@@ -113,13 +109,12 @@ app.directive('marketGroups', [
                     angular.forEach(allTypes, function(cValue, cKey) {
                         angular.forEach(cValue, function(iValue, iKey) {
                             if (iValue.id == id) {
-                                console.log(iValue.name);
                                 $scope.item.name = iValue.name;
                             }
                         })
                     });
                 }
-            },
+            }],
 
             link: function() {
 

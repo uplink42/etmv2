@@ -1,6 +1,6 @@
-<div class="container-fluid ml-50 mr-50">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="col-md-6 pull-left">
             <search-bar 
                 region="region" 
                 item="item" 
@@ -9,21 +9,22 @@
                 pagination="pagination">
             </search-bar>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 market-groups">
-            <market-groups item="item" region="region"></market-groups>
-        </div>
-        <div class="col-md-9 market">
-            <div class="row item">
-                <p class="h1 pt-15 pb-15 pl-15 text-center item-name" ng-if="item.name">
+        <div class="col-md-6 pull-right">
+            <div class="item">
+                <p class="h4 text-center item-name" ng-if="item.name">
                     <img ng-src="{{itemImg + item.id + '_32.png'}}" class="pr-5">
                     {{ item.name }}
                 </p>
             </div>
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 market-groups">
+            <market-groups item="item" region="region"></market-groups>
+        </div>
+        <div class="col-md-10 market">
             <div>
-                <p class="h1 pt-15 pb-15 pl-15 text-center orders-title">Sell Orders</p>
+                <p class="h1 pt-0 mt-0 pb-15 pl-15 text-center orders-title">Sell Orders</p>
             </div>
             <table class="table table-bordered table-striped sell table-hover">
                 <thead>
@@ -53,9 +54,8 @@
                 </div>
             </div>
             
-
-            <div class="pt-15">
-                <p class="h1 pt-15 pb-15 pl-15 text-center orders-title">Buy Orders</p>
+            <div>
+                <p class="h1 pt-0 mt-0 pb-15 pl-15 text-center orders-title">Buy Orders</p>
             </div>
             <table class="table table-bordered table-striped buy table-hover">
                 <thead>

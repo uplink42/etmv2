@@ -1,5 +1,6 @@
-<div class="container pt-30 pb-30" ng-if="isLoadedRegions">
+<div class="container pb-15" ng-if="isLoadedRegions">
     <div class="form-inline">
+        <!--<input type="radio" ng-model="search.type" value="item">-->
         <div class="form-group pr-15">    
             <label for="item">Item</label>
             <input type="text" id="item" ng-model="search.item" uib-typeahead="item as item.value for item in getItems($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control" typeahead-on-select="itemSelected($item)" typeahead-editable="false">
@@ -8,10 +9,15 @@
             <label for="region">Region</label>
             <select id="region" ng-model="search.region" ng-options="sregion['id'] as sregion['name'] for sregion in regions" class="form-control" ng-disabled="search.item.length == '0' || !search.item"></select>
         </div>
-        <div class="form-group">    
-            <label for="station">Station</label>
-            <select ng-model="station" id="station" ng-options="station['id'] as station['name'] for station in stations" class="form-control" ng-disabled="!region"></select>
+        <!--<input type="radio" ng-model="search.type" value="list">
+        <div class="form-group pr-15">    
+            <label for="item">Stock List</label>
+            <select id="region" ng-model="search.region" ng-options="sregion['id'] as sregion['name'] for sregion in regions" class="form-control" ng-disabled="search.item.length == '0' || !search.item"></select>
         </div>
+        <div class="form-group pr-15">    
+            <label for="region">Item</label>
+            <select id="region" ng-model="search.region" ng-options="sregion['id'] as sregion['name'] for sregion in regions" class="form-control" ng-disabled="search.item.length == '0' || !search.item"></select>
+        </div>-->
     </div>
 </div>
 <div ng-if="!isLoadedRegions">

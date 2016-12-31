@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 define("HASH_CACHE", 189);
-$config['base_url'] = 'http://localhost/etm_refactor/';
+$config['base_url'] = 'http://localhost/v2/';
 $config['maintenance'] = FALSE;
 
 /*

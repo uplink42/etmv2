@@ -114,6 +114,11 @@
             <li class="nav-category">
                 <i class="fa fa-magic"></i> Trade Assistant
             </li>
+            <li class="marketexplorer">
+                <a href="<?=base_url('marketexplorer/index/'.$character_id .'?aggr='.$aggregate)?>">
+                    <i class="fa fa-database"></i> NEW! Market Explorer
+                </a>
+            </li>
             <li class="tradesimulator">
                 <a href="<?=base_url('tradesimulator/index/'.$character_id .'?aggr='.$aggregate)?>">
                     <i class="fa fa-files-o"></i> Trade Simulator

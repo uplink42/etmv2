@@ -618,15 +618,15 @@
                         </div>
                         <!-- //.portfolio-item -->
 
-                        <div class="portfolio-item grow asset">
+                        <div class="portfolio-item grow market">
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-8.jpg')?>" title="Citadel Taxes">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-8.jpg')?>" title="Market Explorer">
                                             <div class="portfolio-text">
-                                                <h4>Citadel Taxes</h4>
+                                                <h4>Market Explorer</h4>
 
-                                                <p>Setup custom broker fees for any active Citadel</p>   
+                                                <p>Browse New Eden's Market in real time in any region</p>   
                                             </div>
                                             <!-- //.portfolio-text -->
                                         </a>

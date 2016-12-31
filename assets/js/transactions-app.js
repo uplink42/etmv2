@@ -53,6 +53,7 @@ $(document).ready(function() {
 
     $(".transactions-body p.yellow").html("<p>There are "+ table.rows().count() + " results for a total of "
         + number_format(table.column(4).data().sum(),2, '.', ',' ) + " ISK</p>");
+
     $("#transactions-table_filter input").keyup(function () {
         $(".transactions-body p.yellow").html("There are "+ table.rows({filter: 'applied'}).count() + " results for a total of "
             + number_format(table.column(4, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
