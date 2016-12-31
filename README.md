@@ -50,7 +50,7 @@ a web based profit tracker, trading and asset manager tool for Eve Online.
 
     gulp
     
-    2.1 - Browse to marketexplorer/index and run gulp there as well
+ 2.1 - Browse to marketexplorer/index and run gulp there as well
 
 Gulp should now watch over and update any css/javascript files you change.
 
