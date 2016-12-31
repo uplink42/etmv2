@@ -15,6 +15,7 @@ class StockLists_model extends CI_Model
     //wtf?
     public function getStockLists(int $user_id) : array
     {
+        $this->db->select('itemlist.name, itemlist.iditemlist');
         $this->db->where('user_iduser', $user_id);
         $this->db->order_by('iditemlist', 'desc');
         $query  = $this->db->get('itemlist');

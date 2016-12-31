@@ -11,7 +11,8 @@ var app = angular.module("app", [
 .constant("config", {
     crest: {
         base: 'https://crest-tq.eveonline.com/',
-    }
+    },
+    dist: "dist/app"
 })
 
 .config(['$qProvider', function ($qProvider) {
@@ -20,12 +21,10 @@ var app = angular.module("app", [
 
 .controller('appCtrl', [
     '$scope',
-    'crestFact',
-    'itemListFact',
     'config', 
-    function($scope, crestFact, itemListFact, config) {
+    function($scope, config) {
         //$scope.$storage = $localStorage;
-        $scope.home = "application/home/main-list-view.html";
+        //$scope.home = "dist/app/home/main-list-view.html";
 
         $scope.item = {};
 

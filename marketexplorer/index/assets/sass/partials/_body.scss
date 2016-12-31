@@ -1,3 +1,8 @@
+.content {
+    margin-top: 0 !important;
+    padding-top: 0;
+}
+
 .market {
 	.item-name {
 		font-size: 16px;
@@ -41,4 +46,26 @@
 .market-groups {
     overflow-y: auto;
     max-height: 740px;
+}
+
+#loading-bar-spinner .spinner-icon {
+    border-top-color:  $loading-bar;
+    border-left-color: $loading-bar;
+    @extend #loading-bar;
+}
+
+#loading-bar .bar {
+    background: $loading-bar;
+}
+
+ul.dropdown-menu {
+    background-color: #494b54;
+    
+}
+
+.dropdown-menu > li > a {
+    color: #949ba2;
+    &:hover {
+        color: $loading-bar;
+    }
 }

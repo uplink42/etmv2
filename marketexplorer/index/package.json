@@ -17,12 +17,16 @@
     "gulp-clean-css": "^2.2.0",
     "gulp-concat": "2.5.2",
     "gulp-imagemin": "2.2.1",
+    "gulp-livereload": "^3.8.1",
     "gulp-plumber": "1.0.0",
+    "gulp-purifycss": "^0.2.0",
     "gulp-rename": "1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "1.2.0",
     "main-bower-files": "^2.13.1",
+    "ng-annotate": "^1.2.1",
     "node-sass": "^3.13.0",
     "run-sequence": "^1.2.2"
-  }
+  },
+  "dependencies": {}
 }

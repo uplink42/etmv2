@@ -9,7 +9,7 @@ class Stocklists extends MY_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->page = "stocklists";
-        $this->load->model('stocklists_model');
+        $this->load->model('StockLists_model');
     }
 
     public function index(int $character_id)
@@ -45,6 +45,7 @@ class Stocklists extends MY_Controller
 
     public function populateList()
     {
+        $this->load->model('StockLists_model');
         $lists = $this->StockLists_model->getStockLists($this->user_id);
 
         echo json_encode($lists);

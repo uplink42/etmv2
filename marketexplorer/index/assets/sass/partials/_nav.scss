@@ -1,0 +1,32 @@
+.market-groups {
+	.nav-primary > li:first-child {
+		margin-left: 0;
+	}
+
+	.nav li a.selected-item, .nav li a.selected-item:hover, .selected-item {
+		background-color: $loading-bar;
+		color: #fff;
+	}
+
+	.nav li a {
+		background-color: #444038;
+	}
+
+	.nav li a:hover {
+	 	background-color: #444038
+	}
+
+	.nav-pills > li.active > a, .nav-pills > li.active > a:hover {
+		background-color: #4c3a1a
+	}
+
+
+	.nav {
+		cursor: pointer;
+	}
+
+	.nav > li > a {
+	    padding: 5px 10px;
+	    font-size: 13px;
+	}
+}

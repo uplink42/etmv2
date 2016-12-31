@@ -1,20 +1,29 @@
 "use strict";
 function number_format(number, decimals, decPoint, thousandsSep) {
-    decimals = decimals || 0;
-    number = parseFloat(number);
-    if (!decPoint || !thousandsSep) {
-        decPoint = '.';
-        thousandsSep = ',';
+    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+    var n = !isFinite(+number) ? 0 : +number;
+    var prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+    var sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
+    var dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
+    var s = '';
+
+    var toFixedFix = function (n, prec) {
+        var k = Math.pow(10, prec)
+        return '' + (Math.round(n * k) / k)
+        .toFixed(prec)
     }
-    var roundedNumber = Math.round(Math.abs(number) * ('1e' + decimals)) + '';
-    var numbersString = decimals ? roundedNumber.slice(0, decimals * -1) : roundedNumber;
-    var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
-    var formattedNumber = "";
-    while (numbersString.length > 3) {
-        formattedNumber += thousandsSep + numbersString.slice(-3)
-        numbersString = numbersString.slice(0, -3);
+
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.')
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep)
     }
-    return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
+    
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || ''
+        s[1] += new Array(prec - s[1].length + 1).join('0')
+    }
+    
+    return s.join(dec);
 }
 
 //validate email
@@ -67,6 +76,7 @@ jQuery.fn.dataTable.Api.register('sum()', function() {
         return a + b;
     }, 0);
 });
+
 //load error messages
 var errHandle = (function() {
     var loc = window.location.href
@@ -77,6 +87,7 @@ var errHandle = (function() {
         dataType: "json",
         url: base + "v2/main/getMsgHandles",
         success: function(result) {
+
             data = result;
         }
     });

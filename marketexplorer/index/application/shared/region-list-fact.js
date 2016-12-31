@@ -2,7 +2,6 @@ app.factory('regionListFact', [
     'crestFact', 
     'config',
     function(crestFact, config) {
-
         var regionListFact = {};
 
         regionListFact.getAll = function () {

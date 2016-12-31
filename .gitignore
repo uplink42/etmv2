@@ -5,6 +5,6 @@
 /home
 /luna_admin-v1.1
 fifo.php
-/market_browser/bower_components
-/market_browsernode_modules
-/market_browser/dist
+/marketexplorer/index/bower_components
+/marketexplorer/index/node_modules
+/marketexplorer/index/dist
