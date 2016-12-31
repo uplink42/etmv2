@@ -49,6 +49,8 @@ a web based profit tracker, trading and asset manager tool for Eve Online.
 2 - Then run gulp to generate the dist files:
 
     gulp
+    
+    2.1 - Browse to marketexplorer/index and run gulp there as well
 
 Gulp should now watch over and update any css/javascript files you change.
 
