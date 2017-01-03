@@ -18,7 +18,7 @@
                 </h3>
                 <small>
                     It seems like you have no characters in your ETM account.
-                    This is because you either removed every character from your account or your API keys have expired and were automatically purged.
+                    This is because you either removed every character from your account or your API keys have expired or were otherwise deemed invalid and were automatically purged.
                     <h5>Please add a new valid API Key to continue</h5>
                 </small>
             </div>
