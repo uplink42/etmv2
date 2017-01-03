@@ -66,6 +66,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false"> Trade volumes</a></li>
                     <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="false"> Profit distribution</a></li>
                     <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false"> Daily snapshot</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-5" aria-expanded="false"> Lifetime stats</a></li>
                 </ul>
             </div>
             </div>
@@ -480,6 +481,52 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                             </table>    
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-5" class="tab-pane">
+                        <div class="panel panel-filled">             
+                            <div class="panel-heading">
+                                <div class="panel panel-filled panel-c-success panel-collapse">
+                                    <div class="panel-heading">
+                                        <h5><i class="fa fa-bar-chart-o fa-fw"></i> Lifetime stats (currently selected characters, since the day you registered until today) </h4>
+
+                                    </div>
+                                </div>   
+                            </div>   
+                            <div class="panel-body statistics-body">
+                                <div class="col-sm-12" style="line-height: 3">
+                                    <div class="col-sm-5 col-xs-5 yellow">Signup date</div>
+                                    <div class="col-sm-7 col-xs-7"><?= $signup_date->registration_date ?></div>
+
+                                    <div class="col-sm-5 col-xs-5 yellow">Total Transactions</div>
+                                    <div class="col-sm-3 col-xs-3"><?= number_format($lifetime_count_trans->total,0) ?> </div>
+                                    <div class="col-sm-4 col-xs-4"><?= number_format($lifetime_sum_trans->total,2) ?> ISK</div>
+
+                                    <div class="col-sm-5 col-xs-5 yellow">Total Buy Transactions</div>
+                                    <div class="col-sm-3 col-xs-3"><?= number_format($lifetime_count_buy->total,0) ?></div>
+                                    <div class="col-sm-4 col-xs-4"><?= number_format($lifetime_sum_buy->total,2) ?> ISK</div>
+
+                                    <div class="col-sm-5 col-xs-5 yellow">Total Sell Transactions</div>
+                                    <div class="col-sm-3 col-xs-3"><?= number_format($lifetime_count_sell->total,0) ?> </div>
+                                    <div class="col-sm-4 col-xs-4"><?= number_format($lifetime_sum_sell->total,2) ?> ISK</div>
+
+                                    <div class="col-sm-5 col-xs-5 yellow">Total Profit</div>
+                                    <div class="col-sm-7 col-xs-7"><?= number_format($lifetime_profit->sum,0) ?> ISK</div>
+
+                                    <div class="col-sm-5 col-xs-5 yellow">Highest Profit Day</div>
+                                    <div class="col-sm-3 col-xs-3"><?= $lifetime_highest_profit->date ?> </div> 
+                                    <div class="col-sm-4 col-xs-4"><?= number_format($lifetime_highest_profit->max,2) ?> ISK</div>
+
+                                    <div class="col-sm-5 col-xs-5 yellow">Highest Purchases Day</div>
+                                    <div class="col-sm-3 col-xs-3"><?= $lifetime_highest_buy->date ?> </div> 
+                                    <div class="col-sm-4 col-xs-4"><?= number_format($lifetime_highest_buy->max,2) ?> ISK</div>
+
+                                    <div class="col-sm-5 col-xs-5 yellow">Highest Sales Day</div>
+                                    <div class="col-sm-3 col-xs-3"><?= $lifetime_highest_sell->date ?> </div> 
+                                    <div class="col-sm-4 col-xs-4"><?= number_format($lifetime_highest_sell->max,2) ?> ISK</div>
                                 </div>
                             </div>
                         </div>

@@ -426,4 +426,86 @@ class Statistics_model extends CI_Model
 
         return $jsonEncodedData;
     }
+
+
+    //Lifetime stats
+    public function getTotalTransactions(string $chars, string $type = null)
+    {
+        $this->db->select('count(idbuy) as total');
+        $this->db->from('transaction');
+        if (!empty($type)) {
+            $this->db->where('transaction_type', $type);
+        }
+        $this->db->where('character_eve_idcharacter IN ' . $chars);
+        $query = $this->db->get('');
+
+        $result = $query->row();
+        return $result;
+    }
+
+    public function getSumTransactions(string $chars, string $type = null)
+    {
+        $this->db->select('sum(price_unit * quantity) as total');
+        $this->db->from('transaction');
+        if (!empty($type)) {
+            $this->db->where('transaction_type', $type);
+        }
+        $this->db->where('character_eve_idcharacter IN ' . $chars);
+        $query = $this->db->get('');
+
+        $result = $query->row();
+        return $result;
+    }
+
+
+    public function getTotalProfit(string $chars)
+    {
+        $this->db->select('sum(profit_unit * quantity_profit) as sum');
+        $this->db->from('profit');
+        $this->db->where('characters_eve_idcharacters_OUT IN ' . $chars);
+        $query = $this->db->get('');
+
+        $result = $query->row();
+        return $result;
+    }
+
+
+    public function getSignupDate(string $iduser)
+    {
+        $this->db->select('registration_date');
+        $this->db->from('user');
+        $this->db->where('iduser', $iduser);
+        $query = $this->db->get('');
+
+        $result = $query->row();
+        return $result;
+    }
+
+
+    public function getHighestMetric(string $chars, string $metric)
+    {
+        $value = "";
+        switch($metric) {
+            case 'buy':
+            $value = 'total_buy';
+            break;
+            case 'sell':
+            $value = 'total_sell';
+            break;
+            case 'profit':
+            $value = 'total_profit';
+            break;
+        }
+
+        $this->db->select('date, MAX(' . $value . ') as max');
+        $this->db->from('history');
+        $this->db->where('characters_eve_idcharacters IN ' . $chars);
+        $query = $this->db->get('');
+
+        log_message('error', $this->db->last_query());
+
+        $result = $query->row();
+        return $result;
+    }
+    
 }

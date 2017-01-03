@@ -128,27 +128,14 @@ class Updater_model extends CI_Model
     }
 
 
-    //gets the assigned API keys for each character in the current account
-    //and validates them accordingly, removing any characters with invalid permissions
-    //returns a list of characters removed, otherwise returns false
-    //gets the assigned API keys for each character in the current account
-    //and validates them accordingly, removing any characters with invalid permissions
-    //returns a list of characters removed, otherwise returns false
     public function processAPIKeys(array $user_keys, string $username)
     {
-        log_message('error', $username . ' processing keys');
-
-        /*$query = $this->db->query("SELECT api.apikey, api.vcode, characters.eve_idcharacter
-        FROM api
-        JOIN characters on characters.api_apikey = api.apikey
-        JOIN aggr on aggr.character_eve_idcharacter = characters.eve_idcharacter
-        JOIN user on aggr.user_iduser = user.iduser
-        WHERE user.username = '$username'");*/
-
         foreach ($user_keys as $apis) {
 
             $apikey = (int) $apis['apikey'];
             $vcode  = $apis['vcode'];
+                log_message('error', $apikey);
+                log_message('error', $vcode);
 
             $char_id = $apis['eve_idcharacter'];
             $pheal   = new Pheal($apikey, $vcode, "account");
@@ -157,18 +144,17 @@ class Updater_model extends CI_Model
                 $response = $pheal->APIKeyInfo();
             } catch (\Pheal\Exceptions\PhealException $e) {
                 log_message('error', $e->getMessage());
-                //check if expired
-                $this->checkCharacterKeys($apikey, $vcode, $char_id);
                 return false;
-                }
             }
-        //count user keys again (check if none left)
+
+            $this->checkCharacterKeys($apikey, $vcode, $char_id);
+        }
+
         if (count($this->getKeys($username)) != 0) {
             return true;
         } 
 
         return false;
-        //return $removed_characters;
     }
     
 
