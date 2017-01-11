@@ -12,12 +12,11 @@ class ReportGenerator extends CI_Model
         $this->load->model('Statistics_model', 'stats');
     }
 
-    public function calculateTotals(string $chars, int $interval) : array
+    public function calculateTotals(string $chars, int $interval): array
     {
         $chars = substr($chars, 1);
         $chars = substr($chars, 0, -1);
-
-        $group  = explode(',', $chars);
+        $group = explode(',', $chars);
 
         $final  = [];
         $ind    = [];
@@ -28,25 +27,25 @@ class ReportGenerator extends CI_Model
         $total_buy    = 0;
 
         foreach ($group as $row) {
-            $id           = (int) $row;
+            $id     = (int) $row;
             $profit = $this->getTotalProfit($id, $interval);
             $sell   = $this->getTotalSales($id, $interval);
             $buy    = $this->getTotalExpenses($id, $interval);
 
             $total_profit += $profit;
-            $total_sell   += $sell;
-            $total_buy    += $buy;
+            $total_sell += $sell;
+            $total_buy += $buy;
 
             $values = ["profit" => $profit,
-                       "sell"   => $sell,
-                       "buy"    => $buy];
+                "sell"              => $sell,
+                "buy"               => $buy];
 
             array_push($ind, [$id => $values]);
         }
 
         array_push($totals, ["total_profit" => $total_profit,
-                             "total_sell"   => $total_sell,
-                             "total_buy"    => $total_buy]);
+            "total_sell"                        => $total_sell,
+            "total_buy"                         => $total_buy]);
 
         array_push($final, $ind);
         array_push($final, $totals);

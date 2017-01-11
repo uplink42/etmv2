@@ -33,8 +33,8 @@ class Transactions_model extends CI_Model
         $this->db->join('characters c', 'c.eve_idcharacter = t.character_eve_idcharacter');
         $this->db->join('item i', 'i.eve_iditem = t.item_eve_iditem', 'left');
         $this->db->join('station s', 's.eve_idstation = t.station_eve_idstation', 'left');
-        
-        if(!$transID) {
+
+        if (!$transID) {
             $this->db->where('t.character_eve_idcharacter IN ' . $chars);
             $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
         }
@@ -46,7 +46,7 @@ class Transactions_model extends CI_Model
         if ($transID) {
             $this->db->where('idbuy', $transID);
         }
-        if(!$res) {
+        if (!$res) {
             $this->db->limit(0);
         }
 
@@ -75,5 +75,4 @@ class Transactions_model extends CI_Model
         }
         return false;
     }
-
 }

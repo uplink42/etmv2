@@ -45,19 +45,13 @@ class Updater_model extends CI_Model
         $user_id       = $query->result();
         $this->user_id = $user_id;
 
-        /*$this->db->select('updating');
-        $this->db->where('username', $username);
-        $query = $this->db->get('user');
-        $updating = $query->result();
-        $this->update_state = $updating;*/
-
         $this->db->select('character_eve_idcharacter');
         $this->db->where('username', $username);
         $query                    = $this->db->get('v_user_characters');
         $this->account_characters = $query->result_array();
     }
 
-    //retrurns a list of current database characters
+    //returns a list of current database characters
     public function resultTable(string $username): array
     {
         $data = array(
@@ -127,16 +121,12 @@ class Updater_model extends CI_Model
         return $user_keys;
     }
 
-
     public function processAPIKeys(array $user_keys, string $username)
     {
         foreach ($user_keys as $apis) {
 
-            $apikey = (int) $apis['apikey'];
-            $vcode  = $apis['vcode'];
-                log_message('error', $apikey);
-                log_message('error', $vcode);
-
+            $apikey  = (int) $apis['apikey'];
+            $vcode   = $apis['vcode'];
             $char_id = $apis['eve_idcharacter'];
             $pheal   = new Pheal($apikey, $vcode, "account");
 
@@ -152,13 +142,12 @@ class Updater_model extends CI_Model
 
         if (count($this->getKeys($username)) != 0) {
             return true;
-        } 
+        }
 
         return false;
     }
-    
 
-    public function checkCharacterKeys($apikey, $vcode, $char_id) 
+    public function checkCharacterKeys($apikey, $vcode, $char_id)
     {
         //check if permissions are correct
         //if not, we remove any invalid keys and characters
@@ -172,7 +161,7 @@ class Updater_model extends CI_Model
 
             $this->db->where('character_eve_idcharacter', $char_id);
             $query = $this->db->get('aggr');
-            $res = $query->row()->user_iduser;
+            $res   = $query->row()->user_iduser;
 
             //Invalid access mask or API key not found. Delete API from account
             //Note that none of the characters data is actually removed from the account,
@@ -183,7 +172,7 @@ class Updater_model extends CI_Model
             );
 
             $this->db->delete('aggr', $data);
-            log_message('error', 'deleted '. $char_id .' from ' . $res);
+            log_message('error', 'deleted ' . $char_id . ' from ' . $res);
         }
     }
 
@@ -225,10 +214,7 @@ class Updater_model extends CI_Model
     //and begin the update procedure
     public function iterateAccountCharacters()
     {
-        
-        //if ($this->isLocked($this->username)) {
-        //$this->resultTable();
-        //} else {
+
         foreach ($this->account_characters as $characters) {
             //begin character specific operations
             $this->character_id = $characters['character_eve_idcharacter'];
@@ -268,8 +254,6 @@ class Updater_model extends CI_Model
             $this->setNewInfo();
             $this->updateCharacterInfo();
         }
-        
-        
 
         return true;
     }
@@ -311,7 +295,6 @@ class Updater_model extends CI_Model
 
     private function getCorpStandings()
     {
-        //corp standings
         $pheal  = new Pheal($this->apikey, $this->vcode, "char");
         $result = $pheal->Standings(array("characterID" => $this->character_id));
 
@@ -333,7 +316,6 @@ class Updater_model extends CI_Model
 
     private function getFactionStandings()
     {
-        //faction standings
         $pheal  = new Pheal($this->apikey, $this->vcode, "char");
         $result = $pheal->Standings(array("characterID" => $this->character_id));
 
@@ -598,12 +580,7 @@ class Updater_model extends CI_Model
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $this->db->where('orders.order_state', 'open');
         $this->db->where('orders.type', 'sell');
-        $query = $this->db->get('');
-        /*$query = $this->db->query("SELECT coalesce(sum(orders.volume_remaining * item_price_data.price_evecentral),0) AS grand_total
-        FROM orders
-        JOIN item_price_data ON item_price_data.item_eve_iditem = orders.eve_item_iditem
-        WHERE characters_eve_idcharacters = '$this->character_id' AND orders.order_state = 'open' AND orders.type = 'sell'");*/
-
+        $query                  = $this->db->get('');
         $this->character_orders = $query->row()->grand_total;
     }
 
@@ -670,9 +647,9 @@ class Updater_model extends CI_Model
         //first, delete existing assets
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $this->db->delete('assets');
-            
+
         if (!empty($assetList)) {
-            
+
             batch("assets",
                 array('idassets',
                     'characters_eve_idcharacters',
@@ -686,12 +663,7 @@ class Updater_model extends CI_Model
         $this->db->from('assets');
         $this->db->join('item_price_data', 'item_price_data.item_eve_iditem = assets.item_eve_iditem');
         $this->db->where('characters_eve_idcharacters', $this->character_id);
-        $query = $this->db->get('');
-        /*$query = $this->db->query("SELECT coalesce(SUM(assets.quantity * item_price_data.price_evecentral),0) AS grand_total
-        FROM assets
-        JOIN item_price_data ON item_price_data.item_eve_iditem = assets.item_eve_iditem
-        WHERE assets.`characters_eve_idcharacters` =  '$this->character_id'");*/
-
+        $query                    = $this->db->get('');
         $this->character_networth = $query->row()->grand_total;
     }
 
@@ -738,7 +710,7 @@ class Updater_model extends CI_Model
         $this->db->where('transaction.transaction_type', 'Buy');
         $this->db->where('user.username', $this->username);
         $this->db->order_by('time', 'asc');
-        $buy_list = $this->db->get('');
+        $buy_list  = $this->db->get('');
         $buy_stack = $buy_list->result_array();
 
         //sell list
@@ -750,7 +722,7 @@ class Updater_model extends CI_Model
         $this->db->where('transaction.transaction_type', 'Sell');
         $this->db->where('user.username', $this->username);
         $this->db->order_by('time', 'asc');
-        $sell_list = $this->db->get('');
+        $sell_list  = $this->db->get('');
         $sell_stack = $sell_list->result_array();
 
         $size_buy  = sizeof($buy_stack);
@@ -773,9 +745,9 @@ class Updater_model extends CI_Model
                 $sell_stack[$k]['price_unit'];
 
                 //found a match
-                if ($sell_stack[$k]['item_eve_iditem'] == $buy_stack[$i]['item_eve_iditem'] 
-                    && $sell_stack[$k]['time'] > $buy_stack[$i]['time'] 
-                    && $buy_stack[$i]['remaining'] > 0 
+                if ($sell_stack[$k]['item_eve_iditem'] == $buy_stack[$i]['item_eve_iditem']
+                    && $sell_stack[$k]['time'] > $buy_stack[$i]['time']
+                    && $buy_stack[$i]['remaining'] > 0
                     && $sell_stack[$k]['remaining'] > 0) {
 
                     $num_profits++;
@@ -809,7 +781,6 @@ class Updater_model extends CI_Model
                     $this->db->where('transaction.idbuy', $buy_stack[$i]['idbuy']);
                     $query_buy = $this->db->get('');
 
-
                     $this->db->select('item.name as itemname,
                         item.eve_iditem as iditem,
                         station.name as stationname,
@@ -824,7 +795,6 @@ class Updater_model extends CI_Model
                     $this->db->where('transaction.idbuy', $sell_stack[$k]['idbuy']);
                     $query_sell = $this->db->get('');
 
-                    
                     //calulate taxes
                     $stationFromID   = $query_buy->row()->stationid;
                     $stationToID     = $query_sell->row()->stationid;
@@ -849,8 +819,8 @@ class Updater_model extends CI_Model
                     //calculate final profit
                     $profit      = ($price_unit_s_taxed - $price_unit_b_taxed) * $profit_q;
                     $profit_unit = ($price_unit_s_taxed - $price_unit_b_taxed);
-                    $trans_b = $buy_stack[$i]["idbuy"];
-                    $trans_s = $sell_stack[$k]["idbuy"];
+                    $trans_b     = $buy_stack[$i]["idbuy"];
+                    $trans_s     = $sell_stack[$k]["idbuy"];
 
                     //insert profit
                     $add_profit = $this->db->query("INSERT IGNORE profit
@@ -872,7 +842,6 @@ class Updater_model extends CI_Model
                         '$characterBuyID',
                         '$characterSellID',
                         '$profit_q')");
-
                 }
             }
         }
@@ -897,7 +866,9 @@ class Updater_model extends CI_Model
         $tz = new DateTimeZone('Europe/Lisbon');
         $dt->setTimezone($tz);
         $date_today = $dt->format('Y-m-d');
-        if ($global) $date_today = date('Y-m-d',strtotime("-1 days"));
+        if ($global) {
+            $date_today = date('Y-m-d', strtotime("-1 days"));
+        }
 
         foreach ($character_list->result() as $row) {
             $this->character_id = $row->character_eve_idcharacter;
@@ -935,15 +906,7 @@ class Updater_model extends CI_Model
             $this->db->join('characters', 't2.character_eve_idcharacter = characters.eve_idcharacter');
             $this->db->where('characters.eve_idcharacter', $this->character_id);
             $this->db->where('date(t2.time)', $date_today);
-            $margin = $this->db->get('');
-
-            /*$margin = $this->db->query("select coalesce(((sum(profit.profit_unit*profit.quantity_profit)/sum(t1.price_unit*profit.quantity_profit))*100),0) as margin
-            from profit
-            join transaction t1 on profit.transaction_idbuy_buy = t1.idbuy
-            join transaction t2 on profit.transaction_idbuy_sell = t2.idbuy
-            join characters on t2.character_eve_idcharacter = characters.eve_idcharacter
-            where characters.eve_idcharacter = '$this->character_id'
-            and date(t2.time) = '$date_today'");*/
+            $margin     = $this->db->get('');
             $margin_val = $margin->row()->margin;
 
             $data = array(
@@ -958,11 +921,6 @@ class Updater_model extends CI_Model
             $this->db->replace('history', $data);
         }
 
-        /*$this->is_updating = 0;
-        $data              = ["updating" => $this->is_updating];
-        $this->db->where('username', $this->username);
-        $this->db->update("user", $data);
-        log_message('error', $this->db->last_query());*/
         if (!$global) {
             return $character_list->result();
         }

@@ -101,12 +101,11 @@ var errHandle = (function() {
 $(document).ready(function() {
     $("body").removeClass('loading-body');
     var base = $(".navbar").data('url');
-    //$(".panel-loading-common").hide();
+
     $(".btn-clear").on('click', function() {
         $("input.form-control").val("");
         $("input.form-control").trigger("keyup");
         window.location.hash = "";
-        //window.location.href.split('#')[0];
     });
     $(".go-back").on('click', function() {
         window.history.back();

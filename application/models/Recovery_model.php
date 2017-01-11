@@ -15,7 +15,7 @@ class Recovery_model extends CI_Model
     {
         $this->db->where('username', $username);
         $this->db->where('email', $email);
-        $query = $this->db->get('user');
+        $query  = $this->db->get('user');
         $result = $query->row();
 
         return $result;
@@ -25,7 +25,7 @@ class Recovery_model extends CI_Model
     {
         $this->db->select('username');
         $this->db->where('email', $email);
-        $query = $this->db->get('user');
+        $query  = $this->db->get('user');
         $result = $query->row();
 
         return $result;

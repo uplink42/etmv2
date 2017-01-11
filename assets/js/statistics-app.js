@@ -81,10 +81,4 @@ $(document).ready(function() {
         buttons: [],
         "order": [],
     });
-    /*
-     
-     
-     
-     
-     */
 });

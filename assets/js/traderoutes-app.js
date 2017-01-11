@@ -45,7 +45,6 @@ $(document).ready(function() {
         }
     });
 
-    //put base url and char id on header
     $(".submit-traderoute").on('click', function(e) {
         e.preventDefault();
 

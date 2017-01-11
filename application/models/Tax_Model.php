@@ -32,7 +32,7 @@ class Tax_model extends CI_Model
     public $brokerFeeFrom;
     public $brokerFeeTo;
 
-    public $transTaxFrom = 1; // transaction tax is only for selling
+    public $transTaxFrom = 1;
     public $transTaxTo;
 
     public function tax($stationFromID, $stationToID, $character_from, $character_to, $transFrom, $transTo)
@@ -44,12 +44,12 @@ class Tax_model extends CI_Model
         $this->character_from = $character_from;
         $this->character_to   = $character_to;
 
-        if($stationFromID < 1000000000000) {
+        if ($stationFromID < 1000000000000) {
             $this->getFromCorpStanding($this->getCorpOwnerIDFromStation());
             $this->getFromFactionStanding($this->getFactionOwnerIDFromStation($this->getCorpOwnerIDFromStation()));
         }
 
-        if($stationToID < 1000000000000) { 
+        if ($stationToID < 1000000000000) {
             $this->getToCorpStanding($this->getCorpOwnerIDToStation());
             $this->getToFactionStanding($this->getFactionOwnerIDToStation($this->getCorpOwnerIDToStation()));
         }
@@ -199,7 +199,8 @@ class Tax_model extends CI_Model
 
             } else {
                 return
-                $this->brokerFeeFrom = 1 + ((3 - (0.1 * (float) $this->level_broker_from + 0.03 * (float) $this->fromFactionStandingValue + 0.02 * (float) $this->fromCorpStandingValue)) / 100);
+                $this->brokerFeeFrom = 1 + ((3 - (0.1 * (float) $this->level_broker_from + 0.03 * 
+                    (float) $this->fromFactionStandingValue + 0.02 * (float) $this->fromCorpStandingValue)) / 100);
             }
         } else {
             return 1;
@@ -213,10 +214,11 @@ class Tax_model extends CI_Model
             if ($this->stationToID > 1000000000000 && $toCitadelTax) {
                 return
                 $this->brokerFeeFrom = $toCitadelTax;
-                
+
             } else {
                 return
-                $this->brokerFeeTo = 1 - ((3 - (0.1 * (float) $this->level_broker_to + 0.03 * (float) $this->toFactionStandingValue + 0.02 * (float) $this->toCorpStandingValue)) / 100);
+                $this->brokerFeeTo = 1 - ((3 - (0.1 * (float) $this->level_broker_to + 0.03 * 
+                    (float) $this->toFactionStandingValue + 0.02 * (float) $this->toCorpStandingValue)) / 100);
             }
         } else {
             return 1;

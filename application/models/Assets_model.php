@@ -99,6 +99,7 @@ class Assets_model extends CI_Model
 
     public function getRegionRatio($chars)
     {
+        //todo
         //get sum of all assets for current char
         //get sum of all assets for current char in current region
 

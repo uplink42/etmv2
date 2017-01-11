@@ -71,25 +71,24 @@ class MarketOrders_model extends CI_Model
         $this->db->where('orders_transkey', $order_id);
         $query = $this->db->get('order_status');
 
-        //die($query->row());
         if ($query->num_rows() != 0) {
             $last_timestamp = $query->row()->timestamp_check;
 
             if ($last_timestamp > $date) {
                 $cached_value = $this->getCachedValue($order_id);
 
-                switch($cached_value) {
+                switch ($cached_value) {
                     case '1':
-                    return "OK";
-                    break;
+                        return "OK";
+                        break;
 
                     case '0':
-                    return "undercut";
-                    break;
+                        return "undercut";
+                        break;
 
                     case '2':
-                    return "N/A";
-                    break;
+                        return "N/A";
+                        break;
                 }
             } else {
                 //cache expired, query
@@ -105,7 +104,6 @@ class MarketOrders_model extends CI_Model
     private function checkPrices(int $region_id, string $type, string $order_id, string $station_id, string $date_now, int $item_id)
     {
         $this->RateLimiter->rateLimit();
-        //get crest data
         $url    = "https://crest-tq.eveonline.com/market/" . $region_id . "/orders/" . $type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
         $result = json_decode(file_get_contents($url), true);
 
@@ -169,8 +167,8 @@ class MarketOrders_model extends CI_Model
     private function updateStatus(string $order_id, int $status, string $date_now)
     {
         $data = array("orders_transkey" => $order_id,
-            "status"                    => $status,
-            "timestamp_check"           => $date_now);
+            "status"                        => $status,
+            "timestamp_check"               => $date_now);
         $this->db->replace('order_status', $data);
     }
 

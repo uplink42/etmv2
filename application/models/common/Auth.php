@@ -17,7 +17,6 @@ class Auth extends CI_Model
     {
         $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
         $salt = sprintf(self::BLOWFISH, self::COST) . $salt;
-        // Hash the password with the salt
         $password_final = crypt($password, $salt);
 
         return array("password" => $password_final, "salt" => $salt);

@@ -17,9 +17,9 @@ class Register_model extends CI_Model
         $this->load->model('common/ValidateRequest');
     }
 
-    public function validate(string $username, string $password, string $repeatpassword, string $email, int $apikey, string $vcode, string $reports) : array
+    public function validate(string $username, string $password, string $repeatpassword, string $email, int $apikey, string $vcode, string $reports): array
     {
-        $result = array("username"     => $this->validateUsername($username),
+        $result = array("username" => $this->validateUsername($username),
             "password"                 => $this->validatePassword($password, $repeatpassword),
             "email"                    => $this->validateEmail($email),
             "api"                      => $this->validateAPI($apikey, $vcode),
@@ -85,7 +85,7 @@ class Register_model extends CI_Model
         foreach ($result->key->characters as $character) {
             array_push($characters, array(
                 array("name" => $character->characterName), array("id" => $character->characterID),
-                )
+            )
             );
         }
 
@@ -114,7 +114,7 @@ class Register_model extends CI_Model
         return true;
     }
 
-    public function createAccount(string $username, string $password, string $email, int $apikey, string $vcode, string $reports, array $chars) : string
+    public function createAccount(string $username, string $password, string $email, int $apikey, string $vcode, string $reports, array $chars): string
     {
         $error = "";
 
@@ -194,7 +194,7 @@ class Register_model extends CI_Model
         }
     }
 
-    public function checkCharacterExists(int $character_id) : bool
+    public function checkCharacterExists(int $character_id): bool
     {
         $this->db->where('character_eve_idcharacter', $character_id);
         $check_user = $this->db->get('v_user_characters');

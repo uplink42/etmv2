@@ -24,7 +24,6 @@ app.directive('searchBar', [
 
                 $scope.regions = [];
                 getAllRegions();
-                //getStockLists();
 
                 
                 $scope.$watch('search.region', function(newi, old) {
@@ -32,38 +31,6 @@ app.directive('searchBar', [
                         updateItem($scope.item);
                     }
                 });
-
-
-                $scope.itemSelected = function($item) {
-                    $scope.item = {
-                        name: $item.value,
-                        id: $item.id
-                    }
-                }
-
-
-                /*function getStockLists() {
-                    return $http.get('http://localhost/etm_refactor/Stocklists/populateList')
-                        .then(function(response) {
-                            $scope.stockLists = response;
-                        });
-                }*/
-
-
-                function getAllRegions() {
-                    regionListFact
-                    .getAll()
-                    .then(function(result) {
-                        //console.log(result);
-                        angular.forEach(result, function(cValue, cKey) {
-                            if (cValue.id < 11000000) {
-                                $scope.regions.push(cValue);
-                            }
-                        });
-                        $scope.isLoadedRegions = true;
-                    });
-                }
-
 
                 $scope.getItems = function(val) {
                     return $http.get('https://www.evetrademaster.com/v2/Stocklists/searchItems', {
@@ -79,9 +46,6 @@ app.directive('searchBar', [
                 }
 
 
-                
-
-
                 $scope.$watch('item', function(newValue, oldValue) {
                     updateItem(newValue);
                 }, true);
@@ -94,7 +58,29 @@ app.directive('searchBar', [
                 }
 
 
+                $scope.itemSelected = function($item) {
+                    $scope.item = {
+                        name: $item.value,
+                        id: $item.id
+                    }
+                }
+
+                function getAllRegions() {
+                    regionListFact
+                    .getAll()
+                    .then(function(result) {
+                        //console.log(result);
+                        angular.forEach(result, function(cValue, cKey) {
+                            if (cValue.id < 11000000) {
+                                $scope.regions.push(cValue);
+                            }
+                        });
+                        $scope.isLoadedRegions = true;
+                    });
+                }
+
                 function getItemOrders(id) {
+
                     //sell
                     marketLookupFact
                     .queryItem($scope.search.region, 'sell', id)
@@ -106,7 +92,6 @@ app.directive('searchBar', [
                         })
                         $scope.sellorders.total = totalSell;
                         $scope.sellorders.items = $filter('orderBy')(responseSell, 'price');
-                        //orderby price
                     });
 
                     //buy

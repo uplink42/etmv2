@@ -12,7 +12,6 @@ class StockLists_model extends CI_Model
         parent::__construct();
     }
 
-    //wtf?
     public function getStockLists(int $user_id) : array
     {
         $this->db->select('itemlist.name, itemlist.iditemlist');
@@ -53,10 +52,6 @@ class StockLists_model extends CI_Model
 
     public function queryItems(string $input) : array
     {
-        /*$query = $this->db->query('select name as value from item where name = ' . $input . ' limit 1'
-            ' union ' . 
-            'select name as value from item where name like %'. $input . '% limit 10');*/
-
         $this->db->select('name as value');
         $this->db->from('item');
         $this->db->where('name', $input);
@@ -78,10 +73,6 @@ class StockLists_model extends CI_Model
         }
 
         $result = array_merge($query1, $query2);
-        //remove identical items
-        log_message('error', $this->db->last_query());
-        //$result = $query->result_array();
-
         return $result;
     }
     
@@ -119,12 +110,6 @@ class StockLists_model extends CI_Model
         return array("notice" => $notice, "message" => $msg, "item" => $item);
     }
 
-
-    /*private function checkItemExists(string $name, int $list_id) : bool
-    {
-        $this->db->select('')
-    }*/
-
     public function removeItem(int $item_id, int $list_id) : array
     {
         $data = array("itemlist_iditemlist" => $list_id,
@@ -157,5 +142,4 @@ class StockLists_model extends CI_Model
 
         return array("notice" => $notice, "message" => $message);
     }
-
 }
