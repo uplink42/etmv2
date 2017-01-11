@@ -15,7 +15,7 @@ class Autoexec_outposts_model extends CI_Model
         parent::__construct();
     }
 
-    public function getOutposts() : int
+    public function getOutposts(): int
     {
         $pheal        = new Pheal();
         $response     = $pheal->eveScope->ConquerableStationList();
@@ -27,7 +27,7 @@ class Autoexec_outposts_model extends CI_Model
             $eve_idsystem = $outposts['solarSystemID'];
 
             array_push($outpostsList,
-                array("eve_idstation"               => $idoutposts,
+                array("eve_idstation"           => $idoutposts,
                     "name"                          => $this->db->escape($name),
                     "system_eve_idsystem"           => $eve_idsystem,
                     "corporation_eve_idcorporation" => 1)
@@ -37,9 +37,9 @@ class Autoexec_outposts_model extends CI_Model
         return $this->insertData($outpostsList);
     }
 
-    public function getCitadels() : int
+    public function getCitadels(): int
     {
-        $url = "https://stop.hammerti.me.uk/api/citadel/all";
+        $url    = "https://stop.hammerti.me.uk/api/citadel/all";
         $result = json_decode(file_get_contents($url), true);
 
         $citadelList = [];
@@ -51,12 +51,12 @@ class Autoexec_outposts_model extends CI_Model
             $type      = $row['typeName'] == "" ? "unknown type" : $row['typeName'];
             $nametype  = $name . " (" . $type . ")";
 
-            if($system_id != 0) {
+            if ($system_id != 0) {
                 array_push($citadelList,
-                    array("eve_idstation"                 => $id,
-                          "name"                          => $this->db->escape($nametype),
-                          "system_eve_idsystem"           => $system_id,
-                          "corporation_eve_idcorporation" => 1)
+                    array("eve_idstation"           => $id,
+                        "name"                          => $this->db->escape($nametype),
+                        "system_eve_idsystem"           => $system_id,
+                        "corporation_eve_idcorporation" => 1)
                 );
             }
         }
@@ -64,7 +64,7 @@ class Autoexec_outposts_model extends CI_Model
         return $this->insertData($citadelList);
     }
 
-    public function insertData(array $data) : int
+    public function insertData(array $data): int
     {
         $this->db->trans_start();
         $this->db->query(
@@ -74,7 +74,7 @@ class Autoexec_outposts_model extends CI_Model
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === true) {
-            $count = (int)count($data);
+            $count = (int) count($data);
             return $count;
         }
     }

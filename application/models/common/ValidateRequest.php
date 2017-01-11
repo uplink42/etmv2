@@ -162,7 +162,6 @@ class ValidateRequest extends CI_Model
 
         $response = curl_exec($ch);
 
-        // If curl_exec() fails/throws an error, the function will return false
         if ($response === false) {
             echo 'Curl error: ' . curl_error($ch);
         } else {
@@ -240,12 +239,12 @@ class ValidateRequest extends CI_Model
         }
     }
 
-    public function validateUserEmail(string $username, string $email) : bool
+    public function validateUserEmail(string $username, string $email): bool
     {
         $this->db->where('username', $username);
         $this->db->where('email', $email);
         $query = $this->db->get('user');
-        
+
         if ($query->num_rows() != 0) {
             return true;
         }

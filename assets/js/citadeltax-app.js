@@ -59,7 +59,8 @@ $(document).ready(function() {
                             var id = result[k].idcitadel_tax;
                             var name = result[k].name;
                             var value = result[k].value;
-                            var rm = "<a  data-id=" + id + " href=" + base + "Citadeltax/removeTax/" + charid + "/" + id + "><button class='btn btn-danger btn-remove-tax'>Remove</button></a>";
+                            var rm = "<a  data-id=" + id + " href=" + base + "Citadeltax/removeTax/" 
+                            + charid + "/" + id + "><button class='btn btn-danger btn-remove-tax'>Remove</button></a>";
                             var $element = "<tr><td>" + name + "</td><td>" + value + "</td><td>" + rm + "</td></tr>";
                             $(".table tbody").append($element);
                         });

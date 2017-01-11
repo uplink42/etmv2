@@ -1,8 +1,6 @@
 "use strict";
 $(document).ready(function() {
-
 	var base = $('#intro').attr('data-url') + 'Home/';
-
 	getData();
 
 	function getData() {
@@ -18,11 +16,4 @@ $(document).ready(function() {
 	        }
 	    });
 	}
-
-
-
-
-
-	
-
 });

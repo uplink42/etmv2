@@ -25,7 +25,6 @@ $(document).ready(function() {
             success: function(result) {
                 var res = result.data.reports;
                 $(".report-options").val(res);
-                //$("#ch-email-current").val(result.email.email);
             }
         });
     }
@@ -80,7 +79,6 @@ $(document).ready(function() {
 
     $(".btn-change-pw").on('click', function(e) {
         e.preventDefault();
-        //var oldpw = $("#ch-pw-old");
         var newpw1 = $("#ch-pw-new1").val();
         var newpw2 = $("#ch-pw-new2").val();
         var data = $(".change-password").serialize();

@@ -23,8 +23,6 @@ var app = angular.module("app", [
     '$scope',
     'config', 
     function($scope, config) {
-        //$scope.$storage = $localStorage;
-        //$scope.home = "dist/app/home/main-list-view.html";
 
         $scope.item = {};
 
@@ -43,19 +41,4 @@ var app = angular.module("app", [
         };
 
         $scope.itemImg = "https://image.eveonline.com/Type/";
-
-        /*if (angular.isUndefined($localStorage.items)) {
-            itemListFact
-            .getAll()
-            .then(function(result) {
-                $localStorage.items = result;
-            });
-        }*/
-
-        
-    /*regionListFact.getAll()
-        .then(function(result) {
-            $rootScope.regions = result;
-    });*/
-
 }]);

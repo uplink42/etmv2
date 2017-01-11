@@ -74,11 +74,6 @@ $(document).ready(function() {
         });
     });
 
-    //fetch dropdown data
-    /*$(".dropdown-list").focus(function() {
-        populateDropdown();
-    });*/
-
     //select list from dropdown
     $(".dropdown-list").change(function(e) {
         var $el = $(this).find('option:selected').text();
@@ -175,8 +170,4 @@ $(document).ready(function() {
             }
         });
     });
-
-    
-
-
 });

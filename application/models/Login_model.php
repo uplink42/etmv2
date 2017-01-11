@@ -19,7 +19,6 @@ class Login_model extends CI_Model
         return $query->row();
     }
 
-    //checks if session is valid
     public function checkSession() : bool
     {
         if (!$this->session->has_userdata('username') || !$this->session->has_userdata('iduser')) {
@@ -36,19 +35,6 @@ class Login_model extends CI_Model
         }
     }
 
-    //check if the assigned character belongs to account,
-    /*public function checkCharacter($character_id, $user_id)
-    {
-    $this->db->where('character_eve_idcharacter', $character_id);
-    $this->db->where('iduser', $user_id);
-    $query = $this->db->get('v_user_characters');
-    if ($query->num_rows() == 0) {
-    return false;
-    }
-    return $query->result();
-    }*/
-
-    //retrieves a list of all characters associated with an account
     public function getCharacterList(int $user_id) : array
     {
         $this->db->select('name, character_eve_idcharacter as id');
@@ -68,7 +54,6 @@ class Login_model extends CI_Model
         return array("aggr" => $aggr, "char_names" => $char_names, "chars" => $chars);
     }
 
-    //returns the character name
     public function getCharacterName(int $character_id) : string
     {
         $this->db->select('name');

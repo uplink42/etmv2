@@ -33,7 +33,6 @@ app.directive('marketGroups', [
                 marketTypesFact
                 .getAll()
                 .then(function(response) {
-                    //console.log(response);
                     angular.forEach(response, function(cValue, cKey) {
                         var key = cValue.marketGroup.id;
                         if (angular.isUndefined(allTypes[key])) {

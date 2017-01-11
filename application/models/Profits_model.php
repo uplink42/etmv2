@@ -14,38 +14,38 @@ class Profits_model extends CI_Model
         parent::__construct();
     }
 
-    public function getProfits(string $chars, int $interval, int $item_id = null) : array
+    public function getProfits(string $chars, int $interval, int $item_id = null): array
     {
         $this->db->select("p.profit_unit as profit_unit,
-                           p.characters_eve_idcharacters_IN as char_in,
-                           p.characters_eve_idcharacters_OUT as char_out,
-                           p.transaction_idbuy_buy as idbuy,
-                           p.transaction_idbuy_sell as idsell,
-                           i.eve_iditem as item_id,
-                           i.name AS item_name,
-                           sys1.name AS sys_buy,
-                           sys2.name as sys_sell,
-                           s1.eve_idstation as station_buy_id,
-                           s2.eve_idstation as station_sell_id,
-                           t1.time as time_buy,
-                           t2.time as time_sell,
-                           t1.idbuy as trans_buy,
-                           t2.idbuy as trans_sell,
-                           t1.price_unit as buy_price,
-                           t2.price_unit as sell_price,
-                           (t1.price_unit * p.quantity_profit) as buy_price_total,
-                           (t2.price_unit * p.quantity_profit) as sell_price_total,
-                           t1.quantity as quantity_buy,
-                           t2.quantity as quantity_sell,
-                           p.profit_unit as profit_unit,
-                           p.quantity_profit AS profit_quantity,
-                           c1.name as character_buy,
-                           c2.name as character_sell,
-                           c1.eve_idcharacter as char_buy_id,
-                           c2.eve_idcharacter as char_sell_id,
-                           coalesce(sys1.name, 'Unknown Citadel') as sys_from,
-                           coalesce(sys2.name, 'Unknown Citadel') as sys_to,
-                           time_to_sec(timediff(t2.time,t1.time))/60 as diff");
+            p.characters_eve_idcharacters_IN as char_in,
+            p.characters_eve_idcharacters_OUT as char_out,
+            p.transaction_idbuy_buy as idbuy,
+            p.transaction_idbuy_sell as idsell,
+            i.eve_iditem as item_id,
+            i.name AS item_name,
+            sys1.name AS sys_buy,
+            sys2.name as sys_sell,
+            s1.eve_idstation as station_buy_id,
+            s2.eve_idstation as station_sell_id,
+            t1.time as time_buy,
+            t2.time as time_sell,
+            t1.idbuy as trans_buy,
+            t2.idbuy as trans_sell,
+            t1.price_unit as buy_price,
+            t2.price_unit as sell_price,
+            (t1.price_unit * p.quantity_profit) as buy_price_total,
+            (t2.price_unit * p.quantity_profit) as sell_price_total,
+            t1.quantity as quantity_buy,
+            t2.quantity as quantity_sell,
+            p.profit_unit as profit_unit,
+            p.quantity_profit AS profit_quantity,
+            c1.name as character_buy,
+            c2.name as character_sell,
+            c1.eve_idcharacter as char_buy_id,
+            c2.eve_idcharacter as char_sell_id,
+            coalesce(sys1.name, 'Unknown Citadel') as sys_from,
+            coalesce(sys2.name, 'Unknown Citadel') as sys_to,
+            time_to_sec(timediff(t2.time,t1.time))/60 as diff");
         $this->db->from('profit p');
         $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
         $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
@@ -58,20 +58,22 @@ class Profits_model extends CI_Model
         $this->db->join('item i', 't1.item_eve_iditem = i.eve_iditem', 'left');
         $this->db->where('p.characters_eve_idcharacters_OUT IN ' . $chars);
         $this->db->order_by('t2.time', 'desc');
+
         if ($item_id) {
             $this->db->where('i.eve_iditem', $item_id);
         }
+
         $this->db->where('p.timestamp_sell>= now() - INTERVAL ' . $interval . ' DAY');
         $this->db->order_by('t2.time DESC');
         $this->db->limit(20000);
         $query  = $this->db->get();
         $result = $query->result_array();
+        $count  = count($result);
 
-        $count = count($result);
         for ($i = 0; $i < $count; $i++) {
-            $diff           = (float)$result[$i]['diff'];
-            $price_buy      = (float)$result[$i]['buy_price'];
-            $profit_unit    = (float)$result[$i]['profit_unit'];
+            $diff           = (float) $result[$i]['diff'];
+            $price_buy      = (float) $result[$i]['buy_price'];
+            $profit_unit    = (float) $result[$i]['profit_unit'];
             $character_buy  = $result[$i]['char_buy_id'];
             $character_sell = $result[$i]['char_sell_id'];
             $station_from   = $result[$i]['station_buy_id'];
@@ -101,7 +103,7 @@ class Profits_model extends CI_Model
 
     }
 
-    public function getProfitChart(string $chars, int $interval, int $item_id = null) : string
+    public function getProfitChart(string $chars, int $interval, int $item_id = null): string
     {
         $arrData = array( //graph parameters
             "chart" => array(
@@ -110,7 +112,6 @@ class Profits_model extends CI_Model
                 "xAxisName"     => "Day",
                 "yAxisName"     => "ISK Profit",
                 "paletteColors" => "#f6a821",
-
             ),
         );
 
@@ -145,5 +146,4 @@ class Profits_model extends CI_Model
         $jsonEncodedData = json_encode($arrData);
         return $jsonEncodedData;
     }
-
 }

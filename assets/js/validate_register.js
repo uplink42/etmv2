@@ -3,9 +3,7 @@ $(document).ready(function() {
 
     $("#username").focus().select();
 
-    //form client validation
     $(".submit-register").on('click', 'input', function(e) {
-        //client side validation
         var username = $("#username").val();
         var email = $("#email").val();
         var password = $("#password").val();

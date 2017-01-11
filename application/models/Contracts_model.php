@@ -93,7 +93,7 @@ class Contracts_model extends CI_Model
                 $result[$i]['acceptor_name'] = $name;
 
                 $data = array("eve_idcharacters" => $acceptor,
-                              "name"             => $name);
+                    "name"                           => $name);
                 $this->db->replace('characters_public', $data);
             }
         }

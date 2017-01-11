@@ -24,7 +24,7 @@ class NetworthTracker_model extends CI_Model
         parent::__construct();
     }
 
-    public function init(string $chars, int $interval) : string
+    public function init(string $chars, int $interval): string
     {
         $this->interval = $interval;
         $this->chars    = $chars;
@@ -68,7 +68,7 @@ class NetworthTracker_model extends CI_Model
         return $this->chartBuilder();
     }
 
-    public function chartBuilder() : string
+    public function chartBuilder(): string
     {
         $categoryValues = array(
             array(

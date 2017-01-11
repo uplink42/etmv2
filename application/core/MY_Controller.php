@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller
@@ -15,15 +15,14 @@ class MY_Controller extends CI_Controller
         $this->load->model('common/ValidateRequest');
         $this->load->model('Login_model');
         $this->load->library('session');
-        $this->user_id = (int)$this->session->iduser;
+        $this->user_id = (int) $this->session->iduser;
 
-        if($this->config->item('maintenance') == TRUE) {
+        if ($this->config->item('maintenance') == true) {
             redirect('internal/maintenance');
         }
     }
 
-
-    protected function enforce(int $character_id, int $user_id = null) : bool
+    protected function enforce(int $character_id, int $user_id = null): bool
     {
         if ($this->Login_model->checkSession() &&
             $this->ValidateRequest->checkCharacterBelong($character_id, $user_id)) {
@@ -34,7 +33,7 @@ class MY_Controller extends CI_Controller
                 if ($aggr != 1 && $aggr != 0) {
                     $this->aggregate = false;
                 } else {
-                    $this->aggregate = (bool)$aggr;
+                    $this->aggregate = (bool) $aggr;
                 }
             } else {
                 $this->aggregate = false;
@@ -76,7 +75,7 @@ class MY_Controller extends CI_Controller
             $chars = "(" . $character_id . ")";
         }
 
-        $data['email']          = $this->session->email;
+        $data['email'] = $this->session->email;
 
         $data['username']       = $this->session->username;
         $data['chars']          = $chars;
@@ -91,7 +90,7 @@ class MY_Controller extends CI_Controller
         return $data;
     }
 
-    private function buildSelector() : array
+    private function buildSelector(): array
     {
         switch ($this->page) {
 
@@ -186,7 +185,7 @@ class MY_Controller extends CI_Controller
         return $data;
     }
 
-    public function generateIcon(int $item_id) : string
+    public function generateIcon(int $item_id): string
     {
         $url = "https://image.eveonline.com/Type/" . $item_id . "_32.png";
         return $url;
@@ -194,15 +193,14 @@ class MY_Controller extends CI_Controller
 
     public function injectIcons($dataset, $type = false)
     {
-        //default array
         $max = count($dataset);
 
         if ($max > 0) {
             for ($i = 0; $i < $max; $i++) {
                 if ($type == "object") {
-                    $dataset[$i]->url = $this->generateIcon((int)$dataset[$i]->item_id);
+                    $dataset[$i]->url = $this->generateIcon((int) $dataset[$i]->item_id);
                 } else {
-                    $dataset[$i]['url'] = $this->generateIcon((int)$dataset[$i]['item_id']);
+                    $dataset[$i]['url'] = $this->generateIcon((int) $dataset[$i]['item_id']);
                 }
             }
         }
