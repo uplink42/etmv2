@@ -31,6 +31,7 @@ a web based profit tracker, trading and asset manager tool for Eve Online.
 - [CodeIgniter 3](https://github.com/bcit-ci/CodeIgniter)
 - Fusioncharts
 - Bootstrap 3
+- Ruby SASS
 - jQuery 1.9 (and several jquery plugins)
 
 #3rd party APIs:
