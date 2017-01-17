@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) {
 
 class StockLists_model extends CI_Model
 {
-    const ITEMLIMIT = 100; 
+    const ITEMLIMIT = 200; 
 
     public function __construct()
     {

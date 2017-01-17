@@ -199,22 +199,6 @@
                     </div>
                     <!-- //.counter-item -->
                 </div>
-                <!-- //.col-xs-6 col-sm-6 col-md-3 -->
-                <div class="col-xs-6 col-sm-6 col-md-3 text-center">
-                    <div class="counter-item not-right-column top-column">
-                        <i class="fa fa-usd"></i>
-                        <div class="inner-content">
-                            <span class="number profit">
-                                
-                            </span>
-                        </div>
-                        <!-- //.inner-content -->
-
-                        <p>Profit (M ISK)</p>
-                    </div>
-                    <!-- //.counter-item -->
-                </div>
-                <!-- //.col-xs-6 col-sm-6 col-md-3 -->
 
                 <div class="col-xs-6 col-sm-6 col-md-3 text-center">
                     <div class="counter-item not-right-column">
@@ -228,6 +212,23 @@
                         <!-- //.inner-content -->
 
                         <p>API Keys</p>
+                    </div>
+                    <!-- //.counter-item -->
+                </div>
+                <!-- //.col-xs-6 col-sm-6 col-md-3 -->
+
+                <!-- //.col-xs-6 col-sm-6 col-md-3 -->
+                <div class="col-xs-6 col-sm-6 col-md-3 text-center">
+                    <div class="counter-item not-right-column top-column">
+                        <i class="fa fa-usd"></i>
+                        <div class="inner-content">
+                            <span class="number profit">
+                                
+                            </span>
+                        </div>
+                        <!-- //.inner-content -->
+
+                        <p>Profit (M ISK)</p>
                     </div>
                     <!-- //.counter-item -->
                 </div>
