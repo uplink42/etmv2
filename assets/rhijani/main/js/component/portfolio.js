@@ -43,7 +43,6 @@ $(function(){
         fixedContentPos: false,
         gallery: {
             enabled: true,
-            preload: [0,2],
             navigateByImgClick: false,
             arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"></button>',
             tPrev: 'Previous (Left arrow key)',

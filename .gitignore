@@ -1,5 +1,4 @@
 /application/logs/
-/application/controllers/internal
 /dist/
 /node_modules/
 /home

@@ -18,11 +18,11 @@ class Settings extends MY_Controller
         $this->load->model('Settings_model');
         $this->load->model('common/ValidateRequest');
 
-        $this->email = $_REQUEST['email'] ?? '';
+        $this->email    = $_REQUEST['email'] ?? '';
         $this->password = $_REQUEST['password'] ?? '';
-        $this->reports = $_REQUEST['reports'] ?? '';
+        $this->reports  = $_REQUEST['reports'] ?? '';
 
-        $this->password_old = $_REQUEST['password-old'] ?? '';
+        $this->password_old  = $_REQUEST['password-old'] ?? '';
         $this->password_new1 = $_REQUEST['password-new1'] ?? '';
         $this->password_new2 = $_REQUEST['password-new2'] ?? '';
 
@@ -54,7 +54,7 @@ class Settings extends MY_Controller
     public function reports()
     {
         $result = $this->Settings_model->getReportSelection($this->user_id);
-        $data = array("data" => $result);
+        $data   = array("data" => $result);
 
         echo json_encode($data);
     }
@@ -65,18 +65,18 @@ class Settings extends MY_Controller
         if ($this->Auth->validateLogin($this->session->username, $this->password, true)) {
             if ($this->ValidateRequest->validateEmailAvailability($this->email)) {
                 if ($this->Settings_model->changeEmail($this->user_id, $this->email)) {
-                $notice = "success";
-                $message = Msg::EMAIL_CHANGE_SUCCESS;
-            } else {
-                $notice = "error";
-                $message = Msg::DB_ERROR;
+                    $notice  = "success";
+                    $message = Msg::EMAIL_CHANGE_SUCCESS;
+                } else {
+                    $notice  = "error";
+                    $message = Msg::DB_ERROR;
                 }
             } else {
-                $notice = "error";
+                $notice  = "error";
                 $message = Msg::EMAIL_ALREADY_TAKEN;
             }
         } else {
-            $notice = "error";
+            $notice  = "error";
             $message = Msg::INVALID_LOGIN;
         }
 
@@ -85,31 +85,31 @@ class Settings extends MY_Controller
 
     public function changeReports()
     {
-        if($this->reports == 'none' || $this->reports == 'daily' || $this->reports == 'weekly' || $this->reports == 'monthly') {
-            if($this->Settings_model->changeReports($this->user_id, $this->reports)) {
-                $notice = "success";
+        if ($this->reports == 'none' || $this->reports == 'daily' || $this->reports == 'weekly' || $this->reports == 'monthly') {
+            if ($this->Settings_model->changeReports($this->user_id, $this->reports)) {
+                $notice  = "success";
                 $message = Msg::REPORT_CHANGE_SUCCESS;
             } else {
-                $notice = "error";
+                $notice  = "error";
                 $message = Msg::REPORT_CHANGE_ERROR;
             }
         } else {
-            $notice = "error";
+            $notice  = "error";
             $message = Msg::REPORT_CHANGE_ERROR;
         }
 
         $data = ["notice" => $notice, "message" => $message];
         echo json_encode($data);
-        
+
     }
 
     public function changePassword()
     {
         $this->load->model('common/Auth');
-        if($this->ValidateRequest->validateIdenticalPasswords($this->password_new1, $this->password_new2)) {
-            if($this->ValidateRequest->validatePasswordLength($this->password_new1)) {
-                if($this->Auth->validateLogin($this->session->username, $this->password_old, true)) {
-                    if($this->Settings_model->changePassword($this->user_id, $this->password_new1)) {
+        if ($this->ValidateRequest->validateIdenticalPasswords($this->password_new1, $this->password_new2)) {
+            if ($this->ValidateRequest->validatePasswordLength($this->password_new1)) {
+                if ($this->Auth->validateLogin($this->session->username, $this->password_old, true)) {
+                    if ($this->Settings_model->changePassword($this->user_id, $this->password_new1)) {
                         $notice = "success";
                         $msg    = Msg::CHANGE_PASSWORD_SUCCESS;
                     } else {
