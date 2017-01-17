@@ -1,8 +1,11 @@
 <?php
-//defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 ini_set('mysql.connect_timeout', '3000');
 ini_set('default_socket_timeout', '3000');
 ini_set('max_execution_time', '0');
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 class Autoexec_dailysum extends CI_Controller
 {
@@ -18,6 +21,10 @@ class Autoexec_dailysum extends CI_Controller
 
     public function index()
     {
+        if (!$this->input->is_cli_request()) {
+            die();
+        }
+        
         $users = $this->User->getUsers();
         $dateToday = date('Y-m-d',strtotime("-1 days"));
 

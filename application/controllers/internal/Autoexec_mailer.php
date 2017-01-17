@@ -1,8 +1,10 @@
 <?php
-//defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 ini_set('mysql.connect_timeout', '3000');
 ini_set('default_socket_timeout', '3000');
 ini_set('max_execution_time', '0');
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 
 class Autoexec_mailer extends MY_Controller
 {
@@ -20,6 +22,10 @@ class Autoexec_mailer extends MY_Controller
     //daily, weekly, monthly
     public function index(string $period = "daily")
     {
+        if (!$this->input->is_cli_request()) {
+            die();
+        }
+
         $this->load->model('common/User');
         $users = $this->User->getUsersByReports($period);
 
@@ -32,6 +38,8 @@ class Autoexec_mailer extends MY_Controller
         $data['recap_int'] = max($interval, 7);
 
         foreach ($users as $row) {
+
+      		sleep(5);
             $data['user_id']     = (int) $row->iduser;
             $characters          = $this->Login_model->getCharacterList($data['user_id']);
             $chars               = (string) $characters['aggr'];
@@ -57,8 +65,8 @@ class Autoexec_mailer extends MY_Controller
                 $report = $this->load->view('reports/reports_v', $data, true);
 
                 //mail data
-                //$address = $this->Email->getUserEmail($data['user_id']);
-                $address = "diamantinorgf@gmail.com";
+                $address = $this->User->getUserEmail($data['user_id']);
+                //$address = "etmdevelopment42@gmail.com";
                 $from = "etmdevelopment42@gmail.com";
                 $from_name = "Eve Trade Master";
                 $subject = "Eve Trade Master " . $period . " earnings report for " . $data['date_now'];
@@ -67,12 +75,11 @@ class Autoexec_mailer extends MY_Controller
                 $mail = $this->Email->send($address, $from, $from_name, $subject, $body);
 
                 if($mail) {
-                    echo "Message sent to " . $address;
+                    echo "Message sent to " . $address . "\n";
                 } else {
-                    echo "Error sending mail to " . $address;
+                    echo "Error sending mail to " . $address . "\n";
                 }
             }
-            
         }
     }
 }
