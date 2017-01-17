@@ -1,8 +1,11 @@
 <?php
-//defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 ini_set('mysql.connect_timeout', '3000');
 ini_set('default_socket_timeout', '3000');
 ini_set('max_execution_time', '0');
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 class Autoexec_outposts extends CI_Controller
 {
@@ -20,12 +23,15 @@ class Autoexec_outposts extends CI_Controller
 
     public function index()
     {
+        if (!$this->input->is_cli_request()) {
+            die();
+        }
+
         if($this->ValidateRequest->getCrestStatus()) {
             $count =  $this->outposts->getOutposts();
             echo "Outpost list updated. Total: " . $count;
 
             $citadels = $this->outposts->getCitadels();
-            //insert ignore or duplicate key update
             echo "\n" . "Citadel list updated. Total: " . $citadels;
         } else {
             echo Msg::CREST_CONNECT_FAILURE;
