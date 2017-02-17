@@ -12,9 +12,29 @@
     <!-- Page title -->
     <title>Eve Trade Master 2 - A web based Eve Online profit tracker, asset manager and trade analysis tool</title>
 
+    <?php
+        if ($market) {
+            echo "<script>
+                window.paceOptions = {
+                    ajax: false
+                };
+            </script>";
+        }
+    ?>
+
     <!-- Vendor styles -->
     <link rel="stylesheet" href="<?=base_url('dist/luna/styles/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
     <script src="<?=base_url('dist/js/apps.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+
+     <?php
+        if ($market) {
+            echo "<script>
+            $(document).ready(function() {
+                $('body').addClass('pace-done');
+            });
+            </script>";
+        }
+    ?>
 </head>
 
     <?php echo isset($no_header) ? "<body class='blank'>" : "" ?>

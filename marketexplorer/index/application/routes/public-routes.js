@@ -8,6 +8,6 @@ app.config(
             url: '/',
             controller: 'appCtrl',
             templateUrl: config.dist + '/home/main-list-view.html'
-        })
+        });
     }
 ]);

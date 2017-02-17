@@ -51,7 +51,6 @@ class Updater_model extends CI_Model
         $this->account_characters = $query->result_array();
     }
 
-    //returns a list of current database characters
     public function resultTable(string $username): array
     {
         $data = array(
@@ -150,7 +149,6 @@ class Updater_model extends CI_Model
     public function checkCharacterKeys($apikey, $vcode, $char_id)
     {
         //check if permissions are correct
-        //if not, we remove any invalid keys and characters
         $result = $this->validateAPIKey($apikey, $vcode, $char_id);
 
         if ($result < 1 || !$result) {
@@ -163,16 +161,12 @@ class Updater_model extends CI_Model
             $query = $this->db->get('aggr');
             $res   = $query->row()->user_iduser;
 
-            //Invalid access mask or API key not found. Delete API from account
-            //Note that none of the characters data is actually removed from the account,
-            //but only the user association
             $data = array(
                 "user_iduser"               => $res,
-                "character_eve_idcharacter" => $char_id,
+                /*"character_eve_idcharacter" => $char_id,*/
             );
 
             $this->db->delete('aggr', $data);
-            log_message('error', 'deleted ' . $char_id . ' from ' . $res);
         }
     }
 
@@ -216,7 +210,6 @@ class Updater_model extends CI_Model
     {
 
         foreach ($this->account_characters as $characters) {
-            //begin character specific operations
             $this->character_id = $characters['character_eve_idcharacter'];
 
             $this->db->where('eve_idcharacter', $this->character_id);
@@ -274,9 +267,10 @@ class Updater_model extends CI_Model
         $this->character_broker_level = '0';
         $pheal                        = new Pheal($this->apikey, $this->vcode, "char");
         $response                     = $pheal->CharacterSheet(array("characterID" => $this->character_id));
-        foreach ($response->skills as $skills) {
-            if (($skills->typeID) == 3446) {
-                $this->character_broker_level = $skills->level;
+        foreach ($response->accounts as $row) {
+            if ($row['accountKey'] == 1000) {
+                $balance                 = $row->balance;
+                $this->character_balance = $balance;
             }
         }
     }
@@ -389,10 +383,9 @@ class Updater_model extends CI_Model
             $this->character_new_transactions = count($transactions);
 
             if (count($transactions) == 2560) {
-                //check if we exceed the max transactions per request
                 $refID = end($transactions['transkey']);
                 $this->character_new_transactions += 2560;
-                $this->getTransactions($refID); //pass the last transaction as request again
+                $this->getTransactions($refID);
             }
         } else {
             $this->character_new_transactions = 0;

@@ -20,7 +20,7 @@ app.directive('searchBar', [
                 $scope.search = {
                     region: 10000002,
                     item: ''
-                }
+                };
 
                 $scope.regions = [];
                 getAllRegions();
@@ -43,12 +43,13 @@ app.directive('searchBar', [
                             return item;
                         });
                     });
-                }
+                };
 
 
                 $scope.$watch('item', function(newValue, oldValue) {
                     updateItem(newValue);
                 }, true);
+
 
                 function updateItem(newValue) {
                     if (newValue.id) {
@@ -62,8 +63,9 @@ app.directive('searchBar', [
                     $scope.item = {
                         name: $item.value,
                         id: $item.id
-                    }
-                }
+                    };
+                };
+
 
                 function getAllRegions() {
                     regionListFact
@@ -79,8 +81,8 @@ app.directive('searchBar', [
                     });
                 }
 
-                function getItemOrders(id) {
 
+                function getItemOrders(id) {
                     //sell
                     marketLookupFact
                     .queryItem($scope.search.region, 'sell', id)
@@ -89,7 +91,7 @@ app.directive('searchBar', [
                         var totalSell = 0;
                         angular.forEach(responseSell, function(cValue, cKey) {
                             totalSell += cValue.volume;
-                        })
+                        });
                         $scope.sellorders.total = totalSell;
                         $scope.sellorders.items = $filter('orderBy')(responseSell, 'price');
                     });
@@ -101,7 +103,7 @@ app.directive('searchBar', [
                         var totalBuy = 0;
                         angular.forEach(responseBuy, function(cValue, cKey) {
                             totalBuy += cValue.volume;
-                        })
+                        });
                         $scope.buyorders.total = totalBuy;
                         //$scope.buyorders = response;
                         $scope.buyorders.items = $filter('orderBy')(responseBuy, '-price');
