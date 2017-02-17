@@ -24,7 +24,6 @@ class Updater extends CI_Controller
 
     public function index()
     {
-        $count = 0;
         $username = $this->session->username;
         
         if (empty($username)) {
@@ -34,8 +33,6 @@ class Updater extends CI_Controller
 
         $view     = 'login/select_v';
         $this->load->model('Updater_model');
-
-        log_message('error', $username . ' updates');
         $this->Updater_model->init($username);
 
         //check if API server is up
@@ -49,12 +46,14 @@ class Updater extends CI_Controller
                 //check if user has any keys
                 $keys = $this->Updater_model->getKeys($username);
                 if (count($keys) == 0) {
+                    log_message('error', $username . ' has no keys');
                     //no keys, so prompt for new one
                     $this->askForKey();
                     return;
                 } else {
                     //validate existing keys
                     if (!$this->Updater_model->processAPIKeys($keys, $username)) {
+                        log_message('error', $username . ' keys deleted by process');
                         //no characters left now
                         $this->askForKey();
                         return;
@@ -64,6 +63,7 @@ class Updater extends CI_Controller
                         try {
                             $result_iterate = $this->Updater_model->iterateAccountCharacters();
                             if (!$result_iterate) {
+                                log_message('error', $username . ' iterate failed');
                                 //transaction failed for some reason
                                 buildMessage("error", Msg::DB_ERROR, "login/login_v");
                                 $data['view']      = "login/login_v";
@@ -99,7 +99,7 @@ class Updater extends CI_Controller
                                 get_class($e),
                                 $e->getMessage()
                             );
-                            log_message('error', $e->getMessage());
+                            log_message('error', 'iterate chars ' . $e->getMessage());
 
                             //cache is now corrupted for 24 hours, remove cache and try again
                             //remove all keys just in case
@@ -107,17 +107,17 @@ class Updater extends CI_Controller
                             log_message('error', 'delete cache ' . $this->user_id);
                             $this->Log->addEntry('clear', $this->user_id);
 
-                            if ($count < 3) {
-                                $count++;
-                                log_message('error', 'delete Cache');
+                            if (true) {
+                                //check error code?
                                 foreach ($problematicKeys as $row) {
-
+                                    log_message('error', $username . ' deleting cache folder');
                                     $key = $row->key;
                                     $dir = FILESTORAGE . $key;
                                     $this->removeDirectory($dir);
                                     //release the lock
                                     $this->Updater_model->release($username);
-
+                                    buildMessage("error", Msg::XML_CONNECT_FAILURE, "login/login_v");
+                                    
                                     $this->session->unset_userdata('username');
                                     $this->session->unset_userdata('start');
                                     $this->session->unset_userdata('iduser');
@@ -129,15 +129,12 @@ class Updater extends CI_Controller
                                 $this->session->unset_userdata('iduser');
                                 $this->load->view('main/_template_v', $data);
                             }
-                            
                         }
                     }
                 }
             }
             $this->Updater_model->release($username);
         }
-
-
     }
 
 
@@ -159,9 +156,6 @@ class Updater extends CI_Controller
         $this->Updater_model->release($username);
         $this->Log->addEntry('update', $this->user_id);
 
-        //transaction success, show the result table
-        //buildMessage("success", Msg::LOGIN_SUCCESS, $view);
-
         $data['cl']        = $this->Updater_model->getChangeLog();
         $data['cl_recent'] = $this->Updater_model->getChangeLog(true);
         $data['table']     = array($table);
@@ -179,5 +173,4 @@ class Updater extends CI_Controller
         buildMessage("error", Msg::LOGIN_NO_CHARS, $data['view']);
         $this->load->view('main/_template_v', $data);
     }
-
 }

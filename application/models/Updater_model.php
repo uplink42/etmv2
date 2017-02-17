@@ -11,7 +11,6 @@ Config::getInstance()->access = new \Pheal\Access\StaticCheck();
 
 class Updater_model extends CI_Model
 {
-
     //account related
     private $user_id;
     private $username;
@@ -123,7 +122,6 @@ class Updater_model extends CI_Model
     public function processAPIKeys(array $user_keys, string $username)
     {
         foreach ($user_keys as $apis) {
-
             $apikey  = (int) $apis['apikey'];
             $vcode   = $apis['vcode'];
             $char_id = $apis['eve_idcharacter'];
@@ -132,25 +130,24 @@ class Updater_model extends CI_Model
             try {
                 $response = $pheal->APIKeyInfo();
             } catch (\Pheal\Exceptions\PhealException $e) {
-                log_message('error', $e->getMessage());
+                log_message('error', 'process api keys ' . $e->getMessage());
+                $this->checkCharacterKeys($apikey, $vcode, $char_id);
                 return false;
             }
 
             $this->checkCharacterKeys($apikey, $vcode, $char_id);
         }
 
+        //count user keys again (check if none left)
         if (count($this->getKeys($username)) != 0) {
             return true;
-        }
-
+        } 
         return false;
     }
 
-    public function checkCharacterKeys($apikey, $vcode, $char_id)
+    public function checkCharacterKeys($apikey, $vcode, $char_id) 
     {
-        //check if permissions are correct
         $result = $this->validateAPIKey($apikey, $vcode, $char_id);
-
         if ($result < 1 || !$result) {
             $this->db->select('name');
             $this->db->where('eve_idcharacter', $char_id);
@@ -159,18 +156,15 @@ class Updater_model extends CI_Model
 
             $this->db->where('character_eve_idcharacter', $char_id);
             $query = $this->db->get('aggr');
-            $res   = $query->row()->user_iduser;
-
+            $res = $query->row()->user_iduser;
             $data = array(
-                "user_iduser"               => $res,
-                /*"character_eve_idcharacter" => $char_id,*/
+                "user_iduser" => $res,
             );
 
             $this->db->delete('aggr', $data);
         }
     }
 
-    //checks if the current API key is valid and has all necessary permissions for the current character
     public function validateAPIKey(int $apikey, string $vcode, string $char)
     {
         try {
@@ -187,6 +181,7 @@ class Updater_model extends CI_Model
                 array_push($apichars, $char_api);
             }
         } catch (\Pheal\Exceptions\PhealException $e) {
+            log_message('error', 'validate api keys ' . $e->getMessage());
             //communication error, abort
             return false;
         }
@@ -208,7 +203,6 @@ class Updater_model extends CI_Model
     //and begin the update procedure
     public function iterateAccountCharacters()
     {
-
         foreach ($this->account_characters as $characters) {
             $this->character_id = $characters['character_eve_idcharacter'];
 
@@ -227,27 +221,21 @@ class Updater_model extends CI_Model
             $vcode       = $query->row()->vcode;
             $this->vcode = $vcode;
 
-            //get character data
+            // get character data
+            // transaction missing return false
             $this->getWalletBalance();
             $this->getBrokerRelationsLevel();
             $this->getAccountingLevel();
             $this->getCorpStandings();
             $this->getFactionStandings();
-
-            $this->db->trans_start();
             $this->getTransactions();
-            $this->db->trans_complete();
-            if ($this->db->trans_status() === false) {
-                return false;
-            }
-
             $this->getContracts();
             $this->getMarketOrders();
             $this->getAssets();
             $this->setNewInfo();
             $this->updateCharacterInfo();
         }
-
+        
         return true;
     }
 
@@ -257,8 +245,10 @@ class Updater_model extends CI_Model
         $response = $pheal->AccountBalance(array("characterID" => $this->character_id));
 
         foreach ($response->accounts as $row) {
-            $balance                 = $row->balance;
-            $this->character_balance = $balance;
+            if ($row['accountKey'] == 1000) {
+                $balance                 = $row->balance;
+                $this->character_balance = $balance;
+            }
         }
     }
 
@@ -267,10 +257,9 @@ class Updater_model extends CI_Model
         $this->character_broker_level = '0';
         $pheal                        = new Pheal($this->apikey, $this->vcode, "char");
         $response                     = $pheal->CharacterSheet(array("characterID" => $this->character_id));
-        foreach ($response->accounts as $row) {
-            if ($row['accountKey'] == 1000) {
-                $balance                 = $row->balance;
-                $this->character_balance = $balance;
+        foreach ($response->skills as $skills) {
+            if (($skills->typeID) == 3446) {
+                $this->character_broker_level = $skills->level;
             }
         }
     }
@@ -289,6 +278,7 @@ class Updater_model extends CI_Model
 
     private function getCorpStandings()
     {
+        //corp standings
         $pheal  = new Pheal($this->apikey, $this->vcode, "char");
         $result = $pheal->Standings(array("characterID" => $this->character_id));
 
@@ -310,6 +300,7 @@ class Updater_model extends CI_Model
 
     private function getFactionStandings()
     {
+        //faction standings
         $pheal  = new Pheal($this->apikey, $this->vcode, "char");
         $result = $pheal->Standings(array("characterID" => $this->character_id));
 
@@ -383,9 +374,10 @@ class Updater_model extends CI_Model
             $this->character_new_transactions = count($transactions);
 
             if (count($transactions) == 2560) {
+                //check if we exceed the max transactions per request
                 $refID = end($transactions['transkey']);
                 $this->character_new_transactions += 2560;
-                $this->getTransactions($refID);
+                $this->getTransactions($refID); //pass the last transaction as request again
             }
         } else {
             $this->character_new_transactions = 0;
@@ -573,7 +565,7 @@ class Updater_model extends CI_Model
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $this->db->where('orders.order_state', 'open');
         $this->db->where('orders.type', 'sell');
-        $query                  = $this->db->get('');
+        $query = $this->db->get('');
         $this->character_orders = $query->row()->grand_total;
     }
 
@@ -640,9 +632,9 @@ class Updater_model extends CI_Model
         //first, delete existing assets
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $this->db->delete('assets');
-
+            
         if (!empty($assetList)) {
-
+            
             batch("assets",
                 array('idassets',
                     'characters_eve_idcharacters',
@@ -656,7 +648,7 @@ class Updater_model extends CI_Model
         $this->db->from('assets');
         $this->db->join('item_price_data', 'item_price_data.item_eve_iditem = assets.item_eve_iditem');
         $this->db->where('characters_eve_idcharacters', $this->character_id);
-        $query                    = $this->db->get('');
+        $query = $this->db->get('');
         $this->character_networth = $query->row()->grand_total;
     }
 
@@ -703,7 +695,7 @@ class Updater_model extends CI_Model
         $this->db->where('transaction.transaction_type', 'Buy');
         $this->db->where('user.username', $this->username);
         $this->db->order_by('time', 'asc');
-        $buy_list  = $this->db->get('');
+        $buy_list = $this->db->get('');
         $buy_stack = $buy_list->result_array();
 
         //sell list
@@ -715,7 +707,7 @@ class Updater_model extends CI_Model
         $this->db->where('transaction.transaction_type', 'Sell');
         $this->db->where('user.username', $this->username);
         $this->db->order_by('time', 'asc');
-        $sell_list  = $this->db->get('');
+        $sell_list = $this->db->get('');
         $sell_stack = $sell_list->result_array();
 
         $size_buy  = sizeof($buy_stack);
@@ -729,7 +721,6 @@ class Updater_model extends CI_Model
             $buy_stack[$i]['price_unit'];
 
             $quantity_b_calc = $buy_stack[$i]['quantity'];
-
             for ($k = 0; $k <= $size_sell - 1; $k++) {
                 $sell_stack[$k]['idbuy'];
                 $sell_stack[$k]['item_eve_iditem'];
@@ -738,9 +729,9 @@ class Updater_model extends CI_Model
                 $sell_stack[$k]['price_unit'];
 
                 //found a match
-                if ($sell_stack[$k]['item_eve_iditem'] == $buy_stack[$i]['item_eve_iditem']
-                    && $sell_stack[$k]['time'] > $buy_stack[$i]['time']
-                    && $buy_stack[$i]['remaining'] > 0
+                if ($sell_stack[$k]['item_eve_iditem'] == $buy_stack[$i]['item_eve_iditem'] 
+                    && $sell_stack[$k]['time'] > $buy_stack[$i]['time'] 
+                    && $buy_stack[$i]['remaining'] > 0 
                     && $sell_stack[$k]['remaining'] > 0) {
 
                     $num_profits++;
@@ -773,6 +764,7 @@ class Updater_model extends CI_Model
                     $this->db->join('item', 'transaction.item_eve_iditem = item.eve_iditem', 'left');
                     $this->db->where('transaction.idbuy', $buy_stack[$i]['idbuy']);
                     $query_buy = $this->db->get('');
+
 
                     $this->db->select('item.name as itemname,
                         item.eve_iditem as iditem,
@@ -812,8 +804,8 @@ class Updater_model extends CI_Model
                     //calculate final profit
                     $profit      = ($price_unit_s_taxed - $price_unit_b_taxed) * $profit_q;
                     $profit_unit = ($price_unit_s_taxed - $price_unit_b_taxed);
-                    $trans_b     = $buy_stack[$i]["idbuy"];
-                    $trans_s     = $sell_stack[$k]["idbuy"];
+                    $trans_b = $buy_stack[$i]["idbuy"];
+                    $trans_s = $sell_stack[$k]["idbuy"];
 
                     //insert profit
                     $add_profit = $this->db->query("INSERT IGNORE profit
@@ -859,14 +851,9 @@ class Updater_model extends CI_Model
         $tz = new DateTimeZone('Europe/Lisbon');
         $dt->setTimezone($tz);
         $date_today = $dt->format('Y-m-d');
-        if ($global) {
-            $date_today = date('Y-m-d', strtotime("-1 days"));
-        }
 
         foreach ($character_list->result() as $row) {
             $this->character_id = $row->character_eve_idcharacter;
-
-            $this->character_id;
 
             //sum of sales
             $this->db->select('coalesce(sum(price_total),0) as sum');
@@ -899,7 +886,7 @@ class Updater_model extends CI_Model
             $this->db->join('characters', 't2.character_eve_idcharacter = characters.eve_idcharacter');
             $this->db->where('characters.eve_idcharacter', $this->character_id);
             $this->db->where('date(t2.time)', $date_today);
-            $margin     = $this->db->get('');
+            $margin = $this->db->get('');
             $margin_val = $margin->row()->margin;
 
             $data = array(
@@ -910,7 +897,6 @@ class Updater_model extends CI_Model
                 "total_profit"                => $profits_sum_val,
                 "margin"                      => $margin_val,
             );
-
             $this->db->replace('history', $data);
         }
 
