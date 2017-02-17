@@ -48,7 +48,6 @@ app.directive('marketGroups', [
 
 
                 function recursiveGrpSorting(result) {
-
                     allGroups = result;
                     $scope.groups = [];
                     for (var key in result) {
@@ -59,7 +58,6 @@ app.directive('marketGroups', [
                         }
                     }
                 }
-
 
                 function populateCat(id) {
                     angular.forEach(allGroups, function(cValue, cKey) {
@@ -84,7 +82,6 @@ app.directive('marketGroups', [
                         });
                     } 
                 }
-
 
                 $scope.openSubCat = function(id) {
                     if (!$scope.subcatItems[id] || $scope.subcatItems[id].length < 1) {
