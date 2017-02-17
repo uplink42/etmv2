@@ -16,7 +16,6 @@ app.directive('searchBar', [
                 sellorders: '=',
             },
             controller: ['$scope', function($scope) {
-
                 $scope.search = {
                     region: 10000002,
                     item: ''
@@ -25,7 +24,6 @@ app.directive('searchBar', [
                 $scope.regions = [];
                 getAllRegions();
 
-                
                 $scope.$watch('search.region', function(newi, old) {
                     if (newi) {
                         updateItem($scope.item);
@@ -45,11 +43,9 @@ app.directive('searchBar', [
                     });
                 };
 
-
                 $scope.$watch('item', function(newValue, oldValue) {
                     updateItem(newValue);
                 }, true);
-
 
                 function updateItem(newValue) {
                     if (newValue.id) {
@@ -58,14 +54,12 @@ app.directive('searchBar', [
                     }
                 }
 
-
                 $scope.itemSelected = function($item) {
                     $scope.item = {
                         name: $item.value,
                         id: $item.id
                     };
                 };
-
 
                 function getAllRegions() {
                     regionListFact
@@ -80,7 +74,6 @@ app.directive('searchBar', [
                         $scope.isLoadedRegions = true;
                     });
                 }
-
 
                 function getItemOrders(id) {
                     //sell
@@ -112,7 +105,6 @@ app.directive('searchBar', [
             }],
 
             link: function() {
-
             }
         };
     }

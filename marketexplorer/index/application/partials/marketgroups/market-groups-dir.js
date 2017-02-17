@@ -13,7 +13,6 @@ app.directive('marketGroups', [
                 name: '='
             },
             controller: ['$scope', function($scope) {
-
                 var allGroups;
                 var allTypes = [];
                 $scope.subcatItems = {};
@@ -48,7 +47,6 @@ app.directive('marketGroups', [
 
 
                 function recursiveGrpSorting(result) {
-
                     allGroups = result;
                     $scope.groups = [];
                     for (var key in result) {
@@ -59,7 +57,6 @@ app.directive('marketGroups', [
                         }
                     }
                 }
-
 
                 function populateCat(id) {
                     angular.forEach(allGroups, function(cValue, cKey) {
@@ -74,7 +71,6 @@ app.directive('marketGroups', [
                         $scope.subcatItems[id] = {
                             items: []
                         };
-
                         angular.forEach(allTypes[id], function(cValue, cKey) {
                             $scope.subcatItems[id].items.push(cValue);
                             $scope.subcatItems[cValue.id] = {
@@ -85,13 +81,11 @@ app.directive('marketGroups', [
                     } 
                 }
 
-
                 $scope.openSubCat = function(id) {
                     if (!$scope.subcatItems[id] || $scope.subcatItems[id].length < 1) {
                         $scope.subcatItems[id] = {
                             items: []
                         };
-
                         populateCat(id);
                     } else if (!$scope.subcatItems[id].final) {
                         $scope.subcatItems[id] = [];
@@ -102,7 +96,6 @@ app.directive('marketGroups', [
                         getItemName(id);
                     }
                 };
-
 
                 function getItemName(id) {
                     angular.forEach(allTypes, function(cValue, cKey) {
