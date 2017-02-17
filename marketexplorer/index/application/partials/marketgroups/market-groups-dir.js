@@ -70,7 +70,7 @@ app.directive('marketGroups', [
                         }
                     });
 
-                    if ($scope.subcatItems[id].items.length == 0) {
+                    if ($scope.subcatItems[id].items.length < 1) {
                         $scope.subcatItems[id] = {
                             items: []
                         };
@@ -80,14 +80,14 @@ app.directive('marketGroups', [
                             $scope.subcatItems[cValue.id] = {
                                 final: true,
                                 id: cValue.id,
-                            }
+                            };
                         });
                     } 
                 }
 
 
                 $scope.openSubCat = function(id) {
-                    if (!$scope.subcatItems[id] || $scope.subcatItems[id].length == 0) {
+                    if (!$scope.subcatItems[id] || $scope.subcatItems[id].length < 1) {
                         $scope.subcatItems[id] = {
                             items: []
                         };
@@ -101,7 +101,7 @@ app.directive('marketGroups', [
                         $scope.item.id = $scope.subcatItems[id].id;
                         getItemName(id);
                     }
-                }
+                };
 
 
                 function getItemName(id) {
@@ -110,7 +110,7 @@ app.directive('marketGroups', [
                             if (iValue.id == id) {
                                 $scope.item.name = iValue.name;
                             }
-                        })
+                        });
                     });
                 }
             }],

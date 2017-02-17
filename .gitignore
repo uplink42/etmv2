@@ -3,7 +3,6 @@
 /node_modules/
 /home
 /luna_admin-v1.1
-fifo.php
 /marketexplorer/index/bower_components
 /marketexplorer/index/node_modules
 /marketexplorer/index/dist

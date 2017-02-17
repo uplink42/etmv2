@@ -14,7 +14,7 @@ var crestFact = app.factory('crestFact', ['$q', '$http', 'config',
                     } else {
                         deferred.resolve(aggregateData.value);
                     }
-                })
+                });
             }
             loadAll();
             return deferred.promise;
@@ -33,8 +33,8 @@ var crestFact = app.factory('crestFact', ['$q', '$http', 'config',
                     request = config.crest.base + request;
                 }
                 loadData(request, aggregateData).then(function(d) {
-                    deferred.resolve(aggregateData.value)
-                })
+                    deferred.resolve(aggregateData.value);
+                });
                 return deferred.promise;
             },
             getData: function() {
@@ -43,6 +43,6 @@ var crestFact = app.factory('crestFact', ['$q', '$http', 'config',
             isDataLoaded: function() {
                 return aggregateData.isLoaded;
             }
-        }
+        };
     }
 ]);
