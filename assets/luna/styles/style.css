@@ -1442,7 +1442,7 @@ sup {
 .luna-nav.nav li a:focus {
     color: #c0c4c8;
     background: inherit;
-    font-size: 15px;
+    background-color: #3d404c;
 }
 
 .luna-nav.nav .nav-category {
