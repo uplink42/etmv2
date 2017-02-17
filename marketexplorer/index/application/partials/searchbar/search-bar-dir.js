@@ -16,7 +16,6 @@ app.directive('searchBar', [
                 sellorders: '=',
             },
             controller: ['$scope', function($scope) {
-
                 $scope.search = {
                     region: 10000002,
                     item: ''
@@ -47,7 +46,6 @@ app.directive('searchBar', [
                 $scope.$watch('item', function(newValue, oldValue) {
                     updateItem(newValue);
                 }, true);
-
 
                 function updateItem(newValue) {
                     if (newValue.id) {
