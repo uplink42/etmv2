@@ -79,16 +79,13 @@ Gulp should now watch over and update any css/javascript files you change.
 And that should be all. You can now launch it and create an account.
 
 #Crons:
-There are several crons used to maintain the application. These can be found inside the /application/controllers/internal folder. They are not yet tested 100%.
+There are several crons used to maintain the application. These can be found inside the /application/controllers/internal folder.
 
 
 #To-do:
-- Documentation
 - Rewrite api key storage and validation rules
 - Restructure and normalize database
 - Improve gulp tasks
-- Port to Laravel (maybe)
 - Automatic item list update cron from CREST (right now I have to manually update the database everytime new items are added into Eve)
-- Bower/composer integration
 - Unit testing
 - ??
