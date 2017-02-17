@@ -51,9 +51,11 @@ a web based profit tracker, trading and asset manager tool for Eve Online.
 
     gulp
     
- 2.1 - Browse to marketexplorer/index and run gulp there as well
-
-Gulp should now watch over and update any css/javascript files you change.
+ 2.1 - Browse to marketexplorer/index and run
+ 
+    bower update
+    npm update
+    gulp
 
 3 - Now you must import the seeded database (trader.sql) to bootstrap the application. Contains all relevant SDE data until 29/10/2016. This can be done like this:
 
