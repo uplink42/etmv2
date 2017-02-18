@@ -178,6 +178,12 @@ class MY_Controller extends CI_Controller
                 $data['gets']        = false;
                 break;
 
+            case ('marketexplorer'):
+                $data['hasInterval'] = false;
+                $data['hasRegion']   = false;
+                $data['gets']        = false;
+                break;
+
         }
 
         $data['page'] = $this->page;
