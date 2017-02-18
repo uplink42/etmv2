@@ -19,7 +19,7 @@ class Profits_model extends CI_Model
      * @param  string   $chars    
      * @param  int      $interval 
      * @param  int|null $item_id  
-     * @return [array]             
+     * @return array             
      */
     public function getProfits(string $chars, int $interval, int $item_id = null): array
     {
@@ -113,7 +113,7 @@ class Profits_model extends CI_Model
      * @param  string   $chars    
      * @param  int      $interval 
      * @param  int|null $item_id  
-     * @return [json]             
+     * @return string json             
      */
     public function getProfitChart(string $chars, int $interval, int $item_id = null): string
     {

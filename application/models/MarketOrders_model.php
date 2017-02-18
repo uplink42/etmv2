@@ -17,7 +17,7 @@ class MarketOrders_model extends CI_Model
      * @param  string       $chars 
      * @param  string       $type  
      * @param  bool|boolean $check perform pricecheck?
-     * @return [array]              
+     * @return array              
      */
     public function getMarketOrders(string $chars, string $type, bool $check = false): array
     {
@@ -199,7 +199,7 @@ class MarketOrders_model extends CI_Model
      * @param  string $order_id 
      * @param  int    $status   
      * @param  string $date_now 
-     * @return [void]           
+     * @return void           
      */
     private function updateStatus(string $order_id, int $status, string $date_now)
     {

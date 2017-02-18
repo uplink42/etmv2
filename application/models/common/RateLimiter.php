@@ -42,7 +42,7 @@ class RateLimiter extends CI_Model
 
     /**
      * Determines wether a request can proceed or must wait
-     * @return [bool]
+     * @return bool
      */
     protected function canProceed(): bool
     {

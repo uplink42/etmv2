@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Register extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -11,7 +10,11 @@ class Register extends CI_Controller
         $this->load->library('session');
     }
 
-    public function processData()
+    /**
+     * Begins the user registration procedure
+     * @return void
+     */
+    public function processData(): void
     {
         $username       = $this->security->xss_clean($this->input->post('username'));
         $password       = $this->security->xss_clean($this->input->post('password'));
@@ -24,7 +27,11 @@ class Register extends CI_Controller
         $this->load->model('Register_model');
         $result = $this->Register_model->validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports);
 
-        if (!isset($result['username']) && !isset($result['password']) && !isset($result['email']) && !isset($result['api']) && !isset($result['reports'])) {
+        if (!isset($result['username']) &&
+            !isset($result['password']) &&
+            !isset($result['email']) &&
+            !isset($result['api']) &&
+            !isset($result['reports'])) {
             $this->load->model('Register_model');
             $result = $this->Register_model->getCharacters($apikey, $vcode);
 
@@ -40,10 +47,13 @@ class Register extends CI_Controller
             $data['no_header'] = 1;
             $this->load->view('main/_template_v', $data);
         }
-
     }
 
-    public function processCharacters()
+    /**
+     * Begin registration operations and validations - step 2
+     * @return void
+     */
+    public function processCharacters(): void
     {
         $this->load->model('register_model');
 

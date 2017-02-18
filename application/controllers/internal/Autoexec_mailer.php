@@ -3,8 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ini_set('mysql.connect_timeout', '3000');
 ini_set('default_socket_timeout', '3000');
 ini_set('max_execution_time', '0');
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
 
 class Autoexec_mailer extends MY_Controller
 {
@@ -19,8 +17,13 @@ class Autoexec_mailer extends MY_Controller
         $this->load->model('common/Email');
     }
 
-    //daily, weekly, monthly
-    public function index(string $period = "daily")
+    /**
+     * Kickstarts the mailer procedure
+     * Daily, weekly or monthly mailing is possible
+     * @param  string $period 
+     * @return void         
+     */
+    public function index(string $period = "daily") : void
     {
         if (!$this->input->is_cli_request()) {
             die();
@@ -38,7 +41,6 @@ class Autoexec_mailer extends MY_Controller
         $data['recap_int'] = max($interval, 7);
 
         foreach ($users as $row) {
-
       		sleep(5);
             $data['user_id']     = (int) $row->iduser;
             $characters          = $this->Login_model->getCharacterList($data['user_id']);
@@ -63,10 +65,8 @@ class Autoexec_mailer extends MY_Controller
                 $data['cl_recent'] = $this->Updater_model->getChangeLog(true);
 
                 $report = $this->load->view('reports/reports_v', $data, true);
-
                 //mail data
                 $address = $this->User->getUserEmail($data['user_id']);
-                //$address = "etmdevelopment42@gmail.com";
                 $from = "etmdevelopment42@gmail.com";
                 $from_name = "Eve Trade Master";
                 $subject = "Eve Trade Master " . $period . " earnings report for " . $data['date_now'];

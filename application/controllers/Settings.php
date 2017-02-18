@@ -28,9 +28,13 @@ class Settings extends MY_Controller
 
     }
 
-    public function index(int $character_id)
+    /**
+     * Loads the user settings page
+     * @param  int    $character_id 
+     * @return void               
+     */
+    public function index(int $character_id) : void
     {
-
         if ($this->enforce($character_id, $this->user_id)) {
 
             $aggregate = $this->aggregate;
@@ -44,22 +48,32 @@ class Settings extends MY_Controller
         }
     }
 
-    public function email()
+    /**
+     * Returns the user's email
+     * @return string json 
+     */
+    public function email() : void
     {
         $data = $this->Settings_model->getEmail($this->user_id);
-
         echo json_encode(array("email" => $data));
     }
 
-    public function reports()
+    /**
+     * Returns the user's reports
+     * @return string json 
+     */
+    public function reports() : void
     {
         $result = $this->Settings_model->getReportSelection($this->user_id);
         $data   = array("data" => $result);
-
         echo json_encode($data);
     }
 
-    public function changeEmail()
+    /**
+     * Changes the user's email
+     * @return string json
+     */
+    public function changeEmail() : void
     {
         $this->load->model('common/Auth');
         if ($this->Auth->validateLogin($this->session->username, $this->password, true)) {
@@ -79,11 +93,14 @@ class Settings extends MY_Controller
             $notice  = "error";
             $message = Msg::INVALID_LOGIN;
         }
-
         echo json_encode(array("notice" => $notice, "message" => $message));
     }
 
-    public function changeReports()
+    /**
+     * Change the user's reports
+     * @return string json
+     */
+    public function changeReports() : void
     {
         if ($this->reports == 'none' || $this->reports == 'daily' || $this->reports == 'weekly' || $this->reports == 'monthly') {
             if ($this->Settings_model->changeReports($this->user_id, $this->reports)) {
@@ -100,10 +117,13 @@ class Settings extends MY_Controller
 
         $data = ["notice" => $notice, "message" => $message];
         echo json_encode($data);
-
     }
 
-    public function changePassword()
+    /**
+     * Change a user's password
+     * @return string json
+     */
+    public function changePassword() : void
     {
         $this->load->model('common/Auth');
         if ($this->ValidateRequest->validateIdenticalPasswords($this->password_new1, $this->password_new2)) {

@@ -13,7 +13,7 @@ class Assets_model extends CI_Model
     /**
      * Returns the daily asset evolution for a set of characters
      * @param  string $chars 
-     * @return [array]        
+     * @return array        
      */
     public function getAssetEvolution(string $chars): array
     {
@@ -32,7 +32,7 @@ class Assets_model extends CI_Model
      * Gets all assets by each region in known space for a 
      * set of characters
      * @param  string $chars 
-     * @return [array]        
+     * @return array        
      */
     public function getRegionData(string $chars): array
     {
@@ -131,7 +131,7 @@ class Assets_model extends CI_Model
      * @param  int          $region_id   
      * @param  string       $chars       
      * @param  bool|boolean $significant 
-     * @return [array]                    
+     * @return array                    
      */
     public function getAssetsList(int $region_id, string $chars, bool $significant = true): array
     {
@@ -229,7 +229,7 @@ class Assets_model extends CI_Model
     /**
      * Sends the required data to build the asset distribution chart
      * @param  array  $data 
-     * @return [json]       
+     * @return string json       
      */
     public function buildAssetDistributionChart(array $data): string
     {

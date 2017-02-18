@@ -20,7 +20,12 @@ class Apikeymanagement extends MY_Controller
         settype($this->vcode, 'string');
     }
 
-    public function index($character_id)
+    /**
+     * Loads the api key management page
+     * @param  string $character_id 
+     * @return void               
+     */
+    public function index(string $character_id) : void
     {
         settype($character_id, 'int');
         if ($this->enforce($character_id, $this->user_id)) {
@@ -35,13 +40,22 @@ class Apikeymanagement extends MY_Controller
         }
     }
 
-    public function getCharacters()
+    /**
+     * Returns the character list for a user
+     * @return string json
+     */
+    public function getCharacters() : void
     {
         $data = $this->ApiKeyManagement_model->getCharacterList($this->user_id);
         echo json_encode($data);
     }
 
-    public function removeCharacter(int $character_id_r)
+    /**
+     * Remove a character from an account
+     * @param  int    $character_id_r 
+     * @return string json                 
+     */
+    public function removeCharacter(int $character_id_r) : void
     {
         $this->load->model('ValidateRequest');
         if ($this->ValidateRequest->checkCharacterBelong($character_id_r, $this->user_id)) {
@@ -61,7 +75,11 @@ class Apikeymanagement extends MY_Controller
         echo json_encode($data);
     }
 
-    public function addCharacters()
+    /**
+     * Adds a character or set of characters to an account
+     * @return string json      
+     */
+    public function addCharacters() : void
     {
         $this->load->model('ValidateRequest');
         $result = $this->ValidateRequest->validateAPI($this->keyid, $this->vcode);
@@ -72,13 +90,22 @@ class Apikeymanagement extends MY_Controller
             $data = array("notice" => $notice, "message" => $msg);
             echo json_encode($data);
         } else {
+            //success
             $this->load->model('Register_model');
             $characters = $this->Register_model->getCharacters($this->keyid, $this->vcode);
             echo json_encode($characters);
-            //proceed
         }
     }
 
+    /**
+     * Add characters to account - step 2
+     * @param int         $apikey 
+     * @param string      $vcode  
+     * @param string|null $char1  
+     * @param string|null $char2  
+     * @param string|null $char3 
+     * @return string json
+     */
     public function addCharactersStep(int $apikey, string $vcode, string $char1 = null, string $char2 = null, string $char3 = null)
     {
         $chars = array();
@@ -109,6 +136,5 @@ class Apikeymanagement extends MY_Controller
 
         $data = array("notice" => $notice, "message" => $msg);
         echo json_encode($data);
-        
     }
 }

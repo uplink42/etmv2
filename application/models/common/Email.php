@@ -17,7 +17,7 @@ class Email extends CI_Model
      * @param  string $from_name sender name
      * @param  string $subject   email subject
      * @param  string $body      email body
-     * @return [bool]            send result
+     * @return bool            send result
      */
     public function send(string $to, string $from, string $from_name, string $subject, string $body) : bool
     {

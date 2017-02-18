@@ -7,12 +7,15 @@ ini_set('display_errors', 1);
 
 class Autoexec_pricedata_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Queries the CREST API for the current average item prices
+     * @return int
+     */
     public function getPrices(): int
     {
         $url      = "https://crest-tq.eveonline.com/market/prices/";
@@ -48,6 +51,7 @@ class Autoexec_pricedata_model extends CI_Model
             chunk("item_price_data",
                 array('item_eve_iditem', 'price_evecentral'), $fixedPriceData)
         );
+
         //set bpcs as 0
         $this->db->query("UPDATE item_price_data JOIN item ON item.eve_iditem = item_price_data.item_eve_iditem SET item_price_data.price_evecentral = 0 WHERE item.name LIKE '%blueprint%'");
 
@@ -58,5 +62,4 @@ class Autoexec_pricedata_model extends CI_Model
             return $count;
         }
     }
-
 }

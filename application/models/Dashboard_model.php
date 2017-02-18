@@ -14,7 +14,7 @@ class Dashboard_model extends CI_Model
     /**
      * Returns the required data to build the networth distribution pie chart
      * @param  string $chars 
-     * @return [json]        
+     * @return string json        
      */
     public function getPieData(string $chars): string
     {
@@ -95,7 +95,7 @@ class Dashboard_model extends CI_Model
     /**
      * Returns the trend line for a set of characters
      * @param  string $chars 
-     * @return [array]        
+     * @return array        
      */
     public function getTotalProfitsTrends(string $chars): array
     {
@@ -125,7 +125,7 @@ class Dashboard_model extends CI_Model
      * Returns the number of new contracts, transactions, etc on the main page
      * Todo: re-do for several characters
      * @param  string $chars 
-     * @return [stdClass]        
+     * @return stdClass        
      */
     public function getNewInfo(string $chars): stdClass
     {
@@ -139,7 +139,7 @@ class Dashboard_model extends CI_Model
      * set of characters and a specified interval
      * @param  int|integer $interval 
      * @param  string|null $chars    
-     * @return [array]                
+     * @return array                
      */
     public function getProfits(int $interval = 1, string $chars = null): array
     {

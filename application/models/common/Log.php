@@ -13,7 +13,7 @@ class Log extends CI_Model
      * Logs an event in the database
      * @param string $type    event type
      * @param int    $id_user
-     * @return [void]
+     * @return void
      */
     public function addEntry(string $type, int $id_user)
     {

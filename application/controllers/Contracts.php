@@ -46,10 +46,14 @@ class Contracts extends MY_Controller
         };
     }
 
-    public function index(int $character_id)
+    /**
+     * Loads the contracts page
+     * @param  int    $character_id 
+     * @return void               
+     */
+    public function index(int $character_id) : void
     {
         if ($this->enforce($character_id, $user_id = $this->user_id)) {
-
             $aggregate        = $this->aggregate;
             $data             = $this->loadViewDependencies($character_id, $user_id, $aggregate);
             $chars            = $data['chars'];

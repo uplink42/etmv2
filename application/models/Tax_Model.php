@@ -44,7 +44,7 @@ class Tax_model extends CI_Model
      * @param  [type] $character_to   
      * @param  [type] $transFrom      
      * @param  [type] $transTo        
-     * @return [void]                 
+     * @return void                 
      */
     public function tax($stationFromID, $stationToID, $character_from, $character_to, $transFrom, $transTo)
     {

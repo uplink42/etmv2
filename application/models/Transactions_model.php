@@ -21,7 +21,7 @@ class Transactions_model extends CI_Model
      * @param  int|null     $new      
      * @param  string|null  $transID  
      * @param  bool|boolean $res      
-     * @return [array]                 
+     * @return array                 
      */
     public function getTransactionList(string $chars, int $interval, int $new = null, string $transID = null, bool $res = true) : ?array
     {
@@ -70,7 +70,7 @@ class Transactions_model extends CI_Model
     /**
      * Unlinks a transaction from a user
      * @param  [type] $transaction_id 
-     * @return [bool]                 
+     * @return bool                 
      */
     public function unlinkTransaction(string $transaction_id) : bool
     {

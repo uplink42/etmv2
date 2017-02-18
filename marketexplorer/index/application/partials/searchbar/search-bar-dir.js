@@ -98,7 +98,6 @@ app.directive('searchBar', [
                             totalBuy += cValue.volume;
                         });
                         $scope.buyorders.total = totalBuy;
-                        //$scope.buyorders = response;
                         $scope.buyorders.items = $filter('orderBy')(responseBuy, '-price');
                     });
                 }

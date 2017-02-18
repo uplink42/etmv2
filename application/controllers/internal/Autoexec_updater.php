@@ -13,7 +13,6 @@ use Pheal\Pheal;
 class Autoexec_updater extends CI_Controller
 {
 
-    //update all totals, apis and character data
     public function __construct()
     {
         parent::__construct();
@@ -26,6 +25,10 @@ class Autoexec_updater extends CI_Controller
         $this->load->model('common/ValidateRequest');
     }
 
+    /**
+     * Kickstarts the daily update procedure for every user
+     * @return [type] [description]
+     */
     public function index()
     {
     	if (!$this->input->is_cli_request()) {
@@ -109,7 +112,12 @@ class Autoexec_updater extends CI_Controller
         }
     }
 
-    private function removeDirectory($path)
+    /**
+     * Removes a directory when cache files are corrupt
+     * @param  [type] $path 
+     * @return void       
+     */
+    private function removeDirectory($path) : void
     {
         if (is_dir($path)) {
             $files = glob($path . '/*');
@@ -117,8 +125,6 @@ class Autoexec_updater extends CI_Controller
                 is_dir($file) ? $this->removeDirectory($file) : unlink($file);
             }
             rmdir($path);
-            return;
         }
     }
-
 }

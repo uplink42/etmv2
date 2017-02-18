@@ -12,14 +12,19 @@ class Networthtracker extends MY_Controller
         $this->page = "networthtracker";
     }
 
-    public function index(int $character_id, int $interval = 7)
+    /**
+     * Loads the networth tracker page
+     * @param  int         $character_id
+     * @param  int|integer $interval     
+     * @return void                    
+     */
+    public function index(int $character_id, int $interval = 7) : void
     {
         if ($interval > 365) {
             $interval = 365;
         }
 
         if ($this->enforce($character_id, $this->user_id)) {
-
             $aggregate = $this->aggregate;
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
@@ -28,7 +33,6 @@ class Networthtracker extends MY_Controller
             $chart = $this->NetworthTracker_model->init($chars, $interval);
 
             $data['selected'] = "networth";
-
             $data['chart']    = $chart;
             $data['interval'] = $interval;
             $data['view']     = 'main/nwtracker_v';

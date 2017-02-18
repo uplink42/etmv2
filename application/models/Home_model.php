@@ -12,7 +12,7 @@ class Home_model extends CI_Model
 
     /**
      * Gets the total stats for the homepage
-     * @return [array]
+     * @return array
      */
     public function getStats() : array
     {

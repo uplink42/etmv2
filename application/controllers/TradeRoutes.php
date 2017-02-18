@@ -12,7 +12,12 @@ class Traderoutes extends MY_Controller
         $this->load->model('TradeRoutes_model');
     }
 
-    public function index(int $character_id)
+    /**
+     * Loads the trade routes page
+     * @param  int    $character_id 
+     * @return void           
+     */
+    public function index(int $character_id) : void
     {
         if ($this->enforce($character_id, $this->user_id)) {
 
@@ -20,22 +25,30 @@ class Traderoutes extends MY_Controller
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
 
             $data['selected'] = "traderoutes";
-
             $data['view'] = 'main/traderoutes_v';
             $this->load->view('main/_template_v', $data);
         }
     }
 
-    public function searchStations()
+    /**
+     * Queries stations by name and echoes
+     * the result back to the client
+     * @return string json
+     */
+    public function searchStations() : void
     {
         $input = $_REQUEST['term'];
         $result = $this->TradeRoutes_model->queryStations($input);
-
         echo json_encode($result);
-
     }
 
-    public function submitRoute(int $character_id)
+    /**
+     * Creates a new trade route and echoes the
+     * result back to the client
+     * @param  int    $character_id 
+     * @return string json            
+     */
+    public function submitRoute(int $character_id) : void
     {
         if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id)) {
             if (!empty($_REQUEST['origin']) && !empty($_REQUEST['destination'])) {
@@ -43,7 +56,6 @@ class Traderoutes extends MY_Controller
                 $origin = substr($_REQUEST['origin'], 11) : $origin = $_REQUEST['origin'];
                 substr($_REQUEST['destination'], 0, 10) == "TRADE HUB:" ?
                 $destination = substr($_REQUEST['destination'], 11) : $destination = $_REQUEST['destination'];
-
                 $data = $this->TradeRoutes_model->insertRoute($this->user_id, $origin, $destination);
             } else {
                 $data['message'] = Msg::STATION_NOT_FOUND;
@@ -53,20 +65,30 @@ class Traderoutes extends MY_Controller
             $data['message'] = Msg::INVALID_REQUEST;
             $data['notice']  = "error";
         }
-
         echo json_encode($data);
     }
 
-    public function listTradeRoutes(int $character_id)
+    /**
+     * Gets a list of a user's traderoutes and echoes
+     * the result back to the client
+     * @param  int    $character_id 
+     * @return string json            
+     */
+    public function listTradeRoutes(int $character_id) : void
     {
         if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id)) {
             $result = $this->TradeRoutes_model->getRoutes($this->user_id);
-
             echo json_encode($result);
         }
     }
 
-    public function deleteRoute(int $id_route)
+    /**
+     * Deletes a trade route and echoes
+     * the result back to the client
+     * @param  int    $id_route 
+     * @return string json         
+     */
+    public function deleteRoute(int $id_route) : void
     {
         if ($this->ValidateRequest->checkTradeRouteOwnership($id_route, $this->user_id)) {
             if ($this->TradeRoutes_model->deleteRoute($id_route)) {
@@ -80,7 +102,6 @@ class Traderoutes extends MY_Controller
             $data['message'] = Msg::INVALID_REQUEST;
             $data['notice']  = "error";
         }
-
         echo json_encode($data);
     }
 }

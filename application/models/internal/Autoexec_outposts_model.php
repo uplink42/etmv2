@@ -9,12 +9,15 @@ ini_set('display_errors', 1);
 
 class Autoexec_outposts_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Queries the XML API with all conquerable stations
+     * @return int
+     */
     public function getOutposts(): int
     {
         $pheal        = new Pheal();
@@ -37,6 +40,10 @@ class Autoexec_outposts_model extends CI_Model
         return $this->insertData($outpostsList);
     }
 
+    /**
+     * Queries the unnoficial API for known citadels
+     * @return int
+     */
     public function getCitadels(): int
     {
         $url    = "https://stop.hammerti.me.uk/api/citadel/all";
@@ -64,6 +71,11 @@ class Autoexec_outposts_model extends CI_Model
         return $this->insertData($citadelList);
     }
 
+    /**
+     * Inserts all outposts and citadels in the database
+     * @param  array  $data
+     * @return int
+     */
     public function insertData(array $data): int
     {
         $this->db->trans_start();
@@ -78,5 +90,4 @@ class Autoexec_outposts_model extends CI_Model
             return $count;
         }
     }
-
 }

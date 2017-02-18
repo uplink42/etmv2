@@ -15,20 +15,29 @@ class Recovery extends CI_Controller
         $this->username = $_REQUEST['user'] ?? '';
     }
 
-    public function index(string $type = "password")
+    /**
+     * Loads the username/password recovery page
+     * @param  string $type 
+     * @return void       
+     */
+    public function index(string $type = "password") : void
     {
         $data['view']      = "recovery/recover_" . $type . "_v";
         $data['no_header'] = 1;
         $this->load->view('main/_template_v', $data);
     }
 
-    public function recoverPassword()
+    /**
+     * Begins the password recovery validation
+     * @return void
+     */
+    public function recoverPassword() : void
     {
         $this->load->model('Recovery_model');
         $user_data = $this->Recovery_model->getUserByEmail($this->username, $this->email);
 
         if (!$user_data) {
-            sleep(3);
+            sleep(3); //simulate the lookup delay
             $this->doRecoveryMsg("success");
         } else {
             $validation = $this->ValidateRequest->validateUserEmail($this->username, $this->email);
@@ -41,7 +50,12 @@ class Recovery extends CI_Controller
         }
     }
 
-    private function startPasswordRecovery(stdClass $user_data)
+    /**
+     * Starts the password recovery procedure
+     * @param  stdClass $user_data 
+     * @return void              
+     */
+    private function startPasswordRecovery(stdClass $user_data) : void
     {
         $this->load->model('common/Auth');
         $new_password = $this->Auth->generateRandomPassword();
@@ -67,7 +81,11 @@ class Recovery extends CI_Controller
         }
     }
 
-    public function recoverUsername()
+    /**
+     * Begin the username recovery validation
+     * @return void
+     */
+    public function recoverUsername() : void
     {
         $this->load->model('Recovery_model');
         $result = $this->Recovery_model->getUsernameByEmail($this->email);
@@ -80,7 +98,13 @@ class Recovery extends CI_Controller
         }
     }
 
-    private function startUsernameRecovery(string $username, string $email)
+    /**
+     * Begins the username recovery procedure
+     * @param  string $username 
+     * @param  string $email    
+     * @return void           
+     */
+    private function startUsernameRecovery(string $username, string $email) : void
     {
         $this->load->model('common/Email');
         $data['user'] = $username;
@@ -98,7 +122,12 @@ class Recovery extends CI_Controller
         }
     }
 
-    private function doRecoveryMsg(string $type)
+    /**
+     * Dispatches the result message to the client
+     * @param  string $type 
+     * @return string json       
+     */
+    private function doRecoveryMsg(string $type) : void
     {
         if ($type == "success") {
             $notice = "success";
@@ -107,8 +136,6 @@ class Recovery extends CI_Controller
             $notice = "error";
             $msg    = Msg::RECOVERY_ERROR;
         }
-
         echo json_encode(array("notice" => $notice, "message" => $msg));
     }
-
 }

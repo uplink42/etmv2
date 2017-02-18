@@ -13,7 +13,7 @@ class Login_model extends CI_Model
     /**
      * Get the current username's info
      * @param  string $username 
-     * @return [stdClass]           
+     * @return stdClass           
      */
     public function getUserData(string $username) : stdClass
     {
@@ -24,7 +24,7 @@ class Login_model extends CI_Model
 
     /**
      * Checks if session is valid or not
-     * @return [bool]
+     * @return bool
      */
     public function checkSession() : bool
     {
@@ -45,7 +45,7 @@ class Login_model extends CI_Model
     /**
      * Returns a user's character list
      * @param  int    $user_id 
-     * @return [array]          
+     * @return array          
      */
     public function getCharacterList(int $user_id) : array
     {

@@ -14,10 +14,16 @@ class Tradesimulator extends MY_Controller
         $this->load->model('TradeSimulator_model');
     }
 
-    public function index(int $character_id, array $msg = null, $res = null)
+    /**
+     * Loads the trade simulator page
+     * @param  int        $character_id 
+     * @param  array|null $msg            error msg from previous page       
+     * @param  [type]     $res            display results state?
+     * @return void         
+     */
+    public function index(int $character_id, array $msg = null, $res = null) : void
     {
         if ($this->enforce($character_id, $this->user_id)) {
-
             $aggregate        = $this->aggregate;
             $data             = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $data['selected'] = "tradesimulator";
@@ -31,9 +37,7 @@ class Tradesimulator extends MY_Controller
                 if (isset($msg)) {
                     buildMessage($msg['notice'], $msg['message'], 'main/tradesimulator_v');
                 }
-
                 $res ? $data['results'] = $res : '';
-
             } else {
                 $data["notice"]  = "error";
                 $data["message"] = Msg::CREST_CONNECT_FAILURE;
@@ -41,29 +45,40 @@ class Tradesimulator extends MY_Controller
 
             $data['view'] = 'main/tradesimulator_v';
             $this->load->view('main/_template_v', $data);
-
         }
     }
 
+    /**
+     * Gets all trade routes for this user
+     * @param  int    $character_id 
+     * @return array               
+     */
     public function listTradeRoutes(int $character_id): array
     {
         if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id)) {
             $this->load->model('TradeRoutes_model');
             $result = $this->TradeRoutes_model->getRoutes($this->user_id);
-
             return $result;
         }
     }
 
+    /**
+     * Gets all stock lists for this user
+     * @return [type] [description]
+     */
     public function getLists(): array
     {
         $this->load->model('StockLists_model');
         $lists = $this->StockLists_model->getStockLists($this->user_id);
-
         return $lists;
     }
 
-    public function process(int $character_id)
+    /**
+     * Begins the price check
+     * @param  int    $character_id 
+     * @return string json          
+     */
+    public function process(int $character_id) : void
     {
         if (!empty($_REQUEST['origin-station']) &&
             !empty($_REQUEST['buy-method']) &&
@@ -102,7 +117,6 @@ class Tradesimulator extends MY_Controller
                     $buy_method,
                     $sell_method,
                     $stocklist);
-
                 $this->load->model('common/Log');
                 $this->Log->addEntry('tradesim', $this->user_id);
                 $this->index($character_id, null, $res);
@@ -116,5 +130,4 @@ class Tradesimulator extends MY_Controller
             $this->index($character_id, $msg);
         }
     }
-
 }

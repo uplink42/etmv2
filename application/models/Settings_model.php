@@ -13,7 +13,7 @@ class Settings_model extends CI_Model
     /**
      * Get a user's email
      * @param  int    $id_user 
-     * @return [stdClass]          
+     * @return stdClass          
      */
     public function getEmail(int $id_user): stdClass
     {
@@ -29,7 +29,7 @@ class Settings_model extends CI_Model
      * Change a user's email. Returns true if successful.
      * @param  int    $id_user 
      * @param  string $email   
-     * @return [bool]          
+     * @return bool          
      */
     public function changeEmail(int $id_user, string $email): bool
     {
@@ -47,7 +47,7 @@ class Settings_model extends CI_Model
     /**
      * Get the user's report selection
      * @param  int    $id_user 
-     * @return [stdClass]          
+     * @return stdClass          
      */
     public function getReportSelection(int $id_user): stdClass
     {
@@ -63,7 +63,7 @@ class Settings_model extends CI_Model
      * Change the user's report selection
      * @param  int    $id_user 
      * @param  string $value   
-     * @return [bool]          
+     * @return bool          
      */
     public function changeReports(int $id_user, string $value): bool
     {
@@ -84,7 +84,7 @@ class Settings_model extends CI_Model
      * Change the user's password. Returns true if successful
      * @param  int    $id_user 
      * @param  string $password 
-     * @return [bool]           
+     * @return bool           
      */
     public function changePassword(int $id_user, string $password): bool
     {

@@ -37,7 +37,7 @@ class Updater_model extends CI_Model
     /**
      * Initializes the update procedure
      * @param  string $username
-     * @return [void]
+     * @return void
      */
     public function init(string $username) : void
     {
@@ -58,7 +58,7 @@ class Updater_model extends CI_Model
     /**
      * Generates the data (totals) for the update table
      * @param  string $username 
-     * @return [array]           character and account totals
+     * @return array           character and account totals
      */
     public function resultTable(string $username): array
     {
@@ -118,7 +118,7 @@ class Updater_model extends CI_Model
     /**
      * Returns the list of all api keys for this user
      * @param  string $username 
-     * @return [array]           character keys
+     * @return array           character keys
      */
     public function getKeys(string $username) : array
     {
@@ -138,7 +138,7 @@ class Updater_model extends CI_Model
      * Begins checking each key's validity (e.g expired or wrong permissions)
      * @param  array  $user_keys 
      * @param  string $username  
-     * @return [bool]            validation result
+     * @return bool            validation result
      */
     public function processAPIKeys(array $user_keys, string $username) : bool
     {
@@ -171,7 +171,7 @@ class Updater_model extends CI_Model
      * @param  [int] $apikey  
      * @param  [string] $vcode   
      * @param  [string] $char_id 
-     * @return [void]          
+     * @return void          
      */
     public function checkCharacterKeys(int $apikey, string $vcode, string $char_id) : void
     {
@@ -237,7 +237,7 @@ class Updater_model extends CI_Model
     /**
      * After removing invalid keys and characters, iterate trough existing characters,
      * and begin the update procedure
-     * @return [bool] update result
+     * @return bool update result
      */
     public function iterateAccountCharacters() : bool
     {
@@ -279,7 +279,7 @@ class Updater_model extends CI_Model
 
     /**
      * Update wallet balance
-     * @return [void]
+     * @return void
      */
     private function getWalletBalance() : void
     {
@@ -296,7 +296,7 @@ class Updater_model extends CI_Model
 
     /**
      * Update broker relations skill level
-     * @return [void]
+     * @return void
      */
     private function getBrokerRelationsLevel() : void
     {
@@ -312,7 +312,7 @@ class Updater_model extends CI_Model
 
     /**
      * Update accounting skill level 
-     * @return [void]
+     * @return void
      */
     private function getAccountingLevel() : void
     {
@@ -328,7 +328,7 @@ class Updater_model extends CI_Model
 
     /**
      * Update corp standings
-     * @return [void]
+     * @return void
      */
     private function getCorpStandings() : void
     {
@@ -354,7 +354,7 @@ class Updater_model extends CI_Model
 
     /**
      * Update faction standings
-     * @return [void]
+     * @return void
      */
     private function getFactionStandings() : void
     {
@@ -381,7 +381,7 @@ class Updater_model extends CI_Model
     /**
      * Update transaction list. Can start from an arbitrary transaction reference
      * @param  boolean $refID reference to start with, or false if none
-     * @return [void]         
+     * @return void         
      */
     private function getTransactions($refID = false) : void
     {
@@ -449,7 +449,7 @@ class Updater_model extends CI_Model
 
     /**
      * Update contracts list
-     * @return [void]
+     * @return void
      */
     private function getContracts() : void
     {
@@ -530,7 +530,7 @@ class Updater_model extends CI_Model
 
     /**
      * Updates Market orders
-     * @return [void]
+     * @return void
      */
     private function getMarketOrders() : void
     {
@@ -642,7 +642,7 @@ class Updater_model extends CI_Model
     /**
      * Updates the asset list. Fetches assets 4 levels deep in containers
      * Todo: recursively
-     * @return [void]
+     * @return void
      */
     private function getAssets() : void
     {
@@ -727,7 +727,7 @@ class Updater_model extends CI_Model
 
     /**
      * Updates general character info (balance, escrow, etc)
-     * @return [void]
+     * @return void
      */
     public function updateCharacterInfo() : void
     {
@@ -746,7 +746,7 @@ class Updater_model extends CI_Model
 
      /**
      * Sets the number of new contracts, transactions etc since last visit
-     * @return [void]
+     * @return void
      */
     public function setNewInfo() : void
     {
@@ -763,7 +763,7 @@ class Updater_model extends CI_Model
     /**
      * After all transactions are added, calculate profits and taxes with FIFO and update remaining 
      * quantities in the database
-     * @return [void]
+     * @return void
      */
     public function calculateProfits() : void
     {
@@ -924,7 +924,7 @@ class Updater_model extends CI_Model
      * Update each character's total profit, sales, etc for this day
      * @param  bool|boolean $global global update flag
      * @param  string|null  $user   username
-     * @return [array]              result list, only for non global update
+     * @return array              result list, only for non global update
      */
     public function updateTotals(bool $global = false, string $user = null) : ?array
     {
@@ -999,7 +999,7 @@ class Updater_model extends CI_Model
     /**
      * Returns a list of all API keys for a given user
      * @param  int    $id_user 
-     * @return [array]          
+     * @return array          
      */
     public function getAPIKeys(int $id_user): array
     {
@@ -1018,7 +1018,7 @@ class Updater_model extends CI_Model
     /**
      * Locks the user from updating
      * @param  string $username 
-     * @return [void]           
+     * @return void           
      */
     public function lock(string $username) : void
     {
@@ -1030,7 +1030,7 @@ class Updater_model extends CI_Model
     /**
      * Releases the update lock
      * @param  string $username 
-     * @return [void]           
+     * @return void           
      */
     public function release(string $username) : void
     {
@@ -1062,7 +1062,7 @@ class Updater_model extends CI_Model
     /**
      * Fetch current changelog
      * @param  bool|boolean $recent recent changelog flag (only 3 entries)
-     * @return [array]             changelog result  
+     * @return array             changelog result  
      */
     public function getChangeLog(bool $recent = false): array
     {

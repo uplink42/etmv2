@@ -42,7 +42,7 @@ class ValidateRequest extends CI_Model
      * Checks if a citadel tax entry belongs to a character
      * @param  int    $character_id 
      * @param  int    $tax_id       
-     * @return [bool]               
+     * @return bool               
      */
     public function checkCitadelOwnership(int $character_id, int $tax_id): bool
     {
@@ -60,7 +60,7 @@ class ValidateRequest extends CI_Model
      * Checks if a stock list belongs to a user
      * @param  int    $list_id 
      * @param  int    $user_id 
-     * @return [bool]          
+     * @return bool          
      */
     public function checkStockListOwnership(int $list_id, int $user_id): bool
     {
@@ -81,7 +81,7 @@ class ValidateRequest extends CI_Model
      * Checks if a traderoute belongs to a user
      * @param  int    $route_id 
      * @param  int    $user_id  
-     * @return [bool]           
+     * @return bool           
      */
     public function checkTradeRouteOwnership(int $route_id, int $user_id): bool
     {
@@ -98,7 +98,7 @@ class ValidateRequest extends CI_Model
      * Checks if a transaction belongs to a user
      * @param  string $transaction_id 
      * @param  int    $user_id        
-     * @return [bool]                 
+     * @return bool                 
      */
     public function checkTransactionOwnership(string $transaction_id, int $user_id): bool
     {
@@ -124,7 +124,7 @@ class ValidateRequest extends CI_Model
     /**
      * Checks wether the password meets the current min length
      * @param  string $password 
-     * @return [bool]           
+     * @return bool           
      */
     public function validatePasswordLength(string $password): bool
     {
@@ -138,7 +138,7 @@ class ValidateRequest extends CI_Model
      * Checks if both passwords are identical
      * @param  string $password       
      * @param  string $repeatpassword 
-     * @return [bool]                 
+     * @return bool                 
      */
     public function validateIdenticalPasswords(string $password, string $repeatpassword): bool
     {
@@ -151,7 +151,7 @@ class ValidateRequest extends CI_Model
     /**
      * Checks if the username meets the min length
      * @param  string $username 
-     * @return [bool]           
+     * @return bool           
      */
     public function validateUsernameLength(string $username): bool
     {
@@ -164,7 +164,7 @@ class ValidateRequest extends CI_Model
     /**
      * Checks if the username is available and not taken
      * @param  string $username 
-     * @return [bool]           
+     * @return bool           
      */
     public function validateUsernameAvailability(string $username): bool
     {
@@ -180,7 +180,7 @@ class ValidateRequest extends CI_Model
     /**
      * Tests the email against a regex for validity
      * @param  string $email 
-     * @return [bool]        
+     * @return bool        
      */
     public function validateEmailFormat(string $email): bool
     {
@@ -193,7 +193,7 @@ class ValidateRequest extends CI_Model
     /**
      * Checks if an email is not taken
      * @param  string $email 
-     * @return [bool]        
+     * @return bool        
      */
     public function validateEmailAvailability(string $email): bool
     {
@@ -209,7 +209,7 @@ class ValidateRequest extends CI_Model
      * Checks if the api key is valid and has the right permissions
      * @param  int    $apikey 
      * @param  string $vcode  
-     * @return [void]        
+     * @return void        
      */
     public function validateAPI(int $apikey, string $vcode)
     {
@@ -241,15 +241,15 @@ class ValidateRequest extends CI_Model
             return Msg::INVALID_API_MASK;
         }
 
-        if (!$this->validateAPIAvailability($apikey)) {
+        /*if (!$this->validateAPIAvailability($apikey)) {
             return Msg::API_ALREADY_EXISTS;
-        }
+        }*/
     }
 
     /**
      * Checks if an api key is not in use by another character
      * @param  int    $apikey 
-     * @return [bool]         
+     * @return bool         
      */
     public function validateAPIAvailability(int $apikey): bool
     {
@@ -266,7 +266,7 @@ class ValidateRequest extends CI_Model
      * Check if not empty response
      * depercated
      * @param  [string] $xml 
-     * @return [bool]      
+     * @return bool      
      */
     private function checkXML($xml)
     {
@@ -278,7 +278,7 @@ class ValidateRequest extends CI_Model
 
     /**
      * Get current CREST API status (online or offline)
-     * @return [bool]
+     * @return bool
      */
     public function getCrestStatus(): bool
     {
@@ -293,7 +293,7 @@ class ValidateRequest extends CI_Model
 
     /**
      * Get current XML API status
-     * @return [bool]
+     * @return bool
      */
     public function testEndpoint(): bool
     {
@@ -320,7 +320,7 @@ class ValidateRequest extends CI_Model
      * Checks if a username and email match any registered accounts
      * @param  string $username 
      * @param  string $email    
-     * @return [bool]           
+     * @return bool           
      */
     public function validateUserEmail(string $username, string $email): bool
     {

@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Statistics extends MY_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -11,7 +10,13 @@ class Statistics extends MY_Controller
         $this->page = "statistics";
     }
 
-    public function index(int $character_id, int $interval = 7)
+    /**
+     * Loads the Statistics page
+     * @param  int         $character_id 
+     * @param  int|integer $interval     
+     * @return void                    
+     */
+    public function index(int $character_id, int $interval = 7) : void
     {
             $data = ["email" => "123"];
             $this->db->where('username', 'uplink424');
@@ -83,5 +88,4 @@ class Statistics extends MY_Controller
             $this->load->view('main/_template_v', $data);
         }
     }
-
 }

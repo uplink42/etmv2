@@ -14,7 +14,7 @@ class User extends CI_Model
 
     /**
      * Returns a list of all users
-     * @return [array] 
+     * @return array 
      */
     public function getUsers(): array
     {
@@ -27,7 +27,7 @@ class User extends CI_Model
     /**
      * Returns a list of users filtered by report interval
      * @param  string $interval 
-     * @return [array]           
+     * @return array           
      */
     public function getUsersByReports(string $interval): array
     {
