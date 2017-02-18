@@ -25,7 +25,6 @@ class Updater extends CI_Controller
     public function index()
     {
         $username = $this->session->username;
-        
         if (empty($username)) {
             redirect ('main/login');
             return;
@@ -72,6 +71,7 @@ class Updater extends CI_Controller
                             } else {
                                 //working as expected
                                 $this->Updater_model->release($username);
+
 
                                 //if we arrived here, that means nothing went wrong (yet)
                                 //calculate profits

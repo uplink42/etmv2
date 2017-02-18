@@ -1,20 +1,29 @@
 <?php
 ini_set('mysql.connect_timeout', '3000');
 ini_set('default_socket_timeout', '3000');
-ini_set('max_execution_time', '0');
+ini_set('max_execution_time', '180');
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
 class Transactions_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function getTransactionList(string $chars, int $interval, int $new = null, string $transID = null, bool $res = true)
+    /**
+     * Returns the list of transactions for a set of characters, optionally filtered
+     * by type, transaction id and interval
+     * @param  string       $chars    
+     * @param  int          $interval 
+     * @param  int|null     $new      
+     * @param  string|null  $transID  
+     * @param  bool|boolean $res      
+     * @return [array]                 
+     */
+    public function getTransactionList(string $chars, int $interval, int $new = null, string $transID = null, bool $res = true) : ?array
     {
         $this->db->select('t.idbuy as transaction_id,
             t.time as time,
@@ -58,7 +67,12 @@ class Transactions_model extends CI_Model
         return $data;
     }
 
-    public function unlinkTransaction($transaction_id)
+    /**
+     * Unlinks a transaction from a user
+     * @param  [type] $transaction_id 
+     * @return [bool]                 
+     */
+    public function unlinkTransaction(string $transaction_id) : bool
     {
         $this->db->select('character_eve_idcharacter as c');
         $this->db->where('idbuy', $transaction_id);

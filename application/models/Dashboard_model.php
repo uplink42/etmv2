@@ -11,6 +11,11 @@ class Dashboard_model extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * Returns the required data to build the networth distribution pie chart
+     * @param  string $chars 
+     * @return [json]        
+     */
     public function getPieData(string $chars): string
     {
         $this->db->select('sum(networth) as networth, sum(escrow) as escrow, sum(total_sell) as total_sell, sum(balance) as balance');
@@ -59,10 +64,14 @@ class Dashboard_model extends CI_Model
 
         $arrData["chart"];
         $jsonEncodedData = json_encode($arrData);
-
         return $jsonEncodedData;
     }
 
+    /**
+     * Return the list of weekly profits for the sparkline
+     * @param  string $chars 
+     * @return [string]        
+     */
     public function getWeekProfits(string $chars): string
     {
         $this->db->select('total_profit');
@@ -70,10 +79,6 @@ class Dashboard_model extends CI_Model
         $this->db->where("date>= (now() - INTERVAL 7 DAY)");
         $this->db->order_by('date', 'asc');
         $query = $this->db->get('history');
-
-        /*$query = $this->db->query("SELECT total_profit FROM history
-        WHERE characters_eve_idcharacters = '$character_id'
-        AND date >= now() - INTERVAL 7 DAY");*/
         $result = $query->result_array();
 
         $data = "[";
@@ -87,6 +92,11 @@ class Dashboard_model extends CI_Model
         return $data;
     }
 
+    /**
+     * Returns the trend line for a set of characters
+     * @param  string $chars 
+     * @return [array]        
+     */
     public function getTotalProfitsTrends(string $chars): array
     {
 
@@ -108,10 +118,15 @@ class Dashboard_model extends CI_Model
         $today_profit           = $query2->row()->sum;
         $week_avg == 0 ? $trend = 0 : $trend = $today_profit / $week_avg * 100;
         $data                   = ["total_week" => $result, "avg_week" => $week_avg, "trend_today" => $trend];
-
         return $data;
     }
 
+    /**
+     * Returns the number of new contracts, transactions, etc on the main page
+     * Todo: re-do for several characters
+     * @param  string $chars 
+     * @return [stdClass]        
+     */
     public function getNewInfo(string $chars): stdClass
     {
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
@@ -119,8 +134,14 @@ class Dashboard_model extends CI_Model
         return $result = $query->row();
     }
 
+    /**
+     * Returns a short scenario with the latest profits for a
+     * set of characters and a specified interval
+     * @param  int|integer $interval 
+     * @param  string|null $chars    
+     * @return [array]                
+     */
     public function getProfits(int $interval = 1, string $chars = null): array
-    //redo this query, profit data
     {
         $this->db->select('p.profit_unit as profit_unit,
                         p.quantity_profit as quantity,

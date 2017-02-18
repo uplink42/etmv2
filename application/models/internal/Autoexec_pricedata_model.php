@@ -48,7 +48,7 @@ class Autoexec_pricedata_model extends CI_Model
             chunk("item_price_data",
                 array('item_eve_iditem', 'price_evecentral'), $fixedPriceData)
         );
-        //bpcs as 0
+        //set bpcs as 0
         $this->db->query("UPDATE item_price_data JOIN item ON item.eve_iditem = item_price_data.item_eve_iditem SET item_price_data.price_evecentral = 0 WHERE item.name LIKE '%blueprint%'");
 
         $this->db->trans_complete();

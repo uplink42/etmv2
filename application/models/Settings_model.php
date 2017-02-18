@@ -5,6 +5,16 @@ if (!defined('BASEPATH')) {
 
 class Settings_model extends CI_Model
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Get a user's email
+     * @param  int    $id_user 
+     * @return [stdClass]          
+     */
     public function getEmail(int $id_user): stdClass
     {
         $this->db->select('email');
@@ -15,6 +25,12 @@ class Settings_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Change a user's email. Returns true if successful.
+     * @param  int    $id_user 
+     * @param  string $email   
+     * @return [bool]          
+     */
     public function changeEmail(int $id_user, string $email): bool
     {
         $data = array("email" => $email);
@@ -28,6 +44,11 @@ class Settings_model extends CI_Model
         return false;
     }
 
+    /**
+     * Get the user's report selection
+     * @param  int    $id_user 
+     * @return [stdClass]          
+     */
     public function getReportSelection(int $id_user): stdClass
     {
         $this->db->select('reports');
@@ -38,6 +59,12 @@ class Settings_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Change the user's report selection
+     * @param  int    $id_user 
+     * @param  string $value   
+     * @return [bool]          
+     */
     public function changeReports(int $id_user, string $value): bool
     {
         $data = ["reports" => $value];
@@ -53,13 +80,19 @@ class Settings_model extends CI_Model
         return true;
     }
 
+    /**
+     * Change the user's password. Returns true if successful
+     * @param  int    $id_user 
+     * @param  string $password 
+     * @return [bool]           
+     */
     public function changePassword(int $id_user, string $password): bool
     {
         $this->load->model('common/Auth');
         $hashed = $this->Auth->createHashedPassword($password);
 
         $data = ["password" => $hashed['password'],
-            "salt"              => $hashed['salt']];
+                 "salt"     => $hashed['salt']];
 
         $this->db->trans_start();
         $this->db->where('iduser', $id_user);
@@ -71,5 +104,4 @@ class Settings_model extends CI_Model
         }
         return true;
     }
-
 }

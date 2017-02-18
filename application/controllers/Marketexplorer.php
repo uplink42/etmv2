@@ -18,6 +18,7 @@ class Marketexplorer extends MY_Controller
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
 
+            $data['market']   = true;
             $data['selected'] = "marketexplorer";
             $data['view']     = 'main/marketexplorer_v';
             $this->load->view('main/_template_v', $data);

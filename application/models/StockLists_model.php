@@ -12,6 +12,11 @@ class StockLists_model extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * Returns all stock lists for a user
+     * @param  int    $user_id 
+     * @return [array]         
+     */
     public function getStockLists(int $user_id) : array
     {
         $this->db->select('itemlist.name, itemlist.iditemlist');
@@ -23,10 +28,17 @@ class StockLists_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Creates a new, empty stock list for a user.
+     * Returns the ID if successful
+     * @param  int    $user_id 
+     * @param  string $name    
+     * @return [bool|string]          
+     */
     public function createEmptyList(int $user_id, string $name)
     {
         $data = array("user_iduser" => $user_id,
-            "name"                      => $name);
+                      "name"        => $name);
         $query = $this->db->insert('itemlist', $data);
 
         if ($this->db->affected_rows() != 0) {
@@ -36,6 +48,11 @@ class StockLists_model extends CI_Model
         return false;
     }
 
+    /**
+     * Gets all items in a list
+     * @param  int    $id_list 
+     * @return [array]          
+     */
     public function getItems(int $id_list) : array
     {
         $this->db->select('i.name as name, i.volume as vol, COALESCE(p.price_evecentral,0) as price, i.eve_iditem as id');
@@ -50,6 +67,11 @@ class StockLists_model extends CI_Model
         return $query->result();
     }
 
+    /**
+     * Generates the autocomplete results for item searching
+     * @param  string $input 
+     * @return [array]        
+     */
     public function queryItems(string $input) : array
     {
         $this->db->select('name as value');
@@ -76,7 +98,12 @@ class StockLists_model extends CI_Model
         return $result;
     }
     
-
+    /**
+     * Inserts a new item in a list
+     * @param  string $name    
+     * @param  int    $list_id 
+     * @return [array]          
+     */
     public function insertItem(string $name, int $list_id) : array
     {
         $item  = "";
@@ -95,7 +122,7 @@ class StockLists_model extends CI_Model
             if ($qtotal->row()->sum < $limit) {
                 $item_id = $q1->row()->eve_iditem;
                 $data    = array("itemlist_iditemlist" => $list_id,
-                    "item_eve_iditem"                      => $item_id);
+                                 "item_eve_iditem"     => $item_id);
                 $q2 = $this->db->query("INSERT IGNORE INTO itemcontents (iditemcontents, itemlist_iditemlist, item_eve_iditem)
                 VALUES ('NULL', '$list_id', '$item_id')");
 
@@ -110,10 +137,16 @@ class StockLists_model extends CI_Model
         return array("notice" => $notice, "message" => $msg, "item" => $item);
     }
 
+    /**
+     * Removes an item from a list
+     * @param  int    $item_id 
+     * @param  int    $list_id 
+     * @return [array]          
+     */
     public function removeItem(int $item_id, int $list_id) : array
     {
         $data = array("itemlist_iditemlist" => $list_id,
-            "item_eve_iditem"                   => $item_id);
+                      "item_eve_iditem"     => $item_id);
 
         $query = $this->db->delete('itemcontents', $data);
         if ($this->db->affected_rows() != 0) {
@@ -127,6 +160,11 @@ class StockLists_model extends CI_Model
         return array("notice" => $notice, "message" => $message);
     }
 
+    /**
+     * Removes a stock list and all its contents
+     * @param  int    $list_id 
+     * @return [array]          
+     */
     public function removeList(int $list_id) : array
     {
         $data = array('iditemlist' => $list_id);

@@ -9,6 +9,12 @@ class Log extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * Logs an event in the database
+     * @param string $type    event type
+     * @param int    $id_user
+     * @return [void]
+     */
     public function addEntry(string $type, int $id_user)
     {
         $data = ["type"        => $type,
@@ -16,5 +22,4 @@ class Log extends CI_Model
 
         $this->db->insert('log', $data);
     }
-
 }

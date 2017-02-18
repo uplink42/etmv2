@@ -5,12 +5,17 @@ if (!defined('BASEPATH')) {
 
 class Statistics_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Chart data and configs for the trade volumes chart
+     * @param  string $chars    
+     * @param  int    $interval 
+     * @return [json]           
+     */
     public function buildVolumesChart(string $chars, int $interval): string
     {
         $chart = array(
@@ -26,7 +31,6 @@ class Statistics_model extends CI_Model
         );
 
         $index = -1;
-
         $inner = "";
         $int   = $interval;
         for ($i = 1; $i < $int - 1; $i++) {
@@ -73,7 +77,6 @@ class Statistics_model extends CI_Model
         for ($i = 0, $max = count($expenses_per_day); $i < $max; $i++) {
             array_push($dataExpenses, array('value' => $expenses_per_day[$i]['sum']));
         }
-
         $datasetExpenses = array('seriesname' => 'Expenses', 'data' => $dataExpenses);
 
         //revenue
@@ -95,6 +98,14 @@ class Statistics_model extends CI_Model
         return $jsonEncodedData;
     }
 
+    /**
+     * Gathers the problematic items for an interval and character set, optionally
+     * filtered to a maximum to use on reports
+     * @param  string   $chars    
+     * @param  int      $interval 
+     * @param  int|null $limit    
+     * @return [array]             
+     */
     public function getProblematicItems(string $chars, int $interval, int $limit = null): array
     {
         $this->db->select('item.eve_iditem as item_id,
@@ -118,6 +129,12 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Generate the profits table for an interval and character set
+     * @param  string $chars    [description]
+     * @param  int    $interval [description]
+     * @return [array]           [description]
+     */
     public function getProfitsTable(string $chars, int $interval): array
     {
         $this->db->select('sum(total_profit) as total_profit,
@@ -149,6 +166,15 @@ class Statistics_model extends CI_Model
         return array("daily" => $result_day, "total" => $total);
     }
 
+    /**
+     * Gathers the best items by profit for an interval and character set, optionally
+     * filtered to a maximum to use on reports
+     * @param  string       $chars    
+     * @param  int          $interval 
+     * @param  bool|boolean $chart    
+     * @param  int|null     $limit    
+     * @return [array]                
+     */
     public function getBestItemsRaw(string $chars, int $interval, bool $chart = false, int $limit = null): array
     {
         $this->db->select('item.eve_iditem as item_id,
@@ -177,6 +203,14 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Gathers the best items by margin for an interval and character set, optionally
+     * filtered to a maximum to use on reports
+     * @param  string   $chars    
+     * @param  int      $interval 
+     * @param  int|null $limit    
+     * @return [array]             
+     */
     public function getBestItemsMargin(string $chars, int $interval, int $limit = null): array
     {
         $this->db->select('item.eve_iditem as item_id,
@@ -206,6 +240,14 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Gathers the best customers for an interval and character set, optionally
+     * filtered to a maximum to use on reports. Performs API requests to find
+     * out names not yet stored in the database
+     * @param  string $chars    
+     * @param  int    $interval 
+     * @return [array]           
+     */
     public function getBestCustomersRawProfit(string $chars, int $interval): array
     {
         $this->db->select('t2.client AS soldTo,
@@ -247,6 +289,12 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Gathers the best timezones by margin for an interval and character set
+     * @param  string $chars    [description]
+     * @param  int    $interval [description]
+     * @return [type]           [description]
+     */
     public function getBestTZ(string $chars, int $interval): array
     {
         $this->db->select('t2.time as time_sell,
@@ -287,6 +335,13 @@ class Statistics_model extends CI_Model
         return $tz_profits;
     }
 
+    /**
+     * Gathers the fastest turnovers for an interval and character set, optionally
+     * filtered to a maximum to use on reports
+     * @param  string $chars    
+     * @param  int    $interval 
+     * @return [array]           
+     */
     public function getFastestTurnovers(string $chars, int $interval): array
     {
         $this->db->select('item.name as item,
@@ -308,6 +363,14 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Gathers the best IPH for an interval and character set, optionally
+     * filtered to a maximum to use on reports
+     * @param  string   $chars    
+     * @param  int      $interval 
+     * @param  int|null $limit    
+     * @return [array]             
+     */
     public function getBestIPH(string $chars, int $interval, int $limit = null): array
     {
         $this->db->select('item.name AS item,
@@ -334,6 +397,14 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Gathers the highest losses for an interval and character set, optionally
+     * filtered to a maximum to use on reports
+     * @param  string   $chars    
+     * @param  int      $interval 
+     * @param  int|null $limit    
+     * @return [array]             
+     */
     public function getMarketBlunders(string $chars, int $interval, int $limit = null): array
     {
         $this->db->select('(profit.profit_unit) / ( t1.price_unit ) AS margin,
@@ -353,13 +424,18 @@ class Statistics_model extends CI_Model
         if ($limit) {
             $this->db->limit($limit);
         }
-
         $query  = $this->db->get('');
         $result = $query->result_array();
 
         return $result;
     }
 
+    /**
+     * Gathers the best stations by profit for an interval and character set
+     * @param  string $chars    
+     * @param  int    $interval 
+     * @return [array]           
+     */
     public function getTopStations(string $chars, int $interval): array
     {
         $this->db->select('station.name AS station,
@@ -380,6 +456,12 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Generates the data and configs required to build the item distribution chart
+     * @param  string $chars    
+     * @param  int    $interval 
+     * @return [json]           
+     */
     public function buildDistributionChart(string $chars, int $interval): string
     {
         $arrData["chart"] = array(
@@ -427,8 +509,14 @@ class Statistics_model extends CI_Model
         return $jsonEncodedData;
     }
 
-    //Lifetime stats
-    public function getTotalTransactions(string $chars, string $type = null)
+    /**
+     * Gets the lifetime stats for a set of characters, optionally
+     * filtered by transaction type
+     * @param  string      $chars 
+     * @param  string|null $type  
+     * @return [stdClass]             
+     */
+    public function getTotalTransactions(string $chars, string $type = null) : stdClass
     {
         $this->db->select('count(idbuy) as total');
         $this->db->from('transaction');
@@ -442,7 +530,14 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getSumTransactions(string $chars, string $type = null)
+    /**
+     * Gets the lifetime sum of transactions for a set of characters, optionally
+     * filtered by transaction type
+     * @param  string      $chars 
+     * @param  string|null $type  
+     * @return [stdClass]             
+     */
+    public function getSumTransactions(string $chars, string $type = null) : stdClass
     {
         $this->db->select('sum(price_unit * quantity) as total');
         $this->db->from('transaction');
@@ -456,7 +551,13 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getTotalProfit(string $chars)
+    /**
+     * Gets the lifetime sum of profits for a set of characters, optionally
+     * filtered by transaction type
+     * @param  string $chars 
+     * @return [stdClass]        
+     */
+    public function getTotalProfit(string $chars) : stdClass
     {
         $this->db->select('sum(profit_unit * quantity_profit) as sum');
         $this->db->from('profit');
@@ -467,7 +568,12 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getSignupDate(string $iduser)
+    /**
+     * Returns the user's signup date
+     * @param  string $iduser 
+     * @return [stdClass]         
+     */
+    public function getSignupDate(string $iduser) : stdClass
     {
         $this->db->select('registration_date');
         $this->db->from('user');
@@ -478,7 +584,14 @@ class Statistics_model extends CI_Model
         return $result;
     }
 
-    public function getHighestMetric(string $chars, string $metric)
+    /**
+     * Get highest day and value for a given metric for a set of
+     * characters
+     * @param  string $chars  
+     * @param  string $metric 
+     * @return [stdClass]         
+     */
+    public function getHighestMetric(string $chars, string $metric) : stdClass
     {
         $value = "";
         switch ($metric) {
@@ -497,8 +610,6 @@ class Statistics_model extends CI_Model
         $this->db->from('history');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $query = $this->db->get('');
-
-        log_message('error', $this->db->last_query());
 
         $result = $query->row();
         return $result;

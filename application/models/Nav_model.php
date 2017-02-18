@@ -5,13 +5,18 @@ if (!defined('BASEPATH')) {
 
 class Nav_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function getHeaderData($character_id = "", $aggr = null)
+    /**
+     * Gets the current totals to display in the header section
+     * @param  string $character_id 
+     * @param  [type] $aggr         aggregated charaters flag
+     * @return [array]               
+     */
+    public function getHeaderData($character_id = "", $aggr = null) : array
     {
         if ($aggr == null) {
             $this->db->where('eve_idcharacter', $character_id);
@@ -30,5 +35,4 @@ class Nav_model extends CI_Model
         );
         return $data;
     }
-
 }

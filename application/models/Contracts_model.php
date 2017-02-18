@@ -9,13 +9,22 @@ Config::getInstance()->access = new \Pheal\Access\StaticCheck();
 
 class Contracts_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function getContracts(string $chars, string $filter = null, string $state, int $new = null)
+    /**
+     * Returns a list of all contracts for a set of characters, optionally
+     * filtered by states and types, and queries the eve API for any 
+     * contractor names missing from the database
+     * @param  string      $chars  
+     * @param  string|null $filter contract type
+     * @param  string      $state  contract state
+     * @param  int|null    $new    only return last n new contracts
+     * @return [array]              
+     */
+    public function getContracts(string $chars, string $filter = null, string $state, int $new = null) : array
     {
         $this->db->distinct();
         $this->db->select('c.eve_idcontracts as contract_id,
@@ -97,7 +106,6 @@ class Contracts_model extends CI_Model
                 $this->db->replace('characters_public', $data);
             }
         }
-
         return $result;
     }
 }

@@ -93,7 +93,6 @@ class MY_Controller extends CI_Controller
     private function buildSelector(): array
     {
         switch ($this->page) {
-
             case ('dashboard'):
                 $data['hasInterval'] = true;
                 $data['hasRegion']   = false;

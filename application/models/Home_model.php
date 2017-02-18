@@ -5,12 +5,15 @@ if (!defined('BASEPATH')) {
 
 class Home_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Gets the total stats for the homepage
+     * @return [array]
+     */
     public function getStats() : array
     {
         //profit
@@ -44,6 +47,5 @@ class Home_model extends CI_Model
             "characters"           => ($characters->cha)/10);
 
         return array("data" => $data, "interval" => $interval);
-        return array();
     }
 }

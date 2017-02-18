@@ -35,6 +35,11 @@ class TradeSimulator_model extends CI_Model
     private $stockListID;
     private $stockListName;
 
+    /**
+     * Gets the station ID from name
+     * @param  string $station_name 
+     * @return [type]               
+     */
     public function getStationID(string $station_name)
     {
         if (substr($station_name, 0, 11) === "TRADE HUB: ") {
@@ -54,6 +59,17 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Initialize the price lookup for a stocklist
+     * @param  string $origin      
+     * @param  string $destination 
+     * @param  int    $buyer       
+     * @param  int    $seller      
+     * @param  string $buy_method  
+     * @param  string $sell_method 
+     * @param  int    $stocklist   
+     * @return [array]              
+     */
     public function init(string $origin, string $destination, int $buyer, int $seller, string $buy_method, string $sell_method, int $stocklist)
     {
         $this->stationFromName     = (string) $origin;
@@ -80,12 +96,15 @@ class TradeSimulator_model extends CI_Model
         return $this->generateResults();
     }
 
+    /**
+     * Generates the result array with prices
+     * @return [array] 
+     */
     private function generateResults(): array
     {
         $contents = $this->getStockListContents();
 
         $results = [];
-
         $buy_broker_per  = ($this->brokerFeeFrom - 1) * 100;
         $buy_tax_per     = ($this->transTaxFrom - 1) * 100;
         $sell_broker_per = (1 - $this->brokerFeeTo) * 100;
@@ -111,7 +130,6 @@ class TradeSimulator_model extends CI_Model
             $item_id                   = (int) $row->id;
             $item_name                 = $row->name;
             $row->vol == 0 ? $item_vol = 1 : $item_vol = $row->vol;
-
             $best_buy_price  = $this->getCrestData($item_id, $this->stationFromID, $this->characterFromMethod);
             $buy_broker_fee  = $best_buy_price * ($this->brokerFeeFrom - 1);
             $best_sell_price = $this->getCrestData($item_id, $this->stationToID, $this->characterToMethod);
@@ -120,7 +138,6 @@ class TradeSimulator_model extends CI_Model
 
             $best_buy_price_taxed  = $best_buy_price * $this->brokerFeeFrom;
             $best_sell_price_taxed = $best_sell_price * $this->brokerFeeTo * $this->transTaxTo;
-
             $profit_raw                                 = $best_sell_price_taxed - $best_buy_price_taxed;
             $profit_m3                                  = $profit_raw / $item_vol;
             $best_buy_price_taxed != 0 ? $profit_margin = ($profit_raw / $best_buy_price_taxed) * 100 : $profit_margin = 0;
@@ -143,10 +160,13 @@ class TradeSimulator_model extends CI_Model
         return array("results" => $results, "req" => $taxes);
     }
 
+    /**
+     * Returns the list of all stock list contents
+     * @return [array]
+     */
     private function getStockListContents(): array
     {
         $list = $this->stocklistID;
-
         $this->db->select('i.eve_iditem as id, i.name as name, i.volume as vol');
         $this->db->from('itemlist il');
         $this->db->join('itemcontents ic', 'ic.itemlist_iditemlist = il.iditemlist');
@@ -158,6 +178,13 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Fetches price data from CREST for an item
+     * @param  int    $item_id    
+     * @param  int    $station_id
+     * @param  string $order_type
+     * @return [float]             
+     */
     private function getCrestData(int $item_id, int $station_id, string $order_type): float
     {
         $regionID = $this->getRegionID($station_id)->id;
@@ -189,6 +216,11 @@ class TradeSimulator_model extends CI_Model
         return $price;
     }
 
+    /**
+     * Returns the region ID from the provided station
+     * @param  int    $station_id 
+     * @return [stdClass]             
+     */
     private function getRegionID(int $station_id): stdClass
     {
         $this->db->select('r.eve_idregion as id');
@@ -202,6 +234,11 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Gets the stock list name from an id
+     * @param  int    $stocklist
+     * @return [stdClass]            
+     */
     private function getStockListName(int $stocklist): stdClass
     {
         $this->db->select('name');
@@ -212,6 +249,11 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Returns the character name from an id
+     * @param  int    $id_character 
+     * @return [string]               
+     */
     private function getCharacterName(int $id_character): string
     {
         $this->db->select('name');
@@ -221,5 +263,4 @@ class TradeSimulator_model extends CI_Model
         $result = $query->row()->name;
         return $result;
     }
-
 }
