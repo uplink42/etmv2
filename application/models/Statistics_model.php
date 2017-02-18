@@ -14,7 +14,7 @@ class Statistics_model extends CI_Model
      * Chart data and configs for the trade volumes chart
      * @param  string $chars    
      * @param  int    $interval 
-     * @return [json]           
+     * @return string json           
      */
     public function buildVolumesChart(string $chars, int $interval): string
     {
@@ -104,7 +104,7 @@ class Statistics_model extends CI_Model
      * @param  string   $chars    
      * @param  int      $interval 
      * @param  int|null $limit    
-     * @return [array]             
+     * @return array             
      */
     public function getProblematicItems(string $chars, int $interval, int $limit = null): array
     {
@@ -133,7 +133,7 @@ class Statistics_model extends CI_Model
      * Generate the profits table for an interval and character set
      * @param  string $chars    [description]
      * @param  int    $interval [description]
-     * @return [array]           [description]
+     * @return array           [description]
      */
     public function getProfitsTable(string $chars, int $interval): array
     {
@@ -173,7 +173,7 @@ class Statistics_model extends CI_Model
      * @param  int          $interval 
      * @param  bool|boolean $chart    
      * @param  int|null     $limit    
-     * @return [array]                
+     * @return array                
      */
     public function getBestItemsRaw(string $chars, int $interval, bool $chart = false, int $limit = null): array
     {
@@ -209,7 +209,7 @@ class Statistics_model extends CI_Model
      * @param  string   $chars    
      * @param  int      $interval 
      * @param  int|null $limit    
-     * @return [array]             
+     * @return array             
      */
     public function getBestItemsMargin(string $chars, int $interval, int $limit = null): array
     {
@@ -246,7 +246,7 @@ class Statistics_model extends CI_Model
      * out names not yet stored in the database
      * @param  string $chars    
      * @param  int    $interval 
-     * @return [array]           
+     * @return array           
      */
     public function getBestCustomersRawProfit(string $chars, int $interval): array
     {
@@ -340,7 +340,7 @@ class Statistics_model extends CI_Model
      * filtered to a maximum to use on reports
      * @param  string $chars    
      * @param  int    $interval 
-     * @return [array]           
+     * @return array           
      */
     public function getFastestTurnovers(string $chars, int $interval): array
     {
@@ -369,7 +369,7 @@ class Statistics_model extends CI_Model
      * @param  string   $chars    
      * @param  int      $interval 
      * @param  int|null $limit    
-     * @return [array]             
+     * @return array             
      */
     public function getBestIPH(string $chars, int $interval, int $limit = null): array
     {
@@ -403,7 +403,7 @@ class Statistics_model extends CI_Model
      * @param  string   $chars    
      * @param  int      $interval 
      * @param  int|null $limit    
-     * @return [array]             
+     * @return array             
      */
     public function getMarketBlunders(string $chars, int $interval, int $limit = null): array
     {
@@ -434,7 +434,7 @@ class Statistics_model extends CI_Model
      * Gathers the best stations by profit for an interval and character set
      * @param  string $chars    
      * @param  int    $interval 
-     * @return [array]           
+     * @return array           
      */
     public function getTopStations(string $chars, int $interval): array
     {
@@ -460,7 +460,7 @@ class Statistics_model extends CI_Model
      * Generates the data and configs required to build the item distribution chart
      * @param  string $chars    
      * @param  int    $interval 
-     * @return [json]           
+     * @return string json           
      */
     public function buildDistributionChart(string $chars, int $interval): string
     {
@@ -514,7 +514,7 @@ class Statistics_model extends CI_Model
      * filtered by transaction type
      * @param  string      $chars 
      * @param  string|null $type  
-     * @return [stdClass]             
+     * @return stdClass             
      */
     public function getTotalTransactions(string $chars, string $type = null) : stdClass
     {
@@ -535,7 +535,7 @@ class Statistics_model extends CI_Model
      * filtered by transaction type
      * @param  string      $chars 
      * @param  string|null $type  
-     * @return [stdClass]             
+     * @return stdClass             
      */
     public function getSumTransactions(string $chars, string $type = null) : stdClass
     {
@@ -555,7 +555,7 @@ class Statistics_model extends CI_Model
      * Gets the lifetime sum of profits for a set of characters, optionally
      * filtered by transaction type
      * @param  string $chars 
-     * @return [stdClass]        
+     * @return stdClass        
      */
     public function getTotalProfit(string $chars) : stdClass
     {
@@ -571,7 +571,7 @@ class Statistics_model extends CI_Model
     /**
      * Returns the user's signup date
      * @param  string $iduser 
-     * @return [stdClass]         
+     * @return stdClass         
      */
     public function getSignupDate(string $iduser) : stdClass
     {
@@ -589,7 +589,7 @@ class Statistics_model extends CI_Model
      * characters
      * @param  string $chars  
      * @param  string $metric 
-     * @return [stdClass]         
+     * @return stdClass         
      */
     public function getHighestMetric(string $chars, string $metric) : stdClass
     {

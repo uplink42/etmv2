@@ -22,7 +22,7 @@ class Contracts_model extends CI_Model
      * @param  string|null $filter contract type
      * @param  string      $state  contract state
      * @param  int|null    $new    only return last n new contracts
-     * @return [array]              
+     * @return array              
      */
     public function getContracts(string $chars, string $filter = null, string $state, int $new = null) : array
     {

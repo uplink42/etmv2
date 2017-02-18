@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ini_set('mysql.connect_timeout', '3000');
 ini_set('default_socket_timeout', '3000');
-ini_set('max_execution_time', '300');
+ini_set('max_execution_time', '180');
 
 class Marketorders extends MY_Controller
 {
@@ -19,10 +19,14 @@ class Marketorders extends MY_Controller
         settype($this->check, 'bool');
     }
 
-    public function index(int $character_id)
+    /**
+     * Loads the Market orders page
+     * @param  int    $character_id 
+     * @return void               
+     */
+    public function index(int $character_id) : void
     {
         if ($this->enforce($character_id, $user_id = $this->user_id)) {
-
             $aggregate        = $this->aggregate;
             $data             = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars            = $data['chars'];
@@ -43,5 +47,4 @@ class Marketorders extends MY_Controller
             $this->load->view('main/_template_v', $data);
         }
     }
-
 }

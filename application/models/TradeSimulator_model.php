@@ -68,7 +68,7 @@ class TradeSimulator_model extends CI_Model
      * @param  string $buy_method  
      * @param  string $sell_method 
      * @param  int    $stocklist   
-     * @return [array]              
+     * @return array              
      */
     public function init(string $origin, string $destination, int $buyer, int $seller, string $buy_method, string $sell_method, int $stocklist)
     {
@@ -98,7 +98,7 @@ class TradeSimulator_model extends CI_Model
 
     /**
      * Generates the result array with prices
-     * @return [array] 
+     * @return array 
      */
     private function generateResults(): array
     {
@@ -162,7 +162,7 @@ class TradeSimulator_model extends CI_Model
 
     /**
      * Returns the list of all stock list contents
-     * @return [array]
+     * @return array
      */
     private function getStockListContents(): array
     {
@@ -219,7 +219,7 @@ class TradeSimulator_model extends CI_Model
     /**
      * Returns the region ID from the provided station
      * @param  int    $station_id 
-     * @return [stdClass]             
+     * @return stdClass             
      */
     private function getRegionID(int $station_id): stdClass
     {
@@ -237,7 +237,7 @@ class TradeSimulator_model extends CI_Model
     /**
      * Gets the stock list name from an id
      * @param  int    $stocklist
-     * @return [stdClass]            
+     * @return stdClass            
      */
     private function getStockListName(int $stocklist): stdClass
     {

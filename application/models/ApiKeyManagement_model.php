@@ -16,7 +16,7 @@ class ApiKeyManagement_model extends CI_Model
     /**
      * Get current list of characters and keys for this user
      * @param  int    $id_user 
-     * @return [array]          
+     * @return array          
      */
     public function getCharacterList(int $id_user) : array
     {
@@ -81,9 +81,9 @@ class ApiKeyManagement_model extends CI_Model
                 return Msg::CHARACTER_LIMIT_EXCEEDED;
             }
 
-            $pheal          = new Pheal($apikey, $vcode, "char"); //fetch character name
-            $result         = $pheal->CharacterSheet(array("characterID" => $character_id));
-            $character_name = $this->security->xss_clean($result->name);
+            $pheal            = new Pheal($apikey, $vcode, "char"); //fetch character name
+            $result           = $pheal->CharacterSheet(array("characterID" => $character_id));
+            $character_name   = $this->security->xss_clean($result->name);
             $eve_idcharacter  = $character_id;
             $name             = $this->db->escape($character_name);
             $balance          = 0;

@@ -10,7 +10,6 @@ ini_set('display_errors', 1);
 class Autoexec_pricedata extends CI_Controller
 {
 
-    //update all totals, apis and character data
     public function __construct()
     {
         parent::__construct();
@@ -21,7 +20,12 @@ class Autoexec_pricedata extends CI_Controller
         $this->load->model('common/ValidateRequest');
     }
 
-    public function index()
+    /**
+     * Begins the price updater
+     * Fetches all items's daily prices from CREST
+     * @return void 
+     */
+    public function index() : void
     {
         if (!$this->input->is_cli_request()) {
             die();
@@ -34,5 +38,4 @@ class Autoexec_pricedata extends CI_Controller
             echo Msg::CREST_CONNECT_FAILURE;
         }
     }
-
 }

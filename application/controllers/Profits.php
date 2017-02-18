@@ -6,7 +6,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Profits extends MY_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -14,11 +13,19 @@ class Profits extends MY_Controller
         $this->page = "profits";
     }
 
-    public function index(int $character_id, int $interval = 1, int $item_id = null)
+    /**
+     * Loads the Profits page
+     * @param  int         $character_id 
+     * @param  int|integer $interval     
+     * @param  int|null    $item_id     
+     * @return void                   
+     */
+    public function index(int $character_id, int $interval = 1, int $item_id = null) : void
     {
-        if ($interval > 365) {$interval = 365;}
+        if ($interval > 365) {
+            $interval = 365;
+        }
         if ($this->enforce($character_id, $this->user_id)) {
-
             $aggregate = $this->aggregate;
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];

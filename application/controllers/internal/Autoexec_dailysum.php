@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 
 class Autoexec_dailysum extends CI_Controller
 {
-    //update all totals, apis and character data
     public function __construct()
     {
         parent::__construct();
@@ -15,7 +14,11 @@ class Autoexec_dailysum extends CI_Controller
         $this->load->model('common/User');
     }
 
-    public function index()
+    /**
+     * Kickstarts the update procedure
+     * @return void 
+     */
+    public function index() : void
     {
         if (!$this->input->is_cli_request()) {
             die();
@@ -30,5 +33,4 @@ class Autoexec_dailysum extends CI_Controller
             echo "Updated " . $username . " for " . $dateToday . "\n";
         }
     }
-
 }

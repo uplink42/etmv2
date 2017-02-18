@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Logout extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -12,7 +11,11 @@ class Logout extends CI_Controller
         $this->load->model('common/Msg');
     }
 
-    public function index()
+    /**
+     * Terminates a user session
+     * @return [bool]
+     */
+    public function index() : bool
     {
         $data['view'] = "login/login_v";
         buildMessage("success", Msg::LOGOUT, $data['view']);
@@ -22,8 +25,6 @@ class Logout extends CI_Controller
         $this->session->unset_userdata('start');
         $this->session->unset_userdata('iduser');
         $this->load->view('main/_template_v', $data);
-
         return false;
     }
-
 }

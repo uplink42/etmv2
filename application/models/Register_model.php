@@ -25,7 +25,7 @@ class Register_model extends CI_Model
      * @param  int    $apikey         
      * @param  string $vcode          
      * @param  string $reports        
-     * @return [array]                 
+     * @return array                 
      */
     public function validate(string $username, string $password, string $repeatpassword, string $email, int $apikey, string $vcode, string $reports): array
     {
@@ -116,7 +116,7 @@ class Register_model extends CI_Model
      * Get a list of all API Key characters
      * @param  int    $apikey 
      * @param  string $vcode  
-     * @return [array]         
+     * @return array         
      */
     public function getCharacters(int $apikey, string $vcode) : array
     {

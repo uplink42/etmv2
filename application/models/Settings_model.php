@@ -13,7 +13,7 @@ class Settings_model extends CI_Model
     /**
      * Get a user's email
      * @param  int    $id_user 
-     * @return [stdClass]          
+     * @return stdClass          
      */
     public function getEmail(int $id_user): stdClass
     {
@@ -47,7 +47,7 @@ class Settings_model extends CI_Model
     /**
      * Get the user's report selection
      * @param  int    $id_user 
-     * @return [stdClass]          
+     * @return stdClass          
      */
     public function getReportSelection(int $id_user): stdClass
     {

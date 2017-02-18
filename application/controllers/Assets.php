@@ -21,10 +21,15 @@ class Assets extends MY_Controller
         }
     }
 
-    public function index(int $character_id, int $region_id = 0)
+    /**
+     * Loads the assets page
+     * @param  int         $character_id 
+     * @param  int|integer $region_id    
+     * @return void                    
+     */
+    public function index(int $character_id, int $region_id = 0) : void
     {
         if ($this->enforce($character_id, $this->user_id)) {
-
             $aggregate = $this->aggregate;
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
@@ -49,9 +54,7 @@ class Assets extends MY_Controller
             $asset_list   = $res['result'];
 
             $res['count'] > 300 ? $img = false : $img = true;
-
             $ratio = $this->Assets_model->getWorthSignificant($chars);
-
 
             if ($region_name != "All") {
                 $data['current_asset_value'] = isset($asset_totals[$region_name]) ? $asset_totals[$region_name][0]['total_value'] : 0;

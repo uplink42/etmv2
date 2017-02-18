@@ -19,14 +19,19 @@ class Transactions extends MY_Controller
         settype($this->transID, 'string');
     }
 
-    public function index(int $character_id, int $interval = 14)
+    /**
+     * Displays the transactions page
+     * @param  int         $character_id 
+     * @param  int|integer $interval     
+     * @return void               
+     */
+    public function index(int $character_id, int $interval = 14) : void
     {
         if ($interval > 365) {
             $interval = 365;
         }
 
         if ($this->enforce($character_id, $user_id = $this->user_id)) {
-
             $res              = true;
             $aggregate        = $this->aggregate;
             $data             = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
@@ -34,7 +39,6 @@ class Transactions extends MY_Controller
             $data['selected'] = "transactions";
 
             $this->load->model('Transactions_model');
-
             if ($this->transID) {
                 $this->load->model('ValidateRequest');
                 $res = (bool) $this->ValidateRequest->checkTransactionOwnership($this->transID, $this->user_id);
@@ -60,7 +64,13 @@ class Transactions extends MY_Controller
         }
     }
 
-    public function unlink($transaction_id)
+    /**
+     * Unlinks a transaction and echoes the result back to
+     * the client
+     * @param  [type] $transaction_id 
+     * @return string json                
+     */
+    public function unlink($transaction_id) : void
     {
         $this->load->model('Transactions_model');
         if ($this->ValidateRequest->checkTransactionOwnership($transaction_id, $this->user_id)) {

@@ -11,15 +11,19 @@ final class Dashboard extends MY_Controller
         $this->page = "dashboard";
     }
 
-    //returns all dashboard information to the relevant view
-    public function index(int $character_id, int $interval = 3)
+   /**
+    * Loads the dashboard page
+    * @param  int         $character_id 
+    * @param  int|integer $interval     
+    * @return void                    
+    */
+    public function index(int $character_id, int $interval = 3) : void
     {
         if ($interval > 7) {
             $interval = 7;
         }
 
         if ($this->enforce($character_id, $this->user_id)) {
-
             $aggregate = $this->aggregate;
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
@@ -44,7 +48,6 @@ final class Dashboard extends MY_Controller
             $data['img']            = $img;
             $data['profits']        = $this->injectIcons($profits['result']);
             $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($chars);
-
             $data['view'] = 'main/dashboard_v';
             $this->load->view('main/_template_v', $data);
         }

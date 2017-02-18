@@ -15,7 +15,7 @@ class Auth extends CI_Model
     /**
      * Creates a strong encrypted password
      * @param  string $password 
-     * @return [array]           
+     * @return array           
      */
     public function createHashedPassword(string $password) : array
     {

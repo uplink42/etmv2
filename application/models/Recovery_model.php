@@ -15,7 +15,7 @@ class Recovery_model extends CI_Model
      * user data if so
      * @param  string $username 
      * @param  string $email    
-     * @return [stdClass]           
+     * @return stdClass           
      */
     public function getUserByEmail(string $username, string $email) : stdClass
     {
@@ -30,7 +30,7 @@ class Recovery_model extends CI_Model
     /**
      * Lookup a username by email
      * @param  string $email 
-     * @return [stdClass]        
+     * @return stdClass        
      */
     public function getUsernameByEmail(string $email) : stdClass
     {

@@ -14,7 +14,7 @@ class TradeRoutes_model extends CI_Model
     /**
      * Generates autocomplete results for station names
      * @param  string $input 
-     * @return [array]        
+     * @return array        
      */
     public function queryStations(string $input): array
     {
@@ -42,7 +42,7 @@ class TradeRoutes_model extends CI_Model
      * @param  int    $user_id      
      * @param  string $station_from 
      * @param  string $station_to   
-     * @return [array]               
+     * @return array               
      */
     public function insertRoute(int $user_id, string $station_from, string $station_to): array
     {
@@ -93,7 +93,7 @@ class TradeRoutes_model extends CI_Model
     /**
      * Returns the list of all trade routes for a user
      * @param  int    $user_id 
-     * @return [array]          
+     * @return array          
      */
     public function getRoutes(int $user_id): array
     {

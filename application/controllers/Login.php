@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Login extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -12,12 +11,11 @@ class Login extends CI_Controller
         $this->load->model('common/Msg');
     }
 
-    public function index(string $view = null)
-    {
-
-    }
-
-    public function process()
+    /**
+     * Attempts to login a user
+     * @return void
+     */
+    public function process() : void
     {
         $username = $this->security->xss_clean($this->input->post('username'));
         $password = $this->security->xss_clean($this->input->post('password'));

@@ -209,7 +209,7 @@ class ValidateRequest extends CI_Model
      * Checks if the api key is valid and has the right permissions
      * @param  int    $apikey 
      * @param  string $vcode  
-     * @return [void]        
+     * @return void        
      */
     public function validateAPI(int $apikey, string $vcode)
     {

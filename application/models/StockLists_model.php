@@ -15,7 +15,7 @@ class StockLists_model extends CI_Model
     /**
      * Returns all stock lists for a user
      * @param  int    $user_id 
-     * @return [array]         
+     * @return array         
      */
     public function getStockLists(int $user_id) : array
     {
@@ -51,7 +51,7 @@ class StockLists_model extends CI_Model
     /**
      * Gets all items in a list
      * @param  int    $id_list 
-     * @return [array]          
+     * @return array          
      */
     public function getItems(int $id_list) : array
     {
@@ -70,7 +70,7 @@ class StockLists_model extends CI_Model
     /**
      * Generates the autocomplete results for item searching
      * @param  string $input 
-     * @return [array]        
+     * @return array        
      */
     public function queryItems(string $input) : array
     {
@@ -102,7 +102,7 @@ class StockLists_model extends CI_Model
      * Inserts a new item in a list
      * @param  string $name    
      * @param  int    $list_id 
-     * @return [array]          
+     * @return array          
      */
     public function insertItem(string $name, int $list_id) : array
     {
@@ -141,7 +141,7 @@ class StockLists_model extends CI_Model
      * Removes an item from a list
      * @param  int    $item_id 
      * @param  int    $list_id 
-     * @return [array]          
+     * @return array          
      */
     public function removeItem(int $item_id, int $list_id) : array
     {
@@ -163,7 +163,7 @@ class StockLists_model extends CI_Model
     /**
      * Removes a stock list and all its contents
      * @param  int    $list_id 
-     * @return [array]          
+     * @return array          
      */
     public function removeList(int $list_id) : array
     {

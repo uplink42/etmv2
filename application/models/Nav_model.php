@@ -14,7 +14,7 @@ class Nav_model extends CI_Model
      * Gets the current totals to display in the header section
      * @param  string $character_id 
      * @param  [type] $aggr         aggregated charaters flag
-     * @return [array]               
+     * @return array               
      */
     public function getHeaderData($character_id = "", $aggr = null) : array
     {

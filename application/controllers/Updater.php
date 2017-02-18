@@ -22,6 +22,10 @@ class Updater extends CI_Controller
         $this->user_id = (int) $this->session->iduser;
     }
 
+    /**
+     * Loads the updater page
+     * @return [type] [description]
+     */
     public function index()
     {
         $username = $this->session->username;
@@ -69,10 +73,7 @@ class Updater extends CI_Controller
                                 $data['no_header'] = 1;
                                 return;
                             } else {
-                                //working as expected
                                 $this->Updater_model->release($username);
-
-
                                 //if we arrived here, that means nothing went wrong (yet)
                                 //calculate profits
                                 $this->db->trans_start();
@@ -137,8 +138,12 @@ class Updater extends CI_Controller
         }
     }
 
-
-    private function removeDirectory(string $path)
+    /**
+     * Remove a cache directory
+     * @param  string $path 
+     * @return void      
+     */
+    private function removeDirectory(string $path) : void
     {
         if (is_dir($path)) {
             $files = glob($path . '/*');
@@ -146,11 +151,15 @@ class Updater extends CI_Controller
                 is_dir($file) ? $this->removeDirectory($file) : unlink($file);
             }
             rmdir($path);
-            return;
         }
     }
 
-    private function displayResultTable(string $username)
+    /**
+     * Load the user result table after updating
+     * @param  string $username 
+     * @return void         
+     */
+    private function displayResultTable(string $username) : void
     {
         $table = $this->Updater_model->resultTable($username);
         $this->Updater_model->release($username);
@@ -161,12 +170,15 @@ class Updater extends CI_Controller
         $data['table']     = array($table);
         $data['view']      = "login/select_v";
         $data['no_header'] = 1;
-
         //finally, load the next page
         $this->load->view('main/_template_v', $data);
     }
 
-    private function askForKey()
+    /**
+     * Loads the "New api key required" page
+     * @return void
+     */
+    private function askForKey() : void
     {
         $data['view']      = "login/select_nocharacter_v";
         $data['no_header'] = 1;

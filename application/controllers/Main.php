@@ -4,35 +4,53 @@ require_once APPPATH . 'libraries/PHPMailer/PHPMailerAutoload.php';
 
 class Main extends MY_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
         $this->load->model('common/Msg');
     }
 
-    public function index(string $view = null)
+    /**
+     * Loads the main template
+     * @param  string|null $view 
+     * @return void            
+     */
+    public function index(string $view = null) : void
     {
         $data['no_header'] = 1;
         $data['view']      = 'login/login_v';
         $this->load->view('main/_template_v', $data);
     }
 
-    public function login()
+    /**
+     * Loads the login page
+     * @return void
+     */
+    public function login() : void
     {
         $data['no_header'] = 1;
         $data['view']      = 'login/login_v';
         $this->load->view('main/_template_v', $data);
     }
 
-    public function register()
+    /**
+     * Loads the registration page
+     * @return void
+     */
+    public function register() : void
     {
         $data['no_header'] = 1;
         $data['view']      = 'register/register_v';
         $this->load->view('main/_template_v', $data);
     }
 
-    public function headerData(int $character_id, bool $aggr = null)
+    /**
+     * Loads the header account data
+     * @param  int       $character_id 
+     * @param  bool|null $aggr         
+     * @return string json                  
+     */
+    public function headerData(int $character_id, bool $aggr = null) : void
     {
         $this->load->model('Nav_model');
         if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id, true)) {
@@ -49,7 +67,11 @@ class Main extends MY_Controller
         }
     }
 
-    public function sendEmail()
+    /**
+     * Dispatches an email
+     * @return string json
+     */
+    public function sendEmail() : void
     {
         $to        = $_REQUEST['to'];
         $from      = $_REQUEST['email'];
@@ -70,11 +92,14 @@ class Main extends MY_Controller
         echo json_encode(array("notice" => $res, "message" => $error));
     }
 
-    public function getMsgHandles()
+    /**
+     * Loads the error messages to the client
+     * @return string json
+     */
+    public function getMsgHandles() : void
     {
         $refl = new ReflectionClass('Msg');
         $data = $refl->getConstants();
         echo json_encode($data);
     }
-
 }

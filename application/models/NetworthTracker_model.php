@@ -77,7 +77,7 @@ class NetworthTracker_model extends CI_Model
     /**
      * Aggregates all individual data and produces the final chart
      * object
-     * @return [json] 
+     * @return string json 
      */
     public function chartBuilder(): string
     {
@@ -120,7 +120,7 @@ class NetworthTracker_model extends CI_Model
 
     /**
      * Gathers the days axis
-     * @return [json] 
+     * @return string json 
      */
     private function daysDataset()
     {
@@ -142,7 +142,7 @@ class NetworthTracker_model extends CI_Model
 
     /**
      * Gathers the wallet data
-     * @return [void] 
+     * @return void 
      */
     private function walletDataset()
     {
@@ -163,7 +163,7 @@ class NetworthTracker_model extends CI_Model
 
     /**
      * Gathers the assets data
-     * @return [void]
+     * @return void
      */
     private function assetsDataset()
     {
@@ -184,7 +184,7 @@ class NetworthTracker_model extends CI_Model
 
     /**
      * Gathers the sell orders data
-     * @return [void] 
+     * @return void 
      */
     private function ordersDataset()
     {
@@ -205,7 +205,7 @@ class NetworthTracker_model extends CI_Model
 
     /**
      * Gathers the escrow data
-     * @return [void] 
+     * @return void 
      */
     private function escrowDataset()
     {
@@ -226,7 +226,7 @@ class NetworthTracker_model extends CI_Model
 
     /**
      * Gathers the total networth data
-     * @return [void]
+     * @return void
      */
     private function totalDataset()
     {

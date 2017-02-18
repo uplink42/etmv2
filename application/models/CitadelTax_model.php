@@ -13,7 +13,7 @@ class CitadelTax_model extends CI_Model
     /**
      * Generates autocomplete results for Citadel searches
      * @param  string $input [description]
-     * @return [array]        
+     * @return array        
      */
     public function queryCitadels(string $input): array
     {
@@ -69,7 +69,7 @@ class CitadelTax_model extends CI_Model
     /**
      * Returns all entered taxes for this character
      * @param  int    $character_id 
-     * @return [array]              
+     * @return array              
      */
     public function taxList(int $character_id): array
     {
