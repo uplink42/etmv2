@@ -5,13 +5,17 @@ if (!defined('BASEPATH')) {
 
 class Assets_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function getAssetEvolution(string $chars) : array
+    /**
+     * Returns the daily asset evolution for a set of characters
+     * @param  string $chars 
+     * @return [array]        
+     */
+    public function getAssetEvolution(string $chars): array
     {
         $this->db->select('sum(total_assets) as a');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
@@ -24,7 +28,13 @@ class Assets_model extends CI_Model
         return $result;
     }
 
-    public function getRegionData(string $chars) : array
+    /**
+     * Gets all assets by each region in known space for a 
+     * set of characters
+     * @param  string $chars 
+     * @return [array]        
+     */
+    public function getRegionData(string $chars): array
     {
         $this->db->where('isKS', '1');
         $this->db->order_by('name');
@@ -61,15 +71,20 @@ class Assets_model extends CI_Model
 
                 array_push($data[$region_name],
                     array("total_items" => $total_items,
-                          "total_value" => $total_value,
-                          "region_id"   => $region_id));
+                        "total_value"       => $total_value,
+                        "region_id"         => $region_id));
             }
 
         }
         return $data;
     }
 
-    public function getRegionName(int $region_id) : string
+    /**
+     * Returns the region name or all regions by id
+     * @param  int    $region_id 
+     * @return [string]            
+     */
+    public function getRegionName(int $region_id): string
     {
         if ($region_id != 0) {
             $this->db->select('name');
@@ -87,7 +102,12 @@ class Assets_model extends CI_Model
         }
     }
 
-    public function getCurrentAssetTotals(string $chars) : string
+    /**
+     * Returns the sum of assets for a set of characters
+     * @param  string $chars 
+     * @return [string]        
+     */
+    public function getCurrentAssetTotals(string $chars): string
     {
         $this->db->select('sum(networth) as a');
         $this->db->where('eve_idcharacter IN ' . $chars);
@@ -105,7 +125,15 @@ class Assets_model extends CI_Model
 
     }
 
-    public function getAssetsList(int $region_id, string $chars, bool $significant = true) : array
+    /**
+     * Returns the list of all assets, optionally filtered by 
+     * region or only significant assets
+     * @param  int          $region_id   
+     * @param  string       $chars       
+     * @param  bool|boolean $significant 
+     * @return [array]                    
+     */
+    public function getAssetsList(int $region_id, string $chars, bool $significant = true): array
     {
         $this->db->select('a.item_eve_iditem as item_id,
             a.quantity as quantity,
@@ -170,7 +198,12 @@ class Assets_model extends CI_Model
         return $data;
     }
 
-    public function getWorthSignificant(string $chars) : float
+    /**
+     * Gets the significant assets percentage for a set of characters
+     * @param  string $chars 
+     * @return [float]        
+     */
+    public function getWorthSignificant(string $chars): float
     {
         $this->db->select('sum(a.quantity*pr.price_evecentral) as total');
         $this->db->from('assets a');
@@ -190,11 +223,15 @@ class Assets_model extends CI_Model
         $total  = $query3->row()->sum;
 
         $percent = ($significant / $total) * 100;
-
         return $percent;
     }
 
-    public function buildAssetDistributionChart(array $data) : string
+    /**
+     * Sends the required data to build the asset distribution chart
+     * @param  array  $data 
+     * @return [json]       
+     */
+    public function buildAssetDistributionChart(array $data): string
     {
         $arrData["chart"] = array(
             "bgColor"                   => "#44464f",
@@ -219,26 +256,13 @@ class Assets_model extends CI_Model
             "showLegend"                => "0",
             "useDataPlotColorForLabels" => "1");
 
-        $arrData["data"] = array();
-        /*$assetTypes      = array("wallet", "assets", "escrow", "sellorders");
-        $assetValues     = array($result->balance, $result->networth, $result->escrow, $result->total_sell);
-
-        for ($i = 0; $i < count($assetTypes); $i++) {
-        array_push($arrData["data"], array("label" => (string) $assetTypes[$i],
-        "value"                                    => (string) $assetValues[$i]));
-        }
-         */
-
-        $region_names  = [];
-        $region_values = [];
+        $arrData["data"] = [];
+        $region_names    = [];
+        $region_values   = [];
         foreach ($data as $key => $value) {
             array_push($region_names, $key);
             array_push($region_values, $value[0]['total_value']);
-            /*print_r($value);
-        echo "<br>";*/
         }
-        /*print_r($region_names);
-        print_r($region_values);*/
 
         for ($i = 0; $i < count($region_names); $i++) {
             array_push($arrData["data"], array("label" => (string) $region_names[$i],
@@ -247,8 +271,6 @@ class Assets_model extends CI_Model
 
         $arrData["chart"];
         $jsonEncodedData = json_encode($arrData);
-
         return $jsonEncodedData;
     }
-
 }

@@ -5,13 +5,17 @@ if (!defined('BASEPATH')) {
 
 class CitadelTax_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function queryCitadels(string $input) : array
+    /**
+     * Generates autocomplete results for Citadel searches
+     * @param  string $input [description]
+     * @return [array]        
+     */
+    public function queryCitadels(string $input): array
     {
         $this->db->select('name as value');
         $this->db->where('eve_idstation > 1000000000000');
@@ -23,7 +27,12 @@ class CitadelTax_model extends CI_Model
         return $result;
     }
 
-    public function getCitadelID(string $name) : string
+    /**
+     * Returns a citadel's ID by name if exists
+     * @param  string $name 
+     * @return [string]      
+     */
+    public function getCitadelID(string $name): string
     {
         $this->db->where('name', $name);
         $query = $this->db->get('station');
@@ -34,12 +43,19 @@ class CitadelTax_model extends CI_Model
         return $query->row()->eve_idstation;
     }
 
-    public function setTax(string $citadel_id, int $character_id, float $tax) : bool
+    /**
+     * Sets the tax for a particular character and citadel.
+     * Returns true if successful
+     * @param string $citadel_id   
+     * @param int    $character_id 
+     * @param float  $tax       
+     * @return [bool]   
+     */
+    public function setTax(string $citadel_id, int $character_id, float $tax): bool
     {
-
-        $data = ["station_eve_idstation"     => $citadel_id,
-            "character_eve_idcharacter"      => $character_id,
-            "value"                          => $tax];
+        $data = ["station_eve_idstation" => $citadel_id,
+            "character_eve_idcharacter"  => $character_id,
+            "value"                      => $tax];
 
         $query = $this->db->replace('citadel_tax', $data);
 
@@ -50,7 +66,12 @@ class CitadelTax_model extends CI_Model
         return false;
     }
 
-    public function taxList(int $character_id) : array
+    /**
+     * Returns all entered taxes for this character
+     * @param  int    $character_id 
+     * @return [array]              
+     */
+    public function taxList(int $character_id): array
     {
         $this->db->select('s.name, t.value, t.idcitadel_tax');
         $this->db->from('citadel_tax t');
@@ -62,8 +83,13 @@ class CitadelTax_model extends CI_Model
         return $result;
     }
 
-
-    public function removeTax(int $tax_id) : bool
+    /**
+     * Removes ane tax for this character. 
+     * Returns true if successful
+     * @param  int    $tax_id 
+     * @return [bool]         
+     */
+    public function removeTax(int $tax_id): bool
     {
         $this->db->where('idcitadel_tax', $tax_id);
         $this->db->delete('citadel_tax');
@@ -73,5 +99,4 @@ class CitadelTax_model extends CI_Model
         }
         return false;
     }
-
 }

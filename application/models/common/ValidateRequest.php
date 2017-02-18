@@ -16,6 +16,13 @@ class ValidateRequest extends CI_Model
         $this->load->model('common/Msg');
     }
 
+    /**
+     * Checks if a character belongs to an account
+     * @param  int       $character_id 
+     * @param  int       $user_id      
+     * @param  bool|null $json         json result flag (for javascript requests)
+     * @return [bool/json]              
+     */
     public function checkCharacterBelong(int $character_id, int $user_id, bool $json = null): bool
     {
         $this->db->where('character_eve_idcharacter', $character_id);
@@ -31,6 +38,12 @@ class ValidateRequest extends CI_Model
         }
     }
 
+    /**
+     * Checks if a citadel tax entry belongs to a character
+     * @param  int    $character_id 
+     * @param  int    $tax_id       
+     * @return [bool]               
+     */
     public function checkCitadelOwnership(int $character_id, int $tax_id): bool
     {
         $this->db->where('character_eve_idcharacter', $character_id);
@@ -40,10 +53,15 @@ class ValidateRequest extends CI_Model
         if ($query->num_rows() != 0) {
             return true;
         }
-
         return false;
     }
 
+    /**
+     * Checks if a stock list belongs to a user
+     * @param  int    $list_id 
+     * @param  int    $user_id 
+     * @return [bool]          
+     */
     public function checkStockListOwnership(int $list_id, int $user_id): bool
     {
         $this->db->select('itemlist.iditemlist');
@@ -59,6 +77,12 @@ class ValidateRequest extends CI_Model
         return false;
     }
 
+    /**
+     * Checks if a traderoute belongs to a user
+     * @param  int    $route_id 
+     * @param  int    $user_id  
+     * @return [bool]           
+     */
     public function checkTradeRouteOwnership(int $route_id, int $user_id): bool
     {
         $this->db->where('user_iduser', $user_id);
@@ -70,6 +94,12 @@ class ValidateRequest extends CI_Model
         return false;
     }
 
+    /**
+     * Checks if a transaction belongs to a user
+     * @param  string $transaction_id 
+     * @param  int    $user_id        
+     * @return [bool]                 
+     */
     public function checkTransactionOwnership(string $transaction_id, int $user_id): bool
     {
         $this->load->model('Login_model');
@@ -91,33 +121,51 @@ class ValidateRequest extends CI_Model
         }
     }
 
+    /**
+     * Checks wether the password meets the current min length
+     * @param  string $password 
+     * @return [bool]           
+     */
     public function validatePasswordLength(string $password): bool
     {
         if (strlen($password) < self::MIN_PASSWORD_LENGTH) {
             return false;
         }
-
         return true;
     }
 
+    /**
+     * Checks if both passwords are identical
+     * @param  string $password       
+     * @param  string $repeatpassword 
+     * @return [bool]                 
+     */
     public function validateIdenticalPasswords(string $password, string $repeatpassword): bool
     {
         if ($password != $repeatpassword) {
             return false;
         }
-
         return true;
     }
 
+    /**
+     * Checks if the username meets the min length
+     * @param  string $username 
+     * @return [bool]           
+     */
     public function validateUsernameLength(string $username): bool
     {
         if (strlen($username) < self::MIN_USERNAME_LENGTH) {
             return false;
         }
-
         return true;
     }
 
+    /**
+     * Checks if the username is available and not taken
+     * @param  string $username 
+     * @return [bool]           
+     */
     public function validateUsernameAvailability(string $username): bool
     {
         $this->db->where('username', $username);
@@ -126,19 +174,27 @@ class ValidateRequest extends CI_Model
         if ($existing_user->num_rows() >= 1) {
             return false;
         }
-
         return true;
     }
 
+    /**
+     * Tests the email against a regex for validity
+     * @param  string $email 
+     * @return [bool]        
+     */
     public function validateEmailFormat(string $email): bool
     {
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             return false;
         }
-
         return true;
     }
 
+    /**
+     * Checks if an email is not taken
+     * @param  string $email 
+     * @return [bool]        
+     */
     public function validateEmailAvailability(string $email): bool
     {
         $this->db->where('email', $email);
@@ -146,10 +202,15 @@ class ValidateRequest extends CI_Model
         if ($existing_email->num_rows() >= 1) {
             return false;
         }
-
         return true;
     }
 
+    /**
+     * Checks if the api key is valid and has the right permissions
+     * @param  int    $apikey 
+     * @param  string $vcode  
+     * @return [void]        
+     */
     public function validateAPI(int $apikey, string $vcode)
     {
         //Using CURL to fetch API Access Mask
@@ -185,6 +246,11 @@ class ValidateRequest extends CI_Model
         }
     }
 
+    /**
+     * Checks if an api key is not in use by another character
+     * @param  int    $apikey 
+     * @return [bool]         
+     */
     public function validateAPIAvailability(int $apikey): bool
     {
         $this->db->where('apikey', $apikey);
@@ -193,11 +259,15 @@ class ValidateRequest extends CI_Model
         if ($query->num_rows() == 0) {
             return true;
         }
-
         return false;
-
     }
 
+    /**
+     * Check if not empty response
+     * depercated
+     * @param  [string] $xml 
+     * @return [bool]      
+     */
     private function checkXML($xml)
     {
         if ($xml == "") {
@@ -206,6 +276,10 @@ class ValidateRequest extends CI_Model
         return true;
     }
 
+    /**
+     * Get current CREST API status (online or offline)
+     * @return [bool]
+     */
     public function getCrestStatus(): bool
     {
         $url    = "https://crest-tq.eveonline.com/market/10000002/orders/sell/?type=https://crest-tq.eveonline.com/inventory/types/34/";
@@ -214,10 +288,13 @@ class ValidateRequest extends CI_Model
         if ($result) {
             return true;
         }
-
         return false;
     }
 
+    /**
+     * Get current XML API status
+     * @return [bool]
+     */
     public function testEndpoint(): bool
     {
         try {
@@ -239,6 +316,12 @@ class ValidateRequest extends CI_Model
         }
     }
 
+    /**
+     * Checks if a username and email match any registered accounts
+     * @param  string $username 
+     * @param  string $email    
+     * @return [bool]           
+     */
     public function validateUserEmail(string $username, string $email): bool
     {
         $this->db->where('username', $username);
@@ -248,8 +331,6 @@ class ValidateRequest extends CI_Model
         if ($query->num_rows() != 0) {
             return true;
         }
-
         return false;
     }
-
 }

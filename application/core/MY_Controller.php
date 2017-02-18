@@ -93,7 +93,6 @@ class MY_Controller extends CI_Controller
     private function buildSelector(): array
     {
         switch ($this->page) {
-
             case ('dashboard'):
                 $data['hasInterval'] = true;
                 $data['hasRegion']   = false;
@@ -174,6 +173,12 @@ class MY_Controller extends CI_Controller
                 break;
 
             case ('apikeymanagement'):
+                $data['hasInterval'] = false;
+                $data['hasRegion']   = false;
+                $data['gets']        = false;
+                break;
+
+            case ('marketexplorer'):
                 $data['hasInterval'] = false;
                 $data['hasRegion']   = false;
                 $data['gets']        = false;

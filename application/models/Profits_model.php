@@ -1,19 +1,26 @@
 <?php
 ini_set('mysql.connect_timeout', '3000');
 ini_set('default_socket_timeout', '3000');
-ini_set('max_execution_time', '0');
+ini_set('max_execution_time', '180');
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
 class Profits_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Returns a list of profits for the specified interval
+     * and character set, optionally filtered by item
+     * @param  string   $chars    
+     * @param  int      $interval 
+     * @param  int|null $item_id  
+     * @return [array]             
+     */
     public function getProfits(string $chars, int $interval, int $item_id = null): array
     {
         $this->db->select("p.profit_unit as profit_unit,
@@ -98,11 +105,16 @@ class Profits_model extends CI_Model
             $result[$i]['profit_total'] = $profit_unit * $result[$i]['profit_quantity'];
             $result[$i]['url']          = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
         }
-
         return array("result" => $result, "count" => $count);
-
     }
 
+    /**
+     * Gathers the profit chart data object
+     * @param  string   $chars    
+     * @param  int      $interval 
+     * @param  int|null $item_id  
+     * @return [json]             
+     */
     public function getProfitChart(string $chars, int $interval, int $item_id = null): string
     {
         $arrData = array( //graph parameters
@@ -123,7 +135,6 @@ class Profits_model extends CI_Model
         }
 
         $fromStr = "(SELECT 0 i UNION ALL " . $inner . " SELECT " . $interval . ") i";
-
         $this->db->select("DATE_SUB(CURDATE(), INTERVAL i DAY) date, sum(total_profit) as sum");
         $this->db->from($fromStr);
         $this->db->join('history', 'date=DATE_SUB(CURDATE(), INTERVAL i DAY)', 'left');

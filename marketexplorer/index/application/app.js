@@ -2,10 +2,7 @@ var app = angular.module("app", [
     'ngAnimate',
     'ui.bootstrap',
     'angular-loading-bar',
-    'ngSanitize',
-    'toastr',
     'ui.router',
-    'rt.debounce',
     ])
 
 .constant("config", {

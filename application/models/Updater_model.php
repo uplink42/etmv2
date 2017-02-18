@@ -34,7 +34,12 @@ class Updater_model extends CI_Model
     private $character_new_orders;
     private $character_new_profits;
 
-    public function init(string $username)
+    /**
+     * Initializes the update procedure
+     * @param  string $username
+     * @return [void]
+     */
+    public function init(string $username) : void
     {
         $this->username = $username;
 
@@ -50,6 +55,11 @@ class Updater_model extends CI_Model
         $this->account_characters = $query->result_array();
     }
 
+    /**
+     * Generates the data (totals) for the update table
+     * @param  string $username 
+     * @return [array]           character and account totals
+     */
     public function resultTable(string $username): array
     {
         $data = array(
@@ -105,7 +115,12 @@ class Updater_model extends CI_Model
         return $data;
     }
 
-    public function getKeys(string $username)
+    /**
+     * Returns the list of all api keys for this user
+     * @param  string $username 
+     * @return [array]           character keys
+     */
+    public function getKeys(string $username) : array
     {
         $this->db->select('api.apikey, api.vcode, characters.eve_idcharacter');
         $this->db->from('api');
@@ -119,7 +134,13 @@ class Updater_model extends CI_Model
         return $user_keys;
     }
 
-    public function processAPIKeys(array $user_keys, string $username)
+    /**
+     * Begins checking each key's validity (e.g expired or wrong permissions)
+     * @param  array  $user_keys 
+     * @param  string $username  
+     * @return [bool]            validation result
+     */
+    public function processAPIKeys(array $user_keys, string $username) : bool
     {
         foreach ($user_keys as $apis) {
             $apikey  = (int) $apis['apikey'];
@@ -145,7 +166,14 @@ class Updater_model extends CI_Model
         return false;
     }
 
-    public function checkCharacterKeys($apikey, $vcode, $char_id) 
+    /**
+     * Removes invalid api keys from a users' account
+     * @param  [int] $apikey  
+     * @param  [string] $vcode   
+     * @param  [string] $char_id 
+     * @return [void]          
+     */
+    public function checkCharacterKeys(int $apikey, string $vcode, string $char_id) : void
     {
         $result = $this->validateAPIKey($apikey, $vcode, $char_id);
         if ($result < 1 || !$result) {
@@ -165,6 +193,13 @@ class Updater_model extends CI_Model
         }
     }
 
+    /**
+     * Performs validation checks for each key's result
+     * @param  int    $apikey 
+     * @param  string $vcode  
+     * @param  string $char   
+     * @return [bool|int]      validation result   
+     */
     public function validateAPIKey(int $apikey, string $vcode, string $char)
     {
         try {
@@ -199,9 +234,12 @@ class Updater_model extends CI_Model
         }
     }
 
-    //after removing invalid keys and characters, iterate trough existing characters
-    //and begin the update procedure
-    public function iterateAccountCharacters()
+    /**
+     * After removing invalid keys and characters, iterate trough existing characters,
+     * and begin the update procedure
+     * @return [bool] update result
+     */
+    public function iterateAccountCharacters() : bool
     {
         foreach ($this->account_characters as $characters) {
             $this->character_id = $characters['character_eve_idcharacter'];
@@ -239,7 +277,11 @@ class Updater_model extends CI_Model
         return true;
     }
 
-    private function getWalletBalance()
+    /**
+     * Update wallet balance
+     * @return [void]
+     */
+    private function getWalletBalance() : void
     {
         $pheal    = new Pheal($this->apikey, $this->vcode, "char");
         $response = $pheal->AccountBalance(array("characterID" => $this->character_id));
@@ -252,7 +294,11 @@ class Updater_model extends CI_Model
         }
     }
 
-    private function getBrokerRelationsLevel()
+    /**
+     * Update broker relations skill level
+     * @return [void]
+     */
+    private function getBrokerRelationsLevel() : void
     {
         $this->character_broker_level = '0';
         $pheal                        = new Pheal($this->apikey, $this->vcode, "char");
@@ -264,7 +310,11 @@ class Updater_model extends CI_Model
         }
     }
 
-    private function getAccountingLevel()
+    /**
+     * Update accounting skill level 
+     * @return [void]
+     */
+    private function getAccountingLevel() : void
     {
         $this->character_accounting_level = '0';
         $pheal                            = new Pheal($this->apikey, $this->vcode, "char");
@@ -276,7 +326,11 @@ class Updater_model extends CI_Model
         }
     }
 
-    private function getCorpStandings()
+    /**
+     * Update corp standings
+     * @return [void]
+     */
+    private function getCorpStandings() : void
     {
         //corp standings
         $pheal  = new Pheal($this->apikey, $this->vcode, "char");
@@ -298,7 +352,11 @@ class Updater_model extends CI_Model
         }
     }
 
-    private function getFactionStandings()
+    /**
+     * Update faction standings
+     * @return [void]
+     */
+    private function getFactionStandings() : void
     {
         //faction standings
         $pheal  = new Pheal($this->apikey, $this->vcode, "char");
@@ -320,7 +378,12 @@ class Updater_model extends CI_Model
         }
     }
 
-    private function getTransactions($refID = false)
+    /**
+     * Update transaction list. Can start from an arbitrary transaction reference
+     * @param  boolean $refID reference to start with, or false if none
+     * @return [void]         
+     */
+    private function getTransactions($refID = false) : void
     {
         $pheal    = new Pheal($this->apikey, $this->vcode, "char");
         $response = $pheal->WalletTransactions(array("characterID" => $this->character_id));
@@ -384,7 +447,11 @@ class Updater_model extends CI_Model
         }
     }
 
-    private function getContracts()
+    /**
+     * Update contracts list
+     * @return [void]
+     */
+    private function getContracts() : void
     {
         $pheal    = new Pheal($this->apikey, $this->vcode, "char");
         $response = $pheal->Contracts(array("characterID" => $this->character_id));
@@ -438,7 +505,6 @@ class Updater_model extends CI_Model
         }
 
         $this->character_new_contracts = count($new_contracts) - $duplicates;
-
         if (!empty($contracts)) {
             batch("contracts",
                 array('eve_idcontracts',
@@ -462,7 +528,11 @@ class Updater_model extends CI_Model
         }
     }
 
-    private function getMarketOrders()
+    /**
+     * Updates Market orders
+     * @return [void]
+     */
+    private function getMarketOrders() : void
     {
         $pheal                  = new Pheal($this->apikey, $this->vcode, "char");
         $response               = $pheal->MarketOrders(array("characterID" => $this->character_id));
@@ -569,8 +639,12 @@ class Updater_model extends CI_Model
         $this->character_orders = $query->row()->grand_total;
     }
 
-    //fetches assets 4 levels deep in containers
-    private function getAssets()
+    /**
+     * Updates the asset list. Fetches assets 4 levels deep in containers
+     * Todo: recursively
+     * @return [void]
+     */
+    private function getAssets() : void
     {
         $pheal    = new Pheal($this->apikey, $this->vcode, "char");
         $response = $pheal->AssetList(array("characterID" => $this->character_id));
@@ -634,7 +708,6 @@ class Updater_model extends CI_Model
         $this->db->delete('assets');
             
         if (!empty($assetList)) {
-            
             batch("assets",
                 array('idassets',
                     'characters_eve_idcharacters',
@@ -652,7 +725,11 @@ class Updater_model extends CI_Model
         $this->character_networth = $query->row()->grand_total;
     }
 
-    public function updateCharacterInfo()
+    /**
+     * Updates general character info (balance, escrow, etc)
+     * @return [void]
+     */
+    public function updateCharacterInfo() : void
     {
         $data = array(
             "balance"          => $this->character_balance,
@@ -667,7 +744,11 @@ class Updater_model extends CI_Model
         $this->db->update('characters', $data);
     }
 
-    public function setNewInfo()
+     /**
+     * Sets the number of new contracts, transactions etc since last visit
+     * @return [void]
+     */
+    public function setNewInfo() : void
     {
         $data = array(
             "characters_eve_idcharacters" => $this->character_id,
@@ -679,7 +760,12 @@ class Updater_model extends CI_Model
         $this->db->replace("new_info", $data);
     }
 
-    public function calculateProfits()
+    /**
+     * After all transactions are added, calculate profits and taxes with FIFO and update remaining 
+     * quantities in the database
+     * @return [void]
+     */
+    public function calculateProfits() : void
     {
         $buy_stack  = array();
         $sell_stack = array();
@@ -834,8 +920,13 @@ class Updater_model extends CI_Model
         $this->character_new_profits = $num_profits;
     }
 
-    //Update each character's total profit, sales, etc for this day
-    public function updateTotals(bool $global = false, string $user = null)
+    /**
+     * Update each character's total profit, sales, etc for this day
+     * @param  bool|boolean $global global update flag
+     * @param  string|null  $user   username
+     * @return [array]              result list, only for non global update
+     */
+    public function updateTotals(bool $global = false, string $user = null) : ?array
     {
         if (!$global) {
             $username = $this->username;
@@ -905,6 +996,11 @@ class Updater_model extends CI_Model
         }
     }
 
+    /**
+     * Returns a list of all API keys for a given user
+     * @param  int    $id_user 
+     * @return [array]          
+     */
     public function getAPIKeys(int $id_user): array
     {
         $this->db->select('api.apikey as key');
@@ -919,20 +1015,35 @@ class Updater_model extends CI_Model
         return $result;
     }
 
-    public function lock(string $username)
+    /**
+     * Locks the user from updating
+     * @param  string $username 
+     * @return [void]           
+     */
+    public function lock(string $username) : void
     {
         $data = array("updating" => 1);
         $this->db->where('username', $username);
         $this->db->update('user', $data);
     }
 
-    public function release(string $username)
+    /**
+     * Releases the update lock
+     * @param  string $username 
+     * @return [void]           
+     */
+    public function release(string $username) : void
     {
         $data = array("updating" => 0);
         $this->db->where('username', $username);
         $this->db->update('user', $data);
     }
 
+    /**
+     * Returns the user's lock state
+     * @param  string  $username 
+     * @return boolean           is locked?
+     */
     public function isLocked(string $username): bool
     {
         $this->db->select('updating');
@@ -948,6 +1059,11 @@ class Updater_model extends CI_Model
         return false;
     }
 
+    /**
+     * Fetch current changelog
+     * @param  bool|boolean $recent recent changelog flag (only 3 entries)
+     * @return [array]             changelog result  
+     */
     public function getChangeLog(bool $recent = false): array
     {
         $this->db->select('*');

@@ -13,7 +13,7 @@
     <title>Eve Trade Master 2 - A web based Eve Online profit tracker, asset manager and trade analysis tool</title>
 
     <?php
-        if ($market) {
+        if (!empty($market)) {
             echo "<script>
                 window.paceOptions = {
                     ajax: false
@@ -27,7 +27,7 @@
     <script src="<?=base_url('dist/js/apps.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 
      <?php
-        if ($market) {
+        if (!empty($market)) {
             echo "<script>
             $(document).ready(function() {
                 $('body').addClass('pace-done');

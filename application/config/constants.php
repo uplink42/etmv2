@@ -85,7 +85,7 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 //Application specific constants
-define("FILESTORAGE", "C:/xampp/htdocs/phealcache"); //pheal cache folder
+define("FILESTORAGE", "C:/xampp/htdocs/phealcache/"); //pheal cache folder
 define("URL", "../");
 define("GUSER", "");
 define("GPWD", "");

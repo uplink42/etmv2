@@ -141,5 +141,4 @@ class ReportGenerator extends CI_Model
         $result = $this->stats->getProfitsTable($chars, $interval);
         return $result;
     }
-
 }

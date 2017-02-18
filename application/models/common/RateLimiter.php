@@ -16,13 +16,17 @@ class RateLimiter extends CI_Model
     public function __construct(int $requestsPerSecond = 200, int $maxBurst = 300, int $maxWait = 10)
     {
         $base = sys_get_temp_dir();
-
         $this->lockFilePath      = join(DIRECTORY_SEPARATOR, [$base, 'crest_ratelimiter.lock']);
         $this->requestsPerSecond = $requestsPerSecond;
         $this->maxBurst          = $maxBurst;
         $this->maxWait           = $maxWait;
     }
 
+    /**
+     * Attempts to rate limit requests. When the lock file is busy,
+     *  wait a random amount of time before trying again
+     * @return [type] [description]
+     */
     public function rateLimit()
     {
         $now = time();
@@ -36,6 +40,10 @@ class RateLimiter extends CI_Model
         } while (time() - $now < $this->maxWait);
     }
 
+    /**
+     * Determines wether a request can proceed or must wait
+     * @return [bool]
+     */
     protected function canProceed(): bool
     {
         // Open file, create if does not exist

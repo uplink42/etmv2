@@ -108,7 +108,7 @@ gulp.task('css', function(){
    .pipe(concat('styles.css'))
    .pipe(minify())
    .pipe(gulp.dest('dist/luna/styles'))
-   .pipe(connect.reload())
+   .pipe(connect.reload());
 });
 
 //js dependencies

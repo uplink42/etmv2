@@ -13,6 +13,11 @@ class ApiKeyManagement_model extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * Get current list of characters and keys for this user
+     * @param  int    $id_user 
+     * @return [array]          
+     */
     public function getCharacterList(int $id_user) : array
     {
         $this->db->select('a.apikey as api, c.eve_idcharacter as charid, c.name as name');
@@ -27,6 +32,11 @@ class ApiKeyManagement_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Remove all character associations for a user
+     * @param  int    $id_character 
+     * @return [bool]               
+     */
     public function removeCharacterProcess(int $id_character) : bool
     {
         $this->db->where('character_eve_idcharacter', $id_character);
@@ -35,10 +45,17 @@ class ApiKeyManagement_model extends CI_Model
         if($this->db->affected_rows() != 0) {
             return true;
         }
-
         return false;
     }
 
+    /**
+     * Add a set of characters to an account
+     * @param array  $chars   
+     * @param int    $apikey  
+     * @param string $vcode   
+     * @param int    $id_user 
+     * @return string error or success
+     */
     public function addCharacters(array $chars, int $apikey, string $vcode, int $id_user) 
     {
         $this->load->model('Register_model');
@@ -67,7 +84,6 @@ class ApiKeyManagement_model extends CI_Model
             $pheal          = new Pheal($apikey, $vcode, "char"); //fetch character name
             $result         = $pheal->CharacterSheet(array("characterID" => $character_id));
             $character_name = $this->security->xss_clean($result->name);
-
             $eve_idcharacter  = $character_id;
             $name             = $this->db->escape($character_name);
             $balance          = 0;
@@ -92,16 +108,19 @@ class ApiKeyManagement_model extends CI_Model
 
             $this->db->insert('aggr', $data4);
         }
-
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === false) {
             return Msg::DB_ERROR;
         } 
-
         return "ok";
     }
 
+    /**
+     * Count how many characters a user has associated
+     * @param  int    $id_user 
+     * @return [string]          
+     */
     private function getCharacterCount(int $id_user) : string
     {
         $this->db->select('count(character_eve_idcharacter) as count');

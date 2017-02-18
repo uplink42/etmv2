@@ -35,7 +35,7 @@ gulp.task('styles', function(){
         }}))
     .pipe(sass())
     .pipe(concat('styles.min.css'))
-    .pipe(purify(['application/**/*.js', 'application/**/*.html', 'bower_components/**/*.html']))
+    //.pipe(purify(['application/**/*.js', 'application/**/*.html', 'bower_components/**/*.html']))
     .pipe(minifycss({keepSpecialComments : 0}))
     .pipe(gulp.dest('dist/css/'))
     .pipe(livereload());

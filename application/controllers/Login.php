@@ -36,13 +36,10 @@ class Login extends CI_Controller
 
             $session_start = date('Y-m-d H:i:s');
             $session_data = array("username" => $username,
-                "start"                          => $session_start,
-                "iduser"                         => $id_user,
-                "email"                          => $email
+                "start"                      => $session_start,
+                "iduser"                     => $id_user,
+                "email"                      => $email
             );
-
-            //set cookie
-            //set_cookie($name[, $value = ''[, $expire = ''[, $domain = ''[, $path = '/'[, $prefix = ''[, $secure = FALSE[, $httponly = FALSE]]]]]]])
             $this->session->set_userdata($session_data);
             redirect(base_url('Updater'));
         } else {

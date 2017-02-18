@@ -9,7 +9,6 @@ use Pheal\Pheal;
 
 class Register_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -17,6 +16,17 @@ class Register_model extends CI_Model
         $this->load->model('common/ValidateRequest');
     }
 
+    /**
+     * Start all validations wether we can register a user account
+     * @param  string $username       
+     * @param  string $password       
+     * @param  string $repeatpassword 
+     * @param  string $email          
+     * @param  int    $apikey         
+     * @param  string $vcode          
+     * @param  string $reports        
+     * @return [array]                 
+     */
     public function validate(string $username, string $password, string $repeatpassword, string $email, int $apikey, string $vcode, string $reports): array
     {
         $result = array("username" => $this->validateUsername($username),
@@ -29,6 +39,11 @@ class Register_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Apply all username related validations
+     * @param  string $username 
+     * @return [type]           
+     */
     private function validateUsername(string $username)
     {
         if (!$this->ValidateRequest->validateUsernameLength($username)) {
@@ -38,9 +53,13 @@ class Register_model extends CI_Model
         if (!$this->ValidateRequest->validateUsernameAvailability($username)) {
             return Msg::USER_ALREADY_EXISTS;
         }
-
     }
 
+    /**
+     * Apply all email related validations
+     * @param  string $email 
+     * @return [type]        
+     */
     private function validateEmail(string $email)
     {
         if (!$this->ValidateRequest->validateEmailFormat($email)) {
@@ -53,6 +72,12 @@ class Register_model extends CI_Model
 
     }
 
+    /**
+     * Apply all password related validations
+     * @param  string $password       
+     * @param  string $repeatpassword 
+     * @return [type]                 
+     */
     private function validatePassword(string $password, string $repeatpassword)
     {
         if (!$this->ValidateRequest->validatePasswordLength($password)) {
@@ -64,11 +89,22 @@ class Register_model extends CI_Model
         }
     }
 
+    /**
+     * Apply all API key related validations
+     * @param  int    $apikey 
+     * @param  string $vcode  
+     * @return [type]         
+     */
     private function validateAPI(int $apikey, string $vcode)
     {
         return $this->ValidateRequest->validateAPI($apikey, $vcode);
     }
 
+    /**
+     * Apply all user report related validations
+     * @param  [type] $reports 
+     * @return [type]          
+     */
     private function validateReports($reports)
     {
         if (empty($reports)) {
@@ -76,7 +112,13 @@ class Register_model extends CI_Model
         }
     }
 
-    public function getCharacters(int $apikey, string $vcode)
+    /**
+     * Get a list of all API Key characters
+     * @param  int    $apikey 
+     * @param  string $vcode  
+     * @return [array]         
+     */
+    public function getCharacters(int $apikey, string $vcode) : array
     {
         $pheal  = new Pheal($apikey, $vcode);
         $result = $pheal->accountScope->APIKeyInfo();
@@ -88,11 +130,17 @@ class Register_model extends CI_Model
             )
             );
         }
-
         return $characters;
     }
 
-    public function verifyCharacters(array $chars, int $apikey, string $vcode)
+    /**
+     * Verify if characters belong to an api key
+     * @param  array  $chars  
+     * @param  int    $apikey 
+     * @param  string $vcode  
+     * @return [bool]         
+     */
+    public function verifyCharacters(array $chars, int $apikey, string $vcode) : bool
     {
         $pheal  = new Pheal($apikey, $vcode);
         $result = $pheal->accountScope->APIKeyInfo();
@@ -114,10 +162,20 @@ class Register_model extends CI_Model
         return true;
     }
 
+    /**
+     * After all validations succeed, create an account
+     * @param  string $username 
+     * @param  string $password 
+     * @param  string $email    
+     * @param  int    $apikey   
+     * @param  string $vcode   
+     * @param  string $reports  
+     * @param  array  $chars   
+     * @return [string]          
+     */
     public function createAccount(string $username, string $password, string $email, int $apikey, string $vcode, string $reports, array $chars): string
     {
         $error = "";
-
         $dt = new DateTime();
         $tz = new DateTimeZone('Europe/Lisbon');
         $dt->setTimezone($tz);
@@ -127,7 +185,6 @@ class Register_model extends CI_Model
         $hashed = $this->Auth->createHashedPassword($password);
 
         $this->db->trans_start();
-
         $data1 = array(
             "username"          => $username,
             "registration_date" => $datetime,
@@ -194,6 +251,11 @@ class Register_model extends CI_Model
         }
     }
 
+    /**
+     * Check if a character is already associated with another user
+     * @param  int    $character_id 
+     * @return [bool]               
+     */
     public function checkCharacterExists(int $character_id): bool
     {
         $this->db->where('character_eve_idcharacter', $character_id);

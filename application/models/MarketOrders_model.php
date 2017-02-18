@@ -11,6 +11,14 @@ class MarketOrders_model extends CI_Model
         $this->load->model('common/RateLimiter');
     }
 
+    /**
+     * Returns a list of market orders, optionally filtered
+     * by type and character set
+     * @param  string       $chars 
+     * @param  string       $type  
+     * @param  bool|boolean $check perform pricecheck?
+     * @return [array]              
+     */
     public function getMarketOrders(string $chars, string $type, bool $check = false): array
     {
         $this->db->select('o.eve_item_iditem as item_id,
@@ -56,6 +64,15 @@ class MarketOrders_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Checks wether we should check an order or use the cached values instead
+     * @param  string $order_id   
+     * @param  string $station_id 
+     * @param  int    $region_id  
+     * @param  string $type       
+     * @param  int    $item_id    
+     * @return [string]            
+     */
     public function checkOrder(string $order_id, string $station_id, int $region_id, string $type, int $item_id): string
     {
         $dt = new DateTime();
@@ -76,7 +93,6 @@ class MarketOrders_model extends CI_Model
 
             if ($last_timestamp > $date) {
                 $cached_value = $this->getCachedValue($order_id);
-
                 switch ($cached_value) {
                     case '1':
                         return "OK";
@@ -101,7 +117,18 @@ class MarketOrders_model extends CI_Model
         }
     }
 
-    private function checkPrices(int $region_id, string $type, string $order_id, string $station_id, string $date_now, int $item_id)
+    /**
+     * Begins a series of CREST requests to check if a market order
+     * is undercut or not
+     * @param  int    $region_id  
+     * @param  string $type       
+     * @param  string $order_id   
+     * @param  string $station_id 
+     * @param  string $date_now   
+     * @param  int    $item_id    
+     * @return [string]             
+     */
+    private function checkPrices(int $region_id, string $type, string $order_id, string $station_id, string $date_now, int $item_id) : string
     {
         $this->RateLimiter->rateLimit();
         $url    = "https://crest-tq.eveonline.com/market/" . $region_id . "/orders/" . $type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
@@ -114,7 +141,6 @@ class MarketOrders_model extends CI_Model
         }
 
         $orderPrices = [];
-
         if ($station_id > 1000000000000) {
             $this->updateStatus($order_id, 2, $date_now);
             return "n/a";
@@ -142,7 +168,6 @@ class MarketOrders_model extends CI_Model
         if (!isset($myPrice)) {
             return "expired";
         } else {
-
             if ($bestPrice == $myPrice) {
                 $this->updateStatus($order_id, 1, $date_now);
                 return "OK";
@@ -154,6 +179,11 @@ class MarketOrders_model extends CI_Model
         }
     }
 
+    /**
+     * Returns an order's cached result from the database
+     * @param  string $order_id 
+     * @return [string]           
+     */
     private function getCachedValue(string $order_id): string
     {
         $this->db->select('status');
@@ -164,6 +194,13 @@ class MarketOrders_model extends CI_Model
         return $cached_value;
     }
 
+    /**
+     * Updates an order's status in the database
+     * @param  string $order_id 
+     * @param  int    $status   
+     * @param  string $date_now 
+     * @return [void]           
+     */
     private function updateStatus(string $order_id, int $status, string $date_now)
     {
         $data = array("orders_transkey" => $order_id,
@@ -171,5 +208,4 @@ class MarketOrders_model extends CI_Model
             "timestamp_check"               => $date_now);
         $this->db->replace('order_status', $data);
     }
-
 }

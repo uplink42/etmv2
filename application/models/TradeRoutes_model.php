@@ -11,6 +11,11 @@ class TradeRoutes_model extends CI_Model
         parent::__construct();
     }
 
+    /**
+     * Generates autocomplete results for station names
+     * @param  string $input 
+     * @return [array]        
+     */
     public function queryStations(string $input): array
     {
         $this->db->select('name as value');
@@ -29,10 +34,16 @@ class TradeRoutes_model extends CI_Model
                 $result[$i]['value'] = "TRADE HUB: " . $result[$i]['value'];
             }
         }
-
         return $result;
     }
 
+    /**
+     * Creates a new trade route between 2 stations for a user
+     * @param  int    $user_id      
+     * @param  string $station_from 
+     * @param  string $station_to   
+     * @return [array]               
+     */
     public function insertRoute(int $user_id, string $station_from, string $station_to): array
     {
         $this->db->select('eve_idstation as s');
@@ -79,6 +90,11 @@ class TradeRoutes_model extends CI_Model
         return array("message" => $msg, "notice" => $res);
     }
 
+    /**
+     * Returns the list of all trade routes for a user
+     * @param  int    $user_id 
+     * @return [array]          
+     */
     public function getRoutes(int $user_id): array
     {
         $this->db->select('s1.name as s1, s2.name as s2, idtraderoute as id');
@@ -91,6 +107,11 @@ class TradeRoutes_model extends CI_Model
         return $result;
     }
 
+    /**
+     * Deletes a trade route
+     * @param  int    $route_id 
+     * @return [bool]           
+     */
     public function deleteRoute(int $route_id): bool
     {
         $this->db->where('idtraderoute', $route_id);
@@ -101,5 +122,4 @@ class TradeRoutes_model extends CI_Model
         }
         return false;
     }
-
 }
