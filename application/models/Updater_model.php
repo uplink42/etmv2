@@ -138,7 +138,7 @@ class Updater_model extends CI_Model
      * Begins checking each key's validity (e.g expired or wrong permissions)
      * @param  array  $user_keys 
      * @param  string $username  
-     * @return [bool]            validation result
+     * @return bool            validation result
      */
     public function processAPIKeys(array $user_keys, string $username) : bool
     {
@@ -237,7 +237,7 @@ class Updater_model extends CI_Model
     /**
      * After removing invalid keys and characters, iterate trough existing characters,
      * and begin the update procedure
-     * @return [bool] update result
+     * @return bool update result
      */
     public function iterateAccountCharacters() : bool
     {

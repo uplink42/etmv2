@@ -49,7 +49,7 @@ class CitadelTax_model extends CI_Model
      * @param string $citadel_id   
      * @param int    $character_id 
      * @param float  $tax       
-     * @return [bool]   
+     * @return bool   
      */
     public function setTax(string $citadel_id, int $character_id, float $tax): bool
     {
@@ -87,7 +87,7 @@ class CitadelTax_model extends CI_Model
      * Removes ane tax for this character. 
      * Returns true if successful
      * @param  int    $tax_id 
-     * @return [bool]         
+     * @return bool         
      */
     public function removeTax(int $tax_id): bool
     {

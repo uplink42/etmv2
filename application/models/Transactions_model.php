@@ -70,7 +70,7 @@ class Transactions_model extends CI_Model
     /**
      * Unlinks a transaction from a user
      * @param  [type] $transaction_id 
-     * @return [bool]                 
+     * @return bool                 
      */
     public function unlinkTransaction(string $transaction_id) : bool
     {

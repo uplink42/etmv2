@@ -30,10 +30,10 @@ class Register_model extends CI_Model
     public function validate(string $username, string $password, string $repeatpassword, string $email, int $apikey, string $vcode, string $reports): array
     {
         $result = array("username" => $this->validateUsername($username),
-            "password"                 => $this->validatePassword($password, $repeatpassword),
-            "email"                    => $this->validateEmail($email),
-            "api"                      => $this->validateAPI($apikey, $vcode),
-            "reports"                  => $this->validateReports($reports),
+            "password"             => $this->validatePassword($password, $repeatpassword),
+            "email"                => $this->validateEmail($email),
+            "api"                  => $this->validateAPI($apikey, $vcode),
+            "reports"              => $this->validateReports($reports),
         );
 
         return $result;
@@ -69,7 +69,6 @@ class Register_model extends CI_Model
         if (!$this->ValidateRequest->validateEmailAvailability($email)) {
             return Msg::EMAIL_ALREADY_TAKEN;
         }
-
     }
 
     /**
@@ -134,11 +133,11 @@ class Register_model extends CI_Model
     }
 
     /**
-     * Verify if characters belong to an api key
+     * Verify if characters belong to this api key
      * @param  array  $chars  
      * @param  int    $apikey 
      * @param  string $vcode  
-     * @return [bool]         
+     * @return bool       
      */
     public function verifyCharacters(array $chars, int $apikey, string $vcode) : bool
     {
@@ -254,7 +253,7 @@ class Register_model extends CI_Model
     /**
      * Check if a character is already associated with another user
      * @param  int    $character_id 
-     * @return [bool]               
+     * @return bool               
      */
     public function checkCharacterExists(int $character_id): bool
     {

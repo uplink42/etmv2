@@ -40,7 +40,7 @@ class Auth extends CI_Model
      * @param  string       $username  
      * @param  string       $password  
      * @param  bool|boolean $nosession if we should create a session
-     * @return [bool]                 
+     * @return bool                 
      */
     public function validateLogin(string $username, string $password, bool $nosession = false) : bool
     {

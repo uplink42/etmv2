@@ -13,7 +13,7 @@ class Logout extends CI_Controller
 
     /**
      * Terminates a user session
-     * @return [bool]
+     * @return bool
      */
     public function index() : bool
     {

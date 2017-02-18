@@ -110,7 +110,7 @@ class TradeRoutes_model extends CI_Model
     /**
      * Deletes a trade route
      * @param  int    $route_id 
-     * @return [bool]           
+     * @return bool           
      */
     public function deleteRoute(int $route_id): bool
     {

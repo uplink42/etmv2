@@ -35,7 +35,7 @@ class ApiKeyManagement_model extends CI_Model
     /**
      * Remove all character associations for a user
      * @param  int    $id_character 
-     * @return [bool]               
+     * @return bool               
      */
     public function removeCharacterProcess(int $id_character) : bool
     {

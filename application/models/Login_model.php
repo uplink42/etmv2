@@ -24,7 +24,7 @@ class Login_model extends CI_Model
 
     /**
      * Checks if session is valid or not
-     * @return [bool]
+     * @return bool
      */
     public function checkSession() : bool
     {

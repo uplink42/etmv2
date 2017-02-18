@@ -24,9 +24,9 @@ class Updater extends CI_Controller
 
     /**
      * Loads the updater page
-     * @return [type] [description]
+     * @return void
      */
-    public function index()
+    public function index() : void
     {
         $username = $this->session->username;
         if (empty($username)) {
