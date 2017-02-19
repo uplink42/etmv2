@@ -53,6 +53,7 @@ a web based profit tracker, trading and asset manager tool for Eve Online.
     
  2.1 - Browse to marketexplorer/index and run
  
+    npm install bower
     bower update
     npm update
     gulp
