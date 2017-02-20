@@ -18,7 +18,7 @@ a web based profit tracker, trading and asset manager tool for Eve Online.
 
 #Requirements:
 - Apache 2.2+ web server
-- PHP 7
+- PHP 7.1
 - MariaDB or MySQL database
 - Gulp task runner (requires NodeJS)
 - Should work on any OS, but Windows users will need some extra tweaking with certificates to get the API calls working: 
