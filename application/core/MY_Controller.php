@@ -22,6 +22,12 @@ class MY_Controller extends CI_Controller
         }
     }
 
+    /**
+     * Enforce session validation for all private pages
+     * @param  int      $character_id 
+     * @param  int|null $user_id      
+     * @return bool               
+     */
     protected function enforce(int $character_id, int $user_id = null): bool
     {
         if ($this->Login_model->checkSession() &&
@@ -55,13 +61,25 @@ class MY_Controller extends CI_Controller
         }
     }
 
-    protected function getCharacterList(int $user_id)
+    /**
+     * Returns the character list for a user
+     * @param  int    $user_id
+     * @return array    
+     */
+    protected function getCharacterList(int $user_id) : array
     {
         $data = $this->Login_model->getCharacterList($user_id);
         return $data;
     }
 
-    protected function loadViewDependencies(int $character_id, int $user_id, bool $aggregate)
+    /**
+     * Loads common view dependencies for most pages
+     * @param  int    $character_id 
+     * @param  int    $user_id      
+     * @param  bool   $aggregate    
+     * @return array           
+     */
+    protected function loadViewDependencies(int $character_id, int $user_id, bool $aggregate) : array
     {
         $chars      = [];
         $char_names = [];
@@ -90,6 +108,10 @@ class MY_Controller extends CI_Controller
         return $data;
     }
 
+    /**
+     * Build the character selector dropdown with options
+     * @return array
+     */
     private function buildSelector(): array
     {
         switch ($this->page) {
@@ -190,13 +212,24 @@ class MY_Controller extends CI_Controller
         return $data;
     }
 
+    /**
+     * Get the correct icon for an item
+     * @param  int    $item_id 
+     * @return string      
+     */
     public function generateIcon(int $item_id): string
     {
         $url = "https://image.eveonline.com/Type/" . $item_id . "_32.png";
         return $url;
     }
 
-    public function injectIcons($dataset, $type = false)
+    /**
+     * Inject icons into a result array or object
+     * @param  [array|stdClass]  $dataset 
+     * @param  boolean $type    
+     * @return array   
+     */
+    public function injectIcons($dataset, $type = false) : array
     {
         $max = count($dataset);
 
@@ -211,5 +244,4 @@ class MY_Controller extends CI_Controller
         }
         return $dataset;
     }
-
 }

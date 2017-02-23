@@ -119,7 +119,7 @@ class ApiKeyManagement_model extends CI_Model
     /**
      * Count how many characters a user has associated
      * @param  int    $id_user 
-     * @return [string]          
+     * @return string          
      */
     private function getCharacterCount(int $id_user) : string
     {

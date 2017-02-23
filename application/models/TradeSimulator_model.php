@@ -252,7 +252,7 @@ class TradeSimulator_model extends CI_Model
     /**
      * Returns the character name from an id
      * @param  int    $id_character 
-     * @return [string]               
+     * @return string               
      */
     private function getCharacterName(int $id_character): string
     {

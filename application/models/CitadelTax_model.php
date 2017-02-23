@@ -30,7 +30,7 @@ class CitadelTax_model extends CI_Model
     /**
      * Returns a citadel's ID by name if exists
      * @param  string $name 
-     * @return [string]      
+     * @return string      
      */
     public function getCitadelID(string $name): string
     {

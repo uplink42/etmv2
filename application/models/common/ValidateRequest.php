@@ -213,8 +213,30 @@ class ValidateRequest extends CI_Model
      */
     public function validateAPI(int $apikey, string $vcode)
     {
+        try {
+            $phealAPI = new Pheal($apikey, $vcode, "account");
+            $response = $phealAPI->APIKeyInfo();
+
+            $accessMask = $response->key->accessMask;
+            $expiry     = $response->key->expires;
+
+        } catch (\Pheal\Exceptions\PhealException $e) {
+            log_message('error', 'validate api keys ' . $e->getMessage());
+            //communication error, abort
+            return Msg::INVALID_API_KEY;
+        }
+
+        if ($accessMask == "" && $response) {
+            return Msg::INVALID_API_KEY;
+        } else if ($accessMask != '82317323' && $accessMask != '1073741823' && $response) {
+            return Msg::INVALID_API_MASK;
+        } else if (!isset($expiry) && $response) {
+            return Msg::INVALID_API_KEY;
+        }
+
+
         //Using CURL to fetch API Access Mask
-        $curl_url = "https://api.eveonline.com/account/APIKeyInfo.xml.aspx?keyID=" . $apikey . "&vCode=" . $vcode;
+       /* $curl_url = "https://api.eveonline.com/account/APIKeyInfo.xml.aspx?keyID=" . $apikey . "&vCode=" . $vcode;
 
         $ch = curl_init($curl_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -239,7 +261,7 @@ class ValidateRequest extends CI_Model
 
         if ($accessMask != '82317323') {
             return Msg::INVALID_API_MASK;
-        }
+        }*/
 
         /*if (!$this->validateAPIAvailability($apikey)) {
             return Msg::API_ALREADY_EXISTS;
@@ -265,7 +287,7 @@ class ValidateRequest extends CI_Model
     /**
      * Check if not empty response
      * depercated
-     * @param  [string] $xml 
+     * @param  string $xml 
      * @return bool      
      */
     private function checkXML($xml)

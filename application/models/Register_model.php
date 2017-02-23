@@ -170,7 +170,7 @@ class Register_model extends CI_Model
      * @param  string $vcode   
      * @param  string $reports  
      * @param  array  $chars   
-     * @return [string]          
+     * @return string          
      */
     public function createAccount(string $username, string $password, string $email, int $apikey, string $vcode, string $reports, array $chars): string
     {

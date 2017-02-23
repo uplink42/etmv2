@@ -6,9 +6,18 @@
 <html lang='en'>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+    <meta name="description" content="eve trade master - web based profit tracker and asset manager for eve online">
+    <meta name="author" content="nick starkey">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Eve Trade Master" />
+    <meta name="keywords" content="eve online trading market">
+    <meta name="google-site-verification" content="AaRtrjK00fRsj5cWaYi3VnjiuOIpcRwZw4C860zpf9Y" />
+    <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,700,800" rel="stylesheet">
+    <link href="dist/css/styles.min.css" rel="stylesheet">
+    <link href="dist/css/custom.min.css" rel="stylesheet">
     <!-- Page title -->
     <title>Eve Trade Master 2 - A web based Eve Online profit tracker, asset manager and trade analysis tool</title>
 

@@ -71,7 +71,7 @@ class MarketOrders_model extends CI_Model
      * @param  int    $region_id  
      * @param  string $type       
      * @param  int    $item_id    
-     * @return [string]            
+     * @return string            
      */
     public function checkOrder(string $order_id, string $station_id, int $region_id, string $type, int $item_id): string
     {
@@ -126,7 +126,7 @@ class MarketOrders_model extends CI_Model
      * @param  string $station_id 
      * @param  string $date_now   
      * @param  int    $item_id    
-     * @return [string]             
+     * @return string             
      */
     private function checkPrices(int $region_id, string $type, string $order_id, string $station_id, string $date_now, int $item_id) : string
     {
@@ -182,7 +182,7 @@ class MarketOrders_model extends CI_Model
     /**
      * Returns an order's cached result from the database
      * @param  string $order_id 
-     * @return [string]           
+     * @return string           
      */
     private function getCachedValue(string $order_id): string
     {
