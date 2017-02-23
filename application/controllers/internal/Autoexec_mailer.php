@@ -26,7 +26,7 @@ class Autoexec_mailer extends MY_Controller
     public function index(string $period = "daily") : void
     {
         if (!$this->input->is_cli_request()) {
-            die();
+            //die();
         }
 
         $this->load->model('common/User');
@@ -64,7 +64,7 @@ class Autoexec_mailer extends MY_Controller
                 $data['date_prev'] = date('Y-m-d', strtotime('-24 hours'));
                 $data['cl_recent'] = $this->Updater_model->getChangeLog(true);
 
-                $report = $this->load->view('reports/reports_v', $data, true);
+                $report = $this->load->view('reports/reports_new_v', $data, true);
                 //mail data
                 $address = $this->User->getUserEmail($data['user_id']);
                 $from = "etmdevelopment42@gmail.com";

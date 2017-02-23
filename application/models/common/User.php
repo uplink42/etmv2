@@ -42,7 +42,7 @@ class User extends CI_Model
     /**
      * Returns a username
      * @param  int    $user_id 
-     * @return [string]          
+     * @return string          
      */
     public function getUsername(int $user_id): string
     {
@@ -56,7 +56,7 @@ class User extends CI_Model
     /**
      * Returns a user's email
      * @param  int    $user_id 
-     * @return [string]          
+     * @return string          
      */
     public function getUserEmail(int $user_id): string
     {

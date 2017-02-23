@@ -38,15 +38,15 @@ class Tax_model extends CI_Model
     /**
      * Starts the tax calculation process. Dispatches to other
      * methods as needed
-     * @param  [type] $stationFromID  
-     * @param  [type] $stationToID   
-     * @param  [type] $character_from 
-     * @param  [type] $character_to   
-     * @param  [type] $transFrom      
-     * @param  [type] $transTo        
+     * @param  string $stationFromID  
+     * @param  string $stationToID   
+     * @param  string $character_from 
+     * @param  string $character_to   
+     * @param  string $transFrom      
+     * @param  string $transTo        
      * @return void                 
      */
-    public function tax($stationFromID, $stationToID, $character_from, $character_to, $transFrom, $transTo)
+    public function tax(string $stationFromID, string $stationToID, string $character_from, string $character_to, string $transFrom, string $transTo) : void
     {
         $this->stationFromID  = $stationFromID;
         $this->stationToID    = $stationToID;
@@ -73,7 +73,7 @@ class Tax_model extends CI_Model
 
     /**
      * Gets the corporation ID that owns the origin station
-     * @return [string]
+     * @return string
      */
     public function getCorpOwnerIDFromStation() : string
     {
@@ -86,7 +86,7 @@ class Tax_model extends CI_Model
 
     /**
      * Gets the corporation ID that owns the destination station
-     * @return [string]
+     * @return string
      */
     public function getCorpOwnerIDToStation() : string
     {
@@ -100,7 +100,7 @@ class Tax_model extends CI_Model
     /**
      * Gets the faction ID that owns the origin station
      * @param  [type] $corpOwnerIDFromStation 
-     * @return [string]                         
+     * @return string                         
      */
     public function getFactionOwnerIDFromStation(string $corpOwnerIDFromStation) : string
     {
@@ -114,7 +114,7 @@ class Tax_model extends CI_Model
     /**
      * Gets the faction ID that owns the origin station
      * @param  [type] $corpOwnerIDFromStation 
-     * @return [string]                         
+     * @return string                         
      */
     public function getFactionOwnerIDToStation(string $corpOwnerIDToStation) : string
     {
@@ -165,7 +165,7 @@ class Tax_model extends CI_Model
 
     /**
      * Gets the faction standing value for the origin station and character
-     * @param  [string] $factionOwnerIDFromStation 
+     * @param  string $factionOwnerIDFromStation 
      * @return [float]                            
      */
     public function getFromFactionStanding(string $factionOwnerIDFromStation) : float
@@ -184,7 +184,7 @@ class Tax_model extends CI_Model
 
     /**
      * Gets the faction standing value for the destination station and character
-     * @param  [string] $factionOwnerIDToStation 
+     * @param  string $factionOwnerIDToStation 
      * @return [float]                            
      */
     public function getToFactionStanding(string $factionOwnerIDToStation) : float
@@ -203,7 +203,7 @@ class Tax_model extends CI_Model
 
     /**
      * Get the broker relations skill level from the origin character
-     * @return [int] 
+     * @return int 
      */
     public function getBrokerFromLevel() : int
     {
@@ -216,7 +216,7 @@ class Tax_model extends CI_Model
 
     /**
      * Get the broker relations skill level from the destination character
-     * @return [int]
+     * @return int
      */
     public function getBrokerToLevel() : int
     {
@@ -229,7 +229,7 @@ class Tax_model extends CI_Model
 
     /**
      * Get the accounting level for the origin character
-     * @return [int]
+     * @return int
      */
     public function getAccountingFromLevel() : int
     {
@@ -242,7 +242,7 @@ class Tax_model extends CI_Model
 
     /**
      * Get the accounting level for the destination character
-     * @return [int]
+     * @return int
      */
     public function getAccountingToLevel() : int
     {
@@ -314,7 +314,7 @@ class Tax_model extends CI_Model
 
     /**
      * Returns the fixed tax associated with a citadel
-     * @param  [string] $stationID 
+     * @param  string $stationID 
      * @return [float]            
      */
     private function getCitadelTax(string $stationID) : ?float

@@ -28,7 +28,7 @@ class NetworthTracker_model extends CI_Model
      * of results
      * @param  string $chars    
      * @param  int    $interval 
-     * @return [string]           
+     * @return string           
      */
     public function init(string $chars, int $interval): string
     {

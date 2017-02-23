@@ -28,7 +28,7 @@ class Auth extends CI_Model
 
     /**
      * Generates a random string for a new password
-     * @return [string]
+     * @return string
      */
     public function generateRandomPassword()
     {
@@ -72,9 +72,9 @@ class Auth extends CI_Model
 
     /**
      * Generates a random string for a given number of characters
-     * @param  [string] $valid_chars  possible string characters
-     * @param  [int] $length          string length
-     * @return [string]
+     * @param  string $valid_chars  possible string characters
+     * @param  int $length          string length
+     * @return string
      */
     private function getRandomString(string $valid_chars, int $length) : string
     {

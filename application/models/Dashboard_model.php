@@ -70,7 +70,7 @@ class Dashboard_model extends CI_Model
     /**
      * Return the list of weekly profits for the sparkline
      * @param  string $chars 
-     * @return [string]        
+     * @return string        
      */
     public function getWeekProfits(string $chars): string
     {

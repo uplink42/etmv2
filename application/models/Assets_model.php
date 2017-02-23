@@ -82,7 +82,7 @@ class Assets_model extends CI_Model
     /**
      * Returns the region name or all regions by id
      * @param  int    $region_id 
-     * @return [string]            
+     * @return string            
      */
     public function getRegionName(int $region_id): string
     {
@@ -105,7 +105,7 @@ class Assets_model extends CI_Model
     /**
      * Returns the sum of assets for a set of characters
      * @param  string $chars 
-     * @return [string]        
+     * @return string        
      */
     public function getCurrentAssetTotals(string $chars): string
     {

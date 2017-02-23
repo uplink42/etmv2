@@ -69,7 +69,7 @@ class Login_model extends CI_Model
     /**
      * Get a character's name from id
      * @param  int    $character_id 
-     * @return [string]               
+     * @return string               
      */
     public function getCharacterName(int $character_id) : string
     {

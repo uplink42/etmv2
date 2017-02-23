@@ -168,9 +168,9 @@ class Updater_model extends CI_Model
 
     /**
      * Removes invalid api keys from a users' account
-     * @param  [int] $apikey  
-     * @param  [string] $vcode   
-     * @param  [string] $char_id 
+     * @param  int $apikey  
+     * @param  string $vcode   
+     * @param  string $char_id 
      * @return void          
      */
     public function checkCharacterKeys(int $apikey, string $vcode, string $char_id) : void
