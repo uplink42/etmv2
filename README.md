@@ -15,6 +15,7 @@ a web based profit tracker, trading and asset manager tool for Eve Online.
 - updates your data daily even if you don't login (for e-mail reports and more accurate net-worth evolution charts)
 - can set custom broker fees for citadels of your choosing until ccp gives us proper crest support
 - new! browse the market in real time trough all regions in New Eden
+- new! now available as native client for windows and android
 
 #Requirements:
 - Apache 2.2+ web server
