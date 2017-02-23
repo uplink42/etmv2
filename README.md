@@ -1,6 +1,6 @@
 #Eve Trade Master
 
-a web based profit tracker, trading and asset manager tool for Eve Online.
+a web based profit tracker, trading and asset manager tool for Eve Online (native client for windows and android available)
 
 #Main features:
 
