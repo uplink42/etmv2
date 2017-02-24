@@ -85,10 +85,10 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 //Application specific constants
-define("FILESTORAGE", "C:/xampp/htdocs/phealcache/"); //pheal cache folder
+define("FILESTORAGE", "phealcache/"); //pheal cache folder
 define("URL", "../");
 define("GUSER", "etmdevelopment42@gmail.com");
-define("GPWD", "93y977r9h86ff32apang");
+define("GPWD", "");
 define("SMTPDEBUG", 0);
 define("SMTPAUTH", true);
 define("SMTPSECURE", "ssl");
