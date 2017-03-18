@@ -9,10 +9,10 @@
 			<i class="pe page-header-icon pe-7s-add-user"></i>
 		    </div>
 		    <div class="header-title">
-			<h3>Register</h3>
-			<small>
-			    Select the characters you wish to import to your Eve Trade Master account.
-			</small>
+    			<h3>Register</h3>
+    			<small>
+    			    Select the characters you wish to import to your Eve Trade Master account.
+    			</small>
 		    </div>
 		</div>
 
