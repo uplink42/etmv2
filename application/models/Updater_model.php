@@ -150,7 +150,7 @@ class Updater_model extends CI_Model
 
             try {
                 $response = $pheal->APIKeyInfo();
-            } catch (\Pheal\Exceptions\PhealException $e) {
+            } catch (Exception $e) {
                 log_message('error', 'process api keys ' . $e->getMessage());
                 $this->checkCharacterKeys($apikey, $vcode, $char_id);
                 return false;
@@ -215,7 +215,7 @@ class Updater_model extends CI_Model
                 $char_api = $row->characterID;
                 array_push($apichars, $char_api);
             }
-        } catch (\Pheal\Exceptions\PhealException $e) {
+        } catch (Exception $e) {
             log_message('error', 'validate api keys ' . $e->getMessage());
             //communication error, abort
             return false;

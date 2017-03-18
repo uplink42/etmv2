@@ -18,22 +18,22 @@ class Register_model extends CI_Model
 
     /**
      * Start all validations wether we can register a user account
-     * @param  string $username       
-     * @param  string $password       
-     * @param  string $repeatpassword 
-     * @param  string $email          
-     * @param  int    $apikey         
-     * @param  string $vcode          
-     * @param  string $reports        
-     * @return array                 
+     * @param  string $username
+     * @param  string $password
+     * @param  string $repeatpassword
+     * @param  string $email
+     * @param  int    $apikey
+     * @param  string $vcode
+     * @param  string $reports
+     * @return array
      */
     public function validate(string $username, string $password, string $repeatpassword, string $email, int $apikey, string $vcode, string $reports): array
     {
         $result = array("username" => $this->validateUsername($username),
-            "password"             => $this->validatePassword($password, $repeatpassword),
-            "email"                => $this->validateEmail($email),
-            "api"                  => $this->validateAPI($apikey, $vcode),
-            "reports"              => $this->validateReports($reports),
+            "password"                 => $this->validatePassword($password, $repeatpassword),
+            "email"                    => $this->validateEmail($email),
+            "api"                      => $this->validateAPI($apikey, $vcode),
+            "reports"                  => $this->validateReports($reports),
         );
 
         return $result;
@@ -41,8 +41,8 @@ class Register_model extends CI_Model
 
     /**
      * Apply all username related validations
-     * @param  string $username 
-     * @return [type]           
+     * @param  string $username
+     * @return [type]
      */
     private function validateUsername(string $username)
     {
@@ -57,8 +57,8 @@ class Register_model extends CI_Model
 
     /**
      * Apply all email related validations
-     * @param  string $email 
-     * @return [type]        
+     * @param  string $email
+     * @return [type]
      */
     private function validateEmail(string $email)
     {
@@ -73,9 +73,9 @@ class Register_model extends CI_Model
 
     /**
      * Apply all password related validations
-     * @param  string $password       
-     * @param  string $repeatpassword 
-     * @return [type]                 
+     * @param  string $password
+     * @param  string $repeatpassword
+     * @return [type]
      */
     private function validatePassword(string $password, string $repeatpassword)
     {
@@ -90,9 +90,9 @@ class Register_model extends CI_Model
 
     /**
      * Apply all API key related validations
-     * @param  int    $apikey 
-     * @param  string $vcode  
-     * @return [type]         
+     * @param  int    $apikey
+     * @param  string $vcode
+     * @return [type]
      */
     private function validateAPI(int $apikey, string $vcode)
     {
@@ -101,8 +101,8 @@ class Register_model extends CI_Model
 
     /**
      * Apply all user report related validations
-     * @param  [type] $reports 
-     * @return [type]          
+     * @param  [type] $reports
+     * @return [type]
      */
     private function validateReports($reports)
     {
@@ -113,11 +113,11 @@ class Register_model extends CI_Model
 
     /**
      * Get a list of all API Key characters
-     * @param  int    $apikey 
-     * @param  string $vcode  
-     * @return array         
+     * @param  int    $apikey
+     * @param  string $vcode
+     * @return array
      */
-    public function getCharacters(int $apikey, string $vcode) : array
+    public function getCharacters(int $apikey, string $vcode): array
     {
         $pheal  = new Pheal($apikey, $vcode);
         $result = $pheal->accountScope->APIKeyInfo();
@@ -134,12 +134,12 @@ class Register_model extends CI_Model
 
     /**
      * Verify if characters belong to this api key
-     * @param  array  $chars  
-     * @param  int    $apikey 
-     * @param  string $vcode  
-     * @return bool       
+     * @param  array  $chars
+     * @param  int    $apikey
+     * @param  string $vcode
+     * @return bool
      */
-    public function verifyCharacters(array $chars, int $apikey, string $vcode) : bool
+    public function verifyCharacters(array $chars, int $apikey, string $vcode): bool
     {
         $pheal  = new Pheal($apikey, $vcode);
         $result = $pheal->accountScope->APIKeyInfo();
@@ -163,47 +163,43 @@ class Register_model extends CI_Model
 
     /**
      * After all validations succeed, create an account
-     * @param  string $username 
-     * @param  string $password 
-     * @param  string $email    
-     * @param  int    $apikey   
-     * @param  string $vcode   
-     * @param  string $reports  
-     * @param  array  $chars   
-     * @return string          
+     * @param  array  $data
+     * @return string
      */
-    public function createAccount(string $username, string $password, string $email, int $apikey, string $vcode, string $reports, array $chars): string
+    public function createAccount(array $data): array
     {
         $error = "";
-        $dt = new DateTime();
-        $tz = new DateTimeZone('Europe/Lisbon');
+        $dt    = new DateTime();
+        $tz    = new DateTimeZone('Europe/Lisbon');
         $dt->setTimezone($tz);
         $datetime = $dt->format('Y-m-d H:i:s');
 
         $this->load->model('common/Auth');
-        $hashed = $this->Auth->createHashedPassword($password);
+        $hashed = $this->Auth->createHashedPassword($data['password']);
 
         $this->db->trans_start();
-        $data1 = array(
-            "username"          => $username,
-            "registration_date" => $datetime,
-            "password"          => $hashed['password'],
-            "reports"           => $reports,
-            "email"             => $email,
-            "salt"              => $hashed['salt'],
-            "login_count"       => 0,
-            "updating"          => 0,
+        $data_user = array(
+            "username"                => $data['username'],
+            "registration_date"       => $datetime,
+            "password"                => $hashed['password'],
+            "reports"                 => $data['reports'],
+            "email"                   => $data['email'],
+            "salt"                    => $hashed['salt'],
+            "default_buy_behaviour"   => $data['default_buy'],
+            "default_sell_behaviour"  => $data['default_sell'],
+            "cross_character_profits" => $data['x_character'],
+            "ignore_citadel_tax"      => $data['null_tax'],
+            "login_count"             => 0,
+            "updating"                => 0,
         );
-        $this->db->insert('user', $data1);
+        $this->db->insert('user', $data_user);
         $user_id = $this->db->insert_id();
 
-        $data2 = array(
-            "apikey" => $apikey,
-            "vcode"  => $vcode,
-        );
-        $this->db->query("INSERT IGNORE INTO api(apikey, vcode) VALUES ('$apikey', '$vcode')");
+        $key = $data['apikey'];
+        $vcode = $data['vcode'];
+        $this->db->query("INSERT IGNORE INTO api(apikey, vcode) VALUES ('$key', '$vcode')");
 
-        foreach ($chars as $row) {
+        foreach ($data['chars'] as $row) {
             $character_id = (int) $row;
             //check if character already exists in db
             if ($this->checkCharacterExists($character_id)) {
@@ -212,14 +208,13 @@ class Register_model extends CI_Model
                 return $error;
             }
 
-            $pheal          = new Pheal($apikey, $vcode, "char"); //fetch character name
-            $result         = $pheal->CharacterSheet(array("characterID" => $character_id));
-            $character_name = $this->security->xss_clean($result->name);
-
+            $pheal            = new Pheal($data['apikey'], $data['vcode'], "char"); //fetch character name
+            $result           = $pheal->CharacterSheet(array("characterID" => $character_id));
+            $character_name   = $this->security->xss_clean($result->name);
             $eve_idcharacter  = $character_id;
             $name             = $this->db->escape($character_name);
             $balance          = 0;
-            $api_apikey       = $apikey;
+            $api_apikey       = $data['apikey'];
             $networth         = 0;
             $escrow           = 0;
             $total_sell       = 0;
@@ -232,28 +227,31 @@ class Register_model extends CI_Model
                       ON DUPLICATE KEY UPDATE eve_idcharacter = '$eve_idcharacter', name=" . $name . ", api_apikey = '$api_apikey', networth='$networth',
                           escrow='$escrow', total_sell='$total_sell', broker_relations='$broker_relations', accounting='$accounting'");
 
-            $data4 = array(
+            $data_assoc = array(
                 "idaggr"                    => null,
                 "user_iduser"               => $user_id,
                 "character_eve_idcharacter" => $character_id,
             );
 
-            $this->db->insert('aggr', $data4);
+            $this->db->insert('aggr', $data_assoc);
         }
 
         $this->db->trans_complete();
 
+        $result = [];
         if ($this->db->trans_status() === false) {
-            return Msg::DB_ERROR;
+            $result['success'] = false;
+            $result['msg']     = Msg::DB_ERROR;
         } else {
-            return "ok";
+            $result['success'] = true;
         }
+        return $result;
     }
 
     /**
      * Check if a character is already associated with another user
-     * @param  int    $character_id 
-     * @return bool               
+     * @param  int    $character_id
+     * @return bool
      */
     public function checkCharacterExists(int $character_id): bool
     {

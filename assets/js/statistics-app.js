@@ -6,7 +6,22 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        buttons: [],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
         "order": [],
     });
     var bestiph = $('#bestiph').DataTable({
@@ -15,7 +30,22 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        buttons: [],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
         "order": [],
     });
     var bestcus = $('#bestcus').DataTable({
@@ -24,7 +54,22 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        buttons: [],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
         "order": [],
     });
     var topstations = $('#topstations').DataTable({
@@ -33,7 +78,22 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        buttons: [],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
         "order": [],
     });
     var blunders = $('#blunders').DataTable({
@@ -42,7 +102,22 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        buttons: [],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
         "order": [],
     });
     var bestmargin = $('#bestmargin').DataTable({
@@ -51,7 +126,22 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        buttons: [],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
         "order": [],
     });
     var fastest = $('#fastest').DataTable({
@@ -60,7 +150,22 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        buttons: [],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
         "order": [],
     });
     var timezones = $('#timezones').DataTable({
@@ -69,7 +174,22 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        buttons: [],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
         "order": [],
     });
     var problematic = $('#problematic').DataTable({
@@ -78,7 +198,22 @@ $(document).ready(function() {
             [5, 10, -1],
             [5, 10, "All"]
         ],
-        buttons: [],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
         "order": [],
     });
 });

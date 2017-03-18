@@ -26,7 +26,7 @@ class Updater extends CI_Controller
      * Loads the updater page
      * @return void
      */
-    public function index() : void
+    public function index()
     {
         $username = $this->session->username;
         if (empty($username)) {
@@ -40,7 +40,10 @@ class Updater extends CI_Controller
 
         //check if API server is up
         if (!$this->ValidateRequest->testEndpoint()) {
-            buildMessage("error", Msg::XML_CONNECT_FAILURE, $view);
+            $this->removeDirectory(FILESTORAGE . 'public/public/server');
+            $this->session->set_flashdata('msg', Msg::XML_CONNECT_FAILURE);
+            $this->session->set_flashdata('notice', 'error');
+            redirect('main/login');
             //check if user is already updating
         } else {
             if ($this->Updater_model->isLocked($username)) {
@@ -84,7 +87,8 @@ class Updater extends CI_Controller
 
                                 if ($this->db->trans_status() === false) {
                                     //something went wrong while calculating profits, abort
-                                    buildMessage("error", Msg::DB_ERROR, "login/login_v");
+                                    $this->session->set_flashdata('msg', Msg::DB_ERROR);
+                                    $this->session->set_flashdata('notice', 'error');
                                     $data['view']      = "login/login_v";
                                     $data['no_header'] = 1;
                                     $this->load->view('main/_template_v', $data);
@@ -117,7 +121,8 @@ class Updater extends CI_Controller
                                     $this->removeDirectory($dir);
                                     //release the lock
                                     $this->Updater_model->release($username);
-                                    buildMessage("error", Msg::XML_CONNECT_FAILURE, "login/login_v");
+                                    $this->session->set_flashdata('msg', Msg::XML_CONNECT_FAILURE);
+                                    $this->session->set_flashdata('notice', 'error');
                                     
                                     $this->session->unset_userdata('username');
                                     $this->session->unset_userdata('start');
@@ -143,7 +148,7 @@ class Updater extends CI_Controller
      * @param  string $path 
      * @return void      
      */
-    private function removeDirectory(string $path) : void
+    private function removeDirectory(string $path)
     {
         if (is_dir($path)) {
             $files = glob($path . '/*');
@@ -159,7 +164,7 @@ class Updater extends CI_Controller
      * @param  string $username 
      * @return void         
      */
-    private function displayResultTable(string $username) : void
+    private function displayResultTable(string $username)
     {
         $table = $this->Updater_model->resultTable($username);
         $this->Updater_model->release($username);
@@ -178,7 +183,7 @@ class Updater extends CI_Controller
      * Loads the "New api key required" page
      * @return void
      */
-    private function askForKey() : void
+    private function askForKey()
     {
         $data['view']      = "login/select_nocharacter_v";
         $data['no_header'] = 1;

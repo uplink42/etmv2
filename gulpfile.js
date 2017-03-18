@@ -103,8 +103,7 @@ gulp.task('clean', function () {
 
 //css
 gulp.task('css', function(){
-   gulp.src(paths.css
-)
+   gulp.src(paths.css)
    .pipe(concat('styles.css'))
    .pipe(minify())
    .pipe(gulp.dest('dist/luna/styles'))
@@ -119,7 +118,7 @@ gulp.task('js', function(){
    .pipe(concat('apps.js'))
    .pipe(uglify())
    .pipe(gulp.dest('dist/js'))
-   .pipe(connect.reload())
+   .pipe(connect.reload());
 });
 
 //app files
@@ -137,7 +136,7 @@ gulp.task('uglify', function(){
 gulp.task('fonts', function() {
   gulp.src(paths.fonts, {base: './assets/luna/styles'})
 
-  .pipe(gulp.dest('dist/luna/styles'))
+  .pipe(gulp.dest('dist/luna/styles'));
 });
 
 

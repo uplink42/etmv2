@@ -328,12 +328,12 @@ class ValidateRequest extends CI_Model
             }
             return true;
 
-        } catch (\Pheal\Exceptions\PhealException $e) {
-            echo sprintf(
+        } catch (Exception $e) {
+            /*echo sprintf(
                 "an exception was caught! Type: %s Message: %s",
                 get_class($e),
                 $e->getMessage()
-            );
+            );*/
             return false;
         }
     }

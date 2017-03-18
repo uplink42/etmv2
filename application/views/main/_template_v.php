@@ -1,7 +1,3 @@
-<?php
-    /*Main application view template. Contains all dependencies and basic layout 
-     */
-?>
 <!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -12,12 +8,7 @@
     <meta property="og:title" content="Eve Trade Master" />
     <meta name="keywords" content="eve online trading market">
     <meta name="google-site-verification" content="AaRtrjK00fRsj5cWaYi3VnjiuOIpcRwZw4C860zpf9Y" />
-    <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="images/favicon/favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,500" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,700,800" rel="stylesheet">
-    <link href="dist/css/styles.min.css" rel="stylesheet">
-    <link href="dist/css/custom.min.css" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
     <!-- Page title -->
     <title>Eve Trade Master 2 - A web based Eve Online profit tracker, asset manager and trade analysis tool</title>
 
@@ -30,12 +21,11 @@
             </script>";
         }
     ?>
-
     <!-- Vendor styles -->
     <link rel="stylesheet" href="<?=base_url('dist/luna/styles/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
     <script src="<?=base_url('dist/js/apps.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 
-     <?php
+    <?php
         if (!empty($market)) {
             echo "<script>
             $(document).ready(function() {
@@ -45,18 +35,21 @@
         }
     ?>
 </head>
-
     <?php echo isset($no_header) ? "<body class='blank'>" : "" ?>
     <div class="wrapper mainwrapper" data-url="<?=base_url()?>">
 
     <!-- toastr notification -->
-    <?php if(isset($message)) {?>
+    <?php if (isset($message)) {?>
     <script>toastr["<?=$notice?>"]("<?=$message?>")</script>
     <?php }
-    
+
+    if (!empty($this->session->flashdata('notice'))) {?>
+    <script>toastr["<?=$this->session->flashdata('notice');?>"]("<?=$this->session->flashdata('msg');?>")</script>
+    <?php }
+
     !isset($no_header) ? $this->load->view('common/header_v') : "";
 ?>
-	
+    
 <?php
     $this->load->view($view);
     $this->load->view('common/footer_v');
@@ -125,3 +118,4 @@
         <?php include_once("analyticstracking.php") ?>
 </body>
     
+

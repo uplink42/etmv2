@@ -141,7 +141,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                     <?php foreach($best_raw as $row) {?>
                                                     <tr>
                                                         <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
-                                                            <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
+                                                            <img src="<?=$row['url']?>" alt="icon"> <?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['quantity'],0)?></td>
                                                         <td><?=number_format($row['profit'],2)?></td>
@@ -177,7 +177,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                     <?php foreach($best_iph as $row) {?>
                                                     <tr>
                                                         <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
-                                                            <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
+                                                            <img src="<?=$row['url']?>" alt="icon"> <?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['quantity'],0)?></td>
                                                         <td><?=number_format($row['profit'],2)?></td>
@@ -211,7 +211,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                 <tbody>
                                                     <?php foreach ($best_customer as $row) {?>
                                                     <tr> 
-                                                        <td><img src="<?=$row['url']?>" alt="icon"><?=$row['soldTo']?></td>
+                                                        <td><img src="<?=$row['url']?>" alt="icon"> <?=$row['soldTo']?></td>
                                                         <td><?=number_format($row['profit'],2)?></td>
                                                     </tr>
                                                   <?php }?>
@@ -276,7 +276,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                     <?php foreach($best_blunders as $row) {?>
                                                     <tr>
                                                         <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
-                                                            <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
+                                                            <img src="<?=$row['url']?>" alt="icon"> <?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['profit'],2)?></td>
                                                         <td><?=number_format($row['margin'],2)?></td>
@@ -312,7 +312,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                     <?php foreach($best_margin as $row) {?>
                                                     <tr>
                                                         <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
-                                                            <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
+                                                            <img src="<?=$row['url']?>" alt="icon"> <?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['quantity'],0)?></td>
                                                         <td><?=number_format($row['margin'],2)?></td>
@@ -346,7 +346,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                 <tbody>
                                                     <?php foreach($best_to as $row) {?>
                                                     <tr>
-                                                        <td><img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></td>
+                                                        <td><img src="<?=$row['url']?>" alt="icon"> <?=$row['item']?></td>
                                                         <td><?=$row['difference']?></td>
                                                         <td><?=number_format($row['total'],2)?></td>
                                                     </tr>
@@ -421,7 +421,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                                     <?php foreach($problematic as $row) {?>
                                                     <tr>
                                                         <td><a href="<?=base_url('profits/index/'.$character_id.'/'.$interval.'?aggr='.$aggregate.'#'.$row['item'])?>">
-                                                            <img src="<?=$row['url']?>" alt="icon"><?=$row['item']?></a>
+                                                            <img src="<?=$row['url']?>" alt="icon"> <?=$row['item']?></a>
                                                         </td>
                                                         <td><?=number_format($row['quantity'],0)?></td>
                                                         <td><?=number_format($row['profit'],2)?></td>
