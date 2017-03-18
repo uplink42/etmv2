@@ -33,7 +33,7 @@ a web based profit tracker, trading and asset manager tool for Eve Online (nativ
 - Fusioncharts
 - Bootstrap 3
 - Ruby SASS
-- jQuery 1.9 (and several jquery plugins)
+- jQuery 1.9
 
 #3rd party APIs:
 - Eve XML API
@@ -88,7 +88,6 @@ There are several crons used to maintain the application. These can be found ins
 
 #To-do:
 - Rewrite api key storage and validation rules
-- Restructure and normalize database
 - Improve gulp tasks
 - Automatic item list update cron from CREST (right now I have to manually update the database everytime new items are added into Eve)
 - Unit testing
