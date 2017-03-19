@@ -1,10 +1,10 @@
-input[type=number]::-webkit-inner-spin-button, 
+/*input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
-}
+}*/
 
-.btn:active,
+/*.btn:active,
 .btn.active {
     box-shadow: none;
 }
@@ -540,13 +540,13 @@ fieldset[disabled] .btn-danger.focus {
 .btn-link.active {
     color: #f6a821;
     text-decoration: none;
-}
+}*/
 
-.content > div {
+/*.content > div {
     opacity: 0;
-}
+}*/
 
-.pace {
+/*.pace {
     -webkit-pointer-events: none;
     pointer-events: none;
     -webkit-user-select: none;
@@ -593,9 +593,9 @@ fieldset[disabled] .btn-danger.focus {
 
 .pace-done .content > div {
     opacity: 1;
-}
+}*/
 
-.text-muted {
+/*.text-muted {
     color: #868e96;
 }
 
@@ -621,10 +621,10 @@ fieldset[disabled] .btn-danger.focus {
 
 .text-danger {
     color: #DB524B;
-}
+}*/
 
 /* MARGINS & PADDINGS */
-.p-xxs {
+/*.p-xxs {
     padding: 5px !important;
 }
 
@@ -942,9 +942,9 @@ fieldset[disabled] .btn-danger.focus {
 
 .space-30 {
     margin: 30px 0;
-}
+}*/
 
-.label-accent {
+/*.label-accent {
     background-color: #f6a821;
 }
 
@@ -1068,9 +1068,10 @@ body.blank .content {
 
 .container-center.lg {
     max-width: 800px;
-}
+}*/
 
 /* Various */
+/*
 a {
     color: #f6a821;
     text-decoration: none;
@@ -1206,10 +1207,10 @@ sup {
 .col-lg-12 {
     padding-left: 10px;
     padding-right: 10px;
-}
+}/*
 
 /* Icons */
-.font-example-box:hover {
+/*.font-example-box:hover {
     color: #ffffff;
 }
 
@@ -1232,19 +1233,19 @@ sup {
 .back-link {
     float: left;
     width: 100%;
-}
+}*/
 
 /* UI Sortable */
-.ui-sortable .panel-body {
+/*.ui-sortable .panel-body {
     cursor: move;
-}
+}*/
 
-.ui-sortable-placeholder {
+/*.ui-sortable-placeholder {
     border: 1px dashed #535868 !important;
     visibility: visible !important;
-}
+}*/
 
-.navbar {
+/*.navbar {
     min-height: 60px;
 }
 
@@ -1362,9 +1363,9 @@ sup {
 .profil-link .profile-address {
     text-transform: lowercase;
     font-size: 17px;
-}
+}*/
 
-#mobile-menu {
+/*#mobile-menu {
     display: none;
 }
 
@@ -1457,9 +1458,9 @@ sup {
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
-}
+}*/
 
-.panel {
+/*.panel {
     background-color: transparent;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -1587,9 +1588,9 @@ sup {
 
 .panel.collapsed .fa.fa-chevron-down:before {
     content: "\f077";
-}
+}*/
 
-.pagination > li > a,
+/*.pagination > li > a,
 .pagination > li > span {
     color: #949ba2;
     background-color: transparent;
@@ -1625,10 +1626,10 @@ sup {
     color: #949ba2;
     background-color: transparent;
     border-color: #4a4f5d;
-}
+}*/
 
 /* Progress bar */
-.progress {
+/*.progress {
     border-radius: 2px;
     margin-bottom: 10px;
 }
@@ -1692,9 +1693,9 @@ sup {
 
 .full .progress-bar {
     color: #ffffff;
-}
+}*/
 
-.modal-content {
+/*.modal-content {
     background-color: #21242a;
 }
 
@@ -1721,9 +1722,9 @@ sup {
 .modal-backdrop.in {
     filter: alpha(opacity=10);
     opacity: .1;
-}
+}*/
 
-h1,
+/*h1,
 h2,
 h3,
 h4,
@@ -1822,9 +1823,9 @@ h6 .small,
 
 .label-danger {
     background-color: #DB524B;
-}
+}*/
 
-.badge {
+/*.badge {
     background-color: transparent;
     border: 1px solid #44464f;
     font-weight: 300;
@@ -1832,13 +1833,11 @@ h6 .small,
 }
 
 .vertical-container {
-    /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
     width: 98%;
     margin: 0 auto;
 }
 
 .vertical-container::after {
-    /* clearfix */
     content: '';
     display: table;
     clear: both;
@@ -1971,10 +1970,10 @@ h6 .small,
 
 .vertical-timeline-content h2 {
     font-size: 16px;
-}
+}*/
 
 /* Nestable list */
-.dd {
+/*.dd {
     position: relative;
     display: block;
     margin: 0;
@@ -2098,12 +2097,12 @@ h6 .small,
 .dd-dragel .dd-handle {
     -webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);
     box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);
-}
+}*/
 
 /**
 * Nestable Extras
 */
-.nestable-lists {
+/*.nestable-lists {
     display: block;
     clear: both;
     padding: 30px 0;
@@ -2133,9 +2132,9 @@ h6 .small,
     padding: 25px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-}
+}*/
 
-.nav-tabs {
+/*.nav-tabs {
     border: none;
 }
 
@@ -2238,9 +2237,9 @@ h6 .small,
     -webkit-border-radius: 0 4px 4px 0;
     -moz-border-radius: 0 4px 4px 0;
     border-radius: 0 4px 4px 0;
-}
+}*/
 
-.table > thead > tr > th,
+/*.table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
 .table > thead > tr > td,
@@ -2411,9 +2410,9 @@ th {
 .table-hover > tbody > tr:hover > .danger,
 .table-hover > tbody > tr.danger:hover > th {
     background-color: #d73e36;
-}
+}*/
 
-div.dt-button-info {
+/*div.dt-button-info {
     background-color: #21242a;
     border-radius: 6px;
     border: none;
@@ -2510,9 +2509,9 @@ div.dt-button-info h2 {
 
 #toast-container.toast-top-right > div {
     margin-top: 60px;
-}
+}*/
 
-.form-control {
+/*.form-control {
     color: #949ba2;
     border: none;
     border-radius: 4px;
@@ -2634,10 +2633,10 @@ fieldset[disabled] .form-control {
     background-color: #f6a821 !important;
     width: auto !important;
     height: auto !important;
-}
+}*/
 
 /* Charts */
-.flot-chart {
+/*.flot-chart {
     display: block;
     height: 300px;
     position: relative;
@@ -2660,9 +2659,9 @@ fieldset[disabled] .form-control {
 
 .flot-text {
     color: #949ba2 !important;
-}
+}*/
 
-.hoverinfo {
+/*.hoverinfo {
     background-color: #f6a821 !important;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) !important;
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) !important;
@@ -3032,21 +3031,15 @@ fieldset[disabled] .form-control {
 	opacity: 0;
 		-moz-transform: rotate(900deg);
 	}
-}
+}*/
 
-.footer-links {
+/*.footer-links {
     padding-bottom: 0;
 }
 
 .footer-desc {
     padding-top: 0 !important;
 }
-
-/*@media only screen and (min-width: 768px) {
-  .table-responsive {
-    overflow-x: hidden;
-  }
-}*/
 
 #profits-table td:nth-child(6)::after {
     content: " %";
@@ -3191,14 +3184,10 @@ fieldset[disabled] .form-control {
                 no-repeat;
 }
 
-/* When the body has the loading class, we turn
-   the scrollbar off with overflow:hidden */
 body.loading {
     overflow: hidden;   
 }
 
-/* Anytime the body has the loading class, our
-   modal element will be visible */
 body.loading .modal-load {
     display: block;
 }
@@ -3240,13 +3229,4 @@ body.loading .modal-load {
 
 .loading-body {
     opacity: 0.3;
-}
-
-/*table .portrait {
-    table-layout: fixed;
-    width: 1px;
-    white-space: nowrap;
 }*/
-
-
-

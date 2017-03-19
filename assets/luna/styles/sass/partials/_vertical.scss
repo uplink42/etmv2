@@ -1,0 +1,134 @@
+.badge {
+  background-color: transparent;
+  border: 1px solid #44464f;
+  font-weight: 300;
+  color: #aaacb5;
+}
+
+.vertical-container {
+  width: 98%;
+  margin: 0 auto;
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.v-timeline {
+  position: relative;
+  padding: 0;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 18px;
+    height: 100%;
+    width: 4px;
+    background: $color-border;
+  }
+}
+
+.vertical-timeline-content .btn {
+  float: right;
+}
+
+.vertical-timeline-block {
+  position: relative;
+  margin: 2em 0;
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.vertical-timeline-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 16px;
+  border: 1px solid $color-border;
+  text-align: center;
+  background: $color-background;
+  color: #ffffff;
+  i {
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin-left: -12px;
+    margin-top: -9px;
+  }
+}
+
+.vertical-timeline-content {
+  position: relative;
+  margin-left: 60px;
+  background-color: rgba(68, 70, 79, 0.5);
+  border-radius: 0.25em;
+  border: 1px solid $color-border;
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  h2 {
+    font-weight: 400;
+    margin-top: 4px;
+  }
+  p {
+    margin: 1em 0 0 0;
+    line-height: 1.6;
+  }
+  .vertical-date {
+    font-weight: 500;
+    text-align: right;
+  }
+}
+
+.vertical-date small {
+  color: #ffffff;
+  font-weight: 400;
+}
+
+.vertical-timeline-content {
+  &:after, &:before {
+    right: 100%;
+    top: 20px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  &:after {
+    border-color: transparent;
+    border-right-color: $color-border;
+    border-width: 10px;
+    margin-top: -10px;
+  }
+  &:before {
+    border-color: transparent;
+    border-right-color: $color-border;
+    border-width: 11px;
+    margin-top: -11px;
+  }
+  h2 {
+    font-size: 16px;
+  }
+}

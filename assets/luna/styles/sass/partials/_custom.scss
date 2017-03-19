@@ -1,0 +1,179 @@
+.footer-links {
+  padding-bottom: 0;
+}
+
+.footer-desc {
+  padding-top: 0 !important;
+}
+
+#profits-table td:nth-child(6)::after, #profits-2-table td:nth-child(10)::after, #ts-table td:nth-child(10)::after, #bestmargin td:nth-child(3)::after, #daily td:nth-child(5)::after {
+  content: " %";
+}
+
+#profits-table, #profits-2-table, #ts-table, #sellorders-table, #buyorders-table {
+  color: #fff;
+  opacity: 0.7;
+}
+
+.item-name:hover {
+  cursor: pointer;
+}
+
+#daily, #profits-table .btn-default, #ts-table .btn-default {
+  color: #fff;
+}
+
+#profits-2-table {
+  .btn-default, span {
+    color: #fff;
+  }
+}
+
+#pie svg {
+  background-color: transparent !important;
+}
+
+.character-portrait {
+  border-radius: 50%;
+}
+
+.m-b-none {
+  color: $color-text-warning;
+}
+
+.warning-asset {
+  white-space: normal;
+}
+
+.yellow-2 {
+  color: $color-text-warning;
+}
+
+.info-panel-main {
+  list-style-type: none;
+}
+
+.ui-autocomplete {
+  cursor: pointer;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  display: none;
+  min-width: 160px;
+  padding: 4px 0;
+  margin: 0 0 10px 25px;
+  list-style: none;
+  background-color: $color-background-form;
+  border-color: $color-background-form;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+}
+
+.ui-menu-item > a.ui-corner-all {
+  display: block;
+  padding: 3px 15px;
+  clear: both;
+  font-weight: normal;
+  line-height: 18px;
+  color: #555555;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.ui-state-hover, .ui-state-active {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: $color-text-accent !important;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  background-color: red;
+  background-image: none;
+}
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+.ui-menu .ui-menu-item a {
+  height: 10px;
+  font-size: 12px;
+}
+
+.ui-state-focus {
+  background: none !important;
+  background-color: $color-text-accent !important;
+  border: none !important;
+  color: #fff;
+}
+
+.modal-load {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8) url('http://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;
+}
+
+body.loading {
+  overflow: hidden;
+  .modal-load {
+    display: block;
+  }
+}
+
+.selected-option {
+  font-weight: 700;
+}
+
+.add-list-item, .stocklist-content {
+  display: none;
+}
+
+.footer-links a {
+  cursor: pointer;
+}
+
+.hourglass {
+  font-size: 28px;
+}
+
+.row-bordered {
+  border: 1px solid #fff;
+}
+
+.panel-loading-common {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  top: 45%;
+}
+
+.table-nochars .char {
+  float: left;
+}
+
+.loading-body {
+  opacity: 0.3;
+}

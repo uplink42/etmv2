@@ -23,6 +23,7 @@
     ?>
     <!-- Vendor styles -->
     <link rel="stylesheet" href="<?=base_url('dist/luna/styles/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
+    <link rel="stylesheet" href="<?=base_url('dist/luna/styles/theme.min.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
     <script src="<?=base_url('dist/js/apps.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 
     <?php
@@ -43,7 +44,7 @@
     <script>toastr["<?=$notice?>"]("<?=$message?>")</script>
     <?php }
 
-    if (!empty($this->session->flashdata('notice'))) {?>
+    if (!empty($this->session->flashdata)) {?>
     <script>toastr["<?=$this->session->flashdata('notice');?>"]("<?=$this->session->flashdata('msg');?>")</script>
     <?php }
 

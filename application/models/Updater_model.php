@@ -15,7 +15,6 @@ class Updater_model extends CI_Model
     private $user_id;
     private $username;
     private $account_characters = [];
-    private $is_updating;
 
     //character specific
     private $character_id;
@@ -761,164 +760,15 @@ class Updater_model extends CI_Model
     }
 
     /**
-     * After all transactions are added, calculate profits and taxes with FIFO and update remaining 
-     * quantities in the database
+     * After all transactions are added, calculate profits and taxes with FIFO 
+     * and the specified settings, and update remaining quantities in the database
      * @return void
      */
-    public function calculateProfits() : void
+    /*public function calculateProfits(string $username) : void
     {
-        $buy_stack  = array();
-        $sell_stack = array();
-
-        $num_profits = 0;
-
-        //buy list
-        $this->db->select('transaction.idbuy, transaction.item_eve_iditem, transaction.quantity, transaction.price_unit, transaction.time, transaction.remaining');
-        $this->db->from('transaction');
-        $this->db->join('aggr', 'transaction.character_eve_idcharacter = aggr.character_eve_idcharacter');
-        $this->db->join('user', 'aggr.user_iduser = user.iduser');
-        $this->db->where('transaction.remaining > 0');
-        $this->db->where('transaction.transaction_type', 'Buy');
-        $this->db->where('user.username', $this->username);
-        $this->db->order_by('time', 'asc');
-        $buy_list = $this->db->get('');
-        $buy_stack = $buy_list->result_array();
-
-        //sell list
-        $this->db->select('transaction.idbuy, transaction.item_eve_iditem, transaction.quantity, transaction.price_unit, transaction.time, transaction.remaining');
-        $this->db->from('transaction');
-        $this->db->join('aggr', 'transaction.character_eve_idcharacter = aggr.character_eve_idcharacter');
-        $this->db->join('user', 'aggr.user_iduser = user.iduser');
-        $this->db->where('transaction.remaining > 0');
-        $this->db->where('transaction.transaction_type', 'Sell');
-        $this->db->where('user.username', $this->username);
-        $this->db->order_by('time', 'asc');
-        $sell_list = $this->db->get('');
-        $sell_stack = $sell_list->result_array();
-
-        $size_buy  = sizeof($buy_stack);
-        $size_sell = sizeof($sell_stack);
-
-        for ($i = 0; $i <= $size_buy - 1; $i++) {
-            $buy_stack[$i]['idbuy'];
-            $buy_stack[$i]['item_eve_iditem'];
-            $buy_stack[$i]['remaining'];
-            $buy_stack[$i]['time'];
-            $buy_stack[$i]['price_unit'];
-
-            $quantity_b_calc = $buy_stack[$i]['quantity'];
-            for ($k = 0; $k <= $size_sell - 1; $k++) {
-                $sell_stack[$k]['idbuy'];
-                $sell_stack[$k]['item_eve_iditem'];
-                $sell_stack[$k]['remaining'];
-                $sell_stack[$k]['time'];
-                $sell_stack[$k]['price_unit'];
-
-                //found a match
-                if ($sell_stack[$k]['item_eve_iditem'] == $buy_stack[$i]['item_eve_iditem'] 
-                    && $sell_stack[$k]['time'] > $buy_stack[$i]['time'] 
-                    && $buy_stack[$i]['remaining'] > 0 
-                    && $sell_stack[$k]['remaining'] > 0) {
-
-                    $num_profits++;
-                    $profit_q = min($buy_stack[$i]['remaining'], $sell_stack[$k]['remaining']);
-
-                    //update remaining quantity
-                    $data_buy = ["remaining" => $buy_stack[$i]['remaining'] - $profit_q];
-                    $this->db->where('idbuy', $buy_stack[$i]['idbuy']);
-                    $this->db->update('transaction', $data_buy);
-
-                    $data_sell = ["remaining" => $sell_stack[$k]['remaining'] - $profit_q];
-                    $this->db->where('idbuy', $sell_stack[$k]['idbuy']);
-                    $this->db->update('transaction', $data_sell);
-
-                    //update array
-                    $sell_stack[$k]['remaining'] = $sell_stack[$k]['remaining'] - $profit_q;
-                    $buy_stack[$i]['remaining']  = $buy_stack[$i]['remaining'] - $profit_q;
-
-                    //find profit data
-                    $this->db->select('item.name as itemname,
-                        item.eve_iditem as iditem,
-                        station.name as stationname,
-                        transaction.station_eve_idstation as stationid,
-                        characters.eve_idcharacter as characterid,
-                        characters.name as charactername,
-                        transaction.time as transactiontime');
-                    $this->db->from('transaction');
-                    $this->db->join('characters', 'transaction.character_eve_idcharacter = characters.eve_idcharacter');
-                    $this->db->join('station', 'transaction.station_eve_idstation = station.eve_idstation', 'left');
-                    $this->db->join('item', 'transaction.item_eve_iditem = item.eve_iditem', 'left');
-                    $this->db->where('transaction.idbuy', $buy_stack[$i]['idbuy']);
-                    $query_buy = $this->db->get('');
-
-
-                    $this->db->select('item.name as itemname,
-                        item.eve_iditem as iditem,
-                        station.name as stationname,
-                        transaction.station_eve_idstation as stationid,
-                        characters.eve_idcharacter as characterid,
-                        characters.name as charactername,
-                        transaction.time as transactiontime');
-                    $this->db->from('transaction');
-                    $this->db->join('characters', 'transaction.character_eve_idcharacter = characters.eve_idcharacter');
-                    $this->db->join('station', 'transaction.station_eve_idstation = station.eve_idstation', 'left');
-                    $this->db->join('item', 'transaction.item_eve_iditem = item.eve_iditem', 'left');
-                    $this->db->where('transaction.idbuy', $sell_stack[$k]['idbuy']);
-                    $query_sell = $this->db->get('');
-
-                    //calulate taxes
-                    $stationFromID   = $query_buy->row()->stationid;
-                    $stationToID     = $query_sell->row()->stationid;
-                    $date_buy        = $query_buy->row()->transactiontime;
-                    $date_sell       = $query_sell->row()->transactiontime;
-                    $characterBuyID  = $query_buy->row()->characterid;
-                    $characterSellID = $query_sell->row()->characterid;
-
-                    $CI = &get_instance();
-                    $CI->load->model('Tax_Model');
-                    $CI->Tax_Model->tax($stationFromID, $stationToID, $characterBuyID, $characterSellID, "buy", "sell");
-                    $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
-                    $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
-                    $transTaxTo    = $CI->Tax_Model->calculateTaxTo();
-                    $brokerFeeTo   = $CI->Tax_Model->calculateBrokerTo();
-
-                    $price_unit_b_taxed  = $buy_stack[$i]['price_unit'] * $brokerFeeFrom * $transTaxFrom;
-                    $price_total_b_taxed = $price_unit_b_taxed * $profit_q;
-                    $price_unit_s_taxed  = $sell_stack[$k]['price_unit'] * $brokerFeeTo * $transTaxTo;
-                    $price_total_s_taxed = $price_unit_s_taxed * $profit_q;
-
-                    //calculate final profit
-                    $profit      = ($price_unit_s_taxed - $price_unit_b_taxed) * $profit_q;
-                    $profit_unit = ($price_unit_s_taxed - $price_unit_b_taxed);
-                    $trans_b = $buy_stack[$i]["idbuy"];
-                    $trans_s = $sell_stack[$k]["idbuy"];
-
-                    //insert profit
-                    $add_profit = $this->db->query("INSERT IGNORE profit
-                        (idprofit,
-                        transaction_idbuy_buy,
-                        transaction_idbuy_sell,
-                        profit_unit,
-                        timestamp_buy,
-                        timestamp_sell,
-                        characters_eve_idcharacters_IN,
-                        characters_eve_idcharacters_OUT,
-                        quantity_profit) VALUES
-                        (NULL,
-                        '$trans_b',
-                        '$trans_s',
-                        '$profit_unit',
-                        '$date_buy',
-                        '$date_sell',
-                        '$characterBuyID',
-                        '$characterSellID',
-                        '$profit_q')");
-                }
-            }
-        }
-
-        $this->character_new_profits = $num_profits;
-    }
+        $this->load->model('Updater_profit_model', 'profits');
+        $this->profits->calculate($username);
+    }*/
 
     /**
      * Update each character's total profit, sales, etc for this day

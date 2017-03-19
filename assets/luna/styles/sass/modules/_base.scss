@@ -1,0 +1,100 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #FFFFFF;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+    margin-top: 10px;
+}
+
+h1 {
+    display: inline;
+}
+
+.c-accent {
+    color: $color-text-accent;
+}
+
+.c-white {
+    color: #FFFFFF;
+}
+
+.c-text {
+    color: $color-text-body;
+}
+
+.font-light {
+    font-weight: 300;
+}
+
+.font-normal {
+    font-weight: 400;
+}
+
+.font-bold {
+    font-weight: 600;
+}
+
+.font-extra-bold {
+    font-weight: 700;
+}
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small,
+.h1 small,
+.h2 small,
+.h3 small,
+.h4 small,
+.h5 small,
+.h6 small,
+h1 .small,
+h2 .small,
+h3 .small,
+h4 .small,
+h5 .small,
+h6 .small,
+.h1 .small,
+.h2 .small,
+.h3 .small,
+.h4 .small,
+.h5 .small,
+.h6 .small {
+    color: #a4aab0;
+}
+
+.label-default {
+    background-color: #44464f;
+}
+
+.label-primary {
+    background-color: $color-text-primary;
+}
+
+.label-success {
+    background-color: $color-text-success;
+}
+
+.label-info {
+    background-color: $color-text-info;
+}
+
+.label-warning {
+    background-color: $color-text-warning;
+}
+
+.label-danger {
+    background-color: $color-text-danger;
+}
