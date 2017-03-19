@@ -78,9 +78,9 @@ class Updater extends CI_Controller
                             } else {
                                 $this->Updater_model->release($username);
                                 //if we arrived here, that means nothing went wrong (yet)
-                                //calculate profits
                                 $this->db->trans_start();
-                                $this->Updater_model->calculateProfits();
+                                $this->load->model('Updater_profit_model', 'profits');
+                                $this->profits->beginProfitCalculation($username);
                                 //totals and history
                                 $this->Updater_model->updateTotals();
                                 $this->db->trans_complete();
@@ -104,7 +104,6 @@ class Updater extends CI_Controller
                                 get_class($e),
                                 $e->getMessage()
                             );
-                            log_message('error', 'iterate chars ' . $e->getMessage());
 
                             //cache is now corrupted for 24 hours, remove cache and try again
                             //remove all keys just in case

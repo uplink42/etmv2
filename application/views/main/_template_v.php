@@ -43,7 +43,7 @@
     <script>toastr["<?=$notice?>"]("<?=$message?>")</script>
     <?php }
 
-    if (!empty($this->session->flashdata('notice'))) {?>
+    if (!empty($this->session->flashdata)) {?>
     <script>toastr["<?=$this->session->flashdata('notice');?>"]("<?=$this->session->flashdata('msg');?>")</script>
     <?php }
 
