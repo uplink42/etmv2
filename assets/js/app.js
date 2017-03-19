@@ -8,19 +8,19 @@ function number_format(number, decimals, decPoint, thousandsSep) {
     var s = '';
 
     var toFixedFix = function (n, prec) {
-        var k = Math.pow(10, prec)
+        var k = Math.pow(10, prec);
         return '' + (Math.round(n * k) / k)
-        .toFixed(prec)
+        .toFixed(prec);
     }
 
-    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.')
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
     if (s[0].length > 3) {
-        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep)
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
     }
     
     if ((s[1] || '').length < prec) {
         s[1] = s[1] || ''
-        s[1] += new Array(prec - s[1].length + 1).join('0')
+        s[1] += new Array(prec - s[1].length + 1).join('0');
     }
     
     return s.join(dec);
@@ -63,8 +63,9 @@ $.ui.autocomplete.prototype._initSource = function() {
     } else {
         this.source = this.options.source;
     }
-}
+};
 
+//datetables api
 jQuery.fn.dataTable.Api.register('sum()', function() {
     return this.flatten().reduce(function(a, b) {
         if (typeof a === 'string') {
