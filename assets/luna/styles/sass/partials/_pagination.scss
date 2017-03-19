@@ -1,0 +1,43 @@
+.pagination > {
+  li > {
+    a, span {
+      color: $color-text-body;
+      background-color: transparent;
+      border: 1px solid #585d6e;
+    }
+    a:hover, span:hover, a:focus, span:focus {
+      color: #ffffff;
+      background-color: rgba(97, 103, 121, 0.1);
+      border-color: $color-border-default;
+    }
+  }
+  .active > {
+    a, span, a:hover, span:hover, a:focus, span:focus {
+      color: #ffffff;
+      background-color: rgba(97, 103, 121, 0.1);
+      border-color: $color-border-default;
+    }
+  }
+  .disabled > {
+    span {
+      color: $color-text-body;
+      background-color: transparent;
+      border-color: #4a4f5d;
+      &:hover, &:focus {
+        color: $color-text-body;
+        background-color: transparent;
+        border-color: #4a4f5d;
+      }
+    }
+    a {
+      color: $color-text-body;
+      background-color: transparent;
+      border-color: #4a4f5d;
+      &:hover, &:focus {
+        color: $color-text-body;
+        background-color: transparent;
+        border-color: #4a4f5d;
+      }
+    }
+  }
+}

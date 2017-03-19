@@ -1,0 +1,31 @@
+.font-example-box {
+  &:hover {
+    color: #ffffff;
+  }
+  text-align: center;
+  min-height: 90px;
+  margin: 10px 0;
+  font-size: 42px;
+  i {
+    font-size: 22px;
+  }
+}
+
+.icon-example-name {
+  display: block;
+  font-size: 11px;
+}
+
+.back-link {
+  float: left;
+  width: 100%;
+}
+
+.ui-sortable .panel-body {
+  cursor: move;
+}
+
+.ui-sortable-placeholder {
+  border: 1px dashed #535868 !important;
+  visibility: visible !important;
+}

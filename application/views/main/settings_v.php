@@ -10,9 +10,7 @@
                         </i>
                     </div>
                     <div class="header-title">
-                        <h1>
-                            Account Settings
-                        </h1>
+                        <h1>Account Settings</h1>
                     </div>
                 </div>
                 <hr>
@@ -27,9 +25,7 @@
                     <div class="panel-body">
                         <ul class="info-panel-main">
                             <li>
-                                <i class="fa fa-info yellow">
-                                </i>
-                                Here you can configure several aspects in your ETM account.
+                                <i class="fa fa-info yellow"></i> Here you can configure several aspects in your ETM account.
                             </li>
                         </ul>
                     </div>
@@ -69,7 +65,7 @@
                                     New e-mail:
                                 </label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" id="ch-email-new" placeholder="type a new valid e-mail here" type="text" name="email">
+                                    <input class="form-control" id="ch-email-email" placeholder="type a new valid e-mail here" type="text" name="email">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -149,11 +145,11 @@
                             </ul>
                         <form class="form-horizontal change-reports" method="POST">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label" for="ch-email-pw">
+                                <label class="col-sm-3 control-label" for="reports">
                                     Reports:
                                 </label>
                                 <div class="col-sm-9">
-                                    <select class="form-control report-options" name="reports">
+                                    <select class="form-control report-options" name="reports" id="reports">
                                         <option value="none">None</option>
                                         <option value="daily">Daily</option>
                                         <option value="weekly">Weekly</option>
@@ -173,9 +169,39 @@
                 </div>
             </div>
 
-
-        </div>
-        
+            <div class="col-md-6 col-xs-12">
+                <div class="panel panel-filled">
+                    <div class="panel-heading">
+                        <div class="panel panel-filled panel-c-success panel-collapse">
+                            <div class="panel-heading">
+                                <h5><i class="fa fa-usd"></i> Profit tracking </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body tracking">
+                        <form class="form-horizontal change-tracking" method="POST">
+                            <div class="form-group">
+                                <div class="col-md-6 col-xs-6">
+                                    Default buy transactions behaviour:
+                                </div>
+                                <div class="col-md-6 col-xs-6 text-right">
+                                    <div class="col-md-6" style="float:right;">
+                                        <input type="radio" name="default-buy" value="1" checked> Buy order
+                                    </div>
+                                    <div class="col-md-6" style="float:right;">
+                                        <input type="radio" name="default-buy" value="0"> Sell order
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button class="btn btn-default btn-change-reports" type="submit">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

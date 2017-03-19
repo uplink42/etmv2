@@ -1,0 +1,93 @@
+div.dt-button-info {
+  background-color: #21242a;
+  border-radius: 6px;
+  border: none;
+  h2 {
+    background-color: transparent;
+    border-color: $color-border;
+  }
+}
+
+.table-responsive {
+  border-color: #484c5a !important;
+}
+
+.alert-success {
+  color: #ffffff;
+  border-color: $color-text-success;
+  background-color: $color-text-success;
+  .alert-link {
+    color: $color-text-success;
+  }
+}
+
+.alert-warning {
+  color: #ffffff;
+  border-color: $color-text-warning;
+  background-color: $color-text-warning;
+  .alert-link {
+    color: $color-text-warning;
+  }
+}
+
+.alert-info {
+  color: #ffffff;
+  border-color: $color-text-info;
+  background-color: $color-text-info;
+  .alert-link {
+    color: $color-text-info;
+  }
+}
+
+.alert-danger {
+  color: #ffffff;
+  border-color: $color-text-danger;
+  background-color: $color-text-danger;
+  .alert-link {
+    color: $color-text-danger;
+  }
+}
+
+.toast-success {
+  color: #ffffff;
+  border-color: $color-text-success;
+  background-color: $color-text-success;
+}
+
+.toast-warning {
+  color: #ffffff;
+  border-color: $color-text-warning;
+  background-color: $color-text-warning;
+}
+
+.toast-info {
+  color: #ffffff;
+  border-color: $color-text-info;
+  background-color: $color-text-info;
+}
+
+.toast-error {
+  color: #ffffff;
+  border-color: $color-text-danger;
+  background-color: $color-text-danger;
+}
+
+#toast-container {
+  > div {
+    opacity: 1;
+    margin-top: 20px;
+    border-radius: 4px;
+    padding: 20px 20px 20px 50px;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    &:hover {
+      -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+      -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+    }
+  }
+  &.toast-top-right > div {
+    margin-top: 60px;
+  }
+}

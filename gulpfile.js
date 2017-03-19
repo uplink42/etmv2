@@ -4,8 +4,9 @@ var gulp = require('gulp'),
     minify = require('gulp-minify-css'),
     imagemin = require('gulp-imagemin'),
     connect = require('gulp-connect'),
+    plumber = require('gulp-plumber'),
     clean = require('gulp-clean'),
-    mainBowerFiles = require('gulp-main-bower-files');
+    sass = require('gulp-sass');
 
 var paths = {
      js: ['assets/vendor/pacejs/pace.min.js',
@@ -29,8 +30,8 @@ var paths = {
         'assets/vendor/datatables/datatables.min.css',
         'assets/luna/styles/pe-icons/pe-icon-7-stroke.css',
         'assets/luna/styles/pe-icons/helper.css',
-        'assets/luna/styles/stroke-icons/style.css',
-        'assets/luna/styles/style.css'],
+        'assets/luna/styles/stroke-icons/style.css'/*,
+        'assets/luna/styles/style.css'*/],
 
     app: ['assets/luna/scripts/luna.js',
          'assets/js/toastr_options.js',
@@ -94,6 +95,22 @@ var paths = {
           'assets/rhijani/main/img/*/*']
 
 };
+
+//sass
+gulp.task('sass', function(){
+    gulp.src(['assets/luna/styles/sass/style.scss'])
+    .pipe(plumber({
+        errorHandler: function (error) {
+            console.log(error.message);
+            this.emit('end');
+        }}))
+    .pipe(sass())
+    .pipe(concat('theme.min.css'))
+    .pipe(minify())
+    .pipe(gulp.dest('dist/luna/styles'));
+});
+
+
 
 //delete production files
 gulp.task('clean', function () {
@@ -189,13 +206,13 @@ gulp.task('connect', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.js, ['js']);
   gulp.watch(paths.css, ['css']);
+  gulp.watch('assets/luna/styles/sass/**/*.scss', ['sass']);
   gulp.watch(paths.app, ['uglify']);
-
   gulp.watch(paths.home_js, ['home_js']);
   gulp.watch(paths.home_css, ['home_css']);
   gulp.watch(paths.img, ['img']);
 });
 
-gulp.task('default',['js','css', 'uglify', 'watch', 'home_js', 'home_css', 'img', 'connect', 'home_fonts', 'fonts'], function () {
+gulp.task('default',['js','css', 'sass', 'uglify', 'watch', 'home_js', 'home_css', 'img', 'connect', 'home_fonts', 'fonts'], function () {
 
 });

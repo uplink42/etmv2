@@ -1,0 +1,24 @@
+.modal-content {
+  background-color: #21242a;
+  .modal-title {
+    font-size: 22px;
+  }
+  .modal-header {
+    border-color: $color-border;
+    background-color: #1d1f24;
+    padding: 40px 20px;
+  }
+  .modal-body {
+    padding: 40px;
+  }
+  .modal-footer {
+    border-color: $color-border;
+    background-color: #1d1f24;
+    padding: 20px;
+  }
+}
+
+.modal-backdrop.in {
+  filter: alpha(opacity = 10);
+  opacity: .1;
+}

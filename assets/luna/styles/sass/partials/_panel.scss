@@ -1,0 +1,109 @@
+.panel {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color: $color-text-body;
+  border-radius: 3px;
+  .panel-body {
+    padding: 5px 15px 15px 15px;
+  }
+  &.panel-filled .panel-body {
+    padding-top: 10px;
+  }
+  .panel-footer {
+    background-color: transparent;
+    border: none;
+  }
+  > .panel-heading {
+    color: #ffffff;
+  }
+}
+
+.panel-tools {
+  display: inline-block;
+  float: right;
+  margin-top: 0;
+  padding: 0;
+  position: relative;
+  a {
+    margin-left: 2px;
+    color: $color-text-body;
+    cursor: pointer;
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}
+
+.panel {
+  &.panel-c-white {
+    border-left: 3px solid $color-text-body;
+  }
+  &.panel-c-accent {
+    border-left: 3px solid $color-text-accent;
+  }
+  &.panel-c-primary {
+    border-left: 3px solid $color-text-primary;
+  }
+  &.panel-c-warning {
+    border-left: 3px solid $color-text-warning;
+  }
+  &.panel-c-info {
+    border-left: 3px solid $color-text-info;
+  }
+  &.panel-c-success {
+    border-left: 3px solid $color-text-success;
+  }
+  &.panel-c-danger {
+    border-left: 3px solid $color-text-danger;
+  }
+  &.panel-b-accent {
+    background-color: $color-text-accent;
+    color: #ffffff;
+  }
+  &.panel-b-white {
+    background-color: white;
+    color: #61686f;
+    .panel-heading, .panel-footer {
+      color: #61686f;
+    }
+  }
+  &.panel-filled {
+    background-color: rgba(68, 70, 79, 0.5);
+  }
+}
+
+.view-header {
+  margin: 20px 0;
+  min-height: 50px;
+  padding: 0 15px;
+  .header-icon {
+    font-size: 60px;
+    color: $color-text-accent;
+    width: 68px;
+    float: left;
+    margin-top: -8px;
+    line-height: 0;
+  }
+  .header-title {
+    margin-left: 68px;
+    h3 {
+      margin-bottom: 2px;
+    }
+  }
+}
+
+.panel.collapsed {
+  .panel-body, .panel-footer {
+    display: none;
+  }
+  .fa {
+    &.fa-chevron-up:before {
+      content: "\f078";
+    }
+    &.fa-chevron-down:before {
+      content: "\f077";
+    }
+  }
+}
