@@ -52,3 +52,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['ciunit'] = "ciunit_controller/index";
+$route['ciunit/(:any)'] = "ciunit_controller/index/$1";

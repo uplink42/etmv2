@@ -21,7 +21,6 @@ class Settings_model extends CI_Model
         $this->db->where('iduser', $id_user);
         $query  = $this->db->get('user');
         $result = $query->row();
-
         return $result;
     }
 
@@ -68,7 +67,6 @@ class Settings_model extends CI_Model
     public function changeReports(int $id_user, string $value): bool
     {
         $data = ["reports" => $value];
-
         $this->db->trans_start();
         $this->db->where('iduser', $id_user);
         $this->db->update('user', $data);
@@ -94,6 +92,31 @@ class Settings_model extends CI_Model
         $data = ["password" => $hashed['password'],
                  "salt"     => $hashed['salt']];
 
+        $this->db->trans_start();
+        $this->db->where('iduser', $id_user);
+        $this->db->update('user', $data);
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === false) {
+            return false;
+        }
+        return true;
+    }
+
+
+    public function getProfitTrackingData(int $id_user)
+    {
+        $this->db->select('default_buy_behaviour, default_sell_behaviour, cross_character_profits, ignore_citadel_tax');
+        $this->db->where('iduser', $id_user);
+        $query = $this->db->get('user');
+        $result = $query->row();
+
+        return $result;
+    }
+
+
+    public function changeTrackingData(int $id_user, array $data)
+    {
         $this->db->trans_start();
         $this->db->where('iduser', $id_user);
         $this->db->update('user', $data);

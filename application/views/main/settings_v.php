@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button class="btn btn-default btn-change-email" type="submit">
+                                    <button class="btn btn-default btn-change-email pull-right" type="submit">
                                         Submit
                                     </button>
                                 </div>
@@ -118,7 +118,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button class="btn btn-default btn-change-pw" type="submit">
+                                    <button class="btn btn-default btn-change-pw pull-right" type="submit">
                                         Submit
                                     </button>
                                 </div>
@@ -159,7 +159,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button class="btn btn-default btn-change-reports" type="submit">
+                                    <button class="btn btn-default btn-change-reports pull-right" type="submit">
                                         Submit
                                     </button>
                                 </div>
@@ -180,22 +180,73 @@
                     </div>
                     <div class="panel-body tracking">
                         <form class="form-horizontal change-tracking" method="POST">
-                            <div class="form-group">
+                            <div class="form-group pl-15 mb-20">
                                 <div class="col-md-6 col-xs-6">
-                                    Default buy transactions behaviour:
+                                    <label>Default buy transactions behaviour:</label>
                                 </div>
                                 <div class="col-md-6 col-xs-6 text-right">
-                                    <div class="col-md-6" style="float:right;">
-                                        <input type="radio" name="default-buy" value="1" checked> Buy order
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="default_buy_behaviour" value="1"> Buy order
                                     </div>
-                                    <div class="col-md-6" style="float:right;">
-                                        <input type="radio" name="default-buy" value="0"> Sell order
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="default_buy_behaviour" value="0"> Sell order
                                     </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 help-block">
+                                    <i class="fa fa-info"></i> By default, ETM will assume your purchases come from buy orders and calculates taxes accordingly.
+                                </div>
+                            </div>
+                            <div class="row form-group pl-15 mb-20">
+                                <div class="col-md-6 col-xs-6">
+                                    <label>Default sell transactions behaviour:</label>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="default_sell_behaviour" value="0"> Buy order
+                                    </div>
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="default_sell_behaviour" value="1"> Sell order
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 help-block">
+                                    <i class="fa fa-info"></i> By default, ETM will assume your sales go to sell orders and calculates taxes accordingly.
+                                </div>
+                            </div>
+                            <div class="row form-group pl-15 mb-20">
+                                <div class="col-md-6 col-xs-6">
+                                    <label>Cross-character profit tracking:</label>
+                                </div>
+                                <div class="col-lg-6 col-xs-6 text-right">
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="cross_character_profits" value="1"> Enabled
+                                    </div>
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="cross_character_profits" value="0"> Disabled
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 help-block">
+                                    <i class="fa fa-info"></i> By default, ETM will calculate profits even when purchases and sales come from different characters. You can disable this behaviour and never match transactions between different characters.
+                                </div>
+                            </div>
+                            <div class="row form-group pl-15">
+                                <div class="col-md-6 col-xs-6">
+                                    <label>Set all Citadel taxes to zero:</label>
+                                </div>
+                                <div class="col-md-6 col-xs-6 text-right">
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="ignore_citadel_tax" value="1"> Yes
+                                    </div>
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="ignore_citadel_tax" value="0"> No
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 help-block">
+                                    <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from citadels.
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button class="btn btn-default btn-change-reports" type="submit">
+                                    <button class="btn btn-default btn-change-tracking pull-right" type="submit">
                                         Submit
                                     </button>
                                 </div>

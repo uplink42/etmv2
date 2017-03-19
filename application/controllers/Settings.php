@@ -18,14 +18,18 @@ class Settings extends MY_Controller
         $this->load->model('Settings_model');
         $this->load->model('common/ValidateRequest');
 
-        $this->email    = $_REQUEST['email'] ?? '';
+        $this->email    = $_REQUEST['email']    ?? '';
         $this->password = $_REQUEST['password'] ?? '';
-        $this->reports  = $_REQUEST['reports'] ?? '';
+        $this->reports  = $_REQUEST['reports']  ?? '';
 
-        $this->password_old  = $_REQUEST['password-old'] ?? '';
+        $this->password_old  = $_REQUEST['password-old']  ?? '';
         $this->password_new1 = $_REQUEST['password-new1'] ?? '';
         $this->password_new2 = $_REQUEST['password-new2'] ?? '';
 
+        $this->default_buy_behaviour   = $_REQUEST['default_buy_behaviour']   ?? 1;
+        $this->default_sell_behaviour  = $_REQUEST['default_sell_behaviour']  ?? 1;
+        $this->cross_character_profits = $_REQUEST['cross_character_profits'] ?? 1;
+        $this->ignore_citadel_tax      = $_REQUEST['ignore_citadel_tax']      ?? 0;
     }
 
     /**
@@ -36,7 +40,6 @@ class Settings extends MY_Controller
     public function index(int $character_id) : void
     {
         if ($this->enforce($character_id, $this->user_id)) {
-
             $aggregate = $this->aggregate;
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
@@ -65,6 +68,18 @@ class Settings extends MY_Controller
     public function reports() : void
     {
         $result = $this->Settings_model->getReportSelection($this->user_id);
+        $data   = array("data" => $result);
+        echo json_encode($data);
+    }
+
+
+     /**
+     * Returns the user tracking settings (e.g default buy, sell)
+     * @return string json 
+     */
+    public function tracking() : void
+    {
+        $result = $this->Settings_model->getProfitTrackingData($this->user_id);
         $data   = array("data" => $result);
         echo json_encode($data);
     }
@@ -118,6 +133,33 @@ class Settings extends MY_Controller
         $data = ["notice" => $notice, "message" => $message];
         echo json_encode($data);
     }
+
+    /**
+     * Request to change profit tracking behaviour
+     * @return string json
+     */
+    public function changeTracking() : void
+    {
+        $data = [
+            'default_buy_behaviour'   => $this->default_buy_behaviour,
+            'default_sell_behaviour'  => $this->default_sell_behaviour,
+            'cross_character_profits' => $this->cross_character_profits,
+            'ignore_citadel_tax'      => $this->ignore_citadel_tax
+        ];
+
+        $result = $this->Settings_model->changeTrackingData($this->user_id, $data);
+        if ($result) {
+            $notice  = "success";
+            $message = Msg::TRACKING_CHANGE_SUCCESS;
+        } else {
+            $notice  = "error";
+            $message = Msg::DB_ERROR;
+        }
+
+        $answer = ["notice" => $notice, "message" => $message];
+        echo json_encode($answer);
+    }
+
 
     /**
      * Change a user's password

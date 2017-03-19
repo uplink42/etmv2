@@ -4,6 +4,7 @@ $(document).ready(function() {
     var base = $(".navbar").data('url');
     var email_req = base + "Settings/email/";
     getEmail();
+    getTrackingSettings();
     getReport();
 
     function getEmail() {
@@ -25,6 +26,28 @@ $(document).ready(function() {
             success: function(result) {
                 var res = result.data.reports;
                 $(".report-options").val(res);
+            }
+        });
+    }
+
+    function getTrackingSettings() {
+        var tracking_req = base + "Settings/tracking/";
+        
+        $.ajax({
+            dataType: "json",
+            url: tracking_req,
+            success: function(result) {
+                var res = result.data;
+                console.log(res);
+                for (var key in res) {
+                    if (res.hasOwnProperty(key)) {
+                        var $radio = $('input:radio[name=' + key + ']');
+                        $radio.filter('[value=1]').prop('checked', res[key] === '1' ? true : false);
+                        $radio.filter('[value=0]').prop('checked', res[key] === '0' ? true : false);
+                        
+                    }
+                }
+
             }
         });
     }
@@ -104,5 +127,25 @@ $(document).ready(function() {
         } else {
             toastr["error"](errHandle.get().PASSWORDS_MISMATCH, "Error");
         }
+    });
+
+
+    $(".btn-change-tracking").on('click', function(e) {
+        e.preventDefault();
+        var data = $(".change-tracking").serialize();
+        var tracking_req = base + "Settings/changeTracking/";
+        
+        $.ajax({
+            dataType: "json",
+            url: tracking_req,
+            type: "POST",
+            data: data,
+            success: function(result) {
+                toastr[result.notice](result.message);
+                if (result.notice == "success") {
+                    getReport();
+                }
+            }
+        });
     });
 });
