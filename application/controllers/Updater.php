@@ -97,7 +97,7 @@ class Updater extends CI_Controller
                                     $this->displayResultTable($username);
                                 }
                             }
-                        } catch (\Pheal\Exceptions\PhealException $e) {
+                        } catch (Throwable $e) {
                             //if an exception happens during update (this is a bug on Eve's API)
                             echo sprintf(
                                 "an exception was caught! Type: %s Message: %s",

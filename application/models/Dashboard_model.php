@@ -187,6 +187,10 @@ class Dashboard_model extends CI_Model
             $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
             $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
 
+            log_message('error', $price_buy);
+            log_message('error', $transTaxFrom);
+            log_message('error', $brokerFeeFrom);
+
             $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
             $result[$i]['margin']       = $profit_unit / $price_buy * 100;
             $result[$i]['profit_total'] = $profit_unit * $result[$i]['quantity'];

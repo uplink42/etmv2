@@ -149,7 +149,7 @@ class Updater_model extends CI_Model
 
             try {
                 $response = $pheal->APIKeyInfo();
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 log_message('error', 'process api keys ' . $e->getMessage());
                 $this->checkCharacterKeys($apikey, $vcode, $char_id);
                 return false;
@@ -214,7 +214,7 @@ class Updater_model extends CI_Model
                 $char_api = $row->characterID;
                 array_push($apichars, $char_api);
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             log_message('error', 'validate api keys ' . $e->getMessage());
             //communication error, abort
             return false;
@@ -646,10 +646,8 @@ class Updater_model extends CI_Model
     private function getAssets() : void
     {
         $pheal    = new Pheal($this->apikey, $this->vcode, "char");
-        $response = $pheal->AssetList(array("characterID" => $this->character_id));
-
+        $response = $pheal->AssetList(array("characterID" => $this->character_id, "flat" => 1));
         $i           = 0; //for iterating each asset
-        $index_asset = 0; //for iterating the final array with all assets
 
         foreach ($response->assets as $assets) {
             $typeID_asset   = $assets['typeID'];
@@ -661,45 +659,6 @@ class Updater_model extends CI_Model
                 "item_eve_iditem"                 => $typeID_asset,
                 "quantity"                        => $quantity_asset,
                 "locationID"                      => $locationID);
-
-            if (isset($assets->contents)) {
-                foreach ($assets->contents as $assets_inside) {
-                    $typeID_sub   = $assets_inside['typeID'];
-                    $quantity_sub = $assets_inside['quantity'];
-                    $i++;
-                    $assetList[$i] = array("idassets" => "NULL",
-                        "characters_eve_idcharacters"     => $this->character_id,
-                        "item_eve_iditem"                 => $typeID_sub,
-                        "quantity"                        => $quantity_sub,
-                        "locationID"                      => $locationID);
-
-                    if (isset($assets_inside->contents)) {
-                        foreach ($assets_inside->contents as $assets_inside_2) {
-                            $typeID_sub_sub   = $assets_inside_2['typeID'];
-                            $quantity_sub_sub = $assets_inside_2['quantity'];
-                            $i++;
-                            $assetList[$i] = array("idassets" => "NULL",
-                                "characters_eve_idcharacters"     => $this->character_id,
-                                "item_eve_iditem"                 => $typeID_sub_sub,
-                                "quantity"                        => $quantity_sub_sub,
-                                "locationID"                      => $locationID);
-
-                            if (isset($assets_inside_2->contents)) {
-                                foreach ($assets_inside_2->contents as $assets_inside_3) {
-                                    $typeID_sub_sub_sub   = $assets_inside_3['typeID'];
-                                    $quantity_sub_sub_sub = $assets_inside_3['quantity'];
-                                    $i++;
-                                    $assetList[$i] = array("idassets" => "NULL",
-                                        "characters_eve_idcharacters"     => $this->character_id,
-                                        "item_eve_iditem"                 => $typeID_sub_sub_sub,
-                                        "quantity"                        => $quantity_sub_sub_sub,
-                                        "locationID"                      => $locationID);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         //first, delete existing assets
@@ -724,6 +683,7 @@ class Updater_model extends CI_Model
         $this->character_networth = $query->row()->grand_total;
     }
 
+
     /**
      * Updates general character info (balance, escrow, etc)
      * @return void
@@ -743,6 +703,7 @@ class Updater_model extends CI_Model
         $this->db->update('characters', $data);
     }
 
+
      /**
      * Sets the number of new contracts, transactions etc since last visit
      * @return void
@@ -758,17 +719,6 @@ class Updater_model extends CI_Model
 
         $this->db->replace("new_info", $data);
     }
-
-    /**
-     * After all transactions are added, calculate profits and taxes with FIFO 
-     * and the specified settings, and update remaining quantities in the database
-     * @return void
-     */
-    /*public function calculateProfits(string $username) : void
-    {
-        $this->load->model('Updater_profit_model', 'profits');
-        $this->profits->calculate($username);
-    }*/
 
     /**
      * Update each character's total profit, sales, etc for this day

@@ -332,7 +332,7 @@ class Tax_model extends CI_Model
         $query = $this->db->get('citadel_tax');
 
         if ($query->num_rows != 0) {
-            return (float) $result = $query->row();
+            return (float) $result = $query->row()->value;
         } else {
             return false;
         }

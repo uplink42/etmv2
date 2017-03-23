@@ -220,7 +220,7 @@ class ValidateRequest extends CI_Model
             $accessMask = $response->key->accessMask;
             $expiry     = $response->key->expires;
 
-        } catch (\Pheal\Exceptions\PhealException $e) {
+        } catch (Throwable $e) {
             log_message('error', 'validate api keys ' . $e->getMessage());
             //communication error, abort
             return Msg::INVALID_API_KEY;
@@ -328,7 +328,7 @@ class ValidateRequest extends CI_Model
             }
             return true;
 
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             /*echo sprintf(
                 "an exception was caught! Type: %s Message: %s",
                 get_class($e),

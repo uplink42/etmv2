@@ -68,8 +68,8 @@ class Contracts_model extends CI_Model
             $acceptor    = $result[$i]['acceptor_id'];
             $contract_id = $result[$i]['contract_id'];
 
+            $this->db->cache_off();
             $this->db->where('eve_idcharacters', $issuer);
-
             //check if a character name is already in the public table
             //we cache every new character name in the database for faster lookups in future
             $query           = $this->db->get('characters_public');

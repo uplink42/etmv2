@@ -12,6 +12,7 @@ class Settings_model_test extends CIUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+
     public function test_getEmail_exception_no_user()
     {
         $this->setExpectedException('Exception'); 
@@ -27,6 +28,7 @@ class Settings_model_test extends CIUnit_Framework_TestCase
         $this->assertTrue(FALSE);
     }
 
+
     public function test_getEmail_exception_invalid_user()
     {
         $this->setExpectedException('Exception'); 
@@ -41,6 +43,7 @@ class Settings_model_test extends CIUnit_Framework_TestCase
 
         $this->assertTrue(FALSE);
     }
+
 
     public function test_getReportSelection()
     {

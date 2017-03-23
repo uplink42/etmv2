@@ -44,7 +44,7 @@
     <script>toastr["<?=$notice?>"]("<?=$message?>")</script>
     <?php }
 
-    if (!empty($this->session->flashdata)) {?>
+    if (!empty($_SESSION['msg'])) {?>
     <script>toastr["<?=$this->session->flashdata('notice');?>"]("<?=$this->session->flashdata('msg');?>")</script>
     <?php }
 

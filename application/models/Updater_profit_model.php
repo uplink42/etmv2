@@ -41,7 +41,7 @@ class Updater_profit_model extends CI_Model
         }
     }
 
-    private function calculate(int $character_id = null)
+    private function calculate(int $character_id = null) : void
     {
         $buy_stack   = array();
         $sell_stack  = array();
@@ -66,7 +66,7 @@ class Updater_profit_model extends CI_Model
                 $sell_stack[$k]['time'];
                 $sell_stack[$k]['price_unit'];
 
-                //found a match
+                // found a match
                 if ($sell_stack[$k]['item_eve_iditem'] == $buy_stack[$i]['item_eve_iditem']
                     && $sell_stack[$k]['time'] > $buy_stack[$i]['time']
                     && $buy_stack[$i]['remaining'] > 0
@@ -75,7 +75,7 @@ class Updater_profit_model extends CI_Model
                     $num_profits++;
                     $profit_q = min($buy_stack[$i]['remaining'], $sell_stack[$k]['remaining']);
 
-                    //update remaining quantity
+                    // update remaining quantity
                     $data_buy = ["remaining" => $buy_stack[$i]['remaining'] - $profit_q];
                     $this->db->where('idbuy', $buy_stack[$i]['idbuy']);
                     $this->db->update('transaction', $data_buy);
@@ -84,11 +84,11 @@ class Updater_profit_model extends CI_Model
                     $this->db->where('idbuy', $sell_stack[$k]['idbuy']);
                     $this->db->update('transaction', $data_sell);
 
-                    //update array
+                    // update array
                     $sell_stack[$k]['remaining'] = $sell_stack[$k]['remaining'] - $profit_q;
                     $buy_stack[$i]['remaining']  = $buy_stack[$i]['remaining'] - $profit_q;
 
-                    //find profit data
+                    // find profit data
                     $this->db->select('i.name as itemname,
                         i.eve_iditem as iditem,
                         s.name as stationname,
@@ -117,7 +117,7 @@ class Updater_profit_model extends CI_Model
                     $this->db->where('t.idbuy', $sell_stack[$k]['idbuy']);
                     $query_sell = $this->db->get('');
 
-                    //calulate taxes
+                    // calulate taxes
                     $stationFromID   = $query_buy->row()->stationid;
                     $stationToID     = $query_sell->row()->stationid;
                     $date_buy        = $query_buy->row()->transactiontime;
@@ -128,7 +128,7 @@ class Updater_profit_model extends CI_Model
                     $CI = &get_instance();
                     $CI->load->model('Tax_Model');
 
-                    //get buy and sell behaviour
+                    // get buy and sell behaviour
                     $buy_behaviour  = $this->defaultBuyTracking == 1 ? 'buy' : 'sell';
                     $sell_behaviour = $this->defaultBuyTracking == 1 ? 'sell' : 'buy';
                     $CI->Tax_Model->tax($stationFromID, $stationToID, $characterBuyID, $characterSellID, $buy_behaviour, $sell_behaviour,
@@ -143,13 +143,13 @@ class Updater_profit_model extends CI_Model
                     $price_unit_s_taxed  = $sell_stack[$k]['price_unit'] * $brokerFeeTo * $transTaxTo;
                     $price_total_s_taxed = $price_unit_s_taxed * $profit_q;
 
-                    //calculate final profit
+                    // calculate final profit
                     $profit      = ($price_unit_s_taxed - $price_unit_b_taxed) * $profit_q;
                     $profit_unit = ($price_unit_s_taxed - $price_unit_b_taxed);
                     $trans_b     = $buy_stack[$i]["idbuy"];
                     $trans_s     = $sell_stack[$k]["idbuy"];
 
-                    //insert profit
+                    // insert profit
                     $add_profit = $this->db->query("INSERT IGNORE profit
                         (idprofit,
                         transaction_idbuy_buy,
@@ -175,7 +175,8 @@ class Updater_profit_model extends CI_Model
         $this->character_new_profits = $num_profits;
     }
 
-    private function getStack(int $character_id = null, string $type): array
+
+    private function getStack(int $character_id = null, string $type) : array
     {
         $this->db->select('t.idbuy, t.item_eve_iditem, t.quantity, t.price_unit, t.time, t.remaining');
         $this->db->from('transaction t');
