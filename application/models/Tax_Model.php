@@ -297,6 +297,7 @@ class Tax_model extends CI_Model
         }
     }
 
+
     /**
      * Calculates the origin transaction tax (alwyays zero)
      * @return [float]
