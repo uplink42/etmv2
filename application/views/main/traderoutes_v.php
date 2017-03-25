@@ -19,7 +19,7 @@
 
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <div class="panel panel-filled panel-c-success">
+                <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> Here you can set predefined starting and destination stations you use often so you can later import them into the Trade Simulator<br/>
                         <i class="fa fa-info yellow"></i> Trade Routes are shared among all account characters

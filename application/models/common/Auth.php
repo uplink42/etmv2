@@ -62,7 +62,7 @@ class Auth extends CI_Model
                 'email'    => $row->email,
             );
             if(!$nosession) {
-                $this->session->set_userdata($data);
+                $this->etmsession->setData($data);
             }
             return true;
         }

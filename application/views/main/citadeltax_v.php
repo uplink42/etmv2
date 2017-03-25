@@ -27,7 +27,7 @@
 
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <div class="panel panel-filled panel-c-success">
+                <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> Here you can set or unset custom broker fees for transactions on certain Citadels of your choice<br />
                         <i class="fa fa-info yellow"></i> Setting a different tax for an existing entry will update it

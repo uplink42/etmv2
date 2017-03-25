@@ -76,7 +76,7 @@ class Transactions extends MY_Controller
         if ($this->ValidateRequest->checkTransactionOwnership($transaction_id, $this->user_id)) {
             if ($this->Transactions_model->unlinkTransaction($transaction_id)) {
                 $this->load->model('common/Log');
-                $this->Log->addEntry('unlink' . $transaction_id, $this->session->iduser);
+                $this->Log->addEntry('unlink' . $transaction_id, $this->etmsession->get('iduser'));
                 echo json_encode(array("result" => "true", "msg" => Msg::TRANSACTION_UNLINK_SUCCESS, "type" => "success"));
             } else {
                 echo json_encode(array("result" => "false", "msg" => Msg::TRANSACTION_UNLINK_ERROR, "type" => "error"));

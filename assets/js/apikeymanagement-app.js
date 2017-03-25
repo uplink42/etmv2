@@ -14,7 +14,7 @@ $(document).ready(function() {
             url: url,
             success: function(result) {
                 $(".table-character-list tbody tr").empty();
-                if (result.length == 0) {
+                if (result.length === 0) {
                     var $row = "<tr><td colspan='3' class='text-center'>No characters found</td></tr>";
                     $(".table-character-list tbody tr").prepend($row);
                 } else {

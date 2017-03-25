@@ -25,7 +25,7 @@ class Apikeymanagement extends MY_Controller
      * @param  string $character_id 
      * @return void               
      */
-    public function index(string $character_id) : void
+    public function index(string $character_id)
     {
         settype($character_id, 'int');
         if ($this->enforce($character_id, $this->user_id)) {
@@ -44,7 +44,7 @@ class Apikeymanagement extends MY_Controller
      * Returns the character list for a user
      * @return string json
      */
-    public function getCharacters() : void
+    public function getCharacters()
     {
         $data = $this->ApiKeyManagement_model->getCharacterList($this->user_id);
         echo json_encode($data);
@@ -55,7 +55,7 @@ class Apikeymanagement extends MY_Controller
      * @param  int    $character_id_r 
      * @return string json                 
      */
-    public function removeCharacter(int $character_id_r) : void
+    public function removeCharacter(int $character_id_r)
     {
         $this->load->model('ValidateRequest');
         if ($this->ValidateRequest->checkCharacterBelong($character_id_r, $this->user_id)) {
@@ -79,7 +79,7 @@ class Apikeymanagement extends MY_Controller
      * Adds a character or set of characters to an account
      * @return string json      
      */
-    public function addCharacters() : void
+    public function addCharacters()
     {
         $this->load->model('ValidateRequest');
         $result = $this->ValidateRequest->validateAPI($this->keyid, $this->vcode);

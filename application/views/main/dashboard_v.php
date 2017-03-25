@@ -29,16 +29,18 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="col-lg-2 col-xs-6">
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        <a href="<?=base_url('contracts/index/'.$character_id.'?aggr='.$aggregate.'&new='.$new_info->contracts)?>"><h2 class="m-b-none">
-                            <i class="pe-7s-id"></i>
-                            <?=$new_info->contracts?>
-                        <span class="slight">
-                            <?php if ($new_info->contracts > 0) {
-                                echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
-                            }
-                            ?>
-                        </span>
-                        </h2></a>
+                        <a href="<?=base_url('contracts/index/'.$character_id.'?aggr='.$aggregate.'&new='.$new_info->contracts)?>" class="no-ul">
+                            <h2 class="m-b-none">
+                                <i class="pe-7s-id"></i>
+                                <?=$new_info->contracts?>
+                                <span class="slight">
+                                    <?php if ($new_info->contracts > 0) {
+                                        echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
+                                    }
+                                    ?>
+                                </span>
+                            </h2>
+                        </a>
                         <div>New Contracts</div>
                     </div>
                 </div>
@@ -46,16 +48,18 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="col-lg-2 col-xs-6">
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        <a href="<?=base_url('transactions/index/'.$character_id.'?aggr='.$aggregate.'&new='.$new_info->transactions)?>"><h2 class="m-b-none">
-                            <i class="pe-7s-menu"></i>
-                            <?=$new_info->transactions?>
-                        <span class="slight">
-                            <?php if ($new_info->transactions > 0) {
-                                echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
-                            }
-                            ?>
-                        </span>
-                        </h2></a>
+                        <a href="<?=base_url('transactions/index/'.$character_id.'?aggr='.$aggregate.'&new='.$new_info->transactions)?>" class="no-ul">
+                            <h2 class="m-b-none">
+                                <i class="pe-7s-menu"></i>
+                                <?=$new_info->transactions?>
+                                <span class="slight">
+                                    <?php if ($new_info->transactions > 0) {
+                                        echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
+                                    }
+                                    ?>
+                                </span>
+                            </h2>
+                        </a>
                         <div>New transactions</div>
                     </div>
                 </div>
@@ -63,16 +67,18 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="col-lg-2 col-xs-6">
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        <a href="<?=base_url('marketorders/index/'.$character_id.'?aggr='.$aggregate)?>"><h2 class="m-b-none">
-                        <i class="pe-7s-cart"></i>
-                            <?=$new_info->orders?>
-                        <span class="slight">
-                            <?php if ($new_info->orders > 0) {
-                                echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
-                            }
-                            ?>
-                        </span>
-                        </h2></a>
+                        <a href="<?=base_url('marketorders/index/'.$character_id.'?aggr='.$aggregate)?>" class="no-ul">
+                            <h2 class="m-b-none">
+                                <i class="pe-7s-cart"></i>
+                                <?=$new_info->orders?>
+                                <span class="slight">
+                                    <?php if ($new_info->orders > 0) {
+                                        echo "<i class='fa fa-play fa-rotate-270 text-warning'></i>";
+                                    }
+                                    ?>
+                                </span>
+                            </h2>
+                        </a>
                         <div>New orders</div>
                     </div>
                 </div>
@@ -102,8 +108,8 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
             <div class="col-md-8">
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        <div class="panel panel-filled panel-c-success panel-collapse">
-                            <div class="dropdown pull-right">
+                        <div class="panel panel-filled panel-c-success panel-collapse mt-20">
+                            <div class="dropdown pull-right mr-10 mt-10">
                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     Time Interval
                                     <span class="caret"></span>
@@ -154,20 +160,15 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <?php
-                            $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "300", "pie", "json", $pie_data);
-                            $pieChart->render();
-                        ?>
-                    </div>
-                </div>
+                <?php
+                    $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "300", "pie", "json", $pie_data);
+                    $pieChart->render();
+                ?>
                 <div class="panel panel-filled panel-c-success panel-collapse">
                     <div class="panel-heading">
                         <h5><i class="fa fa-pie-chart"></i>  Assets Distribution:</h5>
                     </div>
                 </div>
-
                 <div id="pie">
                 </div>
             </div>

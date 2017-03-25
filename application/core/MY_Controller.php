@@ -14,8 +14,8 @@ class MY_Controller extends CI_Controller
         $this->load->model('common/Log');
         $this->load->model('common/ValidateRequest');
         $this->load->model('Login_model');
-        $this->load->library('session');
-        $this->user_id = (int) $this->session->iduser;
+        $this->load->library('etmsession');
+        $this->user_id = (int) $this->etmsession->get('iduser');
 
         if ($this->config->item('maintenance') == true) {
             redirect('internal/maintenance');
@@ -52,9 +52,9 @@ class MY_Controller extends CI_Controller
             buildMessage("error", Msg::INVALID_REQUEST_SESSION, $data['view']);
             $data['no_header'] = 1;
 
-            $this->session->unset_userdata('username');
-            $this->session->unset_userdata('start');
-            $this->session->unset_userdata('iduser');
+            $this->etmsession->delete('username');
+            $this->etmsession->delete('start');
+            $this->etmsession->delete('iduser');
             $this->load->view('main/_template_v', $data);
 
             return false;
@@ -93,9 +93,8 @@ class MY_Controller extends CI_Controller
             $chars = "(" . $character_id . ")";
         }
 
-        $data['email'] = $this->session->email;
-
-        $data['username']       = $this->session->username;
+        $data['email']          = $this->etmsession->get('email');
+        $data['username']       = $this->etmsession->get('username');
         $data['chars']          = $chars;
         $character_list         = $this->getCharacterList($this->user_id);
         $data['aggregate']      = $aggregate;

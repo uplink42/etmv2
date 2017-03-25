@@ -103,3 +103,10 @@
     border-radius: 0 4px 4px 0;
   }
 }
+
+.nav-tabs>li.active>a, 
+.nav-tabs>li.active>a:focus, 
+.nav-tabs>li.active>a:hover {
+  color: $color-text-accent;
+  font-weight: 700;
+}

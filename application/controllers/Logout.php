@@ -7,7 +7,7 @@ class Logout extends CI_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
+        $this->load->library('etmsession');
         $this->load->model('common/Msg');
     }
 
@@ -21,9 +21,9 @@ class Logout extends CI_Controller
         buildMessage("success", Msg::LOGOUT, $data['view']);
         $data['no_header'] = 1;
 
-        $this->session->unset_userdata('username');
-        $this->session->unset_userdata('start');
-        $this->session->unset_userdata('iduser');
+        $this->etmsession->delete('username');
+        $this->etmsession->delete('start');
+        $this->etmsession->delete('iduser');
         $this->load->view('main/_template_v', $data);
         return false;
     }

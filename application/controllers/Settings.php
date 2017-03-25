@@ -91,7 +91,7 @@ class Settings extends MY_Controller
     public function changeEmail() : void
     {
         $this->load->model('common/Auth');
-        if ($this->Auth->validateLogin($this->session->username, $this->password, true)) {
+        if ($this->Auth->validateLogin($this->etmsession->get('username'), $this->password, true)) {
             if ($this->ValidateRequest->validateEmailAvailability($this->email)) {
                 if ($this->Settings_model->changeEmail($this->user_id, $this->email)) {
                     $notice  = "success";
@@ -170,7 +170,7 @@ class Settings extends MY_Controller
         $this->load->model('common/Auth');
         if ($this->ValidateRequest->validateIdenticalPasswords($this->password_new1, $this->password_new2)) {
             if ($this->ValidateRequest->validatePasswordLength($this->password_new1)) {
-                if ($this->Auth->validateLogin($this->session->username, $this->password_old, true)) {
+                if ($this->Auth->validateLogin($this->etmsession->get('username'), $this->password_old, true)) {
                     if ($this->Settings_model->changePassword($this->user_id, $this->password_new1)) {
                         $notice = "success";
                         $msg    = Msg::CHANGE_PASSWORD_SUCCESS;

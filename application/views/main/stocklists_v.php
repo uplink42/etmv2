@@ -18,10 +18,9 @@
                 <hr>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <div class="panel panel-filled panel-c-success">
+                <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> Here you can manage several items in bulk to simultaneaously check their prices with the Trade Simulator <br />
                         <i class="fa fa-info yellow"></i> Stock Lists are accessible to every character in your account <br />
@@ -30,28 +29,27 @@
                 </div> 
             </div>
         </div>
-        
         <div class="row">
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="panel panel-filled">
-                    <div class="panel-body stocklist-creation-panel">
+                    <div class="panel-body stocklist-creation-panel" style="height: 185px">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h5><i class="fa fa-plane"></i> Create new Stock List</h5>
+                                <h5><i class="fa fa-plus"></i> Create new Stock List</h5>
                             </div>
                         </div>
                         <form class="form-horizontal" data-url=<?=base_url()?>>
                             <div class="form-group"><label for="list-name" class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-10"><input type="text" class="form-control list-name" id="list-name" name="list-name" placeholder="Type your new list name here" autofocus></div>
                             </div>
-                            <button type="submit" class="btn btn-default submit-list" name="submit-list">Submit</button>
+                            <button type="submit" class="btn btn-default submit-list pull-right" name="submit-list">Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-4 col-sm-12">
                 <div class="panel panel-filled">
-                    <div class="panel-body traderoute-list-panel">
+                    <div class="panel-body traderoute-list-panel" style="height: 185px">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
                                 <h5><i class="fa fa-list-ol"></i> Select Stock List</h5>
@@ -65,12 +63,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row add-list-item">
-            <div class="col-md-12 col-xs-12">
+            <div class="col-md-4 col-sm-12 add-list-item">
                 <div class="panel panel-filled">
-                    <div class="panel-body stocklist-panel">
+                    <div class="panel-body stocklist-panel" style="height: 185px">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
                                 <h5><i class="fa fa-arrow-up"></i> Add Item to Stock List <span class="yellow contents"></span></h4>
@@ -81,21 +76,23 @@
                                 <input type="text" class="form-control" id="item-name" name="item-name" placeholder="Start typing an item name here and select an option below">
                                 <input type="hidden" name="list-id" id="list-id">
                             </div>
-                            <button type="submit" class="btn btn-submit btn-success btn-add-item">Add</button>
+                            <button type="submit" class="btn btn-submit btn-success btn-add-item pull-right">Add</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
-
         <div class="row stocklist-content">
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled">
                     <div class="panel-body stocklist-panel">
                         <div class="panel panel-filled panel-c-success panel-collapse">
                             <div class="panel-heading">
-                                <h5><i class="fa fa-th-list"></i> <span class="yellow contents"></span> Contents:</h4>
+                                <h5>
+                                    <i class="fa fa-th-list" width="20px;"></i> 
+                                    Stock List <span class="yellow contents"></span>
+                                    - Total items: <span class="yellow total"></span>
+                                </h5>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -124,12 +121,12 @@
                     <div class="modal-header text-center">
                         <h4 class="modal-title">Delete Stock List</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text-center">
                         <h4 class="m-t-none"><i class="fa fa-warning"></i> Please make sure you know what you're doing!</h4>
                         <p>This operation will remove the current stock List and all belonging items in it.</p>
                         <p>Deleting this list is <span class="yellow">irreversible</span>. Are you sure you want to continue?</p>
-                        <div class="text-center">
-                            <button type="button" class="btn btn-default modal-close" data-dismiss="modal">Close</button>
+                        <div class="mt-20">
+                            <button type="button" class="btn btn-default modal-close mr-40" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-accent btn-delete-list-confirm" data-url="0">Save changes</button>
                         </div>
                     </div>

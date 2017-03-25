@@ -32,7 +32,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
 
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <div class="panel panel-filled panel-c-success">
+                <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> Here you can keep track of your assets (includes items inside stations, starbases and ships)<br/>
                         <i class="fa fa-info yellow"></i> Citadel assets are currently not supported by the API

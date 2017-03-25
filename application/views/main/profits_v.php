@@ -31,7 +31,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         </div>
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <div class="panel panel-filled panel-c-success">
+                <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-heading">
                         Profits from last <?=$interval?> days
                     </div>

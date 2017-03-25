@@ -1,6 +1,6 @@
 <?php //defined('BASEPATH') or exit('No direct script access allowed');
-ini_set('mysql.connect_timeout', '3000');
-ini_set('default_socket_timeout', '3000');
+//ini_set('mysql.connect_timeout', '3000');
+//ini_set('default_socket_timeout', '3000');
 ini_set('max_execution_time', '0');
 ini_set('memory_limit', '-1');
 
@@ -35,20 +35,37 @@ class Autoexec_updater extends CI_Controller
             die();
         }
         
-        $chars = $this->Autoexec_updater_model->getAllUsers();
-
+        try {
+           $chars = $this->Autoexec_updater_model->getAllUsers(); 
+       } catch (Throwable $e) {
+            echo sprintf(
+                "an exception was caught! Type: %s Message: %s",
+                get_class($e),
+                $e->getMessage()
+            );
+       }
+        
         foreach ($chars as $row) {
             $start    = microtime(true);
             $username = $row->username;
             $iduser = (int) $row->iduser;
             echo $username . "->" . $iduser . "\n";
 
-            $this->Updater_model->init($username);
+            try {
+                $this->Updater_model->init($username);
+            } catch (Throwable $e) {
+                $this->Updater_model->release($username);
+                log_message('error', $e->getMessage());
+                echo sprintf(
+                    "an exception was caught! Type: %s Message: %s",
+                    get_class($e),
+                    $e->getMessage()
+                );
+            }
 
             //check if API server is up
             if (!$this->ValidateRequest->testEndpoint()) {
                 echo XML_CONNECT_FAILURE;
-                //check if user is already updating
             } else {
                 if ($this->Updater_model->isLocked($username)) {
                     echo "User already updating. Aborting..." . "\n";
@@ -71,17 +88,27 @@ class Autoexec_updater extends CI_Controller
                                 } else {
                                 	//if we arrived here, that means nothing went wrong (yet)
 							        //calculate profits
-							        $this->db->trans_start();
-							        $this->Updater_model->calculateProfits();
-							        //totals and history
-							        $this->Updater_model->updateTotals();
-							        $this->db->trans_complete();
-
+                                    try {
+                                        $this->db->trans_start();
+                                        $this->Updater_model->calculateProfits();
+                                        //totals and history
+                                        $this->Updater_model->updateTotals();
+                                        $this->db->trans_complete();
+                                    } catch (Throwable $e) {
+                                        $this->Updater_model->release($username);
+                                        log_message('error', $e->getMessage());
+                                        echo sprintf(
+                                            "an exception was caught! Type: %s Message: %s",
+                                            get_class($e),
+                                            $e->getMessage()
+                                        );
+                                    }
+							        
                                     $finish = microtime(true);
                                     echo number_format($finish - $start, 2) . " for username " . $username . "\n";
                                     $this->Updater_model->release($username);
                                 }
-                            } catch (\Pheal\Exceptions\PhealException $e) {
+                            } catch (Throwable $e) {
                                 //if an exception happens during update (this is a bug on Eve's API)
                                 echo sprintf(
                                     "an exception was caught! Type: %s Message: %s",

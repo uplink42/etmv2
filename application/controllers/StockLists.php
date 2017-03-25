@@ -95,14 +95,14 @@ class Stocklists extends MY_Controller
      * echoes results to client
      * @return [bool|json]
      */
-    public function addItem() : ?bool
+    public function addItem()
     {
         if (empty($_REQUEST['item-name']) || empty($_REQUEST['list-id'])) {
             return false;
         }
         $list_id = (int)$_REQUEST['list-id'];
         $name    = $_REQUEST['item-name'];
-        $user_id = $this->session->iduser;
+        $user_id = $this->etmsession->get('iduser');
 
         if($this->ValidateRequest->checkStockListOwnership($list_id, $this->user_id)) {
             $res = $this->StockLists_model->insertItem($name, $list_id);

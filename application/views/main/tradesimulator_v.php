@@ -22,7 +22,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                 <div class="panel panel-filled panel-c-success">
+                 <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> You can quickly check price differences between systems and regions here. <br/>
                         <i class="fa fa-info yellow"></i> You must first create Stock Lists for the items you wish to submit in this page <br />

@@ -1,6 +1,6 @@
 <?php
-ini_set('mysql.connect_timeout', '3000');
-ini_set('default_socket_timeout', '3000');
+//ini_set('mysql.connect_timeout', '3000');
+//ini_set('default_socket_timeout', '3000');
 ini_set('max_execution_time', '300');
 
 defined('BASEPATH') or exit('No direct script access allowed');
@@ -15,11 +15,11 @@ class Updater extends CI_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->db->cache_delete_all();
-        $this->load->library('session');
+        $this->load->library('etmsession');
         $this->load->model('common/Msg');
         $this->load->model('common/Log');
         $this->load->model('common/ValidateRequest');
-        $this->user_id = (int) $this->session->iduser;
+        $this->user_id = (int) $this->etmsession->get('iduser');
     }
 
     /**
@@ -28,7 +28,7 @@ class Updater extends CI_Controller
      */
     public function index()
     {
-        $username = $this->session->username;
+        $username = $this->etmsession->get('username');
         if (empty($username)) {
             redirect ('main/login');
             return;
@@ -36,13 +36,19 @@ class Updater extends CI_Controller
 
         $view     = 'login/select_v';
         $this->load->model('Updater_model');
-        $this->Updater_model->init($username);
-
+        try {
+            $this->Updater_model->init($username);
+        } catch (Throwable $e) {
+            $this->Updater_model->release($username);
+            log_message('error', $e->getMessage());
+            return;
+        }
+        
         //check if API server is up
         if (!$this->ValidateRequest->testEndpoint()) {
             $this->removeDirectory(FILESTORAGE . 'public/public/server');
-            $this->session->set_flashdata('msg', Msg::XML_CONNECT_FAILURE);
-            $this->session->set_flashdata('notice', 'error');
+            $this->etmsession->set('msg', Msg::XML_CONNECT_FAILURE);
+            $this->etmsession->set('notice', 'error');
             redirect('main/login');
             //check if user is already updating
         } else {
@@ -87,8 +93,8 @@ class Updater extends CI_Controller
 
                                 if ($this->db->trans_status() === false) {
                                     //something went wrong while calculating profits, abort
-                                    $this->session->set_flashdata('msg', Msg::DB_ERROR);
-                                    $this->session->set_flashdata('notice', 'error');
+                                    $this->etmsession->set('msg', Msg::DB_ERROR);
+                                    $this->etmsession->set('notice', 'error');
                                     $data['view']      = "login/login_v";
                                     $data['no_header'] = 1;
                                     $this->load->view('main/_template_v', $data);
@@ -120,18 +126,18 @@ class Updater extends CI_Controller
                                     $this->removeDirectory($dir);
                                     //release the lock
                                     $this->Updater_model->release($username);
-                                    $this->session->set_flashdata('msg', Msg::XML_CONNECT_FAILURE);
-                                    $this->session->set_flashdata('notice', 'error');
+                                    $this->etmsession->set('msg', Msg::XML_CONNECT_FAILURE);
+                                    $this->etmsession->set('notice', 'error');
                                     
-                                    $this->session->unset_userdata('username');
-                                    $this->session->unset_userdata('start');
-                                    $this->session->unset_userdata('iduser');
+                                    $this->etmsession->delete('username');
+                                    $this->etmsession->delete('start');
+                                    $this->etmsession->delete('iduser');
                                 }
                                 $this->index();
                             } else {
-                                $this->session->unset_userdata('username');
-                                $this->session->unset_userdata('start');
-                                $this->session->unset_userdata('iduser');
+                                $this->etmsession->delete('username');
+                                $this->etmsession->delete('start');
+                                $this->etmsession->delete('iduser');
                                 $this->load->view('main/_template_v', $data);
                             }
                         }

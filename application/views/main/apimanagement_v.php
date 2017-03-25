@@ -19,7 +19,7 @@
 
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <div class="panel panel-filled panel-c-success">
+                <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> Here you can add or remove characters to your ETM account<br/>
                         <i class="fa fa-info yellow"></i> Adding more characters means longer update times<br/>

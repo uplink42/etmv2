@@ -1,9 +1,14 @@
 "use strict";
 $(document).ready(function() {
-
     var base = $(".navbar").data('url');
     var url_autocomplete = base + "Stocklists/searchItems/";
 
+    // count items for a list
+    function updateTotalItems() {
+        $('.yellow.total').text($('.table-items tr').length / 2);
+    }
+
+    // get all lists
     function populateDropdown() {
         var url = base + "Stocklists/populateList/";
 
@@ -24,7 +29,7 @@ $(document).ready(function() {
     }
     populateDropdown();
 
-    //get items from a list
+    // get items from a list
     function getItems(id) {
         var url = base + "Stocklists/getItems/" + id;
         $(".table-items").attr('data-id', id);
@@ -45,11 +50,13 @@ $(document).ready(function() {
                     var $element = "<tr><td> " + $img + " " + name + "</td><td>" + vol + "</td><td>" + price + "</td><td>" + $btn + "</td><tr>";
                     $(".table tbody").append($element);
                 });
+
+                updateTotalItems();
             }
         });
     }
 
-    //submit new list
+    // submit new list
     $(".submit-list").on('click', function(e) {
         e.preventDefault();
         var url = base + "Stocklists/newList/";
@@ -74,7 +81,7 @@ $(document).ready(function() {
         });
     });
 
-    //select list from dropdown
+    // select list from dropdown
     $(".dropdown-list").change(function(e) {
         var $el = $(this).find('option:selected').text();
         $(".yellow.contents").text($el);
@@ -91,7 +98,7 @@ $(document).ready(function() {
         }
     });
 
-    //item name autocomplete
+    // item name autocomplete
     $("#item-name").autocomplete({
         global: false,
         source: url_autocomplete,
@@ -104,7 +111,7 @@ $(document).ready(function() {
         }
     });
 
-    //add item
+    // add item
     $(".btn-add-item").on('click', function (e) {
         e.preventDefault();
         var list_id =  $("#list-id").val();
@@ -123,13 +130,14 @@ $(document).ready(function() {
                 if(result.notice == "success") {
                     getItems(list_id);
                 }
+                updateTotalItems();
             }
         });
 
         $("#item-name").val("");
     });
 
-    //remove item
+    // remove item
     $(".table-items").on('click', 'a', function(e) {
         e.preventDefault();
         var url = $(this).attr('href');
@@ -144,12 +152,13 @@ $(document).ready(function() {
                 if(result.notice == "success") {
                     getItems(list_id);
                 }
+                updateTotalItems();
             }
         });
 
     });
 
-    //remove List
+    // remove List
     $(".btn-delete-list-confirm").on('click', function(e) {
         e.preventDefault();
         var id = $(".table-items").attr('data-id');

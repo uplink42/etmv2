@@ -317,3 +317,16 @@
 .space-30 {
   margin: 30px 0;
 }
+
+.no-ul {
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
+/* .w-20 {
+  width: 20%;
+  @media (max-width: $screen-sm) {
+    width: 33%;
+  }
+} */

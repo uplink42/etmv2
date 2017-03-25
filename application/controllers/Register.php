@@ -7,7 +7,7 @@ class Register extends CI_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
+        $this->load->library('etmsession');
     }
 
     /**

@@ -7,7 +7,7 @@ class Login extends CI_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
+        $this->load->library('etmsession');
         $this->load->model('common/Msg');
     }
 
@@ -38,7 +38,7 @@ class Login extends CI_Controller
                 "iduser"                     => $id_user,
                 "email"                      => $email
             );
-            $this->session->set_userdata($session_data);
+            $this->etmsession->setData($session_data);
             redirect(base_url('Updater'));
         } else {
             buildMessage("error", Msg::INVALID_LOGIN, 'login/login_v');

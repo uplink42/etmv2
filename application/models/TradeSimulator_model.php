@@ -1,7 +1,7 @@
 <?php
 ini_set('mysql.connect_timeout', '3000');
 ini_set('default_socket_timeout', '3000');
-ini_set('max_execution_time', '0');
+ini_set('max_execution_time', '-1');
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -72,6 +72,8 @@ class TradeSimulator_model extends CI_Model
      */
     public function init(string $origin, string $destination, int $buyer, int $seller, string $buy_method, string $sell_method, int $stocklist)
     {
+
+
         $this->stationFromName     = (string) $origin;
         $this->stationToName       = (string) $destination;
         $this->stationFromID       = (int) $this->getStationID($origin)->eve_idstation;
@@ -87,11 +89,13 @@ class TradeSimulator_model extends CI_Model
 
         $CI = &get_instance();
         $CI->load->model('Tax_Model');
-        $CI->Tax_Model->tax($this->stationFromID, $this->stationToID, $buyer, $seller, $buy_method, $sell_method);
+        $CI->Tax_Model->tax($this->stationFromID, $this->stationToID, $buyer, $seller, $buy_method, $sell_method, false);
         $this->transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
         $this->brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
         $this->transTaxTo    = $CI->Tax_Model->calculateTaxTo();
         $this->brokerFeeTo   = $CI->Tax_Model->calculateBrokerTo();
+
+         
 
         return $this->generateResults();
     }
@@ -102,6 +106,9 @@ class TradeSimulator_model extends CI_Model
      */
     private function generateResults(): array
     {
+        $start    = microtime(true);
+        log_message('error', $start);
+
         $contents = $this->getStockListContents();
 
         $results = [];
@@ -157,6 +164,10 @@ class TradeSimulator_model extends CI_Model
             array_push($results, $item_res);
         }
 
+        $finish = microtime(true);
+         $res = number_format($finish - $start, 2);
+        log_message('error', $res);
+
         return array("results" => $results, "req" => $taxes);
     }
 
@@ -189,7 +200,13 @@ class TradeSimulator_model extends CI_Model
     {
         $regionID = $this->getRegionID($station_id)->id;
         $url      = "https://crest-tq.eveonline.com/market/" . $regionID . "/orders/" . $order_type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
+        //$context  = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
+        $ch = curl_init();
+        /*curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = json_decode(curl_exec($ch), true);*/
         $result   = json_decode(file_get_contents($url), true);
+        log_message('error', 'asdasd');
 
         $array_prices = [];
 

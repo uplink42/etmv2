@@ -29,7 +29,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-filled panel-c-success">
+                <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> Here you can browse Eve Online's market in real-time.<br/>
                         <i class="fa fa-info yellow"></i> Many more exciting features will follow this application in the near future.
