@@ -1,8 +1,8 @@
-#Eve Trade Master
+Eve Trade Master
 
 a web based profit tracker, trading and asset manager tool for Eve Online (native client for windows and android available)
 
-#Main features:
+Main features:
 
 - tracks everything you buy and sell and calculates profits made (even if you buy and sell things over different characters)
 - calculates taxes based on character standings
@@ -17,7 +17,7 @@ a web based profit tracker, trading and asset manager tool for Eve Online (nativ
 - new! browse the market in real time trough all regions in New Eden
 - new! now available as native client for windows and android
 
-#Requirements:
+Requirements:
 - Apache 2.2+ web server
 - PHP 7.1
 - MariaDB or MySQL database
@@ -26,7 +26,7 @@ a web based profit tracker, trading and asset manager tool for Eve Online (nativ
 [http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok](http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok)
 
 
-#Dependencies (packages included):
+Dependencies (packages included):
 - AngularJS 1.6
 - [PhealNG (XML API library)](https://github.com/3rdpartyeve/phealng)
 - [CodeIgniter 3](https://github.com/bcit-ci/CodeIgniter)
@@ -35,13 +35,13 @@ a web based profit tracker, trading and asset manager tool for Eve Online (nativ
 - Ruby SASS
 - jQuery 1.9
 
-#3rd party APIs:
+3rd party APIs:
 - Eve XML API
 - Eve CREST API
 - Citadel data https://stop.hammerti.me.uk/api/ (unofficial)
 
 
-#Installation
+Installation
 - Download/clone the repo onto your local web server.
 
 1 - First update npm with the needed packages:
@@ -82,11 +82,11 @@ a web based profit tracker, trading and asset manager tool for Eve Online (nativ
 
 And that should be all. You can now launch it and create an account.
 
-#Crons:
+Crons:
 There are several crons used to maintain the application. These can be found inside the /application/controllers/internal folder.
 
 
-#To-do:
+To-do:
 - Rewrite api key storage and validation rules
 - Improve gulp tasks
 - Automatic item list update cron from CREST (right now I have to manually update the database everytime new items are added into Eve)
