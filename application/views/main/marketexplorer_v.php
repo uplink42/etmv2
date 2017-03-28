@@ -18,8 +18,7 @@
                     </div>
                     <div class="header-title">
                         <h1>
-                            <?php echo $aggregate == 1 ? implode(' + ', $char_names) : $character_name?>
-                            's Market Explorer
+                            Market Explorer
                         </h1>
                     </div>
                 </div>

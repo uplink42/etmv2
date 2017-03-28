@@ -9,6 +9,7 @@ class Dashboard_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/User');
     }
 
     /**
@@ -141,7 +142,7 @@ class Dashboard_model extends CI_Model
      * @param  string|null $chars    
      * @return array                
      */
-    public function getProfits(int $interval = 1, string $chars = null): array
+    public function getProfits(int $interval = 1, string $chars = null, int $user_id): array
     {
         $this->db->select('p.profit_unit as profit_unit,
                         p.quantity_profit as quantity,
@@ -183,14 +184,13 @@ class Dashboard_model extends CI_Model
 
             $CI = &get_instance();
             $CI->load->model('Tax_Model');
-            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, "buy", "sell");
+
+            $profit_settings = $this->User->getUserProfitSettings($user_id);
+            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, $profit_settings['buy_behaviour'], 
+                $profit_settings['sell_behaviour'], $profit_settings['citadel_tax_ignore']);
+
             $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
             $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
-
-            log_message('error', $price_buy);
-            log_message('error', $transTaxFrom);
-            log_message('error', $brokerFeeFrom);
-
             $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
             $result[$i]['margin']       = $profit_unit / $price_buy * 100;
             $result[$i]['profit_total'] = $profit_unit * $result[$i]['quantity'];

@@ -32,7 +32,7 @@ final class Dashboard extends MY_Controller
             $data['interval'] = $interval;
 
             $this->load->model('Dashboard_model');
-            $profits = $this->Dashboard_model->getProfits($interval, $chars);
+            $profits = $this->Dashboard_model->getProfits($interval, $chars, $this->user_id);
 
             $count = $profits['count'];
             if ($count > 200) {

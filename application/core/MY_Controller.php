@@ -93,15 +93,15 @@ class MY_Controller extends CI_Controller
             $chars = "(" . $character_id . ")";
         }
 
-        $data['email']          = $this->etmsession->get('email');
-        $data['username']       = $this->etmsession->get('username');
-        $data['chars']          = $chars;
-        $character_list         = $this->getCharacterList($this->user_id);
-        $data['aggregate']      = $aggregate;
-        $data['char_names']     = $char_names;
-        $data['character_list'] = $character_list;
-        $data['character_name'] = $this->Login_model->getCharacterName($character_id);
-        $data['character_id']   = $character_id;
+        $data['email']           = $this->etmsession->get('email');
+        $data['username']        = $this->etmsession->get('username');
+        $data['chars']           = $chars;
+        $character_list          = $this->getCharacterList($this->user_id);
+        $data['aggregate']       = $aggregate;
+        $data['char_names']      = $char_names;
+        $data['character_list']  = $character_list;
+        $data['character_name']  = $this->Login_model->getCharacterName($character_id);
+        $data['character_id']    = $character_id;
 
         $data['selector'] = $this->buildSelector();
         return $data;
