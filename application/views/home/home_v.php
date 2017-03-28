@@ -462,7 +462,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-1.jpg')?>" title="Dashboard">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-1-l.jpg')?>" title="Dashboard">
                                             <div class="portfolio-text">
                                                 <h4>Dashboard</h4>
 
@@ -485,7 +485,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-2.jpg')?>" title="Profit Tracker">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-2-l.jpg')?>" title="Profit Tracker">
                                             <div class="portfolio-text">
                                                 <h4>Profit Tracker</h4>
 
@@ -508,7 +508,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-3.jpg')?>" title="Assets List">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-3-l.jpg')?>" title="Assets List">
                                             <div class="portfolio-text">
                                                 <h4>Assets List</h4>
 
@@ -531,7 +531,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-4.jpg')?>" title="Net worth tracker">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-4-l.jpg')?>" title="Net worth tracker">
                                             <div class="portfolio-text">
                                                 <h4>Net worth tracker</h4>
 
@@ -554,7 +554,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-5.jpg')?>" title="Statistics">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-5-l.jpg')?>" title="Statistics">
                                             <div class="portfolio-text">
                                                 <h4>Statistics</h4>
 
@@ -577,7 +577,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-6.jpg')?>" title="Trade Simulator">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-6-l.jpg')?>" title="Trade Simulator">
                                             <div class="portfolio-text">
                                                 <h4>Trade Simulator</h4>
 
@@ -600,7 +600,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-7.jpg')?>" title="Order Check">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-7-l.jpg')?>" title="Order Check">
                                             <div class="portfolio-text">
                                                 <h4>Order Check</h4>
 
@@ -623,7 +623,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-8.jpg')?>" title="Market Explorer">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-8-l.jpg')?>" title="Market Explorer">
                                             <div class="portfolio-text">
                                                 <h4>Market Explorer</h4>
 
@@ -646,7 +646,7 @@
                             <div class="inner-content">
                                 <div class="portfolio-content">
                                     <div class="portfolio-detail">
-                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-9.jpg')?>" title="Transactions">
+                                        <a href="<?=base_url('dist/img/gallery/portfolio-image-9-l.jpg')?>" title="Transactions">
                                             <div class="portfolio-text">
                                                 <h4>Transactions</h4>
 
@@ -676,8 +676,6 @@
     <!-- //.section-inner -->
 </section>
 
-
-<!-- Begin Coming Soon Section -->
 <section id="coming-soon" class="section section-bgimage-yes">
     <div class="section-inner">
         <div class="section-overlay"></div>
@@ -714,8 +712,6 @@
     </div>
     <!-- //.section-inner -->
 </section>
-<!-- //End Coming Soon Section -->
-
 
 <section id="contact-us" class="section section-bgimage-yes">
     <div class="section-inner">

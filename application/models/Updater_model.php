@@ -846,17 +846,20 @@ class Updater_model extends CI_Model
      */
     public function isLocked(string $username): bool
     {
-        $this->db->select('updating');
-        $this->db->where('username', $username);
-        $query = $this->db->get('user');
+        try {
+            $this->db->select('updating');
+            $this->db->where('username', $username);
+            $query = $this->db->get('user');
+            $result = $query->row()->updating;
 
-        $result = $query->row()->updating;
+            if ($result == '1') {
+                return true;
+            }
 
-        if ($result == '1') {
+            return false;
+        } catch (Throwable $e) {
             return true;
         }
-
-        return false;
     }
 
     /**

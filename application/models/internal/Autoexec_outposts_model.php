@@ -30,7 +30,7 @@ class Autoexec_outposts_model extends CI_Model
             $eve_idsystem = $outposts['solarSystemID'];
 
             array_push($outpostsList,
-                array("eve_idstation"           => $idoutposts,
+                array("eve_idstation"               => $idoutposts,
                     "name"                          => $this->db->escape($name),
                     "system_eve_idsystem"           => $eve_idsystem,
                     "corporation_eve_idcorporation" => 1)
@@ -60,8 +60,8 @@ class Autoexec_outposts_model extends CI_Model
 
             if ($system_id != 0) {
                 array_push($citadelList,
-                    array("eve_idstation"           => $id,
-                        "name"                          => $this->db->escape($nametype),
+                    array("eve_idstation"               => $id,
+                        "name"                          => $nametype,
                         "system_eve_idsystem"           => $system_id,
                         "corporation_eve_idcorporation" => 1)
                 );
@@ -79,15 +79,14 @@ class Autoexec_outposts_model extends CI_Model
     public function insertData(array $data): int
     {
         $this->db->trans_start();
-        $this->db->query(
-            chunk_ignore("station",
-                array('eve_idstation', 'name', 'system_eve_idsystem', 'corporation_eve_idcorporation'), $data)
-        );
+        $this->db->update_batch('station', $data, 'eve_idstation');
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === true) {
             $count = (int) count($data);
             return $count;
+        } else {
+            return 0;
         }
     }
 }
