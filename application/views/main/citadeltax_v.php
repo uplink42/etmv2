@@ -8,10 +8,9 @@
                     <div class="header-icon">
                         <?php if ($aggregate == 0) {?>
                         <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/<?=$character_id?>_64.jpg">
-                            <?php } else {
-    ?>
-                            <i class="pe page-header-icon pe-7s-link">
-                            </i>
+                            <?php } else { ?>
+                                <i class="pe page-header-icon pe-7s-link">
+                                </i>
                             <?php }?>
                     </div>
                     <div class="header-title">
@@ -31,11 +30,16 @@
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> Here you can set or unset custom broker fees for transactions on certain Citadels of your choice<br />
                         <i class="fa fa-info yellow"></i> Setting a different tax for an existing entry will update it
+                        <?php if ($aggregate == 1) { ?>
+                        <br />
+                        <i class="fa fa-info yellow"></i> You must be outside aggregated mode to use this page. Select any of your characters at the top right.
+                        <?php } ?>
                     </div>
                 </div> 
             </div>
         </div>
-        
+    
+        <?php if ($aggregate == 0) { ?>
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
@@ -92,6 +96,7 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
+        <?php } ?>    
     </div>
 </section>
