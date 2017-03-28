@@ -88,7 +88,5 @@ There are several crons used to maintain the application. These can be found ins
 
 To-do:
 - Rewrite api key storage and validation rules
-- Improve gulp tasks
 - Automatic item list update cron from CREST (right now I have to manually update the database everytime new items are added into Eve)
-- Unit testing
-- ??
+
