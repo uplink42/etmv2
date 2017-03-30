@@ -55,14 +55,7 @@
                     <div class="panel-body">
                         <h5><strong class="c-white">Frequently Asked Questions</strong></h5>
                         <p><b>Q: Is this service free?</b></p>
-                                A: Yes, and there are no plans for charging players or displaying ads. If you would like to support this work or server costs and encourage further development feel free to Donate (ISK or $) trough the link in the footer. Disabling your ad-block is also a great help!
-                        <br><br>
-                        <p><b>Q: Help! The website doesn't load!</b></p>
-                        A: This is a rare occurence but the most likely reason for this is because your supplied API key has been either revoked or expired. 
-                        Go <a href='https://community.eveonline.com/support/api-key/' target='blank'>here</a>  and make sure your API key is up-to date or contains the correct characters/permissions and change it accordingly. 
-                        The accepted permissions are displayed <a href='permissions.png' target='blank'>here</a>
-                        Then try logging in after a few minutes. To avoid issues like this in future I recommend you to just set the key as "no expiry". If nothing works just delete the key and wait a few minutes before trying to login again.
-                        If you still can't login drop me a mail at etmdevelopment42 at gmail.com. I'm usually quick at fixing things like this.
+                                A: Yes, and there are no plans for charging players. If you would like to support this work or server costs and encourage further development feel free to Donate (ISK or $) trough the link in the footer. Disabling your ad-block is also a great help!
                         <br><br>
                         <p><b>Q: Your website isn't pulling my data!</b></p>
                         A: As long as you're able to login and select a character it should be. Remember that Eve Online's API only updates data after certain intervals. These are:
@@ -85,7 +78,7 @@
                         If you want clean results I recommend you to not purchase items you don't intend to re-sell with the characters you listed in ETM.
                         <br><br>
                         <p><b>Q: Can I have the source code?</b></p>
-                        A: ETM is not currently open source. Things might change in future, however.
+                        A: The source is available on <a href="https://github.com/uplink42/etmv2/tree/dev" target='blank'>github</a>
                         <br><br>
                         <p><b>Q: Will there be new features after the Beta is over?</b></p>
                         A: Yes. Things like corp API key support are definetly in the list. However I don't have as much time to devote to side projects and can't guarantee any timelines.

@@ -34,7 +34,7 @@ class Updater extends CI_Controller
             return;
         }
 
-        $view     = 'login/select_v';
+        $view = 'login/select_v';
         $this->load->model('Updater_model');
         try {
             $this->Updater_model->init($username);
@@ -44,29 +44,29 @@ class Updater extends CI_Controller
             return;
         }
         
-        //check if API server is up
+        // check if API server is up
         if (!$this->ValidateRequest->testEndpoint()) {
             $this->removeDirectory(FILESTORAGE . 'public/public/server');
             $this->etmsession->set('msg', Msg::XML_CONNECT_FAILURE);
             $this->etmsession->set('notice', 'error');
             redirect('main/login');
-            //check if user is already updating
+            // check if user is already updating
         } else {
             if ($this->Updater_model->isLocked($username)) {
                 $this->displayResultTable($username);
             } else {
-                //check if user has any keys
+                // check if user has any keys
                 $keys = $this->Updater_model->getKeys($username);
                 if (count($keys) == 0) {
                     log_message('error', $username . ' has no keys');
-                    //no keys, so prompt for new one
+                    // no keys, so prompt for new one
                     $this->askForKey();
                     return;
                 } else {
-                    //validate existing keys
+                    // validate existing keys
                     if (!$this->Updater_model->processAPIKeys($keys, $username)) {
                         log_message('error', $username . ' keys deleted by process');
-                        //no characters left now
+                        // no characters left now
                         $this->askForKey();
                         return;
                     } else {
@@ -120,7 +120,7 @@ class Updater extends CI_Controller
                             $this->Log->addEntry('clear', $this->user_id);
 
                             if (true) {
-                                //check error code?
+                                // todo: check error code?
                                 foreach ($problematicKeys as $row) {
                                     log_message('error', $username . ' deleting cache folder');
                                     $key = $row->key;
