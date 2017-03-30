@@ -28,7 +28,7 @@ $(document).ready(function() {
             "showEasing": "swing",
             "timeOut": "6000"
         };
-        toastr.success('<strong>Welcome to Eve Trade Master 2.0!</strong> <br/><small>\n\
+        toastr.success('<strong>Welcome to Eve Trade Master 2.1!</strong> <br/><small>\n\
         Hope you enjoy the new layout and new features. Make sure to report any bugs you find. \n\
         Donations are always welcome, too!</small>');
     }, 1600)

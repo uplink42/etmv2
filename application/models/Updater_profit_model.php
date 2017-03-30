@@ -18,7 +18,7 @@ class Updater_profit_model extends CI_Model
         $result = $query->row();
 
         $this->load->model('common/User');
-        $settings = $this->User->getUserProfitSettings($result->iduser);
+        $this->settings = $this->User->getUserProfitSettings($result->iduser);
 
         if ($this->settings['x_character']) {
             // aggregated calculation

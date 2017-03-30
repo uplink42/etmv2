@@ -71,6 +71,8 @@ class Msg extends CI_Model
     const RECOVERY_SUCCESS           = "If the information you provided is correct you will soon recieve an e-mail with your information";
     const RECOVERY_ERROR             = "Unexpected failure. Try again";
     const LOGOUT                     = "You have logged out";
+    const OFFLINE_MODE_NOTICE        = "Unable to update your characters's data. This could be a temporary issue.";
+    const UPDATE_SUCCESS             = "Sucessfully updated characters' data.";
 
     public function __construct()
     {

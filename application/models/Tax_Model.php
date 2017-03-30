@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Tax_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -101,7 +100,7 @@ class Tax_model extends CI_Model
         $query = $this->db->get('corporation');
 
         if ($query->row()) {
-            return $query->row()->corporation_eve_idcorporation;
+            return $query->row()->faction_eve_idfaction;
         } else {
             return 1;
         }  

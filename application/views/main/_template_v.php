@@ -61,30 +61,60 @@
         <div class="panel panel-filled panel-loading-common text-center">
             <div class="panel-body">
                 Refreshing data... please wait
-                <div id="floatingCirclesG">
-                    <div class="f_circleG" id="frotateG_01"></div>
-                    <div class="f_circleG" id="frotateG_02"></div>
-                    <div class="f_circleG" id="frotateG_03"></div>
-                    <div class="f_circleG" id="frotateG_04"></div>
-                    <div class="f_circleG" id="frotateG_05"></div>
-                    <div class="f_circleG" id="frotateG_06"></div>
-                    <div class="f_circleG" id="frotateG_07"></div>
-                    <div class="f_circleG" id="frotateG_08"></div>
+                <div class="windows8">
+                    <br>
+                    <div class="wBall" class="wBall_1">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
+                    <div class="wBall" class="wBall_2">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
+                    <div class="wBall" class="wBall_3">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
+                    <div class="wBall" class="wBall_4">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
+                    <div class="wBall" class="wBall_5">
+                        <div class="wInnerBall">
+                        </div>
+                    </div>
                 </div>
+                <br>
+                <br>
             </div>
         </div>
 
         <div class="panel-loading-ajax">
-            <div id="floatingCirclesG">
-                <div class="f_circleG" id="frotateG_01"></div>
-                <div class="f_circleG" id="frotateG_02"></div>
-                <div class="f_circleG" id="frotateG_03"></div>
-                <div class="f_circleG" id="frotateG_04"></div>
-                <div class="f_circleG" id="frotateG_05"></div>
-                <div class="f_circleG" id="frotateG_06"></div>
-                <div class="f_circleG" id="frotateG_07"></div>
-                <div class="f_circleG" id="frotateG_08"></div>
+            <div class="windows8">
+                <br>
+                <div class="wBall" class="wBall_1">
+                    <div class="wInnerBall">
+                    </div>
+                </div>
+                <div class="wBall" class="wBall_2">
+                    <div class="wInnerBall">
+                    </div>
+                </div>
+                <div class="wBall" class="wBall_3">
+                    <div class="wInnerBall">
+                    </div>
+                </div>
+                <div class="wBall" class="wBall_4">
+                    <div class="wInnerBall">
+                    </div>
+                </div>
+                <div class="wBall" class="wBall_5">
+                    <div class="wInnerBall">
+                    </div>
+                </div>
             </div>
+            <br>
+            <br>
         </div>
         <?php include_once("analyticstracking.php") ?>
 </body>

@@ -76,23 +76,25 @@ class Updater extends CI_Controller
                             $result_iterate = $this->Updater_model->iterateAccountCharacters();
                             if (!$result_iterate) {
                                 log_message('error', $username . ' iterate failed');
-                                //transaction failed for some reason
-                                buildMessage("error", Msg::DB_ERROR, "login/login_v");
-                                $data['view']      = "login/login_v";
-                                $data['no_header'] = 1;
-                                return;
+                                // transaction failed for some reason
+                                // forward user to offline mode
+                                $this->etmsession->set('msg', Msg::OFFLINE_MODE_NOTICE);
+                                $this->etmsession->set('notice', 'error');
+                                $this->displayResultTable($username);
                             } else {
+                                $this->etmsession->set('msg', Msg::UPDATE_SUCCESS);
+                                $this->etmsession->set('notice', 'success');
                                 $this->Updater_model->release($username);
-                                //if we arrived here, that means nothing went wrong (yet)
+                                // if we arrived here, that means nothing went wrong (yet)
                                 $this->db->trans_start();
                                 $this->load->model('Updater_profit_model', 'profits');
                                 $this->profits->beginProfitCalculation($username);
-                                //totals and history
+                                // update totals and history
                                 $this->Updater_model->updateTotals();
                                 $this->db->trans_complete();
 
                                 if ($this->db->trans_status() === false) {
-                                    //something went wrong while calculating profits, abort
+                                    // something went wrong while calculating profits, abort
                                     $this->etmsession->set('msg', Msg::DB_ERROR);
                                     $this->etmsession->set('notice', 'error');
                                     $data['view']      = "login/login_v";
@@ -100,22 +102,21 @@ class Updater extends CI_Controller
                                     $this->load->view('main/_template_v', $data);
                                     return;
                                 } else {
+                                    // successfully updated
                                     $this->displayResultTable($username);
                                 }
                             }
                         } catch (Throwable $e) {
                             //if an exception happens during update (this is a bug on Eve's API)
                             log_message('error', $e->getMessage());
-                            echo sprintf(
+                            /*echo sprintf(
                                 "an exception was caught! Type: %s Message: %s",
                                 get_class($e),
                                 $e->getMessage()
-                            );
+                            );*/
 
-                            //cache is now corrupted for 24 hours, remove cache and try again
-                            //remove all keys just in case
+                            // cache is now corrupted for 24 hours, remove cached data
                             $problematicKeys = $this->Updater_model->getAPIKeys($this->user_id);
-                            log_message('error', 'delete cache ' . $this->user_id);
                             $this->Log->addEntry('clear', $this->user_id);
 
                             if (true) {
@@ -125,16 +126,17 @@ class Updater extends CI_Controller
                                     $key = $row->key;
                                     $dir = FILESTORAGE . $key;
                                     $this->removeDirectory($dir);
-                                    //release the lock
+                                    // release the lock
                                     $this->Updater_model->release($username);
-                                    $this->etmsession->set('msg', Msg::XML_CONNECT_FAILURE);
+
+                                    // forward user to offline mode
+                                    $this->etmsession->set('msg', Msg::OFFLINE_MODE_NOTICE);
                                     $this->etmsession->set('notice', 'error');
-                                    
-                                    $this->etmsession->delete('username');
+                                    $this->displayResultTable($username);
+                                    /*$this->etmsession->delete('username');
                                     $this->etmsession->delete('start');
-                                    $this->etmsession->delete('iduser');
+                                    $this->etmsession->delete('iduser');*/
                                 }
-                                $this->index();
                             } else {
                                 $this->etmsession->delete('username');
                                 $this->etmsession->delete('start');

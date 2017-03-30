@@ -30,6 +30,9 @@ class MY_Controller extends CI_Controller
      */
     protected function enforce(int $character_id, int $user_id = null): bool
     {
+        $this->etmsession->delete('msg');
+        $this->etmsession->delete('notice');
+
         if ($this->Login_model->checkSession() &&
             $this->ValidateRequest->checkCharacterBelong($character_id, $user_id)) {
 

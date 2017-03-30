@@ -8,6 +8,7 @@ use Pheal\Pheal;
 
 Config::getInstance()->cache  = new \Pheal\Cache\FileStorage(FILESTORAGE);
 Config::getInstance()->access = new \Pheal\Access\StaticCheck();
+//Config::getInstance()->log = new \Pheal\Cache\FileStorage(FILESTORAGE);
 
 class Updater_model extends CI_Model
 {
