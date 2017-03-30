@@ -105,6 +105,7 @@ class Updater extends CI_Controller
                             }
                         } catch (Throwable $e) {
                             //if an exception happens during update (this is a bug on Eve's API)
+                            log_message('error', $e->getMessage());
                             echo sprintf(
                                 "an exception was caught! Type: %s Message: %s",
                                 get_class($e),

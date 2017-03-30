@@ -186,11 +186,10 @@ class Dashboard_model extends CI_Model
             $CI->load->model('Tax_Model');
 
             $profit_settings = $this->User->getUserProfitSettings($user_id);
-            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, $profit_settings['buy_behaviour'], 
-                $profit_settings['sell_behaviour'], $profit_settings['citadel_tax_ignore']);
+            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, $profit_settings);
 
-            $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
-            $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
+            $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
+            $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
             $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
             $result[$i]['margin']       = $profit_unit / $price_buy * 100;
             $result[$i]['profit_total'] = $profit_unit * $result[$i]['quantity'];

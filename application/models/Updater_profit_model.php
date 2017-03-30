@@ -6,10 +6,7 @@ if (!defined('BASEPATH')) {
 class Updater_profit_model extends CI_Model
 {
     private $username;
-    private $defaultSellTracking;
-    private $defaultBuyTracking;
-    private $crossCharacterTracking;
-    private $ignoreCitadelTax;
+    private $settings;
     private $charactersList;
 
     public function beginProfitCalculation(string $username)
@@ -20,12 +17,10 @@ class Updater_profit_model extends CI_Model
         $query  = $this->db->get('user');
         $result = $query->row();
 
-        $this->defaultSellTracking    = $result->default_sell_behaviour;
-        $this->defaultBuyTracking     = $result->default_buy_behaviour;
-        $this->crossCharacterTracking = $result->cross_character_profits;
-        $this->ignoreCitadelTax       = $result->ignore_citadel_tax == 1 ? true : false;
+        $this->load->model('common/User');
+        $settings = $this->User->getUserProfitSettings($result->iduser);
 
-        if ($this->crossCharacterTracking) {
+        if ($this->settings['x_character']) {
             // aggregated calculation
             $this->calculate();
         } else {
@@ -129,14 +124,11 @@ class Updater_profit_model extends CI_Model
                     $CI->load->model('Tax_Model');
 
                     // get buy and sell behaviour
-                    $buy_behaviour  = $this->defaultBuyTracking == 1 ? 'buy' : 'sell';
-                    $sell_behaviour = $this->defaultBuyTracking == 1 ? 'sell' : 'buy';
-                    $CI->Tax_Model->tax($stationFromID, $stationToID, $characterBuyID, $characterSellID, $buy_behaviour, $sell_behaviour,
-                        $this->ignoreCitadelTax);
-                    $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
-                    $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
-                    $transTaxTo    = $CI->Tax_Model->calculateTaxTo();
-                    $brokerFeeTo   = $CI->Tax_Model->calculateBrokerTo();
+                    $CI->Tax_Model->tax($stationFromID, $stationToID, $characterBuyID, $characterSellID, $this->settings);
+                    $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
+                    $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
+                    $transTaxTo    = $CI->Tax_Model->calculateTax('to');
+                    $brokerFeeTo   = $CI->Tax_Model->calculateBroker('to');
 
                     $price_unit_b_taxed  = $buy_stack[$i]['price_unit'] * $brokerFeeFrom * $transTaxFrom;
                     $price_total_b_taxed = $price_unit_b_taxed * $profit_q;

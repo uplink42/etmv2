@@ -241,7 +241,39 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 help-block">
-                                    <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from citadels.
+                                    <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from citadels. This is useful when you trade mainly out of low tax citadels.
+                                </div>
+                            </div>
+                            <div class="row form-group pl-15">
+                                <div class="col-md-6 col-xs-6">
+                                    <label>Set all NPC station taxes to zero:</label>
+                                </div>
+                                <div class="col-md-6 col-xs-6 text-right">
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="ignore_station_tax" value="1"> Yes
+                                    </div>
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="ignore_station_tax" value="0"> No
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 help-block">
+                                    <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from NPC stations. This is useful when you trade mainly with remote buy orders from low tax Citadels.
+                                </div>
+                            </div>
+                            <div class="row form-group pl-15">
+                                <div class="col-md-6 col-xs-6">
+                                    <label>Set all Nullsec outpost taxes to zero:</label>
+                                </div>
+                                <div class="col-md-6 col-xs-6 text-right">
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="ignore_outpost_tax" value="1"> Yes
+                                    </div>
+                                    <div class="col-lg-5 col-md-6" style="float:right;">
+                                        <input type="radio" name="ignore_outpost_tax" value="0"> No
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 help-block">
+                                    <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from player-made outposts in Nullsec. This is useful when you trade items into staging systems with next to no broker fee.
                                 </div>
                             </div>
                             <div class="form-group">

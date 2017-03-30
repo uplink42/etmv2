@@ -72,8 +72,6 @@ class TradeSimulator_model extends CI_Model
      */
     public function init(string $origin, string $destination, int $buyer, int $seller, string $buy_method, string $sell_method, int $stocklist)
     {
-
-
         $this->stationFromName     = (string) $origin;
         $this->stationToName       = (string) $destination;
         $this->stationFromID       = (int) $this->getStationID($origin)->eve_idstation;

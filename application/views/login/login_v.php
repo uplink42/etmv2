@@ -55,31 +55,17 @@
             </div>
             <div class="panel-body panel-loading">
                 Logging in... updating data
-                <div class="windows8">
-                    <br>
-                    <div class="wBall" class="wBall_1">
-                        <div class="wInnerBall">
-                        </div>
-                    </div>
-                    <div class="wBall" class="wBall_2">
-                        <div class="wInnerBall">
-                        </div>
-                    </div>
-                    <div class="wBall" class="wBall_3">
-                        <div class="wInnerBall">
-                        </div>
-                    </div>
-                    <div class="wBall" class="wBall_4">
-                        <div class="wInnerBall">
-                        </div>
-                    </div>
-                    <div class="wBall" class="wBall_5">
-                        <div class="wInnerBall">
-                        </div>
+                <div class="overlay-loader">
+                    <div class="loader">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
                     </div>
                 </div>
-                <br>
-                <br>
             </div>
         </div>
     </div>

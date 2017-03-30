@@ -57,16 +57,18 @@ class Register extends CI_Controller
     {
         $this->load->model('register_model');
         $user_data = [
-            'username' => $this->security->xss_clean($this->input->post('username')),
-            'password' => $this->security->xss_clean($this->input->post('password')),
-            'email'    => $this->security->xss_clean($this->input->post('email')),
-            'apikey'   => (int) $this->security->xss_clean($this->input->post('apikey')),
-            'vcode'    => $this->security->xss_clean($this->input->post('vcode')),
-            'reports'  => $this->security->xss_clean($this->input->post('reports')),
-            'default_buy' => $this->security->xss_clean($this->input->post('default-buy')),
-            'default_sell' => $this->security->xss_clean($this->input->post('default-sell')),
-            'x_character' => $this->security->xss_clean($this->input->post('x-character')),
-            'null_tax' => $this->security->xss_clean($this->input->post('null-citadel-tax'))
+            'username'         => $this->security->xss_clean($this->input->post('username')),
+            'password'         => $this->security->xss_clean($this->input->post('password')),
+            'email'            => $this->security->xss_clean($this->input->post('email')),
+            'apikey'           => (int) $this->security->xss_clean($this->input->post('apikey')),
+            'vcode'            => $this->security->xss_clean($this->input->post('vcode')),
+            'reports'          => $this->security->xss_clean($this->input->post('reports')),
+            'default_buy'      => $this->security->xss_clean($this->input->post('default-buy')),
+            'default_sell'     => $this->security->xss_clean($this->input->post('default-sell')),
+            'x_character'      => $this->security->xss_clean($this->input->post('x-character')),
+            'null_citadel_tax' => $this->security->xss_clean($this->input->post('null-citadel-tax')),
+            'null_station_tax' => $this->security->xss_clean($this->input->post('null-station-tax')),
+            'null_outpost_tax' => $this->security->xss_clean($this->input->post('null-outpost-tax')),
         ];
 
         $chars = array();

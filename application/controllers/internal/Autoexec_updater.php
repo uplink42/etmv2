@@ -36,7 +36,7 @@ class Autoexec_updater extends MY_Controller
      */
     public function index()
     {
-    	if (!$this->input->is_cli_request()) {
+        if (!$this->input->is_cli_request()) {
             die();
         }
         
@@ -68,7 +68,7 @@ class Autoexec_updater extends MY_Controller
                 );
             }
 
-            // check if API server is up
+            //check if API server is up
             if (!$this->ValidateRequest->testEndpoint()) {
                 echo XML_CONNECT_FAILURE;
             } else {
@@ -91,8 +91,8 @@ class Autoexec_updater extends MY_Controller
                                 if (!$result_iterate) {
                                     echo Msg::DB_ERROR . "\n";
                                 } else {
-                                	//if we arrived here, that means nothing went wrong (yet)
-							        //calculate profits
+                                    //if we arrived here, that means nothing went wrong (yet)
+                                    //calculate profits
                                     try {
                                         $this->db->trans_start();
                                         $this->Updater_model->calculateProfits();
@@ -116,7 +116,7 @@ class Autoexec_updater extends MY_Controller
                                     $this->db->where('username', $username);
                                     $report_type = $this->db->get('user')->row()->reports;
 
-                                    $this->sendReport($report_type);
+                                    $this->sendReport($report_type, $username);
                                     $this->Updater_model->release($username);
 
                                     $finish = microtime(true);
@@ -135,7 +135,7 @@ class Autoexec_updater extends MY_Controller
                                 //remove all keys just in case
                                 //$problematicKeys = $this->Updater_model->getAPIKeys($this->user_id);
                                 foreach ($keys as $row) {
-                                	echo 'deleting cache. canceled update ' . $this->iduser;
+                                    echo 'deleting cache. canceled update ' . $this->iduser;
                                     $key = $row['apikey'];
 
                                     $dir = FILESTORAGE . $key;
@@ -148,7 +148,7 @@ class Autoexec_updater extends MY_Controller
                     }
                 }
             }
-            // make sure lock is released in case of exceptions, timeouts, ...
+            //make sure lock is released in case of exceptions, timeouts, ...
             $this->Updater_model->release($username);
         }
     }
@@ -169,13 +169,36 @@ class Autoexec_updater extends MY_Controller
         }
     }
 
-
     public function sendReport(string $period, string $username)
     {
         $period == 'daily' ? $interval = 1 : 
             ($period == 'weekly' ? $interval = 7 : 
-                ($period == 'monthly' ? $interval = 30 : ''));
+                ($period == 'monthly' ? $interval = 30 : 'none'));
 
+        //if today is sunday send weekly report
+        //if today is the day of the month send monthly report
+        $day = date('D');
+        $date = date('d');
+        $month = date('m');
+
+        switch ($period) {
+            case 'none';
+                return;
+            break;
+
+            case 'weekly':
+                if ($day != 'Mon') {
+                    return;
+                }
+            break;
+
+            case 'monthly':
+                if (!($day == 'Mon' && $date == '30') || !($day == 'Mon' && $date == '28' && $month == 'February')) {
+                    return;
+                }
+            break;    
+        }
+        
         $data['period']    = $period;
         $data['interval']  = $interval;
         $data['recap_int'] = max($interval, 7);
@@ -210,7 +233,7 @@ class Autoexec_updater extends MY_Controller
             $report = $this->load->view('reports/reports_v', $data, true);
 
             //mail data
-            $address = $this->User->getUserEmail($data['user_id']);;
+            $address = /*$this->User->getUserEmail($data['user_id']);*/"etmdevelopment42@gmail.com";
             $from = "etmdevelopment42@gmail.com";
             $from_name = "Eve Trade Master";
             $subject = "Eve Trade Master " . $period . " earnings report for " . $data['date_now'];
@@ -224,5 +247,6 @@ class Autoexec_updater extends MY_Controller
                 echo "Error sending mail to " . $address . "\n";
             }
         }
+
     }
 }

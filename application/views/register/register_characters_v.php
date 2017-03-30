@@ -68,7 +68,7 @@
             		    	<h4>General Settings</h4>
                             <div class="row form-group">
                                 <div class="col-md-6 col-xs-6">
-                                    Default buy transactions behaviour:
+                                    <b>Default buy transactions behaviour:</b>
                                 </div>
                                 <div class="col-md-6 col-xs-6 text-right">
                                     <div class="col-md-6" style="float:right;">
@@ -85,7 +85,7 @@
 
                             <div class="row form-group">
                                 <div class="col-md-6 col-xs-6">
-                                    Default sell transactions behaviour:
+                                    <b>Default sell transactions behaviour:</b>
                                 </div>
                                 <div class="col-md-6 col-xs-6 text-right">
                                     <div class="col-md-6" style="float:right;">
@@ -102,7 +102,7 @@
 
                             <div class="row form-group">
                                 <div class="col-md-6 col-xs-6">
-                                    Cross-character profit tracking:
+                                    <b>Cross-character profit tracking:</b>
                                 </div>
                                 <div class="col-md-6 col-xs-6 text-right">
                                     <div class="col-md-6" style="float:right;">
@@ -119,7 +119,7 @@
 
                             <div class="row form-group">
                                 <div class="col-md-6 col-xs-6">
-                                    Set all Citadel taxes to zero:
+                                    <b>Set all Citadel taxes to zero:</b>
                                 </div>
                                 <div class="col-md-6 col-xs-6 text-right">
                                     <div class="col-md-6" style="float:right;">
@@ -130,9 +130,44 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 help-block">
-                                    <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from citadels.
+                                    <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from citadels. This is useful when you trade mainly out of low tax citadels.
                                 </div>
                             </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-6 col-xs-6">
+                                    <b>Set all NPC station taxes to zero:</b>
+                                </div>
+                                <div class="col-md-6 col-xs-6 text-right">
+                                    <div class="col-md-6" style="float:right;">
+                                        <input type="radio" name="null-station-tax" value="1"> Yes
+                                    </div>
+                                    <div class="col-md-6" style="float:right;">
+                                        <input type="radio" name="null-station-tax" value="0" checked> No
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 help-block">
+                                    <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from NPC stations. This is useful when you trade mainly with remote buy orders from low tax Citadels.
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-6 col-xs-6">
+                                    <b>Set all Nullsec outpost taxes to zero:</b>
+                                </div>
+                                <div class="col-md-6 col-xs-6 text-right">
+                                    <div class="col-md-6" style="float:right;">
+                                        <input type="radio" name="null-outpost-tax" value="1"> Yes
+                                    </div>
+                                    <div class="col-md-6" style="float:right;">
+                                        <input type="radio" name="null-outpost-tax" value="0" checked> No
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 help-block">
+                                    <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from player-made outposts in Nullsec. This is useful when you trade items into staging systems with next to no broker fee.
+                                </div>
+                            </div>
+                            <div class="pull-left"><span class="fa fa-info"></span> These options can be changed anytime in your account settings</div>
                             <input type="Submit" class="btn btn-accent pull-right" name="register" value="Continue">	
             		    </div>
             		</div>
