@@ -26,7 +26,7 @@ class Stocklists extends MY_Controller
 
             $data['selected'] = "stocklists";
             $data['view']     = 'main/stocklists_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 

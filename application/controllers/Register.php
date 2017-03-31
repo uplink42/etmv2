@@ -40,12 +40,12 @@ class Register extends CI_Controller
             $data['apikey']     = $apikey;
             $data['vcode']      = $vcode;
             $data['no_header']  = 1;
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         } else {
             $data['result']    = $result;
             $data['view']      = "register/register_v";
             $data['no_header'] = 1;
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 
@@ -99,7 +99,7 @@ class Register extends CI_Controller
             buildMessage("error", Msg::NO_CHARACTER_SELECTED, "register/register_characters_v");
             $data['view']      = "register/register_characters_v";
             $data['no_header'] = 1;
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
             return;
         }
 
@@ -111,13 +111,13 @@ class Register extends CI_Controller
                 $data['characters'] = $this->register_model->getCharacters($user_data['apikey'], $user_data['vcode']);
                 $data['view']       = "register/register_characters_v";
                 $data['no_header']  = 1;
-                $this->load->view('main/_template_v', $data);
+                $this->twig->display('main/_template_v', $data);
             } else {
                 $data['message']   = Msg::ACCOUNT_CREATE_SUCCESS;
                 $data['notice']    = "success";
                 $data['view']      = "login/login_v";
                 $data['no_header'] = 1;
-                $this->load->view('main/_template_v', $data);
+                $this->twig->display('main/_template_v', $data);
             }
         }
     }

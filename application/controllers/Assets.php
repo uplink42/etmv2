@@ -72,7 +72,7 @@ class Assets extends MY_Controller
             $data['totals']      = $asset_totals;
             $data['graph_data']  = $graph;
             $data['view']        = 'main/assets_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

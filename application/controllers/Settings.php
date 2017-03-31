@@ -49,7 +49,7 @@ class Settings extends MY_Controller
             $data['selected'] = "settings";
 
             $data['view'] = 'main/settings_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 

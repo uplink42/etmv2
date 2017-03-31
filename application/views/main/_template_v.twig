@@ -9,55 +9,61 @@
     <meta name="keywords" content="eve online trading market">
     <meta name="google-site-verification" content="AaRtrjK00fRsj5cWaYi3VnjiuOIpcRwZw4C860zpf9Y" />
     <link href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+
     <!-- Page title -->
     <title>Eve Trade Master 2 - A web based Eve Online profit tracker, asset manager and trade analysis tool</title>
 
-    <?php
-        if (!empty($market)) {
-            echo "<script>
-                window.paceOptions = {
-                    ajax: false
-                };
-            </script>";
-        }
-    ?>
-    <!-- Vendor styles -->
-    <link rel="stylesheet" href="<?=base_url('dist/luna/styles/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
-    <link rel="stylesheet" href="<?=base_url('dist/luna/styles/theme.min.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
-    <script src="<?=base_url('dist/js/apps.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+    {# disable pace on marketexplorer #}
+    {% if market is empty %}
+        <script>window.paceOptions = { ajax: false }; </script>
+    {% endif %}
 
-    <?php
-        if (!empty($market)) {
-            echo "<script>
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="{{ base_url('dist/luna/styles/styles.css') }}?HASH_CACHE={{HASH_CACHE}}"/>
+    <link rel="stylesheet" href="{{ base_url('dist/luna/styles/theme.min.css') }}?HASH_CACHE={{HASH_CACHE}}"/>
+    <script src="{{ base_url('dist/js/apps.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>
+
+    {% if market %}
+        <script>
             $(document).ready(function() {
                 $('body').addClass('pace-done');
             });
-            </script>";
-        }
-    ?>
+        </script>
+    {% endif %}
 </head>
-    <?php echo isset($no_header) ? "<body class='blank'>" : "" ?>
-    <div class="wrapper mainwrapper" data-url="<?=base_url()?>">
+    {# no header pages #}
+    {% if no_header %}
+        <body class='blank'>
+    {% endif %}
 
-    <!-- toastr notification -->
-    <?php if (isset($message)) {?>
-    <script>toastr["<?=$notice?>"]("<?=$message?>")</script>
-    <?php }
+    <div class="wrapper mainwrapper" data-url="{{ base_url() }}">
 
-    if (!empty($_SESSION['msg'])) {?>
-    <script>toastr["<?=$_SESSION['notice'];?>"]("<?=$_SESSION['msg'];?>")</script>
-    <?php }
+    {# toastr notification in same page #}
+    {% if message %}
+        <script>toastr[{{ notice }}]({{ message }})</script>
+    {% endif %}
 
-    !isset($no_header) ? $this->load->view('common/header_v') : "";
-?>
+    {# toastr between pages #}
+    {% if SESSION['msg'] %}
+        <script>toastr[{{ SESSION['notice'] }}]({{ SESSION['msg'] }})</script>
+    {% endif %}
     
-<?php
-    $this->load->view($view);
-    $this->load->view('common/footer_v');
-?>
-    </div>
-    <?php if(!empty($email)) {$this->load->view('common/feedback_v');} ?>
+    {# pages with header and sidenav #}
+    {% if no_header is empty %}
+        {% include 'common/header_v.twig' %}
+    {% endif %}
 
+    {# include current page #}
+    {% include view ~ '.twig' %}
+
+    {% include 'common/footer_v' ~ '.twig' %}
+
+    </div>
+    {% if email %}
+        {% include 'common/feedback_v' ~ '.twig' %}
+    {% endif %}
+
+        {# loading... #}
         <div class="panel panel-filled panel-loading-common text-center">
             <div class="panel-body">
                 Refreshing data... please wait
@@ -89,6 +95,7 @@
             </div>
         </div>
 
+        {# loading inside app #}
         <div class="panel-loading-ajax">
             <div class="windows8">
                 <br>
@@ -116,7 +123,5 @@
             <br>
             <br>
         </div>
-        <?php include_once("analyticstracking.php") ?>
+        {% include 'analyticstracking' ~ '.php' %}
 </body>
-    
-

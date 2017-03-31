@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller
@@ -15,6 +15,7 @@ class MY_Controller extends CI_Controller
         $this->load->model('common/ValidateRequest');
         $this->load->model('Login_model');
         $this->load->library('etmsession');
+        $this->load->library('twig');
         $this->user_id = (int) $this->etmsession->get('iduser');
 
         if ($this->config->item('maintenance') == true) {
@@ -58,7 +59,7 @@ class MY_Controller extends CI_Controller
             $this->etmsession->delete('username');
             $this->etmsession->delete('start');
             $this->etmsession->delete('iduser');
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
 
             return false;
         }
@@ -105,6 +106,8 @@ class MY_Controller extends CI_Controller
         $data['character_list']  = $character_list;
         $data['character_name']  = $this->Login_model->getCharacterName($character_id);
         $data['character_id']    = $character_id;
+        $data['HASH_CACHE']      = HASH_CACHE;
+        $data['SESSION']         = $_SESSION;
 
         $data['selector'] = $this->buildSelector();
         return $data;

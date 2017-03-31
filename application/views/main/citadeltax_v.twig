@@ -1,22 +1,25 @@
-<script src="<?=base_url('dist/js/apps/citadeltax-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
                 <div class="view-header">
-                    <?php $this->load->view('common/selector_v');?>
+                    {% include 'common/selector_v' ~ '.twig' %}
                     <div class="header-icon">
-                        <?php if ($aggregate == 0) {?>
-                        <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/<?=$character_id?>_64.jpg">
-                            <?php } else { ?>
-                                <i class="pe page-header-icon pe-7s-link">
-                                </i>
-                            <?php }?>
+                        {% if aggregate == 0 %}
+                            <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/{{character_id}}_64.jpg">
+                        {% endif %}
+                        {% if aggregate != 0 %}
+                            <i class="pe page-header-icon pe-7s-link"></i>
+                        {% endif %}
                     </div>
                     <div class="header-title">
                         <h1>
-                            <?php echo $aggregate == 1 ? implode(' + ', $char_names) : $character_name ?>
-                            's Citadel Taxes
+                            {% if aggregate == 1 %}
+                                {{ char_names | join(' + ') }} 's Citadel Taxes
+                            {% endif %}
+                            {% if aggregate == 0 %}
+                                's Citadel Taxes
+                            {% endif %}
                         </h1>
                     </div>
                 </div>
@@ -28,18 +31,22 @@
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
-                        <i class="fa fa-info yellow"></i> Here you can set or unset custom broker fees for transactions on certain Citadels of your choice<br />
-                        <i class="fa fa-info yellow"></i> Setting a different tax for an existing entry will update it
-                        <?php if ($aggregate == 1) { ?>
+                        <i class="fa fa-info yellow"></i> 
+                            Here you can set or unset custom broker fees for transactions on certain Citadels of your choice
                         <br />
-                        <i class="fa fa-info yellow"></i> You must be outside aggregated mode to use this page. Select any of your characters at the top right.
-                        <?php } ?>
+                        <i class="fa fa-info yellow"></i> 
+                            Setting a different tax for an existing entry will update it
+                        <br />
+                        {% if aggregate == 1 %}
+                        <i class="fa fa-info yellow"></i> 
+                            You must be outside aggregated mode to use this page. Select any of your characters at the top right.
+                        {% endif %}
                     </div>
                 </div> 
             </div>
         </div>
     
-        <?php if ($aggregate == 0) { ?>
+        {% if aggregate == 0 %}
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="panel panel-filled">
@@ -97,6 +104,7 @@
                 </div>
             </div>
         </div>
-        <?php } ?>    
+        {% endif %}  
     </div>
 </section>
+<script src="{{ base_url('dist/js/apps/citadeltax-app.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>

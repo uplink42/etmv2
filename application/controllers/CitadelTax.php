@@ -36,10 +36,13 @@ class Citadeltax extends MY_Controller
             $chars            = $data['chars'];
             $data['selected'] = "citadeltax";
 
-            $this->getTaxList($character_id);
-
+            /*if ($this->aggregate < 1) {
+                $this->getTaxList($character_id);
+            }*/
+            
             $data['view'] = 'main/citadeltax_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
+            //$this->twig->display('main/_template_v', $data);
         }
     }
 

@@ -19,7 +19,7 @@ class Main extends MY_Controller
     {
         $data['no_header'] = 1;
         $data['view']      = 'login/login_v';
-        $this->load->view('main/_template_v', $data);
+        $this->twig->display('main/_template_v', $data);
     }
 
     /**
@@ -30,7 +30,7 @@ class Main extends MY_Controller
     {
         $data['no_header'] = 1;
         $data['view']      = 'login/login_v';
-        $this->load->view('main/_template_v', $data);
+        $this->twig->display('main/_template_v', $data);
     }
 
     /**
@@ -41,7 +41,7 @@ class Main extends MY_Controller
     {
         $data['no_header'] = 1;
         $data['view']      = 'register/register_v';
-        $this->load->view('main/_template_v', $data);
+        $this->twig->display('main/_template_v', $data);
     }
 
     /**

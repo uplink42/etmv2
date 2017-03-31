@@ -91,12 +91,12 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                 <div class="panel-body">
                     <div class="m-t-sm">
                         <div class="c-white"><span class="label label-accent"></span> Last 7 day profits (all characters)</div>
-                            <span class="small c-white">This week: <?=number_format($profits_trends['total_week'], 0) . " ISK";?>
-                                <?php
-                                $profits_trends['trend_today'] > 0 ? $res = "270" : $res="90"?>
-                                <i class="fa fa-play fa-rotate-<?=$res?> text-warning"></i>
-                                <?=number_format($profits_trends['trend_today'],0)?>% (today)
-                            </span>
+                        <span class="small c-white">This week: <?=number_format($profits_trends['total_week'], 0) . " ISK";?>
+                            <?php
+                            $profits_trends['trend_today'] > 0 ? $res = "270" : $res="90"?>
+                            <i class="fa fa-play fa-rotate-<?=$res?> text-warning"></i>
+                            <?=number_format($profits_trends['trend_today'],0)?>% (today)
+                        </span>
                     <!--<span class="sparkline"></span>-->
                     </div>
                 </div>
@@ -105,7 +105,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
 
         </div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-lg-8">
                 <div class="panel panel-filled">
                     <div class="panel-body">
                         <div class="panel panel-filled panel-c-success panel-collapse mt-20">
@@ -129,9 +129,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                 <thead>
                                     <tr>
                                         <th style="width: 40%;">Item</th>
-                                        <th>System</th>
-                                        <th>Date</th>
-                                        <th>Q</th>
+                                        <th class="hidden-xs">System</th>
+                                        <th class="hidden-xs">Date</th>
+                                        <th class="hidden-xs">Q</th>
                                         <th>Profit</th>
                                         <th>Margin</th>
                                     </tr>
@@ -146,9 +146,9 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                         <tr class="<?=$res?>">
                                             <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
                                                 <?=$row['item_name']?></td>
-                                            <td><?=$row['system_name']?></td>
-                                            <td><?=$row['sell_time']?></td>
-                                            <td><?=number_format($row['quantity'],0)?></td>
+                                            <td class="hidden-xs"><?=$row['system_name']?></td>
+                                            <td class="hidden-xs"><?=$row['sell_time']?></td>
+                                            <td class="hidden-xs"><?=number_format($row['quantity'],0)?></td>
                                             <td><?=number_format($row['profit_total'],2)?></td>
                                             <td><a class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
                                       </tr>
@@ -159,7 +159,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4">
                 <?php
                     $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "300", "pie", "json", $pie_data);
                     $pieChart->render();

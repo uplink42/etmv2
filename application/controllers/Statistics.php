@@ -85,7 +85,7 @@ class Statistics extends MY_Controller
 
             $data['interval'] = $interval;
             $data['view']     = 'main/statistics_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

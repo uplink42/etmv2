@@ -1,0 +1,15 @@
+<div class="dropdown pull-right">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownmenu-characters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Character
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+        {% for char in character_list['chars'] %}
+            <li><a href="{{ base_url(selector['page']) }}/index/{{ char }}{{ selector['hasInterval'] ? '/' ~ interval : '' }}{{ selector['hasRegion'] ? "/" ~ region_id : '' }}?aggr=0{{ get }}"> {{ character_list['char_names'][loop.index0] }} </a>
+            </li>
+        {% endfor %}
+        <li role="separator" class="divider"></li>
+        <li><a href="{{ base_url(selector['page']) }}/index/{{ character_id }}{{ selector['hasInterval'] ? '/' ~ interval : '' }}{{ selector['hasRegion'] ? "/" ~ region_id : '' }}?aggr=1{{ get }}"> <b>All</b> </a>
+        </li>
+    </ul>
+</div>

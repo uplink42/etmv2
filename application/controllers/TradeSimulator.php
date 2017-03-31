@@ -44,7 +44,7 @@ class Tradesimulator extends MY_Controller
             }
 
             $data['view'] = 'main/tradesimulator_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 

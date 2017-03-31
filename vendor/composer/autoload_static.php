@@ -14,6 +14,13 @@ class ComposerStaticInit9b6f27ceb534391058a419e49fc2ed8d
                 0 => __DIR__ . '/..' . '/mikey179/vfsStream/src/main/php',
             ),
         ),
+        'T' => 
+        array (
+            'Twig_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/twig/lib',
+            ),
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)

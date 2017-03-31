@@ -1,10 +1,9 @@
 <section class="content">
     <div class="back-link">
-    <a href="<?=base_url()?>" class="btn btn-accent">Back to main page</a>
+    <a href="{{ base_url() }}" class="btn btn-accent">Back to main page</a>
 </div>
 
     <div class="container lg animated slideInDown tabs-container">
-        
     	<div class="view-header">
     	    <div class="header-icon">
     		  <i class="pe page-header-icon pe-7s-smile"></i>
@@ -24,9 +23,7 @@
              data-ad-client="ca-pub-1952914247666990"
              data-ad-slot="6026566466"
              data-ad-format="auto"></ins>
-        <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         <br>
 
         <div class="panel panel-filled">
@@ -41,14 +38,11 @@
                 <div id="tab-1" class="tab-pane active">
                     <div class="panel-body">
                         <h5><strong class="c-white">Latest News</strong></h5>
-                        <?php 
-                            if(isset($cl_recent)) {
-                                foreach($cl_recent as $row) {
-                                    echo "<b>" . $row->date . "</b> - ";
-                                    echo $row->content . "<br>";
-                                }  
-                            }
-                        ?>
+                        {% if cl_recent %}
+                            {% for row in cl_recent %}
+                                <b> {{ row.date }} </b> - {{ row.content | raw }} <br>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
                 <div id="tab-2" class="tab-pane">
@@ -87,13 +81,11 @@
                 <div id="tab-3" class="tab-pane">
                     <div class="panel-body">
                         <h5><strong class="c-white">Changelog</strong></h5>
-                        <?php if(isset($cl)) {
-                            foreach($cl as $row) {
-                                echo "<b>" . $row->date . "</b> - ";
-                                echo $row->content . "<br>";
-                            }
-                        }
-                        ?>
+                        {% if cl %}
+                            {% for row in cl %}
+                                <b> {{ row.date }} </b> - {{ row.content | raw }} <br>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -103,69 +95,62 @@
     	    <div class="panel-body">
     		<p></p>
         		<div class="table-responsive">
-        		    <?php
-        		    if(isset($table)) {
-        		?>
-        		    <table class="table table-responsive table-bordered table-stripped table-hover">
-            			<thead>
-            			    <tr>
-            				<th></th>
-            				<th>Name</th>
-            				<th>Wallet Balance</th>
-            				<th>Assets Value</th>
-            				<th>Escrow</th>
-            				<th>Sell Orders</th>
-            			    </tr>
-            			</thead>
-            			<tbody>    
-            		    <?php
-            			    foreach($table[0]['character'] as $char) {
-            				
-            				$id = $char['id'];
-            				$name = $char['name'];
-            				$balance = $char['balance'];
-            				$networth = $char['networth'];
-            				$escrow = $char['escrow'];
-            				$sell = $char['sell'];
-            				?>
-            				<tr>
-            				    <td><a href='<?= base_url('dashboard/index/'.$id)?>'><img src='https://image.eveonline.com/Character/<?=$id?>_32.jpg' alt='character portrait'></a></td>
-            				    <td><?=$name?></td>
-            				    <td class="text-right"><?=number_format($balance)?></td>
-            				    <td class="text-right"><?=number_format($networth)?></td>
-            				    <td class="text-right"><?=number_format($escrow)?></td>
-            				    <td class="text-right"><?=number_format($sell)?></td>
-            				</tr>
-            				<?php
-            			    }
-            			    
-            			    $balance_total = $table[0]['total']['balance_total'];
-            			    $networth_total = $table[0]['total']['networth_total'];
-            			    $escrow_total = $table[0]['total']['escrow_total'];
-            			    $sell_total = $table[0]['total']['sell_total'];
-            			    ?>
-            				<tr>
-            				    <td></td>
-            				    <td><strong>Total</strong></td>
-            				    <td class="text-right"><strong><?=number_format($balance_total)?></strong></td>
-            				    <td class="text-right"><strong><?=number_format($networth_total)?></strong></td>
-            				    <td class="text-right"><strong><?=number_format($escrow_total)?></strong></td>
-            				    <td class="text-right"><strong><?=number_format($sell_total)?></strong></td>
-            				</tr>
-            				
-            				<tr>
-            				    <td></td>
-            				    <td></td>
-            				    <td></td>
-            				    <td></td>
-            				    <td class="text-right yellow"><strong>GRAND TOTAL</strong></td>
-            				    <td class="text-right yellow"><strong><?=number_format($table[0]['grand_total'])?></strong></td>
-            				</tr>
-            				<?php
-            			}
-            		    ?>	
-            			</tbody>
-                    </table>
+                    {% if table %}
+            		    <table class="table table-responsive table-bordered table-stripped table-hover">
+                			<thead>
+                			    <tr>
+                				    <th></th>
+                				    <th>Name</th>
+                				    <th>Wallet Balance</th>
+                				    <th>Assets Value</th>
+                				    <th>Escrow</th>
+                				    <th>Sell Orders</th>
+                			    </tr>
+                			</thead>
+                			<tbody>
+                            {% for char in table[0]['character'] %}
+
+                				{# $id = $char['id'];
+                				$name = $char['name'];
+                				$balance = $char['balance'];
+                				$networth = $char['networth'];
+                				$escrow = $char['escrow'];
+                				$sell = $char['sell']; #}
+                				<tr>
+                				    <td><a href='{{ base_url('dashboard/index/' ~ char['id']) }}'>
+                                        <img src='https://image.eveonline.com/Character/{{ char['id'] }}_32.jpg' alt='character portrait'></a>
+                                    </td>
+                				    <td>{{ char['name'] }}</td>
+                				    <td class="text-right">{{ char['balance']  | number_format }}</td>
+                				    <td class="text-right">{{ char['networth'] | number_format }}</td>
+                				    <td class="text-right">{{ char['escrow']   | number_format }}</td>
+                				    <td class="text-right">{{ char['sell']     | number_format }}</td>
+                				</tr>
+                            {% endfor %}
+                			    
+                			    {# $balance_total = $table[0]['total']['balance_total'];
+                			    $networth_total = $table[0]['total']['networth_total'];
+                			    $escrow_total = $table[0]['total']['escrow_total'];
+                			    $sell_total = $table[0]['total']['sell_total']; #}
+                				<tr>
+                				    <td></td>
+                				    <td><strong>Total</strong></td>
+                				    <td class="text-right"><strong>{{ table[0]['total']['balance_total']  | number_format }}</strong></td>
+                				    <td class="text-right"><strong>{{ table[0]['total']['networth_total'] | number_format }}</strong></td>
+                				    <td class="text-right"><strong>{{ table[0]['total']['escrow_total']   | number_format }}</strong></td>
+                				    <td class="text-right"><strong>{{ table[0]['total']['sell_total']     | number_format }}</strong></td>
+                				</tr>
+                				<tr>
+                				    <td></td>
+                				    <td></td>
+                				    <td></td>
+                				    <td></td>
+                				    <td class="text-right yellow"><strong>GRAND TOTAL</strong></td>
+                				    <td class="text-right yellow"><strong>{{ table[0]['grand_total'] | number_format }}</strong></td>
+                				</tr>
+                			</tbody>
+                        </table>
+                    {% endif %}
         		</div>        
             </div>
         </div>	

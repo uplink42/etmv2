@@ -8,5 +8,5 @@ $(document).ready(function() {
             $('.panel-login').hide();
             $('.panel-loading').show();
         }
-    })
+    });
 });

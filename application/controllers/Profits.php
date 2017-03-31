@@ -33,7 +33,7 @@ class Profits extends MY_Controller
             $data['selected'] = "profits";
             $this->load->model('Profits_model');
 
-            $profits   = $this->Profits_model->getProfits($chars, $interval, $item_id);
+            $profits   = $this->Profits_model->getProfits($chars, $interval, $item_id, $this->user_id);
             $profits_r = $profits['result'];
             $profits_c = $profits['count'];
 
@@ -50,7 +50,7 @@ class Profits extends MY_Controller
             $data['profits']  = $profits_r;
             $data['interval'] = $interval;
             $data['view']     = 'main/profits_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

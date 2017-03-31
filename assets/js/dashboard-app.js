@@ -33,7 +33,7 @@ $(document).ready(function() {
         Donations are always welcome, too!</small>');
     }, 1600)
     
-    //datatables
+    // datatables
     var table = $('#profits-table').DataTable({
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
             "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],

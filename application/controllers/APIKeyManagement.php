@@ -36,7 +36,7 @@ class Apikeymanagement extends MY_Controller
             $data['selected'] = "apikey";
 
             $data['view']     = 'main/apimanagement_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 

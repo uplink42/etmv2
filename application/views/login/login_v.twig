@@ -1,8 +1,6 @@
-<script src="<?=base_url('assets/js/login.js')?>">
-</script>
 <section class="content">
     <div class="back-link">
-        <a class="btn btn-accent" href="<?=base_url()?>">
+        <a class="btn btn-accent" href="{{ base_url() }}">
             Back to main page
         </a>
     </div>
@@ -23,7 +21,7 @@
         </div>
         <div class="panel panel-filled">
             <div class="panel-body panel-login">
-                <form action="<?=base_url('login/process')?>" id="loginForm" method="POST" name="login">
+                <form action="{{ base_url('login/process') }}" id="loginForm" method="POST" name="login">
                     <div class="form-group">
                         <label class="control-label" for="username">
                             Username
@@ -44,12 +42,13 @@
                     </div>
                     <div class="text-center">
                         <input class="btn btn-default" id="login-btn" name="Login" type="Submit" value="Login">
-                            <a class="btn btn-default" href="<?=base_url('main/register')?>">
+                            <a class="btn btn-default" href="{{ base_url('main/register') }}">
                                 Register
                             </a>
                     </div>
                     <span class="help-block small text-center help-forgot">
-                        <a href="<?=base_url('recovery/index/username')?>">Forgot username</a> | <a href="<?=base_url('recovery/index/password')?>">Forgot password</a>
+                        <a href="{{ base_url('recovery/index/username') }}">Forgot username</a> | 
+                        <a href="{{ base_url('recovery/index/password') }}">Forgot password</a>
                     </span>
                 </form>
             </div>
@@ -84,3 +83,4 @@
         </div>
     </div>
 </section>
+<script src="{{ base_url('dist/js/apps/login.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>

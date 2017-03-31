@@ -68,7 +68,7 @@ class Contracts extends MY_Controller
             $data['actives']          = $actives;
             $data['inactives']        = $inactives;
             $data['view']             = 'main/contracts_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 

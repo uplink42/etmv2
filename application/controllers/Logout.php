@@ -24,7 +24,7 @@ class Logout extends CI_Controller
         $this->etmsession->delete('username');
         $this->etmsession->delete('start');
         $this->etmsession->delete('iduser');
-        $this->load->view('main/_template_v', $data);
+        $this->twig->display('main/_template_v', $data);
         return false;
     }
 }

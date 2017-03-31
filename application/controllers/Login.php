@@ -39,13 +39,11 @@ class Login extends CI_Controller
                 "email"                      => $email
             );
             $this->etmsession->setData($session_data);
-            //$this->etmsession->delete('msg');
-            //$this->etmsession->delete('notice');
             redirect(base_url('Updater'));
         } else {
             buildMessage("error", Msg::INVALID_LOGIN, 'login/login_v');
             $data['no_header'] = 1;
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

@@ -36,7 +36,7 @@ class Networthtracker extends MY_Controller
             $data['chart']    = $chart;
             $data['interval'] = $interval;
             $data['view']     = 'main/nwtracker_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

@@ -60,7 +60,7 @@ class Transactions extends MY_Controller
             $data['transactions'] = $this->injectIcons($transactions['result'], 'object');
             $data['interval']     = $interval;
             $data['view']         = 'main/transactions_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 

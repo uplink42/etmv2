@@ -24,7 +24,7 @@ class Marketexplorer extends MY_Controller
             $data['market']   = true;
             $data['selected'] = "marketexplorer";
             $data['view']     = 'main/marketexplorer_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

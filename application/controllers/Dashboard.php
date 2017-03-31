@@ -49,7 +49,7 @@ final class Dashboard extends MY_Controller
             $data['profits']        = $this->injectIcons($profits['result']);
             $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($chars);
             $data['view'] = 'main/dashboard_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

@@ -18,6 +18,7 @@ class Updater extends CI_Controller
         $this->load->library('etmsession');
         $this->load->model('common/Msg');
         $this->load->model('common/Log');
+        $this->load->library('twig');
         $this->load->model('common/ValidateRequest');
         $this->user_id = (int) $this->etmsession->get('iduser');
     }
@@ -99,7 +100,7 @@ class Updater extends CI_Controller
                                     $this->etmsession->set('notice', 'error');
                                     $data['view']      = "login/login_v";
                                     $data['no_header'] = 1;
-                                    $this->load->view('main/_template_v', $data);
+                                    $this->twig->display('main/_template_v', $data);
                                     return;
                                 } else {
                                     // successfully updated
@@ -141,7 +142,7 @@ class Updater extends CI_Controller
                                 $this->etmsession->delete('username');
                                 $this->etmsession->delete('start');
                                 $this->etmsession->delete('iduser');
-                                $this->load->view('main/_template_v', $data);
+                                $this->twig->display('main/_template_v', $data);
                             }
                         }
                     }
@@ -184,7 +185,7 @@ class Updater extends CI_Controller
         $data['view']      = "login/select_v";
         $data['no_header'] = 1;
         //finally, load the next page
-        $this->load->view('main/_template_v', $data);
+        $this->twig->display('main/_template_v', $data);
     }
 
     /**
@@ -196,6 +197,6 @@ class Updater extends CI_Controller
         $data['view']      = "login/select_nocharacter_v";
         $data['no_header'] = 1;
         buildMessage("error", Msg::LOGIN_NO_CHARS, $data['view']);
-        $this->load->view('main/_template_v', $data);
+        $this->twig->display('main/_template_v', $data);
     }
 }

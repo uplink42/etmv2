@@ -44,7 +44,7 @@ class Marketorders extends MY_Controller
             $data['buyorders']  = $orders_buy;
             $data['sellorders'] = $orders_sell;
             $data['view']       = 'main/marketorders_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

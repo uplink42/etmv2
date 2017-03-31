@@ -10,6 +10,7 @@ class Recovery extends CI_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->load->model('common/Msg');
+        $this->load->library('twig');
         $this->load->model('common/ValidateRequest');
         $this->email    = $_REQUEST['email'] ?? '';
         $this->username = $_REQUEST['user'] ?? '';
@@ -24,7 +25,7 @@ class Recovery extends CI_Controller
     {
         $data['view']      = "recovery/recover_" . $type . "_v";
         $data['no_header'] = 1;
-        $this->load->view('main/_template_v', $data);
+        $this->twig->display('main/_template_v', $data);
     }
 
     /**

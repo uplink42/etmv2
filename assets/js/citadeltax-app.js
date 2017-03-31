@@ -5,7 +5,10 @@ $(document).ready(function() {
     var url_autocomplete = base + "Citadeltax/searchCitadels/";
     var url_req = base + "Citadeltax/addTax/";
     var charid = $(".characterid").val();
-    updateTable();
+
+    if (window.location.search !== '?aggr=1') {
+        updateTable();
+    }
 
     $("#citadel").autocomplete({
         source: url_autocomplete,
@@ -51,20 +54,20 @@ $(document).ready(function() {
             global: false,
             success: function(result) {
                 $(".tax-entries tr").remove();
-                if (result.length == 0) {
+                if (result.length === 0) {
                     var $row = "<tr><td colspan='3' class='text-center'>No tax rules present. Create one at the left</td></tr>";
                     $(".tax-entries").append($row);
                 } else {
                     $.each(result, function(k, v) {
-                            var id = result[k].idcitadel_tax;
-                            var name = result[k].name;
-                            var value = result[k].value;
-                            var rm = "<a  data-id=" + id + " href=" + base + "Citadeltax/removeTax/" 
-                            + charid + "/" + id + "><button class='btn btn-danger btn-remove-tax'>Remove</button></a>";
-                            var $element = "<tr><td>" + name + "</td><td>" + value + "</td><td>" + rm + "</td></tr>";
-                            $(".table tbody").append($element);
-                        });
-                    }
+                        var id = result[k].idcitadel_tax;
+                        var name = result[k].name;
+                        var value = result[k].value;
+                        var rm = "<a  data-id=" + id + " href=" + base + "Citadeltax/removeTax/" 
+                        + charid + "/" + id + "><button class='btn btn-danger btn-remove-tax'>Remove</button></a>";
+                        var $element = "<tr><td>" + name + "</td><td>" + value + "</td><td>" + rm + "</td></tr>";
+                        $(".table tbody").append($element);
+                    });
+                }
             }
         });
     }

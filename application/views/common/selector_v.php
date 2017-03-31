@@ -5,6 +5,7 @@
     </button>
     <ul class="dropdown-menu dropdown-menu-right">
     <?php  for($i=0; $i<count($character_list['chars']); $i++) { 
+        echo $i;
         $selector['hasInterval'] ? $intervalUri = "/".$interval : $intervalUri = "";
         $selector['hasRegion'] ? $regionUri = "/".$region_id : $regionUri = "";
         $selector['gets'] ? $get = "&sig=" . $sig : $get = "";

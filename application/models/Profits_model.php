@@ -21,7 +21,7 @@ class Profits_model extends CI_Model
      * @param  int|null $item_id  
      * @return array             
      */
-    public function getProfits(string $chars, int $interval, int $item_id = null): array
+    public function getProfits(string $chars, int $interval, int $item_id = null, int $user_id): array
     {
         $this->db->select("p.profit_unit as profit_unit,
             p.characters_eve_idcharacters_IN as char_in,
@@ -94,11 +94,14 @@ class Profits_model extends CI_Model
                 $result[$i]['diff'] = number_format($diff / 1440, 1) . " d";
             }
 
+            $this->load->model('common/User');
+            $profit_settings = $this->User->getUserProfitSettings($user_id);
+
             $CI = &get_instance();
             $CI->load->model('Tax_Model');
-            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, "buy", "sell");
-            $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
-            $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
+            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, $profit_settings);
+            $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
+            $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
 
             $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
             $result[$i]['margin']       = $profit_unit / $price_buy * 100;

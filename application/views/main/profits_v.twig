@@ -105,12 +105,12 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                             <tr>
                                                 <th>Item</th>
                                                 <th style="width: 5%;"></th>
-                                                <th>System</th>
-                                                <th>ISK/unit</th>
-                                                <th>Q</th>
-                                                <th>ISK/total</th>
-                                                <th>Time</th>
-                                                <th>Character</th>
+                                                <th class="hidden-xs">System</th>
+                                                <th class="hidden-xs">ISK/unit</th>
+                                                <th class="hidden-xs">Q</th>
+                                                <th class="hidden-xs">ISK/total</th>
+                                                <th class="hidden-xs">Time</th>
+                                                <th class="hidden-xs">Character</th>
                                                 <th>ISK Profit</th>
                                                 <th>Margin</th>
                                                 <th>Duration</th>
@@ -126,26 +126,36 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                                             ?>
                                             <tr class="<?=$res?>">
                                                 <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
-                                                    <a class="item-name" style="color: #fff"><?=$row['item_name']?></a></td>
+                                                    <a class="item-name" style="color: #fff"><?=$row['item_name']?></a>
+                                                </td>
                                                 <td>
                                                     <a href="<?=base_url("transactions/index/".$character_id."?transID=".$row['trans_buy'])?>" target="_blank"><span class="btn btn-xs btn-danger">B</span></a>
                                                     <br/>
                                                     <a href="<?=base_url("transactions/index/".$character_id."?transID=".$row['trans_sell'])?>" target="_blank"><span class="btn btn-xs btn-success">S</span></a>
                                                 </td>
-                                                <td><?=$row['sys_buy']?><br/>
-                                                    <?=$row['sys_sell']?></td>
-                                                <td><?=number_format($row['buy_price'],2)?><br />
-                                                    <?=number_format($row['sell_price'],2)?></td>
-                                                <td><?=number_format($row['profit_quantity'],0)?></td>
-                                                <td><?=number_format($row['buy_price_total'],2)?><br />
-                                                    <?=number_format($row['sell_price_total'],2)?></td>
-                                                <td><?=$row['time_buy']?> <br />
-                                                    <?=$row['time_sell']?></td>
-                                                <td><?=$row['character_buy']?> <br />
-                                                    <?=$row['character_sell']?></td>    
-                                                <td><?=number_format($row['profit_total'],2)?></td>
-                                                <td><a class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a></td>
-                                                <td><?=$row['diff']?></td>
+                                                <td class="hidden-xs"><?=$row['sys_buy']?><br/>
+                                                    <?=$row['sys_sell']?>
+                                                </td>
+                                                <td class="hidden-xs"><?=number_format($row['buy_price'],2)?><br />
+                                                    <?=number_format($row['sell_price'],2)?>
+                                                </td>
+                                                <td class="hidden-xs"><?=number_format($row['profit_quantity'],0)?>
+                                                </td>
+                                                <td class="hidden-xs"><?=number_format($row['buy_price_total'],2)?><br />
+                                                    <?=number_format($row['sell_price_total'],2)?>
+                                                </td>
+                                                <td class="hidden-xs"><?=$row['time_buy']?> <br />
+                                                    <?=$row['time_sell']?>
+                                                </td>
+                                                <td class="hidden-xs"><?=$row['character_buy']?> <br />
+                                                    <?=$row['character_sell']?>
+                                                </td>    
+                                                <td><?=number_format($row['profit_total'],2)?>
+                                                </td>
+                                                <td><a class= "btn btn-default btn-xs"><?=number_format($row['margin'],2)?></a>
+                                                </td>
+                                                <td><?=$row['diff']?>
+                                                </td>
                                             </tr>
                                         <?php } ?>  
                                         </tbody>
