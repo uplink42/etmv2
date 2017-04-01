@@ -54,7 +54,7 @@ $(document).ready(function() {
 
     // load daily chart
     var profitsLineChart = function() {
-        var url_req = base + 'Profits/getProfitChart/' + charID + '/' + interval + '/' + itemID;
+        var url_req = base + 'Profits/getProfitChart/' + charID + '/' + interval + '/' + aggr + '/' + itemID;
         $.ajax({
             dataType: "json",
             url: url_req,

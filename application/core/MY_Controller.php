@@ -106,7 +106,7 @@ class MY_Controller extends CI_Controller
         $data['character_name']  = $this->Login_model->getCharacterName($character_id);
         $data['character_id']    = $character_id;
         $data['HASH_CACHE']      = HASH_CACHE; // twig can't access CI constants
-        $data['SESSION']         = $_SESSION; // nor session variables
+        $data['SESSION']         = $_SESSION;  // nor session variables
         
         $data['selector']        = $this->buildSelector();
         return $data;
@@ -251,14 +251,15 @@ class MY_Controller extends CI_Controller
     }
 
 
-    protected function buildChart(string $character_id, string $callback, string $model, int $interval = 1, int $item_id = null)
+    protected function buildChart(string $character_id, bool $aggr, string $callback, string $model, int $interval = 1, int $item_id = null)
     {
         $msg = Msg::INVALID_REQUEST;
         $notice = "error";
         if ($this->enforce($character_id, $this->user_id, true)) {
             // get active session characters
-            $chars = $this->loadViewDependencies($character_id, $this->user_id, $this->aggregate)['chars'];
+            $chars = $this->loadViewDependencies($character_id, $this->user_id, $aggr)['chars'];
             if ($chars) {
+                log_message('error', $chars);
                 $this->load->model($model);
                 return $this->{$model}->$callback($chars, $interval);
             }

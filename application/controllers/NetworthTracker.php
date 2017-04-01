@@ -36,7 +36,17 @@ class Networthtracker extends MY_Controller
             $data['chart']    = $chart;
             $data['interval'] = $interval;
             $data['view']     = 'main/nwtracker_v';
+
+            $data['layout']['page_title']     = "Net Worth Tracker";
+            $data['layout']['icon']           = "pe-7s-graph3";
+            $data['layout']['page_aggregate'] = true;
             $this->twig->display('main/_template_v', $data);
         }
+    }
+
+
+    public function getNetworthChart(int $character_id, int $interval, bool $aggr = false) : void
+    {
+        echo $this->buildChart($character_id, $aggr, 'init', 'NetworthTracker_model', $interval);
     }
 }

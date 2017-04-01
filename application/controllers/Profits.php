@@ -1,7 +1,7 @@
 <?php
-ini_set('mysql.connect_timeout', '3000');
-ini_set('default_socket_timeout', '3000');
-ini_set('max_execution_time', '0');
+//ini_set('mysql.connect_timeout', '3000');
+//ini_set('default_socket_timeout', '3000');
+//ini_set('max_execution_time', '0');
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Profits extends MY_Controller
@@ -59,8 +59,8 @@ class Profits extends MY_Controller
     }
 
 
-    public function getProfitChart(int $character_id, int $interval = 1, int $item_id = null)
+    public function getProfitChart(int $character_id, int $interval = 1, bool $aggr, int $item_id = null)
     {
-        echo $this->buildChart($character_id, 'getProfitChartData', 'Profits_model', $interval, $item_id); 
+        echo $this->buildChart($character_id, $aggr, 'getProfitChartData', 'Profits_model', $interval, $item_id); 
     }
 }

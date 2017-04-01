@@ -13,8 +13,8 @@
     <script>
         var base     = "{{ base_url() }}",
             charID   = "{{ character_id }}",
-            interval = "{{ interval }}",
-            aggr     = "{{ aggregate }}",
+            interval = "{{ interval }}"  || 1,
+            aggr     = "{{ aggregate }}" || 0,
             itemID   = "{{ item_id }}";
     </script>
 

@@ -58,8 +58,8 @@ final class Dashboard extends MY_Controller
     }
 
 
-    public function getPieChart(int $character_id)
+    public function getPieChart(int $character_id, bool $aggr = false)
     {
-        echo $this->buildChart($character_id, 'getPieChartData', 'Dashboard_model');
+        echo $this->buildChart($character_id, $aggr, 'getPieChartData', 'Dashboard_model');
     }
 }

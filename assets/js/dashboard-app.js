@@ -44,7 +44,7 @@ $(document).ready(function() {
     });
 
     // load pie chart
-    var url_req = base + 'Dashboard/getPieChart/' + charID;
+    var url_req = base + 'Dashboard/getPieChart/' + charID + '/' + aggr;
     $.ajax({
         dataType: "json",
         url: url_req,

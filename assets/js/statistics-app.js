@@ -220,7 +220,7 @@ $(document).ready(function() {
 
     // trade volumes chart
     var barChartStats = function() {
-        var url_req = base + 'Statistics/getVolumesChart/' + charID + '/' + interval;
+        var url_req = base + 'Statistics/getVolumesChart/' + charID + '/' + interval + '/' + aggr;
         $.ajax({
             dataType: "json",
             url: url_req,
@@ -246,7 +246,7 @@ $(document).ready(function() {
 
     // profit distribution chart
     var pieChartStats = function() {
-        var url_req = base + 'Statistics/getDistributionChart/' + charID + '/' + interval;
+        var url_req = base + 'Statistics/getDistributionChart/' + charID + '/' + interval + '/' + aggr;
         $.ajax({
             dataType: "json",
             url: url_req,
