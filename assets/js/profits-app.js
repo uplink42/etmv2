@@ -38,14 +38,40 @@ $(document).ready(function() {
             "filter": "applied"
         }).data().sum(), 2, '.', ',') + " ISK.");
     });
+
     $("table").on('click', 'a', function() {
         var name = $(this).text();
         $("input.form-control").val(name);
         $("input.form-control").trigger("keyup");
     });
+
+    // get profit by item
     if (window.location.hash) {
         var string = window.location.hash.substring(1);
         $("input.form-control").val(string);
         $("input.form-control").trigger("keyup");
     }
+
+    // load daily chart
+    var url_req = base + 'Profits/getProfitChart/' + charID + '/' + interval + '/' + itemID;
+    $.ajax({
+        dataType: "json",
+        url: url_req,
+        global: false,
+        success: function(result) {
+            if (result.chart && result.data) {
+                FusionCharts.ready(function () {
+                    var lineChart = new FusionCharts({
+                        type: 'line',
+                        renderAt: 'chart-2',
+                        width: '100%',
+                        height: '400',
+                        dataFormat: 'json',
+                        dataSource: result
+                    });
+                    lineChart.render();
+                });
+            }
+        }
+    });
 });

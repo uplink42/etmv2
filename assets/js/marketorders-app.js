@@ -89,6 +89,4 @@ $(document).ready(function() {
         $(".main-panel-orders").hide();
         $('.panel-loading').show();
     });
-
-
 });

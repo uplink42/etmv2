@@ -1,10 +1,8 @@
 "use strict";
 $(document).ready(function() {
-
     $(".api-insert-2").hide();
-    var base = $(".navbar").data('url');
-    var apikey;
-    var vcode;
+    var apikey,
+        vcode;
     list();
 
     function list() {

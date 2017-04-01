@@ -11,7 +11,7 @@ function number_format(number, decimals, decPoint, thousandsSep) {
         var k = Math.pow(10, prec);
         return '' + (Math.round(n * k) / k)
         .toFixed(prec);
-    }
+    };
 
     s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
     if (s[0].length > 3) {
@@ -80,15 +80,14 @@ jQuery.fn.dataTable.Api.register('sum()', function() {
 
 //load error messages
 var errHandle = (function() {
-    var loc = window.location.href
-    var base = loc.substr(0, loc.indexOf('v2'));
-    var data;
+    var loc = window.location.href,
+    base = loc.substr(0, loc.indexOf('v2')),
+    data;
 
     $.ajax({
         dataType: "json",
         url: base + "v2/main/getMsgHandles",
         success: function(result) {
-
             data = result;
         }
     });
@@ -101,21 +100,23 @@ var errHandle = (function() {
 
 $(document).ready(function() {
     $("body").removeClass('loading-body');
-    var base = $(".navbar").data('url');
 
     $(".btn-clear").on('click', function() {
         $("input.form-control").val("");
         $("input.form-control").trigger("keyup");
         window.location.hash = "";
     });
+
     $(".go-back").on('click', function() {
         window.history.back();
     });
+
     $(".nav-u").on('click', function(e) {
         $("section").hide();
         $(".footer-panel").hide();
         $(".panel-loading-common").show();
     });
+
     $(".btn-send-feedback").on('click', function() {
         var data = $(".submit-feedback").serialize(),
             url = base + "Main/sendEmail/";

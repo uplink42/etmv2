@@ -1,7 +1,5 @@
 "use strict";
 $(document).ready(function() {
-    var base = $(".navbar").attr('data-url'),
-        charID = $('.profil-link').attr('data-character');
     // Sparkline charts
     var sparklineCharts = function() {
         $(".sparkline").sparkline($(".sparkline").data('profit'), {
@@ -22,6 +20,7 @@ $(document).ready(function() {
     });
     // Run sparkline
     sparklineCharts();
+    
     // Run toastr notification with Welcome message
     setTimeout(function() {
         toastr.options = {
@@ -51,17 +50,19 @@ $(document).ready(function() {
         url: url_req,
         global: false,
         success: function(result) {
-            FusionCharts.ready(function () {
-                var pieChart = new FusionCharts({
-                    type: 'pie2d',
-                    renderAt: 'pie',
-                    width: '100%',
-                    height: '300',
-                    dataFormat: 'json',
-                    dataSource: result
+            if (result.chart && result.data) {
+                FusionCharts.ready(function () {
+                    var pieChart = new FusionCharts({
+                        type: 'pie2d',
+                        renderAt: 'pie',
+                        width: '100%',
+                        height: '300',
+                        dataFormat: 'json',
+                        dataSource: result
+                    });
+                    pieChart.render();
                 });
-                pieChart.render();
-            });
+            }
         }
     });
 });

@@ -1,8 +1,6 @@
 "use strict";
 $(document).ready(function() {
-    var base = $(".navbar").data('url');
     var url_autocomplete = base + "Stocklists/searchItems/";
-
     // count items for a list
     function updateTotalItems() {
         $('.yellow.total').text($('.table-items tr').length / 2);

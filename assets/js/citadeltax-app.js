@@ -1,10 +1,8 @@
 "use strict";
 $(document).ready(function() {
 
-    var base = $(".navbar").attr('data-url');
     var url_autocomplete = base + "Citadeltax/searchCitadels/";
-    var url_req = base + "Citadeltax/addTax/";
-    var charid = $(".characterid").val();
+        url_req = base + "Citadeltax/addTax/";
 
     if (window.location.search !== '?aggr=1') {
         updateTable();
@@ -47,7 +45,7 @@ $(document).ready(function() {
 
     function updateTable() {
         $(document).bind(".go");
-        var url_req = base + "Citadeltax/getTaxList/" + charid;
+        var url_req = base + "Citadeltax/getTaxList/" + charID;
         $.ajax({
             dataType: "json",
             url: url_req,
@@ -63,7 +61,7 @@ $(document).ready(function() {
                         var name = result[k].name;
                         var value = result[k].value;
                         var rm = "<a  data-id=" + id + " href=" + base + "Citadeltax/removeTax/" 
-                        + charid + "/" + id + "><button class='btn btn-danger btn-remove-tax'>Remove</button></a>";
+                        + charID + "/" + id + "><button class='btn btn-danger btn-remove-tax'>Remove</button></a>";
                         var $element = "<tr><td>" + name + "</td><td>" + value + "</td><td>" + rm + "</td></tr>";
                         $(".table tbody").append($element);
                     });
@@ -74,9 +72,8 @@ $(document).ready(function() {
 
     $(".tax-list").on('click', "a", function(e) {
         e.preventDefault();
-        var charid = $(".characterid").val();
         var taxid = $(this).attr('data-id');
-        var url_req = base + "Citadeltax/removeTax/" + charid + "/" + taxid;
+        var url_req = base + "Citadeltax/removeTax/" + charID + "/" + taxid;
         $.ajax({
             dataType: "json",
             url: url_req,

@@ -1,6 +1,5 @@
 "use strict";
 $(document).ready(function() {
-    var base = $(".navbar").data('url');
     var url = base + "Traderoutes/searchStations";
 
     $("#origin-station, #destination-station").autocomplete({

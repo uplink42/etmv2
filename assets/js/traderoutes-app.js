@@ -1,8 +1,6 @@
 "use strict";
 $(document).ready(function() {
-
     $(".origin-station").focus().select();
-    var base = $(".navbar").attr('data-url');
     var url = base + "Traderoutes/searchStations";
     var id = $(".navbar").attr('data-id'); 
 

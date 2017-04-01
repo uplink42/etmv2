@@ -1,11 +1,8 @@
 "use strict";
 $(document).ready(function() {
-    var charid = $(".profil-link").data('character');
-    var domain = $(".profil-link").data('url');
-    var aggr = $(".profil-link").data('aggr');
-    var url = domain + "Main/headerData/" + charid + "/" + aggr;
+    var url = base + "Main/headerData/" + charID + "/" + aggr;
     
-    if (typeof(charid) !== "undefined") {
+    if (typeof(charID) !== "undefined") {
         $.ajax({
             dataType: "json",
             url: url,
@@ -18,10 +15,12 @@ $(document).ready(function() {
             }
         });
     }
+
     if (aggr == 1) {
         $(".profil-link a").css('color', '#cc0044');
     }
-    //highlight the correct option
+    
+    // highlight the correct option
     var option = $(".navbar-brand").data('selected');
     $("li" + "." + option).addClass('active');
 });

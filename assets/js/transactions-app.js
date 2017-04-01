@@ -1,6 +1,5 @@
 "use strict";
 $(document).ready(function() {
-
     setTimeout(function(){
         if(window.location.hash == "#success") {
             toastr["success"](errHandle.get().TRANSACTION_UNLINK_SUCCESS, "Notice");

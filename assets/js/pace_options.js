@@ -1,3 +1,3 @@
 Pace.options = {
   ajax: false
-}
+};

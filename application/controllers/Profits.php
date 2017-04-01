@@ -11,7 +11,9 @@ class Profits extends MY_Controller
         parent::__construct();
         $this->db->cache_on();
         $this->page = "profits";
+        $this->load->model('Profits_model', 'profits');
     }
+
 
     /**
      * Loads the Profits page
@@ -31,9 +33,7 @@ class Profits extends MY_Controller
             $chars     = $data['chars'];
 
             $data['selected'] = "profits";
-            $this->load->model('Profits_model');
-
-            $profits   = $this->Profits_model->getProfits($chars, $interval, $item_id, $this->user_id);
+            $profits   = $this->profits->getProfits($chars, $interval, $item_id, $this->user_id);
             $profits_r = $profits['result'];
             $profits_c = $profits['count'];
 
@@ -43,14 +43,35 @@ class Profits extends MY_Controller
                 $img = true;
             }
 
-            $chart = $this->Profits_model->getProfitChart($chars, $interval, $item_id = null);
+            //$chart = $this->Profits_model->getProfitChart($chars, $interval, $item_id = null);
 
-            $data['chart']    = $chart;
+            //$data['chart']    = $chart;
             $data['img']      = $img;
             $data['profits']  = $profits_r;
             $data['interval'] = $interval;
+            $data['item_id']  = $item_id;
             $data['view']     = 'main/profits_v';
+
+            $data['layout']['page_title']     = "Profit Breakdown";
+            $data['layout']['icon']           = "pe-7s-graph1";
+            $data['layout']['page_aggregate'] = true;
+
             $this->twig->display('main/_template_v', $data);
         }
+    }
+
+    public function getProfitChart(int $character_id, int $interval = 1, int $item_id = null)
+    {
+        $msg = Msg::INVALID_REQUEST;
+        $notice = "error";
+        if ($this->enforce($character_id, $this->user_id, true)) {
+            // get active session characters
+            $chars = $this->loadViewDependencies($character_id, $this->user_id, $this->aggregate)['chars'];
+            if ($chars) {
+                echo $this->profits->getProfitChart($chars, $interval, $item_id = null);
+                return;
+            }
+        }
+        echo json_encode(array("notice" => $notice, "message" => $msg));
     }
 }
