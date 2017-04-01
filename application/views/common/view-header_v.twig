@@ -1,0 +1,27 @@
+<div class="view-header">
+    {% include 'common/selector_v' ~ '.twig' %}
+    <div class="header-icon">
+        {% if aggregate == 0 %}
+            <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/{{character_id}}_64.jpg">
+        {% endif %}
+        {% if aggregate != 0 %}
+            <i class="pe page-header-icon {{ layout['icon'] }}"></i>
+        {% endif %}
+    </div>
+    <div class="header-title">
+        <h1>
+            {% if layout['page_aggregate'] %}
+                {% if aggregate == 1 %}
+                    {{ char_names | join(' + ') }} 's {{ layout['page_title'] }}
+                {% endif %}
+                {% if aggregate == 0 %}
+                    {{ character_name }}'s {{ layout['page_title'] }}
+                {% endif %}
+            {% endif %}
+
+            {% if layout['page_aggregate'] is empty %}
+                {{ layout['page_title'] }}
+            {% endif %}
+        </h1>
+    </div>
+</div>

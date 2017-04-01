@@ -1,27 +1,10 @@
-<?php
-include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
-?>
 <!--Fusioncharts -->
-<script src="<?=base_url('assets/fusioncharts/js/fusioncharts.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
-<script src="<?=base_url('dist/js/apps/dashboard-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
+<script src="{{ base_url('assets/fusioncharts/js/fusioncharts.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="view-header">
-                    <?php $this->load->view('common/selector_v');?>
-                    <div class="header-icon">
-                    <?php if($aggregate==0) {?>
-                        <img class="character-portrait" src= "https://image.eveonline.com/Character/<?=$character_id?>_64.jpg" alt="character portrait">
-                    <?php } else {
-                    ?>
-                        <i class="pe page-header-icon pe-7s-shield"></i>
-                        <?php } ?>
-                    </div>
-                    <div class="header-title">
-                        <h1><?php echo $aggregate == 1 ? implode(' + ', $char_names) : $character_name?>'s Dashboard</h1>
-                    </div>
-                </div>
+                {% include 'common/view-header_v' ~ '.twig' %}
                 <hr>
             </div>
         </div>
@@ -175,3 +158,4 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         </div>
     </div>
 </section>
+<script src="{{ base_url('dist/js/apps/dashboard-app.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>

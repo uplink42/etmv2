@@ -44,7 +44,7 @@ class Twig
 	{
 		// default config
 		$this->config = [
-			'paths' => [VIEWPATH],
+			'paths' => [VIEWPATH, ''],
 			'cache' => APPPATH . 'cache/twig',
 		];
 

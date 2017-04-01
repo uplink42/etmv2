@@ -35,12 +35,7 @@ class Citadeltax extends MY_Controller
             $data             = $this->loadViewDependencies($character_id, $user_id, $aggregate);
             $chars            = $data['chars'];
             $data['selected'] = "citadeltax";
-
-            /*if ($this->aggregate < 1) {
-                $this->getTaxList($character_id);
-            }*/
-            
-            $data['view'] = 'main/citadeltax_v';
+            $data['view']     = 'main/citadeltax_v';
             $this->twig->display('main/_template_v', $data);
             //$this->twig->display('main/_template_v', $data);
         }

@@ -9,11 +9,11 @@
 	 * @param  [type] $view    
 	 * @return void        
 	 */
-	function buildMessage($type, $message, $view)
+	function buildMessage(string $type, string $message)
 	{
-	    $data['notice']  = $type;
-	    $data['message'] = $message;
-	    $data['view']    = $view;
-	    $CI              = &get_instance();
-	    $CI->load->view($view, $data, true);
+		$CI = &get_instance();
+	    $CI->load->library('twig');
+	    $CI->load->library('etmsession');
+	    $data = ['notice' => $type, 'msg' => $message];
+	    $CI->etmsession->setData($data);
 	}

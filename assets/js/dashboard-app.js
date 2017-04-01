@@ -1,5 +1,7 @@
 "use strict";
 $(document).ready(function() {
+    var base = $(".navbar").attr('data-url'),
+        charID = $('.profil-link').attr('data-character');
     // Sparkline charts
     var sparklineCharts = function() {
         $(".sparkline").sparkline($(".sparkline").data('profit'), {
@@ -12,6 +14,7 @@ $(document).ready(function() {
         });
     };
     var sparkResize;
+
     // Resize sparkline charts on window resize
     $(window).resize(function() {
         clearTimeout(sparkResize);
@@ -31,7 +34,7 @@ $(document).ready(function() {
         toastr.success('<strong>Welcome to Eve Trade Master 2.1!</strong> <br/><small>\n\
         Hope you enjoy the new layout and new features. Make sure to report any bugs you find. \n\
         Donations are always welcome, too!</small>');
-    }, 1600)
+    }, 1600);
     
     // datatables
     var table = $('#profits-table').DataTable({
@@ -40,4 +43,16 @@ $(document).ready(function() {
             buttons: [],
             "order": [],
     });
+
+    // pie chart
+    var url_req = base + 'Dashboard/getPieChart/' + charID;
+    $.ajax({
+        dataType: "json",
+        url: url_req,
+        global: false,
+        success: function(result) {
+            console.log(result);
+        }
+    });
+    
 });

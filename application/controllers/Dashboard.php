@@ -9,6 +9,7 @@ final class Dashboard extends MY_Controller
         parent::__construct();
         $this->db->cache_on();
         $this->page = "dashboard";
+        $this->load->model('Dashboard_model', 'dashboard');
     }
 
    /**
@@ -31,8 +32,7 @@ final class Dashboard extends MY_Controller
             $data['selected'] = "dashboard";
             $data['interval'] = $interval;
 
-            $this->load->model('Dashboard_model');
-            $profits = $this->Dashboard_model->getProfits($interval, $chars, $this->user_id);
+            $profits = $this->dashboard->getProfits($interval, $chars, $this->user_id);
 
             $count = $profits['count'];
             if ($count > 200) {
@@ -41,15 +41,37 @@ final class Dashboard extends MY_Controller
                 $img = true;
             }
 
-            $data['pie_data']     = $this->Dashboard_model->getPieData($chars);
-            $data['week_profits'] = $this->Dashboard_model->getWeekProfits($chars);
-            $data['new_info']     = $this->Dashboard_model->getNewInfo($chars);
+            $data['week_profits']   = $this->dashboard->getWeekProfits($chars);
+            $data['new_info']       = $this->dashboard->getNewInfo($chars);
 
             $data['img']            = $img;
             $data['profits']        = $this->injectIcons($profits['result']);
-            $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($chars);
+            $data['profits_trends'] = $this->dashboard->getTotalProfitsTrends($chars);
+
+            $data['layout']['page_title']     = "Dashboard";
+            $data['layout']['icon']           = "pe-7s-link";
+            $data['layout']['page_aggregate'] = true;
+
             $data['view'] = 'main/dashboard_v';
             $this->twig->display('main/_template_v', $data);
+        }
+    }
+
+
+    public function getPieChart(int $character_id)
+    {
+        if ($this->enforce($character_id, $this->user_id, true)) {
+            // get active session characters
+            $chars = $this->loadViewDependencies($character_id, $this->user_id, $this->aggregate)['chars'];
+            if ($chars) {
+                $notice = "success";
+                $msg    = "";
+                echo $this->dashboard->getPieData($chars);
+            } else {
+                $msg = Msg::INVALID_REQUEST;
+                $notice = "error";
+                echo json_encode(array("notice" => $notice, "message" => $msg, "result" => $result));
+            }
         }
     }
 }

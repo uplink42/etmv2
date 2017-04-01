@@ -29,7 +29,7 @@ class MY_Controller extends CI_Controller
      * @param  int|null $user_id      
      * @return bool               
      */
-    protected function enforce(int $character_id, int $user_id = null): bool
+    protected function enforce(int $character_id, int $user_id = null, bool $isJSRequest = false): bool
     {
         $this->etmsession->delete('msg');
         $this->etmsession->delete('notice');
@@ -52,15 +52,16 @@ class MY_Controller extends CI_Controller
             $this->Log->addEntry("visit " . $this->page, $user_id);
             return true;
         } else {
-            $data['view'] = "login/login_v";
-            buildMessage("error", Msg::INVALID_REQUEST_SESSION, $data['view']);
-            $data['no_header'] = 1;
+            if (!$isJSRequest) {
+                $data['view'] = "login/login_v";
+                buildMessage("error", Msg::INVALID_REQUEST_SESSION, $data['view']);
+                $data['no_header'] = 1;
 
-            $this->etmsession->delete('username');
-            $this->etmsession->delete('start');
-            $this->etmsession->delete('iduser');
-            $this->twig->display('main/_template_v', $data);
-
+                $this->etmsession->delete('username');
+                $this->etmsession->delete('start');
+                $this->etmsession->delete('iduser');
+                $this->twig->display('main/_template_v', $data);
+            } 
             return false;
         }
     }
@@ -106,12 +107,13 @@ class MY_Controller extends CI_Controller
         $data['character_list']  = $character_list;
         $data['character_name']  = $this->Login_model->getCharacterName($character_id);
         $data['character_id']    = $character_id;
-        $data['HASH_CACHE']      = HASH_CACHE;
-        $data['SESSION']         = $_SESSION;
+        $data['HASH_CACHE']      = HASH_CACHE; // twig can't access CI constants
+        $data['SESSION']         = $_SESSION; // nor session variables
 
-        $data['selector'] = $this->buildSelector();
+        $data['selector']        = $this->buildSelector();
         return $data;
     }
+
 
     /**
      * Build the character selector dropdown with options
