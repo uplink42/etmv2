@@ -1,46 +1,22 @@
-<?php
-include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
-?>
-<!--Fusioncharts -->
-<script src="<?=base_url('assets/fusioncharts/js/fusioncharts.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
-<script src="<?=base_url('dist/js/apps/assets-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="view-header">
-                    <?php $this->load->view('common/selector_v');?>
-                    <div class="header-icon">
-                        <?php if ($aggregate == 0) {?>
-                        <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/<?=$character_id?>_64.jpg">
-                            <?php } else {
-    ?>
-                            <i class="pe page-header-icon pe-7s-plugin">
-                            </i>
-                            <?php }?>
-                    </div>
-                    <div class="header-title">
-                        <h1>
-                            <?php echo $aggregate == 1 ? implode(' + ', $char_names) : $character_name ?>
-                            's Assets
-                        </h1>
-                    </div>
-                </div>
-                <hr>
+                {% include 'common/view-header_v' ~ '.twig' %}
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
-                        <i class="fa fa-info yellow"></i> Here you can keep track of your assets (includes items inside stations, starbases and ships)<br/>
-                        <i class="fa fa-info yellow"></i> Citadel assets are currently not supported by the API
+                        <i class="fa fa-info yellow"></i> 
+                            Here you can keep track of your assets (includes items inside stations, starbases and ships)<br/>
+                        <i class="fa fa-info yellow"></i> 
+                            Citadel assets are currently not supported by the API
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success">
@@ -54,36 +30,43 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                         <table class="table table-responsive">
                             <tr>
                                 <th>Est Assets Value
-                                <strong class="m-t-xs yellow-2"><?=number_format($current_asset_value)?> ISK</strong>
-                                <br> Selected Region: <span class="yellow-2"><?=$region_name?></span>
-                                <div class="dropdown pull-right">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Region selection
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                        <?php $url = "assets/index/".$character_id."/0?sig=".$sig."&aggr=".$aggregate;?>
-                                        <li><a href="<?=base_url($url)?>"><b>All</b></a></li>
-                                        <li role="separator" class="divider"></li>
-                                    <?php 
-                                    foreach($totals as $key => $row) {
-                                        ?>
-                                        <li  data-id=""><a href="<?=base_url('assets/index/'.$character_id.'/'.$row[0]['region_id']."?sig=".$sig."&aggr=".$aggregate)?>">
-                                        <?php echo $key . " (" . number_format($row[0]['total_value']/1000000000,3) . " b)"?></a></li>
-                                        <?php } ?>
-                                    </ul>
+                                    <strong class="m-t-xs yellow-2">{{ current_asset_value | number_format }} ISK</strong>
+                                    <br> Selected Region: <span class="yellow-2">{{ region_name }}</span>
+                                    <div class="dropdown pull-right">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Region selection
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
+                                            <li><a href="{{ base_url('assets/index/' ~ character_id ~ '/0?sig=' ~ sig ~ '&aggr=' ~ aggregate) }}">
+                                                <b>All</b></a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            {% for key, row in totals %}
+                                                <li data-id=""><a href="{{ base_url('assets/index/' ~ character_id ~ '/' ~ row[0]['region_id'] ~ '?sig=' ~ sig ~ '&aggr=' ~ aggregate) }}">
+                                                    {{ key }} {{ row[0]['total_value_b'] | number_format(3) }} b </a></li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                 </th>
                             </tr>
                         </table> 
                         <div class="text-center">
-                            <?php if($sig==1) {?>
-                            <a href="<?=base_url('assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=0')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently only displaying the most significant items which represent 
-                                <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> 
-                            of your asset value. Click here to see the full item list (page may be slower to load and export features may crash your browser if you have too many items).</p></a>
-                            <?php } else {?>
-                                <a href="<?=base_url('assets/index/'.$character_id. '/'.$region_id. '?aggr='.$aggregate.'&sig=1')?>"><p class="btn btn-w-md btn-warning warning-asset">Currently displaying all items. For faster page loads and exports you may request only the most significant items by clicking here, which would represent <span class="btn btn-default btn-xs"><?=number_format($ratio,2)?>%</span> of your  asset value.</p></a>
-                            <?php } ?>
+                            {% if sig == 1 %}
+                                <a href="{{ base_url('assets/index/' ~ character_id ~  '/' ~ region_id ~ '?aggr=' ~ aggregate ~ '&sig=0') }}">
+                                    <p class="btn btn-w-md btn-warning warning-asset">Currently only displaying the most significant items which represent 
+                                        <span class="btn btn-default btn-xs">{{ ratio | number_format(2) }}</span> 
+                                of your asset value. Click here to see the full item list (page may be slower to load and export features may crash your browser if you have too many items).
+                                    </p>
+                                </a>
+                            {% endif %}
+                            {% if sig == 0 %}
+                                <a href="{{ base_url('assets/index/' ~ character_id ~  '/' ~ region_id ~ '?aggr=' ~ aggregate ~ '&sig=1') }}">
+                                    <p class="btn btn-w-md btn-warning warning-asset">Currently displaying all items. For faster page loads and exports you may request only the most significant items by clicking here, which would represent 
+                                        <span class="btn btn-default btn-xs">{{ ratio | number_format(2) }}</span> of your  asset value.
+                                    </p>
+                                </a>
+                            {% endif %}
                         </div>       
                     </div>
                 </div>
@@ -106,7 +89,7 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
                     <div class="col-lg-12 col-xs-12">
                         <div class="panel panel-filled" style="position:relative;height: 114px">
                             <div style="position: absolute;bottom: 0;left: 0;right: 0">
-                                <span class="sparkline" data-profit="<?= $graph_data?>"></span>
+                                <span class="sparkline" data-profit="{{ graph_data }}"></span>
                             </div>
                      
                         </div> 
@@ -179,3 +162,6 @@ include_once 'assets/fusioncharts/php-wrapper/fusioncharts.php';
         </div>
     </div>
 </section>
+
+<script src="{{ base_url('dist/js/apps/assets-app.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>
+<script src="{{ base_url('assets/fusioncharts/js/fusioncharts.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>

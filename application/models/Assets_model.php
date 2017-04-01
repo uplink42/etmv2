@@ -71,8 +71,9 @@ class Assets_model extends CI_Model
 
                 array_push($data[$region_name],
                     array("total_items" => $total_items,
-                        "total_value"       => $total_value,
-                        "region_id"         => $region_id));
+                        "total_value"   => $total_value,
+                        "total_value_b" => $total_value/1000000000,
+                        "region_id"     => $region_id));
             }
 
         }
