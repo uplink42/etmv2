@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class MY_Controller extends CI_Controller
 {
     protected $aggregate;
-    protected $character_list;
     protected $page;
     protected $user_id;
 
@@ -103,7 +102,7 @@ class MY_Controller extends CI_Controller
         $data['chars']           = $chars;
         $data['aggregate']       = $aggregate;
         $data['char_names']      = $char_names;
-        $data['character_list']  = $this->character_list;
+        $data['character_list']  = $this->getCharacterList($this->user_id);
         $data['character_name']  = $this->Login_model->getCharacterName($character_id);
         $data['character_id']    = $character_id;
         $data['HASH_CACHE']      = HASH_CACHE; // twig can't access CI constants
