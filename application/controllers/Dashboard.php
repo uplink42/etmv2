@@ -49,7 +49,7 @@ final class Dashboard extends MY_Controller
             $data['profits_trends'] = $this->dashboard->getTotalProfitsTrends($chars);
 
             $data['layout']['page_title']     = "Dashboard";
-            $data['layout']['icon']           = "pe-7s-link";
+            $data['layout']['icon']           = "pe-7s-shield";
             $data['layout']['page_aggregate'] = true;
 
             $data['view'] = 'main/dashboard_v';

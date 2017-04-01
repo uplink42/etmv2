@@ -216,4 +216,7 @@ $(document).ready(function() {
         }],
         "order": [],
     });
+
+                                 /*   <?php $newchart = new FusionCharts("mscolumn2d", "sales", "100%", 500, "chart", "json", $chart);
+                                $newchart->render();?>*/
 });

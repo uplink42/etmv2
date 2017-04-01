@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class MY_Controller extends CI_Controller
 {
     protected $aggregate;
+    protected $character_list;
     protected $page;
     protected $user_id;
 
@@ -52,7 +53,7 @@ class MY_Controller extends CI_Controller
             $this->Log->addEntry("visit " . $this->page, $user_id);
             return true;
         } else {
-            if (!$isJSRequest) {
+            if (!$isJSRequest) { // ajax based requests
                 $data['view'] = "login/login_v";
                 buildMessage("error", Msg::INVALID_REQUEST_SESSION, $data['view']);
                 $data['no_header'] = 1;
@@ -89,9 +90,8 @@ class MY_Controller extends CI_Controller
         $chars      = [];
         $char_names = [];
 
-        if ($aggregate == true) {
+        if ($aggregate) {
             $characters = $this->Login_model->getCharacterList($user_id);
-
             $chars      = $characters['aggr'];
             $char_names = $characters['char_names'];
         } else {
@@ -101,15 +101,14 @@ class MY_Controller extends CI_Controller
         $data['email']           = $this->etmsession->get('email');
         $data['username']        = $this->etmsession->get('username');
         $data['chars']           = $chars;
-        $character_list          = $this->getCharacterList($this->user_id);
         $data['aggregate']       = $aggregate;
         $data['char_names']      = $char_names;
-        $data['character_list']  = $character_list;
+        $data['character_list']  = $this->character_list;
         $data['character_name']  = $this->Login_model->getCharacterName($character_id);
         $data['character_id']    = $character_id;
         $data['HASH_CACHE']      = HASH_CACHE; // twig can't access CI constants
         $data['SESSION']         = $_SESSION; // nor session variables
-
+        
         $data['selector']        = $this->buildSelector();
         return $data;
     }

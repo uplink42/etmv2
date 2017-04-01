@@ -63,9 +63,9 @@ class Statistics_model extends CI_Model
         $this->db->order_by('days', 'asc');
         $query3 = $this->db->get();
         $dates  = $query3->result_array();
+        
         //days
         $category = [];
-
         for ($i = 0, $max = count($dates); $i < $max; $i++) {
             array_push($category, array('label' => $dates[$i]['days']));
         }
@@ -97,6 +97,7 @@ class Statistics_model extends CI_Model
 
         return $jsonEncodedData;
     }
+
 
     /**
      * Gathers the problematic items for an interval and character set, optionally
@@ -279,7 +280,7 @@ class Statistics_model extends CI_Model
                 }
 
                 $data = ['eve_idcharacters' => $customerID,
-                    'name'                      => $result[$i]['soldTo']];
+                         'name'             => $result[$i]['soldTo']];
 
                 $this->db->replace('characters_public', $data);
             }
@@ -593,22 +594,12 @@ class Statistics_model extends CI_Model
      */
     public function getHighestMetric(string $chars, string $metric) : stdClass
     {
-        $value = "";
-        switch ($metric) {
-            case 'buy':
-                $value = 'total_buy';
-                break;
-            case 'sell':
-                $value = 'total_sell';
-                break;
-            case 'profit':
-                $value = 'total_profit';
-                break;
-        }
-
-        $this->db->select('date, MAX(' . $value . ') as max');
+        $this->db->select('date, sum(' . $metric . ') as max');
         $this->db->from('history');
-        $this->db->where('characters_eve_idcharacters IN ' . $chars);
+        $this->db->where('characters_eve_idcharacters IN ' .  $chars);
+        $this->db->group_by('date');
+        $this->db->order_by('max', 'desc');
+        $this->db->limit(1);
         $query = $this->db->get('');
 
         $result = $query->row();

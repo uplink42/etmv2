@@ -22,7 +22,7 @@ class Profits extends MY_Controller
      * @param  int|null    $item_id     
      * @return void                   
      */
-    public function index(int $character_id, int $interval = 1, int $item_id = null) : void
+    public function index(int $character_id, int $interval = 7, int $item_id = null) : void
     {
         if ($interval > 365) {
             $interval = 365;
@@ -32,7 +32,7 @@ class Profits extends MY_Controller
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
 
-            $data['selected'] = "profits";
+            // profits table
             $profits   = $this->profits->getProfits($chars, $interval, $item_id, $this->user_id);
             $profits_r = $profits['result'];
             $profits_c = $profits['count'];
@@ -43,9 +43,7 @@ class Profits extends MY_Controller
                 $img = true;
             }
 
-            //$chart = $this->Profits_model->getProfitChart($chars, $interval, $item_id = null);
-
-            //$data['chart']    = $chart;
+            $data['selected'] = "profits";
             $data['img']      = $img;
             $data['profits']  = $profits_r;
             $data['interval'] = $interval;

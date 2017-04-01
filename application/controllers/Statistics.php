@@ -18,45 +18,41 @@ class Statistics extends MY_Controller
      */
     public function index(int $character_id, int $interval = 7) : void
     {
-            $data = ["email" => "123"];
-            $this->db->where('username', 'uplink424');
-            $this->db->update('user', $data);
-
         if ($interval > 365) {
             $interval = 365;
         }
 
         if ($this->enforce($character_id, $this->user_id)) {
-
             $aggregate              = $this->aggregate;
             $data                   = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars                  = $data['chars'];
             $data['selected']       = "statistics";
             
-            $this->load->model('Statistics_model');
-            $chart                   = $this->Statistics_model->buildVolumesChart($chars, $interval);
-            $problematic             = $this->Statistics_model->getProblematicItems($chars, $interval);
-            $profits_table           = $this->Statistics_model->getProfitsTable($chars, $interval);
-            $best_raw                = $this->Statistics_model->getBestItemsRaw($chars, $interval);
-            $best_margin             = $this->Statistics_model->getBestItemsMargin($chars, $interval);
-            $best_customer           = $this->Statistics_model->getBestCustomersRawProfit($chars, $interval);
-            $best_tz                 = $this->Statistics_model->getBestTZ($chars, $interval);
-            $best_to                 = $this->Statistics_model->getFastestTurnovers($chars, $interval);
-            $best_iph                = $this->Statistics_model->getBestIPH($chars, $interval);
-            $best_blunders           = $this->Statistics_model->getMarketBlunders($chars, $interval);
-            $best_stations           = $this->Statistics_model->getTopStations($chars, $interval);
-            $raw_chart               = $this->Statistics_model->buildDistributionChart($chars, $interval);
-            $lifetime_count_trans    = $this->Statistics_model->getTotalTransactions($chars);
-            $lifetime_count_buy      = $this->Statistics_model->getTotalTransactions($chars, 'buy');
-            $lifetime_count_sell     = $this->Statistics_model->getTotalTransactions($chars, 'sell');
-            $lifetime_sum_trans      = $this->Statistics_model->getSumTransactions($chars);
-            $lifetime_sum_buy        = $this->Statistics_model->getSumTransactions($chars, 'buy');
-            $lifetime_sum_sell       = $this->Statistics_model->getSumTransactions($chars, 'sell');
-            $lifetime_profit         = $this->Statistics_model->getTotalProfit($chars);
-            $signup_date             = $this->Statistics_model->getSignupDate($this->user_id);
-            $lifetime_highest_buy    = $this->Statistics_model->getHighestMetric($chars, 'buy');
-            $lifetime_highest_sell   = $this->Statistics_model->getHighestMetric($chars, 'sell');
-            $lifetime_highest_profit = $this->Statistics_model->getHighestMetric($chars, 'profit');
+            $this->load->model('Statistics_model', 'stats');
+            $chart                   = $this->stats->buildVolumesChart($chars, $interval);
+            $problematic             = $this->stats->getProblematicItems($chars, $interval);
+            $profits_table           = $this->stats->getProfitsTable($chars, $interval);
+            $best_raw                = $this->stats->getBestItemsRaw($chars, $interval);
+            $best_margin             = $this->stats->getBestItemsMargin($chars, $interval);
+            $best_customer           = $this->stats->getBestCustomersRawProfit($chars, $interval);
+            $best_tz                 = $this->stats->getBestTZ($chars, $interval);
+            $best_to                 = $this->stats->getFastestTurnovers($chars, $interval);
+            $best_iph                = $this->stats->getBestIPH($chars, $interval);
+            $best_blunders           = $this->stats->getMarketBlunders($chars, $interval);
+            $best_stations           = $this->stats->getTopStations($chars, $interval);
+            $raw_chart               = $this->stats->buildDistributionChart($chars, $interval);
+            $lifetime_count_trans    = $this->stats->getTotalTransactions($chars);
+            $lifetime_count_buy      = $this->stats->getTotalTransactions($chars, 'buy');
+            $lifetime_count_sell     = $this->stats->getTotalTransactions($chars, 'sell');
+            $lifetime_sum_trans      = $this->stats->getSumTransactions($chars);
+            $lifetime_sum_buy        = $this->stats->getSumTransactions($chars, 'buy');
+            $lifetime_sum_sell       = $this->stats->getSumTransactions($chars, 'sell');
+            $lifetime_profit         = $this->stats->getTotalProfit($chars);
+            $signup_date             = $this->stats->getSignupDate($this->user_id);
+
+            $lifetime_highest_buy    = $this->stats->getHighestMetric($chars, 'total_buy');
+            $lifetime_highest_sell   = $this->stats->getHighestMetric($chars, 'total_sell');
+            $lifetime_highest_profit = $this->stats->getHighestMetric($chars, 'total_profit');
 
             $data['raw_chart']               = $raw_chart;
             $data['chart']                   = $chart;
@@ -82,6 +78,10 @@ class Statistics extends MY_Controller
             $data['lifetime_highest_buy']    = $lifetime_highest_buy;
             $data['lifetime_highest_sell']   = $lifetime_highest_sell;
             $data['lifetime_highest_profit'] = $lifetime_highest_profit;
+
+            $data['layout']['page_title']     = "Statistics";
+            $data['layout']['icon']           = "pe-7s-display2";
+            $data['layout']['page_aggregate'] = true;
 
             $data['interval'] = $interval;
             $data['view']     = 'main/statistics_v';
