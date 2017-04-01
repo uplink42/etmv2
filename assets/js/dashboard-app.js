@@ -39,20 +39,29 @@ $(document).ready(function() {
     // datatables
     var table = $('#profits-table').DataTable({
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-            "lengthMenu": [ [25, 50, -1], [25, 50, "All"] ],
+            lengthMenu: [ [25, 50, -1], [25, 50, "All"] ],
             buttons: [],
-            "order": [],
+            order: [],
     });
 
-    // pie chart
+    // load pie chart
     var url_req = base + 'Dashboard/getPieChart/' + charID;
     $.ajax({
         dataType: "json",
         url: url_req,
         global: false,
         success: function(result) {
-            console.log(result);
+            FusionCharts.ready(function () {
+                var pieChart = new FusionCharts({
+                    type: 'pie2d',
+                    renderAt: 'pie',
+                    width: '100%',
+                    height: '300',
+                    dataFormat: 'json',
+                    dataSource: result
+                });
+                pieChart.render();
+            });
         }
     });
-    
 });

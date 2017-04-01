@@ -33,4 +33,11 @@ class EtmSession
     {
         unset($_SESSION[$key]);
     }
+
+    public function deleteAll()
+    {
+        foreach($_SESSION as $key => $val) {
+            unset($_SESSION[$key]);
+        }
+    }
 }

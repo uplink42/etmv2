@@ -12,7 +12,6 @@
 	function buildMessage(string $type, string $message)
 	{
 		$CI = &get_instance();
-	    $CI->load->library('twig');
 	    $CI->load->library('etmsession');
 	    $data = ['notice' => $type, 'msg' => $message];
 	    $CI->etmsession->setData($data);

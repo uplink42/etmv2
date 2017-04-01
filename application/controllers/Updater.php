@@ -48,8 +48,7 @@ class Updater extends CI_Controller
         // check if API server is up
         if (!$this->ValidateRequest->testEndpoint()) {
             $this->removeDirectory(FILESTORAGE . 'public/public/server');
-            $this->etmsession->set('msg', Msg::XML_CONNECT_FAILURE);
-            $this->etmsession->set('notice', 'error');
+            buildMessage('error', Msg::XML_CONNECT_FAILURE);
             redirect('main/login');
             // check if user is already updating
         } else {
@@ -79,13 +78,9 @@ class Updater extends CI_Controller
                                 log_message('error', $username . ' iterate failed');
                                 // transaction failed for some reason
                                 // forward user to offline mode
-                                $this->etmsession->set('msg', Msg::OFFLINE_MODE_NOTICE);
-                                $this->etmsession->set('notice', 'error');
+                                buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
                                 $this->displayResultTable($username);
                             } else {
-                                $this->etmsession->set('msg', Msg::UPDATE_SUCCESS);
-                                $this->etmsession->set('notice', 'success');
-                                $this->Updater_model->release($username);
                                 // if we arrived here, that means nothing went wrong (yet)
                                 $this->db->trans_start();
                                 $this->load->model('Updater_profit_model', 'profits');
@@ -96,26 +91,21 @@ class Updater extends CI_Controller
 
                                 if ($this->db->trans_status() === false) {
                                     // something went wrong while calculating profits, abort
-                                    $this->etmsession->set('msg', Msg::DB_ERROR);
-                                    $this->etmsession->set('notice', 'error');
+                                    buildMessage('error', Msg::DB_ERROR);
                                     $data['view']      = "login/login_v";
                                     $data['no_header'] = 1;
                                     $this->twig->display('main/_template_v', $data);
                                     return;
                                 } else {
                                     // successfully updated
+                                    buildMessage('success', Msg::UPDATE_SUCCESS);
                                     $this->displayResultTable($username);
+                                    $this->Updater_model->release($username);
                                 }
                             }
                         } catch (Throwable $e) {
                             //if an exception happens during update (this is a bug on Eve's API)
                             log_message('error', $e->getMessage());
-                            /*echo sprintf(
-                                "an exception was caught! Type: %s Message: %s",
-                                get_class($e),
-                                $e->getMessage()
-                            );*/
-
                             // cache is now corrupted for 24 hours, remove cached data
                             $problematicKeys = $this->Updater_model->getAPIKeys($this->user_id);
                             $this->Log->addEntry('clear', $this->user_id);
@@ -131,8 +121,7 @@ class Updater extends CI_Controller
                                     $this->Updater_model->release($username);
 
                                     // forward user to offline mode
-                                    $this->etmsession->set('msg', Msg::OFFLINE_MODE_NOTICE);
-                                    $this->etmsession->set('notice', 'error');
+                                    buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
                                     $this->displayResultTable($username);
                                     /*$this->etmsession->delete('username');
                                     $this->etmsession->delete('start');
@@ -183,8 +172,10 @@ class Updater extends CI_Controller
         $data['cl_recent'] = $this->Updater_model->getChangeLog(true);
         $data['table']     = array($table);
         $data['view']      = "login/select_v";
+        $data['SESSION']   = $_SESSION; // not part of MY_Controller
         $data['no_header'] = 1;
-        //finally, load the next page
+
+        // finally, load the next page
         $this->twig->display('main/_template_v', $data);
     }
 
@@ -196,7 +187,8 @@ class Updater extends CI_Controller
     {
         $data['view']      = "login/select_nocharacter_v";
         $data['no_header'] = 1;
-        buildMessage("error", Msg::LOGIN_NO_CHARS, $data['view']);
+        $data['SESSION']   = $_SESSION; // not part of MY_Controller
+        buildMessage('error', Msg::LOGIN_NO_CHARS);
         $this->twig->display('main/_template_v', $data);
     }
 }

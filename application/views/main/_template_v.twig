@@ -21,8 +21,11 @@
     <!-- Vendor styles -->
     <link rel="stylesheet" href="{{ base_url('dist/luna/styles/styles.css') }}?HASH_CACHE={{HASH_CACHE}}"/>
     <link rel="stylesheet" href="{{ base_url('dist/luna/styles/theme.min.css') }}?HASH_CACHE={{HASH_CACHE}}"/>
+
+    <!-- main js -->
     <script src="{{ base_url('dist/js/apps.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>
 
+    {# enable ajax loader #}
     {% if market %}
         <script>
             $(document).ready(function() {
@@ -31,6 +34,7 @@
         </script>
     {% endif %}
 </head>
+
     {# no header pages #}
     {% if no_header %}
         <body class='blank'>
@@ -38,27 +42,25 @@
 
     <div class="wrapper mainwrapper" data-url="{{ base_url() }}">
 
-    {# toastr notification in same page #}
-    {# {% if message %}
-        <script>toastr[{{ notice }}]({{ message }})</script>
-    {% endif %} #}
+        {# toastr between pages #}
+        {% if SESSION['msg'] %}
+            <script>toastr['{{ SESSION['notice'] }}']('{{ SESSION['msg'] }}')</script>
+        {% endif %}
+        
+        {# pages with header and sidenav #}
+        {% if no_header is empty %}
+            {% include 'common/header_v.twig' %}
+        {% endif %}
 
-    {# toastr between pages #}
-    {% if SESSION['msg'] %}
-        <script>toastr['{{ SESSION['notice'] }}']('{{ SESSION['msg'] }}')</script>
-    {% endif %}
-    
-    {# pages with header and sidenav #}
-    {% if no_header is empty %}
-        {% include 'common/header_v.twig' %}
-    {% endif %}
+        {# include current page #}
+        {% include view ~ '.twig' %}
 
-    {# include current page #}
-    {% include view ~ '.twig' %}
-
-    {% include 'common/footer_v' ~ '.twig' %}
+        {# include footer #}
+        {% include 'common/footer_v' ~ '.twig' %}
 
     </div>
+
+    {# include feedback if in authed page #}
     {% if email %}
         {% include 'common/feedback_v' ~ '.twig' %}
     {% endif %}
@@ -123,5 +125,6 @@
             <br>
             <br>
         </div>
+        
         {% include 'analyticstracking' ~ '.php' %}
 </body>
