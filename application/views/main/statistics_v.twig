@@ -63,10 +63,7 @@
                                             </div>
                                         </div>
                                         <div class="panel-body ml-0 mr-0">
-                                        <?php  $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "500", "pie", "json", $raw_chart);
-                                               $pieChart->render(); ?>
-                                            <div id="pie">
-                                            </div>
+                                            <div id="pie"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -80,12 +77,11 @@
                                 <div class="panel panel-filled panel-c-success panel-collapse">
                                     <div class="panel-heading">
                                         <h5><i class="fa fa-bar-chart-o fa-fw"></i> Trade Volumes</h5>
-                                </div>
+                                    </div>
                                 </div>   
                             </div>   
                             <div class="panel-body statistics-body">
-                                <div id="chart">
-                                </div>            
+                                <div id="bar"></div>            
                             </div>
                         </div>
                     </div>

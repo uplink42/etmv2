@@ -118,7 +118,7 @@ class Profits_model extends CI_Model
      * @param  int|null $item_id  
      * @return string json             
      */
-    public function getProfitChart(string $chars, int $interval, int $item_id = null): string
+    public function getProfitChartData(string $chars, int $interval, int $item_id = null): string
     {
         $arrData = array( //graph parameters
             "chart" => array(

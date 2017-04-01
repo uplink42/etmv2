@@ -58,18 +58,9 @@ class Profits extends MY_Controller
         }
     }
 
+
     public function getProfitChart(int $character_id, int $interval = 1, int $item_id = null)
     {
-        $msg = Msg::INVALID_REQUEST;
-        $notice = "error";
-        if ($this->enforce($character_id, $this->user_id, true)) {
-            // get active session characters
-            $chars = $this->loadViewDependencies($character_id, $this->user_id, $this->aggregate)['chars'];
-            if ($chars) {
-                echo $this->profits->getProfitChart($chars, $interval, $item_id = null);
-                return;
-            }
-        }
-        echo json_encode(array("notice" => $notice, "message" => $msg));
+        echo $this->buildChart($character_id, 'getProfitChartData', 'Profits_model', $interval, $item_id); 
     }
 }

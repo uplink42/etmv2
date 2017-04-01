@@ -217,6 +217,55 @@ $(document).ready(function() {
         "order": [],
     });
 
-                                 /*   <?php $newchart = new FusionCharts("mscolumn2d", "sales", "100%", 500, "chart", "json", $chart);
-                                $newchart->render();?>*/
+
+    // trade volumes chart
+    var barChartStats = function() {
+        var url_req = base + 'Statistics/getVolumesChart/' + charID + '/' + interval;
+        $.ajax({
+            dataType: "json",
+            url: url_req,
+            global: false,
+            success: function(result) {
+                if (result.chart && result.dataset && result.categories) {
+                    FusionCharts.ready(function () {
+                        var barChart = new FusionCharts({
+                            type: 'mscolumn2d',
+                            renderAt: 'bar',
+                            width: '100%',
+                            height: '500',
+                            dataFormat: 'json',
+                            dataSource: result
+                        });
+                        barChart.render();
+                    });
+                }
+            }
+        });
+    }();
+    
+
+    // profit distribution chart
+    var pieChartStats = function() {
+        var url_req = base + 'Statistics/getDistributionChart/' + charID + '/' + interval;
+        $.ajax({
+            dataType: "json",
+            url: url_req,
+            global: false,
+            success: function(result) {
+                if (result.chart && result.data) {
+                    FusionCharts.ready(function () {
+                        var chart = new FusionCharts({
+                            type: 'pie2d',
+                            renderAt: 'pie',
+                            width: '100%',
+                            height: '500',
+                            dataFormat: 'json',
+                            dataSource: result
+                        });
+                        chart.render();
+                    });
+                }
+            }
+        });         
+    }();            
 });

@@ -53,25 +53,27 @@ $(document).ready(function() {
     }
 
     // load daily chart
-    var url_req = base + 'Profits/getProfitChart/' + charID + '/' + interval + '/' + itemID;
-    $.ajax({
-        dataType: "json",
-        url: url_req,
-        global: false,
-        success: function(result) {
-            if (result.chart && result.data) {
-                FusionCharts.ready(function () {
-                    var lineChart = new FusionCharts({
-                        type: 'line',
-                        renderAt: 'chart-2',
-                        width: '100%',
-                        height: '400',
-                        dataFormat: 'json',
-                        dataSource: result
+    var profitsLineChart = function() {
+        var url_req = base + 'Profits/getProfitChart/' + charID + '/' + interval + '/' + itemID;
+        $.ajax({
+            dataType: "json",
+            url: url_req,
+            global: false,
+            success: function(result) {
+                if (result.chart && result.data) {
+                    FusionCharts.ready(function () {
+                        var lineChart = new FusionCharts({
+                            type: 'line',
+                            renderAt: 'chart-2',
+                            width: '100%',
+                            height: '400',
+                            dataFormat: 'json',
+                            dataSource: result
+                        });
+                        lineChart.render();
                     });
-                    lineChart.render();
-                });
+                }
             }
-        }
-    });
+        });
+    }();
 });

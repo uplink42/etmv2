@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-define("HASH_CACHE", 71884898741581);
+define("HASH_CACHE", 187);
 $config['base_url'] = 'http://localhost/v2/';
 $config['maintenance'] = FALSE;
 

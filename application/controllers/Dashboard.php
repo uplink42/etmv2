@@ -60,16 +60,6 @@ final class Dashboard extends MY_Controller
 
     public function getPieChart(int $character_id)
     {
-        $msg = Msg::INVALID_REQUEST;
-        $notice = "error";
-        if ($this->enforce($character_id, $this->user_id, true)) {
-            // get active session characters
-            $chars = $this->loadViewDependencies($character_id, $this->user_id, $this->aggregate)['chars'];
-            if ($chars) {
-                echo $this->dashboard->getPieData($chars);
-                return;
-            }
-        }
-        echo json_encode(array("notice" => $notice, "message" => $msg));
+        echo $this->buildChart($character_id, 'getPieChartData', 'Dashboard_model');
     }
 }

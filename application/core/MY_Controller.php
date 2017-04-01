@@ -250,4 +250,20 @@ class MY_Controller extends CI_Controller
         }
         return $dataset;
     }
+
+
+    protected function buildChart(string $character_id, string $callback, string $model, int $interval = 1, int $item_id = null)
+    {
+        $msg = Msg::INVALID_REQUEST;
+        $notice = "error";
+        if ($this->enforce($character_id, $this->user_id, true)) {
+            // get active session characters
+            $chars = $this->loadViewDependencies($character_id, $this->user_id, $this->aggregate)['chars'];
+            if ($chars) {
+                $this->load->model($model);
+                return $this->{$model}->$callback($chars, $interval);
+            }
+        }
+        return json_encode(array("notice" => $notice, "message" => $msg));
+    }
 }

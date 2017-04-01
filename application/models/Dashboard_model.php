@@ -17,7 +17,7 @@ class Dashboard_model extends CI_Model
      * @param  string $chars 
      * @return string json        
      */
-    public function getPieData(string $chars): string
+    public function getPieChartData(string $chars): string
     {
         $this->db->select('sum(networth) as networth, sum(escrow) as escrow, sum(total_sell) as total_sell, sum(balance) as balance');
         $this->db->where('eve_idcharacter IN ' . $chars);

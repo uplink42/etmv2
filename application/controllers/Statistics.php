@@ -8,6 +8,7 @@ class Statistics extends MY_Controller
         parent::__construct();
         $this->db->cache_on();
         $this->page = "statistics";
+        $this->load->model('Statistics_model', 'stats');
     }
 
     /**
@@ -28,8 +29,6 @@ class Statistics extends MY_Controller
             $chars                  = $data['chars'];
             $data['selected']       = "statistics";
             
-            $this->load->model('Statistics_model', 'stats');
-            $chart                   = $this->stats->buildVolumesChart($chars, $interval);
             $problematic             = $this->stats->getProblematicItems($chars, $interval);
             $profits_table           = $this->stats->getProfitsTable($chars, $interval);
             $best_raw                = $this->stats->getBestItemsRaw($chars, $interval);
@@ -40,7 +39,6 @@ class Statistics extends MY_Controller
             $best_iph                = $this->stats->getBestIPH($chars, $interval);
             $best_blunders           = $this->stats->getMarketBlunders($chars, $interval);
             $best_stations           = $this->stats->getTopStations($chars, $interval);
-            $raw_chart               = $this->stats->buildDistributionChart($chars, $interval);
             $lifetime_count_trans    = $this->stats->getTotalTransactions($chars);
             $lifetime_count_buy      = $this->stats->getTotalTransactions($chars, 'buy');
             $lifetime_count_sell     = $this->stats->getTotalTransactions($chars, 'sell');
@@ -49,17 +47,13 @@ class Statistics extends MY_Controller
             $lifetime_sum_sell       = $this->stats->getSumTransactions($chars, 'sell');
             $lifetime_profit         = $this->stats->getTotalProfit($chars);
             $signup_date             = $this->stats->getSignupDate($this->user_id);
-
             $lifetime_highest_buy    = $this->stats->getHighestMetric($chars, 'total_buy');
             $lifetime_highest_sell   = $this->stats->getHighestMetric($chars, 'total_sell');
             $lifetime_highest_profit = $this->stats->getHighestMetric($chars, 'total_profit');
 
-            $data['raw_chart']               = $raw_chart;
-            $data['chart']                   = $chart;
             $data['problematic']             = $this->injectIcons($problematic);
             $data['profits_table']           = $profits_table;
             $data['best_raw']                = $this->injectIcons($best_raw);
-            $data['best_raw_chart']          = $raw_chart;
             $data['best_margin']             = $this->injectIcons($best_margin);
             $data['best_customer']           = $best_customer;
             $data['best_tz']                 = $best_tz;
@@ -87,5 +81,17 @@ class Statistics extends MY_Controller
             $data['view']     = 'main/statistics_v';
             $this->twig->display('main/_template_v', $data);
         }
+    }
+
+
+    public function getVolumesChart(int $character_id, int $interval = 1)
+    {
+        echo $this->buildChart($character_id, 'buildVolumesChart', 'Statistics_model', $interval);      
+    }
+
+
+    public function getDistributionChart(int $character_id, int $interval = 1)
+    {
+        echo $this->buildChart($character_id, 'buildDistributionChart', 'Statistics_model', $interval);
     }
 }
