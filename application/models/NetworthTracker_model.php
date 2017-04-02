@@ -30,8 +30,9 @@ class NetworthTracker_model extends CI_Model
      * @param  int    $interval 
      * @return string           
      */
-    public function init(string $chars, int $interval): string
+    public function init(array $config): string
     {
+        extract($config);
         $this->interval = $interval;
         $this->chars    = $chars;
 

@@ -28,12 +28,7 @@ class Networthtracker extends MY_Controller
             $aggregate = $this->aggregate;
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
-
-            $this->load->model('NetworthTracker_model');
-            $chart = $this->NetworthTracker_model->init($chars, $interval);
-
             $data['selected'] = "networth";
-            $data['chart']    = $chart;
             $data['interval'] = $interval;
             $data['view']     = 'main/nwtracker_v';
 
@@ -47,6 +42,8 @@ class Networthtracker extends MY_Controller
 
     public function getNetworthChart(int $character_id, int $interval, bool $aggr = false) : void
     {
-        echo $this->buildChart($character_id, $aggr, 'init', 'NetworthTracker_model', $interval);
+        //echo $this->buildChart($character_id, $aggr, 'init', 'NetworthTracker_model', $interval);
+        $params = ['interval' => $interval];
+        echo $this->buildData($character_id, $aggr, 'init', 'NetworthTracker_model', $params); 
     }
 }

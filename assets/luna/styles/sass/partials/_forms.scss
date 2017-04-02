@@ -107,12 +107,12 @@ fieldset[disabled] .form-control {
 .character-select {
   li {
     &.selected, {
-      background-color: $color-background-form;
+      background-color: lighten(#3c3e47,20%);
       a {
         color: #fff;
       }
       & a:hover {
-        background-color: $color-background-form;
+        background-color: lighten(#3c3e47, 40%);
         color: #fff;
       }
     }
