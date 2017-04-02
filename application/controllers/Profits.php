@@ -33,19 +33,19 @@ class Profits extends MY_Controller
             $chars     = $data['chars'];
 
             // profits table
-            $profits   = $this->profits->getProfits($chars, $interval, $item_id, $this->user_id);
-            $profits_r = $profits['result'];
-            $profits_c = $profits['count'];
+            // $profits   = $this->profits->getProfits($chars, $interval, $item_id, $this->user_id);
+            //$profits_r = $profits['result'];
+            //$profits_c = $profits['count'];
 
-            if ($profits_c > 200) {
+            /*if ($profits_c > 200) {
                 $img = false;
             } else {
                 $img = true;
-            }
+            }*/
 
             $data['selected'] = "profits";
-            $data['img']      = $img;
-            $data['profits']  = $profits_r;
+            //$data['img']      = $img;
+            /*$data['profits']  = $profits_r;*/
             $data['interval'] = $interval;
             $data['item_id']  = $item_id;
             $data['view']     = 'main/profits_v';
@@ -61,6 +61,20 @@ class Profits extends MY_Controller
 
     public function getProfitChart(int $character_id, int $interval = 1, bool $aggr, int $item_id = null)
     {
-        echo $this->buildChart($character_id, $aggr, 'getProfitChartData', 'Profits_model', $interval, $item_id); 
+        $params = ['interval' => $interval,
+                   'item_id'  => $item_id ];
+
+        echo $this->buildData($character_id, $aggr, 'getProfitChartData', 'Profits_model', $params); 
+    }
+
+
+    public function getProfitTable(int $character_id, int $interval = 1, bool $aggr)
+    {
+        $params = [ 'character_id' => $character_id,
+                    'aggr'         => $aggr,
+                    'interval'     => $interval,
+                    'user_id'      => $this->user_id ];
+
+        echo $this->buildData($character_id, $aggr, 'getProfits', 'Profits_model', $params); 
     }
 }

@@ -250,20 +250,36 @@ class MY_Controller extends CI_Controller
         return $dataset;
     }
 
-
-    protected function buildChart(string $character_id, bool $aggr, string $callback, string $model, int $interval = 1, int $item_id = null)
+    /*int $character_id, bool $aggr, string $callback, string $model, int $interval = 1, int $item_id = null, int $user_id*/
+    protected function buildData(int $character_id, bool $aggr, string $callback, string $model, array $configs)
     {
         $msg = Msg::INVALID_REQUEST;
         $notice = "error";
         if ($this->enforce($character_id, $this->user_id, true)) {
-            // get active session characters
-            $chars = $this->loadViewDependencies($character_id, $this->user_id, $aggr)['chars'];
+            $chars      = [];
+            $char_names = [];
+
+            if ($aggr) {
+                $characters = $this->Login_model->getCharacterList($user_id);
+                $chars      = $characters['aggr'];
+            } else {
+                $chars = "(" . $character_id . ")";
+            }
+
             if ($chars) {
-                log_message('error', $chars);
+                $configs['chars'] = $chars;
                 $this->load->model($model);
-                return $this->{$model}->$callback($chars, $interval);
+                return $this->{$model}->$callback($configs);
+                //call_user_func_array($this->{$model}->$callback, $configs);
+                //return call_user_func_array([$this->{$model}, $callback], $configs);
             }
         }
         return json_encode(array("notice" => $notice, "message" => $msg));
+    }
+
+
+    protected function buildDataTable(int $character_id, bool $aggr, array $data, string $callback, string $model)
+    {
+
     }
 }

@@ -40,7 +40,8 @@ $(document).ready(function() {
         "aoColumnDefs": [
             { 
             "bSearchable": false, "aTargets": [ 6 ] 
-        }]
+        }
+        ]
     });
 
 

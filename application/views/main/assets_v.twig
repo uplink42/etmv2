@@ -63,7 +63,7 @@
                             {% if sig == 0 %}
                                 <a href="{{ base_url('assets/index/' ~ character_id ~  '/' ~ region_id ~ '?aggr=' ~ aggregate ~ '&sig=1') }}">
                                     <p class="btn btn-w-md btn-warning warning-asset">Currently displaying all items. For faster page loads and exports you may request only the most significant items by clicking here, which would represent 
-                                        <span class="btn btn-default btn-xs">{{ ratio | number_format(2) }}</span> of your  asset value.
+                                        <span class="btn btn-default btn-xs">{{ ratio | number_format(2) }}</span> of your asset value.
                                     </p>
                                 </a>
                             {% endif %}
@@ -104,8 +104,7 @@
                             $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "600", "pie", "json", $pie_data);
                             $pieChart->render();
                         ?>
-                        <div id="pie">
-                        </div>
+                        <div id="pie"></div>
                     </div>
                 </div>
             </div>

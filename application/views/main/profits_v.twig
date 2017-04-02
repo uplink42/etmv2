@@ -89,7 +89,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {% for row in profits %}
+                                        {# {% for row in profits %}
                                             <tr class="{{ row['profit_total'] > 0 ? 'success' : 'danger' }}">
                                                 <td> {% if img %}
                                                         <img src={{ row['url'] }} alt=''>
@@ -128,7 +128,7 @@
                                                 <td>{{ row['diff'] }}
                                                 </td>
                                             </tr>
-                                        {% endfor %}
+                                        {% endfor %} #}
                                         </tbody>
                                     </table>
                                 </div>

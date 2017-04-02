@@ -2,7 +2,54 @@
 $(document).ready(function() {
     var table = $('#profits-2-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-        "lengthMenu": [
+        deferRender: true,
+        ajax : {
+            type   : 'GET',
+            url    : base + 'Profits/getProfitTable/' + charID + '/' + interval + '/' + aggr,
+            dataSrc: function (json) {
+                var return_data = [];
+                for (var i = 0; i < json.data.length; i++) {
+                    return_data.push({
+                        item: '<img src="' + json.data[i].url + '">' + '<a class="item-name" style="color:#fff">' + json.data[i].item_name + '</a>',
+                        buy_sell_link: '<a href="' + base + 'transactions/index/' + charID + '?transID=' + json.data[i].trans_buy + '" target=_blank>' + 
+                            '<span class="btn btn-xs btn-danger">B</span></a><br>' + 
+                            '<a href="' + base + 'transactions/index/' + charID + '?transID=' + json.data[i].trans_sell + '" target=_blank>' + 
+                            '<span class="btn btn-xs btn-success">B</span></a>',
+                        systems: json.data[i].sys_buy + '<br>' + json.data[i].sys_sell,
+                        isk_unit: number_format(json.data[i].buy_price, 2, '.', ',' ) + '<br>' + number_format(json.data[i].sell_price, 2, '.', ',' ),
+                        quantity: number_format(json.data[i].profit_quantity, 0, '.', ',' ),
+                        isk_total: number_format(json.data[i].buy_price_total, 2, '.', ',' ) + '<br>' + number_format(json.data[i].sell_price_total, 2, '.', ',' ),
+                        times: json.data[i].time_buy + '<br>' + json.data[i].time_sell,
+                        characters: json.data[i].character_buy + '<br>' + json.data[i].character_sell,
+                        isk_profit: number_format(json.data[i].profit_total, 2, '.', ',' ),
+                        margin: number_format(json.data[i].margin, 2, '.', ',' ),
+                        duration: json.data[i].diff
+                    });
+                  }
+                return return_data;
+            }   
+        },
+        columns: [
+            { data: "item" },
+            { data: "buy_sell_link" },
+            { data: "systems" },
+            { data: "isk_unit" },
+            { data: "quantity" },
+            { data: "isk_total" },
+            { data: "times" },
+            { data: "characters" },
+            { data: "isk_profit" },
+            { data: "margin" },
+            { data: "duration" },
+        ],
+        fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            if (parseFloat(aData.isk_profit) > 0) {
+                $(nRow).addClass('success');
+            } else {
+                $(nRow).addClass('danger');
+            }
+        },
+        lengthMenu: [
             [50, 75, 100, -1],
             [50, 75, 100, "All"]
         ],
@@ -22,15 +69,17 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "aoColumnDefs": [{
+        aoColumnDefs: [{
             "bSearchable": false,
             "aTargets": [3]
         }],
-        "order": []
+        order: []
     });
+
     $(".profits-2-body p.yellow").html("<p>There are " + table.rows().count() 
         + " results for a total of " + number_format(table.column(8).data().sum(), 2, '.', ',') 
         + " ISK</p>");
+
     $("#profits-2-table_filter input").keyup(function() {
         $(".profits-2-body p.yellow").html("There are " + table.rows({
             filter: 'applied'
@@ -45,6 +94,10 @@ $(document).ready(function() {
         $("input.form-control").trigger("keyup");
     });
 
+    setTimeout(function() {
+        $('.profits-2-body .input-sm').trigger('keyup');
+    }, 1000);
+    
     // get profit by item
     if (window.location.hash) {
         var string = window.location.hash.substring(1);
