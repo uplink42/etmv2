@@ -1,22 +1,8 @@
 <section class="content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12" style="margin-top: 65px;">
-                <div class="view-header">
-                    <?php $this->load->view('common/selector_v');?>
-                    <div class="header-icon">
-                        <i class="pe page-header-icon pe-7s-glasses"></i>
-                    </div>
-                    <div class="header-title">
-                        <h1>
-                            Market Explorer
-                        </h1>
-                    </div>
-                </div>
-                <hr>
-            </div>
+        <div class="row" style="margin-top: 70px;">
+            {% include 'common/view-header_v' ~ '.twig' %}
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-filled panel-c-success">
@@ -27,8 +13,6 @@
                 </div>
             </div>
         </div>
-
-
-        <?php include('marketexplorer/index.html') ?>
+        {% include 'marketexplorer/index.html' %}
     </div>
 </section>

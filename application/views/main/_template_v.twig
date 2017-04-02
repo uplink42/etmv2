@@ -22,7 +22,7 @@
     <title>Eve Trade Master 2 - A web based Eve Online profit tracker, asset manager and trade analysis tool</title>
 
     {# disable pace on marketexplorer #}
-    {% if market is empty %}
+    {% if market %}
         <script>window.paceOptions = { ajax: false }; </script>
     {% endif %}
 
