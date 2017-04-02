@@ -1,5 +1,29 @@
 "use strict";
 $(document).ready(function() {
+    var recap = $('#daily').DataTable({
+        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
+        "lengthMenu": [
+            [25, 50, -1],
+            [25, 50, "All"]
+        ],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
+        "order": [],
+    });
     var bestraw = $('#bestraw').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         "lengthMenu": [

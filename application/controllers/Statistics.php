@@ -84,14 +84,22 @@ class Statistics extends MY_Controller
     }
 
 
-    public function getVolumesChart(int $character_id, int $interval = 1, bool $aggr = false)
+    public function getVolumesChart(int $character_id, int $interval = 1, bool $aggr = false) : void
     {
-        echo $this->buildChart($character_id, $aggr, 'buildVolumesChart', 'Statistics_model', $interval);      
+        $params = ['interval' => $interval];
+        echo $this->buildData($character_id, $aggr, 'buildVolumesChart', 'Statistics_model', $params);     
     }
 
 
-    public function getDistributionChart(int $character_id, int $interval = 1, bool $aggr = false)
+    public function getDistributionChart(int $character_id, int $interval = 1, bool $aggr = false) : void
     {
-        echo $this->buildChart($character_id, $aggr, 'buildDistributionChart', 'Statistics_model', $interval);
+        $params = ['interval' => $interval];
+        echo $this->buildData($character_id, $aggr, 'buildDistributionChart', 'Statistics_model', $params); 
+    }
+
+
+    public function getDailyRecap(int $character_id, int $interval = 1, bool $aggr = false) : void
+    {
+
     }
 }

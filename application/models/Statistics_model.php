@@ -16,8 +16,9 @@ class Statistics_model extends CI_Model
      * @param  int    $interval 
      * @return string json           
      */
-    public function buildVolumesChart(string $chars, int $interval): string
+    public function buildVolumesChart(array $configs): string
     {
+        extract($configs);
         $chart = array(
             "caption"       => "Trading volumes",
             "subcaption"    => "last " . $interval . " days",
@@ -463,8 +464,9 @@ class Statistics_model extends CI_Model
      * @param  int    $interval 
      * @return string json           
      */
-    public function buildDistributionChart(string $chars, int $interval): string
+    public function buildDistributionChart(array $configs): string
     {
+        extract($configs);
         $arrData["chart"] = array(
             "bgColor"                   => "#44464f",
             "showBorder"                => "0",
