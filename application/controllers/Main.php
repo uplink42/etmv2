@@ -28,6 +28,15 @@ class Main extends MY_Controller
      */
     public function login() : void
     {
+        // check if session is already present
+        $this->load->library('etmsession');
+        $this->load->model('common/Auth', 'auth');
+        if ($this->auth->validateSession($_SESSION)) {
+            $data['auth'] = true;
+        } else {
+            $data['auth'] = false;
+        }
+
         $data['no_header'] = 1;
         $data['view']      = 'login/login_v';
         $this->twig->display('main/_template_v', $data);

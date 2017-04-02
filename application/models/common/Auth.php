@@ -89,4 +89,24 @@ class Auth extends CI_Model
         
         return $random_string;
     }
+
+
+    public function validateSession(array $session)
+    {
+        if (!isset($session['username']) || !isset($session['email']) || !isset($session['password'])) {
+            return false;
+        }
+
+        $this->db->where('username', $session['username']);
+        $this->db->where('email', $session['email']);
+        $this->db->where('password', $session['password']);
+        $sql = $this->db->get('user');
+        $result = $sql->num_rows();
+
+        if ($result > 0) {
+            return true;
+        }
+
+        return false;
+    }
 }
