@@ -102,3 +102,19 @@ fieldset[disabled] .form-control {
   width: auto !important;
   height: auto !important;
 }
+
+.dropdown-interval,
+.character-select {
+  li {
+    &.selected, {
+      background-color: $color-background-form;
+      a {
+        color: #fff;
+      }
+      & a:hover {
+        background-color: $color-background-form;
+        color: #fff;
+      }
+    }
+  }
+}

@@ -111,6 +111,43 @@ $(document).ready(function() {
         window.history.back();
     });
 
+    // default dropdown select
+    var $options = $('.dropdown-interval li');
+    $.each($options, function (index, value) {
+        if (interval === $(value).find('a').attr('data-id')) {
+            $(value).addClass('selected');
+        }
+    });
+
+    // when selecting a time interval
+    $('.dropdown-interval a').on('click', function(e) {
+        var that = this;
+        var $options = $(this).parent('li').siblings();
+        $.each($options, function (index, value) {
+            $(value).removeClass('selected');
+        });
+        $(this).parent('li').addClass('selected');
+
+        // update character switch links
+        var $chars = $('.character-select li a');
+        $.each($chars, function(index, value) {
+            var path = $(value).attr('href').split('/');
+            var pos = path.indexOf('index') + 2;
+            var toReplace = path[pos].substring(0, path[pos].indexOf('?'));
+            // replace interval segment
+            var res = path[pos].replace(toReplace, $(that).attr('data-id'));
+            path[pos] = res;
+            //stitch url back toguether
+            var newPath = "";
+            for (i = 1; i < path.length; i++) {
+                newPath += "/";
+                newPath += path[i];
+            }
+            // assign to url
+            $(value).attr('href', newPath);
+        });
+    });
+
     $(".nav-u").on('click', function(e) {
         $("section").hide();
         $(".footer-panel").hide();
@@ -132,13 +169,24 @@ $(document).ready(function() {
         });
     });
 
-    $(document).bind("ajaxStop.go", function () {
-        $(".mainwrapper").removeClass('loading-body');
-        $('.panel-loading-ajax').hide();  
+    // show loading spinner for waiting periods over 200ms
+    var shouldLoad = true;
+        didLoad    = false;
+    $(document).bind("ajaxStart.go", function () {
+        setTimeout(function() {
+            if (shouldLoad) {
+                didLoad = true;
+                $(".mainwrapper").addClass('loading-body');
+                $('.panel-loading-ajax').show();
+            }
+        },200);
     });
 
-    $(document).bind("ajaxStart.go", function () {
-        $(".mainwrapper").addClass('loading-body');
-        $('.panel-loading-ajax').show();
+    $(document).bind("ajaxStop.go", function () {
+        shouldLoad = false;
+        if (didLoad) {
+            $(".mainwrapper").removeClass('loading-body');
+            $('.panel-loading-ajax').hide();  
+        }
     });
 });

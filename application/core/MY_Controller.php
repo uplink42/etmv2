@@ -260,7 +260,7 @@ class MY_Controller extends CI_Controller
             $char_names = [];
 
             if ($aggr) {
-                $characters = $this->Login_model->getCharacterList($user_id);
+                $characters = $this->Login_model->getCharacterList($this->user_id);
                 $chars      = $characters['aggr'];
             } else {
                 $chars = "(" . $character_id . ")";
@@ -275,11 +275,5 @@ class MY_Controller extends CI_Controller
             }
         }
         return json_encode(array("notice" => $notice, "message" => $msg));
-    }
-
-
-    protected function buildDataTable(int $character_id, bool $aggr, array $data, string $callback, string $model)
-    {
-
     }
 }

@@ -89,18 +89,13 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                  <li data-id="1">
-                                    <a href="{{ base_url('dashboard/index/' ~ character_id ~ '/1?aggr=' ~ aggregate) }}">Last 24 hours</a></li>
-                                  <li data-id="3">
-                                    <a href="{{ base_url('dashboard/index/' ~ character_id ~ '/3?aggr=' ~ aggregate) }}">Last 3 days</a>
-                                </li>
-                                  <li data-id="60">
-                                    <a href="{{ base_url('dashboard/index/' ~ character_id ~ '/7?aggr=' ~ aggregate) }}">Last 7 days</a>
-                                </li>
+                                    <li><a href="#" data-id="1">Last 24 hours</a></li>
+                                    <li><a href="#" data-id="3">Last 3 days</a></li>
+                                    <li><a href="#" data-id="7">Last 7 days</a></li>
                                 </ul>
                             </div>
                             <div class="panel-heading">
-                                <h5><i class="fa fa-line-chart"></i> Latest Profits - last {{ interval }} day(s)</h5>
+                                <h5><i class="fa fa-line-chart"></i> Latest Profits - last <span class="table-interval"></span> day(s)</h5>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -116,20 +111,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for row in profits %}
-                                        <tr class="{{ row['profit_unit'] > 0 ? 'success' : 'danger' }}">
-                                            <td> {% if img %}
-                                                    <img src={{ row['url'] }} alt=''>
-                                                 {% else %}
-                                                 {% endif %}
-                                                 {{ row['item_name'] }}</td>
-                                            <td class="hidden-xs">{{ row['system_name'] }}</td>
-                                            <td class="hidden-xs">{{ row['sell_time'] }}</td>
-                                            <td class="hidden-xs">{{ row['quantity'] | number_format }}</td>
-                                            <td>{{ row['profit_total'] | number_format }}</td>
-                                            <td><a class= "btn btn-default btn-xs">{{ row['margin'] | number_format(2) }}</a></td>
-                                        </tr>
-                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

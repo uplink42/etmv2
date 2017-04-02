@@ -1,5 +1,6 @@
 "use strict";
 $(document).ready(function() {
+    $('.table-interval').text(interval);
     var table = $('#profits-2-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         deferRender: true,
@@ -22,10 +23,11 @@ $(document).ready(function() {
                         times: json.data[i].time_buy + '<br>' + json.data[i].time_sell,
                         characters: json.data[i].character_buy + '<br>' + json.data[i].character_sell,
                         isk_profit: number_format(json.data[i].profit_total, 2, '.', ',' ),
-                        margin: number_format(json.data[i].margin, 2, '.', ',' ),
+                        margin: '<a class= "btn btn-default btn-xs">' + number_format(json.data[i].margin, 2, '.', ',' ) + '</a>',
                         duration: json.data[i].diff
                     });
                   }
+                updateTableTotals();
                 return return_data;
             }   
         },
@@ -76,10 +78,7 @@ $(document).ready(function() {
         order: []
     });
 
-    $(".profits-2-body p.yellow").html("<p>There are " + table.rows().count() 
-        + " results for a total of " + number_format(table.column(8).data().sum(), 2, '.', ',') 
-        + " ISK</p>");
-
+    // filters
     $("#profits-2-table_filter input").keyup(function() {
         $(".profits-2-body p.yellow").html("There are " + table.rows({
             filter: 'applied'
@@ -88,22 +87,39 @@ $(document).ready(function() {
         }).data().sum(), 2, '.', ',') + " ISK.");
     });
 
+    // links
     $("table").on('click', 'a', function() {
         var name = $(this).text();
         $("input.form-control").val(name);
         $("input.form-control").trigger("keyup");
     });
 
-    setTimeout(function() {
-        $('.profits-2-body .input-sm').trigger('keyup');
-    }, 1000);
-    
     // get profit by item
     if (window.location.hash) {
         var string = window.location.hash.substring(1);
         $("input.form-control").val(string);
         $("input.form-control").trigger("keyup");
     }
+
+    // reload
+    $('.dropdown-interval a').on('click', function(e) {
+        e.preventDefault();
+        if ($(this).attr('data-id') != interval) {
+            var url;
+            var intVal = $(this).attr('data-id'),
+                url    = base + 'Profits/getProfitTable/' + charID + '/' + intVal + '/' + aggr;
+
+            table.ajax.url(url).load();
+            $('.table-interval').text(intVal);
+        }
+    });
+
+    function updateTableTotals() {
+        setTimeout(function() {
+            $('.profits-2-body .input-sm').trigger('keyup');
+        });
+    }
+
 
     // load daily chart
     var profitsLineChart = function() {

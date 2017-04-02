@@ -31,21 +31,8 @@ final class Dashboard extends MY_Controller
 
             $data['selected'] = "dashboard";
             $data['interval'] = $interval;
-
-            $profits = $this->dashboard->getProfits($interval, $chars, $this->user_id);
-
-            $count = $profits['count'];
-            if ($count > 200) {
-                $img = false;
-            } else {
-                $img = true;
-            }
-
             $data['week_profits']   = $this->dashboard->getWeekProfits($chars);
             $data['new_info']       = $this->dashboard->getNewInfo($chars);
-
-            $data['img']            = $img;
-            $data['profits']        = $this->injectIcons($profits['result']);
             $data['profits_trends'] = $this->dashboard->getTotalProfitsTrends($chars);
 
             $data['layout']['page_title']     = "Dashboard";
@@ -58,8 +45,17 @@ final class Dashboard extends MY_Controller
     }
 
 
-    public function getPieChart(int $character_id, bool $aggr = false)
+    public function getPieChart(int $character_id, bool $aggr = false) : void
     {
-        echo $this->buildChart($character_id, $aggr, 'getPieChartData', 'Dashboard_model');
+        $params = [];
+        echo $this->buildData($character_id, $aggr, 'getPieChartData', 'Dashboard_model', $params); 
+    }
+
+    public function getProfitTable(int $character_id, int $interval = 3, bool $aggr = false) : void
+    {
+        $params = ['interval' => $interval,
+                   'user_id'  => $this->user_id];
+                   
+        echo $this->buildData($character_id, $aggr, 'getProfits', 'Dashboard_model', $params); 
     }
 }

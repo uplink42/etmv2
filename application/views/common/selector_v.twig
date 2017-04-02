@@ -3,13 +3,13 @@
         Character
         <span class="caret"></span>
     </button>
-    <ul class="dropdown-menu dropdown-menu-right">
+    <ul class="dropdown-menu dropdown-menu-right character-select">
         {% for char in character_list['chars'] %}
-            <li><a href="{{ base_url(selector['page']) }}/index/{{ char }}{{ selector['hasInterval'] ? '/' ~ interval : '' }}{{ selector['hasRegion'] ? "/" ~ region_id : '' }}?aggr=0{{ get }}"> {{ character_list['char_names'][loop.index0] }} </a>
+            <li class="{{ character_name == character_list['char_names'][loop.index0] and aggregate == 0 ? 'selected' : '' }}"><a href="{{ base_url(selector['page']) }}/index/{{ char }}{{ selector['hasInterval'] ? '/' ~ interval : '' }}{{ selector['hasRegion'] ? "/" ~ region_id : '' }}?aggr=0{{ get }}"> {{ character_list['char_names'][loop.index0] }} </a>
             </li>
         {% endfor %}
         <li role="separator" class="divider"></li>
-        <li><a href="{{ base_url(selector['page']) }}/index/{{ character_id }}{{ selector['hasInterval'] ? '/' ~ interval : '' }}{{ selector['hasRegion'] ? "/" ~ region_id : '' }}?aggr=1{{ get }}"> <b>All</b> </a>
+        <li class="{{ aggregate == 1 ? 'selected' : '' }}"><a href="{{ base_url(selector['page']) }}/index/{{ character_id }}{{ selector['hasInterval'] ? '/' ~ interval : '' }}{{ selector['hasRegion'] ? "/" ~ region_id : '' }}?aggr=1{{ get }}"> <b>All</b> </a>
         </li>
     </ul>
 </div>

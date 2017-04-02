@@ -5,7 +5,6 @@ if (!defined('BASEPATH')) {
 
 class Dashboard_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -17,8 +16,9 @@ class Dashboard_model extends CI_Model
      * @param  string $chars 
      * @return string json        
      */
-    public function getPieChartData(string $chars): string
+    public function getPieChartData(array $configs): string
     {
+        extract ($configs);
         $this->db->select('sum(networth) as networth, sum(escrow) as escrow, sum(total_sell) as total_sell, sum(balance) as balance');
         $this->db->where('eve_idcharacter IN ' . $chars);
         $query  = $this->db->get('characters');
@@ -100,7 +100,6 @@ class Dashboard_model extends CI_Model
      */
     public function getTotalProfitsTrends(string $chars): array
     {
-
         $this->db->select('coalesce(sum(total_profit),0) as sum');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $this->db->where("date>= (now() - INTERVAL 7 DAY)");
@@ -140,10 +139,15 @@ class Dashboard_model extends CI_Model
      * set of characters and a specified interval
      * @param  int|integer $interval 
      * @param  string|null $chars    
-     * @return array                
+     * @return json string                
      */
-    public function getProfits(int $interval = 1, string $chars = null, int $user_id): array
+    public function getProfits(array $configs): string
     {
+        extract($configs);
+        $CI = &get_instance();
+        $CI->load->model('Tax_Model');
+        $profit_settings = $this->User->getUserProfitSettings($user_id);
+
         $this->db->select('p.profit_unit as profit_unit,
                         p.quantity_profit as quantity,
                         p.timestamp_sell as sell_time,
@@ -168,10 +172,8 @@ class Dashboard_model extends CI_Model
         $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
         $this->db->order_by('t2.time', 'desc');
-        $this->db->limit(5000);
         $query = $this->db->get();
         $count = $query->num_rows();
-
         $result = $query->result_array();
 
         for ($i = 0; $i <= count($result) - 1; $i++) {
@@ -182,12 +184,7 @@ class Dashboard_model extends CI_Model
             $station_from   = $result[$i]['station_from'];
             $station_to     = $result[$i]['station_to'];
 
-            $CI = &get_instance();
-            $CI->load->model('Tax_Model');
-
-            $profit_settings = $this->User->getUserProfitSettings($user_id);
             $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, $profit_settings);
-
             $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
             $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
             $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
@@ -196,7 +193,7 @@ class Dashboard_model extends CI_Model
             $result[$i]['url']          = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
         }
 
-        $data = array("result" => $result, "count" => $count);
+        $data = json_encode(['data' => $result]);
         return $data;
     }
 }

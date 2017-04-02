@@ -134,7 +134,7 @@ gulp.task('js', function(){
 
         )
     .pipe(concat('apps.js'))
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(gulp.dest('dist/js'))
     .pipe(connect.reload());
 });
@@ -144,7 +144,7 @@ gulp.task('uglify', function(){
     gulp.src(paths.app
 
         )
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(gulp.dest('dist/js/apps'))
     .pipe(connect.reload());
 });
