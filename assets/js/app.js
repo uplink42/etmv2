@@ -32,6 +32,22 @@ function isEmail(email) {
     return regex.test(email);
 }
 
+
+function searchToObject() {
+    var pairs = window.location.search.substring(1).split("&"),
+        obj = {},
+        pair,
+        i;
+
+    for (i in pairs) {
+        if (pairs[i] === "") continue;
+        pair = pairs[i].split("=");
+        obj[ decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    }
+
+    return obj;
+}
+
 //override jquery ui - disable ajax calls when typing
 $.ui.autocomplete.prototype._initSource = function() {
     var array, url,

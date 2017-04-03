@@ -4,6 +4,10 @@
     }
     color: inherit;
     background-color: transparent;
+
+    /* &.btn-xs {
+        color: #fff;
+    } */
 }
 
 .buttons-margin .btn {
@@ -13,6 +17,8 @@
 .btn-default {
     border-color: #585d6e;
 }
+
+
 
 .btn {
     &.btn-w-sm {

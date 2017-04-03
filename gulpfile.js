@@ -107,7 +107,7 @@ gulp.task('sass', function(){
       }}))
     .pipe(sass())
     .pipe(concat('theme.min.css'))
-    .pipe(minify())
+    //.pipe(minify())
     .pipe(gulp.dest('dist/luna/styles'));
 });
 

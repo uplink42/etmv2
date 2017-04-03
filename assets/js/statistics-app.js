@@ -2,7 +2,7 @@
 $(document).ready(function() {
     var recap = $('#daily').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [25, 50, -1],
             [25, 50, "All"]
         ],
@@ -22,7 +22,7 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: [],
     });
     var bestraw = $('#bestraw').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",

@@ -106,11 +106,11 @@ $(document).ready(function() {
         e.preventDefault();
         if ($(this).attr('data-id') != interval) {
             var url;
-            var intVal = $(this).attr('data-id'),
-                url    = base + 'Profits/getProfitTable/' + charID + '/' + intVal + '/' + aggr;
+            var interval = $(this).attr('data-id'),
+                url    = base + 'Profits/getProfitTable/' + charID + '/' + interval + '/' + aggr;
 
             table.ajax.url(url).load();
-            $('.table-interval').text(intVal);
+            $('.table-interval').text(interval);
         }
     });
 

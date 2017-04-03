@@ -23,8 +23,10 @@ class Transactions_model extends CI_Model
      * @param  bool|boolean $res      
      * @return array                 
      */
-    public function getTransactionList(string $chars, int $interval, int $new = null, string $transID = null, bool $res = true) : ?array
+    public function getTransactionList(array $configs/*, bool $res = true*/) : ?string
     {
+        extract($configs);
+        //string $chars, int $interval, int $new = null, string $transID = null
         $this->db->select('t.idbuy as transaction_id,
             t.time as time,
             t.remaining as remaining,
@@ -55,16 +57,17 @@ class Transactions_model extends CI_Model
         if ($transID) {
             $this->db->where('idbuy', $transID);
         }
-        if (!$res) {
+        /*if (!$res) {
             $this->db->limit(0);
-        }
+        }*/
 
         $query = $this->db->get();
-        $count = $query->num_rows();
-
-        $result = $query->result();
-        $data   = array("result" => $result, "count" => $count);
-        return $data;
+        $result = $query->result_array();
+        for ($i = 0; $i < count($result); $i++) {
+            $result[$i]['url'] = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
+        }
+        //$data   = array("result" => $result, "count" => $count);
+        return json_encode(['data' => $result]);
     }
 
     /**
