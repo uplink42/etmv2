@@ -48,6 +48,10 @@ class Settings extends MY_Controller
 
             $data['selected'] = "settings";
 
+            $data['layout']['page_title']     = "Account Settings";
+            $data['layout']['icon']           = "pe-7s-tools";
+            $data['layout']['page_aggregate'] = false;
+
             $data['view'] = 'main/settings_v';
             $this->twig->display('main/_template_v', $data);
         }

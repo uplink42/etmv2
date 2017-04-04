@@ -90,46 +90,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {# {% for row in profits %}
-                                            <tr class="{{ row['profit_total'] > 0 ? 'success' : 'danger' }}">
-                                                <td> {% if img %}
-                                                        <img src={{ row['url'] }} alt=''>
-                                                     {% else %}
-                                                     {% endif %}
-                                                     <a class="item-name" style="color: #fff"> {{ row['item_name'] }}</a>
-                                                 </td>
-                                                <td>
-                                                    <a href="{{ base_url('transactions/index/' ~ character_id  ~ '?transID=' ~ row['trans_buy']) }}" target="_blank">
-                                                        <span class="btn btn-xs btn-danger">B</span></a>
-                                                    <br/>
-                                                    <a href="{{ base_url('transactions/index/' ~ character_id  ~ '?transID=' ~ row['trans_sell']) }}" target="_blank">
-                                                        <span class="btn btn-xs btn-success">S</span></a>
-                                                </td>
-                                                <td class="hidden-xs">{{ row['sys_buy'] }}<br/>
-                                                    {{ row['sys_sell'] }}
-                                                </td>
-                                                <td class="hidden-xs">{{ row['buy_price'] | number_format(2) }} <br />
-                                                    {{ row['sell_price'] | number_format(2) }}
-                                                </td>
-                                                <td class="hidden-xs">{{ row['profit_quantity'] | number_format(0) }}
-                                                </td>
-                                                <td class="hidden-xs">{{ row['buy_price_total'] | number_format(2) }}<br />
-                                                    {{ row['sell_price_total'] | number_format(2) }}
-                                                </td>
-                                                <td class="hidden-xs">{{ row['time_buy'] }} <br />
-                                                    {{ row['time_sell'] }}
-                                                </td>
-                                                <td class="hidden-xs">{{ row['character_buy'] }} <br />
-                                                    {{ row['character_sell'] }}
-                                                </td>    
-                                                <td>{{ row['profit_total'] | number_format(2) }}
-                                                </td>
-                                                <td><a class= "btn btn-default btn-xs">{{ row['margin'] | number_format(2) }}</a>
-                                                </td>
-                                                <td>{{ row['diff'] }}
-                                                </td>
-                                            </tr>
-                                        {% endfor %} #}
                                         </tbody>
                                     </table>
                                 </div>

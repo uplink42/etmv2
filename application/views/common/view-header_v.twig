@@ -15,12 +15,19 @@
         </ul>
     </div>
     <div class="header-icon">
-        {% if aggregate == 0 %}
-            <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/{{character_id}}_64.jpg">
-        {% endif %}
-        {% if aggregate != 0 %}
+        {% if not layout['page_aggregate'] %}
             <i class="pe page-header-icon {{ layout['icon'] }}"></i>
+        {% else %}
+            {% if aggregate == 0 %}
+                <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/{{character_id}}_64.jpg">
+            {% endif %}
+            {% if aggregate != 0 %}
+                <i class="pe page-header-icon {{ layout['icon'] }}"></i>
+            {% endif %}
         {% endif %}
+
+
+        
     </div>
     <div class="header-title">
         <h1>
@@ -31,9 +38,7 @@
                 {% if aggregate == 0 %}
                     {{ character_name }}'s {{ layout['page_title'] }}
                 {% endif %}
-            {% endif %}
-
-            {% if layout['page_aggregate'] is empty %}
+            {% else %}
                 {{ layout['page_title'] }}
             {% endif %}
         </h1>
