@@ -29,17 +29,16 @@ $(document).ready(function() {
         });
     }
 
+    // start delete
     $("table").on('click', 'button', function() {
         var id = $(this).data('iddel');
-        var url = $("#delete").data('url');
-        var full_url = url + "/" + id;
-
-        $(".btn-delete-confirm").attr('data-url', full_url);
+        var url = base + 'Apikeymanagement/removeCharacter/' + id;
+        $(".btn-delete-confirm").attr('data-url', url);
     });
 
+    // confirm delete
     $(".btn-delete-confirm").on('click', function() {
         var url = $(this).attr('data-url');
-
         $.ajax({
             dataType: "json",
             url: url,
@@ -51,6 +50,7 @@ $(document).ready(function() {
         });
     });
 
+    //submit a new key
     $(".submit-add").on('click', function(e) {
         apikey = $("#keyid").val();
         vcode = $("#vcode").val();
@@ -84,8 +84,9 @@ $(document).ready(function() {
                 }  
             }
         });
-    })
+    });
 
+    // submit characters
     $(".submit-add-2").on('click', function(e) {
         e.preventDefault();
 
@@ -107,6 +108,5 @@ $(document).ready(function() {
                 }
             }
         });
-    })
-    
+    });
 });

@@ -8,6 +8,7 @@ class Logout extends CI_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->load->library('etmsession');
+        $this->load->library('twig');
         $this->load->model('common/Msg');
     }
 
@@ -24,6 +25,7 @@ class Logout extends CI_Controller
         $this->etmsession->delete('username');
         $this->etmsession->delete('start');
         $this->etmsession->delete('iduser');
+
         $this->twig->display('main/_template_v', $data);
         return false;
     }

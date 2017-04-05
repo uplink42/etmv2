@@ -1,22 +1,10 @@
-<script src="<?=base_url('dist/js/apps/apikeymanagement-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="view-header">
-                    <?php $this->load->view('common/selector_v');?>
-                    <div class="header-icon">
-                        <i class="pe page-header-icon fa fa-users">
-                        </i>
-                    </div>
-                    <div class="header-title">
-                        <h1>API Key Management</h1>
-                    </div>
-                </div>
-                <hr>
+                {% include 'common/view-header_v' ~ '.twig' %}
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success panel-main">
@@ -38,7 +26,7 @@
                                 <h5><i class="fa fa-plus"></i> Add API Key/character</h5>
                             </div>
                         </div>
-                        <form class="form-horizontal add-apikey" data-url="<?=base_url()?>" name="apiform">
+                        <form class="form-horizontal add-apikey" name="apiform">
                             <div class="api-insert-1">
                                 <div>
                                     <span class="help-block small text-center">
@@ -102,7 +90,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" data-url="<?=base_url('Apikeymanagement/removeCharacter')?>">
+            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header text-center">
@@ -123,3 +111,4 @@
         </div>
     </div>
 </section>
+<script src="{{ base_url('dist/js/apps/apikeymanagement-app.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>

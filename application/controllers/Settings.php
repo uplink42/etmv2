@@ -57,6 +57,7 @@ class Settings extends MY_Controller
         }
     }
 
+
     /**
      * Returns the user's email
      * @return string json 
@@ -66,6 +67,7 @@ class Settings extends MY_Controller
         $data = $this->Settings_model->getEmail($this->user_id);
         echo json_encode(array("email" => $data));
     }
+
 
     /**
      * Returns the user's reports

@@ -35,6 +35,10 @@ class Apikeymanagement extends MY_Controller
             $chars     = $data['chars'];
             $data['selected'] = "apikey";
 
+            $data['layout']['page_title']     = "API Key Management";
+            $data['layout']['icon']           = "fa fa-users";
+            $data['layout']['page_aggregate'] = false;
+
             $data['view']     = 'main/apimanagement_v';
             $this->twig->display('main/_template_v', $data);
         }
