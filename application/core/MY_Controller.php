@@ -237,7 +237,6 @@ class MY_Controller extends CI_Controller
     public function injectIcons($dataset, $type = false) : array
     {
         $max = count($dataset);
-
         if ($max > 0) {
             for ($i = 0; $i < $max; $i++) {
                 if ($type == "object") {

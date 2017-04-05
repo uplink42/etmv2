@@ -26,6 +26,11 @@ class Stocklists extends MY_Controller
 
             $data['selected'] = "stocklists";
             $data['view']     = 'main/stocklists_v';
+
+            $data['layout']['page_title']     = "Stock Lists";
+            $data['layout']['icon']           = "pe-7s-note2";
+            $data['layout']['page_aggregate'] = true;
+
             $this->twig->display('main/_template_v', $data);
         }
     }
@@ -72,7 +77,8 @@ class Stocklists extends MY_Controller
     {
         if($this->ValidateRequest->checkStockListOwnership($id_list, $this->user_id)) {
             $result = $this->StockLists_model->getItems($id_list);
-            echo json_encode($result);
+            $this->injectIcons($result, 'object');
+            echo json_encode(array('data' => $result));
         } else {
             echo "error";
         }

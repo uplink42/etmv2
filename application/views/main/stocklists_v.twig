@@ -1,21 +1,8 @@
-<script src="<?=base_url('dist/js/apps/stocklists-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="view-header">
-                    <?php $this->load->view('common/selector_v');?>
-                    <div class="header-icon">
-                        <i class="pe page-header-icon pe-7s-note2">
-                        </i>
-                    </div>
-                    <div class="header-title">
-                        <h1>
-                            Stock Lists
-                        </h1>
-                    </div>
-                </div>
-                <hr>
+                {% include 'common/view-header_v' ~ '.twig' %}
             </div>
         </div>
         <div class="row">
@@ -38,7 +25,7 @@
                                 <h5><i class="fa fa-plus"></i> Create new Stock List</h5>
                             </div>
                         </div>
-                        <form class="form-horizontal" data-url=<?=base_url()?>>
+                        <form class="form-horizontal">
                             <div class="form-group"><label for="list-name" class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-10"><input type="text" class="form-control list-name" id="list-name" name="list-name" placeholder="Type your new list name here" autofocus></div>
                             </div>
@@ -91,12 +78,12 @@
                                 <h5>
                                     <i class="fa fa-th-list" width="20px;"></i> 
                                     Stock List <span class="yellow contents"></span>
-                                    - Total items: <span class="yellow total"></span>
                                 </h5>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-responsive table-stripped table-hover">
+                        <div class="table-responsive stocklist-body">
+                            <p class="yellow"></p>
+                            <table class="table table-responsive table-stripped table-hover" id="stocklist-items">
                                 <thead>
                                     <tr>
                                         <th>Item</th>
@@ -106,16 +93,15 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-items">
-                                    
                                 </tbody>
                             </table>
-                            <button class="btn btn-danger btn-delete-list pull-right" data-toggle='modal' data-target='#delete'>Delete Stock List</button>
+                            <button class="mt-30 btn btn-danger btn-delete-list pull-right" data-toggle='modal' data-target='#delete'>Delete Stock List</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" data-url="<?=base_url('stocklists/deleteList')?>">
+        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header text-center">
@@ -135,3 +121,4 @@
         </div>
     </div>
 </section>
+<script src="{{ base_url('dist/js/apps/stocklists-app.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>

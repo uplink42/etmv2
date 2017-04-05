@@ -1,11 +1,9 @@
 "use strict";
 $(document).ready(function() {
-    var url_autocomplete = base + "Stocklists/searchItems/";
-    // count items for a list
-    function updateTotalItems() {
-        $('.yellow.total').text($('.table-items tr').length / 2);
-    }
+    var table,
+        listID;
 
+    var url_autocomplete = base + "Stocklists/searchItems/";
     // get all lists
     function populateDropdown() {
         var url = base + "Stocklists/populateList/";
@@ -27,38 +25,88 @@ $(document).ready(function() {
     }
     populateDropdown();
 
-    // get items from a list
-    function getItems(id) {
-        var url = base + "Stocklists/getItems/" + id;
-        $(".table-items").attr('data-id', id);
-        $.ajax({
-            dataType: "json",
-            url: url,
-            global: false,
-            success: function(result) {
-                $(".table-items tr").remove();
-                $.each(result, function(k, v) {
-                    var id_item = result[k].id;
-                    var url = "https://image.eveonline.com/Type/"+id_item+"_32.png";
-                    var $img = "<img src='"+url+"' alt='item'>";
-                    var name = result[k].name;
-                    var vol = number_format(result[k].vol,2, '.', ',' );
-                    var price = number_format(result[k].price,2, '.', ',');
-                    var $btn = "<a href="+base+"Stocklists/removeItem/"+id_item+"/"+id+"><button class='btn btn-danger btn-remove-item'>Remove</button></a>";
-                    var $element = "<tr><td> " + $img + " " + name + "</td><td>" + vol + "</td><td>" + price + "</td><td>" + $btn + "</td><tr>";
-                    $(".table tbody").append($element);
-                });
 
-                updateTotalItems();
-            }
+    function updateTotal() {
+        setTimeout(function() {
+            $('#stocklist-items_filter input').trigger('keyup');
         });
     }
+
+
+    // get items from a list
+    function getItems(id) {
+        if (table) {
+            table.destroy();
+        }
+
+        listID = id;
+        table = $('#stocklist-items').DataTable({
+            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            deferRender: true,
+            ajax : {
+                type: 'GET',
+                url : base + 'Stocklists/getItems/' + listID,
+                dataSrc: function (json) {
+                    var return_data = [];
+                    for (var i = 0; i < json.data.length; i++) {
+                        return_data.push({
+                            item: '<img src="' + json.data[i].url + '">' + ' <a class="item-name" style="color:#fff">' + 
+                                json.data[i].name + '</a>',
+                            volume: number_format(json.data[i].vol,2, '.', ',' ),
+                            estimate: number_format(json.data[i].price,2, '.', ','),
+                            delete: "<a href=" + base + "Stocklists/removeItem/" + json.data[i].item_id+"/" + 
+                                id + "><button class='btn btn-danger btn-remove-item'>Remove</button></a>" 
+                        });
+                    }
+                    updateTotal();
+                    return return_data;
+                }   
+            },
+            columns: [
+                { data: "item" },
+                { data: "volume" },
+                { data: "estimate" },
+                { data: "delete" },
+            ],
+            lengthMenu: [
+                [50, 75, 100, -1],
+                [50, 75, 100, "All"]
+            ],
+            buttons: [{
+                extend: 'copy',
+                className: 'btn-sm'
+            }, {
+                extend: 'csv',
+                title: 'profits',
+                className: 'btn-sm'
+            }, {
+                extend: 'pdf',
+                title: 'profits',
+                orientation: 'landscape',
+                className: 'btn-sm'
+            }, {
+                extend: 'print',
+                className: 'btn-sm'
+            }],
+            aoColumnDefs: [{
+                bSearchable: false,
+                aTargets: [3]
+            }],
+            order: []
+        });
+    }
+
+    // filters
+    $("body").on('keyup', '#stocklist-items_filter input', function() {
+        console.log('asdasd');
+        $(".stocklist-panel p.yellow").html("You have " + table.rows().count() + " items");
+    });
 
     // submit new list
     $(".submit-list").on('click', function(e) {
         e.preventDefault();
-        var url = base + "Stocklists/newList/";
-        var data = $(".form-horizontal").serialize();
+        var url = base + "Stocklists/newList/",
+            data = $(".form-horizontal").serialize();
         $.ajax({
             dataType: "json",
             url: url,
@@ -66,15 +114,15 @@ $(document).ready(function() {
             type: "POST",
             success: function(result) {
                 toastr[result.notice](result.message);
-                var id_list = result.id,
-                    list_name = $("#list-name").val();
+                listID = result.id;
+                var list_name = $("#list-name").val();
 
                 populateDropdown();
                 $(".add-list-item").show();
                 $(".stocklist-content").show();
                 $(".yellow.contents").text(list_name);
-                $("#list-id").val(id_list);
-                getItems(id_list);
+                $("#list-id").val(listID);
+                getItems(listID);
             }
         });
     });
@@ -84,9 +132,12 @@ $(document).ready(function() {
         var $el = $(this).find('option:selected').text();
         $(".yellow.contents").text($el);
         var id = $(this).find('option:selected').attr('id');
-        getItems(id);
+        if (id) {
+            listID = id;
+            getItems(listID);
+        }
         
-        if($(this).find('option:selected').hasClass('value')) {
+        if ($(this).find('option:selected').hasClass('value')) {
             $(".add-list-item").show();
             $("#list-id").val(id);
             $(".stocklist-content").show();
@@ -112,10 +163,9 @@ $(document).ready(function() {
     // add item
     $(".btn-add-item").on('click', function (e) {
         e.preventDefault();
-        var list_id =  $("#list-id").val();
-        
-        var url = base + "Stocklists/addItem/";
-        var data = $(".add-item").serialize();
+            listID =  $("#list-id").val();
+            var url = base + "Stocklists/addItem/",
+            data = $(".add-item").serialize();
 
         $.ajax({
             dataType: "json",
@@ -126,20 +176,18 @@ $(document).ready(function() {
             success: function(result) {
                 toastr[result.notice](result.message);
                 if(result.notice == "success") {
-                    getItems(list_id);
+                    $('#item-name').val('');
+                    table.ajax.reload();
                 }
-                updateTotalItems();
+                updateTotal();
             }
         });
-
-        $("#item-name").val("");
     });
 
     // remove item
     $(".table-items").on('click', 'a', function(e) {
         e.preventDefault();
         var url = $(this).attr('href');
-        var list_id = $(".table-items").attr('data-id');
 
         $.ajax({
             dataType: "json",
@@ -147,10 +195,11 @@ $(document).ready(function() {
             global: false,
             success: function(result) {
                 toastr[result.notice](result.message);
-                if(result.notice == "success") {
-                    getItems(list_id);
+                if (result.notice == "success") {
+                    url = 'Stocklists/getItems/' + listID;
+                    table.ajax.reload();
+                    updateTotal();
                 }
-                updateTotalItems();
             }
         });
 
@@ -159,15 +208,14 @@ $(document).ready(function() {
     // remove List
     $(".btn-delete-list-confirm").on('click', function(e) {
         e.preventDefault();
-        var id = $(".table-items").attr('data-id');
-        var url = base + "Stocklists/removeList/"+id;
+        var url = base + "Stocklists/removeList/" + listID;
 
         $.ajax({
             dataType: "json",
             url: url,
             success: function(result) {
                 toastr[result.notice](result.message);
-                if(result.notice == "success") {
+                if (result.notice == "success") {
                     $(".modal-close").trigger('click');
                     $(".add-list-item").hide();
                     $(".stocklist-content").hide();
