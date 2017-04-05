@@ -3,7 +3,6 @@ $(document).ready(function() {
     var table,
         listID;
 
-    var url_autocomplete = base + "Stocklists/searchItems/";
     // get all lists
     function populateDropdown() {
         var url = base + "Stocklists/populateList/";
@@ -98,7 +97,6 @@ $(document).ready(function() {
 
     // filters
     $("body").on('keyup', '#stocklist-items_filter input', function() {
-        console.log('asdasd');
         $(".stocklist-panel p.yellow").html("You have " + table.rows().count() + " items");
     });
 
@@ -150,7 +148,7 @@ $(document).ready(function() {
     // item name autocomplete
     $("#item-name").autocomplete({
         global: false,
-        source: url_autocomplete,
+        source: base + 'Stocklists/searchItems/',
         minLength: 2,
         messages: {
             noResults: '',
