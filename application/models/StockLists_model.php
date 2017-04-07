@@ -42,7 +42,6 @@ class StockLists_model extends CI_Model
         $query = $this->db->insert('itemlist', $data);
 
         if ($this->db->affected_rows() != 0) {
-            log_message('error', $this->db->insert_id());
             return $this->db->insert_id();
         }
         return false;

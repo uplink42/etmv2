@@ -221,7 +221,6 @@ class ValidateRequest extends CI_Model
             $expiry     = $response->key->expires;
 
         } catch (Throwable $e) {
-            log_message('error', 'validate api keys ' . $e->getMessage());
             //communication error, abort
             return Msg::INVALID_API_KEY;
         }

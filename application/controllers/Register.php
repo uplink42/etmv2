@@ -27,7 +27,6 @@ class Register extends CI_Controller
 
         $this->load->model('Register_model', 'register');
         $result = $this->register->validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports);
-        log_message('error', print_r($result, 1));
 
         if (!isset($result['username']) &&
             !isset($result['password']) &&
