@@ -27,11 +27,11 @@
     {% endif %}
 
     <!-- Vendor styles -->
-    <link rel="stylesheet" href="{{ base_url('dist/luna/styles/styles.css') }}?HASH_CACHE={{HASH_CACHE}}"/>
-    <link rel="stylesheet" href="{{ base_url('dist/luna/styles/theme.min.css') }}?HASH_CACHE={{HASH_CACHE}}"/>
+    <link rel="stylesheet" href="{{ base_url('dist/luna/styles/styles.css') }}?v={{HASH_CACHE}}"/>
+    <link rel="stylesheet" href="{{ base_url('dist/luna/styles/theme.min.css') }}?v={{HASH_CACHE}}"/>
 
     <!-- main js -->
-    <script src="{{ base_url('dist/js/apps.js') }}?HASH_CACHE={{HASH_CACHE}}"></script>
+    <script src="{{ base_url('dist/js/apps.js') }}?v={{HASH_CACHE}}"></script>
 
     {# enable ajax loader #}
     {% if market %}
