@@ -11,7 +11,7 @@ class Tradesimulator extends MY_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->page = "tradesimulator";
-        $this->load->model('TradeSimulator_model');
+        $this->load->model('TradeSimulator_model', 'ts');
     }
 
     /**
@@ -33,15 +33,15 @@ class Tradesimulator extends MY_Controller
             if ($data['status']) {
                 $data['traderoutes'] = $this->listTradeRoutes($character_id);
                 $data['stocklists']  = $this->getLists();
-
-                if (isset($msg)) {
-                    buildMessage($msg['notice'], $msg['message'], 'main/tradesimulator_v');
-                }
                 $res ? $data['results'] = $res : '';
             } else {
                 $data["notice"]  = "error";
                 $data["message"] = Msg::CREST_CONNECT_FAILURE;
             }
+
+            $data['layout']['page_title']     = "Trade Simulator";
+            $data['layout']['icon']           = "pe-7s-magic-wand";
+            $data['layout']['page_aggregate'] = false;
 
             $data['view'] = 'main/tradesimulator_v';
             $this->twig->display('main/_template_v', $data);
@@ -99,17 +99,17 @@ class Tradesimulator extends MY_Controller
 
             $origin_station      = (string) $_REQUEST['origin-station'];
             $destination_station = (string) $_REQUEST['destination-station'];
-            $buyer               = (int) $_REQUEST['buyer'];
-            $seller              = (int) $_REQUEST['seller'];
+            $buyer               = (int)    $_REQUEST['buyer'];
+            $seller              = (int)    $_REQUEST['seller'];
             $buy_method          = (string) $_REQUEST['buy-method'];
             $sell_method         = (string) $_REQUEST['sell-method'];
-            $stocklist           = (int) $_REQUEST['stocklist'];
+            $stocklist           = (int)    $_REQUEST['stocklist'];
 
-            $this->stationFrom = $this->TradeSimulator_model->getStationID($_REQUEST['origin-station']);
-            $this->stationTo   = $this->TradeSimulator_model->getStationID($_REQUEST['destination-station']);
+            $this->stationFrom = $this->ts->getStationID($_REQUEST['origin-station']);
+            $this->stationTo   = $this->ts->getStationID($_REQUEST['destination-station']);
 
             if ($this->stationFrom && $this->stationTo) {
-                $res = $this->TradeSimulator_model->init(
+                $res = $this->ts->init(
                     $origin_station,
                     $destination_station,
                     $buyer,
@@ -119,13 +119,17 @@ class Tradesimulator extends MY_Controller
                     $stocklist);
                 $this->load->model('common/Log');
                 $this->Log->addEntry('tradesim', $this->user_id);
+                log_message('error', print_r($res,1));
                 $this->index($character_id, null, $res);
-
             } else {
+                log_message('error', 'stationnotfound');
+                buildMessage('notice', Msg::STATION_NOT_FOUND);
                 $msg = array("notice" => "error", "message" => Msg::STATION_NOT_FOUND);
                 $this->index($character_id, $msg);
             }
         } else {
+            log_message('error', 'missingifo');
+            buildMessage('notice', Msg::MISSING_INFO);
             $msg = array("notice" => "error", "message" => Msg::MISSING_INFO);
             $this->index($character_id, $msg);
         }
