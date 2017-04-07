@@ -57,8 +57,8 @@
             <div class="col-md-12">
                 <div class="tabs-container">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> Asset Distribution</a></li>
-                        <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false"> Assets List</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab-2" aria-expanded="true"> Assets List</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-1" aria-expanded="false"> Asset Distribution</a></li>
                         <li class=""><a data-toggle="tab" href="#tab-3" class="spark-tab" aria-expanded="false"> Recent Asset Evolution</a></li>
                     </ul>
                 </div>
@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <div id="tab-1" class="tab-pane active">
+            <div id="tab-1" class="tab-pane">
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
                         <?php 
@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <div id="tab-2" class="tab-pane">
+            <div id="tab-2" class="tab-pane active">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-filled">
@@ -113,24 +113,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                            foreach ($asset_list as $asset) {
-                                                $id = $asset['item_id'];
-                                                $img ? $url = $asset['url'] : $url="";
-
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $img ? "<img src=".$url." alt=''>" : ''?>
-                                                        <a class="item-name" style="color: #fff"><?=$asset['item_name']?></a></td>
-                                                    <td><?=$asset['owner']?></td>
-                                                    <td><?=number_format($asset['quantity'],0)?></td>
-                                                    <td><?=$asset['loc_name']?></td>
-                                                    <td><?=number_format($asset['unit_value'],2)?></td>
-                                                    <td><?=number_format($asset['total_value'],2)?></td>
-                                                </tr>
-                                                <?php
-                                            }
-                                            ?>
                                         </tbody>
                                     </table>
                                 </div>

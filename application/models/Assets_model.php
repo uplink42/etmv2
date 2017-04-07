@@ -75,7 +75,6 @@ class Assets_model extends CI_Model
                         "total_value_b" => $total_value/1000000000,
                         "region_id"     => $region_id));
             }
-
         }
         return $data;
     }

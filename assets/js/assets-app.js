@@ -1,32 +1,22 @@
 "use strict";
 $(document).ready(function() {
-    var itemID;
-    var regionID = 0;
     var table = $('#assets-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         deferRender: true,
         ajax : {
             type : 'POST',
             url  : base + 'Assets/getAssetsTable/' + charID + '/' + aggr,
-            data : {item_id: itemID},
+            data : {region_id: regionID},
             dataSrc: function (json) {
                 var return_data = [];
                 for (var i = 0; i < json.length; i++) {
                     return_data.push({
-                        item: '<img src="' + json[i].url + '">' + '<a class="item-name" style="color:#fff">' + json.data[i].item_name + '</a>',
-                        buy_sell_link: '<a href="' + base + 'transactions/index/' + charID + '?transID=' + json.data[i].trans_buy + '" target=_blank>' + 
-                            '<span class="btn btn-xs btn-danger">B</span></a><br>' + 
-                            '<a href="' + base + 'transactions/index/' + charID + '?transID=' + json.data[i].trans_sell + '" target=_blank>' + 
-                            '<span class="btn btn-xs btn-success">B</span></a>',
-                        systems: json.data[i].sys_buy + '<br>' + json.data[i].sys_sell,
-                        isk_unit: number_format(json.data[i].buy_price, 2, '.', ',' ) + '<br>' + number_format(json.data[i].sell_price, 2, '.', ',' ),
-                        quantity: number_format(json.data[i].profit_quantity, 0, '.', ',' ),
-                        isk_total: number_format(json.data[i].buy_price_total, 2, '.', ',' ) + '<br>' + number_format(json.data[i].sell_price_total, 2, '.', ',' ),
-                        times: json.data[i].time_buy + '<br>' + json.data[i].time_sell,
-                        characters: json.data[i].character_buy + '<br>' + json.data[i].character_sell,
-                        isk_profit: number_format(json.data[i].profit_total, 2, '.', ',' ),
-                        margin: '<a class= "btn btn-default btn-xs">' + number_format(json.data[i].margin, 2, '.', ',' ) + '</a>',
-                        duration: json.data[i].diff
+                        item: '<img src="' + json[i].url + '">' + '<a class="item-name" style="color:#fff">' +  json[i].item_name,
+                        owner: json[i].owner,
+                        quantity: number_format(json[i].quantity, 0, '.', ',' ),
+                        location: json[i].loc_name,
+                        isk_unit: number_format(json[i].unit_value, 2, '.', ',' ),
+                        isk_total: number_format(json[i].total_value, 2, '.', ',' )
                     });
                   }
                 updateTableTotals();
@@ -35,10 +25,10 @@ $(document).ready(function() {
         },
         columns: [
             { data: "item" },
-            { data: "buy_sell_link" },
-            { data: "systems" },
-            { data: "isk_unit" },
+            { data: "owner" },
             { data: "quantity" },
+            { data: "location" },
+            { data: "isk_unit" },
             { data: "isk_total" },
         ],
         lengthMenu: [
@@ -68,6 +58,13 @@ $(document).ready(function() {
         }]
     });
 
+    function updateTableTotals() {
+        setTimeout(function() {
+            $('.assets-body .input-sm').trigger('keyup');
+        });
+    }
+
+    // totals
     $(".assets-body p.yellow").html("<p>There are "+ table.rows().count() + " results for a total of "
         + number_format(table.column(5).data().sum(),2, '.', ',' ) + " ISK</p>");
     $("#assets-table_filter input").keyup(function () {
@@ -75,14 +72,15 @@ $(document).ready(function() {
             + number_format(table.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
     });
 
+    // item filter
     $("table").on('click', 'a', function() {
         var name = $(this).text();
         $(".assets-body input.form-control").val(name);
         $(".assets-body input.form-control").trigger("keyup");
     });
 
+    // normalize sparkline
     var i = 0;
-
     $(".spark-tab").on('click', function() {
         i++;
         if(i<2) {
@@ -92,7 +90,6 @@ $(document).ready(function() {
     });
 
     function renderSparkline() {
-        // Sparkline charts
         var sparklineCharts = function() {
             $(".sparkline").sparkline($(".sparkline").data('profit'), {
                 type: 'line',
@@ -112,5 +109,4 @@ $(document).ready(function() {
         // Run sparkline
         sparklineCharts();
     }
-    
 });
