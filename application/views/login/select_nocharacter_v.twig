@@ -1,8 +1,6 @@
-<script src="<?=base_url('dist/js/apps/loginapikeymanagement-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
-</script>
-<section class="content" data-url="<?=base_url()?>">
+<section class="content" data-url="{{ base_url() }}">
     <div class="back-link">
-        <a class="btn btn-accent" href="<?=base_url()?>">
+        <a class="btn btn-accent" href="{{ base_url() }}">
             Back to main page
         </a>
     </div>
@@ -25,7 +23,7 @@
         </div>
         <div class="panel panel-filled">
             <div class="panel-body">
-                <form class="form-horizontal add-apikey" data-url="<?=base_url()?>" name="apiform">
+                <form class="form-horizontal add-apikey" data-url="{{ base_url() }}" name="apiform">
                     <div class="api-insert-1">
                         <div>
                             <span class="help-block small text-center">
@@ -63,3 +61,4 @@
         </div>
     </div>
 </section>
+<script src="{{ base_url('dist/js/apps/loginapikeymanagement-app.js') }}?HASH_CACHE=<?=HASH_CACHE?>"></script>

@@ -20,7 +20,7 @@ class Msg extends CI_Model
     const CHARACTER_ACCOUNT_MISMATCH = "One or more characters you selected do not belong to this account";
     const CHARACTER_ALREADY_TAKEN    = "One of more characters you selected already belongs to someone";
     const NO_CHARACTER_SELECTED      = "Please select at least one character";
-    const ACCOUNT_CREATE_SUCCESS     = "Account created successfully";
+    const ACCOUNT_CREATE_SUCCESS     = "Account created successfully. You may now login";
     const CHARACTER_CREATE_SUCCESS   = "Character added successfully";
     const ERROR_REMOVED_CHARACTERS   = "Expired or invalid permissions detected on your API key. Removed the following characters from your account:";
     const MISSING_INFO               = "Missing information provided";
@@ -71,7 +71,7 @@ class Msg extends CI_Model
     const RECOVERY_SUCCESS           = "If the information you provided is correct you will soon recieve an e-mail with your information";
     const RECOVERY_ERROR             = "Unexpected failure. Try again";
     const LOGOUT                     = "You have logged out";
-    const OFFLINE_MODE_NOTICE        = "Unable to update your characters's data. This could be a temporary issue.";
+    const OFFLINE_MODE_NOTICE        = "Unable to update your characters's data at this time. This could be a temporary issue.";
     const UPDATE_SUCCESS             = "Sucessfully updated characters' data.";
 
     public function __construct()

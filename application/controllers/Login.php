@@ -45,7 +45,6 @@ class Login extends CI_Controller
             redirect(base_url('Updater'));
         } else {
             buildMessage("error", Msg::INVALID_LOGIN);
-            log_message('error', print_r($_SESSION, 1));
             $data['no_header'] = 1;
             $this->twig->display('main/_template_v', $data);
         }
