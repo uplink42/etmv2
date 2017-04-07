@@ -2,7 +2,6 @@
 $(document).ready(function() {
 
     var url_autocomplete = base + "Citadeltax/searchCitadels/";
-        url_req = base + "Citadeltax/addTax/";
 
     if (window.location.search !== '?aggr=1') {
         updateTable();
@@ -27,7 +26,7 @@ $(document).ready(function() {
             var data = $(".add-tax").serialize();
             $.ajax({
                 dataType: "json",
-                url: url_req,
+                url: base + "Citadeltax/addTax/",
                 data: data,
                 type: "POST",
                 global: false,
@@ -39,7 +38,6 @@ $(document).ready(function() {
             });
         } else {
             toastr["error"](errHandle.get().INVALID_FORM);
-
         }
     });
 
