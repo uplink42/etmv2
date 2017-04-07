@@ -26,6 +26,11 @@ class Traderoutes extends MY_Controller
 
             $data['selected'] = "traderoutes";
             $data['view'] = 'main/traderoutes_v';
+
+            $data['layout']['page_title']     = "Trade Routes";
+            $data['layout']['icon']           = "pe-7s-plane";
+            $data['layout']['page_aggregate'] = false;
+
             $this->twig->display('main/_template_v', $data);
         }
     }

@@ -1,19 +1,8 @@
-<script src="<?=base_url('dist/js/apps/traderoutes-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="view-header">
-                    <?php $this->load->view('common/selector_v');?>
-                    <div class="header-icon">
-                        <i class="pe page-header-icon pe-7s-plane">
-                        </i>
-                    </div>
-                    <div class="header-title">
-                        <h1>Trade Routes</h1>
-                    </div>
-                </div>
-                <hr>
+                {% include 'common/view-header_v' ~ '.twig' %}
             </div>
         </div>
 
@@ -40,7 +29,7 @@
                     </div>
 
                     <div class="panel-body traderoute-creation-panel">
-                        <form class="form-horizontal" data-url=<?=base_url()?>>
+                        <form class="form-horizontal" data-url={{ base_url() }}>
                             <div class="form-group"><label for="origin-station" class="col-sm-2 control-label">Origin</label>
                                 <div class="col-sm-10"><input type="text" class="form-control origin-station" id="origin-station" placeholder="Begin typing and select one of the highlighted stations"></div>
                             </div>
@@ -85,3 +74,4 @@
 
     </div>
 </section>
+<script src="{{ base_url('dist/js/apps/traderoutes-app.js') }}?HASH_CACHE=<?=HASH_CACHE?>"></script>
