@@ -217,37 +217,6 @@ class MY_Controller extends CI_Controller
         return $data;
     }
 
-    /**
-     * Get the correct icon for an item
-     * @param  int    $item_id 
-     * @return string      
-     */
-    public function generateIcon(int $item_id): string
-    {
-        $url = "https://image.eveonline.com/Type/" . $item_id . "_32.png";
-        return $url;
-    }
-
-    /**
-     * Inject icons into a result array or object
-     * @param  [array|stdClass]  $dataset 
-     * @param  boolean $type    
-     * @return array   
-     */
-    public function injectIcons($dataset, $type = false) : array
-    {
-        $max = count($dataset);
-        if ($max > 0) {
-            for ($i = 0; $i < $max; $i++) {
-                if ($type == "object") {
-                    $dataset[$i]->url = $this->generateIcon((int) $dataset[$i]->item_id);
-                } else {
-                    $dataset[$i]['url'] = $this->generateIcon((int) $dataset[$i]['item_id']);
-                }
-            }
-        }
-        return $dataset;
-    }
 
     /*int $character_id, bool $aggr, string $callback, string $model, int $interval = 1, int $item_id = null, int $user_id*/
     protected function buildData(int $character_id, bool $aggr, string $callback, string $model, array $configs)

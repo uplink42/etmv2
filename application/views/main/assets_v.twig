@@ -10,9 +10,7 @@
                 <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> 
-                            Here you can keep track of your assets (includes items inside stations, starbases and ships)<br/>
-                        <i class="fa fa-info yellow"></i> 
-                            Citadel assets are currently not supported by the API
+                            Here you can keep track of your assets (includes items inside stations, starbases and ships)
                     </div>
                 </div>
             </div>
@@ -38,36 +36,19 @@
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                            <li><a href="{{ base_url('assets/index/' ~ character_id ~ '/0?sig=' ~ sig ~ '&aggr=' ~ aggregate) }}">
+                                            <li><a href="{{ base_url('assets/index/' ~ character_id ~ '?aggr=' ~ aggregate) }}">
                                                 <b>All</b></a>
                                             </li>
                                             <li role="separator" class="divider"></li>
                                             {% for key, row in totals %}
-                                                <li data-id=""><a href="{{ base_url('assets/index/' ~ character_id ~ '/' ~ row[0]['region_id'] ~ '?sig=' ~ sig ~ '&aggr=' ~ aggregate) }}">
+                                                <li data-id=""><a href="{{ base_url('assets/index/' ~ character_id ~ '/' ~ row[0]['region_id'] ~ '?aggr=' ~ aggregate) }}">
                                                     {{ key }} {{ row[0]['total_value_b'] | number_format(3) }} b </a></li>
                                             {% endfor %}
                                         </ul>
                                     </div>
                                 </th>
                             </tr>
-                        </table> 
-                        <div class="text-center">
-                            {% if sig == 1 %}
-                                <a href="{{ base_url('assets/index/' ~ character_id ~  '/' ~ region_id ~ '?aggr=' ~ aggregate ~ '&sig=0') }}">
-                                    <p class="btn btn-w-md btn-warning warning-asset">Currently only displaying the most significant items which represent 
-                                        <span class="btn btn-default btn-xs">{{ ratio | number_format(2) }}</span> 
-                                of your asset value. Click here to see the full item list (page may be slower to load and export features may crash your browser if you have too many items).
-                                    </p>
-                                </a>
-                            {% endif %}
-                            {% if sig == 0 %}
-                                <a href="{{ base_url('assets/index/' ~ character_id ~  '/' ~ region_id ~ '?aggr=' ~ aggregate ~ '&sig=1') }}">
-                                    <p class="btn btn-w-md btn-warning warning-asset">Currently displaying all items. For faster page loads and exports you may request only the most significant items by clicking here, which would represent 
-                                        <span class="btn btn-default btn-xs">{{ ratio | number_format(2) }}</span> of your asset value.
-                                    </p>
-                                </a>
-                            {% endif %}
-                        </div>       
+                        </table>      
                     </div>
                 </div>
             </div>
