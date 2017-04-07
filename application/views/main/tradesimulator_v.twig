@@ -52,7 +52,7 @@
                                             <label for="buyer">Buyer character: </label>
                                             <select class="form-control" name="buyer" id="buyer">
                                             {% for key, char in character_list['chars'] %}
-                                              <option value="{{character_list['chars'][key]}}">{{ character_list['char_names'][key] }}</option>
+                                              <option id="{{character_list['chars'][key]}}" value="{{character_list['chars'][key]}}">{{ character_list['char_names'][key] }}</option>
                                              {% endfor %}
                                             </select>
                                         </div>
@@ -81,7 +81,7 @@
                                             <label for="seller">Seller character: </label>
                                             <select class="form-control" name="seller" id="seller">
                                             {% for key, char in character_list['chars'] %}
-                                                <option value="{{character_list['chars'][key]}}">{{ character_list['char_names'][key] }}</option>
+                                                <option id="{{character_list['chars'][key]}}" value="{{character_list['chars'][key]}}">{{ character_list['char_names'][key] }}</option>
                                             {% endfor %}
                                             </select>
                                         </div>
@@ -92,9 +92,9 @@
                                         <div class="form-group">
                                             <label for="stocklist">Stock List: </label>
                                             <select class="form-control" name="stocklist" id="stocklist">
-                                                <option>Select a Stock List below or create a new one</option>
+                                                <option value="0">Select a Stock List below or create a new one</option>
                                             {% for row in stocklists %}
-                                                <option value="{{row.iditemlist}}"> {{ row.name }}</option>
+                                                <option id="{{row.iditemlist}}" value="{{row.iditemlist}}"> {{ row.name }}</option>
                                             {% endfor %}
                                             </select>
                                         </div>
@@ -103,9 +103,9 @@
                                         <div class="form-group">
                                             <label for="traderoute">Trade Route (optional): </label>
                                             <select class="form-control" name="traderoute" id="traderoute">
-                                                <option value="default">Select a Trade Route below</option>
+                                                <option value="0">Select a Trade Route below</option>
                                             {% for row in traderoutes %}
-                                                <option value="{{row.id}}">{{row.s1 ~ " >> " ~ row.s2}}</option>
+                                                <option id="{{row.id}}" value="{{row.id}}">{{row.s1 ~ " >> " ~ row.s2}}</option>
                                             {% endfor %}
                                             </select>
                                         </div>
@@ -192,7 +192,9 @@
                                     <tbody>
                                     {% for row in results['results'] %}
                                         <tr class="{{ row['profit_raw'] > 0 ? 'success' : 'danger' }}">
-                                            <td><img src="{{'https://image.eveonline.com/Type/' ~ row[id] ~ '_32.png'}}" alt="icon"> {{ name }}</td>
+                                            <td width="20%">
+                                                <img src="{{'https://image.eveonline.com/Type/' ~ row['id'] ~ '_32.png'}}" alt="icon"> {{ row['name'] }}
+                                            </td>
                                             <td>{{ row['vol']         | number_format(2) }}</td>
                                             <td>{{ row['buy_price']   | number_format(2) }}</td>
                                             <td>{{ row['buy_broker']  | number_format(2) }}</td>
@@ -215,4 +217,4 @@
         </div>
     </div>
 </section>
-<script src="{{ base_url('dist/js/apps/tradesimulator-app.js') }}?HASH_CACHE=<?=HASH_CACHE?>"></script>
+<script src="{{ base_url('dist/js/apps/tradesimulator-app.js') }}?v={{HASH_CACHE}}"></script>

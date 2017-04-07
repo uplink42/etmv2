@@ -21,7 +21,7 @@ class Tradesimulator extends MY_Controller
      * @param  [type]     $res            display results state?
      * @return void         
      */
-    public function index(int $character_id, array $msg = null, $res = null) : void
+    public function index(int $character_id, $res = null) : void
     {
         if ($this->enforce($character_id, $this->user_id)) {
             $aggregate        = $this->aggregate;
@@ -33,7 +33,7 @@ class Tradesimulator extends MY_Controller
             if ($data['status']) {
                 $data['traderoutes'] = $this->listTradeRoutes($character_id);
                 $data['stocklists']  = $this->getLists();
-                $res ? $data['results'] = $res : '';
+                $data['results']     = $res;
             } else {
                 $data["notice"]  = "error";
                 $data["message"] = Msg::CREST_CONNECT_FAILURE;
@@ -116,22 +116,20 @@ class Tradesimulator extends MY_Controller
                     $seller,
                     $buy_method,
                     $sell_method,
-                    $stocklist);
+                    $stocklist,
+                    $this->user_id);
                 $this->load->model('common/Log');
                 $this->Log->addEntry('tradesim', $this->user_id);
-                log_message('error', print_r($res,1));
-                $this->index($character_id, null, $res);
+                $this->index($character_id, $res);
             } else {
-                log_message('error', 'stationnotfound');
-                buildMessage('notice', Msg::STATION_NOT_FOUND);
+                buildMessage('success', Msg::STATION_NOT_FOUND);
                 $msg = array("notice" => "error", "message" => Msg::STATION_NOT_FOUND);
-                $this->index($character_id, $msg);
+                $this->index($character_id);
             }
         } else {
-            log_message('error', 'missingifo');
-            buildMessage('notice', Msg::MISSING_INFO);
+            buildMessage('success', Msg::MISSING_INFO);
             $msg = array("notice" => "error", "message" => Msg::MISSING_INFO);
-            $this->index($character_id, $msg);
+            $this->index($character_id);
         }
     }
 }

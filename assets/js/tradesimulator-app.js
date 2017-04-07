@@ -29,11 +29,12 @@ $(document).ready(function() {
     // submit
     $(".btn-submit-ts").on('click', function(e) {
         if (!$(this).hasClass('disabled')) {
-            var origin = $("#origin-station").val();
-            var destination = $("#destination-station").val();
-            var buyer = $("#buyer").val();
-            var seller = $("#seller").val();
-            if (origin && destination && buyer && seller) {
+            var origin = $("#origin-station").val(),
+                destination = $("#destination-station").val(),
+                buyer  = $("#buyer option:selected").attr('id'),
+                seller = $("#seller option:selected").attr('id'),
+                list   = $("#stocklist option:selected").attr('id');
+            if (origin && destination && buyer && seller && list) {
                 $(".tradesim").hide();
                 $('.panel-loading').show();
             } else {

@@ -10,6 +10,7 @@ class TradeSimulator_model extends CI_Model
     {
         parent::__construct();
         $this->load->model('common/RateLimiter');
+        $this->load->model('common/User');
     }
 
     private $stationFromName;
@@ -67,7 +68,7 @@ class TradeSimulator_model extends CI_Model
      * @param  int    $stocklist   
      * @return array              
      */
-    public function init(string $origin, string $destination, int $buyer, int $seller, string $buy_method, string $sell_method, int $stocklist)
+    public function init(string $origin, string $destination, int $buyer, int $seller, string $buy_method, string $sell_method, int $stocklist, int $user_id)
     {
         $this->stationFromName     = (string) $origin;
         $this->stationToName       = (string) $destination;
@@ -84,12 +85,12 @@ class TradeSimulator_model extends CI_Model
 
         $CI = &get_instance();
         $CI->load->model('Tax_Model');
-        $this->settings      = $this->User->getUserProfitSettings($result->iduser);
+        $this->settings      = $this->User->getUserProfitSettings($user_id);
         $CI->Tax_Model->tax($this->stationFromID, $this->stationToID, $buyer, $seller, $this->settings);
-        $this->transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
-        $this->brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
-        $this->transTaxTo    = $CI->Tax_Model->calculateTaxTo();
-        $this->brokerFeeTo   = $CI->Tax_Model->calculateBrokerTo();
+        $this->transTaxFrom  = $CI->Tax_Model->calculateTax('from');
+        $this->brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
+        $this->transTaxTo    = $CI->Tax_Model->calculateTax('to');
+        $this->brokerFeeTo   = $CI->Tax_Model->calculateBroker('to');
 
         return $this->generateResults();
     }
@@ -100,9 +101,7 @@ class TradeSimulator_model extends CI_Model
      */
     private function generateResults(): array
     {
-        $start    = microtime(true);
         $contents = $this->getStockListContents();
-
         $results         = [];
         $buy_broker_per  = ($this->brokerFeeFrom - 1) * 100;
         $buy_tax_per     = ($this->transTaxFrom - 1) * 100;
@@ -151,13 +150,12 @@ class TradeSimulator_model extends CI_Model
                 "profit_raw"       => $profit_raw,
                 "profit_m3"        => $profit_m3,
                 "profit_margin"    => $profit_margin);
-
             array_push($results, $item_res);
         }
-
-        $finish = microtime(true);
+        log_message('error', print_r($results, 1));
         return array("results" => $results, "req" => $taxes);
     }
+
 
     /**
      * Returns the list of all stock list contents
@@ -177,6 +175,7 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
+
     /**
      * Fetches price data from CREST for an item
      * @param  int    $item_id    
@@ -189,11 +188,11 @@ class TradeSimulator_model extends CI_Model
         $regionID = $this->getRegionID($station_id)->id;
         $url      = "https://crest-tq.eveonline.com/market/" . $regionID . "/orders/" . $order_type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
         //$context  = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
-        $ch = curl_init();
+        /*$ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $result = json_decode(curl_exec($ch), true);
-        //$result   = json_decode(file_get_contents($url), true);
+        $result = json_decode(curl_exec($ch), true);*/
+        $result   = json_decode(file_get_contents($url), true);
         $array_prices = [];
 
         for ($i = 0; $i < count($result['items']); $i++) {
