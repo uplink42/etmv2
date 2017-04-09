@@ -1,18 +1,14 @@
+<!--<script>
+$(document).ready(function() {
+    $('.collapse-menu').trigger('click');
+});
+</script>-->
 <section class="content">
     <div class="container-fluid">
-        <div class="row" style="margin-top: 70px;">
+        {# <div class="row" style="margin-top: 70px;">
             {% include 'common/view-header_v' ~ '.twig' %}
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-filled panel-c-success">
-                    <div class="panel-body">
-                        <i class="fa fa-info yellow"></i> Here you can browse Eve Online's market in real-time.<br/>
-                        <i class="fa fa-info yellow"></i> Many more exciting features will follow this application in the near future.
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div> #}
         {% include 'marketexplorer/index.html' %}
     </div>
 </section>
+<script src="{{ base_url('assets/fusioncharts/js/fusioncharts.js') }}?v={{HASH_CACHE}}"></script>

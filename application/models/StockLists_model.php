@@ -73,7 +73,7 @@ class StockLists_model extends CI_Model
      */
     public function queryItems(string $input) : array
     {
-        $this->db->select('name as value');
+        $this->db->select('name as value, eve_iditem as id');
         $this->db->from('item');
         $this->db->where('name', $input);
         $this->db->where("type <> 0");
@@ -81,7 +81,7 @@ class StockLists_model extends CI_Model
         $this->db->limit('1');
         $query1  = $this->db->get()->result();
 
-        $this->db->select('name as value');
+        $this->db->select('name as value, eve_iditem as id');
         $this->db->from('item');
         $this->db->like('name', $input);
         $this->db->where("type <> 0");

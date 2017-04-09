@@ -77,7 +77,7 @@ class Stocklists extends MY_Controller
     {
         if($this->ValidateRequest->checkStockListOwnership($id_list, $this->user_id)) {
             $result = $this->StockLists_model->getItems($id_list);
-            $this->injectIcons($result, 'object');
+            injectIcons($result, 'object');
             echo json_encode(array('data' => $result));
         } else {
             echo "error";

@@ -185,26 +185,6 @@
         </table>
 
     <br><br>
-    <center><p align='center'><h3>Possible Blunders </h3></p></center>
-        <table>
-            <tr>
-                <th width="40%">Item</th><th width="30%">Profit (ISK)</th><th>Margin (%)</th>
-            </tr>
-                <?php if (count($blunders) > 0) {
-                foreach($blunders as $row) {?>
-            <tr>
-                <td><img src="<?=$row['url']?>"> <?=$row['item']?></td>
-                <td><?=number_format($row['profit'],2)?></td>
-                <td><?=number_format($row['margin'],0)?></td>
-            </tr>      
-        <?php }
-        } else {
-            echo "<tr><td colspan='3'>No results to display</td></tr>";
-        } ?>
-
-        </table>
-
-    <br><br>
     <center><p align='center'><h3>Best Stations </h3></p></center>
         <table>
             <tr>

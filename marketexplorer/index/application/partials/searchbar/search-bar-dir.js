@@ -12,6 +12,7 @@ app.directive('searchBar', [
             restrict: 'E',
             scope: {
                 item: '=',
+                region: '=',
                 buyorders: '=',
                 sellorders: '=',
             },
@@ -26,12 +27,13 @@ app.directive('searchBar', [
 
                 $scope.$watch('search.region', function(newi, old) {
                     if (newi) {
+                        $scope.region = newi;
                         updateItem($scope.item);
                     }
                 });
 
                 $scope.getItems = function(val) {
-                    return $http.get('https://www.evetrademaster.com/v2/Stocklists/searchItems', {
+                    return $http.get(config.autocomplete, {
                         params: {
                             term: val
                         }

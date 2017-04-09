@@ -152,7 +152,6 @@ class TradeSimulator_model extends CI_Model
                 "profit_margin"    => $profit_margin);
             array_push($results, $item_res);
         }
-        log_message('error', print_r($results, 1));
         return array("results" => $results, "req" => $taxes);
     }
 
@@ -224,7 +223,7 @@ class TradeSimulator_model extends CI_Model
      * @param  int    $station_id 
      * @return stdClass             
      */
-    private function getRegionID(int $station_id): stdClass
+    public function getRegionID(int $station_id): stdClass
     {
         $this->db->select('r.eve_idregion as id');
         $this->db->from('region r');
