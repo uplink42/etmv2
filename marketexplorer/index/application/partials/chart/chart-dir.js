@@ -127,16 +127,9 @@ app.directive('chart', [
                             parentYAxis: "S",
                             renderAs: 'line',
                             data: spread
-                            }, /*{
-                                seriesName: 'highest',
-                                parentYAxis: "S",
-                                renderAs: 'line',
-                                data: highestPrices
-                            }*/
+                            },
                         ]
                     };
-
-                    console.log(chartData);
 
                     FusionCharts.ready(function () {
                         var chart = new FusionCharts({
