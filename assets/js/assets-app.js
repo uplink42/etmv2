@@ -109,4 +109,21 @@ $(document).ready(function() {
         // Run sparkline
         sparklineCharts();
     }
+
+    // load assets chart
+    var assetsChart = function() {
+        FusionCharts.ready(function () {
+            var lineChart = new FusionCharts({
+                type: 'pie2d',
+                renderAt: 'pie',
+                width: '100%',
+                height: '400',
+                dataFormat: 'json',
+                dataSource: pieData
+            });
+            lineChart.render();
+        });
+    };
+
+    assetsChart();
 });

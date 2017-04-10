@@ -1,3 +1,4 @@
+<script>var pieData = {{pie_data | raw}}</script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -41,7 +42,7 @@
                                             </li>
                                             <li role="separator" class="divider"></li>
                                             {% for key, row in totals %}
-                                                <li data-id=""><a href="{{ base_url('assets/index/' ~ character_id ~ '/' ~ row[0]['region_id'] ~ '?aggr=' ~ aggregate) }}">
+                                                <li class="{{ region_id == row[0]['region_id'] ? 'selected' : '' }}"><a href="{{ base_url('assets/index/' ~ character_id ~ '/' ~ row[0]['region_id'] ~ '?aggr=' ~ aggregate) }}">
                                                     {{ key }} {{ row[0]['total_value_b'] | number_format(3) }} b </a></li>
                                             {% endfor %}
                                         </ul>
@@ -81,10 +82,6 @@
             <div id="tab-1" class="tab-pane">
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
-                        <?php 
-                            $pieChart = new FusionCharts("pie2d", "mypiechart", "100%", "600", "pie", "json", $pie_data);
-                            $pieChart->render();
-                        ?>
                         <div id="pie"></div>
                     </div>
                 </div>

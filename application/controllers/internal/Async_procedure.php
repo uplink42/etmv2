@@ -68,8 +68,8 @@ class Async_procedure extends CI_Controller
             ($period == 'weekly' ? $interval = 7 : 
                 ($period == 'monthly' ? $interval = 30 : 'none'));
 
-        //if today is sunday send weekly report
-        //if today is the day of the month send monthly report
+        // if today is sunday send weekly report
+        // if today is the day of the month send monthly report
         $day = date('D');
         $date = date('d');
         $month = date('m');
@@ -103,7 +103,7 @@ class Async_procedure extends CI_Controller
         $data['char_names']  = $characters['char_names'];
 
         if($chars != '()') {
-            $data['totals']         = $this->reports->calculateTotals($chars, $interval);
+            $data['totals'] = $this->reports->calculateTotals($chars, $interval);
             if ($data['totals'][1][0]['total_profit'] == 0 && $data['totals'][1][0]['total_sell'] == 0 && $data['totals'][1][0]['total_buy'] == 0) {
                 return;
             }
@@ -120,7 +120,7 @@ class Async_procedure extends CI_Controller
             $data['recap']          = $this->reports->calculateRecap($chars, $data['recap_int']);
             $data['username']       = $username;
             $data['date_now']       = date('Y-m-d');
-            $data['date_prev']      = date('Y-m-d', strtotime('-24 hours'));
+            $data['date_prev']      = date('Y-m-d', strtotime('-' . $interval * 24 . ' hours'));
             $data['cl_recent']      = $this->Updater_model->getChangeLog(true);
 
             $report = $this->load->view('reports/reports_v', $data, true);

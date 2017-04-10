@@ -2,7 +2,6 @@ app.factory('marketTypesFact', [
     'crestFact', 
     'config',
     function(crestFact, config) {
-
         var marketTypesFact = {};
 
         marketTypesFact.getAll = function () {

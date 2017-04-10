@@ -37,17 +37,18 @@ class Assets extends MY_Controller
             $graph .= "]";
 
             $asset_totals = $this->assets->getRegionData($chars);
-            $chart        = $this->assets->buildAssetDistributionChart($asset_totals);
             $region_name  = $this->assets->getRegionName($region_id);
+            
             if ($region_name != "All") {
                 $data['current_asset_value'] = isset($asset_totals[$region_name]) ? $asset_totals[$region_name][0]['total_value'] : 0;
             } else {
                 $data['current_asset_value'] = $this->assets->getCurrentAssetTotals($chars);
             }
 
-            $data['region_name'] = $region_name;
             $data['region_id']   = $region_id;
-            //$data['totals']      = $asset_totals;
+            $data['region_name'] = $this->assets->getRegionName($region_id);
+            $data['totals']      = $asset_totals;
+            $data['pie_data']    = $this->assets->buildAssetDistributionChart($asset_totals);
             $data['graph_data']  = $graph;
 
             $data['layout']['page_title']     = "Assets";
@@ -63,15 +64,8 @@ class Assets extends MY_Controller
     public function getAssetsTable(int $character_id, bool $aggr)
     {
         $region_id = $_REQUEST['region_id'] ?? null;
-        $params = ['region_id'  => $region_id ];
+        $params    = ['region_id'  => $region_id ];
 
         echo $this->buildData($character_id, $aggr, 'getAssetsList', 'Assets_model', $params); 
-    }
-
-
-    public function getAssetsDistributionChart(int $character_id, bool $aggr)
-    {
-        $params = [];
-        echo $this->buildData($character_id, $aggr, 'buildAssetDistributionChart', 'Assets_model', $params); 
     }
 }
