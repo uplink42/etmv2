@@ -39,17 +39,21 @@ app.directive('chart', [
 
 
                 function buildChart(data) {
-                    var threeMonthsAgo = moment().subtract(3, 'month');
+                    var fourMonthsAgo = moment().subtract(4, 'month');
                     var volumes       = [],
                         dates         = [],
                         avgPrices     = [],
+                        lowestPrices  = [],
+                        highestPrices = [],
                         spread        = [];
 
                     angular.forEach(data, function(cValue, cKey) {
-                        if (moment(cValue.date).isAfter(threeMonthsAgo)) {
+                        if (moment(cValue.date).isAfter(fourMonthsAgo)) {
                             dates.push({label: moment(cValue.date).format('DD/MM')});
                             volumes.push({value: cValue.volume});
                             avgPrices.push({value: cValue.avgPrice});
+                            lowestPrices.push({value: cValue.lowPrice});
+                            highestPrices.push({value: cValue.highPrice});
                             spread.push({value: parseFloat(cValue.highPrice) - parseFloat(cValue.lowPrice)});
                         }
                     });
@@ -127,7 +131,7 @@ app.directive('chart', [
                             parentYAxis: "S",
                             renderAs: 'line',
                             data: spread
-                            },
+                            }
                         ]
                     };
 

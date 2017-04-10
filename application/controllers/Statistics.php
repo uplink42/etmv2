@@ -51,15 +51,15 @@ class Statistics extends MY_Controller
             $lifetime_highest_sell   = $this->stats->getHighestMetric($chars, 'total_sell');
             $lifetime_highest_profit = $this->stats->getHighestMetric($chars, 'total_profit');
 
-            $data['problematic']             = $this->injectIcons($problematic);
+            $data['problematic']             = injectIcons($problematic);
             $data['profits_table']           = $profits_table;
-            $data['best_raw']                = $this->injectIcons($best_raw);
-            $data['best_margin']             = $this->injectIcons($best_margin);
+            $data['best_raw']                = injectIcons($best_raw);
+            $data['best_margin']             = injectIcons($best_margin);
             $data['best_customer']           = $best_customer;
             $data['best_tz']                 = $best_tz;
-            $data['best_to']                 = $this->injectIcons($best_to);
-            $data['best_iph']                = $this->injectIcons($best_iph);
-            $data['best_blunders']           = $this->injectIcons($best_blunders);
+            $data['best_to']                 = injectIcons($best_to);
+            $data['best_iph']                = injectIcons($best_iph);
+            $data['best_blunders']           = injectIcons($best_blunders);
             $data['best_stations']           = $best_stations;
             $data['lifetime_count_trans']    = $lifetime_count_trans;
             $data['lifetime_count_buy']      = $lifetime_count_buy;

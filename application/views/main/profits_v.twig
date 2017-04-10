@@ -10,6 +10,22 @@
                 <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-heading">
                         Profits from last <span class="table-interval"></span> days
+                        <div class="dropdown pull-right">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Time Interval
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
+                                <li><a data-id="1" href="#">Last 24 hours</a></li>
+                                <li><a data-id="7" href="#">Last 7 days</a></li>
+                                <li><a data-id="14" href="#">Last 14 days</a></li>
+                                <li><a data-id="30" href="#">Last 30 days</a></li>
+                                <li><a data-id="60" href="#">Last 2 months</a></li>
+                                <li><a data-id="90" href="#">Last 3 months</a></li>
+                                <li><a data-id="180" href="#">Last 6 months</a></li>
+                                <li><a data-id="365" href="#">Last 12 months</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> This page detects all item <span class="yellow">resales</span> and calculates profits made. Broker fees are always assumed regardless if you bought an item from a buy order or a sell order. <br />
@@ -49,22 +65,6 @@
                         <div class="panel panel-filled">
                             <div class="panel-heading">
                                 <div class="pull-left mt-10 ml-5">Profits from last <span class="table-interval"></span> days</div>
-                                <div class="dropdown pull-right">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Time Interval
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
-                                        <li><a data-id="1" href="#">Last 24 hours</a></li>
-                                        <li><a data-id="7" href="#">Last 7 days</a></li>
-                                        <li><a data-id="14" href="#">Last 14 days</a></li>
-                                        <li><a data-id="30" href="#">Last 30 days</a></li>
-                                        <li><a data-id="60" href="#">Last 2 months</a></li>
-                                        <li><a data-id="90" href="#">Last 3 months</a></li>
-                                        <li><a data-id="180" href="#">Last 6 months</a></li>
-                                        <li><a data-id="365" href="#">Last 12 months</a></li>
-                                    </ul>
-                                </div>
                                 <br>
                             </div>
                             <br>
@@ -102,5 +102,5 @@
     </div>
 </section>
 
-<script src="{{ base_url('dist/js/apps/profits-app.js') }}?v={{HASH_CACHE}}"></script>
 <script src="{{ base_url('assets/fusioncharts/js/fusioncharts.js') }}?v={{HASH_CACHE}}"></script>
+<script src="{{ base_url('dist/js/apps/profits-app.js') }}?v={{HASH_CACHE}}"></script>

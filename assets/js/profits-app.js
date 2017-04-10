@@ -106,10 +106,11 @@ $(document).ready(function() {
         e.preventDefault();
         if ($(this).attr('data-id') != interval) {
             var url;
-            var interval = $(this).attr('data-id'),
+            interval = $(this).attr('data-id'),
                 url    = base + 'Profits/getProfitTable/' + charID + '/' + interval + '/' + aggr;
 
             table.ajax.url(url).load();
+            reloadChart();
             $('.table-interval').text(interval);
         }
     });
@@ -120,6 +121,9 @@ $(document).ready(function() {
         });
     }
 
+    function reloadChart() {
+        profitsLineChart();
+    }
 
     // load daily chart
     var profitsLineChart = function() {
@@ -144,5 +148,8 @@ $(document).ready(function() {
                 }
             }
         });
-    }();
+    };
+
+    profitsLineChart();
+
 });

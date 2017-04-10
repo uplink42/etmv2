@@ -119,13 +119,28 @@ class Profits_model extends CI_Model
     public function getProfitChartData(array $configs): string
     {
         extract ($configs);
-        $arrData = array( //graph parameters
+        $arrData = array(
             "chart" => array(
                 "caption"       => "Profit evolution",
                 "subCaption"    => "last " . $interval . " days",
                 "xAxisName"     => "Day",
                 "yAxisName"     => "ISK Profit",
-                "paletteColors" => "#f6a821",
+                "paletteColors" => "#0075c2,#1aaf5d,#f2c500",
+                "drawCrossLine" => "1",
+                "crossLineColor" => "#f6a821",
+                "crossLineAlpha" => "100",
+                "tooltipGrayOutColor" => "#80bfff",
+                "canvasBgAlpha" => "0",
+                "bgColor" => "#32353d",
+                "bgAlpha" => "100",
+                "outCnvBaseFontColor" => "#fff",
+                "showAlternateHGridColor" => "0",
+                "captionFontColor" =>"#fff",
+                "anchorAlpha" => '0',
+                "labelFontColor" => "#fff",
+                "showValues" => "0",
+                "numberPrefix" => " ISK",
+                "showBorder" => "0"
             ),
         );
 

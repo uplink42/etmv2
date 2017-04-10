@@ -24,11 +24,23 @@ class Statistics_model extends CI_Model
             "subcaption"    => "last " . $interval . " days",
             "xAxisname"     => "days",
             "yAxisName"     => "ISK",
-            "numberPrefix"  => "ISK",
-            "plotFillAlpha" => "80",
-            "paletteColors" => "#d9534f,#5cb85c",
-            "showValues"    => "0",
-
+            "paletteColors" => "#0075c2,#1aaf5d",
+            "drawCrossLine" => "1",
+            "crossLineColor" => "#f6a821",
+            "crossLineAlpha" => "100",
+            "tooltipGrayOutColor" => "#80bfff",
+            "canvasBgAlpha" => "0",
+            "bgColor" => "#32353d",
+            "bgAlpha" => "100",
+            "outCnvBaseFontColor" => "#fff",
+            "showAlternateHGridColor" => "0",
+            "captionFontColor" =>"#fff",
+            "anchorAlpha" => '0',
+            "labelFontColor" => "#fff",
+            "showValues" => "0",
+            "numberSuffix" => " ISK",
+            "legendBgColor" => "#333",
+            "showBorder" => "0"
         );
 
         $index = -1;
@@ -469,6 +481,7 @@ class Statistics_model extends CI_Model
         extract($configs);
         $arrData["chart"] = array(
             "bgColor"                   => "#44464f",
+            "paletteColors"             => "#0075c2,#1aaf5d,#f2c500,#3399ff,#ffcc99,#ff5050,#ff9900,#00802b,#009999,#666699,#ccffcc",
             "showBorder"                => "0",
             "use3DLighting"             => "0",
             "showShadow"                => "0",
@@ -488,6 +501,7 @@ class Statistics_model extends CI_Model
             "toolTipPadding"            => "5",
             "showHoverEffect"           => "1",
             "showLegend"                => "0",
+            "pieSliceDepth"             => "20",
             "useDataPlotColorForLabels" => "1");
 
         $arrData["data"] = array();

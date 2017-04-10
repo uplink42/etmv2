@@ -43,8 +43,24 @@ class NetworthTracker_model extends CI_Model
             'yaxisname'          => 'ISK',
             'captionFontSize'    => '20',
             'subcaptionFontSize' => '14',
-            'subcaptionFontBold' => '0',
-            'showValues'         => '0',
+            "paletteColors" => "#0075c2,#1aaf5d,#f2c500,#ff5050,#ff9900",
+            "drawCrossLine" => "1",
+            "crossLineColor" => "#f6a821",
+            "crossLineAlpha" => "100",
+            "tooltipGrayOutColor" => "#80bfff",
+            "canvasBgAlpha" => "0",
+            "bgColor" => "#32353d",
+            "bgAlpha" => "100",
+            "outCnvBaseFontColor" => "#fff",
+            "showAlternateHGridColor" => "0",
+            "captionFontColor" =>"#fff",
+            "anchorAlpha" => '0',
+            "labelFontColor" => "#fff",
+            "showValues" => "0",
+            "numberSuffix" => " ISK",
+            "outCnvBaseFontColor" => "#fff",
+            "legendBgColor" => "#333",
+            "showBorder" => "0"
         );
 
         $this->styles = array(

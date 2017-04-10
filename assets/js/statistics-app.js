@@ -279,7 +279,7 @@ $(document).ready(function() {
                 if (result.chart && result.data) {
                     FusionCharts.ready(function () {
                         var chart = new FusionCharts({
-                            type: 'pie2d',
+                            type: 'pie3d',
                             renderAt: 'pie',
                             width: '100%',
                             height: '500',

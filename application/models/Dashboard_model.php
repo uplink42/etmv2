@@ -25,7 +25,7 @@ class Dashboard_model extends CI_Model
         $result = $query->row();
 
         $arrData["chart"] = array(
-            "paletteColors"             => "#f6a821,#f45b00,#8e0000,#007F00,#1aaf5d",
+            "paletteColors"             => "#0075c2,#1aaf5d,#f2c500,#8e0000",
             "bgColor"                   => "#44464f",
             "showBorder"                => "0",
             "use3DLighting"             => "0",
@@ -60,7 +60,7 @@ class Dashboard_model extends CI_Model
 
         for ($i = 0; $i < count($assetTypes); $i++) {
             array_push($arrData["data"], array("label" => (string) $assetTypes[$i],
-                "value"                                    => (string) $assetValues[$i]));
+                                               "value" => (string) $assetValues[$i]));
         }
 
         $arrData["chart"];

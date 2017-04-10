@@ -103,9 +103,10 @@ fieldset[disabled] .form-control {
   height: auto !important;
 }
 
-.dropdown-interval,
+/* .dropdown-interval,
 .character-select {
   li {
+    background-color: #494b54;
     &.selected, {
       background-color: #447bb3;
       a {
@@ -113,6 +114,32 @@ fieldset[disabled] .form-control {
       }
       & a:hover {
         background-color: lighten(#447bb3, 5%);
+        color: #fff;
+      }
+    }
+  }
+} */
+
+ul.dropdown-menu {
+    background-color: #494b54;
+}
+
+.dropdown-menu > li > a {
+    color: #949ba2;
+    font-weight: 500;
+    &:hover {
+      //background-color: #447bb3;
+    }
+}
+
+.dropdown-menu {
+  li {
+    &.selected {
+      background-color: #447bb3;
+      a:hover {
+          background-color: #447bb3;
+      }
+      a {
         color: #fff;
       }
     }
