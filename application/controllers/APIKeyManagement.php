@@ -85,8 +85,8 @@ class Apikeymanagement extends MY_Controller
      */
     public function addCharacters()
     {
-        $this->load->model('ValidateRequest');
-        $result = $this->ValidateRequest->validateAPI($this->keyid, $this->vcode);
+        $this->load->model('common/ValidateRequest', 'validate');
+        $result = $this->validate->validateAPI($this->keyid, $this->vcode);
 
         if($result) {
             $notice = "error";
@@ -118,16 +118,17 @@ class Apikeymanagement extends MY_Controller
         $char3 ? array_push($chars, $char3) : '';
 
         if(count($chars) != 0) {
-            $this->load->model('register_model');
-            if($this->register_model->verifyCharacters($chars, $apikey, $vcode)) {
-                $create = $this->ApiKeyManagement_model->addCharacters($chars, $apikey, $vcode, $this->user_id);
+            $this->load->model('register_model', 'reg');
+            if($this->reg->verifyCharacters($chars, $apikey, $vcode)) {
+                $create_error = $this->ApiKeyManagement_model->addCharacters($chars, $apikey, $vcode, $this->user_id);
                 //add characters
-                if ($create == "ok") {
+                if (!$create_error) {
                     $notice = "success";
+                    log_message('error', Msg::CHARACTER_CREATE_SUCCESS);
                     $msg = Msg::CHARACTER_CREATE_SUCCESS;
                 } else {
                     $notice = "error";
-                    $msg = $create;
+                    $msg = $create_error;
                 }
             } else {
                 $notice = "error";

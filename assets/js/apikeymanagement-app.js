@@ -103,9 +103,11 @@ $(document).ready(function() {
             url: url,
             success: function(result) {
                 toastr[result.notice](result.message);
-                if(result.notice === 'success') {
-                    window.location.href = '../../logout';
-                }
+                $('.api-insert-2').hide();
+                $('.api-insert-1').show();
+                $('#keyid').val('');
+                $('#vcode').val('');
+                list();
             }
         });
     });

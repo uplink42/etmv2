@@ -32,6 +32,7 @@ class ApiKeyManagement_model extends CI_Model
         return $result;
     }
 
+
     /**
      * Remove all character associations for a user
      * @param  int    $id_character 
@@ -113,8 +114,8 @@ class ApiKeyManagement_model extends CI_Model
         if ($this->db->trans_status() === false) {
             return Msg::DB_ERROR;
         } 
-        return "ok";
     }
+
 
     /**
      * Count how many characters a user has associated
