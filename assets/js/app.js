@@ -1,5 +1,5 @@
 "use strict";
-if (_404) {
+if (typeof _404 != 'undefined') {
     throw new Error('404 error, FC what do?');
 }
 
