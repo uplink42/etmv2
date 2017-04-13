@@ -17,8 +17,8 @@ var crestFact = app.factory('crestFact', ['$q', '$http', 'config',
                     }
                 })
                 .catch(function(error) {
-                    alert('The Eve CREST API seems to be currently offfline. Please try again later');
-                    throw new Error("Something went badly wrong!");
+                    alert('Unable to retrieve market data from CREST. The server might be down.');
+                    throw new Error("Something went wrong!");
                 });
             }
             loadAll();

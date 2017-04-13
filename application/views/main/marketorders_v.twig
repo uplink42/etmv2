@@ -1,35 +1,15 @@
-<script src="<?=base_url('dist/js/apps/marketorders-app.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="view-header">
-                    <?php $this->load->view('common/selector_v');?>
-                    <div class="header-icon">
-                        <?php if ($aggregate == 0) {?>
-                        <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/<?=$character_id?>_64.jpg">
-                            <?php } else {
-    ?>
-                            <i class="pe page-header-icon pe-7s-cart">
-                            </i>
-                            <?php }?>
-                    </div>
-                    <div class="header-title">
-                        <h1>
-                            <?php echo $aggregate == 1 ? implode(' + ', $char_names) : $character_name ?>
-                            's Market Orders
-                        </h1>
-                    </div>
-                </div>
-                <hr>
+                {% include 'common/view-header_v' ~ '.twig' %}
             </div>
         </div>
-        
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="panel panel-filled panel-c-success panel-main">
                     <div class="panel-heading">
-                        <a href="<?=base_url('Marketorders/index/'.$character_id.'?aggr='.$aggregate.'&check=1')?>">
+                        <a href="{{base_url('Marketorders/index/' ~ character_id ~ '?aggr=' ~ aggregate ~ '&check=1')}}">
                             <button class="btn btn-default btn-success pull-right btn-lg btn-check">Order Check</button>
                         </a>
                         Market Orders
@@ -73,35 +53,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach($buyorders as $buy) {
-                                            $url = $buy['url'];
-                                            !empty($buy['status']) ? $status = $buy['status'] : $status = "-";
-                                            $status == 'OK' ? $class = 'success' : ($status == 'undercut' ? $class = "danger" : $class = '');
-                                            switch($buy['range']) {
-                                                case '-1':
-                                                $range = "Station";
-                                                break;
-                                                case '0':
-                                                $range = "System";
-                                                break;
-                                                case '32767':
-                                                $range = "Region";
-                                                default:
-                                                $range = $buy['range'] . " jumps";
-                                            }
-                                             ?>
-                                            <tr class="<?=$class?>">
-                                                <td><?=$buy['date']?></td>
-                                                <td><img src="<?=$url?>" alt="icon"> <a class="item-name" style="color: #fff"><?=$buy['item_name'];?></a></td>
-                                                <td><?=number_format($buy['vol'],0)?></td>
-                                                <td><?=number_format($buy['price_unit'],2)?></td>
-                                                <td><?=number_format($buy['price_total'],2)?></td>
-                                                <td><?=$buy['station_name']?></td>
-                                                <td><?=$buy['character']?></td>
-                                                <td><?=$range?></td>
-                                                <td><?=$status?></td>
-                                            </tr>
-                                        <?php } ?>
+                                        {% for buy in buyorders %}
+                                        <tr class="{{ buy['status'] == 'OK' ? 'success' : ( buy['status'] == 'undercut' ? 'danger' : '') }}">
+                                            <td>{{ buy['date'] }}</td>
+                                            <td><img src="{{buy['url']}}" alt="icon"><a class="item-name" style="color: #fff"> 
+                                                {{buy['item_name']}}</a></td>
+                                            <td>{{ buy['vol']         | number_format(0) }}</td>
+                                            <td>{{ buy['price_unit']  | number_format(2) }}</td>
+                                            <td>{{ buy['price_total'] | number_format(2) }}</td>
+                                            <td>{{ buy['station_name'] }}</td>
+                                            <td>{{ buy['character'] }}</td>
+                                            <td>
+                                                {% if buy['range'] == '-1' %}
+                                                    Station
+                                                {% endif %}
+                                                {% if buy['range'] == '0' %}
+                                                    System
+                                                {% endif %}
+                                                {% if buy['range'] == '32767' %}
+                                                    Region
+                                                {% endif %}
+                                                {% if buy['range'] > '1' and buy['range'] < '32767' %}
+                                                    {{ buy['range'] ~ ' jumps' }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{% if buy['status'] is not empty %}
+                                                    {{ buy['status'] }}
+                                                {% else %}
+                                                    -
+                                                {% endif %}
+                                            </td>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -137,24 +119,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach($sellorders as $sell) {
-                                            $url = $sell['url'];
-                                            !empty($sell['status']) ? $status = $sell['status'] : $status = "-";
-                                            $status == 'OK' ? $class = 'success' : ($status == 'undercut' ? $class = "danger" : $class = ''); 
-                                            $range = "-";
-                                            ?>
-                                            <tr class="<?=$class?>">
-                                                <td><?=$sell['date']?></td>
-                                                <td><img src="<?=$url?>" alt="icon"><a class="item-name" style="color: #fff"> <?=$sell['item_name'];?></a></td>
-                                                <td><?=number_format($sell['vol'],0)?></td>
-                                                <td><?=number_format($sell['price_unit'],2)?></td>
-                                                <td><?=number_format($sell['price_total'],2)?></td>
-                                                <td><?=$sell['station_name']?></td>
-                                                <td><?=$sell['character']?></td>
-                                                <td><?=$range?></td>
-                                                <td><?=$status?></td>
-                                            </tr>
-                                        <?php } ?>
+                                        {% for sell in sellorders %}
+                                            <tr class="{{ sell['status'] == 'OK' ? 'success' : ( sell['status'] == 'undercut' ? 'danger' : '') }}">
+                                                <td>{{ sell['date'] }}</td>
+                                                <td><img src="{{sell['url']}}" alt="icon"><a class="item-name" style="color: #fff"> 
+                                                    {{sell['item_name']}}</a></td>
+                                                <td>{{ sell['vol'] | number_format(0) }}</td>
+                                                <td>{{ sell['price_unit']  | number_format(2) }}</td>
+                                                <td>{{ sell['price_total'] | number_format(2) }}</td>
+                                                <td>{{ sell['station_name'] }}</td>
+                                                <td>{{ sell['character'] }}</td>
+                                                <td>
+                                                    {% if sell['range'] == '-1' %}
+                                                        Station
+                                                    {% endif %}
+                                                    {% if sell['range'] == '0' %}
+                                                        System
+                                                    {% endif %}
+                                                    {% if sell['range'] == '32767' %}
+                                                        Region
+                                                    {% endif %}
+                                                    {% if sell['range'] > '1' and sell['range'] < '32767' %}
+                                                        {{ sell['range'] ~ ' jumps' }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{% if sell['status'] is not empty %}
+                                                        {{ sell['status'] }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -169,3 +164,4 @@
         </div>
     </div>
 </section>
+<script src="{{ base_url('dist/js/apps/marketorders-app.js') }}?v={{HASH_CACHE}}"></script>
