@@ -165,6 +165,7 @@ class Updater extends CI_Controller
         $table = $this->Updater_model->resultTable($username);
         $this->Updater_model->release($username);
         $this->Log->addEntry('update', $this->user_id);
+        $this->Log->addLogin($this->user_id);
 
         $data['cl']        = $this->Updater_model->getChangeLog();
         $data['cl_recent'] = $this->Updater_model->getChangeLog(true);

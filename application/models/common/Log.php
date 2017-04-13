@@ -22,4 +22,11 @@ class Log extends CI_Model
 
         $this->db->insert('log', $data);
     }
+
+    public function addLogin($id_user)
+    {
+        $this->db->where('iduser', $id_user);
+        $this->db->set('login_count', 'login_count + 1', FALSE);
+        $this->db->update('user');
+    }
 }
