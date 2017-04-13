@@ -86,7 +86,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 //Application specific constants
 define("FILESTORAGE", "phealcache/"); //pheal cache folder
-define("URL", "../");
+define("URL", "../../");
 define("GUSER", "etmdevelopment42@gmail.com");
 define("GPWD", "");
 define("SMTPDEBUG", 0);

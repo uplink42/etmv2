@@ -1,4 +1,8 @@
 "use strict";
+if (_404) {
+    throw new Error('404 error, FC what do?');
+}
+
 function number_format(number, decimals, decPoint, thousandsSep) {
     number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
     var n = !isFinite(+number) ? 0 : +number;
