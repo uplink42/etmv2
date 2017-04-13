@@ -4,7 +4,8 @@ app.directive('searchBar', [
     'regionListFact', 
     'marketLookupFact',
     '$filter',
-    function(config, $http, regionListFact, marketLookupFact, $filter) {
+    '$timeout',
+    function(config, $http, regionListFact, marketLookupFact, $filter, $timeout) {
         "use strict";
 
         return {
@@ -17,6 +18,8 @@ app.directive('searchBar', [
                 sellorders: '=',
             },
             controller: ['$scope', function($scope) {
+                var updateData;
+
                 $scope.search = {
                     region: 10000002,
                     item: ''
@@ -27,6 +30,7 @@ app.directive('searchBar', [
 
                 $scope.$watch('search.region', function(newi, old) {
                     if (newi) {
+                        $timeout.cancel(updateData);
                         $scope.region = newi;
                         updateItem($scope.item);
                     }
@@ -46,12 +50,13 @@ app.directive('searchBar', [
                 };
 
                 $scope.$watch('item', function(newValue, oldValue) {
+                    $timeout.cancel(updateData);
                     updateItem(newValue);
                 }, true);
 
                 function updateItem(newValue) {
                     if (newValue.id) {
-                        getItemOrders(newValue.id);
+                        update(true);
                         $scope.search.item = newValue.name;
                     }
                 }
@@ -137,6 +142,17 @@ app.directive('searchBar', [
                     .catch(function(error) {
                         console.error(error.stack);
                     });
+                }
+
+                // update data every 5 mins automatically
+                function update(init) {
+                    if (init) {
+                        getItemOrders($scope.item.id);
+                    }
+                    updateData = $timeout(function() {
+                        getItemOrders($scope.item.id);
+                        update();
+                    }, 3000);
                 }
             }],
 
