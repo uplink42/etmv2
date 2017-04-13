@@ -152,7 +152,7 @@ app.directive('searchBar', [
                     updateData = $timeout(function() {
                         getItemOrders($scope.item.id);
                         update();
-                    }, 3000);
+                    }, 310000);
                 }
             }],
 
