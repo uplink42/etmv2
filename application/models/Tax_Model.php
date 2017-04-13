@@ -248,15 +248,7 @@ class Tax_model extends CI_Model
         }
 
         if ($this->transFrom == 'buy' && $type === 'from' || $this->transFrom == 'sell' && $type === 'to') {
-            $station_type = '';
-            if ($stationID > 1000000000000) {
-                $station_type = 'citadel';
-            } else if ($stationID > 60014860 && $stationID < 1000000000000) {
-                $type = 'outpost';
-            } else {
-                $station_type = 'station';
-            }
-
+            $station_type = $this->getStationType($stationID);
             switch($station_type) {
                 case 'station':
                     if ($this->ignoreStationTax) {
@@ -276,7 +268,7 @@ class Tax_model extends CI_Model
 
                 case 'citadel':
                     $citadelTax = $this->getCitadelTax($type);
-                    if ($this->citadelTax) {
+                    if ($citadelTax) {
                         return 1;
                     } else {
                         return $this->getGenericTax($type);
@@ -365,5 +357,23 @@ class Tax_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+
+    private function getStationType($stationID) : string
+    {
+        $type = 'citadel';
+        if ($stationID < 1000000000000) {
+            $this->db->select('corporation_eve_idcorporation as owner');
+            $this->db->where('eve_idstation', $stationID);
+            $sql = $this->db->get('station');
+            $owner = $sql->row()->owner;
+            if ($owner == 1) {
+                $type = 'outpost';
+            } else {
+                $type = 'station';
+            }
+        }
+        return $type;
     }
 }
