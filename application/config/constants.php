@@ -97,4 +97,8 @@ define("SMTPPORT", 465);
 define("FROM_EMAIL", "");
 define("FROM_NAME", "Eve Trade Master");
 
+define("MASK_PERSONAL_KEY", '82317323');
+define("MASK_FULL_KEY", '1073741823');
+define("MASK_CORP_KEY", '11800579');
+
 

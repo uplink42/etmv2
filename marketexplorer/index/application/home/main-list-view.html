@@ -25,6 +25,7 @@
             <div class="col-md-6">
                 <div>
                     <p class="h1 pt-0 mt-0 pb-15 pl-15 text-center orders-title">Sell Orders</p>
+                    <p class="text-right"> {{ sellorders.recent + ' new orders created or updated in the last hour'}} </p>
                 </div>
                 <table class="table table-bordered table-striped sell table-hover">
                     <thead>
@@ -49,7 +50,7 @@
                 <div class="results text-right">
                     <div class="pt-5 pb-5 pl-5 text-center" ng-if="sellorders.items.length == 0 || !sellorders.items">No sell orders to display</div>
                     <div ng-if="sellorders.items.length > 0">
-                        <ul uib-pagination total-items="sellorders.items.length" ng-model="pagination.sell" max-size="5" class="pagination-sm mb-0 mt-0" boundary-link-numbers="true" rotate="false" items-per-page="10"></ul>
+                        <ul uib-pagination total-items="sellorders.items.length" ng-model="pagination.sell" max-size="5" class="pagination-sm mb-0 mt-0" boundary-link-numbers="true" rotate="false" items-per-page="7"></ul>
                         <div class="totals pt-5 pb-5 pl-5 pb-10">Total: {{ sellorders.items.length | number:0 }} orders and {{ sellorders.total | number:0 }} items</div>
                     </div>
                 </div>
@@ -58,6 +59,7 @@
             <div class="col-md-6">
                 <div>
                     <p class="h1 pt-0 mt-0 pb-15 pl-15 text-center orders-title">Buy Orders</p>
+                    <p class="text-right"> {{ buyorders.recent + ' new orders created or updated in the last hour'}} </p>
                 </div>
                 <table class="table table-bordered table-striped buy table-hover">
                     <thead>
@@ -82,7 +84,7 @@
                 <div class="results text-right">
                     <div class="pt-5 pb-5 pl-5 pb-5 text-center" ng-if="buyorders.items.length == 0 || !buyorders.items">No buy orders to display</div>
                     <div ng-if="buyorders.items.length > 0">
-                        <ul uib-pagination total-items="buyorders.items.length" ng-model="pagination.buy" max-size="5" class="pagination-sm mb-0 mt-0" boundary-link-numbers="true" rotate="false" items-per-page="10"></ul>{{buypage}}
+                        <ul uib-pagination total-items="buyorders.items.length" ng-model="pagination.buy" max-size="5" class="pagination-sm mb-0 mt-0" boundary-link-numbers="true" rotate="false" items-per-page="7"></ul>{{buypage}}
                         <div class="totals pt-5 pb-5 pl-5 pb-5">Total: {{ buyorders.items.length | number:0 }} orders and {{ buyorders.total | number:0 }} items</div>
                     </div>
                 </div>

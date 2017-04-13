@@ -18,6 +18,7 @@ var crestFact = app.factory('crestFact', ['$q', '$http', 'config',
                 })
                 .catch(function(error) {
                     alert('The Eve CREST API seems to be currently offfline. Please try again later');
+                    throw new Error("Something went badly wrong!");
                 });
             }
             loadAll();

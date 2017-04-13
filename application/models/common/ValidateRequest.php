@@ -226,7 +226,7 @@ class ValidateRequest extends CI_Model
 
         if ($accessMask == "" && $response) {
             return Msg::INVALID_API_KEY;
-        } else if ($accessMask != '82317323' && $accessMask != '1073741823' && $accessMask != '11800579' && $response) {
+        } else if ($accessMask != MASK_PERSONAL_KEY && $accessMask != MASK_FULL_KEY && $accessMask != MASK_CORP_KEY && $response) {
             return Msg::INVALID_API_MASK;
         } else if (!isset($expiry) && $response) {
             return Msg::INVALID_API_KEY;

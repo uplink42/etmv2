@@ -7,7 +7,7 @@ app.factory('regionListFact', [
         regionListFact.getAll = function () {
             var request =  'regions/';
 
-            return crestFact.loadAllData(request)
+            return crestFact.loadAllData(request);
         };
 
         return regionListFact;

@@ -89,6 +89,23 @@ app.directive('searchBar', [
                         });
                         $scope.sellorders.total = totalSell;
                         $scope.sellorders.items = $filter('orderBy')(responseSell, 'price');
+
+                        // recent orders
+                        $http.get(config.crest.base + 'time/', {})
+                        .then(function(response) {
+                            var time = response.data.time;
+                            var oneHourAgo = moment(time).subtract(1, 'hour');
+
+                            $scope.sellorders.recent = 0;
+                            angular.forEach($scope.sellorders.items, function(cValue, cKey) {
+                                if (moment(cValue.issued).isAfter(oneHourAgo)) {
+                                    $scope.sellorders.recent++;
+                                }
+                            });
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error(error.stack);
                     });
 
                     //buy
@@ -101,6 +118,24 @@ app.directive('searchBar', [
                         });
                         $scope.buyorders.total = totalBuy;
                         $scope.buyorders.items = $filter('orderBy')(responseBuy, '-price');
+
+                        // recent
+                        $http.get(config.crest.base + 'time/', {})
+                        .then(function(response) {
+                            var time = response.data.time;
+                            var oneHourAgo = moment(time).subtract(1, 'hour');
+
+                            //recent orders
+                            $scope.buyorders.recent = 0;
+                            angular.forEach($scope.buyorders.items, function(cValue, cKey) {
+                                if (moment(cValue.issued).isAfter(oneHourAgo)) {
+                                    $scope.buyorders.recent++;
+                                }
+                            });
+                        });
+                    })
+                    .catch(function(error) {
+                        console.error(error.stack);
                     });
                 }
             }],

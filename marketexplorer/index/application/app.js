@@ -28,7 +28,6 @@ var app = angular.module("app", [
     '$scope',
     'config', 
     function($scope, config) {
-
         $scope.item = {};
 
         $scope.region = {};
@@ -37,6 +36,7 @@ var app = angular.module("app", [
             items: [],
             total: ''
         };
+
         $scope.sellorders = {
             items: [],
             total: ''
