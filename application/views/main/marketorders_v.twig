@@ -163,6 +163,9 @@
                 </div>
             </div>    
         </div>
-        <?php $this->load->view('common/loader_v')?>
+        <div class="panel-body panel-loading text-center">
+            Searching your orders... please wait. This can take a long time if you have a large list
+            {% include 'common/loader_v' ~ '.twig' %}
+        </div>
     </div>
 </section>

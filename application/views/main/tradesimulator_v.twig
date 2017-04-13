@@ -211,7 +211,10 @@
                             </div>
                         </div>
                     </div>
-                    {% include 'common/loader_v' ~ '.twig' %}
+                    <div class="panel-body panel-loading text-center">
+                    Fetching New Eden prices... please wait. This can take a long time if you have a large list
+                        {% include 'common/loader_v' ~ '.twig' %}
+                    </div>
                 </div>
             </div>
         </div>

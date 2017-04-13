@@ -117,13 +117,6 @@ class Assets_model extends CI_Model
         return $result;
     }
 
-    public function getRegionRatio($chars)
-    {
-        //todo
-        //get sum of all assets for current char
-        //get sum of all assets for current char in current region
-
-    }
 
     /**
      * Returns the list of all assets, optionally filtered by 
@@ -201,6 +194,7 @@ class Assets_model extends CI_Model
     {
         $arrData["chart"] = array(
             "bgColor"                   => "#44464f",
+            "paletteColors"             => "#0075c2,#1aaf5d,#f2c500,#3399ff,#ffcc99,#ff5050,#ff9900,#00802b,#009999,#666699,#ccffcc",
             "showBorder"                => "0",
             "use3DLighting"             => "0",
             "showShadow"                => "0",
@@ -220,6 +214,7 @@ class Assets_model extends CI_Model
             "toolTipPadding"            => "5",
             "showHoverEffect"           => "1",
             "showLegend"                => "0",
+            "pieSliceDepth"             => "20",
             "useDataPlotColorForLabels" => "1");
 
         $arrData["data"] = [];

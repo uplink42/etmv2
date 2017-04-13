@@ -114,10 +114,10 @@ $(document).ready(function() {
     var assetsChart = function() {
         FusionCharts.ready(function () {
             var lineChart = new FusionCharts({
-                type: 'pie2d',
+                type: 'pie3d',
                 renderAt: 'pie',
                 width: '100%',
-                height: '400',
+                height: '500',
                 dataFormat: 'json',
                 dataSource: pieData
             });
