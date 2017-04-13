@@ -10,7 +10,7 @@ class Contracts extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->db->cache_on();
+        $this->db->cache_off();
         $this->page = "contracts";
 
         if (isset($_GET['active'])) {
@@ -68,6 +68,11 @@ class Contracts extends MY_Controller
             $data['actives']          = $actives;
             $data['inactives']        = $inactives;
             $data['view']             = 'main/contracts_v';
+
+            $data['layout']['page_title']     = "Contracts";
+            $data['layout']['icon']           = "pe-7s-news-paper";
+            $data['layout']['page_aggregate'] = true;
+
             $this->twig->display('main/_template_v', $data);
         }
     }

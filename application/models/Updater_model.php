@@ -451,7 +451,7 @@ class Updater_model extends CI_Model
      * Update contracts list
      * @return void
      */
-    private function getContracts() : void
+    private function getContracts()
     {
         $pheal    = new Pheal($this->apikey, $this->vcode, "char");
         $response = $pheal->Contracts(array("characterID" => $this->character_id));
@@ -464,7 +464,7 @@ class Updater_model extends CI_Model
         $new_contracts = [];
 
         foreach ($response->contractList as $row) {
-            $data = array("eve_idcontracts" => $this->db->escape($row->contractID),
+            $data = array("eve_idcontracts"     => $this->db->escape($row->contractID),
                 "issuer_id"                     => $this->db->escape($row->issuerID),
                 "acceptor_id"                   => $this->db->escape($row->acceptorID),
                 "status"                        => $this->db->escape($row->status),

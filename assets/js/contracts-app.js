@@ -59,17 +59,13 @@ $(document).ready(function() {
     });
 
 
-    $(".contracts-active-body p.yellow").html("<p>There are "+ table_active.rows().count() + " results for a total of "
-        + number_format(table_active.column(5).data().sum(),2, '.', ',' ) + " ISK</p>");
+    $(".contracts-active-body p.yellow").html("<p>There are "+ table_active.rows().count() + " results</p>");
     $("#contracts-active table_filter input").keyup(function () {
-        $(".contracts-active-body p.yellow").html("There are "+ table_active.rows({filter: 'applied'}).count() + " results for a total of "
-            + number_format(table_active.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
+        $(".contracts-active-body p.yellow").html("There are "+ table_active.rows({filter: 'applied'}).count() + " results");
     });
 
-    $(".contracts-inactive-body p.yellow").html("<p>There are "+ table_inactive.rows().count() + " results for a total of "
-        + number_format(table_inactive.column(5).data().sum(),2, '.', ',' ) + " ISK</p>");
+    $(".contracts-inactive-body p.yellow").html("<p>There are "+ table_inactive.rows().count() + " results</p>");
     $("#contracts-inactive table_filter input").keyup(function () {
-        $(".contracts-inactive-body p.yellow").html("There are "+ table_inactive.rows({filter: 'applied'}).count() + " results for a total of "
-            + number_format(table_inactive.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
+        $(".contracts-inactive-body p.yellow").html("There are "+ table_inactive.rows({filter: 'applied'}).count() + " results");
     });
 });

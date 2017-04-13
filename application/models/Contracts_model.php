@@ -47,14 +47,14 @@ class Contracts_model extends CI_Model
             $this->db->where('c.type', $filter);
         }
         if ($state == "active") {
-            //active contract types
+            // active contract types
             $this->db->where("c.status IN
                 ('outstanding', 'inProgress')");
             if ($new > 0) {
                 $this->db->limit($new);
             }
         } else {
-            //inactive contract types
+            // inactive contract types
             $this->db->where("c.status IN
                     ('deleted', 'completed', 'failed', 'completedByIssuer', 'completedByContractor', 'cancelled', 'rejected', 'reversed')");
         }
@@ -62,21 +62,25 @@ class Contracts_model extends CI_Model
         $query  = $this->db->get('contracts');
         $result = $query->result_array();
 
-        //modify the result array to include character names
+        // modify the result array to include character names
         for ($i = 0; $i < count($result); $i++) {
             $issuer      = $result[$i]['issuer_id'];
             $acceptor    = $result[$i]['acceptor_id'];
             $contract_id = $result[$i]['contract_id'];
 
-            $this->db->cache_off();
             $this->db->where('eve_idcharacters', $issuer);
-            //check if a character name is already in the public table
-            //we cache every new character name in the database for faster lookups in future
+            // check if a character name is already in the public table
+            // we cache every new character name in the database for faster lookups in future
             $query           = $this->db->get('characters_public');
-            $get_issuer_name = $query->row();
+            $issuer_name = $query->row();
 
-            if ($query->num_rows() == 1) {
-                $result[$i]['issuer_name'] = $get_issuer_name->name;
+            if ($query->num_rows() == 1)  {
+                // deleted, expired contracts sometimes have this
+                if ($issuer == 0) {
+                    $result[$i]['issuer_name'] = 'N/A';
+                } else {
+                    $result[$i]['issuer_name'] = $issuer_name->name;
+                }
             } else {
                 $pheal                     = new Pheal();
                 $response                  = $pheal->eveScope->CharacterName(array("ids" => $issuer));
@@ -84,17 +88,21 @@ class Contracts_model extends CI_Model
                 $result[$i]['issuer_name'] = $name;
 
                 $data = array("eve_idcharacters" => $issuer,
-                    "name"                           => $name);
+                              "name"             => $name);
                 $this->db->replace('characters_public', $data);
             }
 
-            //repeat the process for acceptor characters
+            // repeat the process for acceptor characters
             $this->db->where('eve_idcharacters', $acceptor);
             $query2            = $this->db->get('characters_public');
-            $get_acceptor_name = $query->row();
+            $acceptor_name = $query2->row();
 
             if ($query2->num_rows() == 1) {
-                $result[$i]['acceptor_name'] = $get_acceptor_name->name;
+                if ($acceptor == 0) {
+                    $result[$i]['acceptor_name'] = 'N/A';
+                } else {
+                    $result[$i]['acceptor_name'] = $acceptor_name->name;
+                }
             } else {
                 $pheal                       = new Pheal();
                 $response                    = $pheal->eveScope->CharacterName(array("ids" => $acceptor));

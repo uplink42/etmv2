@@ -11,7 +11,7 @@
     {
     	$ci =& get_instance();
    		$ci->load->database(); 
-		//split data in chunks of 50
+		// split data in chunks of 50
 		$data = array_chunk($data, 50);
 
 		foreach ($data as $row) {
