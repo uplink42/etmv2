@@ -41,6 +41,7 @@ class Transactions extends MY_Controller
 
             $this->load->model('Transactions_model');
             if ($this->transID) {
+                $interval = 9999;
                 $res = (bool) $this->ValidateRequest->checkTransactionOwnership($this->transID, $this->user_id);
                 if (!$res) {
                     $data["notice"]  = "error";

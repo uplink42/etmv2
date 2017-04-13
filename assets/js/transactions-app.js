@@ -17,30 +17,37 @@ $(document).ready(function() {
             url  : base + 'Transactions/getTransactionList/' + charID + '/' + interval + '/' + aggr,
             data : postData,
             dataSrc: function (json) {
-                var return_data = [];
-                for (var i = 0; i < json.data.length; i++) {
-                    var button = json.data[i].type === 'Sell' ? 'btn-success' : 'btn-danger',
-                        unlink = json.data[i].remaining == 0 || json.data[i].type == 'Sell' ? '-' : 1;
-                    if (unlink === 1) {
-                        unlink = "<button type='button' class='btn btn-default btn-unlink' data-toggle='modal' data-target='#unlink' data-transaction=" + 
-                            json.data[i].transaction_id + ">" + "Unlink</button>";
-                    }
+                // not allowed
+                if (json.message) {
+                    toastr[json.notice](json.message);
+                    throw new Error("Don't try to sneak up on others");
+                } else {
+                    var return_data = [];
+                    for (var i = 0; i < json.data.length; i++) {
+                        var button = json.data[i].type === 'Sell' ? 'btn-success' : 'btn-danger',
+                            unlink = json.data[i].remaining === 0 || json.data[i].type == 'Sell' ? '-' : 1;
+                        if (unlink === 1) {
+                            unlink = "<button type='button' class='btn btn-default btn-unlink' data-toggle='modal' data-target='#unlink' data-transaction=" + 
+                                json.data[i].transaction_id + ">" + "Unlink</button>";
+                        }
 
-                    return_data.push({
-                        time: json.data[i].time,
-                        item: '<img src="' + json.data[i].url + '">' + '<a class="item-name" style="color:#fff">' + json.data[i].item_name + '</a>',
-                        quantity: json.data[i].quantity,
-                        isk_unit: number_format(json.data[i].price_unit, 2, '.', ',' ),
-                        isk_total: number_format(json.data[i].price_total, 2, '.', ',' ),
-                        type: '<span class="btn btn-xs ' + button + '">' + json.data[i].type + '</span>',
-                        other_party: json.data[i].client,
-                        station: json.data[i].station_name,
-                        character: json.data[i].character_name,
-                        state: unlink
-                    });
-                  }
-                updateTableTotals();
-                return return_data;
+                        return_data.push({
+                            time: json.data[i].time,
+                            item: '<img src="' + json.data[i].url + '">' + '<a class="item-name" style="color:#fff">' + json.data[i].item_name + '</a>',
+                            quantity: json.data[i].quantity,
+                            isk_unit: number_format(json.data[i].price_unit, 2, '.', ',' ),
+                            isk_total: number_format(json.data[i].price_total, 2, '.', ',' ),
+                            type: '<span class="btn btn-xs ' + button + '">' + json.data[i].type + '</span>',
+                            other_party: json.data[i].client,
+                            station: json.data[i].station_name,
+                            character: json.data[i].character_name,
+                            state: unlink
+                        });
+                    }
+                    updateTableTotals();
+                    return return_data;
+                }
+                
             }   
         },
         columns: [
