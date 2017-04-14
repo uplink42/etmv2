@@ -18,7 +18,7 @@ var crestFact = app.factory('crestFact', ['$q', '$http', 'config',
                 })
                 .catch(function(error) {
                     alert('Unable to retrieve market data from CREST. The server might be down.');
-                    throw new Error("Something went wrong!");
+                    throw new Error(error);
                 });
             }
             loadAll();

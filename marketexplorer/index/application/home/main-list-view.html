@@ -5,7 +5,8 @@
                 region="region" 
                 item="item" 
                 buyorders="buyorders" 
-                sellorders="sellorders">
+                sellorders="sellorders"
+                time="time">
             </search-bar>
         </div>
         <div class="col-md-6 pull-right">
@@ -14,6 +15,9 @@
                     <img ng-src="{{itemImg + item.id + '_32.png'}}" class="pr-5">
                     {{ item.name }}
                 </p>
+            </div>
+            <div class="update pull-right mb-5" ng-if="item.name">
+                *Prices update automatically every 5 minutes. Next update in {{ time }} seconds
             </div>
         </div>
     </div>
@@ -55,7 +59,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="col-md-6">
                 <div>
                     <p class="h1 pt-0 mt-0 pb-15 pl-15 text-center orders-title">Buy Orders</p>
@@ -91,7 +94,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="item.name">
         <div class="col-md-12 chart mt-20">
             <chart 
                 region="region" 

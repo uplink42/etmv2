@@ -51,7 +51,7 @@ $(document).ready(function() {
                         return_data.push({
                             item: '<img src="' + json.data[i].url + '">' + ' <a class="item-name" style="color:#fff">' + 
                                 json.data[i].name + '</a>',
-                            volume: number_format(json.data[i].vol,2, '.', ',' ),
+                            volume: number_format(json.data[i].vol,3, '.', ',' ),
                             estimate: number_format(json.data[i].price,2, '.', ','),
                             delete: "<a href=" + base + "Stocklists/removeItem/" + json.data[i].item_id+"/" + 
                                 id + "><button class='btn btn-danger btn-remove-item'>Remove</button></a>" 

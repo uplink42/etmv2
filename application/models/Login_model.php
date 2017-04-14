@@ -22,8 +22,9 @@ class Login_model extends CI_Model
         return $query->row();
     }
 
+
     /**
-     * Checks if session is valid or not
+     * Checks if there is a valid session
      * @return bool
      */
     public function checkSession() : bool

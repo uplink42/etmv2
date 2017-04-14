@@ -5,7 +5,8 @@ app.directive('searchBar', [
     'marketLookupFact',
     '$filter',
     '$timeout',
-    function(config, $http, regionListFact, marketLookupFact, $filter, $timeout) {
+    '$interval',
+    function(config, $http, regionListFact, marketLookupFact, $filter, $timeout, $interval) {
         "use strict";
 
         return {
@@ -16,9 +17,13 @@ app.directive('searchBar', [
                 region: '=',
                 buyorders: '=',
                 sellorders: '=',
+                time: '='
             },
             controller: ['$scope', function($scope) {
-                var updateData;
+                var updateData,
+                    countdown,
+                    frequency = 310000,
+                    interval  = 1000;
 
                 $scope.search = {
                     region: 10000002,
@@ -31,10 +36,17 @@ app.directive('searchBar', [
                 $scope.$watch('search.region', function(newi, old) {
                     if (newi) {
                         $timeout.cancel(updateData);
+                        $interval.cancel(countdown);
                         $scope.region = newi;
                         updateItem($scope.item);
                     }
                 });
+
+                $scope.$watch('item', function(newValue, oldValue) {
+                    $timeout.cancel(updateData);
+                    $interval.cancel(countdown);
+                    updateItem(newValue);
+                }, true);
 
                 $scope.getItems = function(val) {
                     return $http.get(config.autocomplete, {
@@ -48,11 +60,6 @@ app.directive('searchBar', [
                         });
                     });
                 };
-
-                $scope.$watch('item', function(newValue, oldValue) {
-                    $timeout.cancel(updateData);
-                    updateItem(newValue);
-                }, true);
 
                 function updateItem(newValue) {
                     if (newValue.id) {
@@ -146,13 +153,22 @@ app.directive('searchBar', [
 
                 // update data every 5 mins automatically
                 function update(init) {
+                    var updateTimer  = function() {
+                        $scope.time -= 1;
+                    };
+
                     if (init) {
+                        $scope.time = frequency / interval;
                         getItemOrders($scope.item.id);
+                        countdown = $interval(updateTimer, interval);
                     }
                     updateData = $timeout(function() {
+                        $interval.cancel(countdown);
+                        $scope.time = frequency / interval;
                         getItemOrders($scope.item.id);
+                        countdown = $interval(updateTimer, interval);
                         update();
-                    }, 310000);
+                    }, frequency);
                 }
             }],
 

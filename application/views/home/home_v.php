@@ -11,7 +11,6 @@
 }
 </style>
 
-<!-- Begin Intro Section -->
 <section id="intro" data-url="<?=base_url()?>">
     <div class="intro-body text-center">
         <div class="container">

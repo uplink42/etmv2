@@ -47,5 +47,7 @@ var app = angular.module("app", [
             buy: 1
         };
 
+        $scope.time = "";
+
         $scope.itemImg = "https://image.eveonline.com/Type/";
 }]);
