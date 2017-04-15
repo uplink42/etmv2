@@ -124,7 +124,7 @@ class Profits_model extends CI_Model
                 "caption"       => "Profit evolution",
                 "subCaption"    => "last " . $interval . " days",
                 "xAxisName"     => "Day",
-                "yAxisName"     => "ISK Profit",
+                "yAxisName"     => "Profit (ISK)",
                 "paletteColors" => "#0075c2,#1aaf5d,#f2c500",
                 "drawCrossLine" => "1",
                 "crossLineColor" => "#f6a821",
@@ -139,7 +139,7 @@ class Profits_model extends CI_Model
                 "anchorAlpha" => '0',
                 "labelFontColor" => "#fff",
                 "showValues" => "0",
-                "numberPrefix" => " ISK",
+                "numberSuffix" => " ISK",
                 "showBorder" => "0"
             ),
         );

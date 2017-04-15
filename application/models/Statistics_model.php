@@ -502,7 +502,8 @@ class Statistics_model extends CI_Model
             "showHoverEffect"           => "1",
             "showLegend"                => "0",
             "pieSliceDepth"             => "20",
-            "useDataPlotColorForLabels" => "1");
+            "useDataPlotColorForLabels" => "1",
+            "numberSuffix"              => " ISK",);
 
         $arrData["data"] = array();
 

@@ -58,7 +58,7 @@ th {
 
 .table > {
   thead > tr > td.success, tbody > tr > td.success, tfoot > tr > td.success, thead > tr > th.success, tbody > tr > th.success, tfoot > tr > th.success, thead > tr.success > td, tbody > tr.success > td, tfoot > tr.success > td, thead > tr.success > th, tbody > tr.success > th, tfoot > tr.success > th {
-    background-color: rgba(27, 191, 137, 0.2);
+    background-color: rgba(27, 191, 137, 0.4);
     border: none;
   }
 }
@@ -112,7 +112,7 @@ th {
 
 .table > {
   thead > tr > td.danger, tbody > tr > td.danger, tfoot > tr > td.danger, thead > tr > th.danger, tbody > tr > th.danger, tfoot > tr > th.danger, thead > tr.danger > td, tbody > tr.danger > td, tfoot > tr.danger > td, thead > tr.danger > th, tbody > tr.danger > th, tfoot > tr.danger > th {
-    background-color: rgba(219, 82, 75, 0.2);
+    background-color: rgba(219, 82, 75, 0.5);
     border: none;
   }
 }
