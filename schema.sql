@@ -367,9 +367,11 @@ CREATE TABLE `user` (
   `login_count` int(11) NOT NULL,
   `updating` int(1) NOT NULL,
   `default_buy_behaviour` tinyint(1) NOT NULL DEFAULT '1',
-  `default_sell_behaviour` int(1) NOT NULL DEFAULT '1',
+  `default_sell_behaviour` tinyint(1) NOT NULL DEFAULT '1',
   `cross_character_profits` tinyint(1) NOT NULL DEFAULT '1',
-  `ignore_citadel_tax` tinyint(1) NOT NULL DEFAULT '0'
+  `ignore_citadel_tax` tinyint(1) NOT NULL DEFAULT '0',
+  `ignore_station_tax` tinyint(1) NOT NULL DEFAULT '0',
+  `ignore_outpost_tax` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
