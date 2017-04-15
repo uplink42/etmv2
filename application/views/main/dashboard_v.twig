@@ -67,7 +67,7 @@
                     </div>
                 <div class="panel-body">
                     <div class="m-t-sm">
-                        <div class="c-white"><span class="label label-accent"></span> Last 7 day profits (all characters)</div>
+                        <div class="c-white"><span class="label label-accent"></span> Last 7 day profits</div>
                         <span class="small c-white">This week: {{ profits_trends['total_week'] | number_format }} ISK
                             <i class="fa fa-play fa-rotate-{{ profits_trends['trend_today'] > 0 ? 270 : 90 }} text-warning"></i>
                             {{ profits_trends['trend_today'] | number_format }} % (today)

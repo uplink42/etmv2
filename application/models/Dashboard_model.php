@@ -68,6 +68,7 @@ class Dashboard_model extends CI_Model
         return $jsonEncodedData;
     }
 
+
     /**
      * Return the list of weekly profits for the sparkline
      * @param  string $chars 
@@ -93,6 +94,7 @@ class Dashboard_model extends CI_Model
         return $data;
     }
 
+
     /**
      * Returns the trend line for a set of characters
      * @param  string $chars 
@@ -115,11 +117,13 @@ class Dashboard_model extends CI_Model
         $result                  = $query1->row()->sum;
         $result == 0 ? $week_avg = 0 : $week_avg = $result / 7;
 
-        $today_profit           = $query2->row()->sum;
-        $week_avg == 0 ? $trend = 0 : $trend = $today_profit / $week_avg * 100;
-        $data                   = ["total_week" => $result, "avg_week" => $week_avg, "trend_today" => $trend];
+        $today_profit = $query2->row()->sum;
+        $trend        = $week_avg == 0 ? 0 : $today_profit / $week_avg * 100;
+/*        $week_avg == 0 ? $trend = 0 : $trend = $today_profit / $week_avg * 100;*/
+        $data         = ["total_week" => $result, "avg_week" => $week_avg, "trend_today" => $trend];
         return $data;
     }
+
 
     /**
      * Returns the number of new contracts, transactions, etc on the main page
@@ -129,6 +133,8 @@ class Dashboard_model extends CI_Model
      */
     public function getNewInfo(string $chars): stdClass
     {
+        $this->db->select('coalesce(sum(contracts),0) as contracts, coalesce(sum(orders),0) as orders,
+            coalesce(sum(transactions),0) as transactions');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $query         = $this->db->get('new_info');
         return $result = $query->row();
