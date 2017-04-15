@@ -137,6 +137,8 @@ class Assets_model extends CI_Model
             i.eve_iditem as item_id,
             pr.price_evecentral as unit_value,
             c.name as owner,
+            i.volume as unit_volume,
+            (i.volume*a.quantity) as total_volume,
             (pr.price_evecentral*a.quantity) as total_value');
         $this->db->from('assets a');
         $this->db->join('item i', 'i.eve_iditem = a.item_eve_iditem');
@@ -162,6 +164,8 @@ class Assets_model extends CI_Model
             sys.name as loc_name,
             pr.price_evecentral as unit_value,
             c.name as owner,
+            i.volume as unit_volume,
+            (i.volume*a.quantity) as total_volume,
             (pr.price_evecentral*a.quantity) as total_value');
         $this->db->from('assets a');
         $this->db->join('item i', 'i.eve_iditem = a.item_eve_iditem');
@@ -216,7 +220,8 @@ class Assets_model extends CI_Model
             "showLegend"                => "0",
             "pieSliceDepth"             => "20",
             "useDataPlotColorForLabels" => "1",
-            "numberSuffix"              => " ISK",);
+            "numberSuffix"              => " ISK"
+        );
 
         $arrData["data"] = [];
         $region_names    = [];

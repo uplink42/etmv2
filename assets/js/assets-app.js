@@ -15,6 +15,7 @@ $(document).ready(function() {
                         owner: json[i].owner,
                         quantity: number_format(json[i].quantity, 0, '.', ',' ),
                         location: json[i].loc_name,
+                        volume_total: number_format(json[i].total_volume, 2, '.', ',' ),
                         isk_unit: number_format(json[i].unit_value, 2, '.', ',' ),
                         isk_total: number_format(json[i].total_value, 2, '.', ',' )
                     });
@@ -28,6 +29,7 @@ $(document).ready(function() {
             { data: "owner" },
             { data: "quantity" },
             { data: "location" },
+            { data: "volume_total" },
             { data: "isk_unit" },
             { data: "isk_total" },
         ],
