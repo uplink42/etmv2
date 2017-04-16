@@ -79,6 +79,10 @@ Installation
     'username' => 'root' <- replace this with your database user
     'password' => '' <- replace this with your database password
     'database' => '' <- replace this with the database name (trader by default)
+    
+    
+6- Import the sql files in /seeders. 
+    
 
 And that should be all. You can now launch it and create an account.
 
