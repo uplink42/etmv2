@@ -10,6 +10,9 @@ div.dt-button-info {
 
 .table-responsive {
   border-color: #484c5a !important;
+  @media (max-width: $screen-sm) {
+    font-size: 12px;
+  }
 }
 
 .alert-success {

@@ -26,7 +26,12 @@ class Stocklists extends MY_Controller
 
             $data['selected'] = "stocklists";
             $data['view']     = 'main/stocklists_v';
-            $this->load->view('main/_template_v', $data);
+
+            $data['layout']['page_title']     = "Stock Lists";
+            $data['layout']['icon']           = "pe-7s-note2";
+            $data['layout']['page_aggregate'] = true;
+
+            $this->twig->display('main/_template_v', $data);
         }
     }
 
@@ -72,7 +77,8 @@ class Stocklists extends MY_Controller
     {
         if($this->ValidateRequest->checkStockListOwnership($id_list, $this->user_id)) {
             $result = $this->StockLists_model->getItems($id_list);
-            echo json_encode($result);
+            injectIcons($result, 'object');
+            echo json_encode(array('data' => $result));
         } else {
             echo "error";
         }
@@ -95,14 +101,14 @@ class Stocklists extends MY_Controller
      * echoes results to client
      * @return [bool|json]
      */
-    public function addItem() : ?bool
+    public function addItem()
     {
         if (empty($_REQUEST['item-name']) || empty($_REQUEST['list-id'])) {
             return false;
         }
         $list_id = (int)$_REQUEST['list-id'];
         $name    = $_REQUEST['item-name'];
-        $user_id = $this->session->iduser;
+        $user_id = $this->etmsession->get('iduser');
 
         if($this->ValidateRequest->checkStockListOwnership($list_id, $this->user_id)) {
             $res = $this->StockLists_model->insertItem($name, $list_id);

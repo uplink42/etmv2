@@ -16,18 +16,31 @@ class Statistics_model extends CI_Model
      * @param  int    $interval 
      * @return string json           
      */
-    public function buildVolumesChart(string $chars, int $interval): string
+    public function buildVolumesChart(array $configs): string
     {
+        extract($configs);
         $chart = array(
             "caption"       => "Trading volumes",
             "subcaption"    => "last " . $interval . " days",
             "xAxisname"     => "days",
             "yAxisName"     => "ISK",
-            "numberPrefix"  => "ISK",
-            "plotFillAlpha" => "80",
-            "paletteColors" => "#d9534f,#5cb85c",
-            "showValues"    => "0",
-
+            "paletteColors" => "#0075c2,#1aaf5d",
+            "drawCrossLine" => "1",
+            "crossLineColor" => "#f6a821",
+            "crossLineAlpha" => "100",
+            "tooltipGrayOutColor" => "#80bfff",
+            "canvasBgAlpha" => "0",
+            "bgColor" => "#32353d",
+            "bgAlpha" => "100",
+            "outCnvBaseFontColor" => "#fff",
+            "showAlternateHGridColor" => "0",
+            "captionFontColor" =>"#fff",
+            "anchorAlpha" => '0',
+            "labelFontColor" => "#fff",
+            "showValues" => "0",
+            "numberSuffix" => " ISK",
+            "legendBgColor" => "#333",
+            "showBorder" => "0"
         );
 
         $index = -1;
@@ -63,9 +76,9 @@ class Statistics_model extends CI_Model
         $this->db->order_by('days', 'asc');
         $query3 = $this->db->get();
         $dates  = $query3->result_array();
+        
         //days
         $category = [];
-
         for ($i = 0, $max = count($dates); $i < $max; $i++) {
             array_push($category, array('label' => $dates[$i]['days']));
         }
@@ -97,6 +110,7 @@ class Statistics_model extends CI_Model
 
         return $jsonEncodedData;
     }
+
 
     /**
      * Gathers the problematic items for an interval and character set, optionally
@@ -279,7 +293,7 @@ class Statistics_model extends CI_Model
                 }
 
                 $data = ['eve_idcharacters' => $customerID,
-                    'name'                      => $result[$i]['soldTo']];
+                         'name'             => $result[$i]['soldTo']];
 
                 $this->db->replace('characters_public', $data);
             }
@@ -462,10 +476,12 @@ class Statistics_model extends CI_Model
      * @param  int    $interval 
      * @return string json           
      */
-    public function buildDistributionChart(string $chars, int $interval): string
+    public function buildDistributionChart(array $configs): string
     {
+        extract($configs);
         $arrData["chart"] = array(
             "bgColor"                   => "#44464f",
+            "paletteColors"             => "#0075c2,#1aaf5d,#f2c500,#3399ff,#ffcc99,#ff5050,#ff9900,#00802b,#009999,#666699,#ccffcc",
             "showBorder"                => "0",
             "use3DLighting"             => "0",
             "showShadow"                => "0",
@@ -485,7 +501,9 @@ class Statistics_model extends CI_Model
             "toolTipPadding"            => "5",
             "showHoverEffect"           => "1",
             "showLegend"                => "0",
-            "useDataPlotColorForLabels" => "1");
+            "pieSliceDepth"             => "20",
+            "useDataPlotColorForLabels" => "1",
+            "numberSuffix"              => " ISK",);
 
         $arrData["data"] = array();
 
@@ -593,22 +611,12 @@ class Statistics_model extends CI_Model
      */
     public function getHighestMetric(string $chars, string $metric) : stdClass
     {
-        $value = "";
-        switch ($metric) {
-            case 'buy':
-                $value = 'total_buy';
-                break;
-            case 'sell':
-                $value = 'total_sell';
-                break;
-            case 'profit':
-                $value = 'total_profit';
-                break;
-        }
-
-        $this->db->select('date, MAX(' . $value . ') as max');
+        $this->db->select('date, sum(' . $metric . ') as max');
         $this->db->from('history');
-        $this->db->where('characters_eve_idcharacters IN ' . $chars);
+        $this->db->where('characters_eve_idcharacters IN ' .  $chars);
+        $this->db->group_by('date');
+        $this->db->order_by('max', 'desc');
+        $this->db->limit(1);
         $query = $this->db->get('');
 
         $result = $query->row();

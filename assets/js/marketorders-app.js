@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     var table1 = $('#buyorders-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [25, 50, 100, -1],
             [25, 50, 100, "All"]
         ],
@@ -23,11 +23,11 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "aoColumnDefs": [
+        aoColumnDefs: [
             { 
-            "bSearchable": false, "aTargets": [ 3 ] 
+            bSearchable: false, aTargets: [ 3 ] 
         }],
-        "order": []
+        order: []
     });
 
     $(".buyorders-body p.yellow").html("<p>There are "+ table1.rows().count() + " results for a total of "
@@ -89,6 +89,4 @@ $(document).ready(function() {
         $(".main-panel-orders").hide();
         $('.panel-loading').show();
     });
-
-
 });

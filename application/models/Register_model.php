@@ -29,7 +29,7 @@ class Register_model extends CI_Model
      */
     public function validate(string $username, string $password, string $repeatpassword, string $email, int $apikey, string $vcode, string $reports): array
     {
-        $result = array("username" => $this->validateUsername($username),
+        $result = array("username"     => $this->validateUsername($username),
             "password"                 => $this->validatePassword($password, $repeatpassword),
             "email"                    => $this->validateEmail($email),
             "api"                      => $this->validateAPI($apikey, $vcode),
@@ -188,7 +188,9 @@ class Register_model extends CI_Model
             "default_buy_behaviour"   => $data['default_buy'],
             "default_sell_behaviour"  => $data['default_sell'],
             "cross_character_profits" => $data['x_character'],
-            "ignore_citadel_tax"      => $data['null_tax'],
+            "ignore_citadel_tax"      => $data['null_citadel_tax'],
+            "ignore_station_tax"      => $data['null_station_tax'],
+            "ignore_outpost_tax"      => $data['null_outpost_tax'],
             "login_count"             => 0,
             "updating"                => 0,
         );

@@ -42,7 +42,6 @@ class StockLists_model extends CI_Model
         $query = $this->db->insert('itemlist', $data);
 
         if ($this->db->affected_rows() != 0) {
-            log_message('error', $this->db->insert_id());
             return $this->db->insert_id();
         }
         return false;
@@ -55,7 +54,7 @@ class StockLists_model extends CI_Model
      */
     public function getItems(int $id_list) : array
     {
-        $this->db->select('i.name as name, i.volume as vol, COALESCE(p.price_evecentral,0) as price, i.eve_iditem as id');
+        $this->db->select('i.name as name, i.volume as vol, COALESCE(p.price_evecentral,0) as price, i.eve_iditem as item_id');
         $this->db->from('itemcontents c');
         $this->db->join('item i', 'i.eve_iditem = c.item_eve_iditem');
         $this->db->join('item_price_data p', 'p.item_eve_iditem = i.eve_iditem', 'left');
@@ -74,7 +73,7 @@ class StockLists_model extends CI_Model
      */
     public function queryItems(string $input) : array
     {
-        $this->db->select('name as value');
+        $this->db->select('name as value, eve_iditem as id');
         $this->db->from('item');
         $this->db->where('name', $input);
         $this->db->where("type <> 0");
@@ -82,7 +81,7 @@ class StockLists_model extends CI_Model
         $this->db->limit('1');
         $query1  = $this->db->get()->result();
 
-        $this->db->select('name as value');
+        $this->db->select('name as value, eve_iditem as id');
         $this->db->from('item');
         $this->db->like('name', $input);
         $this->db->where("type <> 0");

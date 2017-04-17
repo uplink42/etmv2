@@ -25,7 +25,7 @@ class Apikeymanagement extends MY_Controller
      * @param  string $character_id 
      * @return void               
      */
-    public function index(string $character_id) : void
+    public function index(string $character_id)
     {
         settype($character_id, 'int');
         if ($this->enforce($character_id, $this->user_id)) {
@@ -35,8 +35,12 @@ class Apikeymanagement extends MY_Controller
             $chars     = $data['chars'];
             $data['selected'] = "apikey";
 
+            $data['layout']['page_title']     = "API Key Management";
+            $data['layout']['icon']           = "fa fa-users";
+            $data['layout']['page_aggregate'] = false;
+
             $data['view']     = 'main/apimanagement_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 
@@ -44,7 +48,7 @@ class Apikeymanagement extends MY_Controller
      * Returns the character list for a user
      * @return string json
      */
-    public function getCharacters() : void
+    public function getCharacters()
     {
         $data = $this->ApiKeyManagement_model->getCharacterList($this->user_id);
         echo json_encode($data);
@@ -55,7 +59,7 @@ class Apikeymanagement extends MY_Controller
      * @param  int    $character_id_r 
      * @return string json                 
      */
-    public function removeCharacter(int $character_id_r) : void
+    public function removeCharacter(int $character_id_r)
     {
         $this->load->model('ValidateRequest');
         if ($this->ValidateRequest->checkCharacterBelong($character_id_r, $this->user_id)) {
@@ -79,10 +83,10 @@ class Apikeymanagement extends MY_Controller
      * Adds a character or set of characters to an account
      * @return string json      
      */
-    public function addCharacters() : void
+    public function addCharacters()
     {
-        $this->load->model('ValidateRequest');
-        $result = $this->ValidateRequest->validateAPI($this->keyid, $this->vcode);
+        $this->load->model('common/ValidateRequest', 'validate');
+        $result = $this->validate->validateAPI($this->keyid, $this->vcode);
 
         if($result) {
             $notice = "error";
@@ -114,16 +118,17 @@ class Apikeymanagement extends MY_Controller
         $char3 ? array_push($chars, $char3) : '';
 
         if(count($chars) != 0) {
-            $this->load->model('register_model');
-            if($this->register_model->verifyCharacters($chars, $apikey, $vcode)) {
-                $create = $this->ApiKeyManagement_model->addCharacters($chars, $apikey, $vcode, $this->user_id);
+            $this->load->model('register_model', 'reg');
+            if($this->reg->verifyCharacters($chars, $apikey, $vcode)) {
+                $create_error = $this->ApiKeyManagement_model->addCharacters($chars, $apikey, $vcode, $this->user_id);
                 //add characters
-                if ($create == "ok") {
+                if (!$create_error) {
                     $notice = "success";
+                    log_message('error', Msg::CHARACTER_CREATE_SUCCESS);
                     $msg = Msg::CHARACTER_CREATE_SUCCESS;
                 } else {
                     $notice = "error";
-                    $msg = $create;
+                    $msg = $create_error;
                 }
             } else {
                 $notice = "error";

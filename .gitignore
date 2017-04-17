@@ -1,4 +1,5 @@
 /application/logs/
+/application/cache/
 /dist/
 /node_modules/
 /home

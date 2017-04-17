@@ -216,56 +216,21 @@ class ValidateRequest extends CI_Model
         try {
             $phealAPI = new Pheal($apikey, $vcode, "account");
             $response = $phealAPI->APIKeyInfo();
-
             $accessMask = $response->key->accessMask;
             $expiry     = $response->key->expires;
 
-        } catch (\Pheal\Exceptions\PhealException $e) {
-            log_message('error', 'validate api keys ' . $e->getMessage());
+        } catch (Throwable $e) {
             //communication error, abort
             return Msg::INVALID_API_KEY;
         }
 
         if ($accessMask == "" && $response) {
             return Msg::INVALID_API_KEY;
-        } else if ($accessMask != '82317323' && $accessMask != '1073741823' && $response) {
+        } else if ($accessMask != MASK_PERSONAL_KEY && $accessMask != MASK_FULL_KEY && $accessMask != MASK_CORP_KEY && $response) {
             return Msg::INVALID_API_MASK;
         } else if (!isset($expiry) && $response) {
             return Msg::INVALID_API_KEY;
         }
-
-
-        //Using CURL to fetch API Access Mask
-       /* $curl_url = "https://api.eveonline.com/account/APIKeyInfo.xml.aspx?keyID=" . $apikey . "&vCode=" . $vcode;
-
-        $ch = curl_init($curl_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-
-        $response = curl_exec($ch);
-
-        if ($response === false) {
-            echo 'Curl error: ' . curl_error($ch);
-        } else {
-            $apiInfo = new SimpleXMLElement($response);
-
-            try {
-                $this->checkXML($apiInfo->result->key);
-                $accessMask = (int) $apiInfo->result->key->attributes()->accessMask;
-            } catch (Exception $e) {
-                return Msg::INVALID_API_KEY;
-            }
-        }
-        curl_close($ch);
-
-        if ($accessMask != '82317323') {
-            return Msg::INVALID_API_MASK;
-        }*/
-
-        /*if (!$this->validateAPIAvailability($apikey)) {
-            return Msg::API_ALREADY_EXISTS;
-        }*/
     }
 
     /**
@@ -328,7 +293,7 @@ class ValidateRequest extends CI_Model
             }
             return true;
 
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             /*echo sprintf(
                 "an exception was caught! Type: %s Message: %s",
                 get_class($e),

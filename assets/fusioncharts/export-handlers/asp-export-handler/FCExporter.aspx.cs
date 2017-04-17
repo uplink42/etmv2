@@ -1,4 +1,4 @@
-/**
+﻿/**
  *
  * FusionCharts Exporter is an ASP.NET C# script that handles 
  * FusionCharts (since v3.1) Server Side Export feature.
@@ -11,12 +11,20 @@
  *
  *    @author FusionCharts
  *    @description FusionCharts Exporter (Server-Side - ASP.NET C#)
- *    @version 3.0 [ 18 July 2014 ]
+ *    @version 4.0 [ 21 June 2016 ]
  *  
  */
 /**
  *  ChangeLog / Version History:
  *  ----------------------------
+ *
+ *   4.0.1 [25 Aug 2016]
+ *       - fixes for throwing Null pointer Exception while exporting as jpeg in save export action
+ *   4.0 [ 21 June 2016 ]
+ *       - Support export if direct image base64 encoded data is provided (for FusionCharts v 3.11.0 or more).
+ *       - Support for download of xls format
+ *       - Export with images suppported for every format including svg if browser is capable of sending the image data
+ *         as base64 data.
  *
  *   3.0 [ 18 July 2014 ]
  *       - Support for JavaScript Chart (SVG)
@@ -33,7 +41,7 @@
  *
  */
 /**
- * Copyright (c) 2014 InfoSoft Global Private Limited. All Rights Reserved
+ * Copyright (c) 2016 InfoSoft Global Private Limited. All Rights Reserved
  * 
  */
 /**
@@ -75,6 +83,8 @@ using System.Collections;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 using SharpVectors.Converters;
+using System.Web.Script.Serialization;
+using System.Collections.Generic;
 
 /// <summary>
 /// FusionCharts Exporter is an ASP.NET C# script that handles 
@@ -144,14 +154,14 @@ public partial class FCExporter : System.Web.UI.Page
     /// The value is semicolon separated key value pair for each format
     /// Each key is the format and value is the MIME type
     /// </summary>
-    private const string MIMETYPES = "pdf=application/pdf;jpg=image/jpeg;jpeg=image/jpeg;gif=image/gif;png=image/png;svg=image/svg+xml";
+    private const string MIMETYPES = "pdf=application/pdf;jpg=image/jpeg;jpeg=image/jpeg;gif=image/gif;png=image/png;svg=image/svg+xml;xls=application/vnd.ms-excel";
 
     /// <summary>
     /// This is a constant list of all the file extensions for the export formats
     /// The value is semicolon separated key value pair for each format
     /// Each key is the format and value is the file extension 
     /// </summary>
-    private const string EXTENSIONS = "pdf=pdf;jpg=jpg;jpeg=jpg;gif=gif;png=png;svg=svg";
+    private const string EXTENSIONS = "pdf=pdf;jpg=jpg;jpeg=jpg;gif=gif;png=png;svg=svg;xls=xls";
 
     /// <summary>
     /// Lists the default exportParameter values taken, if not provided by chart
@@ -173,6 +183,8 @@ public partial class FCExporter : System.Web.UI.Page
     private string DOMId;
 
     public bool IsSVGData { get; set; }
+
+    public bool IsLatest;
 
     /// <summary>
     /// Stores SVG information.
@@ -200,35 +212,69 @@ public partial class FCExporter : System.Web.UI.Page
 
         // process export data and get the processed data (image/PDF) to be exported
         MemoryStream exportObject = null;
-
-        if (IsSVGData)
+        if (!IsLatest)
         {
-            exportObject = exportProcessor(((Hashtable)exportData["parameters"])["exportformat"].ToString(), "svg", (Hashtable)exportData["parameters"]);
+            if (IsSVGData)
+            {
+                if (exportData["encodedImgData"] != null && !string.IsNullOrEmpty(exportData["encodedImgData"].ToString()) && ((Hashtable)exportData["parameters"])["exportformat"].ToString() == "svg")
+                {
+                    exportObject = exportProcessor(((Hashtable)exportData["parameters"])["exportformat"].ToString(), exportData["svg"].ToString(), (Hashtable)exportData["parameters"], exportData["encodedImgData"].ToString());
+                }
+                else
+                {
+                    exportObject = exportProcessor(((Hashtable)exportData["parameters"])["exportformat"].ToString(), "svg", (Hashtable)exportData["parameters"]);
+
+                }
+            }
+            else
+            {
+                exportObject = exportProcessor(((Hashtable)exportData["parameters"])["exportformat"].ToString(), exportData["stream"].ToString(), (Hashtable)exportData["meta"]);
+            }
+
+
+            /*
+             * Send the export binary to output module which would either save to a server directory
+             * or send the export file to download. Download terminates the process while
+             * after save the output module sends back export status 
+             */
+            //object exportedStatus = IsSVGData ? outputExportObject(exportObject, exportData) : outputExportObject(exportObject, (Hashtable)exportData["parameters"]);
+            object exportedStatus = outputExportObject(exportObject, (Hashtable)exportData["parameters"]);
+
+            // Dispose export object
+            exportObject.Close();
+            exportObject.Dispose();
+
+            /*
+             * Build Appropriate Export Status and send back to chart by flushing the  
+             * procesed status to http response. This returns status back to chart. 
+             * [ This is not applicable when Download action took place ]
+             */
+            flushStatus(exportedStatus, (Hashtable)exportData["meta"]);
         }
-        else
-        {
-            exportObject = exportProcessor(((Hashtable)exportData["parameters"])["exportformat"].ToString(), exportData["stream"].ToString(), (Hashtable)exportData["meta"]);
-        }
+    }
+    private void convertRAWImageDataToFile(string imageData, string parameters)
+    {
+        string fileName = parameters.Split('|')[0].Split('=')[1],
+               extention = parameters.Split('|')[1].Split('=')[1],
+               exportAction = parameters.Split('|')[2].Split('=')[1],
+               fullFileName = fileName + "." + extention,
+               filLocation = HttpContext.Current.Server.MapPath("~/Exported_Images/" + fullFileName),
+               contentType = getMime(extention);
 
-        /*
-         * Send the export binary to output module which would either save to a server directory
-         * or send the export file to download. Download terminates the process while
-         * after save the output module sends back export status 
-         */
-        //object exportedStatus = IsSVGData ? outputExportObject(exportObject, exportData) : outputExportObject(exportObject, (Hashtable)exportData["parameters"]);
-        object exportedStatus = outputExportObject(exportObject, (Hashtable)exportData["parameters"]);
+        byte[] bytes = System.Convert.FromBase64String(imageData.Split(',')[1]);
+        File.WriteAllBytes(filLocation, bytes);
+        if (exportAction == "download") {
+            Response.ClearContent();
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + fullFileName);
+            Response.ContentType = contentType;
+            Response.TransmitFile(filLocation);
+            Response.End();
+        }     
+    }
 
-        // Dispose export object
-        exportObject.Close();
-        exportObject.Dispose();
-
-        /*
-         * Build Appropriate Export Status and send back to chart by flushing the  
-         * procesed status to http response. This returns status back to chart. 
-         * [ This is not applicable when Download action took place ]
-         */
-        flushStatus(exportedStatus, (Hashtable)exportData["meta"]);
-
+    private string stichImageToSVGAndGetString(string svgData, string imageData)
+    {
+        return stichImageToSVG(svgData, imageData);
     }
 
     /// <summary>
@@ -247,12 +293,16 @@ public partial class FCExporter : System.Web.UI.Page
         string svgStr = "";
 
         IsSVGData = false;
-
-        if (Request["stream_type"] == "svg")
+        if (Request["stream_type"] == "IMAGE-DATA")
+        {
+            this.convertRAWImageDataToFile(Request["stream"], Request["parameters"]);
+            IsLatest = true;
+        }
+        else if (Request["stream_type"] == "svg")
         {
             IsSVGData = true;
             exportData["svg"] = Request["stream"];
-            
+
             // Added custom parameter
             exportData["exporttargetwindow"] = "_self";
 
@@ -267,9 +317,23 @@ public partial class FCExporter : System.Web.UI.Page
             svgStr = svgStr.Replace("&nbsp;", " ");
             exportData["svg"] = svgStr;
 
+            if (Request["encodedImgData"] != null)
+            {
+                exportData["encodedImgData"] = Request["encodedImgData"];
+            }
+
             byte[] svg = System.Text.Encoding.UTF8.GetBytes(exportData["svg"].ToString());
-            svgStream = new MemoryStream(svg);
-            svgData = new StreamReader(svgStream);
+
+            if (exportData["encodedImgData"] != null && !string.IsNullOrEmpty(exportData["encodedImgData"].ToString()))
+            {
+                svgStream = stichImageToSVGAndGetStream(exportData["svg"].ToString(), exportData["encodedImgData"].ToString());
+                svgData = new StringReader(stichImageToSVGAndGetString(exportData["svg"].ToString(), exportData["encodedImgData"].ToString()));
+            }
+            else
+            {
+                svgStream = new MemoryStream(svg);
+                svgData = new StreamReader(svgStream);
+            }
         }
         // If Flash Charts
         else 
@@ -317,6 +381,55 @@ public partial class FCExporter : System.Web.UI.Page
         return exportData;
     }
 
+    private string stichImageToSVG(string svgData, string imageData)
+    {
+        JavaScriptSerializer ser = new JavaScriptSerializer();
+        var data = ser.Deserialize<Dictionary<string, Dictionary<string, string>>>(imageData);
+
+        List<string> rawImageDataArray = new List<string>();
+        List<string> hrefArray = new List<string>();
+
+        // /(<image[^>]*xlink:href *= *[\"']?)([^\"']*)/i
+        Regex regex = new Regex("<image.+?xlink:href=\"(.+?)\".+?/?>");
+        int counter = 0;
+        foreach (Match match in regex.Matches(svgData))
+        {
+            string[] temp1 = match.Value.Split(new string[] { "xlink:href=" }, StringSplitOptions.None);
+            hrefArray.Add(temp1[1].Split('"')[1]);
+            string[] imageNameArray = hrefArray[counter].Split('/');
+            rawImageDataArray.Add(getImageData(data, imageNameArray[imageNameArray.Length - 1]));
+            counter += 1;
+        }
+        for (int index = 0; index <= rawImageDataArray.Count - 1; index++)
+        {
+            svgData = svgData.Replace(hrefArray[index], rawImageDataArray[index]);
+        }
+
+        return svgData;
+    }
+
+    //  <summary>
+    //  Get image data from the json object Request["encodedImgData"].
+    //  </summary>
+    //  <param name="imageData">(Dictionary<string, Dictionary<string, string>>) all image Image data as a combined object</param>
+    //  <param name="imageName">(string) Image Name</param>
+    //  <returns></returns> 
+    private string getImageData(Dictionary<string, Dictionary<string, string>> imageData, string imageName)
+    {
+        string data = "";
+        foreach (string key in imageData.Keys)
+        {
+            if ((imageData[key]["name"] + "." + imageData[key]["type"]) == imageName)
+            {
+                data = imageData[key]["encodedData"];
+                break; // TODO: might not be correct. Was : Exit For
+            }
+        }
+
+
+        return data;
+    }
+
     /// <summary>
     /// Parse export 'parameters' string into a Hashtable 
     /// Also synchronise default values from defaultparameterValues Hashtable
@@ -354,6 +467,15 @@ public partial class FCExporter : System.Web.UI.Page
 
     }
 
+    private MemoryStream stichImageToSVGAndGetStream(string svgData, string imageData)
+    {
+
+        svgData = stichImageToSVG(svgData, imageData);
+        byte[] svg = System.Text.Encoding.UTF8.GetBytes(svgData.ToString());
+        return new MemoryStream(svg);
+    }
+
+
     /// <summary>
     /// Get Export data from and build the export binary/objct.
     /// </summary>
@@ -361,6 +483,12 @@ public partial class FCExporter : System.Web.UI.Page
     /// <param name="stream">(string) Export image data in FusionCharts compressed format</param>
     /// <param name="meta">{Hastable)Image meta data in keys "width", "heigth" and "bgColor"</param>
     /// <returns></returns>
+
+    private MemoryStream exportProcessor(string strFormat, string stream, Hashtable meta, string imageData)
+    {
+        return stichImageToSVGAndGetStream(stream, imageData);
+    }
+
     private MemoryStream exportProcessor(string strFormat, string stream, Hashtable meta)
     {
 

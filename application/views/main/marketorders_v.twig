@@ -1,0 +1,167 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                {% include 'common/view-header_v' ~ '.twig' %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="panel panel-filled panel-c-success panel-main">
+                    <div class="panel-heading">
+                        <a href="{{base_url('Marketorders/index/' ~ character_id ~ '?aggr=' ~ aggregate ~ '&check=1')}}">
+                            <button class="btn btn-default btn-success pull-right btn-lg btn-check">Order Check</button>
+                        </a>
+                        Market Orders
+                    </div>
+                    <div class="panel-body">
+                        <i class="fa fa-info yellow"></i> You can check the current state of your orders (undercut, expired or on top of the list) with Order Check at the right <br />
+                        <i class="fa fa-info yellow"></i> There is a 6 minute cache timer between requests, so spamming this button only pushes you back in the waiting period.
+                    </div>
+
+                </div> 
+            </div>
+        </div>
+        
+        <div class="main-panel-orders">    
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-filled">
+                        <div class="panel-heading">
+                            <div class="panel panel-filled panel-c-success panel-collapse">
+                                <div class="panel-heading">
+                                    <h5><i class="pe-7s-cart"></i> Buy Orders</h5>
+                                </div>
+                            </div>
+                            <button class="btn btn-default pull-right btn-clear">Clear filters</button>
+                        </div>
+                        <div class="panel-body buyorders-body">
+                            <p class="yellow"></p>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="buyorders-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Item</th>
+                                            <th>Q</th>
+                                            <th>ISK/unit</th>
+                                            <th>ISK/total</th>
+                                            <th>Station</th>
+                                            <th>Character</th>
+                                            <th>Range</th>
+                                            <th>State</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for buy in buyorders %}
+                                        <tr class="{{ buy['status'] == 'OK' ? 'success' : ( buy['status'] == 'undercut' ? 'danger' : '') }}">
+                                            <td>{{ buy['date'] }}</td>
+                                            <td><img src="{{buy['url']}}" alt="icon"><a class="item-name" style="color: #fff"> 
+                                                {{buy['item_name']}}</a></td>
+                                            <td>{{ buy['vol']         | number_format(0) }}</td>
+                                            <td>{{ buy['price_unit']  | number_format(2) }}</td>
+                                            <td>{{ buy['price_total'] | number_format(2) }}</td>
+                                            <td>{{ buy['station_name'] }}</td>
+                                            <td>{{ buy['character'] }}</td>
+                                            <td>
+                                                {% if buy['range'] == '-1' %}
+                                                    Station
+                                                {% endif %}
+                                                {% if buy['range'] == '0' %}
+                                                    System
+                                                {% endif %}
+                                                {% if buy['range'] == '32767' %}
+                                                    Region
+                                                {% endif %}
+                                                {% if buy['range'] > '1' and buy['range'] < '32767' %}
+                                                    {{ buy['range'] ~ ' jumps' }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{% if buy['status'] is not empty %}
+                                                    {{ buy['status'] }}
+                                                {% else %}
+                                                    -
+                                                {% endif %}
+                                            </td>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+         
+                <div class="col-md-12">
+                    <div class="panel panel-filled">
+                        <div class="panel-heading">
+                            <div class="panel panel-filled panel-c-success panel-collapse">
+                                <div class="panel-heading">
+                                    <h5><i class="pe-7s-cart"></i> Sell Orders</h5>
+                                </div>
+                            </div>
+                            <button class="btn btn-default pull-right btn-clear">Clear filters</button>
+                        </div>
+                        <div class="panel-body sellorders-body">
+                            <p class="yellow"></p> 
+                            <div class="table-responsive ">
+                                <table class="table table-striped table-hover" id="sellorders-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Item</th>
+                                            <th>Q</th>
+                                            <th>ISK/unit</th>
+                                            <th>ISK/total</th>
+                                            <th>Station</th>
+                                            <th>Character</th>
+                                            <th>Range</th>
+                                            <th>State</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for sell in sellorders %}
+                                            <tr class="{{ sell['status'] == 'OK' ? 'success' : ( sell['status'] == 'undercut' ? 'danger' : '') }}">
+                                                <td>{{ sell['date'] }}</td>
+                                                <td><img src="{{sell['url']}}" alt="icon"><a class="item-name" style="color: #fff"> 
+                                                    {{sell['item_name']}}</a></td>
+                                                <td>{{ sell['vol'] | number_format(0) }}</td>
+                                                <td>{{ sell['price_unit']  | number_format(2) }}</td>
+                                                <td>{{ sell['price_total'] | number_format(2) }}</td>
+                                                <td>{{ sell['station_name'] }}</td>
+                                                <td>{{ sell['character'] }}</td>
+                                                <td>
+                                                    {% if sell['range'] == '-1' %}
+                                                        Station
+                                                    {% endif %}
+                                                    {% if sell['range'] == '0' %}
+                                                        System
+                                                    {% endif %}
+                                                    {% if sell['range'] == '32767' %}
+                                                        Region
+                                                    {% endif %}
+                                                    {% if sell['range'] > '1' and sell['range'] < '32767' %}
+                                                        {{ sell['range'] ~ ' jumps' }}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{% if sell['status'] is not empty %}
+                                                        {{ sell['status'] }}
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+        <div class="panel-body panel-loading text-center">
+            Searching your orders... please wait. This can take a long time if you have a large list
+            {% include 'common/loader_v' ~ '.twig' %}
+        </div>
+    </div>
+</section>
+<script src="{{ base_url('dist/js/apps/marketorders-app.js') }}?v={{HASH_CACHE}}"></script>

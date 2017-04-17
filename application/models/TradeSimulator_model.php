@@ -1,7 +1,5 @@
 <?php
-ini_set('mysql.connect_timeout', '3000');
-ini_set('default_socket_timeout', '3000');
-ini_set('max_execution_time', '0');
+ini_set('max_execution_time', '180');
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -12,6 +10,7 @@ class TradeSimulator_model extends CI_Model
     {
         parent::__construct();
         $this->load->model('common/RateLimiter');
+        $this->load->model('common/User');
     }
 
     private $stationFromName;
@@ -24,8 +23,7 @@ class TradeSimulator_model extends CI_Model
     private $characterFromName;
     private $characterToName;
 
-    private $characterFromMethod;
-    private $characterToMethod;
+    private $settings;
 
     private $brokerFeeFrom;
     private $transTaxFrom;
@@ -70,7 +68,7 @@ class TradeSimulator_model extends CI_Model
      * @param  int    $stocklist   
      * @return array              
      */
-    public function init(string $origin, string $destination, int $buyer, int $seller, string $buy_method, string $sell_method, int $stocklist)
+    public function init(string $origin, string $destination, int $buyer, int $seller, string $buy_method, string $sell_method, int $stocklist, int $user_id)
     {
         $this->stationFromName     = (string) $origin;
         $this->stationToName       = (string) $destination;
@@ -87,11 +85,12 @@ class TradeSimulator_model extends CI_Model
 
         $CI = &get_instance();
         $CI->load->model('Tax_Model');
-        $CI->Tax_Model->tax($this->stationFromID, $this->stationToID, $buyer, $seller, $buy_method, $sell_method);
-        $this->transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
-        $this->brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
-        $this->transTaxTo    = $CI->Tax_Model->calculateTaxTo();
-        $this->brokerFeeTo   = $CI->Tax_Model->calculateBrokerTo();
+        $this->settings      = $this->User->getUserProfitSettings($user_id);
+        $CI->Tax_Model->tax($this->stationFromID, $this->stationToID, $buyer, $seller, $this->settings);
+        $this->transTaxFrom  = $CI->Tax_Model->calculateTax('from');
+        $this->brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
+        $this->transTaxTo    = $CI->Tax_Model->calculateTax('to');
+        $this->brokerFeeTo   = $CI->Tax_Model->calculateBroker('to');
 
         return $this->generateResults();
     }
@@ -103,8 +102,7 @@ class TradeSimulator_model extends CI_Model
     private function generateResults(): array
     {
         $contents = $this->getStockListContents();
-
-        $results = [];
+        $results         = [];
         $buy_broker_per  = ($this->brokerFeeFrom - 1) * 100;
         $buy_tax_per     = ($this->transTaxFrom - 1) * 100;
         $sell_broker_per = (1 - $this->brokerFeeTo) * 100;
@@ -126,7 +124,6 @@ class TradeSimulator_model extends CI_Model
 
         foreach ($contents as $row) {
             $this->RateLimiter->rateLimit();
-
             $item_id                   = (int) $row->id;
             $item_name                 = $row->name;
             $row->vol == 0 ? $item_vol = 1 : $item_vol = $row->vol;
@@ -143,22 +140,21 @@ class TradeSimulator_model extends CI_Model
             $best_buy_price_taxed != 0 ? $profit_margin = ($profit_raw / $best_buy_price_taxed) * 100 : $profit_margin = 0;
 
             $item_res = array("id" => $item_id,
-                "name"                 => $item_name,
-                "vol"                  => $item_vol,
-                "buy_price"            => $best_buy_price,
-                "buy_broker"           => $buy_broker_fee,
-                "sell_price"           => $best_sell_price,
-                "sell_broker"          => $sell_broker_fee,
-                "sell_tax"             => $sell_trans_tax,
-                "profit_raw"           => $profit_raw,
-                "profit_m3"            => $profit_m3,
-                "profit_margin"        => $profit_margin);
-
+                "name"             => $item_name,
+                "vol"              => $item_vol,
+                "buy_price"        => $best_buy_price,
+                "buy_broker"       => $buy_broker_fee,
+                "sell_price"       => $best_sell_price,
+                "sell_broker"      => $sell_broker_fee,
+                "sell_tax"         => $sell_trans_tax,
+                "profit_raw"       => $profit_raw,
+                "profit_m3"        => $profit_m3,
+                "profit_margin"    => $profit_margin);
             array_push($results, $item_res);
         }
-
         return array("results" => $results, "req" => $taxes);
     }
+
 
     /**
      * Returns the list of all stock list contents
@@ -178,6 +174,7 @@ class TradeSimulator_model extends CI_Model
         return $result;
     }
 
+
     /**
      * Fetches price data from CREST for an item
      * @param  int    $item_id    
@@ -189,12 +186,16 @@ class TradeSimulator_model extends CI_Model
     {
         $regionID = $this->getRegionID($station_id)->id;
         $url      = "https://crest-tq.eveonline.com/market/" . $regionID . "/orders/" . $order_type . "/?type=https://crest-tq.eveonline.com/inventory/types/" . $item_id . "/";
+        //$context  = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
+        /*$ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = json_decode(curl_exec($ch), true);*/
         $result   = json_decode(file_get_contents($url), true);
-
         $array_prices = [];
 
         for ($i = 0; $i < count($result['items']); $i++) {
-            //only fetch orders FROM the designated stationID
+            // only fetch orders FROM the designated stationID
             if ($result['items'][$i]['location']['id_str'] == $station_id) {
                 array_push($array_prices, $result['items'][$i]['price']);
             }
@@ -216,12 +217,13 @@ class TradeSimulator_model extends CI_Model
         return $price;
     }
 
+
     /**
      * Returns the region ID from the provided station
      * @param  int    $station_id 
      * @return stdClass             
      */
-    private function getRegionID(int $station_id): stdClass
+    public function getRegionID(int $station_id): stdClass
     {
         $this->db->select('r.eve_idregion as id');
         $this->db->from('region r');
@@ -233,6 +235,7 @@ class TradeSimulator_model extends CI_Model
 
         return $result;
     }
+
 
     /**
      * Gets the stock list name from an id
@@ -248,6 +251,7 @@ class TradeSimulator_model extends CI_Model
         $result = $query->row();
         return $result;
     }
+
 
     /**
      * Returns the character name from an id

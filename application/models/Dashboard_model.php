@@ -5,10 +5,10 @@ if (!defined('BASEPATH')) {
 
 class Dashboard_model extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/User');
     }
 
     /**
@@ -16,15 +16,16 @@ class Dashboard_model extends CI_Model
      * @param  string $chars 
      * @return string json        
      */
-    public function getPieData(string $chars): string
+    public function getPieChartData(array $configs): string
     {
+        extract ($configs);
         $this->db->select('sum(networth) as networth, sum(escrow) as escrow, sum(total_sell) as total_sell, sum(balance) as balance');
         $this->db->where('eve_idcharacter IN ' . $chars);
         $query  = $this->db->get('characters');
         $result = $query->row();
 
         $arrData["chart"] = array(
-            "paletteColors"             => "#f6a821,#f45b00,#8e0000,#007F00,#1aaf5d",
+            "paletteColors"             => "#0075c2,#1aaf5d,#f2c500,#8e0000",
             "bgColor"                   => "#44464f",
             "showBorder"                => "0",
             "use3DLighting"             => "0",
@@ -59,13 +60,14 @@ class Dashboard_model extends CI_Model
 
         for ($i = 0; $i < count($assetTypes); $i++) {
             array_push($arrData["data"], array("label" => (string) $assetTypes[$i],
-                "value"                                    => (string) $assetValues[$i]));
+                                               "value" => (string) $assetValues[$i]));
         }
 
         $arrData["chart"];
         $jsonEncodedData = json_encode($arrData);
         return $jsonEncodedData;
     }
+
 
     /**
      * Return the list of weekly profits for the sparkline
@@ -92,6 +94,7 @@ class Dashboard_model extends CI_Model
         return $data;
     }
 
+
     /**
      * Returns the trend line for a set of characters
      * @param  string $chars 
@@ -99,7 +102,6 @@ class Dashboard_model extends CI_Model
      */
     public function getTotalProfitsTrends(string $chars): array
     {
-
         $this->db->select('coalesce(sum(total_profit),0) as sum');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $this->db->where("date>= (now() - INTERVAL 7 DAY)");
@@ -115,11 +117,13 @@ class Dashboard_model extends CI_Model
         $result                  = $query1->row()->sum;
         $result == 0 ? $week_avg = 0 : $week_avg = $result / 7;
 
-        $today_profit           = $query2->row()->sum;
-        $week_avg == 0 ? $trend = 0 : $trend = $today_profit / $week_avg * 100;
-        $data                   = ["total_week" => $result, "avg_week" => $week_avg, "trend_today" => $trend];
+        $today_profit = $query2->row()->sum;
+        $trend        = $week_avg == 0 ? 0 : $today_profit / $week_avg * 100;
+/*        $week_avg == 0 ? $trend = 0 : $trend = $today_profit / $week_avg * 100;*/
+        $data         = ["total_week" => $result, "avg_week" => $week_avg, "trend_today" => $trend];
         return $data;
     }
+
 
     /**
      * Returns the number of new contracts, transactions, etc on the main page
@@ -129,6 +133,8 @@ class Dashboard_model extends CI_Model
      */
     public function getNewInfo(string $chars): stdClass
     {
+        $this->db->select('coalesce(sum(contracts),0) as contracts, coalesce(sum(orders),0) as orders,
+            coalesce(sum(transactions),0) as transactions');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $query         = $this->db->get('new_info');
         return $result = $query->row();
@@ -139,10 +145,15 @@ class Dashboard_model extends CI_Model
      * set of characters and a specified interval
      * @param  int|integer $interval 
      * @param  string|null $chars    
-     * @return array                
+     * @return json string                
      */
-    public function getProfits(int $interval = 1, string $chars = null): array
+    public function getProfits(array $configs): string
     {
+        extract($configs);
+        $CI = &get_instance();
+        $CI->load->model('Tax_Model');
+        $profit_settings = $this->User->getUserProfitSettings($user_id);
+
         $this->db->select('p.profit_unit as profit_unit,
                         p.quantity_profit as quantity,
                         p.timestamp_sell as sell_time,
@@ -167,10 +178,8 @@ class Dashboard_model extends CI_Model
         $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
         $this->db->order_by('t2.time', 'desc');
-        $this->db->limit(5000);
         $query = $this->db->get();
         $count = $query->num_rows();
-
         $result = $query->result_array();
 
         for ($i = 0; $i <= count($result) - 1; $i++) {
@@ -181,19 +190,16 @@ class Dashboard_model extends CI_Model
             $station_from   = $result[$i]['station_from'];
             $station_to     = $result[$i]['station_to'];
 
-            $CI = &get_instance();
-            $CI->load->model('Tax_Model');
-            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, "buy", "sell");
-            $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
-            $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
-
+            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, $profit_settings);
+            $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
+            $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
             $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
             $result[$i]['margin']       = $profit_unit / $price_buy * 100;
             $result[$i]['profit_total'] = $profit_unit * $result[$i]['quantity'];
             $result[$i]['url']          = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
         }
 
-        $data = array("result" => $result, "count" => $count);
+        $data = json_encode(['data' => $result]);
         return $data;
     }
 }

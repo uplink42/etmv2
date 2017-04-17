@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="eve trade master - web based profit tracker and asset manager for eve online">
+    <meta name="author" content="nick starkey">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Eve Trade Master" />
+    <meta name="keywords" content="eve online trading market profit">
+    <meta name="google-site-verification" content="AaRtrjK00fRsj5cWaYi3VnjiuOIpcRwZw4C860zpf9Y" />
+    <link href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+
+    <script>
+        var base     = "{{ base_url() }}",
+            charID   = "{{ character_id }}" || 0,
+            interval = "{{ interval }}"     || 1,
+            aggr     = "{{ aggregate }}"    || 0,
+            regionID = "{{ region_id }}"      || 0,
+            itemID   = "{{ item_id }}";
+    </script>
+
+    <!-- Page title -->
+    <title>Eve Trade Master 2 - A web based Eve Online profit tracker, asset manager and trade analysis tool</title>
+
+    {# disable pace on marketexplorer #}
+    {% if market %}
+        <script>window.paceOptions = { ajax: false }; </script>
+    {% endif %}
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="{{ base_url('dist/luna/styles/styles.css') }}?v={{HASH_CACHE}}"/>
+    <link rel="stylesheet" href="{{ base_url('dist/luna/styles/theme.min.css') }}?v={{HASH_CACHE}}"/>
+
+    <!-- main js -->
+    <script src="{{ base_url('dist/js/apps.js') }}?v={{HASH_CACHE}}"></script>
+
+    {# enable ajax loader #}
+    {% if market %}
+        <script>
+            $(document).ready(function() {
+                $('body').addClass('pace-done');
+            });
+        </script>
+    {% endif %}
+</head>
+
+    {# no header pages #}
+    {% if no_header %}
+        <body class='blank'>
+    {% endif %}
+
+    <div class="wrapper mainwrapper" data-url="{{ base_url() }}">
+
+        {# toastr between pages #}
+        {% if SESSION['msg'] %}
+            <script>toastr['{{ SESSION['notice'] }}']('{{ SESSION['msg'] }}')</script>
+        {% endif %}
+        
+        {# pages with header and sidenav #}
+        {% if no_header is empty %}
+            {% include 'common/header_v.twig' %}
+        {% endif %}
+
+        {# include current page #}
+        {% include view ~ '.twig' %}
+
+        {# include footer #}
+        {% include 'common/footer_v' ~ '.twig' %}
+
+    </div>
+
+    {# include feedback if in authed page #}
+    {% if email %}
+        {% include 'common/feedback_v' ~ '.twig' %}
+    {% endif %}
+
+        {# loading... #}
+        <div class="panel panel-filled panel-loading-common text-center">
+            <div class="panel-body">
+                Refreshing data... please wait
+                {% include 'common/loader_v' ~ '.twig' %}
+            </div>
+        </div>
+
+        {# loading inside app #}
+        <div class="panel-loading-ajax">
+            {% include 'common/loader_v' ~ '.twig' %}
+        </div>
+        
+        {% include 'analyticstracking' ~ '.php' %}
+</body>

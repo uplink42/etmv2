@@ -9,6 +9,7 @@ final class Dashboard extends MY_Controller
         parent::__construct();
         $this->db->cache_on();
         $this->page = "dashboard";
+        $this->load->model('Dashboard_model', 'dashboard');
     }
 
    /**
@@ -17,7 +18,7 @@ final class Dashboard extends MY_Controller
     * @param  int|integer $interval     
     * @return void                    
     */
-    public function index(int $character_id, int $interval = 3) : void
+    public function index(int $character_id, int $interval = 1) : void
     {
         if ($interval > 7) {
             $interval = 7;
@@ -30,26 +31,31 @@ final class Dashboard extends MY_Controller
 
             $data['selected'] = "dashboard";
             $data['interval'] = $interval;
+            $data['week_profits']   = $this->dashboard->getWeekProfits($chars);
+            $data['new_info']       = $this->dashboard->getNewInfo($chars);
+            $data['profits_trends'] = $this->dashboard->getTotalProfitsTrends($chars);
 
-            $this->load->model('Dashboard_model');
-            $profits = $this->Dashboard_model->getProfits($interval, $chars);
+            $data['layout']['page_title']     = "Dashboard";
+            $data['layout']['icon']           = "pe-7s-shield";
+            $data['layout']['page_aggregate'] = true;
 
-            $count = $profits['count'];
-            if ($count > 200) {
-                $img = false;
-            } else {
-                $img = true;
-            }
-
-            $data['pie_data']     = $this->Dashboard_model->getPieData($chars);
-            $data['week_profits'] = $this->Dashboard_model->getWeekProfits($chars);
-            $data['new_info']     = $this->Dashboard_model->getNewInfo($chars);
-
-            $data['img']            = $img;
-            $data['profits']        = $this->injectIcons($profits['result']);
-            $data['profits_trends'] = $this->Dashboard_model->getTotalProfitsTrends($chars);
             $data['view'] = 'main/dashboard_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
+    }
+
+
+    public function getPieChart(int $character_id, bool $aggr = false) : void
+    {
+        $params = [];
+        echo $this->buildData($character_id, $aggr, 'getPieChartData', 'Dashboard_model', $params); 
+    }
+
+    public function getProfitTable(int $character_id, int $interval = 3, bool $aggr = false) : void
+    {
+        $params = ['interval' => $interval,
+                   'user_id'  => $this->user_id];
+                   
+        echo $this->buildData($character_id, $aggr, 'getProfits', 'Dashboard_model', $params); 
     }
 }

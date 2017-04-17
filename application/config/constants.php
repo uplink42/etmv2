@@ -86,7 +86,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 //Application specific constants
 define("FILESTORAGE", "phealcache/"); //pheal cache folder
-define("URL", "../");
+define("URL", "../../");
 define("GUSER", "etmdevelopment42@gmail.com");
 define("GPWD", "");
 define("SMTPDEBUG", 0);
@@ -96,5 +96,9 @@ define("SMTPHOST", "smtp.gmail.com");
 define("SMTPPORT", 465);
 define("FROM_EMAIL", "");
 define("FROM_NAME", "Eve Trade Master");
+
+define("MASK_PERSONAL_KEY", '82317323');
+define("MASK_FULL_KEY", '1073741823');
+define("MASK_CORP_KEY", '11800579');
 
 

@@ -17,7 +17,7 @@ class Recovery_model extends CI_Model
      * @param  string $email    
      * @return stdClass           
      */
-    public function getUserByEmail(string $username, string $email) : stdClass
+    public function getUserByEmail(string $username, string $email) : ?stdClass
     {
         $this->db->where('username', $username);
         $this->db->where('email', $email);
@@ -32,7 +32,7 @@ class Recovery_model extends CI_Model
      * @param  string $email 
      * @return stdClass        
      */
-    public function getUsernameByEmail(string $email) : stdClass
+    public function getUsernameByEmail(string $email) : ?stdClass
     {
         $this->db->select('username');
         $this->db->where('email', $email);

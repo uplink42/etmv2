@@ -1,0 +1,47 @@
+<div class="view-header">
+    <div class="dropdown pull-right">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownmenu-characters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Character
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right character-select">
+            {% for char in character_list['chars'] %}
+                <li class="{{ character_name == character_list['char_names'][loop.index0] and aggregate == 0 ? 'selected' : '' }}"><a href="{{ base_url(selector['page']) }}/index/{{ char }}{{ selector['hasInterval'] ? '/' ~ interval : '' }}{{ selector['hasRegion'] ? "/" ~ region_id : '' }}?aggr=0{{ get }}"> {{ character_list['char_names'][loop.index0] }} </a>
+                </li>
+            {% endfor %}
+            <li role="separator" class="divider"></li>
+            <li class="{{ aggregate == 1 ? 'selected' : '' }}"><a href="{{ base_url(selector['page']) }}/index/{{ character_id }}{{ selector['hasInterval'] ? '/' ~ interval : '' }}{{ selector['hasRegion'] ? "/" ~ region_id : '' }}?aggr=1{{ get }}"> <b>All</b> </a>
+            </li>
+        </ul>
+    </div>
+    <div class="header-icon">
+        {% if not layout['page_aggregate'] %}
+            <i class="pe page-header-icon {{ layout['icon'] }}"></i>
+        {% else %}
+            {% if aggregate == 0 %}
+                <img alt="character portrait" class="character-portrait" src="https://image.eveonline.com/Character/{{character_id}}_64.jpg">
+            {% endif %}
+            {% if aggregate != 0 %}
+                <i class="pe page-header-icon {{ layout['icon'] }}"></i>
+            {% endif %}
+        {% endif %}
+
+
+        
+    </div>
+    <div class="header-title">
+        <h1>
+            {% if layout['page_aggregate'] %}
+                {% if aggregate == 1 %}
+                    {{ char_names | join(' + ') }} 's {{ layout['page_title'] }}
+                {% endif %}
+                {% if aggregate == 0 %}
+                    {{ character_name }}'s {{ layout['page_title'] }}
+                {% endif %}
+            {% else %}
+                {{ layout['page_title'] }}
+            {% endif %}
+        </h1>
+    </div>
+</div>
+<hr>

@@ -5,6 +5,7 @@ var crestFact = app.factory('crestFact', ['$q', '$http', 'config',
 
             function loadAll() {
                 $http.get(url).then(function(d) {
+                    // grab all pagination results
                     angular.forEach(d.data.items, function(cValue, cKey) {
                         aggregateData.value.push(cValue);
                     });
@@ -14,6 +15,10 @@ var crestFact = app.factory('crestFact', ['$q', '$http', 'config',
                     } else {
                         deferred.resolve(aggregateData.value);
                     }
+                })
+                .catch(function(error) {
+                    alert('Unable to retrieve market data from CREST. The server might be down.');
+                    throw new Error(error);
                 });
             }
             loadAll();
@@ -27,11 +32,13 @@ var crestFact = app.factory('crestFact', ['$q', '$http', 'config',
                     value: []
                 };
                 var deferred = $q.defer();
+                
                 if (full) {
                     request = request;
                 } else {
                     request = config.crest.base + request;
                 }
+                
                 loadData(request, aggregateData).then(function(d) {
                     deferred.resolve(aggregateData.value);
                 });

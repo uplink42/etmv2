@@ -116,7 +116,7 @@ class CI_Exceptions {
 	 * @param 	bool	$log_error	Whether to log the error
 	 * @return	void
 	 */
-	public function show_404($page = '', $log_error = TRUE)
+	public function show_404($page = '', $log_error = FALSE)
 	{
 		if (is_cli())
 		{
@@ -130,10 +130,10 @@ class CI_Exceptions {
 		}
 
 		// By default we log this, but allow a dev to skip it
-		if ($log_error)
+		/*if ($log_error)
 		{
 			log_message('error', $heading.': '.$page);
-		}
+		}*/
 
 		echo $this->show_error($heading, $message, 'error_404', 404);
 		exit(4); // EXIT_UNKNOWN_FILE

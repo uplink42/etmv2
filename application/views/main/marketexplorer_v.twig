@@ -1,0 +1,14 @@
+<!--<script>
+$(document).ready(function() {
+    $('.collapse-menu').trigger('click');
+});
+</script>-->
+<section class="content">
+    <div class="container-fluid">
+        {# <div class="row" style="margin-top: 70px;">
+            {% include 'common/view-header_v' ~ '.twig' %}
+        </div> #}
+        {% include 'marketexplorer/index.html' %}
+    </div>
+</section>
+<script src="{{ base_url('assets/fusioncharts/js/fusioncharts.js') }}?v={{HASH_CACHE}}"></script>

@@ -71,10 +71,10 @@ class Assets_model extends CI_Model
 
                 array_push($data[$region_name],
                     array("total_items" => $total_items,
-                        "total_value"       => $total_value,
-                        "region_id"         => $region_id));
+                        "total_value"   => $total_value,
+                        "total_value_b" => $total_value/1000000000,
+                        "region_id"     => $region_id));
             }
-
         }
         return $data;
     }
@@ -117,13 +117,6 @@ class Assets_model extends CI_Model
         return $result;
     }
 
-    public function getRegionRatio($chars)
-    {
-        //todo
-        //get sum of all assets for current char
-        //get sum of all assets for current char in current region
-
-    }
 
     /**
      * Returns the list of all assets, optionally filtered by 
@@ -131,10 +124,12 @@ class Assets_model extends CI_Model
      * @param  int          $region_id   
      * @param  string       $chars       
      * @param  bool|boolean $significant 
-     * @return array                    
+     * @return string json                    
      */
-    public function getAssetsList(int $region_id, string $chars, bool $significant = true): array
+    public function getAssetsList(array $configs): string
     {
+        extract($configs);
+
         $this->db->select('a.item_eve_iditem as item_id,
             a.quantity as quantity,
             i.name as item_name,
@@ -142,6 +137,8 @@ class Assets_model extends CI_Model
             i.eve_iditem as item_id,
             pr.price_evecentral as unit_value,
             c.name as owner,
+            i.volume as unit_volume,
+            (i.volume*a.quantity) as total_volume,
             (pr.price_evecentral*a.quantity) as total_value');
         $this->db->from('assets a');
         $this->db->join('item i', 'i.eve_iditem = a.item_eve_iditem');
@@ -156,10 +153,6 @@ class Assets_model extends CI_Model
             $this->db->where('r.eve_idregion', $region_id);
         }
 
-        if ($significant == 1) {
-            $this->db->having('(a.quantity*pr.price_evecentral) > 500000');
-        }
-
         $query1  = $this->db->get();
         $result1 = $query1->result_array();
         $count1  = $query1->num_rows();
@@ -171,6 +164,8 @@ class Assets_model extends CI_Model
             sys.name as loc_name,
             pr.price_evecentral as unit_value,
             c.name as owner,
+            i.volume as unit_volume,
+            (i.volume*a.quantity) as total_volume,
             (pr.price_evecentral*a.quantity) as total_value');
         $this->db->from('assets a');
         $this->db->join('item i', 'i.eve_iditem = a.item_eve_iditem');
@@ -184,48 +179,16 @@ class Assets_model extends CI_Model
             $this->db->where('r.eve_idregion', $region_id);
         }
 
-        if ($significant == 1) {
-            $this->db->having('(a.quantity*pr.price_evecentral) > 500000');
-        }
-
         $query2  = $this->db->get();
         $result2 = $query2->result_array();
         $count2  = $query2->num_rows();
         $total   = $count1 + $count2;
 
         $result = array_merge($result1, $result2);
-        $data   = array("result" => $result, "count" => $total);
-        return $data;
+        return json_encode(injectIcons($result));
     }
 
-    /**
-     * Gets the significant assets percentage for a set of characters
-     * @param  string $chars 
-     * @return [float]        
-     */
-    public function getWorthSignificant(string $chars): float
-    {
-        $this->db->select('sum(a.quantity*pr.price_evecentral) as total');
-        $this->db->from('assets a');
-        $this->db->join('item i', 'i.eve_iditem = a.item_eve_iditem');
-        $this->db->join('characters c', 'c.eve_idcharacter = a.characters_eve_idcharacters');
-        $this->db->join('item_price_data pr', 'pr.item_eve_iditem = a.item_eve_iditem');
-        $this->db->where('c.eve_idcharacter IN ' . $chars);
-        $this->db->where('(a.quantity*pr.price_evecentral) > 500000');
-
-        $query1      = $this->db->get();
-        $significant = $query1->row()->total;
-
-        //get total worth
-        $this->db->select('sum(networth) as sum');
-        $this->db->where('eve_idcharacter IN ' . $chars);
-        $query3 = $this->db->get('characters');
-        $total  = $query3->row()->sum;
-
-        $percent = ($significant / $total) * 100;
-        return $percent;
-    }
-
+   
     /**
      * Sends the required data to build the asset distribution chart
      * @param  array  $data 
@@ -235,6 +198,7 @@ class Assets_model extends CI_Model
     {
         $arrData["chart"] = array(
             "bgColor"                   => "#44464f",
+            "paletteColors"             => "#0075c2,#1aaf5d,#f2c500,#3399ff,#ffcc99,#ff5050,#ff9900,#00802b,#009999,#666699,#ccffcc",
             "showBorder"                => "0",
             "use3DLighting"             => "0",
             "showShadow"                => "0",
@@ -254,7 +218,10 @@ class Assets_model extends CI_Model
             "toolTipPadding"            => "5",
             "showHoverEffect"           => "1",
             "showLegend"                => "0",
-            "useDataPlotColorForLabels" => "1");
+            "pieSliceDepth"             => "20",
+            "useDataPlotColorForLabels" => "1",
+            "numberSuffix"              => " ISK"
+        );
 
         $arrData["data"] = [];
         $region_names    = [];

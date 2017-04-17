@@ -2,7 +2,6 @@
 $(document).ready(function() {
 
 	$(".api-insert-2").hide();
-    var base = $(".mainwrapper").data('url');
     var apikey;
     var vcode;
 

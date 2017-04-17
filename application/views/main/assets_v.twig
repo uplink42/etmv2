@@ -1,0 +1,127 @@
+<script>var pieData = {{pie_data | raw}}</script>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                {% include 'common/view-header_v' ~ '.twig' %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="panel panel-filled panel-c-success panel-main">
+                    <div class="panel-body">
+                        <i class="fa fa-info yellow"></i> 
+                            Here you can keep track of your assets (includes items inside stations, starbases and ships)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="panel panel-filled panel-c-success">
+                    <div class="panel-heading">
+                        <div class="panel-tools">
+                            <a class="panel-toggle">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-responsive">
+                            <tr>
+                                <th>Est Assets Value
+                                    <strong class="m-t-xs yellow-2">{{ current_asset_value | number_format }} ISK</strong>
+                                    <br> Selected Region: <span class="yellow-2">{{ region_name }}</span>
+                                    <div class="dropdown pull-right">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-interval" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Region selection
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right dropdown-interval">
+                                            <li><a href="{{ base_url('assets/index/' ~ character_id ~ '?aggr=' ~ aggregate) }}">
+                                                <b>All</b></a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            {% for key, row in totals %}
+                                                <li class="{{ region_id == row[0]['region_id'] ? 'selected' : '' }}"><a href="{{ base_url('assets/index/' ~ character_id ~ '/' ~ row[0]['region_id'] ~ '?aggr=' ~ aggregate) }}">
+                                                    {{ key }} {{ row[0]['total_value_b'] | number_format(3) }} b </a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </th>
+                            </tr>
+                        </table>      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-2" aria-expanded="true"> Assets List</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-1" aria-expanded="false"> Asset Distribution</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-3" class="spark-tab" aria-expanded="false"> Recent Asset Evolution</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div id="tab-3" class="tab-pane">
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12">
+                        <div class="panel panel-filled" style="position:relative;height: 114px">
+                            <div style="position: absolute;bottom: 0;left: 0;right: 0">
+                                <span class="sparkline" data-profit="{{ graph_data }}"></span>
+                            </div>
+                     
+                        </div> 
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-1" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <div id="pie"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-2" class="tab-pane active">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-filled">
+                            <div class="panel-heading">
+                                <button class="btn btn-default pull-right btn-clear">Clear filters</button>
+                                <br><br>
+                            </div>
+                            <div class="panel-body assets-body">
+                                <p class="yellow"></p>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover" id="assets-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Owner</th>
+                                                <th>Quantity</th>
+                                                <th>Location</th>
+                                                <th>Volume/stack (m<sup>3</sup>)</th>
+                                                <th>Value/unit (ISK)</th>
+                                                <th>Value/stack (ISK)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{{ base_url('dist/js/apps/assets-app.js') }}?v={{HASH_CACHE}}"></script>
+<script src="{{ base_url('assets/fusioncharts/js/fusioncharts.js') }}?v={{HASH_CACHE}}"></script>

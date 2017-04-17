@@ -22,17 +22,18 @@ class Login_model extends CI_Model
         return $query->row();
     }
 
+
     /**
-     * Checks if session is valid or not
+     * Checks if there is a valid session
      * @return bool
      */
     public function checkSession() : bool
     {
-        if (!$this->session->has_userdata('username') || !$this->session->has_userdata('iduser')) {
+        if (!$this->etmsession->get('username') || !$this->etmsession->get('iduser')) {
             return false;
         } else {
-            $this->db->where('username', $this->session->username);
-            $this->db->where('iduser', $this->session->iduser);
+            $this->db->where('username', $this->etmsession->get('username'));
+            $this->db->where('iduser', $this->etmsession->get('iduser'));
             $query = $this->db->get('user');
 
             if ($query->num_rows() < 1) {

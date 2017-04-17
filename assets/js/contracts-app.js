@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     var table_active = $('#contracts-active-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [50, 75, 100, -1],
             [50, 75, 100, "All"]
         ],
@@ -23,16 +23,16 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [[ 0, "desc" ]],
-        "aoColumnDefs": [
+        order: [[ 0, "desc" ]],
+        aoColumnDefs: [
             { 
-            "bSearchable": false, "aTargets": [ 6 ] 
+            bSearchable: false, "aTargets": [ 6 ] 
         }]
     });
 
     var table_inactive = $('#contracts-inactive-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [50, 75, 100, -1],
             [50, 75, 100, "All"]
         ],
@@ -51,25 +51,21 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [[ 0, "desc" ]],
-        "aoColumnDefs": [
+        order: [[ 0, "desc" ]],
+        aoColumnDefs: [
             { 
-            "bSearchable": false, "aTargets": [ 6 ] 
+            bSearchable: false, aTargets: [ 6 ] 
         }]
     });
 
 
-    $(".contracts-active-body p.yellow").html("<p>There are "+ table_active.rows().count() + " results for a total of "
-        + number_format(table_active.column(5).data().sum(),2, '.', ',' ) + " ISK</p>");
-    $("#contracts-active table_filter input").keyup(function () {
-        $(".contracts-active-body p.yellow").html("There are "+ table_active.rows({filter: 'applied'}).count() + " results for a total of "
-            + number_format(table_active.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
+    $(".contracts-active-body p.yellow").html("<p>There are "+ table_active.rows().count() + " results</p>");
+    $("#contracts-active-table_filter input").keyup(function () {
+        $(".contracts-active-body p.yellow").html("There are "+ table_active.rows({filter: 'applied'}).count() + " results");
     });
 
-    $(".contracts-inactive-body p.yellow").html("<p>There are "+ table_inactive.rows().count() + " results for a total of "
-        + number_format(table_inactive.column(5).data().sum(),2, '.', ',' ) + " ISK</p>");
-    $("#contracts-inactive table_filter input").keyup(function () {
-        $(".contracts-inactive-body p.yellow").html("There are "+ table_inactive.rows({filter: 'applied'}).count() + " results for a total of "
-            + number_format(table_inactive.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
+    $(".contracts-inactive-body p.yellow").html("<p>There are "+ table_inactive.rows().count() + " results</p>");
+    $("#contracts-inactive-table_filter input").keyup(function () {
+        $(".contracts-inactive-body p.yellow").html("There are "+ table_inactive.rows({filter: 'applied'}).count() + " results");
     });
 });

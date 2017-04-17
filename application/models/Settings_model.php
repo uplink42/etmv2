@@ -106,7 +106,8 @@ class Settings_model extends CI_Model
 
     public function getProfitTrackingData(int $id_user)
     {
-        $this->db->select('default_buy_behaviour, default_sell_behaviour, cross_character_profits, ignore_citadel_tax');
+        $this->db->select('default_buy_behaviour, default_sell_behaviour, cross_character_profits, ignore_citadel_tax,
+            ignore_station_tax, ignore_outpost_tax');
         $this->db->where('iduser', $id_user);
         $query = $this->db->get('user');
         $result = $query->row();

@@ -4,7 +4,6 @@ $(document).ready(function() {
 	getData();
 
 	function getData() {
-
 		$.ajax({
 	        dataType: "json",
 	        url: base + 'getAll',

@@ -9,6 +9,7 @@ class Marketexplorer extends MY_Controller
         $this->page = "marketexplorer";
     }
 
+
     /**
      * Loads the market explorer javascript app
      * @param  int    $character_id 
@@ -24,7 +25,11 @@ class Marketexplorer extends MY_Controller
             $data['market']   = true;
             $data['selected'] = "marketexplorer";
             $data['view']     = 'main/marketexplorer_v';
-            $this->load->view('main/_template_v', $data);
+
+            $data['layout']['page_title']     = "Market Explorer";
+            $data['layout']['icon']           = "pe-7s-glasses";
+            $data['layout']['page_aggregate'] = false;
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

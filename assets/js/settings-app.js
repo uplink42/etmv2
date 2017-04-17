@@ -1,7 +1,5 @@
 "use strict";
 $(document).ready(function() {
-
-    var base = $(".navbar").data('url');
     var email_req = base + "Settings/email/";
     getEmail();
     getTrackingSettings();
@@ -38,7 +36,6 @@ $(document).ready(function() {
             url: tracking_req,
             success: function(result) {
                 var res = result.data;
-                console.log(res);
                 for (var key in res) {
                     if (res.hasOwnProperty(key)) {
                         var $radio = $('input:radio[name=' + key + ']');

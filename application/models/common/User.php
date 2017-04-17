@@ -66,4 +66,31 @@ class User extends CI_Model
 
         return $result;
     }
+
+
+    public function getUserProfitSettings(int $user_id) : array
+    {
+         // get user settings
+        $this->db->where('username', $this->etmsession->get('username'));
+        $query  = $this->db->get('user');
+        $user_settings = $query->row();
+
+        $default_buy_tracking      = $user_settings->default_buy_behaviour  == 1 ? 'buy' : 'sell';
+        $default_sell_tracking     = $user_settings->default_sell_behaviour == 1 ? 'sell' : 'buy';
+        $cross_character_tracking  = $user_settings->cross_character_profits;
+        $ignore_citadel_tax        = $user_settings->ignore_citadel_tax == 1 ? true : false;
+        $ignore_station_tax        = $user_settings->ignore_station_tax == 1 ? true : false;
+        $ignore_outpost_tax        = $user_settings->ignore_outpost_tax == 1 ? true : false;
+
+        $result = [
+            "buy_behaviour"      => $default_buy_tracking,
+            "sell_behaviour"     => $default_sell_tracking,
+            "x_character"        => $cross_character_tracking,
+            "citadel_tax_ignore" => $ignore_citadel_tax,
+            "station_tax_ignore" => $ignore_station_tax,
+            "outpost_tax_ignore" => $ignore_outpost_tax
+        ];
+
+        return $result;
+    }
 }

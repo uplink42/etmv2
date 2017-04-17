@@ -1,0 +1,223 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                {% include 'common/view-header_v' ~ '.twig' %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                 <div class="panel panel-filled panel-c-success panel-main">
+                    <div class="panel-body">
+                        <i class="fa fa-info yellow"></i> You can quickly check price differences between systems and regions here. <br/>
+                        <i class="fa fa-info yellow"></i> You must first create Stock Lists for the items you wish to submit in this page <br />
+                        <i class="fa fa-info yellow"></i> Broker fees and transaction taxes are automatically calculated based on your standings and skills for the chosen characters <br />
+                        <i class="fa fa-info yellow"></i> Citadel market data is not available yet
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="panel panel-filled">
+                    <div class="panel-heading"></div>
+                    <div class="panel-body">
+                        <div class="tradesim" data-res="{{ results ? 'true' : 'false' }}">
+                            <form name="tradesimulator" method="POST" 
+                            action="{{ base_url('tradesimulator/process/' ~ character_id ~ '?aggr=' ~ aggregate) }}">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="text-center hourglass">
+                                            <i class="fa fa-hourglass-start"></i> BUY
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="origin-station">Origin station: </label>
+                                            <input type="text" class="form-control" name="origin-station" id="origin-station" placeholder="Type in a station name (or select a Trade Route below)">
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="buy-method" value="buy" checked>
+                                                I will purchase my items from buy orders
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="buy-method" value="sell">
+                                                I will purchase my items from sell orders
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="buyer">Buyer character: </label>
+                                            <select class="form-control" name="buyer" id="buyer">
+                                            {% for key, char in character_list['chars'] %}
+                                              <option id="{{character_list['chars'][key]}}" value="{{character_list['chars'][key]}}">{{ character_list['char_names'][key] }}</option>
+                                             {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-center hourglass">
+                                            <i class="fa fa-hourglass-end"></i> SELL
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="destination-station">Destination station: </label>
+                                            <input type="text" class="form-control" id="destination-station" name="destination-station" placeholder="Type in a station name (or select a Trade Route below)">
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="sell-method" value="buy">
+                                                I will sell my items to buy orders
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="sell-method" value="sell" checked>
+                                                I will sell my items to sell orders
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="seller">Seller character: </label>
+                                            <select class="form-control" name="seller" id="seller">
+                                            {% for key, char in character_list['chars'] %}
+                                                <option id="{{character_list['chars'][key]}}" value="{{character_list['chars'][key]}}">{{ character_list['char_names'][key] }}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-md-offset-2">
+                                        <div class="form-group">
+                                            <label for="stocklist">Stock List: </label>
+                                            <select class="form-control" name="stocklist" id="stocklist">
+                                                <option value="0">Select a Stock List below or create a new one</option>
+                                            {% for row in stocklists %}
+                                                <option id="{{row.iditemlist}}" value="{{row.iditemlist}}"> {{ row.name }}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <p><i class="fa fa-info"></i> You must create a Stock List first</p>
+
+                                        <div class="form-group">
+                                            <label for="traderoute">Trade Route (optional): </label>
+                                            <select class="form-control" name="traderoute" id="traderoute">
+                                                <option value="0">Select a Trade Route below</option>
+                                            {% for row in traderoutes %}
+                                                <option id="{{row.id}}" value="{{row.id}}">{{row.s1 ~ " >> " ~ row.s2}}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <p><i class="fa fa-info"></i> Selecting a Trade Route will auto-fill starting and destination stations</p>
+                                    </div>
+                                </div>
+                                <div class="row text-center">
+                                    <button type="submit" class="btn btn-default btn-submit-ts {{ status ? '' : 'disabled' }}">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tradesim-res">
+                            <div class="row">
+                                <div class="text-center col-md-12">
+                                    {% if results is not empty %}
+                                        <b>Stock List:</b> {{ results['req']['list'] }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row row-bordered">
+                                <div class="col-md-6 col-xs-12 text-center"><p><b>Origin</b></p>
+                                    <div class="row text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Character</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['buy_character'] }}</div>
+                                    </div>
+                                    <div class="row text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Station</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['buy_station'] }}</div>
+                                    </div>
+                                    <div class="row text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Order type</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['buy_method'] }} order</div>
+                                    </div>
+                                    <div class="row text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Broker Fee</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['buy_broker'] | number_format(2) ~ ' %' }}</div>
+                                    </div>
+                                    <div class="row text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Transaction Tax</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['buy_tax'] | number_format(2) ~ ' %' }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12 text-center"><p><b>Destination</b></p>
+                                    <div class="row  text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Character</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['sell_character'] }}</div>
+                                    </div>
+                                    <div class="row text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Station</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['sell_station'] }}</div>
+                                    </div>
+                                    <div class="row text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Order type</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['sell_method'] }} order</div>
+                                    </div>
+                                    <div class="row text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Broker Fee</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['sell_broker'] | number_format(2) ~ ' %' }}</div>
+                                    </div>
+                                    <div class="row text-left">
+                                        <div class="col-md-4 col-xs-6"><b>Transaction Tax</b></div>
+                                        <div class="col-md-8 col-xs-6">{{ results['req']['sell_tax'] | number_format(2) ~ ' %' }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
+
+                            <div class="table-responsive">
+                                <table id="ts-table" class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Vol (m<sup>3</sup>)</th>
+                                            <th class="yellow">Buy Price</th>
+                                            <th>Broker Fee (B)</th>
+                                            <th class="yellow">Sell Price</th>
+                                            <th>Broker Fee (S)</th>
+                                            <th>Transaction Tax (S)</th>
+                                            <th class="yellow">Raw Profit</th>
+                                            <th>Profit/m<sup>3</sup></th>
+                                            <th>Margin(%)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for row in results['results'] %}
+                                        <tr class="{{ row['profit_raw'] > 0 ? 'success' : 'danger' }}">
+                                            <td width="20%">
+                                                <img src="{{'https://image.eveonline.com/Type/' ~ row['id'] ~ '_32.png'}}" alt="icon"> {{ row['name'] }}
+                                            </td>
+                                            <td>{{ row['vol']         | number_format(3) }}</td>
+                                            <td>{{ row['buy_price']   | number_format(2) }}</td>
+                                            <td>{{ row['buy_broker']  | number_format(2) }}</td>
+                                            <td>{{ row['sell_price']  | number_format(2) }}</td>
+                                            <td>{{ row['sell_broker'] | number_format(2) }}</td>
+                                            <td>{{ row['sell_tax']    | number_format(2) }}</td>
+                                            <td>{{ row['profit_raw']  | number_format(2) }}</td>
+                                            <td>{{ row['profit_m3']   | number_format(2) }}</td>
+                                            <td><a class= "btn btn-default btn-xs">{{ row['profit_margin'] | number_format(2) }}</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body panel-loading text-center">
+                    Fetching New Eden prices... please wait. This can take a long time if you have a large list
+                        {% include 'common/loader_v' ~ '.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="{{ base_url('dist/js/apps/tradesimulator-app.js') }}?v={{HASH_CACHE}}"></script>

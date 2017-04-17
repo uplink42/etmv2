@@ -1,8 +1,5 @@
 "use strict";
 $(document).ready(function() {
-
-    var base = $(".mainwrapper").data('url');
-
     $(".reset-password").on('click', function(e) {
         e.preventDefault();
         

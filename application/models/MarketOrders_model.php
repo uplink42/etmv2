@@ -1,4 +1,5 @@
 <?php
+ini_set('max_execution_time', '180');
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }

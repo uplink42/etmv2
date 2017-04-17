@@ -1,10 +1,8 @@
 "use strict";
 $(document).ready(function() {
-
     $(".api-insert-2").hide();
-    var base = $(".navbar").data('url');
-    var apikey;
-    var vcode;
+    var apikey,
+        vcode;
     list();
 
     function list() {
@@ -14,7 +12,7 @@ $(document).ready(function() {
             url: url,
             success: function(result) {
                 $(".table-character-list tbody tr").empty();
-                if (result.length == 0) {
+                if (result.length === 0) {
                     var $row = "<tr><td colspan='3' class='text-center'>No characters found</td></tr>";
                     $(".table-character-list tbody tr").prepend($row);
                 } else {
@@ -31,17 +29,16 @@ $(document).ready(function() {
         });
     }
 
+    // start delete
     $("table").on('click', 'button', function() {
         var id = $(this).data('iddel');
-        var url = $("#delete").data('url');
-        var full_url = url + "/" + id;
-
-        $(".btn-delete-confirm").attr('data-url', full_url);
+        var url = base + 'Apikeymanagement/removeCharacter/' + id;
+        $(".btn-delete-confirm").attr('data-url', url);
     });
 
+    // confirm delete
     $(".btn-delete-confirm").on('click', function() {
         var url = $(this).attr('data-url');
-
         $.ajax({
             dataType: "json",
             url: url,
@@ -53,6 +50,7 @@ $(document).ready(function() {
         });
     });
 
+    //submit a new key
     $(".submit-add").on('click', function(e) {
         apikey = $("#keyid").val();
         vcode = $("#vcode").val();
@@ -86,8 +84,9 @@ $(document).ready(function() {
                 }  
             }
         });
-    })
+    });
 
+    // submit characters
     $(".submit-add-2").on('click', function(e) {
         e.preventDefault();
 
@@ -104,11 +103,12 @@ $(document).ready(function() {
             url: url,
             success: function(result) {
                 toastr[result.notice](result.message);
-                if(result.notice === 'success') {
-                    window.location.href = '../../logout';
-                }
+                $('.api-insert-2').hide();
+                $('.api-insert-1').show();
+                $('#keyid').val('');
+                $('#vcode').val('');
+                list();
             }
         });
-    })
-    
+    });
 });

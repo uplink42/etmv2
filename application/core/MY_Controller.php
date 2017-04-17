@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller
@@ -14,8 +14,9 @@ class MY_Controller extends CI_Controller
         $this->load->model('common/Log');
         $this->load->model('common/ValidateRequest');
         $this->load->model('Login_model');
-        $this->load->library('session');
-        $this->user_id = (int) $this->session->iduser;
+        $this->load->library('etmsession');
+        $this->load->library('twig');
+        $this->user_id = (int) $this->etmsession->get('iduser');
 
         if ($this->config->item('maintenance') == true) {
             redirect('internal/maintenance');
@@ -28,8 +29,11 @@ class MY_Controller extends CI_Controller
      * @param  int|null $user_id      
      * @return bool               
      */
-    protected function enforce(int $character_id, int $user_id = null): bool
+    protected function enforce(int $character_id, int $user_id = null, bool $isJSRequest = false): bool
     {
+        $this->etmsession->delete('msg');
+        $this->etmsession->delete('notice');
+
         if ($this->Login_model->checkSession() &&
             $this->ValidateRequest->checkCharacterBelong($character_id, $user_id)) {
 
@@ -48,15 +52,16 @@ class MY_Controller extends CI_Controller
             $this->Log->addEntry("visit " . $this->page, $user_id);
             return true;
         } else {
-            $data['view'] = "login/login_v";
-            buildMessage("error", Msg::INVALID_REQUEST_SESSION, $data['view']);
-            $data['no_header'] = 1;
+            if (!$isJSRequest) { // ajax based requests
+                $data['view'] = "login/login_v";
+                buildMessage("error", Msg::INVALID_REQUEST_SESSION, $data['view']);
+                $data['no_header'] = 1;
 
-            $this->session->unset_userdata('username');
-            $this->session->unset_userdata('start');
-            $this->session->unset_userdata('iduser');
-            $this->load->view('main/_template_v', $data);
-
+                $this->etmsession->delete('username');
+                $this->etmsession->delete('start');
+                $this->etmsession->delete('iduser');
+                $this->twig->display('main/_template_v', $data);
+            } 
             return false;
         }
     }
@@ -84,29 +89,29 @@ class MY_Controller extends CI_Controller
         $chars      = [];
         $char_names = [];
 
-        if ($aggregate == true) {
+        if ($aggregate) {
             $characters = $this->Login_model->getCharacterList($user_id);
-
             $chars      = $characters['aggr'];
             $char_names = $characters['char_names'];
         } else {
             $chars = "(" . $character_id . ")";
         }
 
-        $data['email'] = $this->session->email;
-
-        $data['username']       = $this->session->username;
-        $data['chars']          = $chars;
-        $character_list         = $this->getCharacterList($this->user_id);
-        $data['aggregate']      = $aggregate;
-        $data['char_names']     = $char_names;
-        $data['character_list'] = $character_list;
-        $data['character_name'] = $this->Login_model->getCharacterName($character_id);
-        $data['character_id']   = $character_id;
-
-        $data['selector'] = $this->buildSelector();
+        $data['email']           = $this->etmsession->get('email');
+        $data['username']        = $this->etmsession->get('username');
+        $data['chars']           = $chars;
+        $data['aggregate']       = $aggregate;
+        $data['char_names']      = $char_names;
+        $data['character_list']  = $this->getCharacterList($this->user_id);
+        $data['character_name']  = $this->Login_model->getCharacterName($character_id);
+        $data['character_id']    = $character_id;
+        $data['HASH_CACHE']      = HASH_CACHE; // twig can't access CI constants
+        $data['SESSION']         = $_SESSION;  // nor session variables
+        
+        $data['selector']        = $this->buildSelector();
         return $data;
     }
+
 
     /**
      * Build the character selector dropdown with options
@@ -212,36 +217,31 @@ class MY_Controller extends CI_Controller
         return $data;
     }
 
-    /**
-     * Get the correct icon for an item
-     * @param  int    $item_id 
-     * @return string      
-     */
-    public function generateIcon(int $item_id): string
-    {
-        $url = "https://image.eveonline.com/Type/" . $item_id . "_32.png";
-        return $url;
-    }
 
-    /**
-     * Inject icons into a result array or object
-     * @param  [array|stdClass]  $dataset 
-     * @param  boolean $type    
-     * @return array   
-     */
-    public function injectIcons($dataset, $type = false) : array
+    /*int $character_id, bool $aggr, string $callback, string $model, int $interval = 1, int $item_id = null, int $user_id*/
+    protected function buildData(int $character_id, bool $aggr, string $callback, string $model, array $configs)
     {
-        $max = count($dataset);
+        $msg = Msg::INVALID_REQUEST;
+        $notice = "error";
+        if ($this->enforce($character_id, $this->user_id, true)) {
+            $chars      = [];
+            $char_names = [];
 
-        if ($max > 0) {
-            for ($i = 0; $i < $max; $i++) {
-                if ($type == "object") {
-                    $dataset[$i]->url = $this->generateIcon((int) $dataset[$i]->item_id);
-                } else {
-                    $dataset[$i]['url'] = $this->generateIcon((int) $dataset[$i]['item_id']);
-                }
+            if ($aggr) {
+                $characters = $this->Login_model->getCharacterList($this->user_id);
+                $chars      = $characters['aggr'];
+            } else {
+                $chars = "(" . $character_id . ")";
+            }
+
+            if ($chars) {
+                $configs['chars'] = $chars;
+                $this->load->model($model);
+                return $this->{$model}->$callback($configs);
+                //call_user_func_array($this->{$model}->$callback, $configs);
+                //return call_user_func_array([$this->{$model}, $callback], $configs);
             }
         }
-        return $dataset;
+        return json_encode(array("notice" => $notice, "message" => $msg));
     }
 }

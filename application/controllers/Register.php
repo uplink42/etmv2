@@ -7,7 +7,8 @@ class Register extends CI_Controller
     {
         parent::__construct();
         $this->db->cache_off();
-        $this->load->library('session');
+        $this->load->library('etmsession');
+        $this->load->library('twig');
     }
 
     /**
@@ -16,36 +17,35 @@ class Register extends CI_Controller
      */
     public function processData(): void
     {
-        $username       = $this->security->xss_clean($this->input->post('username'));
-        $password       = $this->security->xss_clean($this->input->post('password'));
-        $repeatpassword = $this->security->xss_clean($this->input->post('repeatpassword'));
-        $email          = $this->security->xss_clean($this->input->post('email'));
-        $apikey         = (int) $this->security->xss_clean($this->input->post('apikey'));
-        $vcode          = $this->security->xss_clean($this->input->post('vcode'));
-        $reports        = $this->security->xss_clean($this->input->post('reports'));
+        $username       = $this->input->post('username', true);
+        $password       = $this->input->post('password', true);
+        $repeatpassword = $this->input->post('repeatpassword', true);
+        $email          = $this->input->post('email', true);
+        $apikey         = (int) $this->input->post('apikey', true);
+        $vcode          = $this->input->post('vcode', true);
+        $reports        = $this->input->post('reports', true);
 
-        $this->load->model('Register_model');
-        $result = $this->Register_model->validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports);
+        $this->load->model('Register_model', 'register');
+        $result = $this->register->validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports);
 
         if (!isset($result['username']) &&
             !isset($result['password']) &&
             !isset($result['email']) &&
             !isset($result['api']) &&
             !isset($result['reports'])) {
-            $this->load->model('Register_model');
-            $result = $this->Register_model->getCharacters($apikey, $vcode);
+            $result = $this->register->getCharacters($apikey, $vcode);
 
             $data['characters'] = $result;
             $data['view']       = "register/register_characters_v";
             $data['apikey']     = $apikey;
             $data['vcode']      = $vcode;
             $data['no_header']  = 1;
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         } else {
             $data['result']    = $result;
             $data['view']      = "register/register_v";
             $data['no_header'] = 1;
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
 
@@ -55,34 +55,36 @@ class Register extends CI_Controller
      */
     public function processCharacters(): void
     {
-        $this->load->model('register_model');
+        $this->load->model('register_model', 'register');
         $user_data = [
-            'username' => $this->security->xss_clean($this->input->post('username')),
-            'password' => $this->security->xss_clean($this->input->post('password')),
-            'email'    => $this->security->xss_clean($this->input->post('email')),
-            'apikey'   => (int) $this->security->xss_clean($this->input->post('apikey')),
-            'vcode'    => $this->security->xss_clean($this->input->post('vcode')),
-            'reports'  => $this->security->xss_clean($this->input->post('reports')),
-            'default_buy' => $this->security->xss_clean($this->input->post('default-buy')),
-            'default_sell' => $this->security->xss_clean($this->input->post('default-sell')),
-            'x_character' => $this->security->xss_clean($this->input->post('x-character')),
-            'null_tax' => $this->security->xss_clean($this->input->post('null-citadel-tax'))
+            'username'         => $this->input->post('username', true),
+            'password'         => $this->input->post('password', true),
+            'email'            => $this->input->post('email', true),
+            'apikey'           => (int) $this->input->post('apikey', true),
+            'vcode'            => $this->input->post('vcode', true),
+            'reports'          => $this->input->post('reports', true),
+            'default_buy'      => $this->input->post('default-buy', true),
+            'default_sell'     => $this->input->post('default-sell', true),
+            'x_character'      => $this->input->post('x-character', true),
+            'null_citadel_tax' => $this->input->post('null-citadel-tax', true),
+            'null_station_tax' => $this->input->post('null-station-tax', true),
+            'null_outpost_tax' => $this->input->post('null-outpost-tax', true),
         ];
 
         $chars = array();
-        if ($char1 = $this->security->xss_clean($this->input->post('char1'))) {
+        if ($char1 = $this->input->post('char1', true)) {
             array_push($chars, $char1);
         } else {
             $char1 = "";
         }
 
-        if ($char2 = $this->security->xss_clean($this->input->post('char2'))) {
+        if ($char2 = $this->input->post('char2', true)) {
             array_push($chars, $char2);
         } else {
             $char2 = "";
         }
 
-        if ($char3 = $this->security->xss_clean($this->input->post('char3'))) {
+        if ($char3 = $this->input->post('char3', true)) {
             array_push($chars, $char3);
         } else {
             $char3 = "";
@@ -90,32 +92,32 @@ class Register extends CI_Controller
 
         $user_data['chars'] = $chars;
 
-        //no characters selected
+        // no characters selected
         if (count($chars) == 0) {
-            $characters         = $this->register_model->getCharacters($user_data['apikey'], $user_data['vcode']);
+            $characters         = $this->register->getCharacters($user_data['apikey'], $user_data['vcode']);
             $data['characters'] = $characters;
             buildMessage("error", Msg::NO_CHARACTER_SELECTED, "register/register_characters_v");
             $data['view']      = "register/register_characters_v";
             $data['no_header'] = 1;
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
             return;
         }
 
-        if ($this->register_model->verifyCharacters($user_data['chars'], $user_data['apikey'], $user_data['vcode'])) {
-            $result = $this->register_model->createAccount($user_data);
+        if ($this->register->verifyCharacters($user_data['chars'], $user_data['apikey'], $user_data['vcode'])) {
+            $result = $this->register->createAccount($user_data);
             if (!$result['success']) {
                 $data['message']    = $result['msg'];
                 $data['notice']     = "error";
-                $data['characters'] = $this->register_model->getCharacters($user_data['apikey'], $user_data['vcode']);
+                $data['characters'] = $this->register->getCharacters($user_data['apikey'], $user_data['vcode']);
                 $data['view']       = "register/register_characters_v";
                 $data['no_header']  = 1;
-                $this->load->view('main/_template_v', $data);
+                $this->twig->display('main/_template_v', $data);
             } else {
-                $data['message']   = Msg::ACCOUNT_CREATE_SUCCESS;
-                $data['notice']    = "success";
+                buildMessage('success', Msg::ACCOUNT_CREATE_SUCCESS);
+                $data['SESSION']   = $_SESSION;
                 $data['view']      = "login/login_v";
                 $data['no_header'] = 1;
-                $this->load->view('main/_template_v', $data);
+                $this->twig->display('main/_template_v', $data);
             }
         }
     }

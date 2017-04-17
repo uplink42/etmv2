@@ -1,4 +1,8 @@
 "use strict";
+if (typeof _404 != 'undefined') {
+    throw new Error('404 error, FC what do?');
+}
+
 function number_format(number, decimals, decPoint, thousandsSep) {
     number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
     var n = !isFinite(+number) ? 0 : +number;
@@ -11,7 +15,7 @@ function number_format(number, decimals, decPoint, thousandsSep) {
         var k = Math.pow(10, prec);
         return '' + (Math.round(n * k) / k)
         .toFixed(prec);
-    }
+    };
 
     s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
     if (s[0].length > 3) {
@@ -30,6 +34,22 @@ function number_format(number, decimals, decPoint, thousandsSep) {
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
+}
+
+
+function searchToObject() {
+    var pairs = window.location.search.substring(1).split("&"),
+        obj = {},
+        pair,
+        i;
+
+    for (i in pairs) {
+        if (pairs[i] === "") continue;
+        pair = pairs[i].split("=");
+        obj[ decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    }
+
+    return obj;
 }
 
 //override jquery ui - disable ajax calls when typing
@@ -80,15 +100,14 @@ jQuery.fn.dataTable.Api.register('sum()', function() {
 
 //load error messages
 var errHandle = (function() {
-    var loc = window.location.href
-    var base = loc.substr(0, loc.indexOf('v2'));
-    var data;
+    var loc = window.location.href,
+    base = loc.substr(0, loc.indexOf('v2')),
+    data;
 
     $.ajax({
         dataType: "json",
         url: base + "v2/main/getMsgHandles",
         success: function(result) {
-
             data = result;
         }
     });
@@ -101,21 +120,60 @@ var errHandle = (function() {
 
 $(document).ready(function() {
     $("body").removeClass('loading-body');
-    var base = $(".navbar").data('url');
 
     $(".btn-clear").on('click', function() {
         $("input.form-control").val("");
         $("input.form-control").trigger("keyup");
         window.location.hash = "";
     });
+
     $(".go-back").on('click', function() {
         window.history.back();
     });
+
+    // default dropdown select
+    var $options = $('.dropdown-interval li');
+    $.each($options, function (index, value) {
+        if (interval === $(value).find('a').attr('data-id')) {
+            $(value).addClass('selected');
+        }
+    });
+
+    // when selecting a time interval
+    $('.dropdown-interval a').on('click', function(e) {
+        var that = this;
+        var $options = $(this).parent('li').siblings();
+        $.each($options, function (index, value) {
+            $(value).removeClass('selected');
+        });
+        $(this).parent('li').addClass('selected');
+
+        // update character switch links
+        var $chars = $('.character-select li a');
+        $.each($chars, function(index, value) {
+            var path = $(value).attr('href').split('/');
+            var pos = path.indexOf('index') + 2;
+            var toReplace = path[pos].substring(0, path[pos].indexOf('?'));
+            // replace interval segment
+            var res = path[pos].replace(toReplace, $(that).attr('data-id'));
+            path[pos] = res;
+            //stitch url back toguether
+            var newPath = "";
+            for (i = 1; i < path.length; i++) {
+                newPath += "/";
+                newPath += path[i];
+            }
+            // assign to url
+            $(value).attr('href', newPath);
+        });
+    });
+
     $(".nav-u").on('click', function(e) {
         $("section").hide();
         $(".footer-panel").hide();
         $(".panel-loading-common").show();
     });
+
     $(".btn-send-feedback").on('click', function() {
         var data = $(".submit-feedback").serialize(),
             url = base + "Main/sendEmail/";
@@ -131,13 +189,24 @@ $(document).ready(function() {
         });
     });
 
-    $(document).bind("ajaxStop.go", function () {
-        $(".mainwrapper").removeClass('loading-body');
-        $('.panel-loading-ajax').hide();  
+    // show loading spinner for waiting periods over 200ms
+    var shouldLoad = true;
+        didLoad    = false;
+    $(document).bind("ajaxStart.go", function () {
+        setTimeout(function() {
+            if (shouldLoad) {
+                didLoad = true;
+                $(".mainwrapper").addClass('loading-body');
+                $('.panel-loading-ajax').show();
+            }
+        },200);
     });
 
-    $(document).bind("ajaxStart.go", function () {
-        $(".mainwrapper").addClass('loading-body');
-        $('.panel-loading-ajax').show();
+    $(document).bind("ajaxStop.go", function () {
+        shouldLoad = false;
+        if (didLoad) {
+            $(".mainwrapper").removeClass('loading-body');
+            $('.panel-loading-ajax').hide();  
+        }
     });
 });

@@ -1,7 +1,4 @@
 <?php
-ini_set('mysql.connect_timeout', '3000');
-ini_set('default_socket_timeout', '3000');
-ini_set('max_execution_time', '180');
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -19,13 +16,15 @@ class Profits_model extends CI_Model
      * @param  string   $chars    
      * @param  int      $interval 
      * @param  int|null $item_id  
-     * @return array             
+     * @return string json          
      */
-    public function getProfits(string $chars, int $interval, int $item_id = null): array
+    public function getProfits(array $configs): string
     {
+        extract ($configs);
+        $this->load->model('common/User');
+        $profit_settings = $this->User->getUserProfitSettings($user_id);
+
         $this->db->select("p.profit_unit as profit_unit,
-            p.characters_eve_idcharacters_IN as char_in,
-            p.characters_eve_idcharacters_OUT as char_out,
             p.transaction_idbuy_buy as idbuy,
             p.transaction_idbuy_sell as idsell,
             i.eve_iditem as item_id,
@@ -66,13 +65,13 @@ class Profits_model extends CI_Model
         $this->db->where('p.characters_eve_idcharacters_OUT IN ' . $chars);
         $this->db->order_by('t2.time', 'desc');
 
-        if ($item_id) {
+        if (isset($item_id)) {
             $this->db->where('i.eve_iditem', $item_id);
         }
 
         $this->db->where('p.timestamp_sell>= now() - INTERVAL ' . $interval . ' DAY');
         $this->db->order_by('t2.time DESC');
-        $this->db->limit(20000);
+        //$this->db->limit(20000);
         $query  = $this->db->get();
         $result = $query->result_array();
         $count  = count($result);
@@ -96,16 +95,18 @@ class Profits_model extends CI_Model
 
             $CI = &get_instance();
             $CI->load->model('Tax_Model');
-            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, "buy", "sell");
-            $transTaxFrom  = $CI->Tax_Model->calculateTaxFrom();
-            $brokerFeeFrom = $CI->Tax_Model->calculateBrokerFrom();
+            $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, $profit_settings);
+            $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
+            $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
 
             $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
             $result[$i]['margin']       = $profit_unit / $price_buy * 100;
             $result[$i]['profit_total'] = $profit_unit * $result[$i]['profit_quantity'];
             $result[$i]['url']          = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
         }
-        return array("result" => $result, "count" => $count);
+        
+        // return array("result" => $result, "count" => $count);
+        return json_encode(['data' => $result]);
     }
 
     /**
@@ -115,15 +116,31 @@ class Profits_model extends CI_Model
      * @param  int|null $item_id  
      * @return string json             
      */
-    public function getProfitChart(string $chars, int $interval, int $item_id = null): string
+    public function getProfitChartData(array $configs): string
     {
-        $arrData = array( //graph parameters
+        extract ($configs);
+        $arrData = array(
             "chart" => array(
                 "caption"       => "Profit evolution",
                 "subCaption"    => "last " . $interval . " days",
                 "xAxisName"     => "Day",
-                "yAxisName"     => "ISK Profit",
-                "paletteColors" => "#f6a821",
+                "yAxisName"     => "Profit (ISK)",
+                "paletteColors" => "#0075c2,#1aaf5d,#f2c500",
+                "drawCrossLine" => "1",
+                "crossLineColor" => "#f6a821",
+                "crossLineAlpha" => "100",
+                "tooltipGrayOutColor" => "#80bfff",
+                "canvasBgAlpha" => "0",
+                "bgColor" => "#32353d",
+                "bgAlpha" => "100",
+                "outCnvBaseFontColor" => "#fff",
+                "showAlternateHGridColor" => "0",
+                "captionFontColor" =>"#fff",
+                "anchorAlpha" => '0',
+                "labelFontColor" => "#fff",
+                "showValues" => "0",
+                "numberSuffix" => " ISK",
+                "showBorder" => "0"
             ),
         );
 

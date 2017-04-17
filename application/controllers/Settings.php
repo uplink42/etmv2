@@ -30,6 +30,8 @@ class Settings extends MY_Controller
         $this->default_sell_behaviour  = $_REQUEST['default_sell_behaviour']  ?? 1;
         $this->cross_character_profits = $_REQUEST['cross_character_profits'] ?? 1;
         $this->ignore_citadel_tax      = $_REQUEST['ignore_citadel_tax']      ?? 0;
+        $this->ignore_station_tax      = $_REQUEST['ignore_station_tax']      ?? 0;
+        $this->ignore_outpost_tax      = $_REQUEST['ignore_outpost_tax']      ?? 0;
     }
 
     /**
@@ -46,10 +48,15 @@ class Settings extends MY_Controller
 
             $data['selected'] = "settings";
 
+            $data['layout']['page_title']     = "Account Settings";
+            $data['layout']['icon']           = "pe-7s-tools";
+            $data['layout']['page_aggregate'] = false;
+
             $data['view'] = 'main/settings_v';
-            $this->load->view('main/_template_v', $data);
+            $this->twig->display('main/_template_v', $data);
         }
     }
+
 
     /**
      * Returns the user's email
@@ -60,6 +67,7 @@ class Settings extends MY_Controller
         $data = $this->Settings_model->getEmail($this->user_id);
         echo json_encode(array("email" => $data));
     }
+
 
     /**
      * Returns the user's reports
@@ -91,7 +99,7 @@ class Settings extends MY_Controller
     public function changeEmail() : void
     {
         $this->load->model('common/Auth');
-        if ($this->Auth->validateLogin($this->session->username, $this->password, true)) {
+        if ($this->Auth->validateLogin($this->etmsession->get('username'), $this->password, true)) {
             if ($this->ValidateRequest->validateEmailAvailability($this->email)) {
                 if ($this->Settings_model->changeEmail($this->user_id, $this->email)) {
                     $notice  = "success";
@@ -144,7 +152,9 @@ class Settings extends MY_Controller
             'default_buy_behaviour'   => $this->default_buy_behaviour,
             'default_sell_behaviour'  => $this->default_sell_behaviour,
             'cross_character_profits' => $this->cross_character_profits,
-            'ignore_citadel_tax'      => $this->ignore_citadel_tax
+            'ignore_citadel_tax'      => $this->ignore_citadel_tax,
+            'ignore_station_tax'      => $this->ignore_station_tax,
+            'ignore_outpost_tax'      => $this->ignore_outpost_tax
         ];
 
         $result = $this->Settings_model->changeTrackingData($this->user_id, $data);
@@ -170,7 +180,7 @@ class Settings extends MY_Controller
         $this->load->model('common/Auth');
         if ($this->ValidateRequest->validateIdenticalPasswords($this->password_new1, $this->password_new2)) {
             if ($this->ValidateRequest->validatePasswordLength($this->password_new1)) {
-                if ($this->Auth->validateLogin($this->session->username, $this->password_old, true)) {
+                if ($this->Auth->validateLogin($this->etmsession->get('username'), $this->password_old, true)) {
                     if ($this->Settings_model->changePassword($this->user_id, $this->password_new1)) {
                         $notice = "success";
                         $msg    = Msg::CHANGE_PASSWORD_SUCCESS;

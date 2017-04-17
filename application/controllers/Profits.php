@@ -1,7 +1,4 @@
 <?php
-ini_set('mysql.connect_timeout', '3000');
-ini_set('default_socket_timeout', '3000');
-ini_set('max_execution_time', '0');
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Profits extends MY_Controller
@@ -11,7 +8,9 @@ class Profits extends MY_Controller
         parent::__construct();
         $this->db->cache_on();
         $this->page = "profits";
+        $this->load->model('Profits_model', 'profits');
     }
+
 
     /**
      * Loads the Profits page
@@ -20,37 +19,44 @@ class Profits extends MY_Controller
      * @param  int|null    $item_id     
      * @return void                   
      */
-    public function index(int $character_id, int $interval = 1, int $item_id = null) : void
+    public function index(int $character_id, int $item_id = null) : void
     {
-        if ($interval > 365) {
-            $interval = 365;
-        }
+        $interval = 7;
         if ($this->enforce($character_id, $this->user_id)) {
             $aggregate = $this->aggregate;
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
 
             $data['selected'] = "profits";
-            $this->load->model('Profits_model');
-
-            $profits   = $this->Profits_model->getProfits($chars, $interval, $item_id);
-            $profits_r = $profits['result'];
-            $profits_c = $profits['count'];
-
-            if ($profits_c > 200) {
-                $img = false;
-            } else {
-                $img = true;
-            }
-
-            $chart = $this->Profits_model->getProfitChart($chars, $interval, $item_id = null);
-
-            $data['chart']    = $chart;
-            $data['img']      = $img;
-            $data['profits']  = $profits_r;
             $data['interval'] = $interval;
+            $data['item_id']  = $item_id;
             $data['view']     = 'main/profits_v';
-            $this->load->view('main/_template_v', $data);
+
+            $data['layout']['page_title']     = "Profit Breakdown";
+            $data['layout']['icon']           = "pe-7s-graph1";
+            $data['layout']['page_aggregate'] = true;
+
+            $this->twig->display('main/_template_v', $data);
         }
+    }
+
+
+    public function getProfitChart(int $character_id, int $interval = 1, bool $aggr, int $item_id = null)
+    {
+        $params = ['interval' => $interval,
+                   'item_id'  => $item_id ];
+
+        echo $this->buildData($character_id, $aggr, 'getProfitChartData', 'Profits_model', $params); 
+    }
+
+
+    public function getProfitTable(int $character_id, int $interval = 1, bool $aggr)
+    {
+        $params = [ 'character_id' => $character_id,
+                    'aggr'         => $aggr,
+                    'interval'     => $interval,
+                    'user_id'      => $this->user_id ];
+
+        echo $this->buildData($character_id, $aggr, 'getProfits', 'Profits_model', $params); 
     }
 }

@@ -1,8 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-ini_set('mysql.connect_timeout', '3000');
-ini_set('default_socket_timeout', '3000');
-ini_set('max_execution_time', '180');
 
 class Marketorders extends MY_Controller
 {
@@ -33,8 +30,8 @@ class Marketorders extends MY_Controller
             $data['selected'] = "marketorders";
 
             $this->load->model('MarketOrders_model');
-            $orders_buy  = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "buy", $this->check));
-            $orders_sell = $this->injectIcons($this->MarketOrders_model->getMarketOrders($chars, "sell", $this->check));
+            $orders_buy  = injectIcons($this->MarketOrders_model->getMarketOrders($chars, "buy", $this->check));
+            $orders_sell = injectIcons($this->MarketOrders_model->getMarketOrders($chars, "sell", $this->check));
 
             if($this->check) {
                 $this->load->model('common/Log');
@@ -44,7 +41,12 @@ class Marketorders extends MY_Controller
             $data['buyorders']  = $orders_buy;
             $data['sellorders'] = $orders_sell;
             $data['view']       = 'main/marketorders_v';
-            $this->load->view('main/_template_v', $data);
+
+            $data['layout']['page_title']     = "Market Orders";
+            $data['layout']['icon']           = "pe-7s-cart";
+            $data['layout']['page_aggregate'] = true;
+
+            $this->twig->display('main/_template_v', $data);
         }
     }
 }

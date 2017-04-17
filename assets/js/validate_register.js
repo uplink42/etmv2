@@ -1,6 +1,5 @@
 "use strict";
 $(document).ready(function() {
-
     $("#username").focus().select();
 
     $(".submit-register").on('click', 'input', function(e) {
@@ -19,6 +18,7 @@ $(document).ready(function() {
         $("#apikey").parent('div').removeClass('has-error');
         $("#vcode").parent('div').removeClass('has-error');
         $("#reports").parent('div').removeClass('has-error');
+
         if (username.length < 6) {
             $("#username").parent('div').addClass('has-error');
             e.preventDefault();
