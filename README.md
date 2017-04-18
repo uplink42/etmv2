@@ -25,15 +25,17 @@ Requirements:
 - Should work on any OS, but Windows users will need some extra tweaking with certificates to get the API calls working: 
 [http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok](http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok)
 
+Packet managers required:
+- bower
+- npm
+- composer
 
 Dependencies (packages included):
 - AngularJS 1.6
 - [PhealNG (XML API library)](https://github.com/3rdpartyeve/phealng)
 - [CodeIgniter 3](https://github.com/bcit-ci/CodeIgniter)
 - Fusioncharts
-- Bootstrap 3
-- Ruby SASS
-- jQuery 1.9
+- Twig
 
 3rd party APIs:
 - Eve XML API
@@ -48,49 +50,58 @@ Installation
 
     npm update
 
-2 - Then run gulp to generate the dist files:
-
+2 - Then install (if needed) and run gulp 
+    
+    npm install gulp
     gulp
     
  2.1 - Browse to marketexplorer/index and run
- 
+    
     npm install bower
     bower update
     npm update
     gulp
 
-3 - Now you must import the seeded database (trader.sql) to bootstrap the application. Contains all relevant SDE data until 29/10/2016. This can be done like this:
+3 - Import the database (schema.sql) 
 
-    mysql -u <username> -p
-    use trader
-    source <path-to-file.sql>
-
-4 - Create a folder with write permissions to store the API cache files
+4 - Make sure /phealcache has write permissions
 
 5 - Edit the following files:
 
     /application/config/config.php
-    $config['base_url'] = 'http://localhost/etm_refactor/'; <- replace this with your ETM path (don't forget the trailing slash)
-
-    /application/config/constants.php
-    define("FILESTORAGE", "path/to/your_cache_folder"); <- replace this with the folder path you created earlier.
+    $config['base_url'] = ''; //your ETM path (don't forget the trailing slash)
 
     /application/config/database.php
     'username' => 'root' <- replace this with your database user
     'password' => '' <- replace this with your database password
-    'database' => '' <- replace this with the database name (trader by default)
+    'database' => '' <- replace this with the database name
     
+6- Import the sql files in /seeders in this order:
     
-6- Import the sql files in /seeders. 
-    
+    calendar_seeder
+    item_seeder
+    region_seeder
+    system_seeder
+    faction_seeder
+    corporation_seeder
+    station_seeder
+    fixed_prices_seeder
+    ship_volumes_seeder
+    item_price_data_seeder
 
+7- Run composer
+
+    composer update
+    
 And that should be all. You can now launch it and create an account.
 
 Crons:
-There are several crons used to maintain the application. These can be found inside the /application/controllers/internal folder.
 
+    00 14 * * * cd [base application path] && php index.php internal/Autoexec_outposts
+    30 09 * * * cd [base application path] && php index.php internal/Autoexec_pricedata
+    55 23 * * * cd [base application path] && php index.php internal/Async_updater
 
 To-do:
 - Rewrite api key storage and validation rules
-- Automatic item list update cron from CREST (right now I have to manually update the database everytime new items are added into Eve)
+- Automatic item list update cron from CREST
 
