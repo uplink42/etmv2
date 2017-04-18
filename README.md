@@ -1,6 +1,6 @@
-#Eve Trade Master
+<h1>Eve Trade Master</h1>
 
-a web based profit tracker, trading and asset manager tool for Eve Online (native client for windows and android available)
+a web based profit tracker, trading and asset manager tool for Eve Online (BETA native client for windows and android available)
 
 Main features:
 
@@ -17,7 +17,7 @@ Main features:
 - new! browse the market in real time trough all regions in New Eden
 - new! now available as native client for windows and android
 
-#Requirements:
+<h1>Requirements:</h1>
 - Apache 2.2+ web server
 - PHP 7.1
 - MariaDB or MySQL database
@@ -25,25 +25,25 @@ Main features:
 - Should work on any OS, but Windows users will need some extra tweaking with certificates to get the API calls working: 
 [http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok](http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok)
 
-#Packet managers required:
+<h1>Packet managers required:</h1>
 - bower
 - npm
 - composer
 
-#Dependencies (packages included):
+<h1>Dependencies (packages included):</h1>
 - AngularJS 1.6
 - [PhealNG (XML API library)](https://github.com/3rdpartyeve/phealng)
 - [CodeIgniter 3](https://github.com/bcit-ci/CodeIgniter)
 - Fusioncharts
 - Twig
 
-#3rd party APIs:
+<h1>3rd party APIs:</h1>
 - Eve XML API
 - Eve CREST API
 - Citadel data https://stop.hammerti.me.uk/api/ (unofficial)
 
 
-#Installation
+<h1>Installation</h1>
 - Download/clone the repo onto your local web server.
 
 1 - First update npm with the needed packages:
@@ -89,24 +89,25 @@ Main features:
     ship_volumes_seeder
     item_price_data_seeder
 
-7- Run composer
+7- Run composer to update dependencies
 
     composer update
     
 And that should be all. You can now launch it and create an account.
 
-#Crons:
+<h1>Crons:</h1>
 
     00 14 * * * cd [base application path] && php index.php internal/Autoexec_outposts
     30 09 * * * cd [base application path] && php index.php internal/Autoexec_pricedata
     55 23 * * * cd [base application path] && php index.php internal/Async_updater
     
-#Unit Tests
+<h1>Unit Tests</h1>
 
 First create an identical database and configure it on /config/database.php. Change the application enrvironment to 'testing' in index.php and browse to /ciunit_controller in your browser. You must run the test seeder file (in the correct database!) before every test run. You can write unit tests in /application/tests.
 
 
-#To-do:
+<h1>To-do:</h1>
 - Rewrite api key storage and validation rules
 - Automatic item list update cron from CREST
+- Unit tests (lots of them)
 
