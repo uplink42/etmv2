@@ -1,4 +1,4 @@
-Eve Trade Master
+#Eve Trade Master
 
 a web based profit tracker, trading and asset manager tool for Eve Online (native client for windows and android available)
 
@@ -17,7 +17,7 @@ Main features:
 - new! browse the market in real time trough all regions in New Eden
 - new! now available as native client for windows and android
 
-Requirements:
+#Requirements:
 - Apache 2.2+ web server
 - PHP 7.1
 - MariaDB or MySQL database
@@ -25,25 +25,25 @@ Requirements:
 - Should work on any OS, but Windows users will need some extra tweaking with certificates to get the API calls working: 
 [http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok](http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok)
 
-Packet managers required:
+#Packet managers required:
 - bower
 - npm
 - composer
 
-Dependencies (packages included):
+#Dependencies (packages included):
 - AngularJS 1.6
 - [PhealNG (XML API library)](https://github.com/3rdpartyeve/phealng)
 - [CodeIgniter 3](https://github.com/bcit-ci/CodeIgniter)
 - Fusioncharts
 - Twig
 
-3rd party APIs:
+#3rd party APIs:
 - Eve XML API
 - Eve CREST API
 - Citadel data https://stop.hammerti.me.uk/api/ (unofficial)
 
 
-Installation
+#Installation
 - Download/clone the repo onto your local web server.
 
 1 - First update npm with the needed packages:
@@ -95,13 +95,13 @@ Installation
     
 And that should be all. You can now launch it and create an account.
 
-Crons:
+#Crons:
 
     00 14 * * * cd [base application path] && php index.php internal/Autoexec_outposts
     30 09 * * * cd [base application path] && php index.php internal/Autoexec_pricedata
     55 23 * * * cd [base application path] && php index.php internal/Async_updater
 
-To-do:
+#To-do:
 - Rewrite api key storage and validation rules
 - Automatic item list update cron from CREST
 
