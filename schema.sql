@@ -945,6 +945,36 @@ ALTER TABLE `traderoutes`
 ALTER TABLE `transaction`
   ADD CONSTRAINT `fk_transaction_character1` FOREIGN KEY (`character_eve_idcharacter`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Table structure for table `fixed_prices`
+--
+
+CREATE TABLE `fixed_prices` (
+  `id` int(11) NOT NULL,
+  `item_eve_iditem` int(11) NOT NULL,
+  `price` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `fixed_prices`
+--
+ALTER TABLE `fixed_prices`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_item` (`item_eve_iditem`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `fixed_prices`
+--
+ALTER TABLE `fixed_prices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
