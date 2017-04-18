@@ -103,7 +103,7 @@ And that should be all. You can now launch it and create an account.
     
 #Unit Tests
 
-First create an identical database and configure it on /config/database.php. Change the application enrvironment to 'testing' in index.php and browse to /ciunit_controller
+First create an identical database and configure it on /config/database.php. Change the application enrvironment to 'testing' in index.php and browse to /ciunit_controller in your browser. You must run the test seeder file (in the correct database!) before every test run. You can write unit tests in /application/tests.
 
 
 #To-do:
