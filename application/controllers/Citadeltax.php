@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Citadeltax extends MY_Controller
+class CitadelTax extends MY_Controller
 {
     private $citadel;
     private $tax;

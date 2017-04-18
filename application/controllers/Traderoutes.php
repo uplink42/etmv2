@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Traderoutes extends MY_Controller
+class TradeRoutes extends MY_Controller
 {
 
     public function __construct()

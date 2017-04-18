@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Apikeymanagement extends MY_Controller
+class APIKeyManagement extends MY_Controller
 {
     private $keyid;
     private $vcode;
