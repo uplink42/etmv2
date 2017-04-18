@@ -18,6 +18,7 @@ Main features:
 - new! now available as native client for windows and android
 
 <h1>Requirements:</h1>
+
 - Apache 2.2+ web server
 - PHP 7.1
 - MariaDB or MySQL database
@@ -26,11 +27,13 @@ Main features:
 [http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok](http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok)
 
 <h1>Packet managers required:</h1>
+
 - bower
 - npm
 - composer
 
 <h1>Dependencies (packages included):</h1>
+
 - AngularJS 1.6
 - [PhealNG (XML API library)](https://github.com/3rdpartyeve/phealng)
 - [CodeIgniter 3](https://github.com/bcit-ci/CodeIgniter)
@@ -38,12 +41,14 @@ Main features:
 - Twig
 
 <h1>3rd party APIs:</h1>
+
 - Eve XML API
 - Eve CREST API
 - Citadel data https://stop.hammerti.me.uk/api/ (unofficial)
 
 
 <h1>Installation</h1>
+
 - Download/clone the repo onto your local web server.
 
 1 - First update npm with the needed packages:
@@ -107,6 +112,7 @@ First create an identical database and configure it on /config/database.php. Cha
 
 
 <h1>To-do:</h1>
+
 - Rewrite api key storage and validation rules
 - Automatic item list update cron from CREST
 - Unit tests (lots of them)
