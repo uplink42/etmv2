@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Marketorders extends MY_Controller
+class MarketOrders extends MY_Controller
 {
     private $significant;
     private $check;
