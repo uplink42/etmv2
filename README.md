@@ -102,6 +102,7 @@ And that should be all. You can now launch it and create an account.
     55 23 * * * cd [base application path] && php index.php internal/Async_updater
     
 #Unit Tests
+
 First create an identical database and configure it on /config/database.php. Change the application enrvironment to 'testing' in index.php and browse to /ciunit_controller
 
 
