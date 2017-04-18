@@ -38,7 +38,7 @@ $(document).ready(function() {
                 }  
             }
         });
-    })
+    });
 
     $(".submit-add-2").on('click', function(e) {
         e.preventDefault();
@@ -57,9 +57,9 @@ $(document).ready(function() {
             success: function(result) {
                 toastr[result.notice](result.message);
                 if(result.notice === 'success') {
-                    window.location.href = '/v2/main/login/logout';
+                    window.location.href = 'main/login/logout';
                 }
             }
         });
-    })
+    });
 });
