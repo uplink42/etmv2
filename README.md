@@ -100,6 +100,10 @@ And that should be all. You can now launch it and create an account.
     00 14 * * * cd [base application path] && php index.php internal/Autoexec_outposts
     30 09 * * * cd [base application path] && php index.php internal/Autoexec_pricedata
     55 23 * * * cd [base application path] && php index.php internal/Async_updater
+    
+#Unit Tests
+First create an identical database 
+These can be started by changing the application enrvironment to 'testing' in index.php and browsing to 
 
 #To-do:
 - Rewrite api key storage and validation rules
