@@ -1,5 +1,5 @@
 SET FOREIGN_KEY_CHECKS=0;
-TRUNCATE TABLE region;
+
 
 #
 # Data for the `region` table  (LIMIT 0,500)

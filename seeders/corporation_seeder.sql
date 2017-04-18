@@ -1,5 +1,5 @@
 SET FOREIGN_KEY_CHECKS=0;
-TRUNCATE TABLE corporation;
+
 #
 # Data for the `corporation` table  (LIMIT 0,500)
 #
