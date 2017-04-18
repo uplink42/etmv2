@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class APIKeyManagement extends MY_Controller
+class Apikeymanagement extends MY_Controller
 {
     private $keyid;
     private $vcode;
@@ -116,6 +116,8 @@ class APIKeyManagement extends MY_Controller
         $char1 ? array_push($chars, $char1) : '';
         $char2 ? array_push($chars, $char2) : '';
         $char3 ? array_push($chars, $char3) : '';
+
+        log_message('error', $this->user_id);
 
         if(count($chars) != 0) {
             $this->load->model('register_model', 'reg');
