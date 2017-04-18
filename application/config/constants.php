@@ -85,20 +85,19 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 //Application specific constants
-define("FILESTORAGE", "phealcache/"); //pheal cache folder
+define("FILESTORAGE", "phealcache/");
 define("URL", "../../");
-define("GUSER", "etmdevelopment42@gmail.com");
+define("GUSER", "");
 define("GPWD", "");
-define("SMTPDEBUG", 0);
-define("SMTPAUTH", true);
-define("SMTPSECURE", "ssl");
-define("SMTPHOST", "smtp.gmail.com");
-define("SMTPPORT", 465);
+define("SMTPDEBUG", "");
+define("SMTPAUTH", "");
+define("SMTPSECURE", "");
+define("SMTPHOST", "");
+define("SMTPPORT", "");
 define("FROM_EMAIL", "");
 define("FROM_NAME", "Eve Trade Master");
 
 define("MASK_PERSONAL_KEY", '82317323');
 define("MASK_FULL_KEY", '1073741823');
-define("MASK_CORP_KEY", '11800579');
 
 

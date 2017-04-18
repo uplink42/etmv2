@@ -223,7 +223,7 @@ class Updater_model extends CI_Model
 
         if ($accessMask == "" && $response) {
             return -4; //api key does not exist
-        } else if ($accessMask != MASK_PERSONAL_KEY && $accessMask != MASK_FULL_KEY && $accessMask != MASK_CORP_KEY && $response) {
+        } else if ($accessMask != MASK_PERSONAL_KEY && $accessMask != MASK_FULL_KEY && $response) {
             return -3; //api key has invalid permissions
         } else if (!in_array($char, $apichars) && $response) {
             return -2; //character does not belong to API key
