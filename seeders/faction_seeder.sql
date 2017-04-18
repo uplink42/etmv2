@@ -1,5 +1,5 @@
 SET FOREIGN_KEY_CHECKS=0;
-TRUNCATE TABLE faction;
+
 
 #
 # Data for the `faction` table  (LIMIT 0,500)

@@ -1,5 +1,5 @@
 SET FOREIGN_KEY_CHECKS=0;
-TRUNCATE TABLE fixed_prices;
+
 --
 -- Dumping data for table `fixed_prices`
 --

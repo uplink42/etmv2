@@ -1,5 +1,5 @@
 SET FOREIGN_KEY_CHECKS=0;
-TRUNCATE TABLE item_price_data;
+
 
 #
 # Data for the `item_price_data` table  (LIMIT 0,500)

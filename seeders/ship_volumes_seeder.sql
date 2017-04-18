@@ -1,5 +1,5 @@
 SET FOREIGN_KEY_CHECKS=0;
-TRUNCATE TABLE ship_volumes;
+
 
 #
 # Data for the `ship_volumes` table  (LIMIT 0,500)
