@@ -90,8 +90,8 @@ class Apikeymanagement extends MY_Controller
 
         if($result) {
             $notice = "error";
-            $msg = $result;
-            $data = array("notice" => $notice, "message" => $msg);
+            $msg    = $result;
+            $data   = array("notice" => $notice, "message" => $msg);
             echo json_encode($data);
         } else {
             //success
@@ -116,8 +116,6 @@ class Apikeymanagement extends MY_Controller
         $char1 ? array_push($chars, $char1) : '';
         $char2 ? array_push($chars, $char2) : '';
         $char3 ? array_push($chars, $char3) : '';
-
-        log_message('error', $this->user_id);
 
         if(count($chars) != 0) {
             $this->load->model('register_model', 'reg');
