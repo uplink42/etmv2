@@ -68,11 +68,13 @@ $(document).ready(function() {
         });
     });
 
+
+    // change email
     $(".btn-change-email").on('click', function(e) {
         e.preventDefault();
-        var email = $("#ch-email-new").val();
+        var email = $("#ch-email-email").val();
         var password = $("#ch-email-pw").val();
-        
+
         if (isEmail(email)) {
             if (password.length >= 6) {
                 var req = "Settings/changeEmail";
@@ -97,6 +99,8 @@ $(document).ready(function() {
         }
     });
 
+
+    // change pw
     $(".btn-change-pw").on('click', function(e) {
         e.preventDefault();
         var newpw1 = $("#ch-pw-new1").val();
@@ -127,6 +131,7 @@ $(document).ready(function() {
     });
 
 
+    // change profit tracking settings
     $(".btn-change-tracking").on('click', function(e) {
         e.preventDefault();
         var data = $(".change-tracking").serialize();
