@@ -4,7 +4,5 @@
 /node_modules/
 /home
 /luna_admin-v1.1
-/marketexplorer/index/bower_components
-/marketexplorer/index/node_modules
-/marketexplorer/index/dist
+/bower_components
 /vendor
