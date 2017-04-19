@@ -81,19 +81,8 @@ Main features:
     'password' => '' <- replace this with your database password
     'database' => '' <- replace this with the database name
     
-6- Import the sql files in /seeders in this order:
+6- Import the all_seeders sql file in /seeders
     
-    calendar_seeder
-    item_seeder
-    region_seeder
-    system_seeder
-    faction_seeder
-    corporation_seeder
-    station_seeder
-    fixed_prices_seeder
-    ship_volumes_seeder
-    item_price_data_seeder
-
 7- Run composer to update dependencies
 
     composer update
