@@ -19,8 +19,7 @@ app.directive('chart', [
                 }, true);
 
                 $scope.$watch('region', function(newValue, oldValue) {
-                    if (Object.keys(newValue).length && !angular.isUndefined(newValue)) {
-                        console.log(newValue);
+                    if (!isNaN(newValue) && !angular.isUndefined(newValue)) {
                         getHistory();
                     }
                 }, true);
