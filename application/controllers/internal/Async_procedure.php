@@ -38,10 +38,10 @@ class Async_procedure extends CI_Controller
     	try {
     		$result_iterate = $this->Updater_model->iterateAccountCharacters();
     	} catch (Throwable $e) {
-    		log_message('error', $username . 'global error ->' . $e->getMessage());
+    		log_message('error', $username . ' GLOBAL ERROR ->' . $e->getMessage());
     	}
         if (!$result_iterate) {
-            log_message('error', $username . 'global error ->' . Msg::DB_ERROR);
+            log_message('error', $username . ' GLOBAL ERROR ->' . Msg::DB_ERROR);
         } else {
         	try {
         		$this->Updater_model->calculateProfits();
@@ -56,7 +56,7 @@ class Async_procedure extends CI_Controller
 
 	            $this->Updater_model->release($username);
         	} catch (Throwable $e) {
-        		log_message('error', $username . 'global error ->' . $e->getMessage());
+        		log_message('error', $username . ' GLOBAL ERROR ->' . $e->getMessage());
         	}
         }
     	$this->Updater_model->release($username);
