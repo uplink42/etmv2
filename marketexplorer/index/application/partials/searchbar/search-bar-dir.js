@@ -1,174 +1,151 @@
-app.directive('searchBar', [
+app.directive('chart', [
     'config',
-    '$http',
-    'regionListFact', 
-    'marketLookupFact',
-    '$filter',
-    '$timeout',
-    '$interval',
-    function(config, $http, regionListFact, marketLookupFact, $filter, $timeout, $interval) {
+    'marketHistoryFact', 
+    function(config, marketHistoryFact) {
         "use strict";
 
         return {
-            templateUrl: config.dist + '/partials/searchbar/search-bar-view.html',
+            templateUrl: config.dist + '/partials/chart/chart-view.html',
             restrict: 'E',
             scope: {
                 item: '=',
-                region: '=',
-                buyorders: '=',
-                sellorders: '=',
-                time: '='
+                region: '='
             },
             controller: ['$scope', function($scope) {
-                var updateData,
-                    countdown,
-                    frequency = 310000,
-                    interval  = 1000;
-
-                $scope.search = {
-                    region: 10000002,
-                    item: ''
-                };
-
-                $scope.regions = [];
-                getAllRegions();
-
-                $scope.$watch('search.region', function(newi, old) {
-                    if (newi) {
-                        $timeout.cancel(updateData);
-                        $interval.cancel(countdown);
-                        $scope.region = newi;
-                        updateItem($scope.item);
-                    }
-                });
-
                 $scope.$watch('item', function(newValue, oldValue) {
-                    $timeout.cancel(updateData);
-                    $interval.cancel(countdown);
-                    updateItem(newValue);
+                    if (Object.keys(newValue).length && !angular.isUndefined(newValue)) {
+                        getHistory();
+                    }
                 }, true);
 
-                $scope.getItems = function(val) {
-                    return $http.get(config.autocomplete, {
-                        params: {
-                            term: val
-                        }
-                    })
+                $scope.$watch('region', function(newValue, oldValue) {
+                    console.log(newValue);
+                    if (!isNaN(parseFloat(newValue)) && !angular.isUndefined(newValue)) {
+                        getHistory();
+                    }
+                }, true);
+
+
+                function getHistory() {
+                    marketHistoryFact
+                    .queryItem($scope.region, $scope.item.id)
                     .then(function(response) {
-                        return response.data.map(function(item){
-                            return item;
-                        });
+                        buildChart(response);
+                    })
+                    .catch(function(error) {
+                        console.error(error.stack);
                     });
-                };
-
-                function updateItem(newValue) {
-                    if (newValue.id) {
-                        update(true);
-                        $scope.search.item = newValue.name;
-                    }
                 }
 
-                $scope.itemSelected = function($item) {
-                    $scope.item = {
-                        name: $item.value,
-                        id: $item.id
-                    };
-                };
 
-                function getAllRegions() {
-                    regionListFact
-                    .getAll()
-                    .then(function(result) {
-                        //console.log(result);
-                        angular.forEach(result, function(cValue, cKey) {
-                            if (cValue.id < 11000000) {
-                                $scope.regions.push(cValue);
+                function buildChart(data) {
+                    var fourMonthsAgo = moment().subtract(4, 'month');
+                    var volumes       = [],
+                        dates         = [],
+                        avgPrices     = [],
+                        lowestPrices  = [],
+                        highestPrices = [],
+                        spread        = [];
+
+                    angular.forEach(data, function(cValue, cKey) {
+                        if (moment(cValue.date).isAfter(fourMonthsAgo)) {
+                            dates.push({label: moment(cValue.date).format('DD/MM')});
+                            volumes.push({value: cValue.volume});
+                            avgPrices.push({value: cValue.avgPrice});
+                            lowestPrices.push({value: cValue.lowPrice});
+                            highestPrices.push({value: cValue.highPrice});
+                            spread.push({value: parseFloat(cValue.highPrice) - parseFloat(cValue.lowPrice)});
+                        }
+                    });
+                    
+                    var chartData = {
+                        chart: {
+                            subcaptionFontBold: "0",
+                            paletteColors: "#0075c2,#1aaf5d,#f2c500",
+                            anchorAlpha: '0',
+                            xAxisname: "time",
+                            pYAxisName: "quantity",
+                            sYAxisName: "price",
+                            sNumberSuffix: " ISK",
+                            showAlternateHGridColor: "0",
+                            showPlotBorder: "0",
+                            labelFontColor: "#fff",
+                            labelFontSize: "14",
+                            legendItemFontSize: "14",
+                            usePlotGradientColor: "0",
+                            baseFontColor: "#333333",
+                            baseFont: "Helvetica Neue,Arial",
+                            showBorder: "0",
+                            showShadow: "0",
+                            showCanvasBorder: "0",
+                            legendBorderAlpha: "0",
+                            legendShadow: "0",
+                            showValues: "0",
+                            divlineAlpha: "100",
+                            divlineColor: "#999999",
+                            divlineThickness: "1",
+                            divLineDashed: "1",
+                            divLineDashLen: "1",
+                            numVisiblePlot: "12",
+                            flatScrollBars: "1",
+                            scrollheight: "10",
+                            linethickness: "2",
+                            formatnumberscale: "1",
+                            labeldisplay: "ROTATE",
+                            slantlabels: "1",
+                            divLineAlpha: "40",
+                            anchoralpha: "0",
+                            animation: "1",
+                            legendborderalpha: "20",
+                            drawCrossLine: "1",
+                            crossLineColor: "#f6a821",
+                            crossLineAlpha: "100",
+                            tooltipGrayOutColor: "#80bfff",
+                            canvasBgAlpha: "0",
+                            bgColor: "#32353d",
+                            bgAlpha: "100",
+                            legendBgColor: "#333",
+                            outCnvBaseFontColor: "#fff",
+                            outCnvBaseFontSize: "12",
+                            pyaxisnamefontcolor: "#fff",
+                            syaxisnamefontcolor: "#fff",
+                            pyaxisnamefontsize: "16",
+                            syaxisnamefontsize: "16",
+                            captionFontColor: "#fff",
+                        },
+                        categories: [{
+                            category: dates
                             }
-                        });
-                        $scope.isLoadedRegions = true;
-                    });
-                }
-
-                function getItemOrders(id) {
-                    //sell
-                    marketLookupFact
-                    .queryItem($scope.search.region, 'sell', id)
-                    .then(function(responseSell) {
-                        //$scope.sellorders = response;
-                        var totalSell = 0;
-                        angular.forEach(responseSell, function(cValue, cKey) {
-                            totalSell += cValue.volume;
-                        });
-                        $scope.sellorders.total = totalSell;
-                        $scope.sellorders.items = $filter('orderBy')(responseSell, 'price');
-
-                        // recent orders
-                        $http.get(config.crest.base + 'time/', {})
-                        .then(function(response) {
-                            var time = response.data.time;
-                            var oneHourAgo = moment(time).subtract(1, 'hour');
-
-                            $scope.sellorders.recent = 0;
-                            angular.forEach($scope.sellorders.items, function(cValue, cKey) {
-                                if (moment(cValue.issued).isAfter(oneHourAgo)) {
-                                    $scope.sellorders.recent++;
-                                }
-                            });
-                        });
-                    })
-                    .catch(function(error) {
-                        console.error(error.stack);
-                    });
-
-                    //buy
-                    marketLookupFact
-                    .queryItem($scope.search.region, 'buy', id)
-                    .then(function(responseBuy) {
-                        var totalBuy = 0;
-                        angular.forEach(responseBuy, function(cValue, cKey) {
-                            totalBuy += cValue.volume;
-                        });
-                        $scope.buyorders.total = totalBuy;
-                        $scope.buyorders.items = $filter('orderBy')(responseBuy, '-price');
-
-                        // recent
-                        $http.get(config.crest.base + 'time/', {})
-                        .then(function(response) {
-                            var time = response.data.time;
-                            var oneHourAgo = moment(time).subtract(1, 'hour');
-
-                            //recent orders
-                            $scope.buyorders.recent = 0;
-                            angular.forEach($scope.buyorders.items, function(cValue, cKey) {
-                                if (moment(cValue.issued).isAfter(oneHourAgo)) {
-                                    $scope.buyorders.recent++;
-                                }
-                            });
-                        });
-                    })
-                    .catch(function(error) {
-                        console.error(error.stack);
-                    });
-                }
-
-                // update data every 5 mins automatically
-                function update(init) {
-                    var updateTimer  = function() {
-                        $scope.time -= 1;
+                        ],
+                        dataset: [{
+                            seriesName: 'volume',
+                            parentYAxis: "P",
+                            data: volumes
+                            }, {
+                            seriesName: 'avg',
+                            parentYAxis: "S",
+                            renderAs: 'line',
+                            data: avgPrices
+                            },{
+                            seriesName: 'spread',
+                            parentYAxis: "S",
+                            renderAs: 'line',
+                            data: spread
+                            }
+                        ]
                     };
 
-                    if (init) {
-                        $scope.time = frequency / interval;
-                        getItemOrders($scope.item.id);
-                        countdown = $interval(updateTimer, interval);
-                    }
-                    updateData = $timeout(function() {
-                        $interval.cancel(countdown);
-                        $scope.time = frequency / interval;
-                        getItemOrders($scope.item.id);
-                        countdown = $interval(updateTimer, interval);
-                        update();
-                    }, frequency);
+                    FusionCharts.ready(function () {
+                        var chart = new FusionCharts({
+                            type: 'mscombidy2d',
+                            renderAt: 'chart',
+                            width: '100%',
+                            height: '350',
+                            dataFormat: 'json',
+                            dataSource: chartData
+                        });
+                        chart.render();
+                    });
                 }
             }],
 
