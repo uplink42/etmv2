@@ -115,7 +115,10 @@ $(document).ready(function() {
                 listID = result.id;
                 var list_name = $("#list-name").val();
 
+                console.log(listID);
                 populateDropdown();
+                $('#list-name').val('').change();
+                $('.dropdown-list').val(listID);
                 $(".add-list-item").show();
                 $(".stocklist-content").show();
                 $(".yellow.contents").text(list_name);
