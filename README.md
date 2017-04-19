@@ -22,15 +22,10 @@ Main features:
 - Apache 2.2+ web server
 - PHP 7.1
 - MariaDB or MySQL database
-- Gulp task runner (requires NodeJS)
+- NodeJS (for npm)
 - Should work on any OS, but Windows users will need some extra tweaking with certificates to get the API calls working: 
 [http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok](http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok)
 
-<h1>Packet managers required:</h1>
-
-- bower
-- npm
-- composer
 
 <h1>Dependencies (packages included):</h1>
 
@@ -55,18 +50,17 @@ Main features:
 
     npm update
 
-2 - Then install (if needed) and run gulp 
-    
-    npm install gulp
-    gulp
-    
- 2.1 - Browse to marketexplorer/index and run
+2 - Then install bower and gulp if needed
     
     npm install bower
-    bower update
-    npm update
-    gulp
-
+    npm install gulp
+    
+ and run
+ 
+     bower update
+     composer update
+     gulp
+     
 3 - Import the database (schema.sql) 
 
 4 - Make sure /phealcache has write permissions
@@ -77,16 +71,13 @@ Main features:
     $config['base_url'] = ''; //your ETM path (don't forget the trailing slash)
 
     /application/config/database.php
-    'username' => 'root' <- replace this with your database user
-    'password' => '' <- replace this with your database password
-    'database' => '' <- replace this with the database name
+    $db['default']
+    'username' => 'root' // db user
+    'password' => ''     // db password
+    'database' => ''     // db name
     
 6- Import the all_seeders sql file in /seeders
-    
-7- Run composer to update dependencies
 
-    composer update
-    
 And that should be all. You can now launch it and create an account.
 
 <h1>Crons:</h1>
