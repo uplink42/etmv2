@@ -66,18 +66,18 @@ class Profits_model extends CI_Model
         $this->db->join('characters c2', 't2.character_eve_idcharacter = c2.eve_idcharacter');
         $this->db->join('item i', 't1.item_eve_iditem = i.eve_iditem', 'left');
         $this->db->where('p.characters_eve_idcharacters_OUT IN ' . $chars);
-        $this->db->order_by('t2.time', 'desc');
-
+        
         if (isset($item_id)) {
             $this->db->where('i.eve_iditem', $item_id);
         }
 
         $this->db->where('p.timestamp_sell>= now() - INTERVAL ' . $interval . ' DAY');
-        $this->db->order_by('t2.time DESC');
-        $result = $this->dt->generate($defs, 'i.name', 'profit_total');
+        
+        if (!isset($defs['order'][0])) {
+            $this->db->order_by('t2.time', 'desc');
+        }
 
-        //$query  = $this->db->get();
-        //$result = $query->result_array();
+        $result = $this->dt->generate($defs, 'i.name', 'profit_total');
         $count  = count($result['data']);
 
         for ($i = 0; $i < $count; $i++) {
@@ -105,11 +105,9 @@ class Profits_model extends CI_Model
 
             $price_buy                        = $price_buy * $transTaxFrom * $brokerFeeFrom;
             $result['data'][$i]->margin       = $profit_unit / $price_buy * 100;
-            $result['data'][$i]->url          = "https://image.eveonline.com/Type/" . $result['data'][$i]->item_id . "_32.png";
         }
         
-        $sorted = sortData($result['data'], $defs);
-        $data   = json_encode(['data'            => $sorted, 
+        $data   = json_encode(['data'            => injectIcons($result['data'], true), 
                                'draw'            => (int)$result['draw'], 
                                'recordsTotal'    => $result['max'],
                                'recordsFiltered' => $result['max'],

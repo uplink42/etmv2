@@ -15,34 +15,31 @@ class Datatables extends CI_Model
 
     public function generate(array $defs, string $search_column, string $sum_column)
     {
-        $this->defs  = $defs;
+        $this->defs          = $defs;
         $this->search_column = $search_column;
         $this->sum_column    = $sum_column;
-        $this->createFiltering();
-        $this->createPagination();
+        
+        $this->filter();
+        $this->paginate();
         return $this->result;
     }
 
 
-    private function createPagination()
+    private function paginate()
     {
+        $results     = $this->sort();
         $this->db->stop_cache();
         $max_query   = $this->db->get('');
-
-        $sum = 0;
-        if (!empty($this->sum_column)) {
-            // sum of the designated row
-            $results = $max_query->result_array();
-            for ($i = 0, $max = count($results); $i < $max; $i++) {
-                $sum += $results[$i][$this->sum_column];
-            }
-        }
-        
+        $results     = $max_query->result();
         $max_results = $max_query->num_rows();
+        $sum         = $this->count($results);
+
         if (isset($this->defs['length']) &&  $this->defs['length'] < 0) {
+            // pagination not requested
             $page_query   = $max_query;
             $page_results = $max_results;
         } else {
+            // paginate
             $page_query   = $this->db->limit($this->defs['length'], $this->defs['start'])->get('');
             $page_results = $page_query->num_rows();
         }
@@ -51,7 +48,7 @@ class Datatables extends CI_Model
     }
 
 
-    private function createFiltering()
+    private function filter()
     {
         if (empty($this->defs['search']['value'])) {
             return false;
@@ -65,6 +62,31 @@ class Datatables extends CI_Model
         }*/
 
         $this->db->like($this->search_column, $this->defs['search']['value']);
+    }
+
+
+    private function sort()
+    {
+        if (isset($this->defs['order'][0])) {
+            $column_idx  = $this->defs['order'][0]['column'];
+            $column_name = $this->defs['columns'][$column_idx]['data'];
+
+            $this->db->order_by($column_name, $this->defs['order'][0]['dir']);
+        }
+    }
+
+
+    private function count($results)
+    {
+        $sum = 0;
+        if (!empty($this->sum_column)) {
+            // sum of the designated column
+            for ($i = 0, $max = count($results); $i < $max; $i++) {
+                $sum += $results[$i]->{$this->sum_column};
+            }
+        }
+        
+        return $sum;
     }
 
 

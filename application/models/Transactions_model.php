@@ -45,8 +45,11 @@ class Transactions_model extends CI_Model
             $this->db->where('t.character_eve_idcharacter IN ' . $chars);
             $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
         }
-        $this->db->order_by("t.time DESC");
 
+        if (!isset($defs['order'][0])) {
+            $this->db->order_by("t.time DESC");
+        }
+        
         if ($new > 0) {
             $this->db->limit($new);
         }
@@ -55,8 +58,7 @@ class Transactions_model extends CI_Model
         }
 
         $result = $this->dt->generate($defs, 'i.name', 'price_total');
-        $sorted = sortData($result['data'], $defs);
-        $data = json_encode(['data'            => injectIcons($sorted, true), 
+        $data = json_encode(['data'            => injectIcons($result['data'], true), 
                              'draw'            => (int)$result['draw'], 
                              'recordsTotal'    => $result['max'],
                              'recordsFiltered' => $result['max'],

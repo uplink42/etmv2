@@ -134,7 +134,9 @@ class Assets_model extends CI_Model
         $this->db->select('a.item_eve_iditem as item_id,
             a.quantity as quantity,
             i.name as item_name,
-            st.name as loc_name,
+            st.name as station_name,
+            sys.name as system_name,
+            COALESCE(st.name, sys.name) as loc_name,
             i.eve_iditem as item_id,
             pr.price_evecentral as unit_value,
             c.name as owner,
@@ -145,9 +147,8 @@ class Assets_model extends CI_Model
         $this->db->join('item i', 'i.eve_iditem = a.item_eve_iditem');
         $this->db->join('characters c', 'c.eve_idcharacter = a.characters_eve_idcharacters');
         $this->db->join('station st', 'st.eve_idstation = a.locationID', 'left');
-        $this->db->join('system sys1', 'sys1.eve_idsystem = st.system_eve_idsystem', 'left');
-        $this->db->join('system sys2', 'sys2.eve_idsystem = a.locationID', 'left');
-        $this->db->join('region r', 'r.eve_idregion = sys1.region_eve_idregion');
+        $this->db->join('system sys', 'sys.eve_idsystem = a.locationID', 'left');
+        $this->db->join('region r', 'r.eve_idregion = sys.region_eve_idregion', 'left');
         $this->db->join('item_price_data pr', 'pr.item_eve_iditem = a.item_eve_iditem');
         $this->db->where('c.eve_idcharacter IN ' . $chars);
 
@@ -156,8 +157,7 @@ class Assets_model extends CI_Model
         }
 
         $result  = $this->dt->generate($defs, 'i.name', 'total_value');
-        $sorted = sortData($result['data'], $defs);
-        $data = json_encode(['data'            => injectIcons($sorted, true), 
+        $data = json_encode(['data'            => injectIcons($result['data'],TRUE), 
                              'draw'            => (int)$result['draw'], 
                              'recordsTotal'    => $result['max'],
                              'recordsFiltered' => $result['max'],

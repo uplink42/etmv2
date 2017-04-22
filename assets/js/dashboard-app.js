@@ -104,6 +104,12 @@ $(document).ready(function() {
             { data: "profit_total" },
             { data: "margin" }
         ],
+        aoColumnDefs: [{
+            bSearchable: false,
+            aTargets: [3]
+        }, { targets: 'no-sort', 
+            orderable: false 
+        }],
         fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (parseFloat(aData.profit_total) > 0) {
                 $(nRow).addClass('success');

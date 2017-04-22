@@ -201,8 +201,7 @@ class Dashboard_model extends CI_Model
             $result['data'][$i]->margin       = $profit_unit / $price_buy * 100;
         }
 
-        $sorted = sortData($result['data'], $defs);
-        $data = json_encode(['data'            => injectIcons($sorted, true), 
+        $data = json_encode(['data'            => injectIcons($result['data'], true), 
                              'draw'            => (int)$result['draw'], 
                              'recordsTotal'    => $result['max'],
                              'recordsFiltered' => $result['max'],
