@@ -1,5 +1,6 @@
 "use strict";
 $(document).ready(function() {
+    var totalValue = 0;
     var table = $('#assets-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         processing: true,
@@ -11,6 +12,7 @@ $(document).ready(function() {
             data : {region_id: regionID},
             dataSrc: function (json) {
                 var return_data = [];
+                totalValue = json.recordsSum;
                 for (var i = 0; i < json.data.length; i++) {
                     return_data.push({
                         item_name: '<img src="' + json.data[i].url + '">' + '<a class="item-name" style="color:#fff">' +  json.data[i].item_name,
@@ -22,7 +24,7 @@ $(document).ready(function() {
                         total_value: number_format(json.data[i].total_value, 2, '.', ',' )
                     });
                   }
-                updateTableTotals();
+                updateTableTotals(totalValue);
                 return return_data;
             }   
         },
@@ -78,9 +80,11 @@ $(document).ready(function() {
         $(".assets-body p.yellow").html("There are "+ table.rows({filter: 'applied'}).count() + " results for a total of "
             + number_format(table.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
     });*/
+
     $("#assets-table_filter input").keyup(function() {
         let info = table.page.info();
-        $(".assets-body p.yellow").html("There are " + info.recordsTotal + " results");
+        $(".assets-body p.yellow").html("There are " + info.recordsTotal + " results for a total value of " + 
+            number_format(totalValue, 2, '.', ',' ) + " ISK");
     });
 
     // item filter

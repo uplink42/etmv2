@@ -53,6 +53,7 @@ class Profits_model extends CI_Model
             c2.eve_idcharacter as char_sell_id,
             coalesce(sys1.name, 'Unknown Citadel') as sys_from,
             coalesce(sys2.name, 'Unknown Citadel') as sys_to,
+            (p.quantity_profit * p.profit_unit) as profit_total,
             time_to_sec(timediff(t2.time,t1.time))/60 as diff");
         $this->db->from('profit p');
         $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
@@ -73,7 +74,7 @@ class Profits_model extends CI_Model
 
         $this->db->where('p.timestamp_sell>= now() - INTERVAL ' . $interval . ' DAY');
         $this->db->order_by('t2.time DESC');
-        $result = $this->dt->generate($defs, 'i.name');
+        $result = $this->dt->generate($defs, 'i.name', 'profit_total');
 
         //$query  = $this->db->get();
         //$result = $query->result_array();
@@ -104,15 +105,15 @@ class Profits_model extends CI_Model
 
             $price_buy                        = $price_buy * $transTaxFrom * $brokerFeeFrom;
             $result['data'][$i]->margin       = $profit_unit / $price_buy * 100;
-            $result['data'][$i]->profit_total = $profit_unit * $result['data'][$i]->profit_quantity;
             $result['data'][$i]->url          = "https://image.eveonline.com/Type/" . $result['data'][$i]->item_id . "_32.png";
         }
         
         $sorted = sortData($result['data'], $defs);
-        $data = json_encode(['data'            => $sorted, 
-                             'draw'            => (int)$result['draw'], 
-                             'recordsTotal'    => $result['max'],
-                             'recordsFiltered' => $result['max']]);
+        $data   = json_encode(['data'            => $sorted, 
+                               'draw'            => (int)$result['draw'], 
+                               'recordsTotal'    => $result['max'],
+                               'recordsFiltered' => $result['max'],
+                               'recordsSum'      => $result['sum']]);
         return $data;
     }
 

@@ -1,5 +1,6 @@
 "use strict";
 $(document).ready(function() {
+    var totalValue = 0;
     // Sparkline charts
     var sparklineCharts = function() {
         $(".sparkline").sparkline($(".sparkline").data('profit'), {
@@ -77,6 +78,7 @@ $(document).ready(function() {
             url: base + 'Dashboard/getProfitTable/' + charID + '/' + interval + '/' + aggr,
             dataSrc: function (json) {
                 let return_data = [];
+                totalValue = json.recordsSum;
                 for (let i = 0; i < json.data.length; i++) {
                     return_data.push({
                         item_name: '<img src="' + json.data[i].url + '">' + json.data[i].item_name,
@@ -86,7 +88,8 @@ $(document).ready(function() {
                         profit_total: number_format(json.data[i].profit_total, 2, '.', ',' ),
                         margin: '<a class= "btn btn-default btn-xs">' + number_format(json.data[i].margin, 2, '.', ',' ) + '</a>',
                     });
-                  }
+                }
+                updateTableTotals();
                 return return_data;
             }
         },
@@ -110,6 +113,7 @@ $(document).ready(function() {
         }
     });
 
+
     $('.dropdown-interval a').on('click', function(e) {
         e.preventDefault();
         if ($(this).attr('data-id') != interval) {
@@ -120,5 +124,18 @@ $(document).ready(function() {
             table.ajax.url(url).load();
             $('.table-interval').text(interval);
         }
+    });
+
+    function updateTableTotals() {
+        setTimeout(function() {
+            $('.profits-body .input-sm').trigger('keyup');
+        });
+    }
+
+    // filters
+    $("#profits-table_filter input").keyup(function() {
+        let info = table.page.info();
+        $(".profits-body p.yellow").html("There are " + info.recordsTotal + " results for a total value of " + 
+            number_format(totalValue, 2, '.', ',' ) + " ISK");
     }); 
 });

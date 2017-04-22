@@ -1,6 +1,7 @@
 "use strict";
 $(document).ready(function() {
     $('.table-interval').text(interval);
+    var totalValue = 0;
     var table = $('#profits-2-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         processing: true,
@@ -11,6 +12,7 @@ $(document).ready(function() {
             url    : base + 'Profits/getProfitTable/' + charID + '/' + interval + '/' + aggr,
             dataSrc: function (json) {
                 var return_data = [];
+                totalValue = json.recordsSum;
                 for (var i = 0; i < json.data.length; i++) {
                     return_data.push({
                         item_name: '<img src="' + json.data[i].url + '">' + '<a class="item-name" style="color:#fff">' + json.data[i].item_name + '</a>',
@@ -88,8 +90,8 @@ $(document).ready(function() {
     // filters
     $("#profits-2-table_filter input").keyup(function() {
         let info = table.page.info();
-        $(".profits-2-body p.yellow").html("There are " + info.recordsTotal + 
-            " results");
+        $(".profits-2-body p.yellow").html("There are " + info.recordsTotal + " results for a total value of " + 
+            number_format(totalValue, 2, '.', ',' ) + " ISK");
     });
 
     // links

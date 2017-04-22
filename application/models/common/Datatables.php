@@ -13,10 +13,11 @@ class Datatables extends CI_Model
         
     }
 
-    public function generate(array $defs, string $search_column)
+    public function generate(array $defs, string $search_column, string $sum_column)
     {
         $this->defs  = $defs;
         $this->search_column = $search_column;
+        $this->sum_column    = $sum_column;
         $this->createFiltering();
         $this->createPagination();
         return $this->result;
@@ -27,17 +28,26 @@ class Datatables extends CI_Model
     {
         $this->db->stop_cache();
         $max_query   = $this->db->get('');
-        $max_results = $max_query->num_rows();
 
+        $sum = 0;
+        if (!empty($this->sum_column)) {
+            // sum of the designated row
+            $results = $max_query->result_array();
+            for ($i = 0, $max = count($results); $i < $max; $i++) {
+                $sum += $results[$i][$this->sum_column];
+            }
+        }
+        
+        $max_results = $max_query->num_rows();
         if (isset($this->defs['length']) &&  $this->defs['length'] < 0) {
-            $page_query = $max_query;
+            $page_query   = $max_query;
             $page_results = $max_results;
         } else {
             $page_query   = $this->db->limit($this->defs['length'], $this->defs['start'])->get('');
             $page_results = $page_query->num_rows();
         }
 
-        $this->generateFinalObject($page_query, $max_results, $page_results);
+        $this->generateFinalObject($page_query, $max_results, $page_results, $sum);
     }
 
 
@@ -58,13 +68,14 @@ class Datatables extends CI_Model
     }
 
 
-    private function generateFinalObject($query, $max, $page)
+    private function generateFinalObject($query, $max, $page, $sum)
     {
         $result = [
             'data' => $query->result(),
             'max'  => $max,
             'page' => $page,
-            'draw' => $this->defs['draw']
+            'draw' => $this->defs['draw'],
+            'sum'  => number_format($sum,2)
         ];
 
         $this->db->flush_cache();

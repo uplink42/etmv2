@@ -170,7 +170,8 @@ class Dashboard_model extends CI_Model
                         c1.eve_idcharacter as character_from,
                         c2.eve_idcharacter as character_to,
                         t1.price_unit as price_buy,
-                        t2.price_unit as price_sell');
+                        t2.price_unit as price_sell,
+                        (p.quantity_profit * p.profit_unit) as profit_total');
         $this->db->from('profit p');
         $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
         $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
@@ -183,7 +184,7 @@ class Dashboard_model extends CI_Model
         $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
 
-        $result = $this->dt->generate($defs, 'i.name');
+        $result = $this->dt->generate($defs, 'i.name', 'profit_total');
 
         for ($i = 0; $i <= count($result['data']) - 1; $i++) {
             $price_buy      = $result['data'][$i]->price_buy;
@@ -198,15 +199,14 @@ class Dashboard_model extends CI_Model
             $brokerFeeFrom                    = $CI->Tax_Model->calculateBroker('from');
             $price_buy                        = $price_buy * $transTaxFrom * $brokerFeeFrom;
             $result['data'][$i]->margin       = $profit_unit / $price_buy * 100;
-            $result['data'][$i]->profit_total = $profit_unit * $result['data'][$i]->quantity;
-            $result['data'][$i]->url          = "https://image.eveonline.com/Type/" . $result['data'][$i]->item_id . "_32.png";
         }
 
         $sorted = sortData($result['data'], $defs);
-        $data = json_encode(['data'            => $sorted, 
+        $data = json_encode(['data'            => injectIcons($sorted, true), 
                              'draw'            => (int)$result['draw'], 
                              'recordsTotal'    => $result['max'],
-                             'recordsFiltered' => $result['max']]);
+                             'recordsFiltered' => $result['max'],
+                             'recordsSum'      => $result['sum']]);
         return $data;
     }
 }

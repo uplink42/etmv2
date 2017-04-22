@@ -6,6 +6,7 @@ $(document).ready(function() {
         new    : searchToObject().new     || 0,
     };
 
+    var totalValue = 0;
     var table = $('#transactions-table').DataTable({
         order: [],
         bSortClasses: false,
@@ -24,6 +25,7 @@ $(document).ready(function() {
                     toastr[json.notice](json.message);
                     throw new Error("Don't try to sneak up on others");
                 } else {
+                    totalValue = json.recordsSum;
                     var return_data = [];
                     for (let i = 0; i < json.data.length; i++) {
                         let button = json.data[i].type === 'Sell' ? 'btn-success' : 'btn-danger',
@@ -116,19 +118,10 @@ $(document).ready(function() {
         $(".transactions-body input.form-control").trigger("keyup");
     });
 
-    // totals display
-/*    $(".transactions-body p.yellow").html("<p>There are "+ table.rows().count() + " results for a total of "
-        + number_format(table.column(4).data().sum(),2, '.', ',' ) + " ISK</p>");
-
-    $("#transactions-table_filter input").keyup(function () {
-        $(".transactions-body p.yellow").html("There are "+ table.rows({filter: 'applied'}).count() + " results for a total of "
-            + number_format(table.column(4, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
-    });*/
-
     $("#transactions-table_filter input").keyup(function() {
         let info = table.page.info();
-        $(".transactions-body p.yellow").html("There are " + info.recordsTotal + 
-            " results");
+        $(".transactions-body p.yellow").html("There are " + info.recordsTotal + " results for a total value of " + 
+            number_format(totalValue, 2, '.', ',' ) + " ISK");
     });
     
     // unlink prompt

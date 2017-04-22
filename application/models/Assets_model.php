@@ -155,44 +155,13 @@ class Assets_model extends CI_Model
             $this->db->where('r.eve_idregion', $region_id);
         }
 
-
-        $result  = $this->dt->generate($defs, 'i.name');
-
-        /*$this->db->select('a.item_eve_iditem as item_id,
-            a.quantity as quantity,
-            i.name as item_name,
-            i.eve_iditem as item_id,
-            sys.name as loc_name,
-            pr.price_evecentral as unit_value,
-            c.name as owner,
-            i.volume as unit_volume,
-            (i.volume*a.quantity) as total_volume,
-            (pr.price_evecentral*a.quantity) as total_value');
-        $this->db->from('assets a');
-        $this->db->join('item i', 'i.eve_iditem = a.item_eve_iditem');
-        $this->db->join('characters c', 'c.eve_idcharacter = a.characters_eve_idcharacters');
-        $this->db->join('system sys', 'sys.eve_idsystem = a.locationID');
-        $this->db->join('region r', 'r.eve_idregion = sys.region_eve_idregion');
-        $this->db->join('item_price_data pr', 'pr.item_eve_iditem = a.item_eve_iditem');
-        $this->db->where('c.eve_idcharacter IN' . $chars);
-
-        if ($region_id != 0) {
-            $this->db->where('r.eve_idregion', $region_id);
-        }
-
-        $query2 = $this->db->get_compiled_select();
-        $query = $this->db->query($query1." UNION ".$query2);*/
-
-        /*$query2  = $this->db->get();
-        $result2 = $query2->result_array();
-        $count2  = $query2->num_rows();
-        $total   = $count1 + $count2;*/
-
+        $result  = $this->dt->generate($defs, 'i.name', 'total_value');
         $sorted = sortData($result['data'], $defs);
         $data = json_encode(['data'            => injectIcons($sorted, true), 
                              'draw'            => (int)$result['draw'], 
                              'recordsTotal'    => $result['max'],
-                             'recordsFiltered' => $result['max']]);
+                             'recordsFiltered' => $result['max'],
+                             'recordsSum'      => $result['sum']]);
         return $data;
     }
 

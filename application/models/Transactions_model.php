@@ -53,20 +53,14 @@ class Transactions_model extends CI_Model
         if ($transID) {
             $this->db->where('idbuy', $transID);
         }
-        /*if (!$res) {
-            $this->db->limit(0);
-        }*/
-        $result = $this->dt->generate($defs, 'i.name');
 
-        for ($i = 0; $i < count($result['data']); $i++) {
-            $result['data'][$i]->url = "https://image.eveonline.com/Type/" . $result['data'][$i]->item_id . "_32.png";
-        }
-        
+        $result = $this->dt->generate($defs, 'i.name', 'price_total');
         $sorted = sortData($result['data'], $defs);
-        $data = json_encode(['data'            => $sorted, 
+        $data = json_encode(['data'            => injectIcons($sorted, true), 
                              'draw'            => (int)$result['draw'], 
                              'recordsTotal'    => $result['max'],
-                             'recordsFiltered' => $result['max']]);
+                             'recordsFiltered' => $result['max'],
+                             'recordsSum'      => $result['sum']]);
         return $data;
     }
 
