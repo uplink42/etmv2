@@ -25,7 +25,7 @@ final class Apikeymanagement extends MY_Controller
      * @param  string $character_id 
      * @return void               
      */
-    public function index(string $character_id)
+    public function index($character_id)
     {
         settype($character_id, 'int');
         if ($this->enforce($character_id, $this->user_id)) {

@@ -39,9 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 <div class="panel panel-filled">
                     <div class="panel-body">
-                        Sorry, but the page you are looking for has note been found. 
-                        Try checking the URL for error, then hit the refresh button on your browser 
-                        or try find something else.
+                        Sorry, but the page you are looking for has not been found.
                     </div>
                 </div>
                 <div>

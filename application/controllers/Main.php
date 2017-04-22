@@ -15,7 +15,7 @@ final class Main extends MY_Controller
      * @param  string|null $view 
      * @return void            
      */
-    public function index(string $view = null) : void
+    public function index($view = null) : void
     {
         $data['no_header'] = 1;
         $data['view']      = 'login/login_v';

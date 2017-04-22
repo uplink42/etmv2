@@ -21,7 +21,7 @@ final class Recovery extends CI_Controller
      * @param  string $type 
      * @return void       
      */
-    public function index(string $type = "password") : void
+    public function index($type = "password") : void
     {
         $data['view']      = "recovery/recover_" . $type . "_v";
         $data['no_header'] = 1;

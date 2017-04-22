@@ -19,7 +19,7 @@ final class Profits extends MY_Controller
      * @param  int|null    $item_id     
      * @return void                   
      */
-    public function index(int $character_id, int $item_id = null) : void
+    public function index($character_id, $item_id = null) : void
     {
         $interval = 7;
         if ($this->enforce($character_id, $this->user_id)) {
