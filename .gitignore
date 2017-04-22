@@ -1,8 +1,5 @@
 /application/logs/
 /application/cache/
 /dist/
-/node_modules/
 /home
 /luna_admin-v1.1
-/bower_components
-/vendor
