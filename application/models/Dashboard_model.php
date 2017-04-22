@@ -184,6 +184,10 @@ class Dashboard_model extends CI_Model
         $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
 
+        if (!isset($defs['order'][0])) {
+            $this->db->order_by('t2.time', 'desc');
+        }
+
         $result = $this->dt->generate($defs, 'i.name', 'profit_total');
 
         for ($i = 0; $i <= count($result['data']) - 1; $i++) {
