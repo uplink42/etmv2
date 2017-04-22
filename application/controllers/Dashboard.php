@@ -51,10 +51,13 @@ final class Dashboard extends MY_Controller
         echo $this->buildData($character_id, $aggr, 'getPieChartData', 'Dashboard_model', $params); 
     }
 
+
     public function getProfitTable(int $character_id, int $interval = 3, bool $aggr = false) : void
     {
         $params = ['interval' => $interval,
-                   'user_id'  => $this->user_id];
+                   'user_id'  => $this->user_id,
+                   'defs'     => $_REQUEST
+                   ];
                    
         echo $this->buildData($character_id, $aggr, 'getProfits', 'Dashboard_model', $params); 
     }

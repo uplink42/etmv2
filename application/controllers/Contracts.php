@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Contracts extends MY_Controller
+final class Contracts extends MY_Controller
 {
     protected $active;
     protected $inactive;

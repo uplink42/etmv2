@@ -1,7 +1,8 @@
 "use strict";
 $(document).ready(function() {
-    var recap = $('#daily').DataTable({
+    let recap = $('#daily').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
+        deferRender: true,
         lengthMenu: [
             [25, 50, -1],
             [25, 50, "All"]
@@ -24,9 +25,10 @@ $(document).ready(function() {
         }],
         order: [],
     });
-    var bestraw = $('#bestraw').DataTable({
+    let bestraw = $('#bestraw').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        deferRender: true,
+        lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
@@ -46,14 +48,15 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: [],
     });
-    var bestiph = $('#bestiph').DataTable({
+    let bestiph = $('#bestiph').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
+        deferRender: true,
         buttons: [{
             extend: 'copy',
             className: 'btn-sm'
@@ -70,11 +73,12 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: []
     });
-    var bestcus = $('#bestcus').DataTable({
+    let bestcus = $('#bestcus').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        deferRender: true,
+        lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
@@ -94,11 +98,12 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: []
     });
-    var topstations = $('#topstations').DataTable({
+    let topstations = $('#topstations').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        deferRender: true,
+        lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
@@ -118,11 +123,11 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: []
     });
     var blunders = $('#blunders').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
@@ -142,11 +147,12 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: [],
+        deferRender: true
     });
-    var bestmargin = $('#bestmargin').DataTable({
+    let bestmargin = $('#bestmargin').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
@@ -166,11 +172,12 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: [],
+        deferRender: true
     });
-    var fastest = $('#fastest').DataTable({
+    let fastest = $('#fastest').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
@@ -190,11 +197,12 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: [],
+        deferRender: true
     });
-    var timezones = $('#timezones').DataTable({
+    let timezones = $('#timezones').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
@@ -214,11 +222,12 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: [],
+        deferRender: true
     });
-    var problematic = $('#problematic').DataTable({
+    let problematic = $('#problematic').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        "lengthMenu": [
+        lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
@@ -238,13 +247,13 @@ $(document).ready(function() {
             extend: 'print',
             className: 'btn-sm'
         }],
-        "order": [],
+        order: [],
+        deferRender: true
     });
-
 
     // trade volumes chart
     var barChartStats = function() {
-        var url_req = base + 'Statistics/getVolumesChart/' + charID + '/' + interval + '/' + aggr;
+        let url_req = base + 'Statistics/getVolumesChart/' + charID + '/' + interval + '/' + aggr;
         $.ajax({
             dataType: "json",
             url: url_req,
@@ -270,7 +279,7 @@ $(document).ready(function() {
 
     // profit distribution chart
     var pieChartStats = function() {
-        var url_req = base + 'Statistics/getDistributionChart/' + charID + '/' + interval + '/' + aggr;
+        let url_req = base + 'Statistics/getDistributionChart/' + charID + '/' + interval + '/' + aggr;
         $.ajax({
             dataType: "json",
             url: url_req,

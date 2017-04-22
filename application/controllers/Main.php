@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 require_once APPPATH . 'libraries/PHPMailer/PHPMailerAutoload.php';
 
-class Main extends MY_Controller
+final class Main extends MY_Controller
 {
     public function __construct()
     {

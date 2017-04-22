@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Recovery extends CI_Controller
+final class Recovery extends CI_Controller
 {
     private $email;
 

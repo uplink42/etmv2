@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Assets extends MY_Controller
+final class Assets extends MY_Controller
 {
     public function __construct()
     {
@@ -64,7 +64,7 @@ class Assets extends MY_Controller
     public function getAssetsTable(int $character_id, bool $aggr)
     {
         $region_id = $_REQUEST['region_id'] ?? null;
-        $params    = ['region_id'  => $region_id ];
+        $params    = ['region_id' => $region_id, 'defs' => $_REQUEST];
 
         echo $this->buildData($character_id, $aggr, 'getAssetsList', 'Assets_model', $params); 
     }

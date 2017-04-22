@@ -8,6 +8,7 @@ class Assets_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/Datatables', 'dt');
     }
 
     /**
@@ -129,7 +130,7 @@ class Assets_model extends CI_Model
     public function getAssetsList(array $configs): string
     {
         extract($configs);
-
+        $this->db->start_cache();
         $this->db->select('a.item_eve_iditem as item_id,
             a.quantity as quantity,
             i.name as item_name,
@@ -144,8 +145,9 @@ class Assets_model extends CI_Model
         $this->db->join('item i', 'i.eve_iditem = a.item_eve_iditem');
         $this->db->join('characters c', 'c.eve_idcharacter = a.characters_eve_idcharacters');
         $this->db->join('station st', 'st.eve_idstation = a.locationID', 'left');
-        $this->db->join('system sys', 'sys.eve_idsystem = st.system_eve_idsystem');
-        $this->db->join('region r', 'r.eve_idregion = sys.region_eve_idregion');
+        $this->db->join('system sys1', 'sys1.eve_idsystem = st.system_eve_idsystem', 'left');
+        $this->db->join('system sys2', 'sys2.eve_idsystem = a.locationID', 'left');
+        $this->db->join('region r', 'r.eve_idregion = sys1.region_eve_idregion');
         $this->db->join('item_price_data pr', 'pr.item_eve_iditem = a.item_eve_iditem');
         $this->db->where('c.eve_idcharacter IN ' . $chars);
 
@@ -153,11 +155,10 @@ class Assets_model extends CI_Model
             $this->db->where('r.eve_idregion', $region_id);
         }
 
-        $query1  = $this->db->get();
-        $result1 = $query1->result_array();
-        $count1  = $query1->num_rows();
 
-        $this->db->select('a.item_eve_iditem as item_id,
+        $result  = $this->dt->generate($defs, 'i.name');
+
+        /*$this->db->select('a.item_eve_iditem as item_id,
             a.quantity as quantity,
             i.name as item_name,
             i.eve_iditem as item_id,
@@ -179,13 +180,20 @@ class Assets_model extends CI_Model
             $this->db->where('r.eve_idregion', $region_id);
         }
 
-        $query2  = $this->db->get();
+        $query2 = $this->db->get_compiled_select();
+        $query = $this->db->query($query1." UNION ".$query2);*/
+
+        /*$query2  = $this->db->get();
         $result2 = $query2->result_array();
         $count2  = $query2->num_rows();
-        $total   = $count1 + $count2;
+        $total   = $count1 + $count2;*/
 
-        $result = array_merge($result1, $result2);
-        return json_encode(injectIcons($result));
+        $sorted = sortData($result['data'], $defs);
+        $data = json_encode(['data'            => injectIcons($sorted, true), 
+                             'draw'            => (int)$result['draw'], 
+                             'recordsTotal'    => $result['max'],
+                             'recordsFiltered' => $result['max']]);
+        return $data;
     }
 
    

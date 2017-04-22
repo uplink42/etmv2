@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class TradeSimulator extends MY_Controller
+final class TradeSimulator extends MY_Controller
 {
     private $stationFrom;
     private $stationTo;

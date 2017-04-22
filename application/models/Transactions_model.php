@@ -6,6 +6,7 @@ class Transactions_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/Datatables', 'dt');
     }
 
     /**
@@ -21,7 +22,7 @@ class Transactions_model extends CI_Model
     public function getTransactionList(array $configs/*, bool $res = true*/) : ?string
     {
         extract($configs);
-        //string $chars, int $interval, int $new = null, string $transID = null
+        $this->db->start_cache();
         $this->db->select('t.idbuy as transaction_id,
             t.time as time,
             t.remaining as remaining,
@@ -55,14 +56,18 @@ class Transactions_model extends CI_Model
         /*if (!$res) {
             $this->db->limit(0);
         }*/
+        $result = $this->dt->generate($defs, 'i.name');
 
-        $query = $this->db->get();
-        $result = $query->result_array();
-        for ($i = 0; $i < count($result); $i++) {
-            $result[$i]['url'] = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
+        for ($i = 0; $i < count($result['data']); $i++) {
+            $result['data'][$i]->url = "https://image.eveonline.com/Type/" . $result['data'][$i]->item_id . "_32.png";
         }
-        //$data   = array("result" => $result, "count" => $count);
-        return json_encode(['data' => $result]);
+        
+        $sorted = sortData($result['data'], $defs);
+        $data = json_encode(['data'            => $sorted, 
+                             'draw'            => (int)$result['draw'], 
+                             'recordsTotal'    => $result['max'],
+                             'recordsFiltered' => $result['max']]);
+        return $data;
     }
 
     /**

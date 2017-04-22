@@ -8,6 +8,7 @@ class Profits_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/Datatables', 'dt');
     }
 
     /**
@@ -24,6 +25,7 @@ class Profits_model extends CI_Model
         $this->load->model('common/User');
         $profit_settings = $this->User->getUserProfitSettings($user_id);
 
+        $this->db->start_cache();
         $this->db->select("p.profit_unit as profit_unit,
             p.transaction_idbuy_buy as idbuy,
             p.transaction_idbuy_sell as idsell,
@@ -71,26 +73,27 @@ class Profits_model extends CI_Model
 
         $this->db->where('p.timestamp_sell>= now() - INTERVAL ' . $interval . ' DAY');
         $this->db->order_by('t2.time DESC');
-        //$this->db->limit(20000);
-        $query  = $this->db->get();
-        $result = $query->result_array();
-        $count  = count($result);
+        $result = $this->dt->generate($defs, 'i.name');
+
+        //$query  = $this->db->get();
+        //$result = $query->result_array();
+        $count  = count($result['data']);
 
         for ($i = 0; $i < $count; $i++) {
-            $diff           = (float) $result[$i]['diff'];
-            $price_buy      = (float) $result[$i]['buy_price'];
-            $profit_unit    = (float) $result[$i]['profit_unit'];
-            $character_buy  = $result[$i]['char_buy_id'];
-            $character_sell = $result[$i]['char_sell_id'];
-            $station_from   = $result[$i]['station_buy_id'];
-            $station_to     = $result[$i]['station_sell_id'];
+            $diff           = (float) $result['data'][$i]->diff;
+            $price_buy      = (float) $result['data'][$i]->buy_price;
+            $profit_unit    = (float) $result['data'][$i]->profit_unit;
+            $character_buy  = $result['data'][$i]->char_buy_id;
+            $character_sell = $result['data'][$i]->char_sell_id;
+            $station_from   = $result['data'][$i]->station_buy_id;
+            $station_to     = $result['data'][$i]->station_sell_id;
 
-            if ($result[$i]['diff'] < 60) {
-                $result[$i]['diff'] = number_format($diff, 1) . " m";
-            } else if ($result[$i]['diff'] < 1440) {
-                $result[$i]['diff'] = number_format($diff / 60, 1) . " h";
+            if ($result['data'][$i]->diff < 60) {
+                $result['data'][$i]->diff = number_format($diff, 1) . " m";
+            } else if ($result['data'][$i]->diff < 1440) {
+                $result['data'][$i]->diff = number_format($diff / 60, 1) . " h";
             } else {
-                $result[$i]['diff'] = number_format($diff / 1440, 1) . " d";
+                $result['data'][$i]->diff = number_format($diff / 1440, 1) . " d";
             }
 
             $CI = &get_instance();
@@ -99,14 +102,18 @@ class Profits_model extends CI_Model
             $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
             $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
 
-            $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
-            $result[$i]['margin']       = $profit_unit / $price_buy * 100;
-            $result[$i]['profit_total'] = $profit_unit * $result[$i]['profit_quantity'];
-            $result[$i]['url']          = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
+            $price_buy                        = $price_buy * $transTaxFrom * $brokerFeeFrom;
+            $result['data'][$i]->margin       = $profit_unit / $price_buy * 100;
+            $result['data'][$i]->profit_total = $profit_unit * $result['data'][$i]->profit_quantity;
+            $result['data'][$i]->url          = "https://image.eveonline.com/Type/" . $result['data'][$i]->item_id . "_32.png";
         }
         
-        // return array("result" => $result, "count" => $count);
-        return json_encode(['data' => $result]);
+        $sorted = sortData($result['data'], $defs);
+        $data = json_encode(['data'            => $sorted, 
+                             'draw'            => (int)$result['draw'], 
+                             'recordsTotal'    => $result['max'],
+                             'recordsFiltered' => $result['max']]);
+        return $data;
     }
 
     /**
