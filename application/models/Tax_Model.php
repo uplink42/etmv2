@@ -59,7 +59,7 @@ class Tax_model extends CI_Model
 
         if ($this->stationToID < 1000000000000) {
             $corpIDTo = $this->getCorpId('to');
-            $this->getCorpStanding('to', $corpIDFrom);
+            $this->getCorpStanding('to', $corpIDTo);
             $this->getFactionStanding('to', $this->getFactionID($corpIDTo));
         }
 
@@ -283,7 +283,6 @@ class Tax_model extends CI_Model
 
     private function getGenericTax(string $type)
     {
-
         switch ($type) {
             case 'from':
                 $faction = $this->fromFactionStandingValue;
@@ -367,11 +366,15 @@ class Tax_model extends CI_Model
             $this->db->select('corporation_eve_idcorporation as owner');
             $this->db->where('eve_idstation', $stationID);
             $sql = $this->db->get('station');
-            $owner = $sql->row()->owner;
-            if ($owner == 1) {
-                $type = 'outpost';
-            } else {
-                $type = 'station';
+
+            // citadel may not exist in db
+            if ($sql->num_rows() > 0) {
+                $owner = $sql->row()->owner;
+                if ($owner == 1) {
+                    $type = 'outpost';
+                } else {
+                    $type = 'station';
+                }
             }
         }
         return $type;
