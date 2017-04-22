@@ -47,6 +47,7 @@ final class Updater extends CI_Controller
         if (!$this->ValidateRequest->testEndpoint()) {
             $this->removeDirectory(FILESTORAGE . 'public/public/server');
             buildMessage('error', Msg::XML_CONNECT_FAILURE);
+            log_message('error', Msg::XML_CONNECT_FAILURE);
             redirect('main/login');
             // check if user is already updating
         } else {

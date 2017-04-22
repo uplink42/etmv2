@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // nw tracker stats
     var nwTracker = function() {
-        var url_req = base + 'NetworthTracker/getNetworthChart/' + charID + '/' + interval + '/' + aggr;
+        var url_req = base + 'Networthtracker/getNetworthChart/' + charID + '/' + interval + '/' + aggr;
         $.ajax({
             dataType: "json",
             url: url_req,
