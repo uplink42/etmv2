@@ -29,7 +29,7 @@ class MY_Controller extends CI_Controller
      * @param  int|null $user_id      
      * @return bool               
      */
-    protected function enforce(int $character_id, int $user_id = null, bool $isJSRequest = false): bool
+    protected function enforce($character_id, $user_id = null, bool $isJSRequest = false): bool
     {
         $this->etmsession->delete('msg');
         $this->etmsession->delete('notice');
@@ -84,7 +84,7 @@ class MY_Controller extends CI_Controller
      * @param  bool   $aggregate    
      * @return array           
      */
-    protected function loadViewDependencies(int $character_id, int $user_id, bool $aggregate) : array
+    protected function loadViewDependencies($character_id, $user_id, $aggregate) : array
     {
         $chars      = [];
         $char_names = [];

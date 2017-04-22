@@ -21,7 +21,7 @@ final class TradeSimulator extends MY_Controller
      * @param  [type]     $res            display results state?
      * @return void         
      */
-    public function index(int $character_id, $res = null) : void
+    public function index($character_id, $res = null) : void
     {
         if ($this->enforce($character_id, $this->user_id)) {
             $aggregate        = $this->aggregate;

@@ -18,7 +18,7 @@ final class Dashboard extends MY_Controller
     * @param  int|integer $interval     
     * @return void                    
     */
-    public function index(int $character_id, int $interval = 1) : void
+    public function index($character_id, $interval = 1) : void
     {
         if ($interval > 7) {
             $interval = 7;

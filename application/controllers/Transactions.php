@@ -26,7 +26,7 @@ final class Transactions extends MY_Controller
      * @param  int|integer $interval     
      * @return void               
      */
-    public function index(int $character_id, int $interval = 14) : void
+    public function index($character_id, $interval = 14) : void
     {
         if ($interval > 365) {
             $interval = 365;

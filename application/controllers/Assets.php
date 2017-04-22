@@ -16,7 +16,7 @@ final class Assets extends MY_Controller
      * @param  int|integer $region_id    
      * @return void                    
      */
-    public function index(int $character_id, int $region_id = 0) : void
+    public function index($character_id, $region_id = 0) : void
     {
         if ($this->enforce($character_id, $this->user_id)) {
             $aggregate = $this->aggregate;

@@ -18,7 +18,7 @@ final class NetworthTracker extends MY_Controller
      * @param  int|integer $interval     
      * @return void                    
      */
-    public function index(int $character_id, int $interval = 7) : void
+    public function index($character_id, $interval = 7) : void
     {
         if ($interval > 365) {
             $interval = 365;

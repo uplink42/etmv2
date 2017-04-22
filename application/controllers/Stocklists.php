@@ -16,7 +16,7 @@ final class StockLists extends MY_Controller
      * @param  int    $character_id 
      * @return void               
      */
-    public function index(int $character_id) : void
+    public function index($character_id) : void
     {
         if ($this->enforce($character_id, $this->user_id)) {
 
