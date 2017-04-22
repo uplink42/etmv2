@@ -6,6 +6,7 @@ class Transactions_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/Datatables', 'dt');
     }
 
     /**
@@ -21,7 +22,7 @@ class Transactions_model extends CI_Model
     public function getTransactionList(array $configs/*, bool $res = true*/) : ?string
     {
         extract($configs);
-        //string $chars, int $interval, int $new = null, string $transID = null
+        $this->db->start_cache();
         $this->db->select('t.idbuy as transaction_id,
             t.time as time,
             t.remaining as remaining,
@@ -44,25 +45,25 @@ class Transactions_model extends CI_Model
             $this->db->where('t.character_eve_idcharacter IN ' . $chars);
             $this->db->where("t.time>= (now() - INTERVAL " . $interval . " DAY)");
         }
-        $this->db->order_by("t.time DESC");
 
+        if (!isset($defs['order'][0])) {
+            $this->db->order_by("t.time DESC");
+        }
+        
         if ($new > 0) {
             $this->db->limit($new);
         }
         if ($transID) {
             $this->db->where('idbuy', $transID);
         }
-        /*if (!$res) {
-            $this->db->limit(0);
-        }*/
 
-        $query = $this->db->get();
-        $result = $query->result_array();
-        for ($i = 0; $i < count($result); $i++) {
-            $result[$i]['url'] = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
-        }
-        //$data   = array("result" => $result, "count" => $count);
-        return json_encode(['data' => $result]);
+        $result = $this->dt->generate($defs, 'i.name', 'price_total');
+        $data = json_encode(['data'            => injectIcons($result['data'], true), 
+                             'draw'            => (int)$result['draw'], 
+                             'recordsTotal'    => $result['max'],
+                             'recordsFiltered' => $result['max'],
+                             'recordsSum'      => $result['sum']]);
+        return $data;
     }
 
     /**

@@ -1,7 +1,10 @@
 "use strict";
 $(document).ready(function() {
+    var totalValue = 0;
     var table = $('#assets-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+        processing: true,
+        serverSide: true,
         deferRender: true,
         ajax : {
             type : 'POST',
@@ -9,29 +12,33 @@ $(document).ready(function() {
             data : {region_id: regionID},
             dataSrc: function (json) {
                 var return_data = [];
-                for (var i = 0; i < json.length; i++) {
+                totalValue = json.recordsSum;
+                for (var i = 0; i < json.data.length; i++) {
                     return_data.push({
-                        item: '<img src="' + json[i].url + '">' + '<a class="item-name" style="color:#fff">' +  json[i].item_name,
-                        owner: json[i].owner,
-                        quantity: number_format(json[i].quantity, 0, '.', ',' ),
-                        location: json[i].loc_name,
-                        volume_total: number_format(json[i].total_volume, 2, '.', ',' ),
-                        isk_unit: number_format(json[i].unit_value, 2, '.', ',' ),
-                        isk_total: number_format(json[i].total_value, 2, '.', ',' )
+                        item_name: '<img src="' + json.data[i].url + '">' + '<a class="item-name" style="color:#fff">' +  json.data[i].item_name,
+                        owner: json.data[i].owner,
+                        quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
+                        loc_name: json.data[i].loc_name,
+                        total_volume: number_format(json.data[i].total_volume, 2, '.', ',' ),
+                        unit_value: number_format(json.data[i].unit_value, 2, '.', ',' ),
+                        total_value: number_format(json.data[i].total_value, 2, '.', ',' )
                     });
                   }
-                updateTableTotals();
+                updateTableTotals(totalValue);
                 return return_data;
             }   
         },
+        initComplete: function(settings, json) { 
+            let info = this.api().page.info();
+        },
         columns: [
-            { data: "item" },
+            { data: "item_name" },
             { data: "owner" },
             { data: "quantity" },
-            { data: "location" },
-            { data: "volume_total" },
-            { data: "isk_unit" },
-            { data: "isk_total" },
+            { data: "loc_name" },
+            { data: "total_volume" },
+            { data: "unit_value" },
+            { data: "total_value" },
         ],
         lengthMenu: [
             [25, 50, 100, -1],
@@ -67,11 +74,17 @@ $(document).ready(function() {
     }
 
     // totals
-    $(".assets-body p.yellow").html("<p>There are "+ table.rows().count() + " results for a total of "
+/*    $(".assets-body p.yellow").html("<p>There are "+ table.rows().count() + " results for a total of "
         + number_format(table.column(5).data().sum(),2, '.', ',' ) + " ISK</p>");
     $("#assets-table_filter input").keyup(function () {
         $(".assets-body p.yellow").html("There are "+ table.rows({filter: 'applied'}).count() + " results for a total of "
             + number_format(table.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
+    });*/
+
+    $("#assets-table_filter input").keyup(function() {
+        let info = table.page.info();
+        $(".assets-body p.yellow").html("There are " + info.recordsTotal + " results for a total value of " + 
+            number_format(totalValue, 2, '.', ',' ) + " ISK");
     });
 
     // item filter

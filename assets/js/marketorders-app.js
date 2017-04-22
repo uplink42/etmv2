@@ -7,6 +7,7 @@ $(document).ready(function() {
             [25, 50, 100, -1],
             [25, 50, 100, "All"]
         ],
+        deferRender: true,
         buttons: [{
             extend: 'copy',
             className: 'btn-sm'

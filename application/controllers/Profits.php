@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Profits extends MY_Controller
+final class Profits extends MY_Controller
 {
     public function __construct()
     {
@@ -55,7 +55,8 @@ class Profits extends MY_Controller
         $params = [ 'character_id' => $character_id,
                     'aggr'         => $aggr,
                     'interval'     => $interval,
-                    'user_id'      => $this->user_id ];
+                    'user_id'      => $this->user_id,
+                    'defs'         => $_REQUEST];
 
         echo $this->buildData($character_id, $aggr, 'getProfits', 'Profits_model', $params); 
     }

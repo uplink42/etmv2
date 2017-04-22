@@ -1,5 +1,6 @@
 "use strict";
 $(document).ready(function() {
+    var totalValue = 0;
     // Sparkline charts
     var sparklineCharts = function() {
         $(".sparkline").sparkline($(".sparkline").data('profit'), {
@@ -66,44 +67,58 @@ $(document).ready(function() {
     // datatables
     var table = $('#profits-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        lengthMenu: [ [25, 50, -1], [25, 50, "All"] ],
+        lengthMenu: [[10, 15, 20, -1], [10, 15, 20, "All"]],
         buttons: [],
         order: [],
         deferRender: true,
+        processing: true,
+        serverSide: true,
         ajax : {
             type: 'GET',
             url: base + 'Dashboard/getProfitTable/' + charID + '/' + interval + '/' + aggr,
             dataSrc: function (json) {
-                var return_data = [];
-                for (var i = 0; i < json.data.length; i++) {
+                let return_data = [];
+                totalValue = json.recordsSum;
+                for (let i = 0; i < json.data.length; i++) {
                     return_data.push({
-                        item: '<img src="' + json.data[i].url + '">' + json.data[i].item_name,
-                        system: json.data[i].system_name,
-                        date: json.data[i].sell_time,
+                        item_name: '<img src="' + json.data[i].url + '">' + json.data[i].item_name,
+                        system_name: json.data[i].system_name,
+                        sell_time: json.data[i].sell_time,
                         quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
-                        profit: number_format(json.data[i].profit_total, 2, '.', ',' ),
+                        profit_total: number_format(json.data[i].profit_total, 2, '.', ',' ),
                         margin: '<a class= "btn btn-default btn-xs">' + number_format(json.data[i].margin, 2, '.', ',' ) + '</a>',
                     });
-                  }
+                }
+                updateTableTotals();
                 return return_data;
             }
         },
+        initComplete: function(settings, json) { 
+            let info = this.api().page.info();
+        },
         columns: [
-            { data: "item" },
-            { data: "system" },
-            { data: "date" },
+            { data: "item_name" },
+            { data: "system_name" },
+            { data: "sell_time" },
             { data: "quantity" },
-            { data: "profit" },
+            { data: "profit_total" },
             { data: "margin" }
         ],
+        aoColumnDefs: [{
+            bSearchable: false,
+            aTargets: [3]
+        }, { targets: 'no-sort', 
+            orderable: false 
+        }],
         fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            if (parseFloat(aData.profit) > 0) {
+            if (parseFloat(aData.profit_total) > 0) {
                 $(nRow).addClass('success');
             } else {
                 $(nRow).addClass('danger');
             }
         }
     });
+
 
     $('.dropdown-interval a').on('click', function(e) {
         e.preventDefault();
@@ -115,5 +130,18 @@ $(document).ready(function() {
             table.ajax.url(url).load();
             $('.table-interval').text(interval);
         }
+    });
+
+    function updateTableTotals() {
+        setTimeout(function() {
+            $('.profits-body .input-sm').trigger('keyup');
+        });
+    }
+
+    // filters
+    $("#profits-table_filter input").keyup(function() {
+        let info = table.page.info();
+        $(".profits-body p.yellow").html("There are " + info.recordsTotal + " results for a total value of " + 
+            number_format(totalValue, 2, '.', ',' ) + " ISK");
     }); 
 });

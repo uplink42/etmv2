@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Settings extends MY_Controller
+final class Settings extends MY_Controller
 {
     private $email;
     private $password;

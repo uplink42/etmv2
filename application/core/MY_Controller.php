@@ -218,7 +218,6 @@ class MY_Controller extends CI_Controller
     }
 
 
-    /*int $character_id, bool $aggr, string $callback, string $model, int $interval = 1, int $item_id = null, int $user_id*/
     protected function buildData(int $character_id, bool $aggr, string $callback, string $model, array $configs)
     {
         $msg = Msg::INVALID_REQUEST;
@@ -238,8 +237,6 @@ class MY_Controller extends CI_Controller
                 $configs['chars'] = $chars;
                 $this->load->model($model);
                 return $this->{$model}->$callback($configs);
-                //call_user_func_array($this->{$model}->$callback, $configs);
-                //return call_user_func_array([$this->{$model}, $callback], $configs);
             }
         }
         return json_encode(array("notice" => $notice, "message" => $msg));

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Register extends CI_Controller
+final class Register extends CI_Controller
 {
     public function __construct()
     {

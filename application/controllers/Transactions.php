@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Transactions extends MY_Controller
+final class Transactions extends MY_Controller
 {
     protected $new;
     protected $transID;
@@ -89,7 +89,8 @@ class Transactions extends MY_Controller
                     'character_id' => $character_id,
                     'aggr'         => $aggr,
                     'new'          => $this->new,
-                    'transID'      => $this->transID 
+                    'transID'      => $this->transID,
+                    'defs'         => $_REQUEST 
         ];
 
         if ($params['transID'] > 0) {

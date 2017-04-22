@@ -3,7 +3,7 @@ ini_set('max_execution_time', '300');
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Updater extends CI_Controller
+final class Updater extends CI_Controller
 {
     private $user_id;
     private $clear;

@@ -9,6 +9,7 @@ class Dashboard_model extends CI_Model
     {
         parent::__construct();
         $this->load->model('common/User');
+        $this->load->model('common/Datatables', 'dt');
     }
 
     /**
@@ -116,11 +117,13 @@ class Dashboard_model extends CI_Model
 
         $result                  = $query1->row()->sum;
         $result == 0 ? $week_avg = 0 : $week_avg = $result / 7;
+        $data = [];
 
-        $today_profit = $query2->row()->sum;
-        $trend        = $week_avg == 0 ? 0 : $today_profit / $week_avg * 100;
-/*        $week_avg == 0 ? $trend = 0 : $trend = $today_profit / $week_avg * 100;*/
-        $data         = ["total_week" => $result, "avg_week" => $week_avg, "trend_today" => $trend];
+        if (isset($query2->row()->sum)) {
+            $today_profit = $query2->row()->sum;
+            $trend        = $week_avg == 0 ? 0 : $today_profit / $week_avg * 100;
+            $data         = ["total_week" => $result, "avg_week" => $week_avg, "trend_today" => $trend];
+        }
         return $data;
     }
 
@@ -140,6 +143,7 @@ class Dashboard_model extends CI_Model
         return $result = $query->row();
     }
 
+
     /**
      * Returns a short scenario with the latest profits for a
      * set of characters and a specified interval
@@ -154,6 +158,7 @@ class Dashboard_model extends CI_Model
         $CI->load->model('Tax_Model');
         $profit_settings = $this->User->getUserProfitSettings($user_id);
 
+        $this->db->start_cache();
         $this->db->select('p.profit_unit as profit_unit,
                         p.quantity_profit as quantity,
                         p.timestamp_sell as sell_time,
@@ -165,7 +170,8 @@ class Dashboard_model extends CI_Model
                         c1.eve_idcharacter as character_from,
                         c2.eve_idcharacter as character_to,
                         t1.price_unit as price_buy,
-                        t2.price_unit as price_sell');
+                        t2.price_unit as price_sell,
+                        (p.quantity_profit * p.profit_unit) as profit_total');
         $this->db->from('profit p');
         $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
         $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
@@ -177,29 +183,29 @@ class Dashboard_model extends CI_Model
         $this->db->join('characters c2', 'c2.eve_idcharacter = t2.character_eve_idcharacter');
         $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
         $this->db->where("t2.time>= (now() - INTERVAL " . $interval . " DAY)");
-        $this->db->order_by('t2.time', 'desc');
-        $query = $this->db->get();
-        $count = $query->num_rows();
-        $result = $query->result_array();
 
-        for ($i = 0; $i <= count($result) - 1; $i++) {
-            $price_buy      = $result[$i]['price_buy'];
-            $profit_unit    = $result[$i]['profit_unit'];
-            $character_buy  = $result[$i]['character_from'];
-            $character_sell = $result[$i]['character_to'];
-            $station_from   = $result[$i]['station_from'];
-            $station_to     = $result[$i]['station_to'];
+        $result = $this->dt->generate($defs, 'i.name', 'profit_total');
+
+        for ($i = 0; $i <= count($result['data']) - 1; $i++) {
+            $price_buy      = $result['data'][$i]->price_buy;
+            $profit_unit    = $result['data'][$i]->profit_unit;
+            $character_buy  = $result['data'][$i]->character_from;
+            $character_sell = $result['data'][$i]->character_to;
+            $station_from   = $result['data'][$i]->station_from;
+            $station_to     = $result['data'][$i]->station_to;
 
             $CI->Tax_Model->tax($station_from, $station_to, $character_buy, $character_sell, $profit_settings);
-            $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
-            $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
-            $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
-            $result[$i]['margin']       = $profit_unit / $price_buy * 100;
-            $result[$i]['profit_total'] = $profit_unit * $result[$i]['quantity'];
-            $result[$i]['url']          = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
+            $transTaxFrom                     = $CI->Tax_Model->calculateTax('from');
+            $brokerFeeFrom                    = $CI->Tax_Model->calculateBroker('from');
+            $price_buy                        = $price_buy * $transTaxFrom * $brokerFeeFrom;
+            $result['data'][$i]->margin       = $profit_unit / $price_buy * 100;
         }
 
-        $data = json_encode(['data' => $result]);
+        $data = json_encode(['data'            => injectIcons($result['data'], true), 
+                             'draw'            => (int)$result['draw'], 
+                             'recordsTotal'    => $result['max'],
+                             'recordsFiltered' => $result['max'],
+                             'recordsSum'      => $result['sum']]);
         return $data;
     }
 }

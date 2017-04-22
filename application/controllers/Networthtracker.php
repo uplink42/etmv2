@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class NetworthTracker extends MY_Controller
+final class NetworthTracker extends MY_Controller
 {
     private $significant;
 

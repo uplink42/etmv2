@@ -8,6 +8,7 @@ class Profits_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/Datatables', 'dt');
     }
 
     /**
@@ -24,6 +25,7 @@ class Profits_model extends CI_Model
         $this->load->model('common/User');
         $profit_settings = $this->User->getUserProfitSettings($user_id);
 
+        $this->db->start_cache();
         $this->db->select("p.profit_unit as profit_unit,
             p.transaction_idbuy_buy as idbuy,
             p.transaction_idbuy_sell as idsell,
@@ -51,6 +53,7 @@ class Profits_model extends CI_Model
             c2.eve_idcharacter as char_sell_id,
             coalesce(sys1.name, 'Unknown Citadel') as sys_from,
             coalesce(sys2.name, 'Unknown Citadel') as sys_to,
+            (p.quantity_profit * p.profit_unit) as profit_total,
             time_to_sec(timediff(t2.time,t1.time))/60 as diff");
         $this->db->from('profit p');
         $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
@@ -63,34 +66,35 @@ class Profits_model extends CI_Model
         $this->db->join('characters c2', 't2.character_eve_idcharacter = c2.eve_idcharacter');
         $this->db->join('item i', 't1.item_eve_iditem = i.eve_iditem', 'left');
         $this->db->where('p.characters_eve_idcharacters_OUT IN ' . $chars);
-        $this->db->order_by('t2.time', 'desc');
-
+        
         if (isset($item_id)) {
             $this->db->where('i.eve_iditem', $item_id);
         }
 
         $this->db->where('p.timestamp_sell>= now() - INTERVAL ' . $interval . ' DAY');
-        $this->db->order_by('t2.time DESC');
-        //$this->db->limit(20000);
-        $query  = $this->db->get();
-        $result = $query->result_array();
-        $count  = count($result);
+        
+        if (!isset($defs['order'][0])) {
+            $this->db->order_by('t2.time', 'desc');
+        }
+
+        $result = $this->dt->generate($defs, 'i.name', 'profit_total');
+        $count  = count($result['data']);
 
         for ($i = 0; $i < $count; $i++) {
-            $diff           = (float) $result[$i]['diff'];
-            $price_buy      = (float) $result[$i]['buy_price'];
-            $profit_unit    = (float) $result[$i]['profit_unit'];
-            $character_buy  = $result[$i]['char_buy_id'];
-            $character_sell = $result[$i]['char_sell_id'];
-            $station_from   = $result[$i]['station_buy_id'];
-            $station_to     = $result[$i]['station_sell_id'];
+            $diff           = (float) $result['data'][$i]->diff;
+            $price_buy      = (float) $result['data'][$i]->buy_price;
+            $profit_unit    = (float) $result['data'][$i]->profit_unit;
+            $character_buy  = $result['data'][$i]->char_buy_id;
+            $character_sell = $result['data'][$i]->char_sell_id;
+            $station_from   = $result['data'][$i]->station_buy_id;
+            $station_to     = $result['data'][$i]->station_sell_id;
 
-            if ($result[$i]['diff'] < 60) {
-                $result[$i]['diff'] = number_format($diff, 1) . " m";
-            } else if ($result[$i]['diff'] < 1440) {
-                $result[$i]['diff'] = number_format($diff / 60, 1) . " h";
+            if ($result['data'][$i]->diff < 60) {
+                $result['data'][$i]->diff = number_format($diff, 1) . " m";
+            } else if ($result['data'][$i]->diff < 1440) {
+                $result['data'][$i]->diff = number_format($diff / 60, 1) . " h";
             } else {
-                $result[$i]['diff'] = number_format($diff / 1440, 1) . " d";
+                $result['data'][$i]->diff = number_format($diff / 1440, 1) . " d";
             }
 
             $CI = &get_instance();
@@ -99,14 +103,16 @@ class Profits_model extends CI_Model
             $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
             $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
 
-            $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
-            $result[$i]['margin']       = $profit_unit / $price_buy * 100;
-            $result[$i]['profit_total'] = $profit_unit * $result[$i]['profit_quantity'];
-            $result[$i]['url']          = "https://image.eveonline.com/Type/" . $result[$i]['item_id'] . "_32.png";
+            $price_buy                        = $price_buy * $transTaxFrom * $brokerFeeFrom;
+            $result['data'][$i]->margin       = $profit_unit / $price_buy * 100;
         }
         
-        // return array("result" => $result, "count" => $count);
-        return json_encode(['data' => $result]);
+        $data   = json_encode(['data'            => injectIcons($result['data'], true), 
+                               'draw'            => (int)$result['draw'], 
+                               'recordsTotal'    => $result['max'],
+                               'recordsFiltered' => $result['max'],
+                               'recordsSum'      => $result['sum']]);
+        return $data;
     }
 
     /**
