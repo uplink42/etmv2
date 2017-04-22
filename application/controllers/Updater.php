@@ -186,8 +186,8 @@ final class Updater extends CI_Controller
     {
         $data['view']      = "login/select_nocharacter_v";
         $data['no_header'] = 1;
-        $data['SESSION']   = $_SESSION; // not part of MY_Controller
         buildMessage('error', Msg::LOGIN_NO_CHARS);
+        $data['SESSION']   = $_SESSION; // not part of MY_Controller
         $this->twig->display('main/_template_v', $data);
     }
 }

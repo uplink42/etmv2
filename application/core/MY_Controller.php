@@ -52,9 +52,10 @@ class MY_Controller extends CI_Controller
             $this->Log->addEntry("visit " . $this->page, $user_id);
             return true;
         } else {
-            if (!$isJSRequest) { // ajax based requests
+            if (!$isJSRequest) {
                 $data['view'] = "login/login_v";
-                buildMessage("error", Msg::INVALID_REQUEST_SESSION, $data['view']);
+                buildMessage("error", Msg::INVALID_REQUEST_SESSION);
+                $data['SESSION']   = $_SESSION;
                 $data['no_header'] = 1;
 
                 $this->etmsession->delete('username');
