@@ -23,7 +23,7 @@ class ValidateRequest extends CI_Model
      * @param  bool|null $json         json result flag (for javascript requests)
      * @return [bool/json]              
      */
-    public function checkCharacterBelong(int $character_id, int $user_id, bool $json = null): bool
+    public function checkCharacterBelong($character_id, int $user_id, bool $json = null): bool
     {
         $this->db->where('character_eve_idcharacter', $character_id);
         $this->db->where('iduser', $user_id);
