@@ -46,9 +46,11 @@ final class Updater extends CI_Controller
         // check if API server is up
         if (!$this->ValidateRequest->testEndpoint()) {
             $this->removeDirectory(FILESTORAGE . 'public/public/server');
-            buildMessage('error', Msg::XML_CONNECT_FAILURE);
-            log_message('error', Msg::XML_CONNECT_FAILURE);
-            redirect('main/login');
+            //buildMessage('error', Msg::XML_CONNECT_FAILURE);
+            // forward user to offline mode
+            buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
+            $this->displayResultTable($username);
+            //redirect('main/login');
             // check if user is already updating
         } else {
             if ($this->Updater_model->isLocked($username)) {
