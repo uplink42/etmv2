@@ -86,8 +86,8 @@ class Profits_model extends CI_Model
             $profit_unit    = (float) $result['data'][$i]->profit_unit;
             $character_buy  = $result['data'][$i]->char_buy_id;
             $character_sell = $result['data'][$i]->char_sell_id;
-            $station_from   = $result['data'][$i]->station_buy_id;
-            $station_to     = $result['data'][$i]->station_sell_id;
+            $station_from   = (string) $result['data'][$i]->station_buy_id;
+            $station_to     = (string) $result['data'][$i]->station_sell_id;
 
             if ($result['data'][$i]->diff < 60) {
                 $result['data'][$i]->diff = number_format($diff, 1) . " m";
