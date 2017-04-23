@@ -28,7 +28,8 @@ $(document).ready(function() {
         aoColumnDefs: [
             { 
             bSearchable: false, "aTargets": [ 6 ] 
-        }]
+        }],
+        autoWidth: false
     });
 
     var table_inactive = $('#contracts-inactive-table').DataTable({

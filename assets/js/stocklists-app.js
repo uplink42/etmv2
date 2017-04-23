@@ -42,6 +42,7 @@ $(document).ready(function() {
         table = $('#stocklist-items').DataTable({
             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
             deferRender: true,
+            autoWidth: false,
             ajax : {
                 type: 'GET',
                 url : base + 'Stocklists/getItems/' + listID,

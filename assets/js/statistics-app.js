@@ -3,6 +3,7 @@ $(document).ready(function() {
     let recap = $('#daily').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         deferRender: true,
+        autoWidth: false,
         lengthMenu: [
             [25, 50, -1],
             [25, 50, "All"]
@@ -28,6 +29,7 @@ $(document).ready(function() {
     let bestraw = $('#bestraw').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         deferRender: true,
+        autoWidth: false,
         lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
@@ -57,6 +59,7 @@ $(document).ready(function() {
             [5, 10, "All"]
         ],
         deferRender: true,
+        autoWidth: false,
         buttons: [{
             extend: 'copy',
             className: 'btn-sm'
@@ -78,6 +81,7 @@ $(document).ready(function() {
     let bestcus = $('#bestcus').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         deferRender: true,
+        autoWidth: false,
         lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
@@ -103,6 +107,7 @@ $(document).ready(function() {
     let topstations = $('#topstations').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         deferRender: true,
+        autoWidth: false,
         lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
@@ -148,7 +153,8 @@ $(document).ready(function() {
             className: 'btn-sm'
         }],
         order: [],
-        deferRender: true
+        deferRender: true,
+        autoWidth: false
     });
     let bestmargin = $('#bestmargin').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
@@ -173,7 +179,8 @@ $(document).ready(function() {
             className: 'btn-sm'
         }],
         order: [],
-        deferRender: true
+        deferRender: true,
+        autoWidth: false
     });
     let fastest = $('#fastest').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
@@ -198,7 +205,8 @@ $(document).ready(function() {
             className: 'btn-sm'
         }],
         order: [],
-        deferRender: true
+        deferRender: true,
+        autoWidth: false
     });
     let timezones = $('#timezones').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
@@ -223,7 +231,8 @@ $(document).ready(function() {
             className: 'btn-sm'
         }],
         order: [],
-        deferRender: true
+        deferRender: true,
+        autoWidth: false
     });
     let problematic = $('#problematic').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
@@ -248,7 +257,8 @@ $(document).ready(function() {
             className: 'btn-sm'
         }],
         order: [],
-        deferRender: true
+        deferRender: true,
+        autoWidth: false
     });
 
     // trade volumes chart

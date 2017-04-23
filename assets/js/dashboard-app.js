@@ -116,7 +116,8 @@ $(document).ready(function() {
             } else {
                 $(nRow).addClass('danger');
             }
-        }
+        },
+        autoWidth: false
     });
 
 
