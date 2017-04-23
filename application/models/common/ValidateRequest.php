@@ -221,6 +221,7 @@ class ValidateRequest extends CI_Model
 
         } catch (Throwable $e) {
             //communication error, abort
+            //todo: difference between no reply and expired key
             return Msg::INVALID_API_KEY;
         }
 
