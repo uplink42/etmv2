@@ -44,9 +44,10 @@ class Async_procedure extends CI_Controller
             log_message('error', $username . ' GLOBAL ERROR ->' . Msg::DB_ERROR);
         } else {
         	try {
-        		$this->Updater_model->calculateProfits();
-		        //totals and history
-		        $this->Updater_model->updateTotals(true, $username);
+                $this->load->model('Updater_profit_model', 'profits');
+                $this->profits->beginProfitCalculation($username);
+                // update totals and history
+                $this->Updater_model->updateTotals();
 		        // send email
                 $this->db->where('iduser', $iduser);
                 $query = $this->db->get('user');
