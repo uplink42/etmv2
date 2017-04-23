@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+ini_set('memory_limit','512M');
 
 final class Transactions extends MY_Controller
 {

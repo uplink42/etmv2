@@ -16,12 +16,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 intro-content">
-                    <div class="logo">
-                        <h1>ETM</h1>
-                    </div>
                     <div class="intro-text text-center">
                         <h2>Eve Trade Master 2.0</h2>
-
                         <p class="lead">a web based profit tracker, asset manager and much more!</p>
                     </div>
                     <div class="page-scroll">

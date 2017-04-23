@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+ini_set('memory_limit','1G');
 
 final class Profits extends MY_Controller
 {
@@ -10,7 +11,6 @@ final class Profits extends MY_Controller
         $this->page = "profits";
         $this->load->model('Profits_model', 'profits');
     }
-
 
     /**
      * Loads the Profits page
