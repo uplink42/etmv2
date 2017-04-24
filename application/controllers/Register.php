@@ -25,6 +25,8 @@ final class Register extends CI_Controller
         $vcode          = $this->input->post('vcode', true);
         $reports        = $this->input->post('reports', true);
 
+        log_message('error', $reports);
+
         $this->load->model('Register_model', 'register');
         $result = $this->register->validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports);
 

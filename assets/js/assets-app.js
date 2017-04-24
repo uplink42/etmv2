@@ -64,7 +64,8 @@ $(document).ready(function() {
             { 
             bSearchable: false, 
             aTargets: [ 3 ] 
-        }]
+        }],
+        autoWidth: false
     });
 
     function updateTableTotals() {

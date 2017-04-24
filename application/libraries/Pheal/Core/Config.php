@@ -165,7 +165,7 @@ class Config
         $this->fetcher = new \Pheal\Fetcher\Curl();
         $this->rateLimiter = new \Pheal\RateLimiter\NullRateLimiter();
 
-        $this->http_user_agent = "( evetrademaster.com - etmdevelopment42@gmail.com )";
+        $this->http_user_agent = "(evetrademaster - custom install)";
     }
 
     /**

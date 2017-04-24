@@ -80,6 +80,7 @@ class Dashboard_model extends CI_Model
         $this->db->select('total_profit');
         $this->db->where('characters_eve_idcharacters IN ' . $chars);
         $this->db->where("date>= (now() - INTERVAL 7 DAY)");
+        $this->db->group_by('date');
         $this->db->order_by('date', 'asc');
         $query = $this->db->get('history');
         $result = $query->result_array();

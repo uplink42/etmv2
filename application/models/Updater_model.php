@@ -153,7 +153,7 @@ class Updater_model extends CI_Model
             } catch (Throwable $e) {
                 log_message('error', 'process api keys ' . $e->getMessage());
                 $this->checkCharacterKeys($apikey, $vcode, $char_id);
-                return false;
+                //return false;
             }
 
             $this->checkCharacterKeys($apikey, $vcode, $char_id);
@@ -218,7 +218,7 @@ class Updater_model extends CI_Model
         } catch (Throwable $e) {
             log_message('error', 'validate api keys ' . $e->getMessage());
             //communication error, abort
-            return false;
+            //return false;
         }
 
         if ($accessMask == "" && $response) {
@@ -727,7 +727,7 @@ class Updater_model extends CI_Model
      * @param  string|null  $user   username
      * @return array              result list, only for non global update
      */
-    public function updateTotals(bool $global = false, string $user = null) : ?array
+    public function updateTotals(bool $global = false, string $user = null)
     {
         if (!$global) {
             $username = $this->username;

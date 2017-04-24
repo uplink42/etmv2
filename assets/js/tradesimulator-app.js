@@ -62,6 +62,7 @@ $(document).ready(function() {
             [50, 75, 100, -1],
             [50, 75, 100, "All"]
         ],
+        autoWidth: false,
         buttons: [{
             extend: 'copy',
             className: 'btn-sm'

@@ -7,6 +7,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         deferRender: true,
+        autoWidth: false,
         ajax : {
             type   : 'GET',
             url    : base + 'Profits/getProfitTable/' + charID + '/' + interval + '/' + aggr,
