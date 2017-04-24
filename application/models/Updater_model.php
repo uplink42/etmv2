@@ -727,7 +727,7 @@ class Updater_model extends CI_Model
      * @param  string|null  $user   username
      * @return array              result list, only for non global update
      */
-    public function updateTotals(bool $global = false, string $user = null) : ?array
+    public function updateTotals(bool $global = false, string $user = null)
     {
         if (!$global) {
             $username = $this->username;
