@@ -47,7 +47,7 @@ class Async_procedure extends CI_Controller
                 $this->load->model('Updater_profit_model', 'profits');
                 $this->profits->beginProfitCalculation($username);
                 // update totals and history
-                $this->Updater_model->updateTotals(true, $username);
+                $this->Updater_model->updateTotals($username, true);
 		        // send email
                 $this->db->where('iduser', $iduser);
                 $query = $this->db->get('user');

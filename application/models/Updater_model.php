@@ -727,14 +727,8 @@ class Updater_model extends CI_Model
      * @param  string|null  $user   username
      * @return array              result list, only for non global update
      */
-    public function updateTotals(bool $global = false, string $user = null)
+    public function updateTotals(string $user = null, bool $global = false)
     {
-        if (!$global) {
-            $username = $this->username;
-        } else {
-            $username = $user;
-        }
-
         $this->db->select('name, character_eve_idcharacter');
         $this->db->where('username', $username);
         $character_list = $this->db->get('v_user_characters');
