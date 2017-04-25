@@ -193,13 +193,15 @@ $(document).ready(function() {
     var shouldLoad = true;
         didLoad    = false;
     $(document).bind("ajaxStart.go", function () {
+        shouldLoad = true;
         setTimeout(function() {
             if (shouldLoad) {
+                console.log('spinner started');
                 didLoad = true;
                 $(".mainwrapper").addClass('loading-body');
                 $('.panel-loading-ajax').show();
             }
-        },200);
+        },250);
     });
 
     $(document).bind("ajaxStop.go", function () {
