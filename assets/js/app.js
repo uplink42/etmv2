@@ -189,7 +189,7 @@ $(document).ready(function() {
         });
     });
 
-    // show loading spinner for waiting periods over 200ms
+    // show loading spinner for waiting periods over 250ms
     var shouldLoad = true;
         didLoad    = false;
     $(document).bind("ajaxStart.go", function () {

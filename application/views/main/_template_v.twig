@@ -23,9 +23,7 @@
     <title>Eve Trade Master 2 - A web based Eve Online profit tracker, asset manager and trade analysis tool</title>
 
     {# disable pace on marketexplorer #}
-    {% if market %}
-        <script>window.paceOptions = { ajax: false }; </script>
-    {% endif %}
+    <script>window.paceOptions = { ajax: false }; </script>
 
     <!-- Vendor styles -->
     <link rel="stylesheet" href="{{ base_url('dist/luna/styles/styles.css') }}?v={{HASH_CACHE}}"/>
