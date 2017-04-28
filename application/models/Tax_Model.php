@@ -247,7 +247,7 @@ class Tax_model extends CI_Model
             break;
         }
 
-        if ($this->transFrom == 'buy' && $type === 'from' || $this->transFrom == 'sell' && $type === 'to') {
+        if ($this->transFrom == 'buy' && $type === 'from' || $this->transTo == 'sell' && $type === 'to') {
             $station_type = $this->getStationType($stationID);
             switch($station_type) {
                 case 'station':

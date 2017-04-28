@@ -189,17 +189,19 @@ $(document).ready(function() {
         });
     });
 
-    // show loading spinner for waiting periods over 200ms
+    // show loading spinner for waiting periods over 250ms
     var shouldLoad = true;
         didLoad    = false;
     $(document).bind("ajaxStart.go", function () {
+        shouldLoad = true;
         setTimeout(function() {
             if (shouldLoad) {
+                console.log('spinner started');
                 didLoad = true;
                 $(".mainwrapper").addClass('loading-body');
                 $('.panel-loading-ajax').show();
             }
-        },200);
+        },250);
     });
 
     $(document).bind("ajaxStop.go", function () {

@@ -86,7 +86,7 @@ final class Main extends MY_Controller
         $from      = $_REQUEST['email'];
         $from_name = $_REQUEST['from_name'];
         $subject   = $_REQUEST['subject'];
-        $body      = $_REQUEST['message'];
+        $body      = $_REQUEST['email'] .' -> '. $_REQUEST['message'];
 
         $this->load->model('common/Email');
         $mail = $this->Email->send($to, $from, $from_name, $subject, $body);
