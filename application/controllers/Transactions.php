@@ -29,6 +29,7 @@ final class Transactions extends MY_Controller
      */
     public function index($character_id, $interval = 14) : void
     {
+        $this->Log->addEntry("visit " . $this->page, $this->user_id);
         if ($interval > 365) {
             $interval = 365;
         }

@@ -39,6 +39,8 @@ final class Updater extends CI_Controller
             $this->Updater_model->init($username);
         } catch (Throwable $e) {
             $this->Updater_model->release($username);
+            buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
+            $this->displayResultTable($username);
             log_message('error', $e->getMessage());
             return;
         }
@@ -47,111 +49,112 @@ final class Updater extends CI_Controller
         if (!$this->ValidateRequest->testEndpoint()) {
             $this->removeDirectory(FILESTORAGE . 'public/public/server');
             // forward user to offline mode
+            $this->Updater_model->release($username);
             buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
             $this->displayResultTable($username);
-            // check if user is already updating
-        } else {
-            if ($this->Updater_model->isLocked($username)) {
-                $this->displayResultTable($username);
-            } else {
-                // check if user has any keys
-                $keys = $this->Updater_model->getKeys($username);
-                if (count($keys) == 0) {
-                    log_message('error', $username . ' has no keys');
-                    // no keys, so prompt for new one
-                    $this->askForKey();
-                    return;
-                } else {
-                    // validate existing keys
-                    $keys_status = $this->Updater_model->processAPIKeys($keys, $username);
-                    if (!$keys_status) {
-                        log_message('error', 'Unable to connect to verify key status');
-                        // unable to connect to verify keys
-                        buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
-                        $this->displayResultTable($username);
-                        return;
-                    } 
-
-                    foreach($keys_status as $key => $val) {
-                        $invalid_keys = [];
-                        if ($val < 1) {
-                            array_push($invalid_keys, $key);
-                        }
-
-                        if (count($invalid_keys) > 0) {
-                            log_message('error', 'Invalid Keys detected');
-                            // invalid key
-                            buildMessage('error', Msg::OFFLINE_MODE_NOTICE_KEY . ' ' . implode($invalid_keys, ','));
-                            $this->displayResultTable($username);
-                            return;
-                        }
-                    }
-
-                    // begin update
-                    $this->Updater_model->lock($username);
-                    try {
-                        $result_iterate = $this->Updater_model->iterateAccountCharacters();
-                        if (!$result_iterate) {
-                            log_message('error', $username . ' iterate failed');
-                            // transaction failed for some reason
-                            // forward user to offline mode
-                            buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
-                            $this->displayResultTable($username);
-                        } else {
-                            // if we arrived here, that means nothing went wrong (yet)
-                            $this->db->trans_start();
-                            $this->load->model('Updater_profit_model', 'profits');
-                            $this->profits->beginProfitCalculation($username);
-                            // update totals and history
-                            $this->Updater_model->updateTotals($username);
-                            $this->db->trans_complete();
-
-                            if ($this->db->trans_status() === false) {
-                                // something went wrong while calculating profits, abort
-                                buildMessage('error', Msg::DB_ERROR);
-                                $data['view']      = "login/login_v";
-                                $data['no_header'] = 1;
-                                $this->twig->display('main/_template_v', $data);
-                                return;
-                            } else {
-                                // successfully updated
-                                buildMessage('success', Msg::UPDATE_SUCCESS);
-                                $this->displayResultTable($username);
-                                $this->Updater_model->release($username);
-                            }
-                        }
-                    } catch (Throwable $e) {
-                        //if an exception happens during update (this is a bug on Eve's API)
-                        log_message('error', $e->getMessage());
-                        // cache is now corrupted for 24 hours, remove cached data
-                        $problematicKeys = $this->Updater_model->getAPIKeys($this->user_id);
-                        $this->Log->addEntry('clear', $this->user_id);
-
-                        if (true) {
-                            // todo: check error code?
-                            foreach ($problematicKeys as $row) {
-                                log_message('error', $username . ' deleting cache folder');
-                                $key = $row->key;
-                                $dir = FILESTORAGE . $key;
-                                $this->removeDirectory($dir);
-                                // release the lock
-                                $this->Updater_model->release($username);
-
-                                // forward user to offline mode
-                                buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
-                                $this->displayResultTable($username);
-                            }
-                        } else {
-                            $this->etmsession->delete('username');
-                            $this->etmsession->delete('start');
-                            $this->etmsession->delete('iduser');
-                            $this->twig->display('main/_template_v', $data);
-                        }
-                    }
-                }
-            }
-            $this->Updater_model->release($username);
+            return;
         }
+
+        // check if user is already updating
+        if ($this->Updater_model->isLocked($username)) {
+            $this->displayResultTable($username);
+            return;
+        }
+            
+        // check if user has any keys
+        $keys = $this->Updater_model->getKeys($username);
+        if (count($keys) == 0) {
+            $this->Updater_model->release($username);
+            log_message('error', $username . ' has no keys');
+            // no keys, so prompt for new one
+            $this->askForKey();
+            return;
+        }
+
+        // validate existing keys
+        $keys_status = $this->Updater_model->processAPIKeys($keys, $username);
+        if (!$keys_status) {
+            $this->Updater_model->release($username);
+            log_message('error', 'Unable to connect to verify key status');
+            // unable to connect to verify keys
+            buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
+            $this->displayResultTable($username);
+            return;
+        } 
+
+        foreach($keys_status as $key => $val) {
+            $invalid_keys = [];
+            if ($val < 1) {
+                array_push($invalid_keys, $key);
+            }
+
+            if (count($invalid_keys) > 0) {
+                $this->Updater_model->release($username);
+                log_message('error', 'Invalid Keys detected');
+                // invalid key
+                buildMessage('error', Msg::OFFLINE_MODE_NOTICE_KEY . ' ' . implode($invalid_keys, ','));
+                $this->displayResultTable($username);
+                return;
+            }
+        }
+
+        // begin update
+        $this->Updater_model->lock($username);
+        try {
+            $result_iterate = $this->Updater_model->iterateAccountCharacters();
+            if (!$result_iterate) {
+                $this->Updater_model->release($username);
+                log_message('error', $username . ' iterate failed');
+                // transaction failed for some reason
+                // forward user to offline mode
+                buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
+                $this->displayResultTable($username);
+                return;
+            }
+
+            // if we arrived here, that means nothing went wrong (yet)
+            $this->db->trans_start();
+            $this->load->model('Updater_profit_model', 'profits');
+            $this->profits->beginProfitCalculation($username);
+            // update totals and history
+            $this->Updater_model->updateTotals($username);
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === false) {
+                $this->Updater_model->release($username);
+                // something went wrong while calculating profits, abort
+                buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
+                $this->displayResultTable($username);
+                return;
+            }
+
+            // successfully updated
+            buildMessage('success', Msg::UPDATE_SUCCESS);
+            $this->displayResultTable($username);
+            $this->Updater_model->release($username);
+
+        } catch (Throwable $e) {
+            // if an exception happens during update (this is a bug on Eve's API)
+            log_message('error', $e->getMessage());
+            // cache is now corrupted for 24 hours, remove cached data
+            $problematicKeys = $this->Updater_model->getAPIKeys($this->user_id);
+            $this->Log->addEntry('clear', $this->user_id);
+
+            // todo: check error code?
+            foreach ($problematicKeys as $row) {
+                log_message('error', $username . ' deleting cache folder');
+                $key = $row->key;
+                $dir = FILESTORAGE . $key;
+                $this->removeDirectory($dir);
+
+                $this->Updater_model->release($username);
+                // forward user to offline mode
+                buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
+                $this->displayResultTable($username);
+            }
+        }
+
+        $this->Updater_model->release($username);
     }
 
     /**

@@ -21,6 +21,7 @@ final class Profits extends MY_Controller
      */
     public function index($character_id, $item_id = null) : void
     {
+        $this->Log->addEntry("visit " . $this->page, $this->user_id);
         $interval = 7;
         if ($this->enforce($character_id, $this->user_id)) {
             $aggregate = $this->aggregate;
