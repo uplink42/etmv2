@@ -35,6 +35,11 @@ Main features:
 - Fusioncharts
 - Twig
 
+You will also need:
+- npm
+- bower
+- composer
+
 <h1>3rd party APIs:</h1>
 
 - Eve XML API
