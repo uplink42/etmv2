@@ -95,7 +95,7 @@
     		<p></p>
         		<div class="table-responsive">
                     {% if table %}
-            		    <table class="table table-responsive table-bordered table-stripped table-hover">
+            		    <table class="table table-responsive table-bordered table-stripped table-hover table-clickable">
                 			<thead>
                 			    <tr>
                 				    <th></th>
@@ -115,9 +115,9 @@
                 				$networth = $char['networth'];
                 				$escrow = $char['escrow'];
                 				$sell = $char['sell']; #}
-                				<tr>
-                				    <td><a href='{{ base_url('dashboard/index/' ~ char['id']) }}'>
-                                        <img src='https://image.eveonline.com/Character/{{ char['id'] }}_32.jpg' alt='character portrait'></a>
+                				<tr onclick="window.document.location='{{base_url('dashboard/index/' ~ char['id'])}}'">
+                				    <td>
+                                        <img src='https://image.eveonline.com/Character/{{ char['id'] }}_32.jpg' alt='character portrait'>
                                     </td>
                 				    <td>{{ char['name'] }}</td>
                 				    <td class="text-right">{{ char['balance']  | number_format }}</td>
@@ -131,7 +131,7 @@
                 			    $networth_total = $table[0]['total']['networth_total'];
                 			    $escrow_total = $table[0]['total']['escrow_total'];
                 			    $sell_total = $table[0]['total']['sell_total']; #}
-                				<tr>
+                				<tr onclick="window.document.location='{{base_url('dashboard/index/' ~ table[0]['character'][0]["id"] ~ '?aggr=1')}}'">
                 				    <td></td>
                 				    <td><strong>Total</strong></td>
                 				    <td class="text-right"><strong>{{ table[0]['total']['balance_total']  | number_format }}</strong></td>
@@ -139,7 +139,7 @@
                 				    <td class="text-right"><strong>{{ table[0]['total']['escrow_total']   | number_format }}</strong></td>
                 				    <td class="text-right"><strong>{{ table[0]['total']['sell_total']     | number_format }}</strong></td>
                 				</tr>
-                				<tr>
+                				<tr onclick="window.document.location='{{base_url('dashboard/index/' ~ table[0]['character'][0]["id"] ~ '?aggr=1')}}'">
                 				    <td></td>
                 				    <td></td>
                 				    <td></td>
