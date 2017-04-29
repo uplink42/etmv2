@@ -27,10 +27,9 @@ final class Apikeymanagement extends MY_Controller
      */
     public function index($character_id)
     {
-        $this->Log->addEntry("visit " . $this->page, $this->user_id);
         settype($character_id, 'int');
         if ($this->enforce($character_id, $this->user_id)) {
-
+            $this->Log->addEntry("visit " . $this->page, $this->user_id);
             $aggregate = $this->aggregate;
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];

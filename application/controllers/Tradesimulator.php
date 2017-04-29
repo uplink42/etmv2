@@ -23,8 +23,8 @@ final class TradeSimulator extends MY_Controller
      */
     public function index($character_id, $res = null) : void
     {
-        $this->Log->addEntry("visit " . $this->page, $this->user_id);
         if ($this->enforce($character_id, $this->user_id)) {
+            $this->Log->addEntry("visit " . $this->page, $this->user_id);
             $aggregate        = $this->aggregate;
             $data             = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $data['selected'] = "tradesimulator";
