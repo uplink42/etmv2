@@ -140,8 +140,9 @@ class Updater_model extends CI_Model
      * @param  string $username  
      * @return bool            validation result
      */
-    public function processAPIKeys(array $user_keys, string $username) : bool
+    public function processAPIKeys(array $user_keys, string $username)
     {
+        $result = [];
         foreach ($user_keys as $apis) {
             $apikey  = (int) $apis['apikey'];
             $vcode   = $apis['vcode'];
@@ -152,18 +153,19 @@ class Updater_model extends CI_Model
                 $response = $pheal->APIKeyInfo();
             } catch (Throwable $e) {
                 log_message('error', 'process api keys ' . $e->getMessage());
-                $this->checkCharacterKeys($apikey, $vcode, $char_id);
-                //return false;
+                // $this->checkCharacterKeys($apikey, $vcode, $char_id);
+                return false;
             }
 
-            $this->checkCharacterKeys($apikey, $vcode, $char_id);
+            $result[$apikey] = $this->validateAPIKey($apikey, $vcode, $char_id);
         }
 
+        return $result;
         //count user keys again (check if none left)
-        if (count($this->getKeys($username)) != 0) {
+        /*if (count($this->getKeys($username)) != 0) {
             return true;
         } 
-        return false;
+        return false;*/
     }
 
     /**
@@ -173,7 +175,7 @@ class Updater_model extends CI_Model
      * @param  string $char_id 
      * @return void          
      */
-    public function checkCharacterKeys(int $apikey, string $vcode, string $char_id) : void
+    /*public function checkCharacterKeys(int $apikey, string $vcode, string $char_id) : void
     {
         $result = $this->validateAPIKey($apikey, $vcode, $char_id);
         if ($result < 1 || !$result) {
@@ -191,7 +193,7 @@ class Updater_model extends CI_Model
 
             $this->db->delete('aggr', $data);
         }
-    }
+    }*/
 
     /**
      * Performs validation checks for each key's result
@@ -217,8 +219,7 @@ class Updater_model extends CI_Model
             }
         } catch (Throwable $e) {
             log_message('error', 'validate api keys ' . $e->getMessage());
-            //communication error, abort
-            //return false;
+            return false;
         }
 
         if ($accessMask == "" && $response) {
@@ -232,6 +233,8 @@ class Updater_model extends CI_Model
         } else {
             return 1; //everything is ok
         }
+
+        return true;
     }
 
     /**

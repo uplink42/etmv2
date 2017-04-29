@@ -72,6 +72,7 @@ class Msg extends CI_Model
     const RECOVERY_ERROR             = "Unexpected failure. Try again";
     const LOGOUT                     = "You have logged out";
     const OFFLINE_MODE_NOTICE        = "Unable to update your characters's data at this time. This could be a temporary issue.";
+    const OFFLINE_MODE_NOTICE_KEY    = "The following API Keys are invalid and prevent you from updating: ";
     const UPDATE_SUCCESS             = "Sucessfully updated characters' data.";
 
     public function __construct()
