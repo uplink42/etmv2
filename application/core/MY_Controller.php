@@ -49,7 +49,6 @@ class MY_Controller extends CI_Controller
                 $this->aggregate = false;
             }
 
-            //$this->Log->addEntry("visit " . $this->page, $user_id);
             return true;
         } else {
             if (!$isJSRequest) {

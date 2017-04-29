@@ -17,6 +17,7 @@ final class MarketExplorer extends MY_Controller
      */
     public function index($character_id) : void
     {
+        $this->Log->addEntry("visit " . $this->page, $this->user_id);
         if ($this->enforce($character_id, $this->user_id)) {
             $aggregate = $this->aggregate;
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
