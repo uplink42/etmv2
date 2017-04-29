@@ -86,6 +86,9 @@ class TradeSimulator_model extends CI_Model
         $CI = &get_instance();
         $CI->load->model('Tax_Model');
         $this->settings      = $this->User->getUserProfitSettings($user_id);
+        $this->settings['buy_behaviour']  = $buy_method;
+        $this->settings['sell_behaviour'] = $sell_method;
+
         $CI->Tax_Model->tax($this->stationFromID, $this->stationToID, $buyer, $seller, $this->settings);
         $this->transTaxFrom  = $CI->Tax_Model->calculateTax('from');
         $this->brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
