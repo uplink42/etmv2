@@ -23,9 +23,7 @@ final class Register extends CI_Controller
         $email          = $this->input->post('email', true);
         $apikey         = (int) $this->input->post('apikey', true);
         $vcode          = $this->input->post('vcode', true);
-        $reports        = $this->input->post('reports', true);
-
-        log_message('error', $reports);
+        $reports        = $this->input->post('reports');
 
         $this->load->model('Register_model', 'register');
         $result = $this->register->validate($username, $password, $repeatpassword, $email, $apikey, $vcode, $reports);
@@ -64,7 +62,7 @@ final class Register extends CI_Controller
             'email'            => $this->input->post('email', true),
             'apikey'           => (int) $this->input->post('apikey', true),
             'vcode'            => $this->input->post('vcode', true),
-            'reports'          => $this->input->post('reports', true),
+            'reports'          => $this->input->post('reports'),
             'default_buy'      => $this->input->post('default-buy', true),
             'default_sell'     => $this->input->post('default-sell', true),
             'x_character'      => $this->input->post('x-character', true),
@@ -93,7 +91,6 @@ final class Register extends CI_Controller
         }
 
         $user_data['chars'] = $chars;
-
         // no characters selected
         if (count($chars) == 0) {
             $characters         = $this->register->getCharacters($user_data['apikey'], $user_data['vcode']);
