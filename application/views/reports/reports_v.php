@@ -37,11 +37,11 @@
     </style>        
 </head>
 <body>
-    <center><h2>Daily earnings report for <?=$username?></h2></center><br>
+    <center><h2><?=$period?> earnings report for <?=$username?></h2></center><br>
     
     <center><h2>From: <?=$date_prev?> GMT</h2></center>
     <center><h2>To: <?=$date_now?> GMT</h2><br></center>
-    <center><p align='center'><h3>Last 24 hours snapshot: </h3></p></center>
+    <center><p align='center'><h3>Snapshot: </h3></p></center>
     
     <table>
         <tr>
