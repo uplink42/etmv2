@@ -12,6 +12,7 @@ app.directive('chart', [
                 region: '='
             },
             controller: ['$scope', function($scope) {
+                // watch when item or region change
                 $scope.$watch('item', function(newValue, oldValue) {
                     if (Object.keys(newValue).length && !angular.isUndefined(newValue)) {
                         getHistory();
@@ -36,10 +37,9 @@ app.directive('chart', [
                     });
                 }
 
-
                 function buildChart(data) {
-                    var fourMonthsAgo = moment().subtract(4, 'month');
-                    var volumes       = [],
+                    let fourMonthsAgo = moment().subtract(4, 'month'),
+                        volumes       = [],
                         dates         = [],
                         avgPrices     = [],
                         lowestPrices  = [],
@@ -135,7 +135,7 @@ app.directive('chart', [
                     };
 
                     FusionCharts.ready(function () {
-                        var chart = new FusionCharts({
+                        let chart = new FusionCharts({
                             type: 'mscombidy2d',
                             renderAt: 'chart',
                             width: '100%',
