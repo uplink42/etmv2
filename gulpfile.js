@@ -247,7 +247,7 @@ gulp.task('me_bower_styles', function() {
 
 //process app scripts
 gulp.task('me_scripts', function(){
-    return gulp.src(paths.me_base + 'application/**/**/*.js')
+    return gulp.src(paths.me_base + 'application/**/*.js')
     //.pipe(angularFilesort())
     .pipe(babel())
     .pipe(uglify())
@@ -280,13 +280,6 @@ gulp.task('me_watch', function() {
     gulp.watch(paths.me_base + "application/**/*.js", ['me_scripts']);
     gulp.watch(paths.me_base + "application/**/*.html", ['me_views']);
 });
-
-
-
-
-/*gulp.task('default', ['js','css', 'sass', 'uglify', 'watch', 'home_js', 'home_css', 'img', 'connect', 'home_fonts', 'fonts'], function () {
-
-});*/
 
 gulp.task('default', function (cb) {
     runSequence('clean', ['me_styles', 'me_scripts', 'me_bower', 'me_bower_styles', 'me_fonts', 'me_views', 'me_watch', 

@@ -3,17 +3,14 @@
         <div class="col-md-6 pull-left">
             <search-bar 
                 region="region" 
-                item="item" 
-                buyorders="buyorders" 
-                sellorders="sellorders"
-                time="time">
+                item="item">
             </search-bar>
         </div>
         <div class="col-md-6 pull-right">
             <div class="item">
                 <p class="h4 text-left item-name" ng-if="item.name">
                     <img ng-src="{{itemImg + item.id + '_32.png'}}" class="pr-5">
-                    {{ item.name }}
+                    {{ item.name }} - current spread: <span>{{ spread.value | number: 2 }} % </span>
                 </p>
             </div>
             <div class="update pull-right mb-5" ng-if="item.name">

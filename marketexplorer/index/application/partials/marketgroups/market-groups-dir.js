@@ -3,7 +3,8 @@ app.directive('marketGroups', [
     'marketGroupsFact',
     'marketTypesFact',
     function(config, marketGroupsFact, marketTypesFact) {
-
+        "use strict";
+        
         return {
             templateUrl: config.dist + '/partials/marketgroups/market-groups-view.html',
             restrict: 'E',
@@ -13,8 +14,8 @@ app.directive('marketGroups', [
                 name: '='
             },
             controller: ['$scope', function($scope) {
-                var allGroups;
-                var allTypes = [];
+                let allGroups,
+                    allTypes = [];
                 $scope.subcatItems = {};
                 $scope.item = {};
                 $scope.subcatsView = config.dist + '/partials/marketgroups/cats/market-sub-cats-view.html';
@@ -33,7 +34,7 @@ app.directive('marketGroups', [
                 .getAll()
                 .then(function(response) {
                     angular.forEach(response, function(cValue, cKey) {
-                        var key = cValue.marketGroup.id;
+                        let key = cValue.marketGroup.id;
                         if (angular.isUndefined(allTypes[key])) {
                             allTypes[key] = [];
                         }
@@ -49,7 +50,7 @@ app.directive('marketGroups', [
                 function recursiveGrpSorting(result) {
                     allGroups = result;
                     $scope.groups = [];
-                    for (var key in result) {
+                    for (let key in result) {
                         if (!result[key].parentGroup) {
                             if (result[key].id < 300000) {
                                 $scope.groups.push(result[key]);
@@ -90,8 +91,6 @@ app.directive('marketGroups', [
                     } else if (!$scope.subcatItems[id].final) {
                         $scope.subcatItems[id] = [];
                     } else {
-                        $scope.isSelected = {};
-                        $scope.isSelected[id] = true;
                         $scope.item.id = $scope.subcatItems[id].id;
                         getItemName(id);
                     }

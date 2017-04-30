@@ -1,5 +1,9 @@
 .table {
   width: 100%;
+
+  &.table-clickable {
+    cursor: pointer;
+  }
 }
 
 .table > {
