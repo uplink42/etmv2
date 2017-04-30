@@ -58,7 +58,7 @@ var paths = {
             'assets/luna/styles/bootstrap/fonts/*.*',],
     home_js: ['assets/vendor/jquery/dist/jquery.min.js',
               'assets/vendor/jquery-easing/jquery.easing.min.js',
-    /*'assets/vendor/bootstrap/js/bootstrap.min.js',*/
+              'assets/vendor/bootstrap/js/bootstrap.min.js',
               'assets/vendor/detectmobilebrowser/detectmobilebrowser.js',
               'assets/vendor/smartresize/smartresize.js',
               'assets/vendor/jquery-backstretch/jquery.backstretch.min.js',
@@ -105,7 +105,7 @@ gulp.task('css', function(){
     .pipe(concat('styles.css'))
     .pipe(minify())
     .pipe(gulp.dest('dist/luna/styles'))
-    .pipe(connect.reload())
+    .pipe(connect.reload());
 });
 
 //js dependencies
@@ -114,7 +114,7 @@ gulp.task('js', function(){
     .pipe(concat('apps.js'))
     .pipe(uglify())
     .pipe(gulp.dest('dist/js'))
-    .pipe(connect.reload())
+    .pipe(connect.reload());
 });
 
 //app files
@@ -123,7 +123,7 @@ gulp.task('uglify', function(){
     .pipe(babel())
     .pipe(uglify())
     .pipe(gulp.dest('dist/js/apps'))
-    .pipe(connect.reload())
+    .pipe(connect.reload());
 });
 
 //fonts

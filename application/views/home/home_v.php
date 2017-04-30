@@ -31,7 +31,6 @@
     </div>
 </section>
 
-
 <nav id="navigation" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header page-scroll">
