@@ -34,6 +34,8 @@ class Updater_model extends CI_Model
     private $character_new_orders;
     private $character_new_profits;
 
+    private $assetList;
+
     /**
      * Initializes the update procedure
      * @param  string $username
@@ -161,39 +163,8 @@ class Updater_model extends CI_Model
         }
 
         return $result;
-        //count user keys again (check if none left)
-        /*if (count($this->getKeys($username)) != 0) {
-            return true;
-        } 
-        return false;*/
     }
 
-    /**
-     * Removes invalid api keys from a users' account
-     * @param  int $apikey  
-     * @param  string $vcode   
-     * @param  string $char_id 
-     * @return void          
-     */
-    /*public function checkCharacterKeys(int $apikey, string $vcode, string $char_id) : void
-    {
-        $result = $this->validateAPIKey($apikey, $vcode, $char_id);
-        if ($result < 1 || !$result) {
-            $this->db->select('name');
-            $this->db->where('eve_idcharacter', $char_id);
-            $query          = $this->db->get('characters');
-            $character_name = $query->row()->name;
-
-            $this->db->where('character_eve_idcharacter', $char_id);
-            $query = $this->db->get('aggr');
-            $res = $query->row()->user_iduser;
-            $data = array(
-                "user_iduser" => $res,
-            );
-
-            $this->db->delete('aggr', $data);
-        }
-    }*/
 
     /**
      * Performs validation checks for each key's result
@@ -245,6 +216,7 @@ class Updater_model extends CI_Model
     public function iterateAccountCharacters() : bool
     {
         foreach ($this->account_characters as $characters) {
+            $this->assetList = [];
             $this->character_id = $characters['character_eve_idcharacter'];
 
             $this->db->where('eve_idcharacter', $this->character_id);
@@ -642,41 +614,45 @@ class Updater_model extends CI_Model
         $this->character_orders = $query->row()->grand_total;
     }
 
+
     /**
-     * Updates the asset list. Fetches assets 4 levels deep in containers
-     * Todo: recursively
+     * Updates the asset list.
      * @return void
      */
     private function getAssets() : void
     {
-        $pheal    = new Pheal($this->apikey, $this->vcode, "char");
-        $response = $pheal->AssetList(array("characterID" => $this->character_id, "flat" => 1));
-        $i           = 0; //for iterating each asset
+        $pheal       = new Pheal($this->apikey, $this->vcode, "char");
+        $response    = $pheal->AssetList(array("characterID" => $this->character_id));
 
         foreach ($response->assets as $assets) {
-            $typeID_asset   = $assets['typeID'];
-            $locationID     = $assets['locationID'];
-            $quantity_asset = $assets['quantity'];
-            $i++;
-            $assetList[$i] = array("idassets" => "NULL",
+            $typeID      = $assets['typeID'];
+            $locationID  = $assets['locationID'];
+            $quantity    = $assets['quantity'];
+            $assetsLevel = array(
+                "idassets"                        => "NULL",
                 "characters_eve_idcharacters"     => $this->character_id,
-                "item_eve_iditem"                 => $typeID_asset,
-                "quantity"                        => $quantity_asset,
+                "item_eve_iditem"                 => $typeID,
+                "quantity"                        => $quantity,
                 "locationID"                      => $locationID);
+
+            array_push($this->assetList, $assetsLevel);
+            if (isset($assets->contents)) {
+                $this->getAssetContents($assets->contents, $locationID);
+            }
         }
 
         //first, delete existing assets
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $this->db->delete('assets');
             
-        if (!empty($assetList)) {
+        if (!empty($this->assetList)) {
             batch("assets",
                 array('idassets',
                     'characters_eve_idcharacters',
                     'item_eve_iditem',
                     'quantity',
                     'locationID'),
-                $assetList);
+                $this->assetList);
         }
 
         $this->db->select('coalesce(SUM(assets.quantity * item_price_data.price_evecentral),0) AS grand_total');
@@ -685,6 +661,26 @@ class Updater_model extends CI_Model
         $this->db->where('characters_eve_idcharacters', $this->character_id);
         $query = $this->db->get('');
         $this->character_networth = $query->row()->grand_total;
+    }
+
+
+    function getAssetContents($contents, $locationID) {
+        foreach ($contents as $assets_inside) {
+            $typeID      = $assets_inside['typeID'];
+            $quantity    = $assets_inside['quantity'];
+
+            $assets  = array(
+                "idassets"                    => "NULL",
+                "characters_eve_idcharacters" => $this->character_id,
+                "item_eve_iditem"             => $typeID,
+                "quantity"                    => $quantity,
+                "locationID"                  => $locationID);
+
+            array_push($this->assetList, $assets);
+            if (isset($assets->contents)) {
+                $this->getAssetContents($assets->contents, $locationID);
+            }
+        }
     }
 
 
