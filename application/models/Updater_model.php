@@ -728,63 +728,69 @@ class Updater_model extends CI_Model
      */
     public function updateTotals(string $username = null, bool $global = false)
     {
+        $max_days = 0;
         $this->db->select('name, character_eve_idcharacter');
         $this->db->where('username', $username);
         $character_list = $this->db->get('v_user_characters');
 
-        $dt = new DateTime();
-        $tz = new DateTimeZone('Europe/Lisbon');
-        $dt->setTimezone($tz);
-        $date_today = $dt->format('Y-m-d');
-
-        foreach ($character_list->result() as $row) {
-            $this->character_id = $row->character_eve_idcharacter;
-
-            //sum of sales
-            $this->db->select('coalesce(sum(price_total),0) as sum');
-            $this->db->where('character_eve_idcharacter', $this->character_id);
-            $this->db->where('transaction_type', 'Sell');
-            $this->db->where('date(time)', $date_today);
-            $sales_sum     = $this->db->get('transaction');
-            $sales_sum_val = $sales_sum->row()->sum;
-
-            //sum of purchases
-            $this->db->select('coalesce(sum(price_total),0) as sum');
-            $this->db->where('character_eve_idcharacter', $this->character_id);
-            $this->db->where('transaction_type', 'Buy');
-            $this->db->where('date(time)', $date_today);
-            $purchases_sum     = $this->db->get('transaction');
-            $purchases_sum_val = $purchases_sum->row()->sum;
-
-            //sum of profits
-            $this->db->select('coalesce(SUM(profit_unit*quantity_profit),0) as sum');
-            $this->db->where('date(timestamp_sell)', $date_today);
-            $this->db->where('characters_eve_idcharacters_OUT', $this->character_id);
-            $profits_sum     = $this->db->get('profit');
-            $profits_sum_val = $profits_sum->row()->sum;
-
-            //profit margin
-            $this->db->select('coalesce(((sum(profit.profit_unit*profit.quantity_profit)/sum(t1.price_unit*profit.quantity_profit))*100),0) as margin');
-            $this->db->from('profit');
-            $this->db->join('transaction t1', 'profit.transaction_idbuy_buy = t1.idbuy');
-            $this->db->join('transaction t2', 'profit.transaction_idbuy_sell = t2.idbuy');
-            $this->db->join('characters', 't2.character_eve_idcharacter = characters.eve_idcharacter');
-            $this->db->where('characters.eve_idcharacter', $this->character_id);
-            $this->db->where('date(t2.time)', $date_today);
-            $margin = $this->db->get('');
-            $margin_val = $margin->row()->margin;
-
-            $data = array(
-                "characters_eve_idcharacters" => $this->character_id,
-                "date"                        => $date_today,
-                "total_buy"                   => $purchases_sum_val,
-                "total_sell"                  => $sales_sum_val,
-                "total_profit"                => $profits_sum_val,
-                "margin"                      => $margin_val,
-            );
-            $this->db->replace('history', $data);
+        if ($global) {
+            $max_days = 2;
         }
 
+        foreach ($character_list->result() as $row) {
+            $dt = new DateTime();
+            $tz = new DateTimeZone('Europe/Lisbon');
+            $dt->setTimezone($tz);
+
+            for ($i = 0; $i <= $max_days; $i++) {
+                $date = date_sub($dt, date_interval_create_from_date_string('1 days'))->format('Y-m-d');
+                $this->character_id = $row->character_eve_idcharacter;
+                //sum of sales
+                $this->db->select('coalesce(sum(price_total),0) as sum');
+                $this->db->where('character_eve_idcharacter', $this->character_id);
+                $this->db->where('transaction_type', 'Sell');
+                $this->db->where('date(time)', $date);
+                $sales_sum     = $this->db->get('transaction');
+                $sales_sum_val = $sales_sum->row()->sum;
+
+                //sum of purchases
+                $this->db->select('coalesce(sum(price_total),0) as sum');
+                $this->db->where('character_eve_idcharacter', $this->character_id);
+                $this->db->where('transaction_type', 'Buy');
+                $this->db->where('date(time)', $date);
+                $purchases_sum     = $this->db->get('transaction');
+                $purchases_sum_val = $purchases_sum->row()->sum;
+
+                //sum of profits
+                $this->db->select('coalesce(SUM(profit_unit*quantity_profit),0) as sum');
+                $this->db->where('date(timestamp_sell)', $date);
+                $this->db->where('characters_eve_idcharacters_OUT', $this->character_id);
+                $profits_sum     = $this->db->get('profit');
+                $profits_sum_val = $profits_sum->row()->sum;
+
+                //profit margin
+                $this->db->select('coalesce(((sum(profit.profit_unit*profit.quantity_profit)/sum(t1.price_unit*profit.quantity_profit))*100),0) as margin');
+                $this->db->from('profit');
+                $this->db->join('transaction t1', 'profit.transaction_idbuy_buy = t1.idbuy');
+                $this->db->join('transaction t2', 'profit.transaction_idbuy_sell = t2.idbuy');
+                $this->db->join('characters', 't2.character_eve_idcharacter = characters.eve_idcharacter');
+                $this->db->where('characters.eve_idcharacter', $this->character_id);
+                $this->db->where('date(t2.time)', $date);
+                $margin = $this->db->get('');
+                $margin_val = $margin->row()->margin;
+
+                $data = array(
+                    "characters_eve_idcharacters" => $this->character_id,
+                    "date"                        => $date,
+                    "total_buy"                   => $purchases_sum_val,
+                    "total_sell"                  => $sales_sum_val,
+                    "total_profit"                => $profits_sum_val,
+                    "margin"                      => $margin_val,
+                );
+                $this->db->replace('history', $data);
+            }
+        }
+        //}
         if (!$global) {
             return $character_list->result();
         }
