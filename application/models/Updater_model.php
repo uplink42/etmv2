@@ -745,9 +745,6 @@ class Updater_model extends CI_Model
             for ($i = 0; $i <= $max_days; $i++) {
                 $date = date_sub($dt, date_interval_create_from_date_string('1 days'))->format('Y-m-d');
                 $this->character_id = $row->character_eve_idcharacter;
-
-                log_message('error', print_r($date,1));
-
                 //sum of sales
                 $this->db->select('coalesce(sum(price_total),0) as sum');
                 $this->db->where('character_eve_idcharacter', $this->character_id);
