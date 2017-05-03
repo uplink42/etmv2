@@ -124,7 +124,6 @@ final class Apikeymanagement extends MY_Controller
                 //add characters
                 if (!$create_error) {
                     $notice = "success";
-                    log_message('error', Msg::CHARACTER_CREATE_SUCCESS);
                     $msg = Msg::CHARACTER_CREATE_SUCCESS;
                 } else {
                     $notice = "error";

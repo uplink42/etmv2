@@ -13,7 +13,6 @@ final class Updater extends CI_Controller
         parent::__construct();
         $this->db->cache_off();
         $this->db->cache_delete_all();
-        $this->load->library('etmsession');
         $this->load->model('common/Msg');
         $this->load->model('common/Log');
         $this->load->library('twig');

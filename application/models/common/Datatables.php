@@ -34,7 +34,7 @@ class Datatables extends CI_Model
         $max_results = $max_query->num_rows();
         $sum         = $this->count($results);
 
-        if (isset($this->defs['length']) &&  $this->defs['length'] < 0) {
+        if (isset($this->defs['length']) && $this->defs['length'] < 0) {
             // pagination not requested
             $page_query   = $max_query;
             $page_results = $max_results;
