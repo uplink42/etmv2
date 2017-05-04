@@ -147,7 +147,7 @@ class Assets_model extends CI_Model
         $this->db->join('item i', 'i.eve_iditem = a.item_eve_iditem');
         $this->db->join('characters c', 'c.eve_idcharacter = a.characters_eve_idcharacters');
         $this->db->join('station st', 'st.eve_idstation = a.locationID', 'left');
-        $this->db->join('system sys', 'sys.eve_idsystem = a.locationID', 'left');
+        $this->db->join('system sys', 'sys.eve_idsystem = st.system_eve_idsystem', 'left');
         $this->db->join('region r', 'r.eve_idregion = sys.region_eve_idregion', 'left');
         $this->db->join('item_price_data pr', 'pr.item_eve_iditem = a.item_eve_iditem');
         $this->db->where('c.eve_idcharacter IN ' . $chars);
