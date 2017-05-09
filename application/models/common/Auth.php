@@ -32,7 +32,7 @@ class Auth extends CI_Model
      */
     public function generateRandomPassword()
     {
-        return $this->getRandomString("abcdefghijklmnopqrstuwxyz1234567890_!#$%&=?", 10);
+        return $this->getRandomString("abcdefghijklmnopqrstuwxyz1234567890_!#$%&=?", 24);
     }
 
     /**

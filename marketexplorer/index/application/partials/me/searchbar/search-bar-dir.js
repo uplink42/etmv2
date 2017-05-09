@@ -1,4 +1,4 @@
-app.directive('searchBar', [
+me.directive('searchBar', [
     'config',
     '$http',
     'regionListFact', 
@@ -10,7 +10,7 @@ app.directive('searchBar', [
         "use strict";
 
         return {
-            templateUrl: config.dist + '/partials/searchbar/search-bar-view.html',
+            templateUrl: config.dist + '/partials/me/searchbar/search-bar-view.html',
             restrict: 'E',
             scope: {
                 item: '=',
@@ -26,7 +26,9 @@ app.directive('searchBar', [
                 getAllRegions();
 
                 $scope.$watch('item', function(newValue, oldValue) {
-                    $scope.search.item = newValue.name;
+                    if (newValue) {
+                        $scope.search.item = newValue.name;
+                    }
                 }, true);
 
                 // item autocomplete

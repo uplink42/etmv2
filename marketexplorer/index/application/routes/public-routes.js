@@ -4,10 +4,20 @@ app.config(
     'config',
     function($stateProvider, $urlRouterProvider, config) {
         $urlRouterProvider.otherwise('/');
-        $stateProvider.state('home', {
+        $stateProvider
+        .state('home', {
             url: '/',
-            controller: 'appCtrl',
+            controller: 'homeCtrl',
+        })
+        .state('marketexplorer', {
+            url: '/marketexplorer',
+            controller: 'marketExplorerCtrl',
             templateUrl: config.dist + '/home/main-list-view.html'
+        })
+        .state('tradefinder', {
+            url: '/tradefinder',
+            controller: 'tradeFinderCtrl',
+            templateUrl: config.dist + '/home/trade-finder-view.html'
         });
     }
 ]);
