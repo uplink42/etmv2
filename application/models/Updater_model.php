@@ -58,7 +58,7 @@ class Updater_model extends CI_Model
     /**
      * Generates the data (totals) for the update table
      * @param  string $username 
-     * @return array           character and account totals
+     * @return array character and account totals
      */
     public function resultTable(string $username): array
     {
@@ -161,39 +161,8 @@ class Updater_model extends CI_Model
         }
 
         return $result;
-        //count user keys again (check if none left)
-        /*if (count($this->getKeys($username)) != 0) {
-            return true;
-        } 
-        return false;*/
     }
 
-    /**
-     * Removes invalid api keys from a users' account
-     * @param  int $apikey  
-     * @param  string $vcode   
-     * @param  string $char_id 
-     * @return void          
-     */
-    /*public function checkCharacterKeys(int $apikey, string $vcode, string $char_id) : void
-    {
-        $result = $this->validateAPIKey($apikey, $vcode, $char_id);
-        if ($result < 1 || !$result) {
-            $this->db->select('name');
-            $this->db->where('eve_idcharacter', $char_id);
-            $query          = $this->db->get('characters');
-            $character_name = $query->row()->name;
-
-            $this->db->where('character_eve_idcharacter', $char_id);
-            $query = $this->db->get('aggr');
-            $res = $query->row()->user_iduser;
-            $data = array(
-                "user_iduser" => $res,
-            );
-
-            $this->db->delete('aggr', $data);
-        }
-    }*/
 
     /**
      * Performs validation checks for each key's result
@@ -263,7 +232,6 @@ class Updater_model extends CI_Model
             $this->vcode = $vcode;
 
             // get character data
-            // transaction missing return false
             $this->getWalletBalance();
             $this->getBrokerRelationsLevel();
             $this->getAccountingLevel();

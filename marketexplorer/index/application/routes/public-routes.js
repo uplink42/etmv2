@@ -7,17 +7,18 @@ app.config(
         $stateProvider
         .state('home', {
             url: '/',
-            controller: 'homeCtrl',
+            abstract: true,
+            templateUrl: config.dist + '/templates/public-template.html'
         })
-        .state('marketexplorer', {
-            url: '/marketexplorer',
-            controller: 'marketExplorerCtrl',
-            templateUrl: config.dist + '/home/main-list-view.html'
+        .state('home.register', {
+            url: '/register',
+            controller: 'registerCtrl',
+            templateUrl: config.dist + '/partials/register/register-view.html'
         })
-        .state('tradefinder', {
-            url: '/tradefinder',
-            controller: 'tradeFinderCtrl',
-            templateUrl: config.dist + '/home/trade-finder-view.html'
+        .state('home.login', {
+            url: '/login',
+            controller: 'loginCtrl',
+            templateUrl: config.dist + '/partials/login/login-view.html'
         });
     }
 ]);
