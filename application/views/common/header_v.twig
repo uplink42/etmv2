@@ -106,9 +106,14 @@
             </li>
             <li class="marketexplorer">
                 <a href="{{ base_url('marketexplorer/index/' ~ character_id ~ '?aggr=' ~ aggregate) }}">
-                    <i class="fa fa-database"></i> NEW! Market Explorer
+                    <i class="fa fa-database"></i> Market Explorer
                 </a>
             </li>
+            {# <li class="tradefinder">
+                <a href="{{ base_url('tradefinder/index/' ~ character_id ~ '?aggr=' ~ aggregate ~ '&tf=1') }}">
+                    <i class="fa fa-map-signs"></i> NEW! Trade Finder
+                </a>
+            </li> #}
             <li class="tradesimulator">
                 <a href="{{ base_url('tradesimulator/index/' ~ character_id ~ '?aggr=' ~ aggregate) }}">
                     <i class="fa fa-files-o"></i> Trade Simulator

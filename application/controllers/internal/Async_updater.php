@@ -64,6 +64,7 @@ class Async_updater extends CI_Controller
                             } else {
                                 // no invalid keys
                                 $this->Updater_model->lock($username);
+                                sleep(1);
                                 exec("php /var/www/html/v2 && php index.php internal/Async_procedure index " . $iduser . " > /dev/null &");
                             }
                         }

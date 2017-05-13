@@ -1,11 +1,11 @@
-app.directive('chart', [
+me.directive('chart', [
     'config',
     'marketHistoryFact', 
     function(config, marketHistoryFact) {
         "use strict";
 
         return {
-            templateUrl: config.dist + '/partials/chart/chart-view.html',
+            templateUrl: config.dist + '/partials/me/chart/chart-view.html',
             restrict: 'E',
             scope: {
                 item: '=',

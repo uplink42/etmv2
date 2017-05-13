@@ -1,0 +1,25 @@
+<section class="content">
+    <div class="container-fluid">
+    	<div class="row" style="margin-top: 20px;">
+            <div class="col-lg-12">
+                {% include 'common/view-header_v' ~ '.twig' %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="panel panel-filled panel-c-success panel-main">
+                    <div class="panel-heading">
+                        <a href="{{base_url('Marketorders/index/' ~ character_id ~ '?aggr=' ~ aggregate ~ '&check=1')}}">
+                        </a>
+                        Trade Finder
+                    </div>
+                    <div class="panel-body">
+                        <i class="fa fa-info yellow"></i> You can check the current state of your orders (undercut, expired or on top of the list) with Order Check at the right <br />
+                        <i class="fa fa-info yellow"></i> There is a 6 minute cache timer between requests, so spamming this button only pushes you back in the waiting period.
+                    </div>
+                </div> 
+            </div>
+        </div>
+        {% include 'marketexplorer/index.html' %}
+    </div>
+</section>

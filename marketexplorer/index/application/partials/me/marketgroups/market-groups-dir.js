@@ -1,4 +1,4 @@
-app.directive('marketGroups', [
+me.directive('marketGroups', [
     'config',
     'marketGroupsFact',
     'marketTypesFact',
@@ -6,7 +6,7 @@ app.directive('marketGroups', [
         "use strict";
         
         return {
-            templateUrl: config.dist + '/partials/marketgroups/market-groups-view.html',
+            templateUrl: config.dist + '/partials/me/marketgroups/market-groups-view.html',
             restrict: 'E',
             scope: {
                 region: '=',
@@ -15,9 +15,9 @@ app.directive('marketGroups', [
             },
             controller: ['$scope', function($scope) {
                 let allGroups,
-                    allTypes = [];
+                    allTypes       = [];
                 $scope.subcatItems = {};
-                $scope.item = {};
+                $scope.item        = {};
                 $scope.subcatsView = config.dist + '/partials/marketgroups/cats/market-sub-cats-view.html';
 
                 marketGroupsFact
