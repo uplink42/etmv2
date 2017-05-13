@@ -102,4 +102,3 @@ First create an identical database and configure it on /config/database.php. Cha
 - Automatic item list update cron from CREST
 - Unit tests (lots of them)
 
-
