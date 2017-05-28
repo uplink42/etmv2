@@ -1,35 +1,5 @@
 SET FOREIGN_KEY_CHECKS=0;
 
-
-#
-# Data for the `item` table  (LIMIT 0,500)
-#
--- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: 11-Abr-2017 às 14:46
--- Versão do servidor: 10.0.29-MariaDB-1~xenial
--- PHP Version: 7.0.17-2+deb.sury.org~xenial+1
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `trader`
---
-
---
--- Extraindo dados da tabela `item`
---
-
 INSERT INTO `item` (`eve_iditem`, `name`, `volume`, `type`) VALUES
 (0, '#System', 0, 0),
 (2, 'Corporation', 0, 0),
@@ -29441,6 +29411,110 @@ INSERT INTO `item` (`eve_iditem`, `name`, `volume`, `type`) VALUES
 (45025, 'Brutix Navy Issue Sapphire Sungrazer SKIN (Permanent)', 0.01, 2103),
 (45026, 'Dominix Navy Issue Sapphire Sungrazer SKIN (Permanent)', 0.01, 2108),
 (45027, 'Megathron Navy Issue Sapphire Sungrazer SKIN (Permanent)', 0.01, 2108);
+INSERT INTO `invtypes` (`eve_iditem`, `name`, `volume`, `type`) VALUES
+(45027, 'Megathron Navy Issue Sapphire Sungrazer SKIN (Permanent)', 0.01, 2108),
+(45029, 'Stratios Tiancity Logo SKIN (Permanent)', 0.01, 0),
+(45030, 'Sun G5 (Yellow)', 1, 0),
+(45031, 'Sun K7 (Orange)', 1, 0),
+(45032, 'Sun K7 (Orange)', 1, 0),
+(45033, 'Sun K5 (Red Giant)', 1, 0),
+(45034, 'Sun B0 (Blue)', 1, 0),
+(45035, 'Sun F0 (White)', 1, 0),
+(45036, 'Sun G5 (Pink)', 1, 0),
+(45037, 'Sun K5 (Orange Bright)', 1, 0),
+(45038, 'Sun G3 (Pink Small)', 1, 0),
+(45039, 'Sun M0 (Orange radiant)', 1, 0),
+(45040, 'Sun M0 (Orange radiant)', 1, 0),
+(45041, 'Sun K3 (Yellow Small)', 1, 0),
+(45042, 'Sun B5 (White Dwarf)', 1, 0),
+(45043, 'Dagon Blueprint', 0.01, 0),
+(45044, 'Chemosh Blueprint', 0.01, 0),
+(45045, 'Molok Blueprint', 0.01, 0),
+(45046, 'Sun B0 (Blue)', 1, 0),
+(45047, 'Sun G5 (Yellow)', 1, 0),
+(45050, 'Amarr CA Frigate', 18100, 0),
+(45051, 'Amarr CA Destroyer', 28600, 0),
+(45053, 'Test Asteroid 1', 0, 0),
+(45054, 'Test Asteroid 2', 0, 0),
+(45055, '♦ Bhaalgorn', 486000, 0),
+(45056, '♦ Apocalypse', 495000, 0),
+(45057, 'Amarr CA Cruiser', 120000, 0),
+(45060, 'Vintage Frigate Blueprints', 0.01, 1661),
+(45061, 'Subspace Energy & You', 0.01, 1661),
+(45062, 'Replica Gold Magnate Decorative Plating', 0.01, 1661),
+(45461, 'Caldari CA Frigate', 19700, 0),
+(45462, 'Caldari CA Destroyer', 16500, 0),
+(45463, 'Caldari CA Cruiser', 101000, 0),
+(45464, 'Gallente CA Frigate', 29500, 0),
+(45465, 'Gallente CA Destroyer', 26500, 0),
+(45466, 'Gallente CA Cruiser', 113000, 0),
+(45467, 'Minmatar CA Frigate', 27289, 0),
+(45468, 'Minmatar CA Destroyer', 16450, 0),
+(45469, 'Minmatar CA Cruiser', 80000, 0),
+(45470, '♦ Chemosh', 18500000, 0),
+(45471, '♦ Molok', 155000000, 0),
+(45472, '♦ Molok', 155000000, 0),
+(45473, '♦ Dagon', 18135000, 0),
+(45474, '♦ Chemosh', 18500000, 0),
+(45480, 'Enforcer CONCORD Aerospace \'Prototype\' SKIN (Permanent)', 0.01, 2362),
+(45481, 'Pacifier CONCORD Aerospace \'Prototype\' SKIN (Permanent)', 0.01, 2361),
+(45482, 'Capsule YC119 Capsuleer Day SKIN (Permanent)', 0.01, 2285),
+(45483, 'Astero SOE Gold Cell (Archaeology) SKIN (Permanent)', 0.01, 2031),
+(45484, 'Stratios SOE Gold Cell (Archaeology) SKIN (Permanent)', 0.01, 2030),
+(45485, 'Nestor SOE Gold Cell (Archaeology) SKIN (Permanent)', 0.01, 1963),
+(45486, 'Pacifier Blueprint', 0.01, 0),
+(45487, 'Enforcer Blueprint', 0.01, 0),
+(45505, 'Taipan Hostile Takeover SKIN (Permanent)', 0.01, 2360),
+(45507, 'Worm Hostile Takeover SKIN (Permanent)', 0.01, 2031),
+(45508, 'Gila Hostile Takeover SKIN (Permanent)', 0.01, 2030),
+(45509, 'Rattlesnake Hostile Takeover SKIN (Permanent)', 0.01, 1963),
+(45514, 'ExplorationSuit_F01_SOE.type', 0.1, 0),
+(45515, 'ExplorationSuit_F01_Caldari.type', 0.1, 0),
+(45516, 'ExplorationSuit_F01_Minmatar.type', 0.1, 0),
+(45517, 'ExplorationSuit_F01_Gallente.type', 0.1, 0),
+(45518, 'ExplorationSuit_F01_Amarr.type', 0.1, 0),
+(45519, 'ExplorationSuit_F01_CaldariOrange.type', 0.1, 0),
+(45520, 'ExplorationSuit_F01_ORE.type', 0.1, 0),
+(45521, 'ExplorationSuit_M01_Gallente.type', 0.1, 0),
+(45522, 'ExplorationSuit_M01_ORE.type', 0.5, 0),
+(45523, 'ExplorationSuit_M01_SOE.type', 0.1, 0),
+(45524, 'ExplorationSuit_M01_Caldari.type', 0.1, 0),
+(45525, 'ExplorationSuit_M01_Minmatar.type', 0.1, 0),
+(45526, 'ExplorationSuit_M01_Amarr.type', 0.1, 0),
+(45527, 'ExplorationSuit_M01_CaldariOrange.type', 0.1, 0),
+(45528, 'Marshal Blueprint', 0.01, 0),
+(45552, 'Guristas Victory SKIN (Permanent)', 0.01, 2120),
+(45553, 'Hurricane Hazard Control SKIN (Permanent)', 0.01, 1959),
+(45554, 'Rifter Hazard Control SKIN (Permanent)', 0.01, 2005),
+(45555, 'Nidhoggur Hazard Control SKIN (Permanent)', 0.01, 1977),
+(45556, 'Hel Hazard Control SKIN (Permanent)', 0.01, 1977),
+(45557, 'Sabre Hazard Control SKIN (Permanent)', 0.01, 2041),
+(45558, 'Naglfar Hazard Control SKIN (Permanent)', 0.01, 1983),
+(45559, 'Typhoon Hazard Control SKIN (Permanent)', 0.01, 1967),
+(45560, 'Tristan Ruby Sungrazer SKIN (Permanent)', 0.01, 2004),
+(45561, 'Helios Ruby Sungrazer SKIN (Permanent)', 0.01, 2053),
+(45562, 'Algos Ruby Sungrazer SKIN (Permanent)', 0.01, 1996),
+(45563, 'Catalyst Ruby Sungrazer SKIN (Permanent)', 0.01, 1996),
+(45564, 'Hecate Ruby Sungrazer SKIN (Permanent)', 0.01, 2356),
+(45565, 'Thorax Ruby Sungrazer SKIN (Permanent)', 0.01, 1992),
+(45566, 'Vexor Ruby Sungrazer SKIN (Permanent)', 0.01, 1992),
+(45567, 'Ishtar Ruby Sungrazer SKIN (Permanent)', 0.01, 2071),
+(45568, 'Vexor Navy Issue Ruby Sungrazer SKIN (Permanent)', 0.01, 2063),
+(45569, 'Dominix Ruby Sungrazer SKIN (Permanent)', 0.01, 1966),
+(45570, 'Megathron Ruby Sungrazer SKIN (Permanent)', 0.01, 1966),
+(45571, 'Kronos Ruby Sungrazer SKIN (Permanent)', 0.01, 2026),
+(45572, 'Moros Ruby Sungrazer SKIN (Permanent)', 0.01, 1982),
+(45573, 'Thanatos Ruby Sungrazer SKIN (Permanent)', 0.01, 1976),
+(45574, 'Nyx Ruby Sungrazer SKIN (Permanent)', 0.01, 1976),
+(45575, 'Epithal Ruby Sungrazer SKIN (Permanent)', 0.01, 2009),
+(45576, 'Iteron Mark V Ruby Sungrazer SKIN (Permanent)', 0.01, 2009),
+(45577, 'Miasmos Ruby Sungrazer SKIN (Permanent)', 0.01, 2009),
+(45578, 'Nereus Ruby Sungrazer SKIN (Permanent)', 0.01, 2009),
+(45579, 'Viator Ruby Sungrazer SKIN (Permanent)', 0.01, 2090),
+(45580, 'Occator Ruby Sungrazer SKIN (Permanent)', 0.01, 2090),
+(45581, 'Obelisk Ruby Sungrazer SKIN (Permanent)', 0.01, 1986),
+(45582, 'Erebus Ruby Sungrazer SKIN (Permanent)', 0.01, 1979),
+(45635, 'Small Skill Injector', 0.002, 2358);
 
 COMMIT;
 SET FOREIGN_KEY_CHECKS=1;
