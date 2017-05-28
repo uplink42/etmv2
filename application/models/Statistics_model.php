@@ -50,6 +50,15 @@ class Statistics_model extends CI_Model
             $inner .= "SELECT " . $i . " UNION ALL ";
         }
 
+        // only get results starting from the signup date forwards
+        $this->db->select('date');
+        $this->db->from('history');
+        $this->db->where('characters_eve_idcharacters IN ' . $chars);
+        $this->db->order_by('date', 'asc');
+        $this->db->limit(1);
+        $query = $this->db->get('');
+        $startDate = $query->row()->date;
+
         $fromStr = "(SELECT 0 i UNION ALL " . $inner . " SELECT " . $interval . ") i";
 
         $this->db->select("DATE_SUB(CURDATE(), INTERVAL i DAY) date, sum(total_buy) as sum");
@@ -73,6 +82,7 @@ class Statistics_model extends CI_Model
         $this->db->select('days');
         $this->db->from('calendar');
         $this->db->where('days>= (now() - INTERVAL ' . $interval . ' DAY) AND days <= DATE(NOW())');
+        $this->db->where('days >=', $startDate);
         $this->db->order_by('days', 'asc');
         $query3 = $this->db->get();
         $dates  = $query3->result_array();
