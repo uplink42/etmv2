@@ -26,7 +26,6 @@ class Contracts_model extends CI_Model
      */
     public function getContracts(string $chars, string $filter = null, string $state, int $new = null) : array
     {
-        $this->db->distinct();
         $this->db->select('c.eve_idcontracts as contract_id,
                            c.issuer_id as issuer_id,
                            c.acceptor_id as acceptor_id,
@@ -59,7 +58,7 @@ class Contracts_model extends CI_Model
                     ('deleted', 'completed', 'failed', 'completedByIssuer', 'completedByContractor', 'cancelled', 'rejected', 'reversed')");
         }
 
-        $query  = $this->db->get('contracts');
+        $query  = $this->db->get('');
         $result = $query->result_array();
 
         // modify the result array to include character names

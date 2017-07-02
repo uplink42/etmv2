@@ -32,7 +32,7 @@ class Auth extends CI_Model
      */
     public function generateRandomPassword()
     {
-        return $this->getRandomString("abcdefghijklmnopqrstuwxyz1234567890_!#$%&=?", 24);
+        return $this->getRandomString("abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_!#$%&=?", 24);
     }
 
     /**
@@ -96,6 +96,8 @@ class Auth extends CI_Model
         if (!isset($session['username']) || !isset($session['email']) || !isset($session['password'])) {
             return false;
         }
+
+               
 
         $this->db->where('username', $session['username']);
         $this->db->where('email', $session['email']);

@@ -31,7 +31,7 @@ final class Main extends MY_Controller
         // check if session is already present
         $this->load->library('etmsession');
         $this->load->model('common/Auth', 'auth');
-        if ($this->auth->validateSession($_SESSION)) {
+        if (isset($_SESSION['username']) && isset($_SESSION['email']) && $this->auth->validateSession($_SESSION)) {
             $data['auth'] = true;
         } else {
             $data['auth'] = false;

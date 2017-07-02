@@ -29516,5 +29516,34 @@ INSERT INTO `invtypes` (`eve_iditem`, `name`, `volume`, `type`) VALUES
 (45582, 'Erebus Ruby Sungrazer SKIN (Permanent)', 0.01, 1979),
 (45635, 'Small Skill Injector', 0.002, 2358);
 
+INSERT INTO `items` (`eve_iditem`, `name`, `volume`, `type`) VALUES
+(45636, 'Swarm Overmind Tertius', 60, 0),
+(45637, 'Swarm Overmind Secundus', 60, 0),
+(45638, 'Swarm Overmind Primus', 1010000, 0),
+(45640, 'Standup M-Set Thukker Advanced Component Manufacturing Material Efficiency', 10, 2347),
+(45641, 'Standup L-Set Thukker Advanced Component Manufacturing Efficiency', 20, 2348),
+(45642, 'Standup M-Set Thukker Advanced Component Manufacturing Material Efficiency Blueprint', 0.01, 0),
+(45643, 'Standup L-Set Thukker Advanced Component Manufacturing Efficiency Blueprint', 0.01, 0),
+(45652, 'Superconducting Magnetometric Amplifier', 5, 1147),
+(45653, 'Superconducting Gravimetric Amplifier', 5, 1147),
+(45654, 'Superconducting Radar Amplifier', 5, 1147),
+(45655, ' Superconducting Ladar Amplifier', 5, 1147),
+(45656, 'Superconducting Magnetometric Amplifier Blueprint', 0.01, 1191),
+(45657, ' Superconducting Gravimetric Amplifier Blueprint', 0.01, 1191),
+(45658, ' Superconducting Radar Amplifier Blueprint', 0.01, 1191),
+(45659, ' Superconducting Ladar Amplifier Blueprint', 0.01, 1191),
+(45660, 'Scorched Microgravimeter', 0.01, 1862),
+(45661, 'Faraday Force Magnetometer', 0.01, 1862),
+(45662, 'Ancient Radar Decorrelator', 0.01, 1862),
+(45663, 'Synthetic Aperture Ladar Receiver', 0.01, 1862),
+(45664, 'Sin Ruby Sungrazer SKIN (Permanent)', 0.01, 2112),
+(45665, 'Abaddon Star Captain SKIN (Permanent)', 0.01, 1964),
+(45666, 'Apocalypse Star Captain SKIN (Permanent)', 0.01, 1964),
+(45667, 'Armageddon Star Captain SKIN (Permanent)', 0.01, 1964),
+(45668, 'Machariel Angel\'s Hex SKIN (Permanent)', 0.01, 1963),
+(45677, 'Blood Raider Molok Blueprint Armored Cache', 20000, 2317),
+(45678, 'Blood Raider Chemosh Blueprint Armored Cache', 20000, 2317),
+(45679, 'Blood Raider Dagon Blueprint Armored Cache', 20000, 2317);
+
 COMMIT;
 SET FOREIGN_KEY_CHECKS=1;
