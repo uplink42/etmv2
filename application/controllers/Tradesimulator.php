@@ -16,12 +16,12 @@ final class TradeSimulator extends MY_Controller
 
     /**
      * Loads the trade simulator page
-     * @param  int        $character_id 
-     * @param  array|null $msg            error msg from previous page       
+     * @param  int        $character_id
+     * @param  array|null $msg            error msg from previous page
      * @param  [type]     $res            display results state?
-     * @return void         
+     * @return void
      */
-    public function index($character_id, $res = null) : void
+    public function index($character_id, $res = null): void
     {
         if ($this->enforce($character_id, $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
@@ -51,8 +51,8 @@ final class TradeSimulator extends MY_Controller
 
     /**
      * Gets all trade routes for this user
-     * @param  int    $character_id 
-     * @return array               
+     * @param  int    $character_id
+     * @return array
      */
     public function listTradeRoutes(int $character_id): array
     {
@@ -76,10 +76,10 @@ final class TradeSimulator extends MY_Controller
 
     /**
      * Begins the price check
-     * @param  int    $character_id 
-     * @return string json          
+     * @param  int    $character_id
+     * @return string json
      */
-    public function process(int $character_id) : void
+    public function process(int $character_id): void
     {
         if (!empty($_REQUEST['origin-station']) &&
             !empty($_REQUEST['buy-method']) &&
@@ -92,19 +92,19 @@ final class TradeSimulator extends MY_Controller
             $this->load->model('common/ValidateRequest');
             $list_id = (int) $_REQUEST['stocklist'];
             $user_id = (int) $this->user_id;
-            
-            if(!$this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
+
+            if (!$this->ValidateRequest->checkStockListOwnership($list_id, $user_id)) {
                 $msg = array("notice" => "error", "message" => Msg::LIST_NOT_BELONG);
                 $this->index($character_id, $msg);
             }
 
             $origin_station      = (string) $_REQUEST['origin-station'];
             $destination_station = (string) $_REQUEST['destination-station'];
-            $buyer               = (int)    $_REQUEST['buyer'];
-            $seller              = (int)    $_REQUEST['seller'];
+            $buyer               = (int) $_REQUEST['buyer'];
+            $seller              = (int) $_REQUEST['seller'];
             $buy_method          = (string) $_REQUEST['buy-method'];
             $sell_method         = (string) $_REQUEST['sell-method'];
-            $stocklist           = (int)    $_REQUEST['stocklist'];
+            $stocklist           = (int) $_REQUEST['stocklist'];
 
             $this->stationFrom = $this->ts->getStationID($_REQUEST['origin-station']);
             $this->stationTo   = $this->ts->getStationID($_REQUEST['destination-station']);

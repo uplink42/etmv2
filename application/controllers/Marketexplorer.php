@@ -9,13 +9,12 @@ final class MarketExplorer extends MY_Controller
         $this->page = "marketexplorer";
     }
 
-
     /**
      * Loads the market explorer javascript app
-     * @param  int    $character_id 
-     * @return void               
+     * @param  int    $character_id
+     * @return void
      */
-    public function index($character_id) : void
+    public function index($character_id): void
     {
         if ($this->enforce($character_id, $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);

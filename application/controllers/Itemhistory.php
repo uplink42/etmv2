@@ -18,7 +18,7 @@ final class Itemhistory extends MY_Controller
      * @param  int|null    $item_id
      * @return void
      */
-    public function index($character_id, $interval = 30, $item_id = null): void
+    public function index($character_id, int $interval = 30, int $item_id = null): void
     {
         if ($this->enforce($character_id, $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
@@ -39,11 +39,11 @@ final class Itemhistory extends MY_Controller
         }
     }
 
-    public function getItemStats($item_id)
+    public function getItemStats(int $item_id)
     {
-        $character_id = $this->input->post('chars');
-        $interval     = $this->input->post('interval');
-        $aggr         = $this->input->post('aggr');
+        $character_id = (int) $this->input->post('chars');
+        $interval     = (int) $this->input->post('interval');
+        $aggr         = (int) $this->input->post('aggr');
 
         if (!$item_id || !$character_id || !$interval || !$aggr) {
             echo Msg::INVALID_REQUEST;
@@ -51,7 +51,7 @@ final class Itemhistory extends MY_Controller
         }
 
         $params = ['interval' => $interval,
-                   'item_id'  => $item_id];
+            'item_id'             => $item_id];
 
         echo $this->buildData($character_id, $aggr, 'getStatsByInterval', 'Itemhistory_model', $params);
     }

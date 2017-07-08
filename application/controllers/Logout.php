@@ -16,7 +16,7 @@ final class Logout extends CI_Controller
      * Terminates a user session
      * @return bool
      */
-    public function index() : bool
+    public function index(): bool
     {
         $data['view'] = "login/login_v";
         buildMessage("success", Msg::LOGOUT, $data['view']);

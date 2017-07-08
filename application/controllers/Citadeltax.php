@@ -25,10 +25,10 @@ final class CitadelTax extends MY_Controller
 
     /**
      * Loads the Citadel tax page
-     * @param  int    $character_id 
-     * @return void              
+     * @param  int    $character_id
+     * @return void
      */
-    public function index($character_id) : void
+    public function index($character_id): void
     {
         if ($this->enforce($character_id, $user_id = $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
@@ -51,7 +51,7 @@ final class CitadelTax extends MY_Controller
      * Returns Citadels autocomplete results
      * @return string json
      */
-    public function searchCitadels() : void
+    public function searchCitadels(): void
     {
         $input  = $_REQUEST['term'];
         $result = $this->CitadelTax_model->queryCitadels($input);
@@ -62,7 +62,7 @@ final class CitadelTax extends MY_Controller
      * Validates and adds a tax to a certain citadel
      * @return string json
      */
-    public function addTax() : void
+    public function addTax(): void
     {
         $citadel_id = $this->CitadelTax_model->getCitadelID($this->citadel);
         if ($citadel_id) {
@@ -88,10 +88,10 @@ final class CitadelTax extends MY_Controller
 
     /**
      * Returns the citadel tax list for a user
-     * @param  int    $character_id 
-     * @return string json               
+     * @param  int    $character_id
+     * @return string json
      */
-    public function getTaxList(int $character_id) : void
+    public function getTaxList(int $character_id): void
     {
         echo json_encode($this->CitadelTax_model->taxList($character_id));
     }
@@ -99,10 +99,10 @@ final class CitadelTax extends MY_Controller
     /**
      * Removes a citadel tax entry
      * @param  int    $character_id
-     * @param  int    $tax_id      
-     * @return string json              
+     * @param  int    $tax_id
+     * @return string json
      */
-    public function removeTax(int $character_id, int $tax_id) : void
+    public function removeTax(int $character_id, int $tax_id): void
     {
         if ($this->ValidateRequest->checkCitadelOwnership($character_id, $tax_id)) {
             if ($this->CitadelTax_model->removeTax($tax_id)) {

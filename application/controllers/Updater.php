@@ -28,7 +28,7 @@ final class Updater extends CI_Controller
     {
         $username = $this->etmsession->get('username');
         if (empty($username)) {
-            redirect ('main/login');
+            redirect('main/login');
             return;
         }
 
@@ -43,7 +43,7 @@ final class Updater extends CI_Controller
             log_message('error', $e->getMessage());
             return;
         }
-        
+
         // check if API server is up
         if (!$this->ValidateRequest->testEndpoint()) {
             $this->removeDirectory(FILESTORAGE . 'public/public/server');
@@ -59,7 +59,7 @@ final class Updater extends CI_Controller
             $this->displayResultTable($username);
             return;
         }
-            
+
         // check if user has any keys
         $keys = $this->Updater_model->getKeys($username);
         if (count($keys) == 0) {
@@ -79,9 +79,9 @@ final class Updater extends CI_Controller
             buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
             $this->displayResultTable($username);
             return;
-        } 
+        }
 
-        foreach($keys_status as $key => $val) {
+        foreach ($keys_status as $key => $val) {
             $invalid_keys = [];
             if ($val < 1) {
                 array_push($invalid_keys, $key);
@@ -158,8 +158,8 @@ final class Updater extends CI_Controller
 
     /**
      * Remove a cache directory
-     * @param  string $path 
-     * @return void      
+     * @param  string $path
+     * @return void
      */
     private function removeDirectory(string $path)
     {
@@ -174,8 +174,8 @@ final class Updater extends CI_Controller
 
     /**
      * Load the user result table after updating
-     * @param  string $username 
-     * @return void         
+     * @param  string $username
+     * @return void
      */
     private function displayResultTable(string $username)
     {
@@ -204,7 +204,7 @@ final class Updater extends CI_Controller
         $data['view']      = "login/select_nocharacter_v";
         $data['no_header'] = 1;
         buildMessage('error', Msg::LOGIN_NO_CHARS);
-        $data['SESSION']   = $_SESSION; // not part of MY_Controller
+        $data['SESSION'] = $_SESSION; // not part of MY_Controller
         $this->twig->display('main/_template_v', $data);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-ini_set('memory_limit','512M');
+ini_set('memory_limit', '512M');
 
 final class Transactions extends MY_Controller
 {
@@ -23,11 +23,11 @@ final class Transactions extends MY_Controller
 
     /**
      * Displays the transactions page
-     * @param  int         $character_id 
-     * @param  int|integer $interval     
-     * @return void               
+     * @param  int         $character_id
+     * @param  int|integer $interval
+     * @return void
      */
-    public function index($character_id, $interval = 14) : void
+    public function index($character_id, int $interval = 14): void
     {
         if ($interval > 365) {
             $interval = 365;
@@ -44,14 +44,14 @@ final class Transactions extends MY_Controller
             $this->load->model('Transactions_model');
             if ($this->transID) {
                 $interval = 9999;
-                $res = (bool) $this->ValidateRequest->checkTransactionOwnership($this->transID, $this->user_id);
+                $res      = (bool) $this->ValidateRequest->checkTransactionOwnership($this->transID, $this->user_id);
                 if (!$res) {
                     $data["notice"]  = "error";
                     $data["message"] = Msg::TRANSACTION_NOT_BELONG;
                 }
             }
-            $data['interval']     = $interval;
-            $data['view']         = 'main/transactions_v';
+            $data['interval'] = $interval;
+            $data['view']     = 'main/transactions_v';
 
             $data['layout']['page_title']     = "Transactions";
             $data['layout']['icon']           = "pe-7s-menu";
@@ -60,14 +60,13 @@ final class Transactions extends MY_Controller
         }
     }
 
-
     /**
      * Unlinks a transaction and echoes the result back to
      * the client
-     * @param  [type] $transaction_id 
-     * @return string json                
+     * @param  [type] $transaction_id
+     * @return string json
      */
-    public function unlink($transaction_id) : void
+    public function unlink(int $transaction_id): void
     {
         $this->load->model('Transactions_model');
         if ($this->ValidateRequest->checkTransactionOwnership($transaction_id, $this->user_id)) {
@@ -83,16 +82,15 @@ final class Transactions extends MY_Controller
         }
     }
 
-
     public function getTransactionList(int $character_id, int $interval = 1, bool $aggr = false)
     {
         //int $item_id = null, int $new = 0, string $transID
-        $params = [ 'interval'     => $interval,
-                    'character_id' => $character_id,
-                    'aggr'         => $aggr,
-                    'new'          => $this->new,
-                    'transID'      => $this->transID,
-                    'defs'         => $_REQUEST 
+        $params = ['interval' => $interval,
+            'character_id'        => $character_id,
+            'aggr'                => $aggr,
+            'new'                 => $this->new,
+            'transID'             => $this->transID,
+            'defs'                => $_REQUEST,
         ];
 
         if ($params['transID'] > 0) {
@@ -105,6 +103,6 @@ final class Transactions extends MY_Controller
             }
         }
 
-        echo $this->buildData($character_id, $aggr, 'getTransactionList', 'Transactions_model', $params); 
+        echo $this->buildData($character_id, $aggr, 'getTransactionList', 'Transactions_model', $params);
     }
 }

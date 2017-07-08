@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 final class Dashboard extends MY_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -12,13 +11,13 @@ final class Dashboard extends MY_Controller
         $this->load->model('Dashboard_model', 'dashboard');
     }
 
-   /**
-    * Loads the dashboard page
-    * @param  int         $character_id 
-    * @param  int|integer $interval     
-    * @return void                    
-    */
-    public function index($character_id, $interval = 1) : void
+    /**
+     * Loads the dashboard page
+     * @param  int         $character_id
+     * @param  int|integer $interval
+     * @return void
+     */
+    public function index($character_id, int $interval = 1): void
     {
         if ($interval > 7) {
             $interval = 7;
@@ -30,8 +29,8 @@ final class Dashboard extends MY_Controller
             $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
             $chars     = $data['chars'];
 
-            $data['selected'] = "dashboard";
-            $data['interval'] = $interval;
+            $data['selected']       = "dashboard";
+            $data['interval']       = $interval;
             $data['week_profits']   = $this->dashboard->getWeekProfits($chars);
             $data['new_info']       = $this->dashboard->getNewInfo($chars);
             $data['profits_trends'] = $this->dashboard->getTotalProfitsTrends($chars);
@@ -45,21 +44,19 @@ final class Dashboard extends MY_Controller
         }
     }
 
-
-    public function getPieChart(int $character_id, bool $aggr = false) : void
+    public function getPieChart(int $character_id, bool $aggr = false): void
     {
         $params = [];
-        echo $this->buildData($character_id, $aggr, 'getPieChartData', 'Dashboard_model', $params); 
+        echo $this->buildData($character_id, $aggr, 'getPieChartData', 'Dashboard_model', $params);
     }
 
-
-    public function getProfitTable(int $character_id, int $interval = 3, bool $aggr = false) : void
+    public function getProfitTable(int $character_id, int $interval = 3, bool $aggr = false): void
     {
         $params = ['interval' => $interval,
-                   'user_id'  => $this->user_id,
-                   'defs'     => $_REQUEST
-                   ];
-                   
-        echo $this->buildData($character_id, $aggr, 'getProfits', 'Dashboard_model', $params); 
+            'user_id'             => $this->user_id,
+            'defs'                => $_REQUEST,
+        ];
+
+        echo $this->buildData($character_id, $aggr, 'getProfits', 'Dashboard_model', $params);
     }
 }

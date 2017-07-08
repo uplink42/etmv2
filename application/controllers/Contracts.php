@@ -42,16 +42,16 @@ final class Contracts extends MY_Controller
         }
 
         if (isset($_REQUEST['new'])) {
-            $this->new = (int)$_REQUEST['new'];
+            $this->new = (int) $_REQUEST['new'];
         };
     }
 
     /**
      * Loads the contracts page
-     * @param  int    $character_id 
-     * @return void               
+     * @param  int    $character_id
+     * @return void
      */
-    public function index($character_id) : void
+    public function index($character_id): void
     {
         if ($this->enforce($character_id, $user_id = $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);

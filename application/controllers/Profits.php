@@ -13,12 +13,12 @@ final class Profits extends MY_Controller
 
     /**
      * Loads the Profits page
-     * @param  int         $character_id 
-     * @param  int|integer $interval     
-     * @param  int|null    $item_id     
-     * @return void                   
+     * @param  int         $character_id
+     * @param  int|integer $interval
+     * @param  int|null    $item_id
+     * @return void
      */
-    public function index($character_id, $item_id = null) : void
+    public function index($character_id, $item_id = null): void
     {
         $interval = 7;
         if ($this->enforce($character_id, $this->user_id)) {
@@ -40,24 +40,22 @@ final class Profits extends MY_Controller
         }
     }
 
-
     public function getProfitChart(int $character_id, int $interval = 1, bool $aggr, int $item_id = null)
     {
         $params = ['interval' => $interval,
-                   'item_id'  => $item_id ];
+            'item_id'             => $item_id];
 
-        echo $this->buildData($character_id, $aggr, 'getProfitChartData', 'Profits_model', $params); 
+        echo $this->buildData($character_id, $aggr, 'getProfitChartData', 'Profits_model', $params);
     }
-
 
     public function getProfitTable(int $character_id, int $interval = 1, bool $aggr)
     {
-        $params = [ 'character_id' => $character_id,
-                    'aggr'         => $aggr,
-                    'interval'     => $interval,
-                    'user_id'      => $this->user_id,
-                    'defs'         => $_REQUEST];
+        $params = ['character_id' => $character_id,
+            'aggr'                    => $aggr,
+            'interval'                => $interval,
+            'user_id'                 => $this->user_id,
+            'defs'                    => $_REQUEST];
 
-        echo $this->buildData($character_id, $aggr, 'getProfits', 'Profits_model', $params); 
+        echo $this->buildData($character_id, $aggr, 'getProfits', 'Profits_model', $params);
     }
 }

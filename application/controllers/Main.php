@@ -12,10 +12,10 @@ final class Main extends MY_Controller
 
     /**
      * Loads the main template
-     * @param  string|null $view 
-     * @return void            
+     * @param  string|null $view
+     * @return void
      */
-    public function index($view = null) : void
+    public function index($view = null): void
     {
         $data['no_header'] = 1;
         $data['view']      = 'login/login_v';
@@ -26,7 +26,7 @@ final class Main extends MY_Controller
      * Loads the login page
      * @return void
      */
-    public function login() : void
+    public function login(): void
     {
         // check if session is already present
         $this->load->library('etmsession');
@@ -46,7 +46,7 @@ final class Main extends MY_Controller
      * Loads the registration page
      * @return void
      */
-    public function register() : void
+    public function register(): void
     {
         $data['no_header'] = 1;
         $data['view']      = 'register/register_v';
@@ -55,11 +55,11 @@ final class Main extends MY_Controller
 
     /**
      * Loads the header account data
-     * @param  int       $character_id 
-     * @param  bool|null $aggr         
-     * @return string json                  
+     * @param  int       $character_id
+     * @param  bool|null $aggr
+     * @return string json
      */
-    public function headerData(int $character_id, bool $aggr = null) : void
+    public function headerData(int $character_id, bool $aggr = null): void
     {
         $this->load->model('Nav_model');
         if ($this->ValidateRequest->checkCharacterBelong($character_id, $this->user_id, true)) {
@@ -80,13 +80,13 @@ final class Main extends MY_Controller
      * Dispatches an email
      * @return string json
      */
-    public function sendEmail() : void
+    public function sendEmail(): void
     {
         $to        = $_REQUEST['to'];
         $from      = $_REQUEST['email'];
         $from_name = $_REQUEST['from_name'];
         $subject   = $_REQUEST['subject'];
-        $body      = $_REQUEST['email'] .' -> '. $_REQUEST['message'];
+        $body      = $_REQUEST['email'] . ' -> ' . $_REQUEST['message'];
 
         $this->load->model('common/Email');
         $mail = $this->Email->send($to, $from, $from_name, $subject, $body);
@@ -105,7 +105,7 @@ final class Main extends MY_Controller
      * Loads the error messages to the client
      * @return string json
      */
-    public function getMsgHandles() : void
+    public function getMsgHandles(): void
     {
         $refl = new ReflectionClass('Msg');
         $data = $refl->getConstants();

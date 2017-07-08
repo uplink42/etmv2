@@ -13,11 +13,11 @@ final class Statistics extends MY_Controller
 
     /**
      * Loads the Statistics page
-     * @param  int         $character_id 
-     * @param  int|integer $interval     
-     * @return void                    
+     * @param  int         $character_id
+     * @param  int|integer $interval
+     * @return void
      */
-    public function index($character_id, $interval = 7) : void
+    public function index($character_id, int $interval = 7): void
     {
         if ($interval > 365) {
             $interval = 365;
@@ -25,11 +25,11 @@ final class Statistics extends MY_Controller
 
         if ($this->enforce($character_id, $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
-            $aggregate              = $this->aggregate;
-            $data                   = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
-            $chars                  = $data['chars'];
-            $data['selected']       = "statistics";
-            
+            $aggregate        = $this->aggregate;
+            $data             = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
+            $chars            = $data['chars'];
+            $data['selected'] = "statistics";
+
             $problematic             = $this->stats->getProblematicItems($chars, $interval);
             $profits_table           = $this->stats->getProfitsTable($chars, $interval);
             $best_raw                = $this->stats->getBestItemsRaw($chars, $interval);
@@ -84,23 +84,15 @@ final class Statistics extends MY_Controller
         }
     }
 
-
-    public function getVolumesChart(int $character_id, int $interval = 1, bool $aggr = false) : void
+    public function getVolumesChart(int $character_id, int $interval = 1, bool $aggr = false): void
     {
         $params = ['interval' => $interval];
-        echo $this->buildData($character_id, $aggr, 'buildVolumesChart', 'Statistics_model', $params);     
+        echo $this->buildData($character_id, $aggr, 'buildVolumesChart', 'Statistics_model', $params);
     }
 
-
-    public function getDistributionChart(int $character_id, int $interval = 1, bool $aggr = false) : void
+    public function getDistributionChart(int $character_id, int $interval = 1, bool $aggr = false): void
     {
         $params = ['interval' => $interval];
-        echo $this->buildData($character_id, $aggr, 'buildDistributionChart', 'Statistics_model', $params); 
-    }
-
-
-    public function getDailyRecap(int $character_id, int $interval = 1, bool $aggr = false) : void
-    {
-
+        echo $this->buildData($character_id, $aggr, 'buildDistributionChart', 'Statistics_model', $params);
     }
 }

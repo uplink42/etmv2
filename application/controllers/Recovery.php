@@ -18,10 +18,10 @@ final class Recovery extends CI_Controller
 
     /**
      * Loads the username/password recovery page
-     * @param  string $type 
-     * @return void       
+     * @param  string $type
+     * @return void
      */
-    public function index($type = "password") : void
+    public function index($type = "password"): void
     {
         $data['view']      = "recovery/recover_" . $type . "_v";
         $data['no_header'] = 1;
@@ -32,7 +32,7 @@ final class Recovery extends CI_Controller
      * Begins the password recovery validation
      * @return void
      */
-    public function recoverPassword() : void
+    public function recoverPassword(): void
     {
         $this->load->model('Recovery_model');
         $user_data = $this->Recovery_model->getUserByEmail($this->username, $this->email);
@@ -53,10 +53,10 @@ final class Recovery extends CI_Controller
 
     /**
      * Starts the password recovery procedure
-     * @param  stdClass $user_data 
-     * @return void              
+     * @param  stdClass $user_data
+     * @return void
      */
-    private function startPasswordRecovery(stdClass $user_data) : void
+    private function startPasswordRecovery(stdClass $user_data): void
     {
         $this->load->model('common/Auth');
         $new_password = $this->Auth->generateRandomPassword();
@@ -86,7 +86,7 @@ final class Recovery extends CI_Controller
      * Begin the username recovery validation
      * @return void
      */
-    public function recoverUsername() : void
+    public function recoverUsername(): void
     {
         $this->load->model('Recovery_model');
         $result = $this->Recovery_model->getUsernameByEmail($this->email);
@@ -101,11 +101,11 @@ final class Recovery extends CI_Controller
 
     /**
      * Begins the username recovery procedure
-     * @param  string $username 
-     * @param  string $email    
-     * @return void           
+     * @param  string $username
+     * @param  string $email
+     * @return void
      */
-    private function startUsernameRecovery(string $username, string $email) : void
+    private function startUsernameRecovery(string $username, string $email): void
     {
         $this->load->model('common/Email');
         $data['user'] = $username;
@@ -116,7 +116,7 @@ final class Recovery extends CI_Controller
         $from_name  = FROM_NAME;
         $subject    = "Eve Trade Master - Username Recovery";
 
-        if($this->Email->send($to, $from, $from_name, $subject, $email_body)) {
+        if ($this->Email->send($to, $from, $from_name, $subject, $email_body)) {
             $this->doRecoveryMsg("success");
         } else {
             $this->doRecoveryMsg("error");
@@ -125,10 +125,10 @@ final class Recovery extends CI_Controller
 
     /**
      * Dispatches the result message to the client
-     * @param  string $type 
-     * @return string json       
+     * @param  string $type
+     * @return string json
      */
-    private function doRecoveryMsg(string $type) : void
+    private function doRecoveryMsg(string $type): void
     {
         if ($type == "success") {
             $notice = "success";
