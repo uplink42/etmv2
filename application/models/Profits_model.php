@@ -107,11 +107,11 @@ class Profits_model extends CI_Model
             $result['data'][$i]->margin       = $profit_unit / $price_buy * 100;
         }
         
-        $data   = json_encode(['data'            => injectIcons($result['data'], true), 
-                               'draw'            => (int)$result['draw'], 
-                               'recordsTotal'    => $result['max'],
-                               'recordsFiltered' => $result['max'],
-                               'recordsSum'      => $result['sum']]);
+        $data = json_encode(['data'            => injectIcons($result['data'], true), 
+                             'draw'            => (int)$result['draw'], 
+                             'recordsTotal'    => $result['max'],
+                             'recordsFiltered' => $result['max'],
+                             'recordsSum'      => $result['sum']]);
         return $data;
     }
 
