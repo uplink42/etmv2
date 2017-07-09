@@ -47,7 +47,8 @@ class Itemhistory_model extends CI_Model
 
         // lifetime
         $this->db->select('COALESCE(sum(t.price_total), 0) as total,
-                           COALESCE(sum(t.quantity), 0) as quantity');
+                           COALESCE(sum(t.quantity), 0) as quantity,
+                           COALESCE(COALESCE(sum(t.price_total), 0) / COALESCE(sum(t.quantity), 0), 0) as avg');
         $this->db->from('transaction t');
         $this->db->where('t.transaction_type', 'Sell');
         $this->db->where('t.character_eve_idcharacter IN ' . $this->chars);
@@ -57,7 +58,8 @@ class Itemhistory_model extends CI_Model
 
         // totals
         $this->db->select('COALESCE(sum(t.price_total), 0) as total,
-                           COALESCE(sum(t.quantity), 0) as quantity');
+                           COALESCE(sum(t.quantity), 0) as quantity,
+                           COALESCE(COALESCE(sum(t.price_total), 0) / COALESCE(sum(t.quantity), 0), 0) as avg');
         $this->db->from('transaction t');
         $this->db->where('t.transaction_type', 'Sell');
         $this->db->where('t.character_eve_idcharacter IN ' . $this->chars);
@@ -67,7 +69,8 @@ class Itemhistory_model extends CI_Model
         $data['snapshot']['day'] = $query->row();
 
         $this->db->select('COALESCE(sum(t.price_total), 0) as total,
-                           COALESCE(sum(t.quantity), 0) as quantity');
+                           COALESCE(sum(t.quantity), 0) as quantity,
+                           COALESCE(COALESCE(sum(t.price_total), 0) / COALESCE(sum(t.quantity), 0), 0) as avg');
         $this->db->from('transaction t');
         $this->db->where('t.transaction_type', 'Sell');
         $this->db->where('t.character_eve_idcharacter IN ' . $this->chars);
@@ -141,7 +144,8 @@ class Itemhistory_model extends CI_Model
 
         // lifetime
         $this->db->select('COALESCE(sum(t.price_total), 0) as total,
-                           COALESCE(sum(t.quantity), 0) as quantity');
+                           COALESCE(sum(t.quantity), 0) as quantity,
+                           COALESCE(COALESCE(sum(t.price_total), 0) / COALESCE(sum(t.quantity), 0), 0) as avg');
         $this->db->from('transaction t');
         $this->db->where('t.transaction_type', 'Buy');
         $this->db->where('t.character_eve_idcharacter IN ' . $this->chars);
@@ -151,7 +155,8 @@ class Itemhistory_model extends CI_Model
 
         // totals
         $this->db->select('COALESCE(sum(t.price_total), 0) as total,
-                           COALESCE(sum(t.quantity), 0) as quantity');
+                           COALESCE(sum(t.quantity), 0) as quantity,
+                           COALESCE(COALESCE(sum(t.price_total), 0) / COALESCE(sum(t.quantity), 0), 0) as avg');
         $this->db->from('transaction t');
         $this->db->where('t.transaction_type', 'Buy');
         $this->db->where('t.character_eve_idcharacter IN ' . $this->chars);
@@ -161,7 +166,8 @@ class Itemhistory_model extends CI_Model
         $data['snapshot']['day'] = $query->row();
 
         $this->db->select('COALESCE(sum(t.price_total), 0) as total,
-                           COALESCE(sum(t.quantity), 0) as quantity');
+                           COALESCE(sum(t.quantity), 0) as quantity,
+                           COALESCE(COALESCE(sum(t.price_total), 0) / COALESCE(sum(t.quantity), 0), 0) as avg');
         $this->db->from('transaction t');
         $this->db->where('t.transaction_type', 'Buy');
         $this->db->where('t.character_eve_idcharacter IN ' . $this->chars);
@@ -236,7 +242,8 @@ class Itemhistory_model extends CI_Model
         // lifetime
         $this->db->select('COALESCE(sum(p.quantity_profit * p.profit_unit), 0) as profit,
                            COALESCE(sum(p.quantity_profit), 0) as quantity,
-                           COALESCE(sum(p.profit_unit)/sum(t1.price_unit)*100,0) as margin');
+                           COALESCE(sum(p.profit_unit)/sum(t1.price_unit)*100,0) as margin,
+                           COALESCE(COALESCE(sum(p.quantity_profit * p.profit_unit), 0) / COALESCE(sum(p.quantity_profit), 0), 0) as avg_profit');
         $this->db->from('profit p');
         $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
         $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
@@ -248,7 +255,8 @@ class Itemhistory_model extends CI_Model
         // today
         $this->db->select('COALESCE(sum(p.quantity_profit * p.profit_unit), 0) as profit,
                            COALESCE(sum(p.quantity_profit), 0) as quantity,
-                           COALESCE(sum(p.profit_unit)/sum(t1.price_unit)*100,0) as margin');
+                           COALESCE(sum(p.profit_unit)/sum(t1.price_unit)*100,0) as margin,
+                           COALESCE(COALESCE(sum(p.quantity_profit * p.profit_unit), 0) / COALESCE(sum(p.quantity_profit), 0), 0) as avg_profit');
         $this->db->from('profit p');
         $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
         $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
@@ -261,7 +269,8 @@ class Itemhistory_model extends CI_Model
         // interval
         $this->db->select('COALESCE(sum(p.quantity_profit * p.profit_unit), 0) as profit,
                            COALESCE(sum(p.quantity_profit), 0) as quantity,
-                           COALESCE(sum(p.profit_unit)/sum(t1.price_unit)*100,0) as margin');
+                           COALESCE(sum(p.profit_unit)/sum(t1.price_unit)*100,0) as margin,
+                           COALESCE(COALESCE(sum(p.quantity_profit * p.profit_unit), 0) / COALESCE(sum(p.quantity_profit), 0), 0) as avg_profit');
         $this->db->from('profit p');
         $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
         $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
@@ -277,7 +286,7 @@ class Itemhistory_model extends CI_Model
         for ($i = 0; $i < $this->interval; $i++) {
             $previous           = $date->sub(new DateInterval('P1D'));
             $str                = $previous->format('Y-m-d');
-            $profitsByDay[$str] = ['profit' => 0, 'quantity' => 0, 'margin' => 0];
+            $profitsByDay[$str] = ['profit' => 0, 'quantity' => 0, 'margin' => 0, 'avg_profit' => 0];
         }
 
         $this->db->select('COALESCE(sum(p.quantity_profit * p.profit_unit), 0) as profit,
@@ -296,13 +305,17 @@ class Itemhistory_model extends CI_Model
         $result = $query->result();
 
         foreach ($result as $day) {
-            $profitsByDay[$day->day] = ['profit' => $day->profit, 'quantity' => $day->quantity, 'margin' => $day->margin];
+            $profitsByDay[$day->day] = [
+                'profit'     => $day->profit,
+                'quantity'   => $day->quantity,
+                'margin'     => $day->margin,
+            ];
         }
 
-        $profits_list  = array();
-        $margins_list  = array();
-        $days_list     = array();
-        $quantity_list = array();
+        $profits_list     = array();
+        $margins_list     = array();
+        $days_list        = array();
+        $quantity_list    = array();
 
         foreach ($profitsByDay as $key => $value) {
             array_push($days_list, ['label' => $key]);
@@ -336,13 +349,13 @@ class Itemhistory_model extends CI_Model
                 ['category' => array_reverse($days_list)],
             ],
             'dataset'    => [
-                ['seriesName' => 'margin',
+                ['seriesName' => 'profit',
                     'renderAs'    => 'line',
                     'parentYAxis' => 'S',
-                    'data'        => array_reverse($margins_list),
-                ],
-                ['seriesName' => 'profit',
                     'data'        => array_reverse($profits_list),
+                ],
+                ['seriesName' => 'margin',
+                    'data'        => array_reverse($margins_list),
                 ],
             ],
         ];
@@ -354,8 +367,8 @@ class Itemhistory_model extends CI_Model
 
     private function getChartConfigs(string $type)
     {
-        $title = '';
-        $axis  = '';
+        $title          = '';
+        $axisLeftSuffix = '';
         switch ($type) {
             case 'buy':
                 $title           = 'Purchases';
@@ -380,9 +393,10 @@ class Itemhistory_model extends CI_Model
 
             case 'profit_margin':
                 $title           = 'Profit Margins';
-                $axisLeft        = 'total ISK in profit';
-                $axisRight       = 'profit margin';
-                $axisRightSuffix = ' %';
+                $axisLeft        = 'profit margin (%)';
+                $axisRight       = 'total ISK in profit';
+                $axisRightSuffix = ' ISK';
+                $axisLeftSuffix  = ' %';
                 break;
 
             default:
@@ -399,6 +413,7 @@ class Itemhistory_model extends CI_Model
             'pYAxisName'              => $axisLeft,
             'sYAxisName'              => $axisRight,
             'sNumberSuffix'           => $axisRightSuffix,
+            'pNumberSuffix'           => $axisLeftSuffix,
             'showAlternateHGridColor' => "0",
             'showPlotBorder'          => "0",
             'labelFontColor'          => "#fff",

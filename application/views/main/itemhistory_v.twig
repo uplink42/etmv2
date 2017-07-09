@@ -29,11 +29,11 @@
                     </div>
                     <div class="panel-body">
                         <i class="fa fa-info yellow"></i> This page displays a breakdown of a particular item overtime. This includes transactions, volumes and profits <br />
-                        <i class="fa fa-info yellow"></i> Broker fees and transaction taxes are already included in final prices. <br />
+                        <i class="fa fa-info yellow"></i> Broker fees and transaction taxes are already included in final prices, according to your tax tracking settings. <br />
                     </div>
                     <div class="panel-body">
                         <div class="form-group">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 pl-0">
                                 <input type="text" class="form-control origin-station" id="item" name="item" placeholder="Search for an item name here" autofocus required>
                                 <input type="hidden" name="id" id="id">
                             </div>
@@ -52,23 +52,23 @@
                     <div class="panel panel-filled panel-c-success panel-main">
                         <div class="panel-heading clearfix">
                             <div class="col-sm-3">Item: <span id="item-img" class="pl-5 pr-5"></span><span id="item-name"></span></div>
-                            <div class="col-sm-3">Profit today: <span id="profit-today"></span> - margin: <span id="profit-margin-today"></span> % ( <span id="profit-q-today"></span> units)</div>
-                            <div class="col-sm-3">Bought today: <span id="bought-today"></span> ( <span id="bought-q-today"></span> units)</div>
-                            <div class="col-sm-3">Sold today: <span id="sold-today"></span> ( <span id="sold-q-today"></span> units)</div>
+                            <div class="col-sm-3">Profit today: <span id="profit-today"></span> - margin: <span id="profit-margin-today"></span> % ( <span id="profit-q-today"></span> units) - Avg: <span id="profit-avg-today" class="yellow"></span></div>
+                            <div class="col-sm-3">Bought today: <span id="bought-today"></span> (<span id="bought-q-today"></span> units) - Avg: <span id="bought-avg-today" class="yellow"></span></div>
+                            <div class="col-sm-3">Sold today: <span id="sold-today"></span> (<span id="sold-q-today"></span> units)  - Avg: <span id="sold-avg-today" class="yellow"></span></div>
                         </div>
 
                         <div class="panel-heading clearfix">
                             <div class="col-sm-3 text-center pr-20"><b class="yellow">Last {{ interval }} days </b> </div>
-                            <div class="col-sm-3">Profit: <span id="profit-interval"></span> - margin: <span id="profit-margin-interval"></span> % ( <span id="profit-q-interval"></span> units)</div>
-                            <div class="col-sm-3">Bought: <span id="bought-interval"></span> ( <span id="bought-q-interval"></span> units)</div>
-                            <div class="col-sm-3">Sold: <span id="sold-interval"></span> ( <span id="sold-q-interval"></span> units)</div>
+                            <div class="col-sm-3">Profit: <span id="profit-interval"></span> - margin: <span id="profit-margin-interval"></span> % ( <span id="profit-q-interval"></span> units) - Avg: <span id="profit-avg-interval" class="yellow"></span></div>
+                            <div class="col-sm-3">Bought: <span id="bought-interval"></span> (<span id="bought-q-interval"></span> units) - Avg: <span id="bought-avg-interval" class="yellow"></span></div>
+                            <div class="col-sm-3">Sold: <span id="sold-interval"></span> (<span id="sold-q-interval"></span> units) - Avg: <span id="sold-avg-interval" class="yellow"></span></div>
                         </div>
 
                         <div class="panel-heading clearfix">
                             <div class="col-sm-3 text-center pr-20"><b class="yellow">Lifetime </b></div>
-                            <div class="col-sm-3">Profit: <span id="profit-lifetime"></span> - margin: <span id="profit-margin-lifetime"></span> % ( <span id="profit-q-lifetime"></span> units)</div>
-                            <div class="col-sm-3">Bought: <span id="bought-lifetime"></span> ( <span id="bought-q-lifetime"></span> units)</div>
-                            <div class="col-sm-3">Sold: <span id="sold-lifetime"></span> ( <span id="sold-q-lifetime"></span> units)</div>
+                            <div class="col-sm-3">Profit: <span id="profit-lifetime"></span> - margin: <span id="profit-margin-lifetime"></span> % ( <span id="profit-q-lifetime"></span> units) - Avg: <span id="profit-avg-lifetime" class="yellow"></span></div>
+                            <div class="col-sm-3">Bought: <span id="bought-lifetime"></span> (<span id="bought-q-lifetime"></span> units) - Avg: <span id="bought-avg-lifetime" class="yellow"></span></div>
+                            <div class="col-sm-3">Sold: <span id="sold-lifetime"></span> (<span id="sold-q-lifetime"></span> units)  - Avg: <span id="sold-avg-lifetime" class="yellow"></span></div>
                         </div>
                     </div>
                 </div>
@@ -104,6 +104,7 @@
                                                     <th>Quantity re-sold</th>
                                                     <th>Total ISK in profit</th>
                                                     <th>Profit Margin (%)</th>
+                                                    <th>Average Profit/unit</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -117,28 +118,48 @@
                 </div>
                 <div id="tab-2" class="tab-pane active">
                     <div class="row">
+                        {% if (interval <= 60) %}
                         <div class="col-lg-6 col-md-12">
+                        {% endif %}
+                        {% if (interval > 60) %}
+                        <div class="col-lg-12 col-md-12">
+                        {% endif %}
                             <div class="panel panel-filled">
                                 <div class="panel-heading">
                                     <div id="chart-profit"></div>
                                 </div>
                             </div>
                         </div>
+                        {% if (interval <= 60) %}
                         <div class="col-lg-6 col-md-12">
+                        {% endif %}
+                        {% if (interval > 60) %}
+                        <div class="col-lg-12 col-md-12">
+                        {% endif %}
                             <div class="panel panel-filled">
                                 <div class="panel-heading">
                                     <div id="chart-margin"></div>
                                 </div>
                             </div>
                         </div>
+                        {% if (interval <= 60) %}
                         <div class="col-lg-6 col-md-12">
+                        {% endif %}
+                        {% if (interval > 60) %}
+                        <div class="col-lg-12 col-md-12">
+                        {% endif %}
                             <div class="panel panel-filled">
                                 <div class="panel-heading">
                                     <div id="chart-sell"></div>
                                 </div>
                             </div>
                         </div>
+                        {% if (interval <= 60) %}
                         <div class="col-lg-6 col-md-12">
+                        {% endif %}
+                        {% if (interval > 60) %}
+                        <div class="col-lg-12 col-md-12">
+                        {% endif %}
                             <div class="panel panel-filled">
                                 <div class="panel-heading">
                                     <div id="chart-buy"></div>

@@ -237,6 +237,7 @@ class Statistics_model extends CI_Model
      */
     public function getBestItemsMargin(string $chars, int $interval, int $limit = null): array
     {
+        // the margin calculation is slightly
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
                            sum(profit.profit_unit)/sum(t1.price_unit)*100 as margin,
