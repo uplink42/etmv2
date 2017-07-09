@@ -22,7 +22,6 @@ $(document).ready(function() {
                 { data: "total_sell" },
                 { data: "q_profit" },
                 { data: "total_profit" },
-                { data: "avg_profit" },
                 { data: "p_margin" },
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
@@ -211,11 +210,6 @@ $(document).ready(function() {
                     // margin
                     result.profit.margin_chart.dataset[1].data.forEach((value, index) => {
                         tableData[index].p_margin = number_format(value.value, 2, '.', ',' );
-                    });
-
-                    // avg profit
-                    result.profit.chart.dataset[1].data.forEach((value, index) => {
-                        tableData[index].avg_profit = number_format(value.value, 2, '.', ',' );
                     });
 
                     table.destroy();

@@ -295,11 +295,11 @@ class Itemhistory_model extends CI_Model
         $date       = new DateTime();
         $date->setTimezone(new DateTimeZone('UTC'));
         $datef = $date->format('Y-m-d');
-        $profitsByDay[$datef] = ['profit' => 0, 'quantity' => 0, 'margin' => 0, 'avg_profit' => 0];
+        $profitsByDay[$datef] = ['profit' => 0, 'quantity' => 0, 'margin' => 0];
         for ($i = 0; $i < $this->interval - 1; $i++) {
             $previous           = $date->sub(new DateInterval('P1D'));
             $str                = $previous->format('Y-m-d');
-            $profitsByDay[$str] = ['profit' => 0, 'quantity' => 0, 'margin' => 0, 'avg_profit' => 0];
+            $profitsByDay[$str] = ['profit' => 0, 'quantity' => 0, 'margin' => 0];
         }
 
         $this->db->select('COALESCE(sum(p.quantity_profit * p.profit_unit), 0) as profit,
