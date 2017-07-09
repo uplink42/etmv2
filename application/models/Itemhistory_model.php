@@ -245,8 +245,8 @@ class Itemhistory_model extends CI_Model
                            COALESCE(sum(p.profit_unit)/sum(t1.price_unit)*100,0) as margin,
                            COALESCE(COALESCE(sum(p.quantity_profit * p.profit_unit), 0) / COALESCE(sum(p.quantity_profit), 0), 0) as avg_profit');
         $this->db->from('profit p');
-        $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
-        $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
+        $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy', 'left');
+        $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell', 'left');
         $this->db->where('p.characters_eve_idcharacters_OUT IN ' . $this->chars);
         $this->db->where('t2.item_eve_iditem', $this->item_id);
         $query                        = $this->db->get('');
@@ -258,8 +258,8 @@ class Itemhistory_model extends CI_Model
                            COALESCE(sum(p.profit_unit)/sum(t1.price_unit)*100,0) as margin,
                            COALESCE(COALESCE(sum(p.quantity_profit * p.profit_unit), 0) / COALESCE(sum(p.quantity_profit), 0), 0) as avg_profit');
         $this->db->from('profit p');
-        $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
-        $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
+        $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy', 'left');
+        $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell', 'left');
         $this->db->where('p.characters_eve_idcharacters_OUT IN ' . $this->chars);
         $this->db->where('t2.item_eve_iditem', $this->item_id);
         $this->db->where('p.timestamp_sell>= now() - INTERVAL 1 DAY');
@@ -272,8 +272,8 @@ class Itemhistory_model extends CI_Model
                            COALESCE(sum(p.profit_unit)/sum(t1.price_unit)*100,0) as margin,
                            COALESCE(COALESCE(sum(p.quantity_profit * p.profit_unit), 0) / COALESCE(sum(p.quantity_profit), 0), 0) as avg_profit');
         $this->db->from('profit p');
-        $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy');
-        $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell');
+        $this->db->join('transaction t1', 't1.idbuy = p.transaction_idbuy_buy', 'left');
+        $this->db->join('transaction t2', 't2.idbuy = p.transaction_idbuy_sell', 'left');
         $this->db->where('p.characters_eve_idcharacters_OUT IN ' . $this->chars);
         $this->db->where('t2.item_eve_iditem', $this->item_id);
         $this->db->where('p.timestamp_sell>= now() - INTERVAL ' . $this->interval . ' DAY');

@@ -8,16 +8,23 @@ me.controller('marketExplorerCtrl', [
     'marketLookupFact',
     function ($scope, $timeout, $interval, $filter, $http, config, marketLookupFact) {
         "use strict";
+
+        $scope.timeNow    = '';
+        $scope.oneHourAgo = '';
         
-        $scope.item = {};
-        $scope.region = {};
+        $scope.item      = {};
+        $scope.region    = {};
+        $scope.regions   = [];
+
         $scope.buyorders = {
             items: [],
-            total: ''
+            total: '',
+            recent: 0,
         };
         $scope.sellorders = {
             items: [],
-            total: ''
+            total: '',
+            recent: 0,
         };
         $scope.pagination = {
             sell: 1,
@@ -37,6 +44,10 @@ me.controller('marketExplorerCtrl', [
             countdown,
             frequency = 310000,
             interval  = 1000;
+
+        // orders data
+        let totalSell = 0,
+            totalBuy  = 0;
 
         // watches
         $scope.$watch('region', function(newi, old) {
@@ -66,31 +77,69 @@ me.controller('marketExplorerCtrl', [
             }
         }
 
-        function getItemOrders(id) {
+        function getItemOrders(idItem) {
+            totalBuy  = 0;
+            totalSell = 0;
+
+            $scope.sellorders.total  = 0;
+            $scope.sellorders.recent = 0;
+            $scope.sellorders.items  = [];
+            
+            $scope.buyorders.total   = 0;
+            $scope.buyorders.recent  = 0;
+            $scope.buyorders.items   = [];
+
+            // check time and restart
+            $http.get(config.crest.base + 'time/', {})
+            .then(function(response) {
+                $scope.timeNow = response.data.time;
+                $scope.oneHourAgo = moment($scope.timeNow).subtract(1, 'hour');
+
+                if ($scope.region != '-1') {
+                    const idRegion = angular.copy($scope.region);
+                    queryRegion(idItem, idRegion);
+                } else {
+                    const regions = $scope.regions.filter((val) => val.id > 0);
+                    regions.forEach((value, key) => {
+                        queryRegion(idItem, value.id);
+                    });
+                }
+            });
+        }
+
+        function getCurrentTime() {
+            $http.get(config.crest.base + 'time/', {})
+            .then(function(response) {
+                $scope.time = response.data.time;
+                $scope.oneHourAgo = moment(time).subtract(1, 'hour');
+            });
+        }
+
+        function queryRegion(idItem, idRegion) {
             //sell
             marketLookupFact
-            .queryItem($scope.region, 'sell', id)
+            .queryItem(idRegion, 'sell', idItem)
             .then(function(responseSell) {
-                let totalSell = 0;
                 angular.forEach(responseSell, function(cValue, cKey) {
                     totalSell += cValue.volume;
                 });
                 $scope.sellorders.total = totalSell;
-                $scope.sellorders.items = $filter('orderBy')(responseSell, 'price');
-                if ($scope.sellorders.items.length) $scope.spread.minSell = $scope.sellorders.items[0].price;
+
+                responseSell.forEach((item) => {
+                    $scope.sellorders.items.push(item);
+                });
+                $scope.sellorders.items = $filter('orderBy')($scope.sellorders.items, 'price');
+                if ($scope.sellorders.items.length && $scope.region != '-1') {
+                    $scope.spread.minSell = $scope.sellorders.items[0].price;
+                } else {
+                    $scope.spread.minSell = 1;
+                }
                 
                 // recent orders
-                $http.get(config.crest.base + 'time/', {})
-                .then(function(response) {
-                    let time = response.data.time,
-                        oneHourAgo = moment(time).subtract(1, 'hour');
-
-                    $scope.sellorders.recent = 0;
-                    angular.forEach($scope.sellorders.items, function(cValue, cKey) {
-                        if (moment(cValue.issued).isAfter(oneHourAgo)) {
-                            $scope.sellorders.recent++;
-                        }
-                    });
+                angular.forEach($scope.sellorders.items, function(cValue, cKey) {
+                    if (moment(cValue.issued).isAfter($scope.oneHourAgo)) {
+                        $scope.sellorders.recent++;
+                    }
                 });
             })
             .catch(function(error) {
@@ -99,29 +148,29 @@ me.controller('marketExplorerCtrl', [
 
             //buy
             marketLookupFact
-            .queryItem($scope.region, 'buy', id)
+            .queryItem(idRegion, 'buy', idItem)
             .then(function(responseBuy) {
-                let totalBuy = 0;
                 angular.forEach(responseBuy, function(cValue, cKey) {
                     totalBuy += cValue.volume;
                 });
                 $scope.buyorders.total = totalBuy;
-                $scope.buyorders.items = $filter('orderBy')(responseBuy, '-price');
-                if ($scope.buyorders.items.length) $scope.spread.maxBuy = $scope.buyorders.items[0].price;
-                
-                // recent
-                $http.get(config.crest.base + 'time/', {})
-                .then(function(response) {
-                    let time = response.data.time,
-                        oneHourAgo = moment(time).subtract(1, 'hour');
 
-                    //recent orders
-                    $scope.buyorders.recent = 0;
-                    angular.forEach($scope.buyorders.items, function(cValue, cKey) {
-                        if (moment(cValue.issued).isAfter(oneHourAgo)) {
-                            $scope.buyorders.recent++;
-                        }
-                    });
+                responseBuy.forEach((item) => {
+                    $scope.buyorders.items.push(item);
+                });
+                $scope.buyorders.items = $filter('orderBy')($scope.buyorders.items, '-price');
+
+                if ($scope.buyorders.items.length && $scope.region != '-1') {
+                    $scope.spread.maxBuy = $scope.buyorders.items[0].price;
+                } else {
+                    $scope.spread.maxBuy = 1;
+                }
+
+                //recent orders
+                angular.forEach($scope.buyorders.items, function(cValue, cKey) {
+                    if (moment(cValue.issued).isAfter($scope.oneHourAgo)) {
+                        $scope.buyorders.recent++;
+                    }
                 });
             })
             .catch(function(error) {

@@ -3,14 +3,15 @@
         <div class="col-md-6 pull-left">
             <search-bar 
                 region="region" 
-                item="item">
+                item="item"
+                regions="regions">
             </search-bar>
         </div>
         <div class="col-md-6 pull-right">
             <div class="item">
                 <p class="h4 text-left item-name" ng-if="item.name">
                     <img ng-src="{{itemImg + item.id + '_32.png'}}" class="pr-5">
-                    {{ item.name }} - current spread: <span>{{ spread.value | number: 2 }} % </span>
+                    {{ item.name }} <span ng-if="region > 0">- current spread: {{ spread.value | number: 2 }} % </span>
                 </p>
             </div>
             <div class="update pull-right mb-5" ng-if="item.name">
@@ -93,10 +94,9 @@
     </div>
     <div class="row" ng-if="item.name">
         <div class="col-md-12 chart mt-20">
-            <chart 
-                region="region" 
-                item="item">
+            <chart region="region" item="item" ng-if="region > 0">
             </chart>
+            <div ng-if="region < 0" class="text-center"> History not available when all regions are selected </div>
         </div>
     </div>
 </div>
