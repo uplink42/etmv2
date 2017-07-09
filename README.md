@@ -27,13 +27,6 @@ Main features:
 [http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok](http://stackoverflow.com/questions/6400300/https-and-ssl3-get-server-certificatecertificate-verify-failed-ca-is-ok)
 
 
-<h1>Dependencies (packages included):</h1>
-
-You will also need:
-- npm
-- bower
-- composer
-
 <h1>3rd party APIs:</h1>
 
 - Eve XML API
