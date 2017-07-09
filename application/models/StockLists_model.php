@@ -89,11 +89,12 @@ class StockLists_model extends CI_Model
         $this->db->limit('15');
         $query2  = $this->db->get()->result();
 
-        if(($key = array_search($query1, $query2)) !== false) {
+        /*if(($key = array_search($query1, $query2)) !== false) {
             unset($query2[$key]);
-        }
+        }*/
 
-        $result = array_merge($query1, $query2);
+        //$result = array_merge($query1, $query2);
+        $result = array_unique(array_merge($query1,$query2), SORT_REGULAR);
         return $result;
     }
     

@@ -45,13 +45,14 @@ final class Itemhistory extends MY_Controller
         $interval     = (int) $this->input->post('interval');
         $aggr         = (int) $this->input->post('aggr');
 
-        if (!$item_id || !$character_id || !$interval || !$aggr) {
+        if (!$item_id || !$character_id || !$interval) {
             echo Msg::INVALID_REQUEST;
             return;
         }
 
         $params = ['interval' => $interval,
-            'item_id'             => $item_id];
+                   'item_id'  => $item_id,
+                   'aggr'     => $aggr    ];
 
         echo $this->buildData($character_id, $aggr, 'getStatsByInterval', 'Itemhistory_model', $params);
     }

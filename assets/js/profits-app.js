@@ -17,9 +17,9 @@ $(document).ready(function() {
                 for (var i = 0; i < json.data.length; i++) {
                     return_data.push({
                         item_name: '<img src="' + json.data[i].url + '">' + '<a class="item-name" style="color:#fff">' + json.data[i].item_name + '</a>',
-                        buy_sell_link: '<a href="' + base + 'transactions/index/' + charID + '?transID=' + json.data[i].trans_buy + '&aggr=1" target=_blank>' + 
+                        buy_sell_link: '<a href="' + base + 'transactions/index/' + charID + '/' + interval + '?transID=' + json.data[i].trans_buy + '&aggr=1" target=_blank>' + 
                             '<span class="btn btn-xs btn-danger">B</span></a><br>' + 
-                            '<a href="' + base + 'transactions/index/' + charID + '?transID=' + json.data[i].trans_sell + '&aggr=1" target=_blank>' + 
+                            '<a href="' + base + 'transactions/index/' + charID + '/' + interval + '?transID=' + json.data[i].trans_sell + '&aggr=1" target=_blank>' + 
                             '<span class="btn btn-xs btn-success">S</span></a>',
                         systems: json.data[i].sys_buy + '<br>' + json.data[i].sys_sell,
                         isk_unit: number_format(json.data[i].buy_price, 2, '.', ',' ) + '<br>' + number_format(json.data[i].sell_price, 2, '.', ',' ),

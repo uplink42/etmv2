@@ -111,7 +111,7 @@
                                                 <tbody>
                                                     {% for row in best_raw %}
                                                     <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
+                                                        <td><a href="{{ base_url('itemhistory/index/' ~ character_id ~ '/' ~ interval ~ '/' ~ row["item_id"] ~ '?aggr=' ~ aggregate) }}" target="_blank">
                                                             <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
                                                         </td>
                                                         <td>{{ row['quantity'] | number_format(0) }}</td>
@@ -147,7 +147,7 @@
                                                 <tbody>
                                                     {% for row in best_iph %}
                                                     <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
+                                                        <td><a href="{{ base_url('itemhistory/index/' ~ character_id ~ '/' ~ interval ~ '/' ~ row["item_id"] ~ '?aggr=' ~ aggregate) }}" target="_blank">
                                                             <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
                                                         </td>
                                                         <td>{{ row['quantity'] | number_format(0) }}</td>
@@ -246,7 +246,7 @@
                                                 <tbody>
                                                     {% for row in best_blunders %}
                                                     <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
+                                                        <td><a href="{{ base_url('itemhistory/index/' ~ character_id ~ '/' ~ interval ~ '/' ~ row["item_id"] ~ '?aggr=' ~ aggregate) }}" target="_blank">
                                                         <td>{{ row['profit']   | number_format(2) }}</td>
                                                         <td>{{ row['margin']   | number_format(2) }}</td>
                                                     </tr>
@@ -280,7 +280,7 @@
                                                 <tbody>
                                                     {% for row in best_margin %}
                                                     <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
+                                                        <td><a href="{{ base_url('itemhistory/index/' ~ character_id ~ '/' ~ interval ~ '/' ~ row["item_id"] ~ '?aggr=' ~ aggregate) }}" target="_blank">
                                                             <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
                                                         </td>
                                                         <td>{{ row['quantity'] | number_format(0) }}</td>
@@ -315,7 +315,7 @@
                                                 <tbody>
                                                     {% for row in best_to %}
                                                     <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
+                                                        <td><a href="{{ base_url('itemhistory/index/' ~ character_id ~ '/' ~ interval ~ '/' ~ row["item_id"] ~ '?aggr=' ~ aggregate) }}" target="_blank">
                                                             <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
                                                         </td>
                                                         <td>{{ row['difference'] }}</td>
@@ -382,7 +382,7 @@
                                                 <tbody>
                                                     {% for row in problematic %}
                                                     <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
+                                                        <td><a href="{{ base_url('itemhistory/index/' ~ character_id ~ '/' ~ interval ~ '/' ~ row["item_id"] ~ '?aggr=' ~ aggregate) }}" target="_blank">
                                                             <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
                                                         </td>
                                                         <td>{{ row['quantity'] | number_format(0) }}</td>

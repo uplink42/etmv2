@@ -18,9 +18,9 @@ final class Profits extends MY_Controller
      * @param  int|null    $item_id
      * @return void
      */
-    public function index($character_id, $item_id = null): void
+    public function index($character_id, int $interval = 7): void
     {
-        $interval = 7;
+        //$interval = 7;
         if ($this->enforce($character_id, $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
             $aggregate = $this->aggregate;
@@ -29,7 +29,7 @@ final class Profits extends MY_Controller
 
             $data['selected'] = "profits";
             $data['interval'] = $interval;
-            $data['item_id']  = $item_id;
+            //$data['item_id']  = $item_id;
             $data['view']     = 'main/profits_v';
 
             $data['layout']['page_title']     = "Profit Breakdown";
