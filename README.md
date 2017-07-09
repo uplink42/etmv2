@@ -29,13 +29,6 @@ Main features:
 
 <h1>Dependencies (packages included):</h1>
 
-- AngularJS 
-- [PhealNG (XML API library)](https://github.com/3rdpartyeve/phealng)
-- [CodeIgniter 3](https://github.com/bcit-ci/CodeIgniter)
-- Fusioncharts
-- Twig
-- PHPUnit
-
 You will also need:
 - npm
 - bower
