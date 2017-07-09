@@ -82,7 +82,10 @@ class Itemhistory_model extends CI_Model
         // daily stats
         $salesByDay = [];
         $date       = new DateTime();
-        for ($i = 0; $i < $this->interval; $i++) {
+        $date->setTimezone(new DateTimeZone('UTC'));
+        $datef = $date->format('Y-m-d');
+        $salesByDay[$datef] = ['sales' => 0, 'quantity' => 0];
+        for ($i = 0; $i < $this->interval - 1; $i++) {
             $previous         = $date->sub(new DateInterval('P1D'));
             $str              = $previous->format('Y-m-d');
             $salesByDay[$str] = ['sales' => 0, 'quantity' => 0];
@@ -102,7 +105,9 @@ class Itemhistory_model extends CI_Model
         $result = $query->result();
 
         foreach ($result as $day) {
-            $salesByDay[$day->day] = ['sales' => $day->sales, 2, 'quantity' => $day->quantity, 0];
+            if (isset($salesByDay[$day->day])) {
+                $salesByDay[$day->day] = ['sales' => $day->sales, 2, 'quantity' => $day->quantity, 0];
+            }
         }
 
         $sales_list    = array();
@@ -178,8 +183,11 @@ class Itemhistory_model extends CI_Model
 
         // daily stats
         $purchasesByDay = [];
-        $date           = new DateTime();
-        for ($i = 0; $i < $this->interval; $i++) {
+        $date       = new DateTime();
+        $date->setTimezone(new DateTimeZone('UTC'));
+        $datef = $date->format('Y-m-d');
+        $purchasesByDay[$datef] = ['purchases' => 0, 'quantity' => 0];
+        for ($i = 0; $i < $this->interval - 1; $i++) {
             $previous             = $date->sub(new DateInterval('P1D'));
             $str                  = $previous->format('Y-m-d');
             $purchasesByDay[$str] = ['purchases' => 0, 'quantity' => 0];
@@ -199,7 +207,9 @@ class Itemhistory_model extends CI_Model
         $result = $query->result();
 
         foreach ($result as $day) {
-            $purchasesByDay[$day->day] = ['purchases' => $day->purchases, 2, 'quantity' => $day->quantity, 0];
+            if (isset($purchasesByDay[$day->day])) {
+                $purchasesByDay[$day->day] = ['purchases' => $day->purchases, 2, 'quantity' => $day->quantity, 0];
+            }
         }
 
         $purchases_list = array();
@@ -282,8 +292,11 @@ class Itemhistory_model extends CI_Model
 
         // daily stats
         $profitsByDay = [];
-        $date         = new DateTime();
-        for ($i = 0; $i < $this->interval; $i++) {
+        $date       = new DateTime();
+        $date->setTimezone(new DateTimeZone('UTC'));
+        $datef = $date->format('Y-m-d');
+        $profitsByDay[$datef] = ['profit' => 0, 'quantity' => 0, 'margin' => 0, 'avg_profit' => 0];
+        for ($i = 0; $i < $this->interval - 1; $i++) {
             $previous           = $date->sub(new DateInterval('P1D'));
             $str                = $previous->format('Y-m-d');
             $profitsByDay[$str] = ['profit' => 0, 'quantity' => 0, 'margin' => 0, 'avg_profit' => 0];
@@ -305,11 +318,13 @@ class Itemhistory_model extends CI_Model
         $result = $query->result();
 
         foreach ($result as $day) {
-            $profitsByDay[$day->day] = [
-                'profit'     => $day->profit,
-                'quantity'   => $day->quantity,
-                'margin'     => $day->margin,
-            ];
+            if (isset($profitsByDay[$day->day])) {
+                $profitsByDay[$day->day] = [
+                    'profit'     => $day->profit,
+                    'quantity'   => $day->quantity,
+                    'margin'     => $day->margin,
+                ];
+            }
         }
 
         $profits_list     = array();
