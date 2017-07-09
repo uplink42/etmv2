@@ -9,9 +9,6 @@ me.controller('marketExplorerCtrl', [
     function ($scope, $timeout, $interval, $filter, $http, config, marketLookupFact) {
         "use strict";
 
-        $scope.timeNow    = '';
-        $scope.oneHourAgo = '';
-        
         $scope.item      = {};
         $scope.region    = {};
         $scope.regions   = [];
@@ -49,6 +46,8 @@ me.controller('marketExplorerCtrl', [
         let totalSell = 0,
             totalBuy  = 0;
 
+        let oneHourAgo = '';
+
         // watches
         $scope.$watch('region', function(newi, old) {
             if (newi) {
@@ -84,7 +83,7 @@ me.controller('marketExplorerCtrl', [
             $scope.sellorders.total  = 0;
             $scope.sellorders.recent = 0;
             $scope.sellorders.items  = [];
-            
+
             $scope.buyorders.total   = 0;
             $scope.buyorders.recent  = 0;
             $scope.buyorders.items   = [];
@@ -92,8 +91,7 @@ me.controller('marketExplorerCtrl', [
             // check time and restart
             $http.get(config.crest.base + 'time/', {})
             .then(function(response) {
-                $scope.timeNow = response.data.time;
-                $scope.oneHourAgo = moment($scope.timeNow).subtract(1, 'hour');
+                oneHourAgo = moment(response.data.time).subtract(1, 'hour');
 
                 if ($scope.region != '-1') {
                     const idRegion = angular.copy($scope.region);
@@ -104,14 +102,6 @@ me.controller('marketExplorerCtrl', [
                         queryRegion(idItem, value.id);
                     });
                 }
-            });
-        }
-
-        function getCurrentTime() {
-            $http.get(config.crest.base + 'time/', {})
-            .then(function(response) {
-                $scope.time = response.data.time;
-                $scope.oneHourAgo = moment(time).subtract(1, 'hour');
             });
         }
 
@@ -137,7 +127,7 @@ me.controller('marketExplorerCtrl', [
                 
                 // recent orders
                 angular.forEach($scope.sellorders.items, function(cValue, cKey) {
-                    if (moment(cValue.issued).isAfter($scope.oneHourAgo)) {
+                    if (moment(cValue.issued).isAfter(oneHourAgo)) {
                         $scope.sellorders.recent++;
                     }
                 });
@@ -168,7 +158,7 @@ me.controller('marketExplorerCtrl', [
 
                 //recent orders
                 angular.forEach($scope.buyorders.items, function(cValue, cKey) {
-                    if (moment(cValue.issued).isAfter($scope.oneHourAgo)) {
+                    if (moment(cValue.issued).isAfter(oneHourAgo)) {
                         $scope.buyorders.recent++;
                     }
                 });
