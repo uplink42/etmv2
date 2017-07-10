@@ -6,9 +6,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Eve Trade Master 2 - A web based Eve Online profit tracker</title>
-    <meta name="keywords" content="eve trading, trading tool, eve online isk, eve online market"/>    
-    <meta name="description" content="A web based Eve Online profit tracker, asset manager and trade analysis tool">
+    <title>Eve Trade Master 2 - A web based Eve Online profit tracker, asset manager and market tool</title>
+    <meta name="keywords" content="eve online trading, trading tool, eve online isk, eve online market, eve online"/>    
+    <meta name="description" content="A web based Eve Online profit tracker, asset manager and trading tool. Eve Trade Master is an extensive and easy to use set of tools to optimize your trading or learn the market">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Google Font -->

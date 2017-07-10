@@ -8,6 +8,7 @@ class Statistics_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('common/Datatables', 'dt');
     }
 
     /**
@@ -121,38 +122,6 @@ class Statistics_model extends CI_Model
         return $jsonEncodedData;
     }
 
-
-    /**
-     * Gathers the problematic items for an interval and character set, optionally
-     * filtered to a maximum to use on reports
-     * @param  string   $chars    
-     * @param  int      $interval 
-     * @param  int|null $limit    
-     * @return array             
-     */
-    public function getProblematicItems(string $chars, int $interval, int $limit = null): array
-    {
-        $this->db->select('item.eve_iditem as item_id,
-                           item.name as item,
-                           sum(profit.quantity_profit*profit.profit_unit) as profit,
-                           sum(profit.quantity_profit) as quantity');
-        $this->db->from('profit');
-        $this->db->join('transaction', 'profit.transaction_idbuy_sell = transaction.idbuy');
-        $this->db->join('item', 'item.eve_iditem = transaction.item_eve_iditem');
-        $this->db->where('profit.timestamp_sell >=  now() - INTERVAL ' . $interval . ' DAY');
-        $this->db->where('profit.characters_eve_idcharacters_OUT IN ' . $chars);
-        $this->db->group_by('item.eve_iditem');
-        $this->db->having('sum(profit.quantity_profit*profit.profit_unit) < 0');
-        $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit) ASC');
-        if ($limit) {
-            $this->db->limit($limit);
-        }
-        $query = $this->db->get();
-
-        $result = $query->result_array();
-        return $result;
-    }
-
     /**
      * Generate the profits table for an interval and character set
      * @param  string $chars    [description]
@@ -199,8 +168,10 @@ class Statistics_model extends CI_Model
      * @param  int|null     $limit    
      * @return array                
      */
-    public function getBestItemsRaw(string $chars, int $interval, bool $chart = false, int $limit = null): array
+    public function getBestItemsRaw(array $configs): string
     {
+        extract($configs);
+        $this->db->start_cache();
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
                            sum(profit.quantity_profit*profit.profit_unit) as profit,
@@ -212,19 +183,62 @@ class Statistics_model extends CI_Model
         $this->db->where('profit.characters_eve_idcharacters_OUT IN ' . $chars);
         $this->db->group_by('item.eve_iditem');
         $this->db->having('sum(profit.quantity_profit*profit.profit_unit) > 0');
-        $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit)', 'desc');
 
-        if ($chart) {
-            $this->db->limit(20);
-        }
-        if ($limit) {
-            $this->db->limit($limit);
+        if (!isset($defs['order'][0])) {
+            $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit)', 'desc');
         }
 
-        $query  = $this->db->get('');
-        $result = $query->result_array();
+        $result = $this->dt->generate($defs, 'item.name', 'profit');
+        $count  = count($result['data']);
 
-        return $result;
+        $data = json_encode(['data' => injectIcons($result['data'], true),
+            'draw'                      => (int) $result['draw'],
+            'recordsTotal'              => $result['max'],
+            'recordsFiltered'           => $result['max'],
+            'recordsSum'                => $result['sum']]);
+
+        return $data;
+    }
+
+
+    /**
+     * Gathers the problematic items for an interval and character set, optionally
+     * filtered to a maximum to use on reports
+     * @param  string   $chars    
+     * @param  int      $interval 
+     * @param  int|null $limit    
+     * @return array             
+     */
+    public function getProblematicItems(array $configs): string
+    {
+        extract($configs);
+        $this->db->start_cache();
+        $this->db->select('item.eve_iditem as item_id,
+                           item.name as item,
+                           sum(profit.quantity_profit*profit.profit_unit) as profit,
+                           sum(profit.quantity_profit) as quantity');
+        $this->db->from('profit');
+        $this->db->join('transaction', 'profit.transaction_idbuy_sell = transaction.idbuy');
+        $this->db->join('item', 'item.eve_iditem = transaction.item_eve_iditem');
+        $this->db->where('profit.timestamp_sell >=  now() - INTERVAL ' . $interval . ' DAY');
+        $this->db->where('profit.characters_eve_idcharacters_OUT IN ' . $chars);
+        $this->db->group_by('item.eve_iditem');
+        $this->db->having('sum(profit.quantity_profit*profit.profit_unit) < 0');
+        
+        if (!isset($defs['order'][0])) {
+            $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit)', 'asc');
+        }
+
+        $result = $this->dt->generate($defs, 'item.name', 'profit');
+        $count  = count($result['data']);
+
+        $data = json_encode(['data' => injectIcons($result['data'], true),
+            'draw'                      => (int) $result['draw'],
+            'recordsTotal'              => $result['max'],
+            'recordsFiltered'           => $result['max'],
+            'recordsSum'                => $result['sum']]);
+
+        return $data;
     }
 
     /**
@@ -235,9 +249,11 @@ class Statistics_model extends CI_Model
      * @param  int|null $limit    
      * @return array             
      */
-    public function getBestItemsMargin(string $chars, int $interval, int $limit = null): array
+    public function getBestItemsMargin(array $configs): string
     {
-        // the margin calculation is slightly
+        extract($configs);
+        $this->db->start_cache();
+        // the margin calculation is slightly off
         $this->db->select('item.eve_iditem as item_id,
                            item.name as item,
                            sum(profit.profit_unit)/sum(t1.price_unit)*100 as margin,
@@ -253,16 +269,62 @@ class Statistics_model extends CI_Model
         $this->db->where('profit.profit_unit > 0');
         $this->db->group_by('item.eve_iditem');
         $this->db->having('sum(profit.quantity_profit*profit.profit_unit) > 0');
-        $this->db->order_by('sum(profit.profit_unit)/sum(t1.price_unit)', 'DESC');
 
-        if ($limit) {
-            $this->db->limit($limit);
+        if (!isset($defs['order'][0])) {
+            $this->db->order_by('sum(profit.profit_unit)/sum(t1.price_unit)', 'DESC');
         }
 
-        $query  = $this->db->get('');
-        $result = $query->result_array();
+        $result = $this->dt->generate($defs, 'item.name', 'margin');
+        $count  = count($result['data']);
 
-        return $result;
+        $data = json_encode(['data' => injectIcons($result['data'], true),
+            'draw'                      => (int) $result['draw'],
+            'recordsTotal'              => $result['max'],
+            'recordsFiltered'           => $result['max'],
+            'recordsSum'                => $result['sum']]);
+
+        return $data;
+    }
+
+    /**
+     * Gathers the best IPH for an interval and character set, optionally
+     * filtered to a maximum to use on reports
+     * @param  string   $chars    
+     * @param  int      $interval 
+     * @param  int|null $limit    
+     * @return array             
+     */
+    public function getBestIPH(array $configs): string
+    {
+        extract($configs);
+        $this->db->start_cache();
+        $this->db->select('item.name AS item,
+                           item.eve_iditem AS item_id,
+                           SUM( profit.quantity_profit * profit.profit_unit ) AS profit,
+                           SUM( profit.quantity_profit ) AS quantity,
+                           (SUM(profit.quantity_profit * profit.profit_unit)) / AVG(TIME_TO_SEC(TIMEDIFF(profit.timestamp_sell, profit.timestamp_buy)) /3600 ) AS iph');
+        $this->db->from('profit');
+        $this->db->join('transaction', 'profit.transaction_idbuy_sell = transaction.idbuy');
+        $this->db->join('item', 'item.eve_iditem = transaction.item_eve_iditem');
+        $this->db->where('profit.timestamp_sell >= now() - INTERVAL ' . $interval . ' DAY');
+        $this->db->where('profit.characters_eve_idcharacters_OUT IN  ' . $chars);
+        $this->db->group_by('item.eve_iditem');
+        $this->db->having('SUM( profit.quantity_profit * profit.profit_unit ) >0');
+
+        if (!isset($defs['order'][0])) {
+            $this->db->order_by('iph', 'desc');
+        }
+
+        $result = $this->dt->generate($defs, 'item.name', 'iph');
+        $count  = count($result['data']);
+
+        $data = json_encode(['data' => injectIcons($result['data'], true),
+            'draw'                      => (int) $result['draw'],
+            'recordsTotal'              => $result['max'],
+            'recordsFiltered'           => $result['max'],
+            'recordsSum'                => $result['sum']]);
+
+        return $data;
     }
 
     /**
@@ -305,7 +367,6 @@ class Statistics_model extends CI_Model
 
                 $data = ['eve_idcharacters' => $customerID,
                          'name'             => $result[$i]['soldTo']];
-
                 $this->db->replace('characters_public', $data);
             }
             $result[$i]['url'] = "https://image.eveonline.com/Character/" . $customerID . "_32.jpg";
@@ -382,40 +443,6 @@ class Statistics_model extends CI_Model
         $this->db->where('t2.character_eve_idcharacter IN ' . $chars);
         $this->db->order_by('timediff(t2.time,t1.time) asc');
         $this->db->limit('5');
-        $query  = $this->db->get('');
-        $result = $query->result_array();
-
-        return $result;
-    }
-
-    /**
-     * Gathers the best IPH for an interval and character set, optionally
-     * filtered to a maximum to use on reports
-     * @param  string   $chars    
-     * @param  int      $interval 
-     * @param  int|null $limit    
-     * @return array             
-     */
-    public function getBestIPH(string $chars, int $interval, int $limit = null): array
-    {
-        $this->db->select('item.name AS item,
-                           item.eve_iditem AS item_id,
-                           SUM( profit.quantity_profit * profit.profit_unit ) AS profit,
-                           SUM( profit.quantity_profit ) AS quantity,
-                           (SUM( profit.quantity_profit * profit.profit_unit )) / AVG( TIME_TO_SEC( TIMEDIFF( profit.timestamp_sell, profit.timestamp_buy ) ) /3600 ) AS iph');
-        $this->db->from('profit');
-        $this->db->join('transaction', 'profit.transaction_idbuy_sell = transaction.idbuy');
-        $this->db->join('item', 'item.eve_iditem = transaction.item_eve_iditem');
-        $this->db->where('profit.timestamp_sell >= now() - INTERVAL ' . $interval . ' DAY');
-        $this->db->where('profit.characters_eve_idcharacters_OUT IN  ' . $chars);
-        $this->db->group_by('item.eve_iditem');
-        $this->db->having('SUM( profit.quantity_profit * profit.profit_unit ) >0');
-        $this->db->order_by('iph', 'desc');
-
-        if ($limit) {
-            $this->db->limit($limit);
-        }
-
         $query  = $this->db->get('');
         $result = $query->result_array();
 
@@ -521,7 +548,21 @@ class Statistics_model extends CI_Model
         $item_names  = [];
         $item_values = [];
 
-        $data = $this->getBestItemsRaw($chars, $interval, true);
+        $this->db->select('item.eve_iditem as item_id,
+                           item.name as item,
+                           sum(profit.quantity_profit*profit.profit_unit) as profit,
+                           sum(profit.quantity_profit) as quantity');
+        $this->db->from('profit');
+        $this->db->join('transaction', 'profit.transaction_idbuy_sell = transaction.idbuy');
+        $this->db->join('item', 'item.eve_iditem = transaction.item_eve_iditem');
+        $this->db->where('profit.timestamp_sell >= now() - INTERVAL ' . $interval . ' day');
+        $this->db->where('profit.characters_eve_idcharacters_OUT IN ' . $chars);
+        $this->db->group_by('item.eve_iditem');
+        $this->db->having('sum(profit.quantity_profit*profit.profit_unit) > 0');
+        $this->db->order_by('sum(profit.quantity_profit*profit.profit_unit)', 'desc');
+        $this->db->limit(20);
+        $query = $this->db->get('');
+        $data = $query->result_array();
 
         foreach ($data as $key => $value) {
             array_push($item_names, $value['item']);
@@ -530,7 +571,7 @@ class Statistics_model extends CI_Model
 
         for ($i = 0; $i < count($item_names); $i++) {
             array_push($arrData["data"], array("label" => (string) $item_names[$i],
-                "value"                                    => (string) $item_values[$i]));
+                                               "value" => (string) $item_values[$i]));
         }
         $arrData["chart"];
         $jsonEncodedData = json_encode($arrData);

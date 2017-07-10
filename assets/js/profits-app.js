@@ -31,7 +31,7 @@ $(document).ready(function() {
                         margin: '<a class= "btn btn-default btn-xs">' + number_format(json.data[i].margin, 2, '.', ',' ) + '</a>',
                         diff: json.data[i].diff
                     });
-                  }
+                }
                 updateTableTotals();
                 return return_data;
             }   
