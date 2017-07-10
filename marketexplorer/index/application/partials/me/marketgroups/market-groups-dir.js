@@ -18,7 +18,7 @@ me.directive('marketGroups', [
                     allTypes       = [];
                 $scope.subcatItems = {};
                 $scope.item        = {};
-                $scope.subcatsView = config.dist + '/partials/marketgroups/cats/market-sub-cats-view.html';
+                $scope.subcatsView = config.dist + '/partials/me/marketgroups/cats/market-sub-cats-view.html';
 
                 marketGroupsFact
                 .getAll()

@@ -109,15 +109,6 @@
                                                     </tr>
                                                 </thead>    
                                                 <tbody>
-                                                    {% for row in best_raw %}
-                                                    <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
-                                                            <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
-                                                        </td>
-                                                        <td>{{ row['quantity'] | number_format(0) }}</td>
-                                                        <td>{{ row['profit']   | number_format(2) }}</td>
-                                                    </tr>
-                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                         </div>  
@@ -145,16 +136,6 @@
                                                     </tr>
                                                 </thead>    
                                                 <tbody>
-                                                    {% for row in best_iph %}
-                                                    <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
-                                                            <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
-                                                        </td>
-                                                        <td>{{ row['quantity'] | number_format(0) }}</td>
-                                                        <td>{{ row['profit']   | number_format(2) }}</td>
-                                                        <td>{{ row['iph']      | number_format(2) }}</td>
-                                                    </tr>
-                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                         </div>  
@@ -182,7 +163,7 @@
                                                 <tbody>
                                                     {% for row in best_customer %}
                                                     <tr> 
-                                                        <td><img src="{{ row['url'] }}" alt="icon"> {{ row['soldTo'] }}</td>
+                                                        <td><img src="{{ row['url'] }}" alt="icon" class="pr-5">{{ row['soldTo'] }}</td>
                                                         <td>{{ row['profit'] | number_format(2) }}</td>
                                                     </tr>
                                                   {% endfor %}
@@ -246,7 +227,7 @@
                                                 <tbody>
                                                     {% for row in best_blunders %}
                                                     <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
+                                                        <td><a href="{{ base_url('itemhistory/index/' ~ character_id ~ '/' ~ interval ~ '/' ~ row["item_id"] ~ '?aggr=' ~ aggregate) }}" target="_blank">
                                                         <td>{{ row['profit']   | number_format(2) }}</td>
                                                         <td>{{ row['margin']   | number_format(2) }}</td>
                                                     </tr>
@@ -278,15 +259,6 @@
                                                     </tr>
                                                 </thead>    
                                                 <tbody>
-                                                    {% for row in best_margin %}
-                                                    <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
-                                                            <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
-                                                        </td>
-                                                        <td>{{ row['quantity'] | number_format(0) }}</td>
-                                                        <td>{{ row['margin']   | number_format(2) }}</td>
-                                                    </tr>
-                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                         </div>  
@@ -315,8 +287,8 @@
                                                 <tbody>
                                                     {% for row in best_to %}
                                                     <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
-                                                            <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
+                                                        <td><a href="{{ base_url('itemhistory/index/' ~ character_id ~ '/' ~ interval ~ '/' ~ row["item_id"] ~ '?aggr=' ~ aggregate) }}" target="_blank">
+                                                            <img src="{{ row['url'] }}" alt="icon" class="pr-5">{{ row['item'] }}</a>
                                                         </td>
                                                         <td>{{ row['difference'] }}</td>
                                                         <td>{{ row['total'] | number_format(2) }}</td>
@@ -350,7 +322,7 @@
                                                 <tbody>
                                                     {% for key, row in best_tz %}
                                                     <tr>
-                                                        <td><img src="{{ base_url('assets/img/' ~ key ~ '.png') }}" alt="icon"></td>
+                                                        <td><img src="{{ base_url('assets/img/' ~ key ~ '.png') }}" alt="icon" class="pr-5"></td>
                                                         <td>{{ row | number_format(2) }}</td>
                                                     </tr>
                                                     {% endfor %}
@@ -380,15 +352,6 @@
                                                     </tr>
                                                 </thead>    
                                                 <tbody>
-                                                    {% for row in problematic %}
-                                                    <tr>
-                                                        <td><a href="{{ base_url('profits/index/' ~ character_id ~ '/' ~ interval ~ '?aggr=' ~ aggregate ~'#' ~ row['item']) }}" target="_blank">
-                                                            <img src="{{ row['url'] }}" alt="icon"> {{ row['item'] }}</a>
-                                                        </td>
-                                                        <td>{{ row['quantity'] | number_format(0) }}</td>
-                                                        <td>{{ row['profit']   | number_format(2) }}</td>
-                                                    </tr>
-                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                         </div>  
@@ -422,7 +385,7 @@
                                             </thead>
                                             <tbody>
                                             {% for row in profits_table['daily'] %}
-                                                <tr class="{{ row['margin'] > 0 ? 'success' : 'danger' }}">
+                                                <tr class="{{ row['margin'] > 0 ? 'success' : row['margin'] < 0 ? 'danger' : '' }}">
                                                     <td>{{ row['date'] }}</td>
                                                     <td>{{ row['total_buy']    | number_format(2) }}</td>
                                                     <td>{{ row['total_sell']   | number_format(2) }}</td>

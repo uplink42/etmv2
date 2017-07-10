@@ -14,15 +14,17 @@ me.directive('searchBar', [
             restrict: 'E',
             scope: {
                 item: '=',
-                region: '='
+                region: '=',
+                regions: '=',
             },
             controller: ['$scope', function($scope) {
+                const ignoreRegions = [10000019, 10000017, 10000004];
+                
                 $scope.search = {
                     region: 10000002,
                     item: ''
                 };
 
-                $scope.regions = [];
                 getAllRegions();
 
                 $scope.$watch('item', function(newValue, oldValue) {
@@ -61,9 +63,10 @@ me.directive('searchBar', [
                     regionListFact
                     .getAll()
                     .then(function(result) {
+                        $scope.regions.push({ id: '-1', name: 'ALL' });
                         //console.log(result);
                         angular.forEach(result, function(cValue, cKey) {
-                            if (cValue.id < 11000000) {
+                            if (cValue.id < 11000000 && !ignoreRegions.includes(cValue.id)) {
                                 $scope.regions.push(cValue);
                             }
                         });

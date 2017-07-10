@@ -22,15 +22,14 @@ $(document).ready(function() {
             }
         });
     }
+    
     populateDropdown();
-
 
     function updateTotal() {
         setTimeout(function() {
             $('#stocklist-items_filter input').trigger('keyup');
         });
     }
-
 
     // get items from a list
     function getItems(id) {

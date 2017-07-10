@@ -26,10 +26,34 @@ $(document).ready(function() {
         }],
         order: [],
     });
+
     let bestraw = $('#bestraw').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
+        processing: true,
+        serverSide: true,
         deferRender: true,
         autoWidth: false,
+        ajax : {
+            type: 'GET',
+            url: base + 'Statistics/getBestItemsProfit/' + charID + '/' + interval + '/' + aggr,
+            dataSrc: function(json) {
+                let return_data = [];
+                for (let i = 0; i < json.data.length; i++) {
+                    return_data.push({
+                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + json.data[i].item_id + "?aggr=" + aggr + "' target='_blank'>" + 
+                            "<img src='" + json.data[i].url + "' alt='icon' class='pr-5'>" + json.data[i].item + "</a>",
+                        quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
+                        profit: number_format(json.data[i].profit, 2, '.', ',' ),
+                    });
+                }
+                return return_data;
+            }
+        },
+        columns: [
+            { data: "item" },
+            { data: "quantity" },
+            { data: "profit" },
+        ],
         lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
@@ -52,14 +76,140 @@ $(document).ready(function() {
         }],
         order: [],
     });
-    let bestiph = $('#bestiph').DataTable({
+
+    let bestmargin = $('#bestmargin').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
+        processing: true,
+        serverSide: true,
+        deferRender: true,
+        autoWidth: false,
+        ajax : {
+            type: 'GET',
+            url: base + 'Statistics/getBestItemsMargin/' + charID + '/' + interval + '/' + aggr,
+            dataSrc: function(json) {
+                let return_data = [];
+                for (let i = 0; i < json.data.length; i++) {
+                    return_data.push({
+                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + json.data[i].item_id + "?aggr=" + aggr + "' target='_blank'>" + 
+                            "<img src='" + json.data[i].url + "' alt='icon' class='pr-5'>" + json.data[i].item + "</a>",
+                        quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
+                        margin: number_format(json.data[i].margin, 2, '.', ',' ),
+                    });
+                }
+                return return_data;
+            }
+        },
+        columns: [
+            { data: "item" },
+            { data: "quantity" },
+            { data: "margin" },
+        ],
         lengthMenu: [
             [5, 10, -1],
             [5, 10, "All"]
         ],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
+        order: [],
+    });
+
+    let problematic = $('#problematic').DataTable({
+        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
+        processing: true,
+        serverSide: true,
         deferRender: true,
         autoWidth: false,
+        ajax : {
+            type: 'GET',
+            url: base + 'Statistics/getProblematicItems/' + charID + '/' + interval + '/' + aggr,
+            dataSrc: function(json) {
+                let return_data = [];
+                for (let i = 0; i < json.data.length; i++) {
+                    return_data.push({
+                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + json.data[i].item_id + "?aggr=" + aggr + "' target='_blank'>" + 
+                            "<img src='" + json.data[i].url + "' alt='icon' class='pr-5'>" + json.data[i].item + "</a>",
+                        quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
+                        profit: number_format(json.data[i].profit, 2, '.', ',' ),
+                    });
+                }
+                return return_data;
+            }
+        },
+        columns: [
+            { data: "item" },
+            { data: "quantity" },
+            { data: "profit" },
+        ],
+        lengthMenu: [
+            [5, 10, -1],
+            [5, 10, "All"]
+        ],
+        buttons: [{
+            extend: 'copy',
+            className: 'btn-sm'
+        }, {
+            extend: 'csv',
+            title: 'profits',
+            className: 'btn-sm'
+        }, {
+            extend: 'pdf',
+            title: 'profits',
+            orientation: 'landscape',
+            className: 'btn-sm'
+        }, {
+            extend: 'print',
+            className: 'btn-sm'
+        }],
+        order: [],
+    });
+
+    let bestiph = $('#bestiph').DataTable({
+        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
+        processing: true,
+        serverSide: true,
+        deferRender: true,
+        autoWidth: false,
+        ajax : {
+            type: 'GET',
+            url: base + 'Statistics/getBestIPH/' + charID + '/' + interval + '/' + aggr,
+            dataSrc: function(json) {
+                let return_data = [];
+                for (let i = 0; i < json.data.length; i++) {
+                    return_data.push({
+                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + json.data[i].item_id + "?aggr=" + aggr + "' target='_blank'>" + 
+                            "<img src='" + json.data[i].url + "' alt='icon' class='pr-5'>" + json.data[i].item + "</a>",
+                        quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
+                        profit: number_format(json.data[i].profit, 2, '.', ',' ),
+                        iph: number_format(json.data[i].iph, 2, '.', ',' ),
+                    });
+                }
+                return return_data;
+            }
+        },
+        columns: [
+            { data: "item" },
+            { data: "quantity" },
+            { data: "profit" },
+            { data: "iph" },
+        ],
+        lengthMenu: [
+            [5, 10, -1],
+            [5, 10, "All"]
+        ],
         buttons: [{
             extend: 'copy',
             className: 'btn-sm'
@@ -78,6 +228,7 @@ $(document).ready(function() {
         }],
         order: []
     });
+
     let bestcus = $('#bestcus').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         deferRender: true,
@@ -104,6 +255,7 @@ $(document).ready(function() {
         }],
         order: []
     });
+
     let topstations = $('#topstations').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         deferRender: true,
@@ -130,7 +282,8 @@ $(document).ready(function() {
         }],
         order: []
     });
-    var blunders = $('#blunders').DataTable({
+
+    let blunders = $('#blunders').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         lengthMenu: [
             [5, 10, -1],
@@ -156,32 +309,7 @@ $(document).ready(function() {
         deferRender: true,
         autoWidth: false
     });
-    let bestmargin = $('#bestmargin').DataTable({
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        lengthMenu: [
-            [5, 10, -1],
-            [5, 10, "All"]
-        ],
-        buttons: [{
-            extend: 'copy',
-            className: 'btn-sm'
-        }, {
-            extend: 'csv',
-            title: 'profits',
-            className: 'btn-sm'
-        }, {
-            extend: 'pdf',
-            title: 'profits',
-            orientation: 'landscape',
-            className: 'btn-sm'
-        }, {
-            extend: 'print',
-            className: 'btn-sm'
-        }],
-        order: [],
-        deferRender: true,
-        autoWidth: false
-    });
+
     let fastest = $('#fastest').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         lengthMenu: [
@@ -208,33 +336,8 @@ $(document).ready(function() {
         deferRender: true,
         autoWidth: false
     });
+
     let timezones = $('#timezones').DataTable({
-        dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
-        lengthMenu: [
-            [5, 10, -1],
-            [5, 10, "All"]
-        ],
-        buttons: [{
-            extend: 'copy',
-            className: 'btn-sm'
-        }, {
-            extend: 'csv',
-            title: 'profits',
-            className: 'btn-sm'
-        }, {
-            extend: 'pdf',
-            title: 'profits',
-            orientation: 'landscape',
-            className: 'btn-sm'
-        }, {
-            extend: 'print',
-            className: 'btn-sm'
-        }],
-        order: [],
-        deferRender: true,
-        autoWidth: false
-    });
-    let problematic = $('#problematic').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         lengthMenu: [
             [5, 10, -1],

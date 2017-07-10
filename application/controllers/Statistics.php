@@ -13,11 +13,11 @@ final class Statistics extends MY_Controller
 
     /**
      * Loads the Statistics page
-     * @param  int         $character_id 
-     * @param  int|integer $interval     
-     * @return void                    
+     * @param  int         $character_id
+     * @param  int|integer $interval
+     * @return void
      */
-    public function index($character_id, $interval = 7) : void
+    public function index($character_id, int $interval = 7): void
     {
         if ($interval > 365) {
             $interval = 365;
@@ -25,21 +25,18 @@ final class Statistics extends MY_Controller
 
         if ($this->enforce($character_id, $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
-            $aggregate              = $this->aggregate;
-            $data                   = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
-            $chars                  = $data['chars'];
-            $data['selected']       = "statistics";
-            
-            $problematic             = $this->stats->getProblematicItems($chars, $interval);
+            $aggregate        = $this->aggregate;
+            $data             = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
+            $chars            = $data['chars'];
+            $data['selected'] = "statistics";
+
             $profits_table           = $this->stats->getProfitsTable($chars, $interval);
-            $best_raw                = $this->stats->getBestItemsRaw($chars, $interval);
-            $best_margin             = $this->stats->getBestItemsMargin($chars, $interval);
             $best_customer           = $this->stats->getBestCustomersRawProfit($chars, $interval);
             $best_tz                 = $this->stats->getBestTZ($chars, $interval);
             $best_to                 = $this->stats->getFastestTurnovers($chars, $interval);
-            $best_iph                = $this->stats->getBestIPH($chars, $interval);
             $best_blunders           = $this->stats->getMarketBlunders($chars, $interval);
             $best_stations           = $this->stats->getTopStations($chars, $interval);
+            
             $lifetime_count_trans    = $this->stats->getTotalTransactions($chars);
             $lifetime_count_buy      = $this->stats->getTotalTransactions($chars, 'buy');
             $lifetime_count_sell     = $this->stats->getTotalTransactions($chars, 'sell');
@@ -52,14 +49,10 @@ final class Statistics extends MY_Controller
             $lifetime_highest_sell   = $this->stats->getHighestMetric($chars, 'total_sell');
             $lifetime_highest_profit = $this->stats->getHighestMetric($chars, 'total_profit');
 
-            $data['problematic']             = injectIcons($problematic);
             $data['profits_table']           = $profits_table;
-            $data['best_raw']                = injectIcons($best_raw);
-            $data['best_margin']             = injectIcons($best_margin);
             $data['best_customer']           = $best_customer;
             $data['best_tz']                 = $best_tz;
             $data['best_to']                 = injectIcons($best_to);
-            $data['best_iph']                = injectIcons($best_iph);
             $data['best_blunders']           = injectIcons($best_blunders);
             $data['best_stations']           = $best_stations;
             $data['lifetime_count_trans']    = $lifetime_count_trans;
@@ -84,23 +77,55 @@ final class Statistics extends MY_Controller
         }
     }
 
-
-    public function getVolumesChart(int $character_id, int $interval = 1, bool $aggr = false) : void
+    public function getVolumesChart(int $character_id, int $interval = 1, bool $aggr = false): void
     {
         $params = ['interval' => $interval];
-        echo $this->buildData($character_id, $aggr, 'buildVolumesChart', 'Statistics_model', $params);     
+        echo $this->buildData($character_id, $aggr, 'buildVolumesChart', 'Statistics_model', $params);
     }
 
-
-    public function getDistributionChart(int $character_id, int $interval = 1, bool $aggr = false) : void
+    public function getDistributionChart(int $character_id, int $interval = 1, bool $aggr = false): void
     {
         $params = ['interval' => $interval];
-        echo $this->buildData($character_id, $aggr, 'buildDistributionChart', 'Statistics_model', $params); 
+        echo $this->buildData($character_id, $aggr, 'buildDistributionChart', 'Statistics_model', $params);
     }
 
-
-    public function getDailyRecap(int $character_id, int $interval = 1, bool $aggr = false) : void
+    public function getBestItemsProfit(int $character_id, int $interval = 1, bool $aggr)
     {
+        $params = ['character_id' => $character_id,
+                   'aggr'         => $aggr,
+                   'interval'     => $interval,
+                   'defs'         => $_REQUEST];
 
+        echo $this->buildData($character_id, $aggr, 'getBestItemsRaw', 'Statistics_model', $params);
+    }
+
+    public function getBestItemsMargin(int $character_id, int $interval = 1, bool $aggr)
+    {
+        $params = ['character_id' => $character_id,
+                   'aggr'         => $aggr,
+                   'interval'     => $interval,
+                   'defs'         => $_REQUEST];
+
+        echo $this->buildData($character_id, $aggr, 'getBestItemsMargin', 'Statistics_model', $params);
+    }
+
+    public function getProblematicItems(int $character_id, int $interval = 1, bool $aggr)
+    {
+        $params = ['character_id' => $character_id,
+                   'aggr'         => $aggr,
+                   'interval'     => $interval,
+                   'defs'         => $_REQUEST];
+
+        echo $this->buildData($character_id, $aggr, 'getProblematicItems', 'Statistics_model', $params);
+    }
+
+    public function getBestIPH(int $character_id, int $interval = 1, bool $aggr)
+    {
+        $params = ['character_id' => $character_id,
+                   'aggr'         => $aggr,
+                   'interval'     => $interval,
+                   'defs'         => $_REQUEST];
+
+        echo $this->buildData($character_id, $aggr, 'getBestIPH', 'Statistics_model', $params);
     }
 }

@@ -477,7 +477,7 @@
                 <div class="col-md-8 col-md-offset-2">
                     <div class="countdown-text text-center">
                         <p class="lead">Stay up to date with new features and bug fixes and contribute for the future development in Eve Trade Master</p>
-                        <a href="http://www.evetrademaster.com/blog" class="btn btn-lg btn-rj">Dev Blog</a>
+                        <a href="https://www.evetrademaster.com/blog" class="btn btn-lg btn-rj">Dev Blog</a>
                     </div>
                 </div>
             </div>

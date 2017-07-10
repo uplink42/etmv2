@@ -15,10 +15,10 @@ final class NetworthTracker extends MY_Controller
     /**
      * Loads the networth tracker page
      * @param  int         $character_id
-     * @param  int|integer $interval     
-     * @return void                    
+     * @param  int|integer $interval
+     * @return void
      */
-    public function index($character_id, $interval = 7) : void
+    public function index($character_id, $interval = 7): void
     {
         if ($interval > 365) {
             $interval = 365;
@@ -26,9 +26,9 @@ final class NetworthTracker extends MY_Controller
 
         if ($this->enforce($character_id, $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
-            $aggregate = $this->aggregate;
-            $data      = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
-            $chars     = $data['chars'];
+            $aggregate        = $this->aggregate;
+            $data             = $this->loadViewDependencies($character_id, $this->user_id, $aggregate);
+            $chars            = $data['chars'];
             $data['selected'] = "networth";
             $data['interval'] = $interval;
             $data['view']     = 'main/nwtracker_v';
@@ -40,11 +40,9 @@ final class NetworthTracker extends MY_Controller
         }
     }
 
-
-    public function getNetworthChart(int $character_id, int $interval, bool $aggr = false) : void
+    public function getNetworthChart(int $character_id, int $interval, bool $aggr = false): void
     {
-        //echo $this->buildChart($character_id, $aggr, 'init', 'NetworthTracker_model', $interval);
         $params = ['interval' => $interval];
-        echo $this->buildData($character_id, $aggr, 'init', 'NetworthTracker_model', $params); 
+        echo $this->buildData($character_id, $aggr, 'init', 'NetworthTracker_model', $params);
     }
 }

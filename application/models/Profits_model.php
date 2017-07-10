@@ -14,14 +14,14 @@ class Profits_model extends CI_Model
     /**
      * Returns a list of profits for the specified interval
      * and character set, optionally filtered by item
-     * @param  string   $chars    
-     * @param  int      $interval 
-     * @param  int|null $item_id  
-     * @return string json          
+     * @param  string   $chars
+     * @param  int      $interval
+     * @param  int|null $item_id
+     * @return string json
      */
     public function getProfits(array $configs): string
     {
-        extract ($configs);
+        extract($configs);
         $this->load->model('common/User');
         $profit_settings = $this->User->getUserProfitSettings($user_id);
 
@@ -66,13 +66,13 @@ class Profits_model extends CI_Model
         $this->db->join('characters c2', 't2.character_eve_idcharacter = c2.eve_idcharacter');
         $this->db->join('item i', 't1.item_eve_iditem = i.eve_iditem', 'left');
         $this->db->where('p.characters_eve_idcharacters_OUT IN ' . $chars);
-        
+
         if (isset($item_id)) {
             $this->db->where('i.eve_iditem', $item_id);
         }
 
         $this->db->where('p.timestamp_sell>= now() - INTERVAL ' . $interval . ' DAY');
-        
+
         if (!isset($defs['order'][0])) {
             $this->db->order_by('t2.time', 'desc');
         }
@@ -103,50 +103,50 @@ class Profits_model extends CI_Model
             $transTaxFrom  = $CI->Tax_Model->calculateTax('from');
             $brokerFeeFrom = $CI->Tax_Model->calculateBroker('from');
 
-            $price_buy                        = $price_buy * $transTaxFrom * $brokerFeeFrom;
-            $result['data'][$i]->margin       = $profit_unit / $price_buy * 100;
+            $price_buy                  = $price_buy * $transTaxFrom * $brokerFeeFrom;
+            $result['data'][$i]->margin = $profit_unit / $price_buy * 100;
         }
-        
-        $data   = json_encode(['data'            => injectIcons($result['data'], true), 
-                               'draw'            => (int)$result['draw'], 
-                               'recordsTotal'    => $result['max'],
-                               'recordsFiltered' => $result['max'],
-                               'recordsSum'      => $result['sum']]);
+
+        $data = json_encode(['data' => injectIcons($result['data'], true),
+            'draw'                      => (int) $result['draw'],
+            'recordsTotal'              => $result['max'],
+            'recordsFiltered'           => $result['max'],
+            'recordsSum'                => $result['sum']]);
         return $data;
     }
 
     /**
      * Gathers the profit chart data object
-     * @param  string   $chars    
-     * @param  int      $interval 
-     * @param  int|null $item_id  
-     * @return string json             
+     * @param  string   $chars
+     * @param  int      $interval
+     * @param  int|null $item_id
+     * @return string json
      */
     public function getProfitChartData(array $configs): string
     {
-        extract ($configs);
+        extract($configs);
         $arrData = array(
             "chart" => array(
-                "caption"       => "Profit evolution",
-                "subCaption"    => "last " . $interval . " days",
-                "xAxisName"     => "Day",
-                "yAxisName"     => "Profit (ISK)",
-                "paletteColors" => "#0075c2,#1aaf5d,#f2c500",
-                "drawCrossLine" => "1",
-                "crossLineColor" => "#f6a821",
-                "crossLineAlpha" => "100",
-                "tooltipGrayOutColor" => "#80bfff",
-                "canvasBgAlpha" => "0",
-                "bgColor" => "#32353d",
-                "bgAlpha" => "100",
-                "outCnvBaseFontColor" => "#fff",
+                "caption"                 => "Profit evolution",
+                "subCaption"              => "last " . $interval . " days",
+                "xAxisName"               => "Day",
+                "yAxisName"               => "Profit (ISK)",
+                "paletteColors"           => "#0075c2,#1aaf5d,#f2c500",
+                "drawCrossLine"           => "1",
+                "crossLineColor"          => "#f6a821",
+                "crossLineAlpha"          => "100",
+                "tooltipGrayOutColor"     => "#80bfff",
+                "canvasBgAlpha"           => "0",
+                "bgColor"                 => "#32353d",
+                "bgAlpha"                 => "100",
+                "outCnvBaseFontColor"     => "#fff",
                 "showAlternateHGridColor" => "0",
-                "captionFontColor" =>"#fff",
-                "anchorAlpha" => '0',
-                "labelFontColor" => "#fff",
-                "showValues" => "0",
-                "numberSuffix" => " ISK",
-                "showBorder" => "0"
+                "captionFontColor"        => "#fff",
+                "anchorAlpha"             => '0',
+                "labelFontColor"          => "#fff",
+                "showValues"              => "0",
+                "numberSuffix"            => " ISK",
+                "showBorder"              => "0",
             ),
         );
 

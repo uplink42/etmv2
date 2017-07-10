@@ -16,7 +16,7 @@ final class Login extends CI_Controller
      * Attempts to login a user
      * @return void
      */
-    public function process() : void
+    public function process(): void
     {
         $username = $this->input->post('username', true);
         $password = $this->input->post('password', true);
@@ -36,10 +36,10 @@ final class Login extends CI_Controller
             $email     = $user_data->email;
 
             $session_start = date('Y-m-d H:i:s');
-            $session_data = array("username" => $username,
-                "start"                      => $session_start,
-                "iduser"                     => $id_user,
-                "email"                      => $email
+            $session_data  = array("username" => $username,
+                "start"                           => $session_start,
+                "iduser"                          => $id_user,
+                "email"                           => $email,
             );
             $this->etmsession->setData($session_data);
             redirect(base_url('Updater'));

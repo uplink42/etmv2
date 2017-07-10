@@ -18,10 +18,10 @@ final class MarketOrders extends MY_Controller
 
     /**
      * Loads the Market orders page
-     * @param  int    $character_id 
-     * @return void               
+     * @param  int    $character_id
+     * @return void
      */
-    public function index($character_id) : void
+    public function index($character_id): void
     {
         if ($this->enforce($character_id, $user_id = $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
@@ -34,7 +34,7 @@ final class MarketOrders extends MY_Controller
             $orders_buy  = injectIcons($this->MarketOrders_model->getMarketOrders($chars, "buy", $this->check));
             $orders_sell = injectIcons($this->MarketOrders_model->getMarketOrders($chars, "sell", $this->check));
 
-            if($this->check) {
+            if ($this->check) {
                 $this->load->model('common/Log');
                 $this->Log->addEntry('ordercheck', $this->user_id);
             }

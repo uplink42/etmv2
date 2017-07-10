@@ -12,11 +12,11 @@ final class Assets extends MY_Controller
 
     /**
      * Loads the assets page
-     * @param  int         $character_id 
-     * @param  int|integer $region_id    
-     * @return void                    
+     * @param  int         $character_id
+     * @param  int|integer $region_id
+     * @return void
      */
-    public function index($character_id, $region_id = 0) : void
+    public function index($character_id, $region_id = 0): void
     {
         if ($this->enforce($character_id, $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
@@ -39,7 +39,7 @@ final class Assets extends MY_Controller
 
             $asset_totals = $this->assets->getRegionData($chars);
             $region_name  = $this->assets->getRegionName($region_id);
-            
+
             if ($region_name != "All") {
                 $data['current_asset_value'] = isset($asset_totals[$region_name]) ? $asset_totals[$region_name][0]['total_value'] : 0;
             } else {
@@ -56,17 +56,16 @@ final class Assets extends MY_Controller
             $data['layout']['icon']           = "pe-7s-plugin";
             $data['layout']['page_aggregate'] = true;
 
-            $data['view']        = 'main/assets_v';
+            $data['view'] = 'main/assets_v';
             $this->twig->display('main/_template_v', $data);
         }
     }
-
 
     public function getAssetsTable(int $character_id, bool $aggr)
     {
         $region_id = $_REQUEST['region_id'] ?? null;
         $params    = ['region_id' => $region_id, 'defs' => $_REQUEST];
 
-        echo $this->buildData($character_id, $aggr, 'getAssetsList', 'Assets_model', $params); 
+        echo $this->buildData($character_id, $aggr, 'getAssetsList', 'Assets_model', $params);
     }
 }

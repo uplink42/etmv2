@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-ini_set('memory_limit','1G');
 
 final class Profits extends MY_Controller
 {
@@ -14,14 +13,14 @@ final class Profits extends MY_Controller
 
     /**
      * Loads the Profits page
-     * @param  int         $character_id 
-     * @param  int|integer $interval     
-     * @param  int|null    $item_id     
-     * @return void                   
+     * @param  int         $character_id
+     * @param  int|integer $interval
+     * @param  int|null    $item_id
+     * @return void
      */
-    public function index($character_id, $item_id = null) : void
+    public function index($character_id, int $interval = 7): void
     {
-        $interval = 7;
+        //$interval = 7;
         if ($this->enforce($character_id, $this->user_id)) {
             $this->Log->addEntry("visit " . $this->page, $this->user_id);
             $aggregate = $this->aggregate;
@@ -30,7 +29,7 @@ final class Profits extends MY_Controller
 
             $data['selected'] = "profits";
             $data['interval'] = $interval;
-            $data['item_id']  = $item_id;
+            //$data['item_id']  = $item_id;
             $data['view']     = 'main/profits_v';
 
             $data['layout']['page_title']     = "Profit Breakdown";
@@ -41,24 +40,22 @@ final class Profits extends MY_Controller
         }
     }
 
-
     public function getProfitChart(int $character_id, int $interval = 1, bool $aggr, int $item_id = null)
     {
         $params = ['interval' => $interval,
-                   'item_id'  => $item_id ];
+            'item_id'             => $item_id];
 
-        echo $this->buildData($character_id, $aggr, 'getProfitChartData', 'Profits_model', $params); 
+        echo $this->buildData($character_id, $aggr, 'getProfitChartData', 'Profits_model', $params);
     }
-
 
     public function getProfitTable(int $character_id, int $interval = 1, bool $aggr)
     {
-        $params = [ 'character_id' => $character_id,
-                    'aggr'         => $aggr,
-                    'interval'     => $interval,
-                    'user_id'      => $this->user_id,
-                    'defs'         => $_REQUEST];
+        $params = ['character_id' => $character_id,
+            'aggr'                    => $aggr,
+            'interval'                => $interval,
+            'user_id'                 => $this->user_id,
+            'defs'                    => $_REQUEST];
 
-        echo $this->buildData($character_id, $aggr, 'getProfits', 'Profits_model', $params); 
+        echo $this->buildData($character_id, $aggr, 'getProfits', 'Profits_model', $params);
     }
 }
