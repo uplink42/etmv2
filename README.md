@@ -14,8 +14,8 @@ Main features:
 - can create stock lists up to 100 items, simulate profits with the above method and display best margins, best profit/m3, etc
 - updates your data daily even if you don't login (for e-mail reports and more accurate net-worth evolution charts)
 - can set custom broker fees for citadels of your choosing until ccp gives us proper crest support
-- new! browse the market in real time trough all regions in New Eden
-- new! now available as native client for windows and android
+- browse the market in real time trough all regions in New Eden, including all regions at the same time
+- new! Keep track of every item's history overtime.
 
 <h1>Requirements:</h1>
 
