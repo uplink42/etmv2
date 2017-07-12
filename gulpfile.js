@@ -126,7 +126,7 @@ gulp.task('js', function(){
 gulp.task('uglify', function(){
     gulp.src(paths.app_core.concat(paths.app))
     .pipe(babel())
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest('dist/js/apps'))
     .pipe(connect.reload());
 });
