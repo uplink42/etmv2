@@ -1,7 +1,6 @@
-"use strict";
-$(document).ready(function() {
-    var totalValue = 0;
-    var table = $('#assets-table').DataTable({
+$(function() {
+    let totalValue = 0;
+    let table = $('#assets-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         processing: true,
         serverSide: true,
@@ -10,12 +9,12 @@ $(document).ready(function() {
             type : 'POST',
             url  : base + 'Assets/getAssetsTable/' + charID + '/' + aggr,
             data : {region_id: regionID},
-            dataSrc: function (json) {
-                var return_data = [];
+            dataSrc: (json) => {
+                let return_data = [];
                 totalValue = json.recordsSum;
-                for (var i = 0; i < json.data.length; i++) {
+                for (let i = 0; i < json.data.length; i++) {
                     return_data.push({
-                        item_name: '<img src="' + json.data[i].url + '">' + '<a class="item-name" style="color:#fff">' +  json.data[i].item_name,
+                        item_name: '<img src="' + json.data[i].url + '" class="pr-5">' + '<a class="item-name" style="color:#fff">' +  json.data[i].item_name,
                         owner: json.data[i].owner,
                         quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
                         loc_name: json.data[i].loc_name,
@@ -28,7 +27,7 @@ $(document).ready(function() {
                 return return_data;
             }   
         },
-        initComplete: function(settings, json) { 
+        initComplete: function (settings, json) { 
             let info = this.api().page.info();
         },
         columns: [
@@ -69,44 +68,36 @@ $(document).ready(function() {
     });
 
     function updateTableTotals() {
-        setTimeout(function() {
+        setTimeout(() => {
             $('.assets-body .input-sm').trigger('keyup');
         });
     }
 
-    // totals
-/*    $(".assets-body p.yellow").html("<p>There are "+ table.rows().count() + " results for a total of "
-        + number_format(table.column(5).data().sum(),2, '.', ',' ) + " ISK</p>");
-    $("#assets-table_filter input").keyup(function () {
-        $(".assets-body p.yellow").html("There are "+ table.rows({filter: 'applied'}).count() + " results for a total of "
-            + number_format(table.column(5, {"filter": "applied"} ).data().sum(),2, '.', ',' ) + " ISK");
-    });*/
-
-    $("#assets-table_filter input").keyup(function() {
+    $("#assets-table_filter input").keyup(() => {
         let info = table.page.info();
         $(".assets-body p.yellow").html("There are " + info.recordsTotal + " results for a total value of " + 
             number_format(totalValue, 2, '.', ',' ) + " ISK");
     });
 
     // item filter
-    $("table").on('click', 'a', function() {
-        var name = $(this).text();
+    $("table").on('click', 'a', function () {
+        let name = $(this).text();
         $(".assets-body input.form-control").val(name);
         $(".assets-body input.form-control").trigger("keyup");
     });
 
     // normalize sparkline
     var i = 0;
-    $(".spark-tab").on('click', function() {
+    $(".spark-tab").on('click', () => {
         i++;
-        if(i<2) {
+        if (i<2) {
             $(".spark-tab").trigger('click');
             renderSparkline();
         }
     });
 
     function renderSparkline() {
-        var sparklineCharts = function() {
+        var sparklineCharts = () => {
             $(".sparkline").sparkline($(".sparkline").data('profit'), {
                 type: 'line',
                 lineColor: '#f6a821',
@@ -118,7 +109,7 @@ $(document).ready(function() {
         
         var sparkResize;
         // Resize sparkline charts on window resize
-        $(window).resize(function() {
+        $(window).resize(() => {
             clearTimeout(sparkResize);
             sparkResize = setTimeout(sparklineCharts, 100);
         });
@@ -127,8 +118,8 @@ $(document).ready(function() {
     }
 
     // load assets chart
-    var assetsChart = function() {
-        FusionCharts.ready(function () {
+    var assetsChart = () => {
+        FusionCharts.ready(() => {
             var lineChart = new FusionCharts({
                 type: 'pie3d',
                 renderAt: 'pie',

@@ -1,22 +1,21 @@
-"use strict";
-$(document).ready(function() {
-    var table,
+$(function() {
+    let table,
         listID;
 
     // get all lists
     function populateDropdown() {
-        var url = base + "Stocklists/populateList/";
+        const url = base + "Stocklists/populateList/";
 
         $.ajax({
             dataType: "json",
             url: url,
             global: false,
-            success: function(result) {
+            success: (result) => {
                 $(".dropdown-list option.value").remove();
-                $.each(result, function(k, v) {
-                    var idlist = result[k].iditemlist;
-                    var name = result[k].name;
-                    var $element = "<option class='value'" + "id=" + idlist + ">" + name + "</option>";
+                $.each(result, (k, v) => {
+                    const idlist = result[k].iditemlist;
+                    const name = result[k].name;
+                    const $element = "<option class='value'" + "id=" + idlist + ">" + name + "</option>";
                     $(".dropdown-list").append($element);
                 });
             }
@@ -46,8 +45,8 @@ $(document).ready(function() {
                 type: 'GET',
                 url : base + 'Stocklists/getItems/' + listID,
                 dataSrc: function (json) {
-                    var return_data = [];
-                    for (var i = 0; i < json.data.length; i++) {
+                    let return_data = [];
+                    for (let i = 0; i < json.data.length; i++) {
                         return_data.push({
                             item: '<img src="' + json.data[i].url + '">' + ' <a class="item-name" style="color:#fff">' + 
                                 json.data[i].name + '</a>',
@@ -96,15 +95,15 @@ $(document).ready(function() {
     }
 
     // filters
-    $("body").on('keyup', '#stocklist-items_filter input', function() {
+    $("body").on('keyup', '#stocklist-items_filter input', () => {
         $(".stocklist-panel p.yellow").html("You have " + table.rows().count() + " items");
     });
 
     // submit new list
-    $(".submit-list").on('click', function(e) {
+    $(".submit-list").on('click', (e) => {
         e.preventDefault();
-        var url = base + "Stocklists/newList/",
-            data = $(".form-horizontal").serialize();
+        const url  = base + "Stocklists/newList/",
+              data = $(".form-horizontal").serialize();
         $.ajax({
             dataType: "json",
             url: url,
@@ -130,9 +129,9 @@ $(document).ready(function() {
 
     // select list from dropdown
     $(".dropdown-list").change(function(e) {
-        var $el = $(this).find('option:selected').text();
+        let $el = $(this).find('option:selected').text();
         $(".yellow.contents").text($el);
-        var id = $(this).find('option:selected').attr('id');
+        let id = $(this).find('option:selected').attr('id');
         if (id) {
             listID = id;
             getItems(listID);
@@ -156,13 +155,13 @@ $(document).ready(function() {
         messages: {
             noResults: '',
         },
-        select: function( event, ui ) {
+        select: (event, ui) => {
             $("#item-name").val(ui.item.value);
         }
     });
 
     // add item
-    $(".btn-add-item").on('click', function (e) {
+    $(".btn-add-item").on('click', (e) => {
         e.preventDefault();
             listID =  $("#list-id").val();
             var url = base + "Stocklists/addItem/",

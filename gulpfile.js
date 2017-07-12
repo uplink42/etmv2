@@ -30,7 +30,7 @@ var paths = {
          'assets/js/pace_options.js',
          'assets/js/app.js',
          'assets/js/header.js'],
-    /*'assets/js/*.js'],*/
+
     css: ['assets/luna/styles/fontawesome/css/font-awesome.css',
           'assets/vendor/animate.css/animate.css',
           'assets/luna/styles/bootstrap/css/bootstrap.css',
@@ -79,6 +79,11 @@ var paths = {
     img: ['assets/rhijani/main/img/*', 'assets/rhijani/main/img/*/*']
 };
 
+gulp.task('polyfills', function () {
+    return gulp.src('polyfills/polyfills.js')
+    .pipe(gulp.dest('./dist/polyfills'));
+});
+
 //sass
 gulp.task('sass', function(){
     gulp.src(['assets/luna/styles/sass/style.scss'])
@@ -121,7 +126,7 @@ gulp.task('js', function(){
 gulp.task('uglify', function(){
     gulp.src(paths.app_core.concat(paths.app))
     .pipe(babel())
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(gulp.dest('dist/js/apps'))
     .pipe(connect.reload());
 });
@@ -156,7 +161,7 @@ gulp.task('img', () =>
     .pipe(imagemin())
     .pipe(gulp.dest('dist/img'))
     .pipe(connect.reload())
-    );
+);
 
 //home fonts
 gulp.task('home_fonts', function() {
@@ -272,7 +277,6 @@ gulp.task('me_bower', function() {
 });
 
 
-
 //global watch
 gulp.task('me_watch', function() {
     livereload.listen();
@@ -283,5 +287,5 @@ gulp.task('me_watch', function() {
 
 gulp.task('default', function (cb) {
     runSequence('clean', ['me_styles', 'me_scripts', 'me_bower', 'me_bower_styles', 'me_fonts', 'me_views', 'me_watch', 
-        'js','css', 'sass', 'uglify', 'watch', 'home_js', 'home_css', 'img', 'connect', 'home_fonts', 'fonts'], cb);
+        'js','css', 'sass', 'uglify', 'watch', 'home_js', 'home_css', 'img', 'connect', 'home_fonts', 'fonts', 'polyfills'], cb);
 });

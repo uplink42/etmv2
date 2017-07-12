@@ -1,5 +1,4 @@
-"use strict";
-$(document).ready(function() {
+$(function() {
 	// if user has a session, go to next page
 	if (auth) {
 		$('.panel-login').hide();
@@ -8,7 +7,7 @@ $(document).ready(function() {
 	}
 
 	$("#username").focus().select();
-    $('#login-btn').on('click', function() {
+    $('#login-btn').on('click', () => {
         if ($("#username").val().length > 0 && $("#password").val().length > 0) {
             $('.panel-login').hide();
             $('.panel-loading').show();

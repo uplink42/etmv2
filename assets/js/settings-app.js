@@ -1,6 +1,5 @@
-"use strict";
-$(document).ready(function() {
-    var email_req = base + "Settings/email/";
+$(function() {
+    const email_req = base + "Settings/email/";
     getEmail();
     getTrackingSettings();
     getReport();
@@ -9,36 +8,36 @@ $(document).ready(function() {
         $.ajax({
             dataType: "json",
             url: email_req,
-            success: function(result) {
+            success: (result) => {
                 $("#ch-email-current").val(result.email.email);
             }
         });
     }
 
     function getReport() {
-        var report_req = base + "Settings/reports/";
+        const report_req = base + "Settings/reports/";
         
         $.ajax({
             dataType: "json",
             url: report_req,
-            success: function(result) {
-                var res = result.data.reports;
+            success: (result) => {
+                const res = result.data.reports;
                 $(".report-options").val(res);
             }
         });
     }
 
     function getTrackingSettings() {
-        var tracking_req = base + "Settings/tracking/";
+        const tracking_req = base + "Settings/tracking/";
         
         $.ajax({
             dataType: "json",
             url: tracking_req,
-            success: function(result) {
-                var res = result.data;
-                for (var key in res) {
+            success: (result) => {
+                let res = result.data;
+                for (let key in res) {
                     if (res.hasOwnProperty(key)) {
-                        var $radio = $('input:radio[name=' + key + ']');
+                        const $radio = $('input:radio[name=' + key + ']');
                         $radio.filter('[value=1]').prop('checked', res[key] === '1' ? true : false);
                         $radio.filter('[value=0]').prop('checked', res[key] === '0' ? true : false);
                         
@@ -49,17 +48,17 @@ $(document).ready(function() {
         });
     }
 
-    $(".btn-change-reports").on('click', function(e) {
+    $(".btn-change-reports").on('click', (e) => {
         e.preventDefault();
-        var data = $(".change-reports").serialize();
-        var report_req = base + "Settings/changeReports/";
+        const data = $(".change-reports").serialize();
+        const report_req = base + "Settings/changeReports/";
         
         $.ajax({
             dataType: "json",
             url: report_req,
             type: "POST",
             data: data,
-            success: function(result) {
+            success: (result) => {
                 toastr[result.notice](result.message);
                 if (result.notice == "success") {
                     getReport();
@@ -70,21 +69,21 @@ $(document).ready(function() {
 
 
     // change email
-    $(".btn-change-email").on('click', function(e) {
+    $(".btn-change-email").on('click', (e) => {
         e.preventDefault();
-        var email = $("#ch-email-email").val();
-        var password = $("#ch-email-pw").val();
+        const email = $("#ch-email-email").val();
+        const password = $("#ch-email-pw").val();
 
         if (isEmail(email)) {
             if (password.length >= 6) {
-                var req = "Settings/changeEmail";
-                var data = $(".change-email").serialize();
+                const req = "Settings/changeEmail";
+                const data = $(".change-email").serialize();
                 $.ajax({
                     dataType: "json",
                     type: "POST",
                     data: data,
                     url: base + req,
-                    success: function(result) {
+                    success: (result) => {
                         toastr[result.notice](result.message);
                         getEmail();
                         $("#ch-email-new").val("");
@@ -92,30 +91,29 @@ $(document).ready(function() {
                     }
                 });
             } else {
-                toastr["error"](errHandle.get().PASSWORD_TOO_SHORT);
+                toastr.error(errHandle.get().PASSWORD_TOO_SHORT);
             }
         } else {
-            toastr["error"](errHandle.get().INVALID_EMAIL);
+            toastr.error(errHandle.get().INVALID_EMAIL);
         }
     });
-
 
     // change pw
     $(".btn-change-pw").on('click', function(e) {
         e.preventDefault();
-        var newpw1 = $("#ch-pw-new1").val();
-        var newpw2 = $("#ch-pw-new2").val();
-        var data = $(".change-password").serialize();
+        const newpw1 = $("#ch-pw-new1").val();
+        const newpw2 = $("#ch-pw-new2").val();
+        const data = $(".change-password").serialize();
         
         if (newpw1 === newpw2) {
             if (newpw1.length >= 6) {
-                var req = "Settings/changePassword";
+                let req = "Settings/changePassword";
                 $.ajax({
                     dataType: "json",
                     type: "POST",
                     data: data,
                     url: base + req,
-                    success: function(result) {
+                    success: (result) => {
                         toastr[result.notice](result.message);
                         $("#ch-pw-new1").val("");
                         $("#ch-pw-new2").val("");
@@ -123,26 +121,26 @@ $(document).ready(function() {
                     }
                 });
             } else {
-                toastr["error"](errHandle.get().PASSWORD_TOO_SHORT, "Error");
+                toastr.error(errHandle.get().PASSWORD_TOO_SHORT, "Error");
             }
         } else {
-            toastr["error"](errHandle.get().PASSWORDS_MISMATCH, "Error");
+            toastr.error(errHandle.get().PASSWORDS_MISMATCH, "Error");
         }
     });
 
 
     // change profit tracking settings
-    $(".btn-change-tracking").on('click', function(e) {
+    $(".btn-change-tracking").on('click', (e) => {
         e.preventDefault();
-        var data = $(".change-tracking").serialize();
-        var tracking_req = base + "Settings/changeTracking/";
+        const data = $(".change-tracking").serialize();
+        const tracking_req = base + "Settings/changeTracking/";
         
         $.ajax({
             dataType: "json",
             url: tracking_req,
             type: "POST",
             data: data,
-            success: function(result) {
+            success: (result) => {
                 toastr[result.notice](result.message);
                 if (result.notice == "success") {
                     getReport();

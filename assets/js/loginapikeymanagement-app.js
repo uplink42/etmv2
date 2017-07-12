@@ -1,36 +1,34 @@
-"use strict";
-$(document).ready(function() {
-
+$(function() {
 	$(".api-insert-2").hide();
-    var apikey;
-    var vcode;
+    let apikey;
+    let vcode;
 
 	$(".submit-add").on('click', function(e) {
 		e.preventDefault();
         apikey = $("#keyid").val();
         vcode = $("#vcode").val();
-        var url = base + "Apikeymanagement/addCharacters/";
-        var data = $(".add-apikey").serialize();
+        let url = base + "Apikeymanagement/addCharacters/";
+        let data = $(".add-apikey").serialize();
 
         $.ajax({
             dataType: "json",
             url: url,
             data: data,
             type: "POST",
-            success: function(result) {
+            success: (result) => {
                 if (typeof(result.notice) != "undefined") {
                     toastr[result.notice](result.message);
                 } else {
                     $(".api-insert-1").toggle();
                     $(".api-insert-2").toggle();
                         
-                    var count = 1;
-                    $.each(result, function(k, v) {
-                        var id = result[k][1].id;
-                        var name = result[k][0].name;
-                        var url = "https://image.eveonline.com/Character/" + id + "_32.jpg";
-                        var cl = "character" + count;
-                        var $element = "<tr><td class='char'><img src='" + url + "'alt='icon'></img>" + " " + name + "</td>"+
+                    let count = 1;
+                    $.each(result, (k, v) => {
+                        const id = result[k][1].id;
+                        const name = result[k][0].name;
+                        const url = "https://image.eveonline.com/Character/" + id + "_32.jpg";
+                        const cl = "character" + count;
+                        const $element = "<tr><td class='char'><img src='" + url + "'alt='icon'></img>" + " " + name + "</td>"+
                                        "<td><input type='checkbox' class='" + cl + "' data-id='" + id + "'></td></tr>";
                         count++;
                         $(".table-character-selection tbody").append($element);
@@ -40,7 +38,7 @@ $(document).ready(function() {
         });
     });
 
-    $(".submit-add-2").on('click', function(e) {
+    $(".submit-add-2").on('click', (e) => {
         e.preventDefault();
 
         var selected = [];

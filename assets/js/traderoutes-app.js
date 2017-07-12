@@ -1,7 +1,6 @@
-"use strict";
-$(document).ready(function() {
+$(function() {
     $(".origin-station").focus().select();
-    var url = base + "Traderoutes/searchStations";
+    let url = base + "Traderoutes/searchStations";
 
     // list routes
     function list() {
@@ -45,23 +44,23 @@ $(document).ready(function() {
     });
 
     // submit route
-    $(".submit-traderoute").on('click', function(e) {
+    $(".submit-traderoute").on('click', (e) => {
         e.preventDefault();
-        var origin_val = $(".origin-station").val();
-        var dest_val = $(".destination-station").val();
+        const origin_val = $(".origin-station").val();
+        const dest_val = $(".destination-station").val();
 
         $(".origin").val(origin_val);
         $(".destination").val(dest_val);
         url = base + "Traderoutes/submitRoute/" + charID;
+        let data = $(".form-horizontal").serialize();
 
-        var data = $(".form-horizontal").serialize();
         $.ajax({
             dataType: "json",
             url: url,
             global: false,
             data: data,
             type: "POST",
-            success: function(result) {
+            success: (result) => {
                 toastr[result.notice](result.message);
                 $(".origin-station, .destination-station").val("");
                 list();
@@ -71,14 +70,14 @@ $(document).ready(function() {
     
     // delete route
     $("table").on('click', 'button', function() {
-        var $this = $(this);
-        var url = base + "Traderoutes/" + "deleteRoute/" + $(this).attr('data-iddel');
+        const $this = $(this);
+        const url = base + "Traderoutes/" + "deleteRoute/" + $(this).attr('data-iddel');
 
         $.ajax({
             dataType: "json",
             url: url,
             global: false,
-            success: function(result) {
+            success: (result) => {
                 $this.closest("tr").remove();
                 toastr[result.notice](result.message);
                 list();

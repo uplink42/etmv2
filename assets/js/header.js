@@ -1,11 +1,10 @@
-"use strict";
-$(document).ready(function() {
+$(function() {
     // don't request outside the backoffice 
     if (charID === 0) {
         return 0;
     }
 
-    var url = base + "Main/headerData/" + charID + "/" + aggr;
+    const  url = base + "Main/headerData/" + charID + "/" + aggr;
     $.ajax({
         dataType: "json",
         url: url,
@@ -17,7 +16,6 @@ $(document).ready(function() {
             $(".header-escrow").html(result.escrow);
         }
     });
-
 
     if (aggr == 1) {
         $(".profil-link a").css('color', '#cc0044');

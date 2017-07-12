@@ -1,32 +1,31 @@
-"use strict";
-$(document).ready(function() {
-    $(".reset-password").on('click', function(e) {
+$(function() {
+    $(".reset-password").on('click', (e) => {
         e.preventDefault();
         
-        var url  = base + "Recovery/recoverPassword";
-        var data = $("#recovery").serialize();
+        const url  = base + "Recovery/recoverPassword";
+        const data = $("#recovery").serialize();
         $.ajax({
             dataType: "json",
             type: "POST",
             url: url,
             data: data,
-            success: function(result) {
+            success: (result) => {
                 toastr[result.notice](result.message);
             }
         });
     });
 
-    $(".forgot-username").on('click', function(e) {
+    $(".forgot-username").on('click', (e) => {
         e.preventDefault();
         
-        var url  = base + "Recovery/recoverUsername";
-        var data = $("#recovery").serialize();
+        const url  = base + "Recovery/recoverUsername";
+        const data = $("#recovery").serialize();
         $.ajax({
             dataType: "json",
             type: "POST",
             url: url,
             data: data,
-            success: function(result) {
+            success: (result) => {
                 toastr[result.notice](result.message);
             }
         });

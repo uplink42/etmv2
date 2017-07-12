@@ -1,13 +1,12 @@
-"use strict";
-$(document).ready(function() {
+$(function() {
     $('.table-interval').text(interval);
-    var postData = {
+    let postData = {
         transID: searchToObject().transID || 0,
         new    : searchToObject().new     || 0,
     };
 
-    var totalValue = 0;
-    var table = $('#transactions-table').DataTable({
+    let totalValue = 0;
+    let table = $('#transactions-table').DataTable({
         order: [],
         bSortClasses: false,
         autoWidth: false,
@@ -19,7 +18,7 @@ $(document).ready(function() {
             type : 'POST',
             url  : base + 'Transactions/getTransactionList/' + charID + '/' + interval + '/' + aggr,
             data : postData,
-            dataSrc: function (json) {
+            dataSrc: (json) => {
                 // not allowed
                 if (json.message) {
                     toastr[json.notice](json.message);
@@ -113,7 +112,7 @@ $(document).ready(function() {
 
     // filter by item name
     $("table").on('click', 'a', function() {
-        var name = $(this).text();
+        let name = $(this).text();
         $(".transactions-body input.form-control").val(name);
         $(".transactions-body input.form-control").trigger("keyup");
     });
@@ -126,19 +125,19 @@ $(document).ready(function() {
     
     // unlink prompt
     $("table").on('click', 'button', function() {
-        var id = $(this).data('transaction');
+        let id = $(this).data('transaction');
         $(".btn-unlink-confirm").attr('data-id', id);
     });
 
     // unlink request
-    $(".btn-unlink-confirm").on('click', function() {
-        var id  = $(".btn-unlink-confirm").attr('data-id'),
-            url = base + 'Transactions/unlink/' + id;
+    $(".btn-unlink-confirm").on('click', () => {
+        const id  = $(".btn-unlink-confirm").attr('data-id'),
+              url = base + 'Transactions/unlink/' + id;
         $.ajax({
             dataType: "json",
             url: url,
             success: function(result) {
-                var notice = result.type;
+                let notice = result.type;
                 $('#unlink').modal('toggle');
                 toastr[notice](result.msg);
                 table.ajax.reload();

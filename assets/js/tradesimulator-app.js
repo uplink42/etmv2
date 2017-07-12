@@ -1,6 +1,5 @@
-"use strict";
-$(document).ready(function() {
-    var url = base + "Traderoutes/searchStations";
+$(function() {
+    let url = base + "Traderoutes/searchStations";
 
     // station name autocomplete
     $("#origin-station, #destination-station").autocomplete({
@@ -20,8 +19,8 @@ $(document).ready(function() {
 
     // set station names
     $("#traderoute").change(function() {
-        var fromStationName = $("#traderoute option:selected").text().substring(0, $("#traderoute option:selected").text().indexOf('>>') - 1);
-        var toStationName = $("#traderoute option:selected").text().substr($("#traderoute option:selected").text().indexOf(">>") + 3);
+        const fromStationName = $("#traderoute option:selected").text().substring(0, $("#traderoute option:selected").text().indexOf('>>') - 1);
+        const toStationName = $("#traderoute option:selected").text().substr($("#traderoute option:selected").text().indexOf(">>") + 3);
         $("#origin-station").val(fromStationName);
         $("#destination-station").val(toStationName);
     });
@@ -39,7 +38,7 @@ $(document).ready(function() {
                 $('.panel-loading').show();
             } else {
                 e.preventDefault();
-                toastr["error"]("Missing information");
+                toastr.error("Missing information");
             }
         } else {
             e.preventDefault();
@@ -56,7 +55,7 @@ $(document).ready(function() {
     }
 
     // result table
-    var table = $('#ts-table').DataTable({
+    let table = $('#ts-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         lengthMenu: [
             [50, 75, 100, -1],
