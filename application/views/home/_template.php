@@ -17,10 +17,6 @@
     
     <link rel="stylesheet" href="<?=base_url('dist/home/styles/css/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
 
-    <!-- Color CSS -->
-    <!--<link href="assets/css/colors/blue.css" rel="stylesheet" type="text/css">-->
-    <!--<link href="../assets/css/component/colors/blue.css" rel="stylesheet" type="text/css">-->
-    
     <!-- Modernizr JS for IE9 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="../assets/plugins/modernizr.min.js"></script>
