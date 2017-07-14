@@ -4,7 +4,7 @@ $(function() {
         return 0;
     }
 
-    const  url = base + "Main/headerData/" + charID + "/" + aggr;
+    var  url = base + "Main/headerData/" + charID + "/" + aggr;
     $.ajax({
         dataType: "json",
         url: url,
