@@ -98,6 +98,17 @@ gulp.task('sass', function(){
     .pipe(gulp.dest('dist/luna/styles'));
 });
 
+//sw
+gulp.task('sw', function(callback) {
+  var swPrecache = require('sw-precache');
+  var rootDir = './';
+
+  swPrecache.write(`${rootDir}/service-worker.js`, {
+    staticFileGlobs: ['./dist' + '/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff}'],
+    stripPrefix: rootDir
+  }, callback);
+});
+
 //delete production files
 gulp.task('clean', function () {
     return gulp.src('dist', {read: false})
