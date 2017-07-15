@@ -32,6 +32,8 @@ final class Settings extends MY_Controller
         $this->ignore_citadel_tax      = $_REQUEST['ignore_citadel_tax']      ?? 0;
         $this->ignore_station_tax      = $_REQUEST['ignore_station_tax']      ?? 0;
         $this->ignore_outpost_tax      = $_REQUEST['ignore_outpost_tax']      ?? 0;
+        $this->ignore_buy_tax          = $_REQUEST['ignore_buy_tax']          ?? 0;
+        $this->ignore_sell_tax         = $_REQUEST['ignore_sell_tax']         ?? 0;
     }
 
     /**
@@ -155,7 +157,9 @@ final class Settings extends MY_Controller
             'cross_character_profits' => $this->cross_character_profits,
             'ignore_citadel_tax'      => $this->ignore_citadel_tax,
             'ignore_station_tax'      => $this->ignore_station_tax,
-            'ignore_outpost_tax'      => $this->ignore_outpost_tax
+            'ignore_outpost_tax'      => $this->ignore_outpost_tax,
+            'ignore_buy_tax'          => $this->ignore_buy_tax,
+            'ignore_sell_tax'         => $this->ignore_sell_tax
         ];
 
         $result = $this->Settings_model->changeTrackingData($this->user_id, $data);

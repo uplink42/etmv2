@@ -20,7 +20,7 @@ self.addEventListener('push', function(event) {
 				
 				var title = 'Eve Trade Master';
 				var body = data.m;
-				var icon = '/app-icons/android-chrome-512x512.png?' + uri;
+				var icon = 'app-icons/android-chrome-512x512.png?' + uri;
 				var tag = 'pushbotstag';
 				
 				return self.registration.showNotification(title, {  

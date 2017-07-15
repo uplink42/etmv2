@@ -191,6 +191,8 @@ class Register_model extends CI_Model
             "ignore_citadel_tax"      => $data['null_citadel_tax'],
             "ignore_station_tax"      => $data['null_station_tax'],
             "ignore_outpost_tax"      => $data['null_outpost_tax'],
+            "ignore_buy_tax"          => $data['null_buy_tax'],
+            "ignore_sell_tax"         => $data['null_sell_tax'],
             "login_count"             => 0,
             "updating"                => 0,
         );

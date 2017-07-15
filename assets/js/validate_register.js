@@ -19,25 +19,31 @@ $(function() {
 
         if (username.length < 6) {
             $("#username").parent('div').addClass('has-error');
+            e.preventDefault();
         }
         if (!isEmail(email)) {
             $("#email").parent('div').addClass('has-error');
+            e.preventDefault();
         }
         if (password.length < 6) {
             $("#password").parent('div').addClass('has-error');
+            e.preventDefault();
         }
         if (password != repeatpassword || repeatpassword.length == 0) {
             $("#repeatpassword").parent('div').addClass('has-error');
+            e.preventDefault();
         }
         if (apikey.length < 6) {
             $("#apikey").parent('div').addClass('has-error');
+            e.preventDefault();
         }
         if (vcode.length < 6) {
             $("#vcode").parent('div').addClass('has-error');
+            e.preventDefault();
         }
         if (reports.length < 6) {
             $("#reports").parent('div').addClass('has-error');
+            e.preventDefault();
         }
-        e.preventDefault();
     });
 });
