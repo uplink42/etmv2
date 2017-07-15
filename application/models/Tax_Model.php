@@ -27,6 +27,8 @@ class Tax_model extends CI_Model
     private $ignoreCitadelTax;
     private $ignoreOutpostTax;
     private $ignoreStationTax;
+    private $ignoreAllBuyTax;
+    private $ignoreAllSellTax;
 
     /**
      * Starts the tax calculation process. Dispatches to other
@@ -49,6 +51,8 @@ class Tax_model extends CI_Model
         $this->ignoreCitadelTax  = $settings['citadel_tax_ignore'];
         $this->ignoreOutpostTax  = $settings['outpost_tax_ignore'];
         $this->ignoreStationTax  = $settings['station_tax_ignore'];
+        $this->ignoreBuyTax      = $settings['buy_tax_ignore'];
+        $this->ignoreSellTax     = $settings['sell_tax_ignore'];
 
         // non citadels use standings
         if ($this->stationFromID < 1000000000000) {
@@ -239,11 +243,19 @@ class Tax_model extends CI_Model
             case 'from':
                 $characterID = $this->characterFromID;
                 $stationID   = $this->stationFromID;
+                if ($this->ignoreBuyTax) {
+                    return 1;
+                }
+
             break;
 
             case 'to':
                 $characterID = $this->characterToID;
                 $stationID   = $this->stationToID;
+                if ($this->ignoreSellTax) {
+                    return 1;
+                }
+
             break;
         }
 

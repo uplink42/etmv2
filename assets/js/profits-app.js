@@ -1,8 +1,8 @@
-"use strict";
-$(document).ready(function() {
+$(function() {
     $('.table-interval').text(interval);
-    var totalValue = 0;
-    var table = $('#profits-2-table').DataTable({
+
+    let totalValue = 0;
+    let table = $('#profits-2-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         processing: true,
         serverSide: true,
@@ -11,7 +11,7 @@ $(document).ready(function() {
         ajax : {
             type   : 'GET',
             url    : base + 'Profits/getProfitTable/' + charID + '/' + interval + '/' + aggr,
-            dataSrc: function (json) {
+            dataSrc: (json) => {
                 var return_data = [];
                 totalValue = json.recordsSum;
                 for (var i = 0; i < json.data.length; i++) {
@@ -55,7 +55,7 @@ $(document).ready(function() {
         fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (parseFloat(aData.profit_total) > 0) {
                 $(nRow).addClass('success');
-            } else {
+            } else if (parseFloat(aData.profit_total) < 0) {
                 $(nRow).addClass('danger');
             }
         },
@@ -89,7 +89,7 @@ $(document).ready(function() {
     });
 
     // filters
-    $("#profits-2-table_filter input").keyup(function() {
+    $("#profits-2-table_filter input").keyup(() => {
         let info = table.page.info();
         $(".profits-2-body p.yellow").html("There are " + info.recordsTotal + " results for a total value of " + 
             number_format(totalValue, 2, '.', ',' ) + " ISK");
@@ -135,14 +135,14 @@ $(document).ready(function() {
 
     // load daily chart
     var profitsLineChart = function() {
-        var url_req = base + 'Profits/getProfitChart/' + charID + '/' + interval + '/' + aggr + '/' + itemID;
+        const url_req = base + 'Profits/getProfitChart/' + charID + '/' + interval + '/' + aggr + '/' + itemID;
         $.ajax({
             dataType: "json",
             url: url_req,
             global: false,
             success: function(result) {
                 if (result.chart && result.data) {
-                    FusionCharts.ready(function () {
+                    FusionCharts.ready(() => {
                         var lineChart = new FusionCharts({
                             type: 'line',
                             renderAt: 'chart-2',
@@ -159,5 +159,4 @@ $(document).ready(function() {
     };
 
     profitsLineChart();
-
 });

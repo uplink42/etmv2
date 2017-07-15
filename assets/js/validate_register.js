@@ -1,15 +1,13 @@
-"use strict";
-$(document).ready(function() {
+$(function() {
     $("#username").focus().select();
-
     $(".submit-register").on('click', 'input', function(e) {
-        var username = $("#username").val();
-        var email = $("#email").val();
-        var password = $("#password").val();
-        var repeatpassword = $("#repeatpassword").val();
-        var apikey = $("#apikey").val();
-        var vcode = $("#vcode").val();
-        var reports = $("#reports").attr('id');
+        let username = $("#username").val();
+        let email = $("#email").val();
+        let password = $("#password").val();
+        let repeatpassword = $("#repeatpassword").val();
+        let apikey = $("#apikey").val();
+        let vcode = $("#vcode").val();
+        let reports = $("#reports").attr('id');
         
         $("#username").parent('div').removeClass('has-error');
         $("#email").parent('div').removeClass('has-error');
@@ -47,5 +45,5 @@ $(document).ready(function() {
             $("#reports").parent('div').addClass('has-error');
             e.preventDefault();
         }
-    })
+    });
 });

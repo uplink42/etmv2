@@ -1,5 +1,4 @@
-"use strict";
-$(document).ready(function() {
+$(function() {
     let table;
     initializeTable([]);
     $('.item-data').hide();
@@ -62,7 +61,7 @@ $(document).ready(function() {
                 noResults: 'No results found',
                 results : function(resultsCount) {}
             },
-            select: function(event, ui) {
+            select: (event, ui) => {
                 $("#item").val(ui.item.value);
                 $("#id").val(ui.item.id);
             }
@@ -84,13 +83,13 @@ $(document).ready(function() {
             url: base + "Itemhistory/getItemStats/" + id,
             data: { chars: charID, interval: interval, aggr: aggr },
             type: "POST",
-            success: function(result) {
+            success: (result) => {
                 if (result) {
                     $('.item-data').show();
 
                     $("#item-name").text(result.item.name);
-                    var id = result.item.eve_iditem;
-                    var url = 'https://image.eveonline.com/Type/' + id + '_32.png';
+                    let id = result.item.eve_iditem;
+                    let url = 'https://image.eveonline.com/Type/' + id + '_32.png';
                     $("#item-img").html('<img src="' + url + '">');
 
                     // assign to form
@@ -147,7 +146,7 @@ $(document).ready(function() {
                         chart.render();
                     });
 
-                    FusionCharts.ready(function () {
+                    FusionCharts.ready(() => {
                         const chart = new FusionCharts({
                             type: 'mscombidy2d',
                             renderAt: 'chart-margin',
@@ -159,7 +158,7 @@ $(document).ready(function() {
                         chart.render();
                     });
 
-                    FusionCharts.ready(function () {
+                    FusionCharts.ready(() => {
                         const chart = new FusionCharts({
                             type: 'mscombidy2d',
                             renderAt: 'chart-sell',
@@ -171,7 +170,7 @@ $(document).ready(function() {
                         chart.render();
                     });
 
-                    FusionCharts.ready(function () {
+                    FusionCharts.ready(() => {
                         const chart = new FusionCharts({
                             type: 'mscombidy2d',
                             renderAt: 'chart-buy',

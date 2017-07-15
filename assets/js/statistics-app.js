@@ -1,5 +1,4 @@
-"use strict";
-$(document).ready(function() {
+$(function() {
     let recap = $('#daily').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'f>>tp",
         deferRender: true,
@@ -36,7 +35,7 @@ $(document).ready(function() {
         ajax : {
             type: 'GET',
             url: base + 'Statistics/getBestItemsProfit/' + charID + '/' + interval + '/' + aggr,
-            dataSrc: function(json) {
+            dataSrc: (json) => {
                 let return_data = [];
                 for (let i = 0; i < json.data.length; i++) {
                     return_data.push({
@@ -86,11 +85,12 @@ $(document).ready(function() {
         ajax : {
             type: 'GET',
             url: base + 'Statistics/getBestItemsMargin/' + charID + '/' + interval + '/' + aggr,
-            dataSrc: function(json) {
+            dataSrc: (json) => {
                 let return_data = [];
                 for (let i = 0; i < json.data.length; i++) {
                     return_data.push({
-                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + json.data[i].item_id + "?aggr=" + aggr + "' target='_blank'>" + 
+                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + json.data[i].item_id + 
+                            "?aggr=" + aggr + "' target='_blank'>" + 
                             "<img src='" + json.data[i].url + "' alt='icon' class='pr-5'>" + json.data[i].item + "</a>",
                         quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
                         margin: number_format(json.data[i].margin, 2, '.', ',' ),
@@ -136,11 +136,12 @@ $(document).ready(function() {
         ajax : {
             type: 'GET',
             url: base + 'Statistics/getProblematicItems/' + charID + '/' + interval + '/' + aggr,
-            dataSrc: function(json) {
+            dataSrc: (json) => {
                 let return_data = [];
                 for (let i = 0; i < json.data.length; i++) {
                     return_data.push({
-                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + json.data[i].item_id + "?aggr=" + aggr + "' target='_blank'>" + 
+                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + 
+                            json.data[i].item_id + "?aggr=" + aggr + "' target='_blank'>" + 
                             "<img src='" + json.data[i].url + "' alt='icon' class='pr-5'>" + json.data[i].item + "</a>",
                         quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
                         profit: number_format(json.data[i].profit, 2, '.', ',' ),
@@ -186,11 +187,12 @@ $(document).ready(function() {
         ajax : {
             type: 'GET',
             url: base + 'Statistics/getBestIPH/' + charID + '/' + interval + '/' + aggr,
-            dataSrc: function(json) {
+            dataSrc: (json) => {
                 let return_data = [];
                 for (let i = 0; i < json.data.length; i++) {
                     return_data.push({
-                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + json.data[i].item_id + "?aggr=" + aggr + "' target='_blank'>" + 
+                        item: "<a href='" + base + "itemhistory/index/" + charID + "/" + interval + "/" + 
+                            json.data[i].item_id + "?aggr=" + aggr + "' target='_blank'>" + 
                             "<img src='" + json.data[i].url + "' alt='icon' class='pr-5'>" + json.data[i].item + "</a>",
                         quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
                         profit: number_format(json.data[i].profit, 2, '.', ',' ),
@@ -373,7 +375,7 @@ $(document).ready(function() {
             global: false,
             success: function(result) {
                 if (result.chart && result.dataset && result.categories) {
-                    FusionCharts.ready(function () {
+                    FusionCharts.ready(() => {
                         var barChart = new FusionCharts({
                             type: 'mscolumn2d',
                             renderAt: 'bar',
@@ -399,8 +401,8 @@ $(document).ready(function() {
             global: false,
             success: function(result) {
                 if (result.chart && result.data) {
-                    FusionCharts.ready(function () {
-                        var chart = new FusionCharts({
+                    FusionCharts.ready(() => {
+                        let chart = new FusionCharts({
                             type: 'pie3d',
                             renderAt: 'pie',
                             width: '100%',

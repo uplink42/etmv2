@@ -1,7 +1,5 @@
-"use strict";
-$(document).ready(function() {
-
-    var table_active = $('#contracts-active-table').DataTable({
+$(function() {
+    const table_active = $('#contracts-active-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         lengthMenu: [
             [50, 75, 100, -1],
@@ -32,7 +30,7 @@ $(document).ready(function() {
         autoWidth: false
     });
 
-    var table_inactive = $('#contracts-inactive-table').DataTable({
+    const table_inactive = $('#contracts-inactive-table').DataTable({
         dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
         lengthMenu: [
             [50, 75, 100, -1],
@@ -60,14 +58,13 @@ $(document).ready(function() {
         }]
     });
 
-
     $(".contracts-active-body p.yellow").html("<p>There are "+ table_active.rows().count() + " results</p>");
-    $("#contracts-active-table_filter input").keyup(function () {
+    $("#contracts-active-table_filter input").keyup(() => {
         $(".contracts-active-body p.yellow").html("There are "+ table_active.rows({filter: 'applied'}).count() + " results");
     });
 
     $(".contracts-inactive-body p.yellow").html("<p>There are "+ table_inactive.rows().count() + " results</p>");
-    $("#contracts-inactive-table_filter input").keyup(function () {
+    $("#contracts-inactive-table_filter input").keyup(() => {
         $(".contracts-inactive-body p.yellow").html("There are "+ table_inactive.rows({filter: 'applied'}).count() + " results");
     });
 });

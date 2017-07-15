@@ -81,6 +81,8 @@ class User extends CI_Model
         $ignore_citadel_tax        = $user_settings->ignore_citadel_tax == 1 ? true : false;
         $ignore_station_tax        = $user_settings->ignore_station_tax == 1 ? true : false;
         $ignore_outpost_tax        = $user_settings->ignore_outpost_tax == 1 ? true : false;
+        $ignore_buy_tax            = $user_settings->ignore_buy_tax     == 1 ? true : false;
+        $ignore_sell_tax           = $user_settings->ignore_sell_tax    == 1 ? true : false;
 
         $result = [
             "buy_behaviour"      => $default_buy_tracking,
@@ -88,7 +90,9 @@ class User extends CI_Model
             "x_character"        => $cross_character_tracking,
             "citadel_tax_ignore" => $ignore_citadel_tax,
             "station_tax_ignore" => $ignore_station_tax,
-            "outpost_tax_ignore" => $ignore_outpost_tax
+            "outpost_tax_ignore" => $ignore_outpost_tax,
+            "sell_tax_ignore"    => $ignore_buy_tax,
+            "buy_tax_ignore"     => $ignore_sell_tax,
         ];
 
         return $result;

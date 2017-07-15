@@ -1,25 +1,24 @@
-"use strict";
-$(document).ready(function() {
+$(function() {
     $(".api-insert-2").hide();
-    var apikey,
+    let apikey,
         vcode;
     list();
 
     function list() {
-        var url = base + "Apikeymanagement/getCharacters/";
+        const url = base + "Apikeymanagement/getCharacters/";
         $.ajax({
             dataType: "json",
             url: url,
-            success: function(result) {
+            success: (result) => {
                 $(".table-character-list tbody tr").empty();
                 if (result.length === 0) {
-                    var $row = "<tr><td colspan='3' class='text-center'>No characters found</td></tr>";
+                    const $row = "<tr><td colspan='3' class='text-center'>No characters found</td></tr>";
                     $(".table-character-list tbody tr").prepend($row);
                 } else {
                     $.each(result, function(k, v) {
-                        var id = result[k].charid;
-                        var img = "<img src='https://image.eveonline.com/Character/" + id + "_32.jpg'></img>"; 
-                        var $row = "<tr><td>" + img + " " + result[k].name + "</td><td>" + result[k].api + 
+                        const id = result[k].charid;
+                        const img = "<img src='https://image.eveonline.com/Character/" + id + "_32.jpg'></img>"; 
+                        const $row = "<tr><td>" + img + " " + result[k].name + "</td><td>" + result[k].api + 
                                "</td><td><button class='btn btn-danger btn-delete' data-iddel=" + id + 
                                " data-toggle='modal' data-target='#delete'>Remove</button></tr></tr>";
                         $(".table-character-list").prepend($row);
@@ -31,18 +30,18 @@ $(document).ready(function() {
 
     // start delete
     $("table").on('click', 'button', function() {
-        var id = $(this).data('iddel');
-        var url = base + 'Apikeymanagement/removeCharacter/' + id;
+        const id = $(this).data('iddel');
+        const url = base + 'Apikeymanagement/removeCharacter/' + id;
         $(".btn-delete-confirm").attr('data-url', url);
     });
 
     // confirm delete
     $(".btn-delete-confirm").on('click', function() {
-        var url = $(this).attr('data-url');
+        const url = $(this).attr('data-url');
         $.ajax({
             dataType: "json",
             url: url,
-            success: function(result) {
+            success: (result) => {
                 $('#delete').modal('toggle');
                 toastr[result.notice](result.message);
                 list();
@@ -55,28 +54,29 @@ $(document).ready(function() {
         apikey = $("#keyid").val();
         vcode = $("#vcode").val();
         e.preventDefault();
-        var url = base + "Apikeymanagement/addCharacters/";
-        var data = $(".add-apikey").serialize();
+
+        const url = base + "Apikeymanagement/addCharacters/";
+        const data = $(".add-apikey").serialize();
 
         $.ajax({
             dataType: "json",
             url: url,
             data: data,
             type: "POST",
-            success: function(result) {
-                if (typeof(result.notice) != "undefined") {
+            success: (result) => {
+                if (typeof result.notice != 'undefined') {
                     toastr[result.notice](result.message);
                 } else {
                     $(".api-insert-1").toggle();
                     $(".api-insert-2").toggle();
                         
-                    var count = 1;
-                    $.each(result, function(k, v) {
-                        var id = result[k][1].id;
-                        var name = result[k][0].name;
-                        var url = "https://image.eveonline.com/Character/" + id + "_32.jpg";
-                        var cl = "character" + count;
-                        var $element = "<tr><td><img src='" + url + "'alt='icon'></img>" + " " + name + "</td>"+
+                    let count = 1;
+                    $.each(result, (k, v) => {
+                        const id = result[k][1].id;
+                        const name = result[k][0].name;
+                        const url = "https://image.eveonline.com/Character/" + id + "_32.jpg";
+                        const cl = "character" + count;
+                        const $element = "<tr><td><img src='" + url + "'alt='icon'></img>" + " " + name + "</td>"+
                                        "<td><input type='checkbox' class='" + cl + "' data-id='" + id + "'></td></tr>";
                         count++;
                         $(".table-character-selection tbody").append($element);
@@ -87,16 +87,16 @@ $(document).ready(function() {
     });
 
     // submit characters
-    $(".submit-add-2").on('click', function(e) {
+    $(".submit-add-2").on('click', (e) => {
         e.preventDefault();
 
-        var selected = [];
+        let selected = [];
         $(".character1").is(':checked') ? selected.push($(".character1").attr('data-id')) : "";
         $(".character2").is(':checked') ? selected.push($(".character2").attr('data-id')) : "";
         $(".character3").is(':checked') ? selected.push($(".character3").attr('data-id')) : "";
         
-        var args = selected.join('/');
-        var url = base + "Apikeymanagement/addCharactersStep/" + apikey + "/" + vcode + "/" + args;
+        const args = selected.join('/');
+        const url = base + "Apikeymanagement/addCharactersStep/" + apikey + "/" + vcode + "/" + args;
 
         $.ajax({ 
             dataType: "json",

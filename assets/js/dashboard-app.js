@@ -1,8 +1,7 @@
-"use strict";
-$(document).ready(function() {
-    var totalValue = 0;
+$(function() {
+    let totalValue = 0;
     // Sparkline charts
-    var sparklineCharts = function() {
+    const sparklineCharts = function() {
         $(".sparkline").sparkline($(".sparkline").data('profit'), {
             type: 'line',
             lineColor: '#FFFFFF',
@@ -13,9 +12,9 @@ $(document).ready(function() {
         });
     };
 
-    var sparkResize;
+    let sparkResize;
     // Resize sparkline charts on window resize
-    $(window).resize(function() {
+    $(window).resize(() => {
         clearTimeout(sparkResize);
         sparkResize = setTimeout(sparklineCharts, 100);
     });
@@ -31,21 +30,21 @@ $(document).ready(function() {
             "showEasing": "swing",
             "timeOut": "6000"
         };
-        toastr.success('<strong>Welcome to Eve Trade Master 2.2!</strong> <br/><small>\n\
-        Hope you enjoy the new features. Make sure to report any bugs you find. \n\
-        Donations are always welcome, too!</small>');
+        toastr.success(`<strong>Welcome to Eve Trade Master 2.2!</strong> <br/><small>
+        Hope you enjoy the new features. Make sure to report any bugs you find.
+        Donations are always welcome, too!</small>`);
     }, 1600);
 
     drawPieChart();
 
     // load pie chart
     function drawPieChart() {
-        var url_req = base + 'Dashboard/getPieChart/' + charID + '/' + aggr;
+        const url_req = base + 'Dashboard/getPieChart/' + charID + '/' + aggr;
         $.ajax({
             dataType: "json",
             url: url_req,
             global: false,
-            success: function(result) {
+            success: (result) => {
                 if (result.chart && result.data) {
                     FusionCharts.ready(function () {
                         var pieChart = new FusionCharts({
@@ -76,7 +75,7 @@ $(document).ready(function() {
         ajax : {
             type: 'GET',
             url: base + 'Dashboard/getProfitTable/' + charID + '/' + interval + '/' + aggr,
-            dataSrc: function (json) {
+            dataSrc: (json) => {
                 let return_data = [];
                 totalValue = json.recordsSum;
                 for (let i = 0; i < json.data.length; i++) {
@@ -113,20 +112,18 @@ $(document).ready(function() {
         fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (parseFloat(aData.profit_total) > 0) {
                 $(nRow).addClass('success');
-            } else {
+            } else if (parseFloat(aData.profit_total) < 0) {
                 $(nRow).addClass('danger');
             }
         },
         autoWidth: false
     });
 
-
     $('.dropdown-interval a').on('click', function(e) {
         e.preventDefault();
         if ($(this).attr('data-id') != interval) {
-            var url;
-            interval = $(this).attr('data-id'),
-            url    = base + 'Dashboard/getProfitTable/' + charID + '/' + interval + '/' + aggr;
+            interval = $(this).attr('data-id');
+            const url = base + 'Dashboard/getProfitTable/' + charID + '/' + interval + '/' + aggr;
 
             table.ajax.url(url).load();
             $('.table-interval').text(interval);

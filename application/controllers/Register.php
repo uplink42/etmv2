@@ -69,6 +69,8 @@ final class Register extends CI_Controller
             'null_citadel_tax' => $this->input->post('null-citadel-tax', true),
             'null_station_tax' => $this->input->post('null-station-tax', true),
             'null_outpost_tax' => $this->input->post('null-outpost-tax', true),
+            'null_buy_tax'     => $this->input->post('null-buy-tax', true),
+            'null_sell_tax'    => $this->input->post('null-sell-tax', true),
         ];
 
         $chars = array();
