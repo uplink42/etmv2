@@ -1,5 +1,5 @@
 //Service worker file name
-var serviceWorkerFile = './../service-worker-pushbots.js',
+var serviceWorkerFile = 'https://www.evetrademaster.com/v2/service-worker-pushbots.js',
 	logging = true,
 	application_id = "5969d3bb4a9efaa3b08b4568",
 	pushbots_url = "https://api.pushbots.com/";
