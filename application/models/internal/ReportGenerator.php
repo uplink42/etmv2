@@ -116,8 +116,17 @@ class ReportGenerator extends CI_Model
      */
     public function calculateBestRaw(string $chars, int $interval): array
     {
-        $result = $this->stats->getBestItemsRaw($chars, $interval, false, 5);
-        return $result;
+        $configs = [
+            'interval' => $interval,
+            'chars' => $chars,
+            'defs' => [
+                'length' => 5,
+                'start' => 0,
+                'draw' => 1
+            ]
+        ];
+        $result = $this->stats->getBestItemsRaw($configs);
+        return json_decode($result, true)['data'];
     }
 
     /**
@@ -128,8 +137,17 @@ class ReportGenerator extends CI_Model
      */
     public function calculateBestMargin(string $chars, int $interval): array
     {
-        $result = $this->stats->getBestItemsMargin($chars, $interval, 5);
-        return $result;
+        $configs = [
+            'interval' => $interval,
+            'chars' => $chars,
+            'defs' => [
+                'length' => 5,
+                'start' => 0,
+                'draw' => 1
+            ]
+        ];
+        $result = $this->stats->getBestItemsMargin($configs);
+        return json_decode($result, true)['data'];
     }
 
     /**
@@ -140,8 +158,17 @@ class ReportGenerator extends CI_Model
      */
     public function calculateProblematicItems(string $chars, int $interval): array
     {
-        $result = $this->stats->getProblematicItems($chars, $interval, 5);
-        return $result;
+        $configs = [
+            'interval' => $interval,
+            'chars' => $chars,
+            'defs' => [
+                'length' => 5,
+                'start' => 0,
+                'draw' => 1
+            ]
+        ];
+        $result = $this->stats->getProblematicItems($configs);
+        return json_decode($result, true)['data'];
     }
 
     /**
@@ -176,8 +203,17 @@ class ReportGenerator extends CI_Model
      */
     public function calculateBestIPH(string $chars, int $interval): array
     {
-        $result = $this->stats->getBestIPH($chars, $interval, 5);
-        return $result;
+        $configs = [
+            'interval' => $interval,
+            'chars' => $chars,
+            'defs' => [
+                'length' => 5,
+                'start' => 0,
+                'draw' => 1
+            ]
+        ];
+        $result = $this->stats->getBestIPH($configs);
+        return json_decode($result, true)['data'];
     }
 
     /**

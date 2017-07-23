@@ -11,7 +11,7 @@ use Pheal\Pheal;
 
 class Async_updater extends CI_Controller
 {
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->db->cache_off();
@@ -25,13 +25,13 @@ class Async_updater extends CI_Controller
 
     public function index()
     {
-    	if (!$this->input->is_cli_request()) {
+        if (!$this->input->is_cli_request()) {
             die('unauthorized');
         }
 
         $chars = $this->Autoexec_updater_model->getAllUsers();
         foreach ($chars as $row) {
-        	$username = $row->username;
+            $username = $row->username;
             $iduser = (int) $row->iduser;
 
             if (!$this->ValidateRequest->testEndpoint()) {
@@ -39,18 +39,17 @@ class Async_updater extends CI_Controller
                 // check if user is already updating
             } else {
                 // check if already updating
-            	if ($this->Updater_model->isLocked($username)) {
+                if ($this->Updater_model->isLocked($username)) {
                 } else {
                     // count keys
-                	$keys = $this->Updater_model->getKeys($username);
+                    $keys = $this->Updater_model->getKeys($username);
                     if (count($keys) == 0) {
-                        return;
+                        //return;
                     } else {
                         // check existing keys status
                         $keys_status = $this->Updater_model->processAPIKeys($keys, $username);
-                    	if (!$keys_status) {
+                        if (!$keys_status) {
                             // failure
-                            return;
                         } else {
                             // check each key if valid
                             foreach($keys_status as $key => $val) {
@@ -60,11 +59,11 @@ class Async_updater extends CI_Controller
                                 }
                             }
                             if (count($invalid_keys) > 0) {
-                                return false;
+                                //return false;
                             } else {
                                 // no invalid keys
-                                $this->Updater_model->lock($username);
-                                sleep(1);
+                                //$this->Updater_model->lock($username);
+                                sleep(2);
                                 exec("php /var/www/html/v2 && php index.php internal/Async_procedure index " . $iduser . " > /dev/null &");
                             }
                         }
