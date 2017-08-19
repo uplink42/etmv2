@@ -24,7 +24,8 @@
                         <a href="#etm2" class="btn btn-lg btn-rj">Learn More</a>
                         <br><br>
                     </div>
-                    <p class="lead"><a href="<?=base_url('main/login')?>">Login</a> | <a href="<?=base_url('main/register')?>">Register</a></p>
+                    <p class="lead"><a href="<?=base_url('main/login')?>">Login</a> | 
+                    <a href="https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=http://localhost/v2/access&client_id=05798e421861481da97e3ea300446054&scope=esi-skills.read_skills.v1 esi-wallet.read_character_wallet.v1 esi-universe.read_structures.v1 esi-markets.structure_markets.v1 esi-characters.read_standings.v1 esi-markets.read_character_orders.v1 esi-contracts.read_character_contracts.v1">Register</a></p>
                 </div>
             </div>
         </div>

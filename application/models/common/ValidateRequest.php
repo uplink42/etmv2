@@ -38,6 +38,19 @@ class ValidateRequest extends CI_Model
         }
     }
 
+
+    public function checkCharacterFree($characterID) : bool
+    {
+         $this->db->where('character_eve_idcharacter', $characterID);
+         $query = $this->db->get('v_user_characters');
+
+         if ($query->num_rows() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Checks if a citadel tax entry belongs to a character
      * @param  int    $character_id 

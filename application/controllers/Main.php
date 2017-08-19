@@ -50,6 +50,10 @@ final class Main extends MY_Controller
     {
         $data['no_header'] = 1;
         $data['view']      = 'register/register_v';
+        $data['access_token']  = $this->input->get('token');
+        $data['refresh_token'] = $this->input->get('refresh');
+        $data['character'] = $this->input->get('character');
+
         $this->twig->display('main/_template_v', $data);
     }
 

@@ -52,16 +52,11 @@
 				    <input type="password"  id="repeatpassword" class="form-control" name="repeatpassword" required='required' value="{{set_value('repeatpassword')}}">
 				    <span class="help-block small">Please repeat your password</span>
 				</div>
-				<div class="form-group col-lg-6">
-				    <label>API Key</label>
-				    <input type="number" id="apikey" placeholder="Paste the KeyID generated below here" class="form-control" name="apikey" required='required' value="{{set_value('apikey')}}">
-				    <strong><span class="help-block yellow"><i class="fa fa-info"></i> <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask=82317323" target="_blank">Generate key HERE. ETM only accepts keys created with this link!</a></span></strong>
-				</div>
-				<div class="form-group col-lg-6">
-				    <label>vCode</label>
-				    <input type="text" id="vcode" class="form-control" name="vcode" required='required' value="{{set_value('vcode')}}">
-				    <span class="help-block small">Paste the generated vCode here</span>
-				</div>
+
+				<input type="hidden" name="token" value="{{access_token}}">
+				<input type="hidden" name="refresh" value="{{refresh_token}}">
+				<input type="hidden" name="character" value="{{character}}">
+
 				<div class="form-group col-lg-4 col-lg-offset-4">
 				    <label>Automated reports</label>
 				    <select class="form-control" id="reports" name="reports">
