@@ -197,6 +197,7 @@ class Statistics_model extends CI_Model
             'recordsFiltered'           => $result['max'],
             'recordsSum'                => $result['sum']]);
 
+        log_message('error', $this->db->last_query());
         return $data;
     }
 
@@ -479,6 +480,7 @@ class Statistics_model extends CI_Model
         $query  = $this->db->get('');
         $result = $query->result_array();
 
+
         return $result;
     }
 
@@ -505,6 +507,7 @@ class Statistics_model extends CI_Model
         $query  = $this->db->get('');
         $result = $query->result_array();
 
+        log_message('error', $this->db->last_query());
         return $result;
     }
 

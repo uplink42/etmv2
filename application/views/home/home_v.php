@@ -82,7 +82,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-title text-center">
-                        <h2 class="main-title">ETM 2.0 is finally here!</h2>
+                        <h2 class="main-title">ETM 2.4 is here!</h2>
 
                         <h3 class="sub-title">New features, a new image and lots of improvements</h3>
 
@@ -199,7 +199,7 @@
                         <div class="funny-boxes-text">
                             <h4>Automatic Profit Tracking</h4>
 
-                            <p>Find out every item you've been re-selling, with all taxes and fees calculated, even across different characters!</p>
+                            <p>Find out every item you've been re-selling, with customizable taxes and fees, even across different characters!</p>
                         </div>
                     </div>
                 </div>

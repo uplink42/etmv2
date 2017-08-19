@@ -1,0 +1,13 @@
+{
+    "name": "Eve Trade Master",
+    "short_name": "Eve Trade Master",  
+    "icons": [
+        {
+            "src": "https://www.evetrademaster.com/v2/app-icons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "gcm_sender_id": "597265716689",  
+    "gcm_user_visible_only": true  
+}

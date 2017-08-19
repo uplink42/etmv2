@@ -30,7 +30,7 @@ $(function() {
             "showEasing": "swing",
             "timeOut": "6000"
         };
-        toastr.success(`<strong>Welcome to Eve Trade Master 2.2!</strong> <br/><small>
+        toastr.success(`<strong>Welcome to Eve Trade Master!</strong> <br/><small>
         Hope you enjoy the new features. Make sure to report any bugs you find.
         Donations are always welcome, too!</small>`);
     }, 1600);
@@ -80,7 +80,7 @@ $(function() {
                 totalValue = json.recordsSum;
                 for (let i = 0; i < json.data.length; i++) {
                     return_data.push({
-                        item_name: '<img src="' + json.data[i].url + '">' + json.data[i].item_name,
+                        item_name: '<img class="pr-5" src="' + json.data[i].url + '">' + json.data[i].item_name,
                         system_name: json.data[i].system_name,
                         sell_time: json.data[i].sell_time,
                         quantity: number_format(json.data[i].quantity, 0, '.', ',' ),
