@@ -5,3 +5,6 @@
 /dist/
 /windows/
 /android/
+/node_modules/
+/bower_components/
+/.idea/

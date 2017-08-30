@@ -16,6 +16,8 @@
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
     
     <link rel="stylesheet" href="<?=base_url('dist/home/styles/css/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
+
+    <?php $this->load->view('home/cookies'); ?>
     <!-- <link rel="manifest" href="manifest.json"> -->
     <script>
         //some default pre init

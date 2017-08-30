@@ -8,6 +8,9 @@ final class Access extends CI_Controller
         parent::__construct();
     }
 
+    /**
+     * @return bool
+     */
     public function index()
     {
         $code = $this->input->get('code');
@@ -17,10 +20,10 @@ final class Access extends CI_Controller
 
         $header = 'Authorization: Basic '.base64_encode(CLIENT_ID.':'.CLIENT_SECRET);
         $fields_string = '';
-        $fields = array(
+        $fields = [
             'grant_type' => 'authorization_code',
             'code' => $code
-        );
+        ];
         
         foreach ($fields as $key => $value) {
             $fields_string .= $key.'='.$value.'&';
@@ -50,16 +53,16 @@ final class Access extends CI_Controller
                 $ch = curl_init(); 
                 curl_setopt($ch, CURLOPT_URL, "https://login.eveonline.com/oauth/verify");
                 curl_setopt($ch, CURLOPT_USERAGENT, USERAGENT);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array($header));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [$header]);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
                 $output = curl_exec($ch);
                 $res = json_decode($output, 1);
 
-                $params = array(
+                $params = [
                     'character' => $res['CharacterID'],
                     'refresh' => $refreshToken,
                     'token' => $accessToken,
-                );
+                ];
 
                 redirect('main/register?' . http_build_query($params));
             } else {
