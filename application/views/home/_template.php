@@ -46,6 +46,7 @@
     </script>
 
     <script src="<?=base_url('sdk.min.js')?>" type="text/javascript" onload="PB.init()" async></script>
+
     <!-- Modernizr JS for IE9 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="../assets/plugins/modernizr.min.js"></script>

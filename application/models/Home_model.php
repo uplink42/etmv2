@@ -14,7 +14,7 @@ class Home_model extends CI_Model
      * Gets the total stats for the homepage
      * @return array
      */
-    public function getStats() : array
+    public function saveStats()
     {
         //profit
         $this->db->select('sum(profit_unit * quantity_profit) as profit');
@@ -36,16 +36,22 @@ class Home_model extends CI_Model
         $query      = $this->db->get('characters');
         $characters = $query->row();
 
-        $data = array("profit"     => (int)(($profit->profit)/1000000),
-            "transactions"         => $transactions->transaction,
-            "keys"                 => $keys->apikey,
-            "characters"           => $characters->cha);
+        $data = array(
+            "profit"       => (int)(($profit->profit)/1000000),
+            "transactions" => $transactions->transaction,
+            "api_keys"     => $keys->apikey,
+            "characters"   => $characters->cha);
 
-        $interval = array("profit" => round(($profit->profit)/10),
-            "transactions"         => ($transactions->transaction)/10,
-            "keys"                 => ($keys->apikey)/10,
-            "characters"           => ($characters->cha)/10);
+        $this->db->insert('stats', $data);
+    }
 
-        return array("data" => $data, "interval" => $interval);
+    public function getStats()
+    {
+        $this->db->order_by('id', 'desc');
+        $this->db->limit('1');
+        $query = $this->db->get('stats');
+        $result = $query->row();
+
+        return $result;
     }
 }

@@ -17,6 +17,11 @@ final class Register extends CI_Controller
      */
     public function processData(): void
     {
+        if (empty($this->input->post('vcode')) || 
+            empty($this->input->post('apikey'))) {
+            return;
+        }
+
         $username       = $this->input->post('username', true);
         $password       = $this->input->post('password', true);
         $repeatpassword = $this->input->post('repeatpassword', true);
@@ -55,6 +60,10 @@ final class Register extends CI_Controller
      */
     public function processCharacters(): void
     {
+        if (empty($this->input->post('vcode')) || empty($this->input->post('apikey'))) {
+            return;
+        }
+
         $this->load->model('register_model', 'register');
         $user_data = [
             'username'         => $this->input->post('username', true),

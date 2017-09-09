@@ -8,10 +8,10 @@ $(document).ready(function() {
 	        dataType: "json",
 	        url: base + 'getAll',
 	        success: function(result) {
-	            $('.number.characters').text(result.data.characters);
-	            $('.number.keys').text(result.data.keys);
-	            $('.number.profit').text(result.data.profit);
-	            $('.number.transactions').text(result.data.transactions);
+	            $('.number.characters').text(result.characters);
+	            $('.number.keys').text(result.api_keys);
+	            $('.number.profit').text(result.profit);
+	            $('.number.transactions').text(result.transactions);
 	        }
 	    });
 	}
