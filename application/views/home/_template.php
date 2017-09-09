@@ -16,8 +16,36 @@
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
     
     <link rel="stylesheet" href="<?=base_url('dist/home/styles/css/styles.css')?>?HASH_CACHE=<?=HASH_CACHE?>"/>
-    <link rel="manifest" href="manifest.json">
-    <script src="pushbots-chrome.js"></script>
+    <!-- <link rel="manifest" href="manifest.json"> -->
+    <script>
+        //some default pre init
+        var PB = PB || {};PB.q = PB.q || [];PB.events = PB.events || [];
+
+        //PushBots ApplicationId (required)
+        PB.app_id = "5969d3bb4a9efaa3b08b4568";
+        //Your domain name, must be HTTPS or localhost  (required)
+        PB.domain = "https://www.evetrademaster.com";
+        PB.logging_enabled = true;
+        PB.auto_subscribe = true;
+
+        //Async functions
+        //PB.q.push(["tag", ['test', "test3"]]);
+        //PB.q.push(["alias", "username"]);
+        //PB.q.push(["untag", ['test', "test3"]]);
+        //Toggle notification subscription
+        //PB.q.push(["subscribe", true]);
+
+        //Pushbots events
+        PB.events.push(["onRegistered", function(data){
+            console.log("onRegistered" , data);
+        }]);
+
+        PB.events.push(["onRegisteredOnPushBots", function(data){
+            console.log("onRegisteredOnPushBots", data);
+        }]);
+    </script>
+
+    <script src="<?=base_url('sdk.min.js')?>" type="text/javascript" onload="PB.init()" async></script>
     <!-- Modernizr JS for IE9 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="../assets/plugins/modernizr.min.js"></script>
@@ -27,7 +55,7 @@
 
 <?php $this->load->view('home/home_v'); ?>
 <script src="<?=base_url('dist/home/js/apps.js')?>?HASH_CACHE=<?=HASH_CACHE?>"></script>
-<script src="sw-registration.js"></script>
+<!-- <script src="sw-registration.js"></script> -->
 </body>
     <?php include_once("analyticstracking.php") ?>
 </html>
