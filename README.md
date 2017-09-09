@@ -77,6 +77,7 @@ And that should be all. You can now launch it and create an account.
     00 14 * * * cd [base application path] && php index.php internal/Autoexec_outposts
     30 09 * * * cd [base application path] && php index.php internal/Autoexec_pricedata
     55 23 * * * cd [base application path] && php index.php internal/Async_updater
+    00 * * * * cd [base application path] && php index.php internal/Autoexec_sum
     
 <h1>Unit Tests</h1>
 
