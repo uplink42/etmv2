@@ -4,26 +4,19 @@
 </div>
 
     <div class="container lg animated slideInDown tabs-container">
-    	<div class="view-header">
-    	    <div class="header-icon">
-    		  <i class="pe page-header-icon pe-7s-smile"></i>
-    	    </div>
-    	    <div class="header-title">
-        		<h3>Character selection</h3>
-        		<small>
-        		    Select one of the following character portraits to continue
-        		</small>
-    	    </div>
-    	</div>
+        <div class="view-header">
+            <div class="header-icon">
+              <i class="pe page-header-icon pe-7s-smile"></i>
+            </div>
+            <div class="header-title">
+                <h3>Character selection</h3>
+                <small>
+                    Select one of the following character portraits to continue
+                </small>
+            </div>
+        </div>
 
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- ETM -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1952914247666990"
-             data-ad-slot="6026566466"
-             data-ad-format="auto"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        {% include 'ads/select' ~ '.twig' %}
         <br>
 
         <div class="panel panel-filled">
@@ -90,69 +83,69 @@
             </div>
         </div>
 
-    	<div class="panel panel-filled">
-    	    <div class="panel-body">
-    		<p></p>
-        		<div class="table-responsive">
+        <div class="panel panel-filled">
+            <div class="panel-body">
+            <p></p>
+                <div class="table-responsive">
                     {% if table %}
-            		    <table class="table table-responsive table-bordered table-stripped table-hover table-clickable">
-                			<thead>
-                			    <tr>
-                				    <th></th>
-                				    <th>Name</th>
-                				    <th>Wallet Balance</th>
-                				    <th>Assets Value</th>
-                				    <th>Escrow</th>
-                				    <th>Sell Orders</th>
-                			    </tr>
-                			</thead>
-                			<tbody>
+                        <table class="table table-responsive table-bordered table-stripped table-hover table-clickable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Wallet Balance</th>
+                                    <th>Assets Value</th>
+                                    <th>Escrow</th>
+                                    <th>Sell Orders</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             {% for char in table[0]['character'] %}
 
-                				{# $id = $char['id'];
-                				$name = $char['name'];
-                				$balance = $char['balance'];
-                				$networth = $char['networth'];
-                				$escrow = $char['escrow'];
-                				$sell = $char['sell']; #}
-                				<tr onclick="window.document.location='{{base_url('dashboard/index/' ~ char['id'])}}'">
-                				    <td>
+                                {# $id = $char['id'];
+                                $name = $char['name'];
+                                $balance = $char['balance'];
+                                $networth = $char['networth'];
+                                $escrow = $char['escrow'];
+                                $sell = $char['sell']; #}
+                                <tr onclick="window.document.location='{{base_url('dashboard/index/' ~ char['id'])}}'">
+                                    <td>
                                         <img src='https://image.eveonline.com/Character/{{ char['id'] }}_32.jpg' alt='character portrait'>
                                     </td>
-                				    <td>{{ char['name'] }}</td>
-                				    <td class="text-right">{{ char['balance']  | number_format }}</td>
-                				    <td class="text-right">{{ char['networth'] | number_format }}</td>
-                				    <td class="text-right">{{ char['escrow']   | number_format }}</td>
-                				    <td class="text-right">{{ char['sell']     | number_format }}</td>
-                				</tr>
+                                    <td>{{ char['name'] }}</td>
+                                    <td class="text-right">{{ char['balance']  | number_format }}</td>
+                                    <td class="text-right">{{ char['networth'] | number_format }}</td>
+                                    <td class="text-right">{{ char['escrow']   | number_format }}</td>
+                                    <td class="text-right">{{ char['sell']     | number_format }}</td>
+                                </tr>
                             {% endfor %}
-                			    
-                			    {# $balance_total = $table[0]['total']['balance_total'];
-                			    $networth_total = $table[0]['total']['networth_total'];
-                			    $escrow_total = $table[0]['total']['escrow_total'];
-                			    $sell_total = $table[0]['total']['sell_total']; #}
-                				<tr onclick="window.document.location='{{base_url('dashboard/index/' ~ table[0]['character'][0]["id"] ~ '?aggr=1')}}'">
-                				    <td></td>
-                				    <td><strong>Total</strong></td>
-                				    <td class="text-right"><strong>{{ table[0]['total']['balance_total']  | number_format }}</strong></td>
-                				    <td class="text-right"><strong>{{ table[0]['total']['networth_total'] | number_format }}</strong></td>
-                				    <td class="text-right"><strong>{{ table[0]['total']['escrow_total']   | number_format }}</strong></td>
-                				    <td class="text-right"><strong>{{ table[0]['total']['sell_total']     | number_format }}</strong></td>
-                				</tr>
-                				<tr onclick="window.document.location='{{base_url('dashboard/index/' ~ table[0]['character'][0]["id"] ~ '?aggr=1')}}'">
-                				    <td></td>
-                				    <td></td>
-                				    <td></td>
-                				    <td></td>
-                				    <td class="text-right yellow"><strong>GRAND TOTAL</strong></td>
-                				    <td class="text-right yellow"><strong>{{ table[0]['grand_total'] | number_format }}</strong></td>
-                				</tr>
-                			</tbody>
+                                
+                                {# $balance_total = $table[0]['total']['balance_total'];
+                                $networth_total = $table[0]['total']['networth_total'];
+                                $escrow_total = $table[0]['total']['escrow_total'];
+                                $sell_total = $table[0]['total']['sell_total']; #}
+                                <tr onclick="window.document.location='{{base_url('dashboard/index/' ~ table[0]['character'][0]["id"] ~ '?aggr=1')}}'">
+                                    <td></td>
+                                    <td><strong>Total</strong></td>
+                                    <td class="text-right"><strong>{{ table[0]['total']['balance_total']  | number_format }}</strong></td>
+                                    <td class="text-right"><strong>{{ table[0]['total']['networth_total'] | number_format }}</strong></td>
+                                    <td class="text-right"><strong>{{ table[0]['total']['escrow_total']   | number_format }}</strong></td>
+                                    <td class="text-right"><strong>{{ table[0]['total']['sell_total']     | number_format }}</strong></td>
+                                </tr>
+                                <tr onclick="window.document.location='{{base_url('dashboard/index/' ~ table[0]['character'][0]["id"] ~ '?aggr=1')}}'">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right yellow"><strong>GRAND TOTAL</strong></td>
+                                    <td class="text-right yellow"><strong>{{ table[0]['grand_total'] | number_format }}</strong></td>
+                                </tr>
+                            </tbody>
                         </table>
                     {% endif %}
-        		</div>        
+                </div>        
             </div>
-        </div>	
+        </div>  
     </div>
 </section>
 
