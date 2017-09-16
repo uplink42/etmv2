@@ -100,7 +100,7 @@ define("FROM_NAME", "Eve Trade Master");
 define("MASK_PERSONAL_KEY", '82317323');
 define("MASK_FULL_KEY", '1073741823');
 
-define('PUSHBOTS_APPID', '5969d3bb4a9efaa3b08b4568');
-define('PUSHBOTS_APPSECRET', 'cd811859684e489428e6c0be6eb98eef');
+define('PUSHBOTS_APPID', '');
+define('PUSHBOTS_APPSECRET', '');
 
 
