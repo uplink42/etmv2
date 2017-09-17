@@ -2,28 +2,32 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-class Autoexec_sum extends CI_Controller
+final class Autoexec_sum extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
-        $this->db->cache_off();
-        $this->db->cache_delete_all();
-        $this->load->model('Home_model', 'home');
     }
 
-    /**
-     * Begins the price updater
-     * Fetches all items's daily prices from CREST
-     * @return void 
-     */
-    public function index() : void
+    public function index(): void
     {
-        if (!$this->input->is_cli_request()) {
-            die();
+        if (!is_cli()) {
+            //show_404();
         }
 
-        $data = $this->Home_model->saveStats();
+        $this->load->model('Home_model', 'home');
+        $this->load->model('Profit_model', 'profit');
+        $this->load->model('Api_keys_model', 'keys');
+        $this->load->model('Characters_model', 'characters');
+        $this->load->model('Transactions_model', 'transactions');
+
+        $data = [
+            "profit"       => $this->profit->countAllProfits()->profit,
+            "transactions" => $this->transactions->countAll(),
+            "api_keys"     => $this->keys->countAll(),
+            "characters"   => $this->characters->countAll(),
+        ];
+
+        $data = $this->home->saveStats($data);
     }
 }

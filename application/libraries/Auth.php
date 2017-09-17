@@ -1,16 +1,9 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Auth extends CI_Model
+final class Auth
 {
-    const COST = 10;
+	const COST = 10;
     const BLOWFISH = "$2a$%02d$";
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->model('common/Msg');
-    }
 
     /**
      * Creates a strong encrypted password
@@ -42,7 +35,7 @@ class Auth extends CI_Model
      * @param  bool|boolean $nosession if we should create a session
      * @return bool                 
      */
-    public function validateLogin(string $username, string $password, bool $nosession = false) : bool
+    /*public function validateLogin(string $username, string $password, bool $nosession = false) : bool
     {
         $this->db->where('username', $username);
         $query_salt                             = $this->db->get('user');
@@ -68,7 +61,7 @@ class Auth extends CI_Model
         }
 
         return false;
-    }
+    }*/
 
     /**
      * Generates a random string for a given number of characters
@@ -96,8 +89,6 @@ class Auth extends CI_Model
         if (!isset($session['username']) || !isset($session['email']) || !isset($session['password'])) {
             return false;
         }
-
-               
 
         $this->db->where('username', $session['username']);
         $this->db->where('email', $session['email']);

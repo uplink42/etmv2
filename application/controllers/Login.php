@@ -10,6 +10,7 @@ final class Login extends CI_Controller
         $this->load->library('etmsession');
         $this->load->model('common/Msg');
         $this->load->library('twig');
+        $this->load->library('Auth');
     }
 
     /**
@@ -22,14 +23,43 @@ final class Login extends CI_Controller
         $password = $this->input->post('password', true);
 
         if (!empty($username) && !empty($password)) {
+            $result           = false;
             $data             = array();
             $data['SESSION']  = $_SESSION; // not part of MY_Controller
             $data['view']     = 'login/login_v';
             $data['username'] = $username;
             $data['password'] = $password;
 
-            $this->load->model('Login_model', 'login');
-            $this->load->model('common/Auth', 'auth');
+            $this->load->model('User_model', 'user');
+            $user = $this->user->getOne(['username' => $username]);
+
+            if (!$user) {
+                return false;
+            }
+
+            $salt            = $user->salt;
+            $password_salted = crypt($password, $salt);
+            $login           = $this->user->getOne(['username' => $username, 'password' => $password_salted]);
+            if (!$login) {
+                return false;
+            }
+
+            $session = array(
+                'username' => $login->username,
+                'password' => $login->password,
+                'email'    => $login->email,
+            );
+            if(!$nosession) {
+                $this->etmsession->setData($session);
+            }
+
+            return true;
+
+
+
+
+
+
             if ($this->auth->validateLogin($username, $password)) {
                 //login success
                 $user_data = $this->login->getUserData($username);

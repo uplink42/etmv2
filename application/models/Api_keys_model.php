@@ -5,16 +5,16 @@ if (!defined('BASEPATH')) {
 
 require_once 'DB_model.php';
 
-final class Transactions_model extends DB_Model
+final class Api_keys_model extends DB_Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    protected $table      = 'transaction';
-    protected $alias      = 't';
-    protected $identifier = 'idbuy';
+    protected $table      = 'api';
+    protected $alias      = 'a';
+    protected $identifier = 'apikey';
 
     protected function parseOptions(array $options = [])
     {

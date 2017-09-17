@@ -17,7 +17,7 @@ final class Home extends CI_Controller
      */
     public function index(): void
     {
-        $data = ["view" => "home/home_v", "stats" => $this->Home_model->getStats()];
+        $data = ["view" => "home/home_v"];
         $this->load->view('home/_template');
     }
 
