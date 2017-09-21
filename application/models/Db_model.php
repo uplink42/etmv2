@@ -83,33 +83,14 @@ class DB_model extends CI_Model
     	return count(self::getAll($options));
     }
 
-    public function startTransaction()
+    public function createOrUpdate(array $options = [])
     {
-        $this->db->trans_start();
-    }
-
-    public function rollback()
-    {
-        $this->db->trans_rollback();
-    }
-
-    public function commit()
-    {
-        $this->db->trans_complete();
-    }
-
-    public function getTransactionStatus()
-    {
-        return $this->db->trans_status();
-    }
-
-    public function escape($string)
-    {
-        return $this->db->escape($string);
-    }
-
-    public function query($query)
-    {
-        return $this->db->query($query);
+        $data = $this->getOne([$this->identifier => $options[$this->identifier]]);
+        if ($data) {
+            $id = $data->{$this->identifier};
+            return $this->update($id, $options);
+        } else {
+            return $this->insert($options);
+        }
     }
 }

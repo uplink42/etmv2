@@ -18,6 +18,10 @@ final class Characters_model extends DB_Model
 
     protected function parseOptions(array $options = [])
     {
+        if (isset($options['eve_idcharacter'])) {
+            $this->db->where($this->alias . '.eve_idcharacter', $options['eve_idcharacter']);
+        }
+
         if (isset($options['character_eve_idcharacter'])) {
             $this->db->join('aggr a', 'a.character_eve_idcharacter = ' . $this->alias . '.eve_idcharacter');
             $this->db->where($this->alias .'.eve_idcharacter', $options['character_eve_idcharacter']);

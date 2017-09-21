@@ -14,14 +14,14 @@ final class Register extends CI_Controller
 
     public function index()
     {
-    	$data['no_header'] = 1;
+        $data['no_header'] = 1;
         $data['view']      = 'register/register_v';
         $this->twig->display('main/_template_v', $data);
     }
 
     public function processData(): void
     {
-    	$username       = $this->input->post('username', true);
+        $username       = $this->input->post('username', true);
         $password       = $this->input->post('password', true);
         $repeatpassword = $this->input->post('repeatpassword', true);
         $email          = $this->input->post('email', true);
@@ -29,18 +29,15 @@ final class Register extends CI_Controller
         $vcode          = $this->input->post('vcode', true);
         $reports        = $this->input->post('reports');
 
-        $result = array("username"     => $this->validateUsername($username),
-            "password"                 => $this->validatePassword($password, $repeatpassword),
-            "email"                    => $this->validateEmail($email),
-            "api"                      => $this->validateAPI($apikey, $vcode),
-            "reports"                  => $this->validateReports($reports),
+        $result = array("username" => $this->validateUsername($username),
+                        "password" => $this->validatePassword($password, $repeatpassword),
+                        "email"    => $this->validateEmail($email),
+                        "api"      => $this->validateAPI($apikey, $vcode),
+                        "reports"  => $this->validateReports($reports),
         );
 
-        if (!isset($result['username']) &&
-            !isset($result['password']) &&
-            !isset($result['email']) &&
-            !isset($result['api']) &&
-            !isset($result['reports'])) {
+        if (!isset($result['username']) && !isset($result['password']) &&
+            !isset($result['email']) && !isset($result['api']) && !isset($result['reports'])) {
             $characters         = $this->getCharacters($apikey, $vcode);
             $data['characters'] = $characters;
             $data['view']       = "register/register_characters_v";
@@ -99,10 +96,11 @@ final class Register extends CI_Controller
         // no characters selected
         if (count($chars) == 0) {
             $data['characters'] = $this->getCharacters($user_data['apikey'], $user_data['vcode']);
-            $data['characters'] = $characters;
-            $data['view']      = "register/register_characters_v";
-            $data['no_header'] = 1;
             buildMessage("error", Msg::NO_CHARACTER_SELECTED);
+            $data['characters'] = $characters;
+            $data['view']       = "register/register_characters_v";
+            $data['no_header']  = 1;
+
             $this->twig->display('main/_template_v', $data);
             return;
         }
@@ -110,9 +108,8 @@ final class Register extends CI_Controller
         if ($this->verifyCharacters($user_data['chars'], $user_data['apikey'], $user_data['vcode'])) {
             $result = $this->createAccount($user_data);
             if (!$result['success']) {
-            	print_r($result);
-            	// failure creating account (sssion msg wont show on same page)
-            	buildMessage('error', $result['msg']);
+                // failure creating account (sssion msg wont show on same page)
+                buildMessage('error', $result['msg']);
                 $data['characters'] = $this->getCharacters($user_data['apikey'], $user_data['vcode']);
                 $data['view']       = "register/register_characters_v";
                 $data['no_header']  = 1;
@@ -127,12 +124,12 @@ final class Register extends CI_Controller
         }
     }
 
-    public function createAccount(array $data) : array
+    public function createAccount(array $data): array
     {
-    	$this->load->model('Api_keys_model', 'keys');
-    	$this->load->model('User_model', 'user');
-    	$this->load->model('Characters_model', 'characters');
-    	$this->load->model('Aggr_model', 'aggr');
+        $this->load->model('Api_keys_model', 'keys');
+        $this->load->model('User_model', 'user');
+        $this->load->model('Characters_model', 'characters');
+        $this->load->model('Aggr_model', 'aggr');
 
         $error = "";
         $dt    = new DateTime();
@@ -143,7 +140,6 @@ final class Register extends CI_Controller
         $this->load->library('Auth');
         $hashed = Auth::createHashedPassword($data['password']);
 
-        $this->user->startTransaction();
         $data_user = array(
             "username"                => $data['username'],
             "registration_date"       => $datetime,
@@ -166,63 +162,51 @@ final class Register extends CI_Controller
         $this->keys->insertKey($data['apikey'], $data['vcode']);
 
         foreach ($data['chars'] as $row) {
-            $character_id = (int) $row;
+            $character_id     = (int) $row;
             $character_exists = $this->characters->getOne(['character_eve_idcharacter' => $character_id]);
             if ($character_exists) {
-                $this->user->rollback();
+                $this->db->trans_rollback();
                 $result['success'] = false;
                 $result['msg']     = Msg::CHARACTER_ALREADY_TAKEN;
                 return $result;
             }
 
-            $pheal            = new Pheal($data['apikey'], $data['vcode'], "char"); //fetch character name
-            $result           = $pheal->CharacterSheet(array("characterID" => $character_id));
-            $character_name   = $this->security->xss_clean($result->name);
-            $eve_idcharacter  = $character_id;
-            $name             = $this->user->escape($character_name);
-            $balance          = 0;
-            $api_apikey       = $data['apikey'];
-            $networth         = 0;
-            $escrow           = 0;
-            $total_sell       = 0;
-            $broker_relations = 0;
-            $accounting       = 0;
+            $pheal   = new Pheal($data['apikey'], $data['vcode'], "char"); //fetch character name
+            $result  = $pheal->CharacterSheet(array("characterID" => $character_id));
+            $configs = [
+                'eve_idcharacter'  => $character_id,
+                'name'             => $result->name,
+                'balance'          => 0,
+                'api_apikey'       => $data['apikey'],
+                'networth'         => 0,
+                'escrow'           => 0,
+                'total_sell'       => 0,
+                'broker_relations' => '0',
+                'accounting'       => '0',
+            ];
 
-            $this->characters->query("INSERT INTO characters
-                (eve_idcharacter, name, balance, api_apikey, networth, escrow, total_sell, broker_relations, accounting)
-                  VALUES ('$eve_idcharacter', " . $name . ", '$balance', '$api_apikey', '$networth', '$escrow', '$total_sell', '$broker_relations', '$accounting')
-                      ON DUPLICATE KEY UPDATE eve_idcharacter = '$eve_idcharacter', name=" . $name . ", api_apikey = '$api_apikey', networth='$networth',
-                          escrow='$escrow', total_sell='$total_sell', broker_relations='$broker_relations', accounting='$accounting'");
-            
+            $this->characters->createOrUpdate($configs);
             $data_assoc = array(
                 "user_iduser"               => $user_id,
                 "character_eve_idcharacter" => $character_id,
             );
-
             $this->aggr->insert($data_assoc);
         }
 
-        $this->user->trans_complete();
-        $result = [];
-        if (!$this->user->getTransactionStatus()) {
-            $result['success'] = false;
-            $result['msg']     = Msg::DB_ERROR;
-        } else {
-            $result['success'] = true;
-        }
-        return $result;
+        $data['success'] = true;
+        return $data;
     }
 
     private function getCharacters($apikey, $vcode)
     {
-    	$pheal  = new Pheal($apikey, $vcode);
-        $result = $pheal->accountScope->APIKeyInfo();
+        $pheal      = new Pheal($apikey, $vcode);
+        $result     = $pheal->accountScope->APIKeyInfo();
         $characters = array();
         foreach ($result->key->characters as $character) {
             array_push($characters, array(
-            	array("name" => $character->characterName), 
-            		array("id" => $character->characterID),
-            	)
+                array("name" => $character->characterName),
+                array("id" => $character->characterID),
+                )
             );
         }
 
@@ -231,8 +215,8 @@ final class Register extends CI_Controller
 
     public function verifyCharacters(array $chars, int $apikey, string $vcode): bool
     {
-        $pheal  = new Pheal($apikey, $vcode);
-        $result = $pheal->accountScope->APIKeyInfo();
+        $pheal      = new Pheal($apikey, $vcode);
+        $result     = $pheal->accountScope->APIKeyInfo();
         $chars_api  = array();
         $chars_name = array();
         $empty      = array();
@@ -241,7 +225,7 @@ final class Register extends CI_Controller
             array_push($chars_name, $character->characterName);
         }
 
-        //calculate differences between api result and selected characters and intersect the result
+        // calculate differences between api result and selected characters and intersect the result
         if (array_intersect(array_diff($chars, $chars_api), $chars_api) != $empty) {
             return false;
         }

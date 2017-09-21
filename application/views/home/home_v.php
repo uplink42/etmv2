@@ -24,7 +24,7 @@
                         <a href="#etm2" class="btn btn-lg btn-rj">Learn More</a>
                         <br><br>
                     </div>
-                    <p class="lead"><a href="<?=base_url('main/login')?>">Login</a> | <a href="<?=base_url('main/register')?>">Register</a></p>
+                    <p class="lead"><a href="<?=base_url('main/login')?>">Login</a> | <a href="<?=base_url('register')?>">Register</a></p>
                 </div>
             </div>
         </div>
@@ -107,7 +107,7 @@
                         ETM 2.0 represents a major milestone both in back and front-end improvements, which will hopefully empower your trading activity in New Eden to a whole new level.</p>
                         <div class="text-center">
                             <br>
-                            <a href="<?=base_url('main/register')?>" class="btn btn-lg btn-rj">Check it out!</a>
+                            <a href="<?=base_url('register')?>" class="btn btn-lg btn-rj">Check it out!</a>
                         </div>
                     </div>
                 </div>
@@ -276,7 +276,7 @@
                     <div class="quote-text text-center">
                         <h2>Try it out! Free to use forever.</h2>
                         <h2>All you need is a working API Key</h2>
-                        <a class="btn btn-lg btn-rj" href="<?=base_url('main/register')?>">Register</a>
+                        <a class="btn btn-lg btn-rj" href="<?=base_url('register')?>">Register</a>
                     </div>
                 </div>
             </div>    
