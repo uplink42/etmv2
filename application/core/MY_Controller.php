@@ -10,16 +10,38 @@ class MY_Controller extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('common/Msg');
-        $this->load->model('common/Log');
-        $this->load->model('common/ValidateRequest');
-        $this->load->model('Login_model');
+        $this->load->helper('msg');
+        $this->load->helper('log');
+        $this->load->helper('validation');
+        //$this->load->model('Login_model');
         $this->load->library('etmsession');
         $this->load->library('twig');
+        $this->load->model('User_model', 'user');
         $this->user_id = (int) $this->etmsession->get('iduser');
 
         if ($this->config->item('maintenance') == true) {
             redirect('internal/maintenance');
+        }
+    }
+
+    private function clearMessages()
+    {
+        $this->etmsession->delete('msg');
+        $this->etmsession->delete('notice');
+    }
+
+    private function setAggregate()
+    {
+        if (isset($this->input->get['aggr'])) {
+            $aggr = $this->input->get['aggr'];
+
+            if ($aggr != 1 && $aggr != 0) {
+                $this->aggregate = false;
+            } else {
+                $this->aggregate = (bool) $aggr;
+            }
+        } else {
+            $this->aggregate = false;
         }
     }
 
@@ -31,26 +53,10 @@ class MY_Controller extends CI_Controller
      */
     protected function enforce($character_id, $user_id = null, bool $isJSRequest = false): bool
     {
-        $this->etmsession->delete('msg');
-        $this->etmsession->delete('notice');
-
-        if ($this->Login_model->checkSession() &&
-            $this->ValidateRequest->checkCharacterBelong($character_id, $user_id)) {
-
-            if (isset($_GET['aggr'])) {
-                $aggr = $_GET['aggr'];
-
-                if ($aggr != 1 && $aggr != 0) {
-                    $this->aggregate = false;
-                } else {
-                    $this->aggregate = (bool) $aggr;
-                }
-            } else {
-                $this->aggregate = false;
-            }
-
-            return true;
-        } else {
+        // get rid of unwanted session variables
+        $this->clearMessages();
+        $count = $this->user->countAll(['username' => $this->etmsession->get('username'), 'iduser' => $this->etmsession->get('iduser')]);
+        if ($count < 1) {
             if (!$isJSRequest) {
                 $data['view'] = "login/login_v";
                 buildMessage("error", Msg::INVALID_REQUEST_SESSION);
@@ -61,9 +67,12 @@ class MY_Controller extends CI_Controller
                 $this->etmsession->delete('start');
                 $this->etmsession->delete('iduser');
                 $this->twig->display('main/_template_v', $data);
-            } 
+            }
             return false;
         }
+
+        $this->setAggregate();
+        return true;
     }
 
     /**
@@ -71,11 +80,11 @@ class MY_Controller extends CI_Controller
      * @param  int    $user_id
      * @return array    
      */
-    protected function getCharacterList(int $user_id) : array
+    /*protected function getCharacterList(int $user_id) : array
     {
         $data = $this->Login_model->getCharacterList($user_id);
         return $data;
-    }
+    }*/
 
     /**
      * Loads common view dependencies for most pages
@@ -84,7 +93,7 @@ class MY_Controller extends CI_Controller
      * @param  bool   $aggregate    
      * @return array           
      */
-    protected function loadViewDependencies($character_id, $user_id, $aggregate) : array
+    /*protected function loadViewDependencies($character_id, $user_id, $aggregate) : array
     {
         $chars      = [];
         $char_names = [];
@@ -110,14 +119,14 @@ class MY_Controller extends CI_Controller
         
         $data['selector']        = $this->buildSelector();
         return $data;
-    }
+    }*/
 
 
     /**
      * Build the character selector dropdown with options
      * @return array
      */
-    private function buildSelector(): array
+    /*private function buildSelector(): array
     {
         switch ($this->page) {
             case ('dashboard'):
@@ -215,10 +224,10 @@ class MY_Controller extends CI_Controller
 
         $data['page'] = $this->page;
         return $data;
-    }
+    }*/
 
 
-    protected function buildData(int $character_id, bool $aggr, string $callback, string $model, array $configs)
+    /*protected function buildData(int $character_id, bool $aggr, string $callback, string $model, array $configs)
     {
         $msg = Msg::INVALID_REQUEST;
         $notice = "error";
@@ -240,5 +249,5 @@ class MY_Controller extends CI_Controller
             }
         }
         return json_encode(array("notice" => $notice, "message" => $msg));
-    }
+    }*/
 }

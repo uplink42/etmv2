@@ -7,26 +7,14 @@ final class Main extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('common/Msg');
-    }
-
-    /**
-     * Loads the main template
-     * @param  string|null $view
-     * @return void
-     */
-    public function index($view = null): void
-    {
-        $data['no_header'] = 1;
-        $data['view']      = 'login/login_v';
-        $this->twig->display('main/_template_v', $data);
+        $this->load->helper('Msg');
     }
 
     /**
      * Loads the login page
      * @return void
      */
-    public function login(): void
+    /*public function login(): void
     {
         // check if session is already present
         $this->load->library('etmsession');
@@ -40,18 +28,18 @@ final class Main extends MY_Controller
         $data['no_header'] = 1;
         $data['view']      = 'login/login_v';
         $this->twig->display('main/_template_v', $data);
-    }
+    }*/
 
     /**
      * Loads the registration page
      * @return void
      */
-    public function register(): void
+    /*public function register(): void
     {
         $data['no_header'] = 1;
         $data['view']      = 'register/register_v';
         $this->twig->display('main/_template_v', $data);
-    }
+    }*/
 
     /**
      * Loads the header account data

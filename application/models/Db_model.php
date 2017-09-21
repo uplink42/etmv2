@@ -39,7 +39,7 @@ class DB_model extends CI_Model
     	return $this->db->get('');
     }
 
-    protected function insert(array $data = [])
+    public function insert(array $data = [])
     {
     	if ($this->db->insert($this->table, $data)) {
     		return $this->db->insert_id();
@@ -48,7 +48,7 @@ class DB_model extends CI_Model
     	return false;
     }
 
-    protected function update($id, array $data = [])
+    public function update($id, array $data = [])
     {
     	$this->db->where($this->identifier, $id);
     	if ($this->db->update($this->table, $data)) {
@@ -58,7 +58,7 @@ class DB_model extends CI_Model
     	return false;
     }
 
-    protected function delete($id)
+    public function delete($id)
     {
     	$this->db->where($this->identifier, $id);
     	if ($this->db->delete($this->table)) {
@@ -68,12 +68,12 @@ class DB_model extends CI_Model
     	return false;
     }
 
-    protected function getAll(array $options = []) : array
+    public function getAll(array $options = []) : array
     {
     	return $this->parseOptions($options)->result();
     }
 
-    protected function getOne(array $options = []) : stdClass
+    public function getOne(array $options = [])
     {
     	return $this->parseOptions($options)->row();
     }
@@ -81,5 +81,35 @@ class DB_model extends CI_Model
     public function countAll(array $options = [])
     {
     	return count(self::getAll($options));
+    }
+
+    public function startTransaction()
+    {
+        $this->db->trans_start();
+    }
+
+    public function rollback()
+    {
+        $this->db->trans_rollback();
+    }
+
+    public function commit()
+    {
+        $this->db->trans_complete();
+    }
+
+    public function getTransactionStatus()
+    {
+        return $this->db->trans_status();
+    }
+
+    public function escape($string)
+    {
+        return $this->db->escape($string);
+    }
+
+    public function query($query)
+    {
+        return $this->db->query($query);
     }
 }

@@ -11,11 +11,11 @@ final class Autoexec_sum extends CI_Controller
 
     public function index(): void
     {
-        if (!is_cli()) {
-            //show_404();
+        if (ENVIRONMENT !== 'development' && !is_cli()) {
+            show_404();
         }
 
-        $this->load->model('Home_model', 'home');
+        $this->load->model('Stats_model', 'stats');
         $this->load->model('Profit_model', 'profit');
         $this->load->model('Api_keys_model', 'keys');
         $this->load->model('Characters_model', 'characters');
@@ -28,6 +28,6 @@ final class Autoexec_sum extends CI_Controller
             "characters"   => $this->characters->countAll(),
         ];
 
-        $data = $this->home->saveStats($data);
+        $data = $this->stats->saveStats($data);
     }
 }

@@ -7,7 +7,7 @@ final class Home extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Home_model');
+        $this->load->model('Stats_model', 'stats');
         $this->db->cache_off();
     }
 
@@ -27,7 +27,7 @@ final class Home extends CI_Controller
      */
     public function getAll(): void
     {
-        $data = $this->Home_model->getStats();
+        $data = $this->stats->getStats();
         echo json_encode($data);
     }
 }
