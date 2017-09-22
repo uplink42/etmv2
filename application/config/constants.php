@@ -100,7 +100,7 @@ define("FROM_NAME", "Eve Trade Master");
 define("MASK_PERSONAL_KEY", '82317323');
 define("MASK_FULL_KEY", '1073741823');
 
-define('PUSHBOTS_APPID', '');
-define('PUSHBOTS_APPSECRET', '');
-
-
+define('FIREBASE_API', 'AIzaSyA8mIyl1DV3DtnDKcSI2pWZb2OsjEFg');
+define('FIREBASE_DOMAIN', 'testing-6b247.firebaseapp.com');
+define('SENDER_ID', '37198709626');
+define('PUSHBOTS_APP_ID', '597a50824a9efa36b68b4568');

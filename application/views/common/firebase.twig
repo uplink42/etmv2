@@ -1,0 +1,12 @@
+<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase-messaging.js"></script>
+
+<script>
+    var config = {
+        apiKey: "{{FIREBASE_API}}",
+        authDomain: "{{FIREBASE_DOMAIN}}",
+        messagingSenderId: "{{SENDER_ID}}",
+    };
+    firebase.initializeApp(config);
+</script>
+<script src="{{ base_url('firebase.js') }}"></script>

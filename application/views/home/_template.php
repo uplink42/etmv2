@@ -33,7 +33,7 @@
         //PB.q.push(["alias", "username"]);
         //PB.q.push(["untag", ['test', "test3"]]);
         //Toggle notification subscription
-        //PB.q.push(["subscribe", true]);
+        PB.q.push(["subscribe", true]);
 
         //Pushbots events
         PB.events.push(["onRegistered", function(data){
@@ -45,7 +45,7 @@
         }]);
     </script>
 
-    <script src="<?=base_url('sdk.min.js')?>" type="text/javascript" onload="PB.init()" async></script>
+    <script src="//cdn.pushbots.com/js/sdk.min.js" type="text/javascript" onload="PB.init()" async></script>
     <!-- Modernizr JS for IE9 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="../assets/plugins/modernizr.min.js"></script>

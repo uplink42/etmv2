@@ -1,13 +1,5 @@
 {
-    "name": "Eve Trade Master",
-    "short_name": "Eve Trade Master",  
-    "icons": [
-        {
-            "src": "https://www.evetrademaster.com/v2/app-icons/android-chrome-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        }
-    ],
-    "gcm_sender_id": "597265716689",  
-    "gcm_user_visible_only": true  
+  "//": "Some browsers will use this to enable push notifications.",
+  "//": "It is the same for all projects, this is not your project's sender ID",
+  "gcm_sender_id": "103953800507"
 }

@@ -21,6 +21,10 @@ class MY_Controller extends CI_Controller
         if ($this->config->item('maintenance') == true) {
             redirect('internal/maintenance');
         }
+
+        $this->twig->addGlobal('FIREBASE_API', FIREBASE_API);
+        $this->twig->addGlobal('FIREBASE_DOMAIN', FIREBASE_DOMAIN);
+        $this->twig->addGlobal('SENDER_ID', SENDER_ID);
     }
 
     /**
