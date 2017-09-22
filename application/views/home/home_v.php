@@ -24,7 +24,7 @@
                         <a href="#etm2" class="btn btn-lg btn-rj">Learn More</a>
                         <br><br>
                     </div>
-                    <p class="lead"><a href="<?=base_url('main/login')?>">Login</a> | <a href="<?=base_url('register')?>">Register</a></p>
+                    <p class="lead"><a href="<?=base_url('login')?>">Login</a> | <a href="<?=base_url('register')?>">Register</a></p>
                 </div>
             </div>
         </div>
