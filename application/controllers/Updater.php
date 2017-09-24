@@ -1,5 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
+use Pheal\Core\Config;
 use Pheal\Pheal;
+
+Config::getInstance()->cache  = new \Pheal\Cache\FileStorage(FILESTORAGE);
+Config::getInstance()->access = new \Pheal\Access\StaticCheck();
 
 final class Updater extends CI_Controller
 {
@@ -132,11 +136,11 @@ final class Updater extends CI_Controller
             }
 
             // profits and history
-            /*$this->db->trans_start();
+            $this->db->trans_start();
             $profitCalc = new ProfitCalculator($this->idUser);
             $profitCalc->beginProfitCalculation();
             $this->updateTotals();
-            $this->db->trans_complete();*/
+            $this->db->trans_complete();
 
             // something went wrong while calculating profits, abort
             if ($this->db->trans_status() === false) {
