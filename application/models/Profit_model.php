@@ -15,6 +15,17 @@ final class Profit_model extends DB_Model
     protected $table      = 'profit';
     protected $alias      = 'p';
     protected $identifier = 'idprofit';
+    protected $fields     = [
+        'idprofit',
+        'transaction_idbuy_buy',
+        'transaction_idbuy_sell',
+        'profit_unit',
+        'timestamp_buy',
+        'timestamp_sell',
+        'characters_eve_idcharacters_IN',
+        'characters_eve_idcharacters_OUT',
+        'quantity_profit',
+    ];
 
     protected function parseOptions(array $options = [])
     {

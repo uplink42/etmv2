@@ -5,19 +5,21 @@ if (!defined('BASEPATH')) {
 
 require_once 'DB_model.php';
 
-final class Api_keys_model extends DB_Model
+final class Standings_faction_model extends DB_Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    protected $table      = 'api';
-    protected $alias      = 'a';
-    protected $identifier = 'apikey';
+    protected $table      = 'standings_faction';
+    protected $alias      = 'sf';
+    protected $identifier = 'idstandings_faction';
     protected $fields     = [
-        'apikey',
-        'vcode',
+        'idstandings_faction',
+        'characters_eve_idcharacters',
+        'faction_eve_idfaction',
+        'value',
     ];
 
     protected function parseOptions(array $options = [])

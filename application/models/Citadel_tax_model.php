@@ -5,19 +5,21 @@ if (!defined('BASEPATH')) {
 
 require_once 'DB_model.php';
 
-final class Api_keys_model extends DB_Model
+final class Citadel_tax_model extends DB_Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    protected $table      = 'api';
-    protected $alias      = 'a';
-    protected $identifier = 'apikey';
+    protected $table      = 'citadel-tax';
+    protected $alias      = 'ct';
+    protected $identifier = 'idcitadel_tax';
     protected $fields     = [
-        'apikey',
-        'vcode',
+        'idcitadel_tax',
+        'character_eve_idcharacter',
+        'station_eve_idstation',
+        'value',
     ];
 
     protected function parseOptions(array $options = [])

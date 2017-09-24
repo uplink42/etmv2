@@ -15,13 +15,20 @@ final class Characters_model extends DB_Model
     protected $table      = 'characters';
     protected $alias      = 'c';
     protected $identifier = 'eve_idcharacter';
+    protected $fields     = [
+        'eve_idcharacter',
+        'name',
+        'balance',
+        'api_apikey',
+        'networth',
+        'escrow',
+        'total_sell',
+        'broker_relations',
+        'accounting',
+    ];
 
     protected function parseOptions(array $options = [])
     {
-        if (isset($options['eve_idcharacter'])) {
-            $this->db->where($this->alias . '.eve_idcharacter', $options['eve_idcharacter']);
-        }
-
         if (isset($options['character_eve_idcharacter'])) {
             $this->db->join('aggr a', 'a.character_eve_idcharacter = ' . $this->alias . '.eve_idcharacter');
             $this->db->where($this->alias .'.eve_idcharacter', $options['character_eve_idcharacter']);

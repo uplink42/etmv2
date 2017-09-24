@@ -50,6 +50,7 @@ final class Login extends CI_Controller
 
         // set session variables
         $session = array(
+            'iduser'   => $login->iduser,
             'username' => $login->username,
             'password' => $login->password,
             'email'    => $login->email,
@@ -57,7 +58,7 @@ final class Login extends CI_Controller
         if(!$nosession) {
             $this->etmsession->setData($session);
         }
-        redirect(base_url('Updater'));
+        redirect(base_url('updater'));
     }
 
     private function loginFail()

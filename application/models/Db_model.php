@@ -13,6 +13,7 @@ class DB_model extends CI_Model
     protected $table; // table name
     protected $alias; // table alias
     protected $identifier; // table id column
+    protected $fields; // table columns
 
     protected function getTable()
     {
@@ -31,10 +32,29 @@ class DB_model extends CI_Model
 
     protected function parseOptions(array $options = [])
     {
+        // parse table fields
+        foreach ($this->fields as $field) {
+            if (isset($options[$field])) {
+                $this->db->where($this->alias . '.' . $field, $options[$field]);
+            }
+        }
+
+        // alias own table
     	$this->db->from($this->table . ' ' . $this->alias);
+
+        // order
     	if (isset($options['order_by']) && isset($options['order_dir'])) {
-    		$this->db->order_by("{$this->alias}.{$options['order_by']}", $options['order_dir']);
+    		$this->db->order_by($this->alias . '.' . $options['order_by'], $options['order_dir']);
     	}
+
+        // pagination
+        if (isset($options['limit']) && !isset($options['skip'])) {
+            $this->db->limit($options['limit']);
+        }
+
+        if (isset($options['limit']) && isset($options['skip'])) {
+            $this->db->limit($options['limit'], $options['skip']);
+        }
 
     	return $this->db->get('');
     }
@@ -58,19 +78,26 @@ class DB_model extends CI_Model
     	return false;
     }
 
-    public function delete($id)
+    public function delete(array $options = [])
     {
-    	$this->db->where($this->identifier, $id);
-    	if ($this->db->delete($this->table)) {
-    		return $this->db->affected_rows();
-    	}
+        foreach ($options as $key => $value) {
+            $this->db->where($key, $value);
+        }
 
-    	return false;
+        if ($this->db->delete($this->table)) {
+            return $this->db->affected_rows();
+        }
+
+        return false;
     }
 
-    public function getAll(array $options = []) : array
+    public function getAll(array $options = [], bool $isArray = false) : array
     {
-    	return $this->parseOptions($options)->result();
+        if ($isArray) {
+            return $this->parseOptions($options)->result_array();
+        } else {
+            return $this->parseOptions($options)->result();
+        }
     }
 
     public function getOne(array $options = [])
@@ -83,13 +110,21 @@ class DB_model extends CI_Model
     	return count(self::getAll($options));
     }
 
-    public function createOrUpdate(array $options = [])
+    public function insertOrUpdate(array $options = [])
     {
         $data = $this->getOne([$this->identifier => $options[$this->identifier]]);
         if ($data) {
             $id = $data->{$this->identifier};
             return $this->update($id, $options);
         } else {
+            return $this->insert($options);
+        }
+    }
+
+    public function insertOrIgnore(array $options = [])
+    {
+        $data = $this->getOne([$this->identifier => $options[$this->identifier]]);
+        if (!$data) {
             return $this->insert($options);
         }
     }

@@ -30,6 +30,7 @@ class ValidateRequest
             return false;
         }
     }
+
     /**
      * Checks if a citadel tax entry belongs to a character
      * @param  int    $character_id 
@@ -46,6 +47,7 @@ class ValidateRequest
         }
         return false;
     }
+
     /**
      * Checks if a stock list belongs to a user
      * @param  int    $list_id 
@@ -65,6 +67,7 @@ class ValidateRequest
         }
         return false;
     }
+
     /**
      * Checks if a traderoute belongs to a user
      * @param  int    $route_id 
@@ -81,6 +84,7 @@ class ValidateRequest
         }
         return false;
     }
+
     /**
      * Checks if a transaction belongs to a user
      * @param  string $transaction_id 
@@ -106,6 +110,7 @@ class ValidateRequest
             return false;
         }
     }
+
     /**
      * Checks wether the password meets the current min length
      * @param  string $password 
@@ -119,6 +124,7 @@ class ValidateRequest
 
         return true;
     }
+
     /**
      * Checks if both passwords are identical
      * @param  string $password       
@@ -133,6 +139,7 @@ class ValidateRequest
 
         return true;
     }
+
     /**
      * Checks if the username meets the min length
      * @param  string $username 
@@ -146,6 +153,7 @@ class ValidateRequest
 
         return true;
     }
+
     /**
      * Checks if the username is available and not taken
      * @param  string $username 
@@ -162,6 +170,7 @@ class ValidateRequest
 
         return true;
     }
+
     /**
      * Tests the email against a regex for validity
      * @param  string $email 
@@ -175,6 +184,7 @@ class ValidateRequest
 
         return true;
     }
+
     /**
      * Checks if an email is not taken
      * @param  string $email 
@@ -191,6 +201,7 @@ class ValidateRequest
 
         return true;
     }
+
     /**
      * Checks if the api key is valid and has the right permissions
      * @param  int    $apikey 
@@ -217,6 +228,7 @@ class ValidateRequest
             return Msg::INVALID_API_KEY;
         }
     }
+
     /**
      * Checks if an api key is not in use by another character
      * @param  int    $apikey 
@@ -232,6 +244,7 @@ class ValidateRequest
 
         return false;
     }
+
     /**
      * Check if not empty response
      * depercated
@@ -246,6 +259,7 @@ class ValidateRequest
 
         return true;
     }
+
     /**
      * Get current CREST API status (online or offline)
      * @return bool
@@ -260,28 +274,7 @@ class ValidateRequest
 
         return false;
     }
-    /**
-     * Get current XML API status
-     * @return bool
-     */
-    public static function testEndpoint(): bool
-    {
-        try {
-            $pheal    = new Pheal();
-            $response = $pheal->serverScope->ServerStatus();
-            if (!is_numeric($response->onlinePlayers)) {
-                return false;
-            }
-            return true;
-        } catch (Throwable $e) {
-            /*echo sprintf(
-                "an exception was caught! Type: %s Message: %s",
-                get_class($e),
-                $e->getMessage()
-            );*/
-            return false;
-        }
-    }
+    
     /**
      * Checks if a username and email match any registered accounts
      * @param  string $username 

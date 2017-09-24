@@ -15,6 +15,14 @@ final class Stats_model extends DB_Model
     protected $table      = 'stats';
     protected $alias      = 's';
     protected $identifier = 'id';
+    protected $fields     = [
+        'id',
+        'profit',
+        'transactions',
+        'api_keys',
+        'characters',
+        'timestamp',
+    ];
 
     protected function parseOptions(array $options = [])
     {

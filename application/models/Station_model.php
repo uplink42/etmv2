@@ -5,19 +5,21 @@ if (!defined('BASEPATH')) {
 
 require_once 'DB_model.php';
 
-final class Api_keys_model extends DB_Model
+final class Station_model extends DB_Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    protected $table      = 'api';
-    protected $alias      = 'a';
-    protected $identifier = 'apikey';
+    protected $table      = 'station';
+    protected $alias      = 's';
+    protected $identifier = 'eve_idstation';
     protected $fields     = [
-        'apikey',
-        'vcode',
+        'eve_idstation',
+        'name',
+        'system_eve_idsystem',
+        'corporation_eve_idcorporation',
     ];
 
     protected function parseOptions(array $options = [])

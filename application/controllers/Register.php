@@ -59,7 +59,7 @@ final class Register extends CI_Controller
      */
     public function processCharacters(): void
     {
-        $user_data = [
+        $userData = [
             'username'         => $this->input->post('username', true),
             'password'         => $this->input->post('password', true),
             'email'            => $this->input->post('email', true),
@@ -92,10 +92,10 @@ final class Register extends CI_Controller
             $char3 = "";
         }
 
-        $user_data['chars'] = $chars;
+        $userData['chars'] = $chars;
         // no characters selected
         if (count($chars) == 0) {
-            $data['characters'] = $this->getCharacters($user_data['apikey'], $user_data['vcode']);
+            $data['characters'] = $this->getCharacters($userData['apikey'], $userData['vcode']);
             buildMessage("error", Msg::NO_CHARACTER_SELECTED);
             $data['characters'] = $characters;
             $data['view']       = "register/register_characters_v";
@@ -105,12 +105,12 @@ final class Register extends CI_Controller
             return;
         }
 
-        if ($this->verifyCharacters($user_data['chars'], $user_data['apikey'], $user_data['vcode'])) {
-            $result = $this->createAccount($user_data);
+        if ($this->verifyCharacters($userData['chars'], $userData['apikey'], $userData['vcode'])) {
+            $result = $this->createAccount($userData);
             if (!$result['success']) {
                 // failure creating account (sssion msg wont show on same page)
                 buildMessage('error', $result['msg']);
-                $data['characters'] = $this->getCharacters($user_data['apikey'], $user_data['vcode']);
+                $data['characters'] = $this->getCharacters($userData['apikey'], $userData['vcode']);
                 $data['view']       = "register/register_characters_v";
                 $data['no_header']  = 1;
                 $this->twig->display('main/_template_v', $data);
@@ -140,7 +140,7 @@ final class Register extends CI_Controller
         $this->load->library('Auth');
         $hashed = Auth::createHashedPassword($data['password']);
 
-        $data_user = array(
+        $userData = array(
             "username"                => $data['username'],
             "registration_date"       => $datetime,
             "password"                => $hashed['password'],
@@ -158,13 +158,18 @@ final class Register extends CI_Controller
             "login_count"             => 0,
             "updating"                => 0,
         );
-        $user_id = $this->user->insert($data_user);
-        $this->keys->insertKey($data['apikey'], $data['vcode']);
+
+        $idUser = $this->user->insert($userData);
+        $options = [
+                'apikey' => $data['apikey'],
+                'vcode' => $data['vcode'],
+        ];
+        $this->keys->insertOrIgnore($options);
 
         foreach ($data['chars'] as $row) {
-            $character_id     = (int) $row;
-            $character_exists = $this->characters->getOne(['character_eve_idcharacter' => $character_id]);
-            if ($character_exists) {
+            $idCharacter     = (int) $row;
+            $characterExists = $this->characters->getOne(['character_eve_idcharacter' => $idCharacter]);
+            if ($characterExists) {
                 $this->db->trans_rollback();
                 $result['success'] = false;
                 $result['msg']     = Msg::CHARACTER_ALREADY_TAKEN;
@@ -172,9 +177,9 @@ final class Register extends CI_Controller
             }
 
             $pheal   = new Pheal($data['apikey'], $data['vcode'], "char"); //fetch character name
-            $result  = $pheal->CharacterSheet(array("characterID" => $character_id));
+            $result  = $pheal->CharacterSheet(array("characterID" => $idCharacter));
             $configs = [
-                'eve_idcharacter'  => $character_id,
+                'eve_idcharacter'  => $idCharacter,
                 'name'             => $result->name,
                 'balance'          => 0,
                 'api_apikey'       => $data['apikey'],
@@ -185,10 +190,10 @@ final class Register extends CI_Controller
                 'accounting'       => '0',
             ];
 
-            $this->characters->createOrUpdate($configs);
+            $this->characters->insertOrUpdate($configs);
             $data_assoc = array(
-                "user_iduser"               => $user_id,
-                "character_eve_idcharacter" => $character_id,
+                "user_iduser"               => $idUser,
+                "character_eve_idcharacter" => $idCharacter,
             );
             $this->aggr->insert($data_assoc);
         }
@@ -217,16 +222,16 @@ final class Register extends CI_Controller
     {
         $pheal      = new Pheal($apikey, $vcode);
         $result     = $pheal->accountScope->APIKeyInfo();
-        $chars_api  = array();
-        $chars_name = array();
+        $apiChars  = array();
+        $nameChars = array();
         $empty      = array();
         foreach ($result->key->characters as $character) {
             array_push($chars_api, $character->characterID);
-            array_push($chars_name, $character->characterName);
+            array_push($nameChars, $character->characterName);
         }
 
         // calculate differences between api result and selected characters and intersect the result
-        if (array_intersect(array_diff($chars, $chars_api), $chars_api) != $empty) {
+        if (array_intersect(array_diff($chars, $apiChars), $apiChars) != $empty) {
             return false;
         }
         return true;
