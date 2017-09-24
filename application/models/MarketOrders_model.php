@@ -59,10 +59,40 @@ class MarketOrders_model extends CI_Model
                     $stationID,
                     $regionID,
                     $type,
-                    $itemID);
+                    $itemID
+                );
             }
         }
+
         return $result;
+    }
+
+    public function getEstimatedProfits($sell_orders, $user_id, $chars)
+    {
+         // get x character settings
+        $this->load->model('common/User', 'user');
+        $x_character = $this->user->getUserProfitSettings($user_id)['cross_character_profits'];
+
+        if ($x_character) {
+            // get list of ordered, unfulfilled profits
+            $this->db->select('t.idbuy, t.item_eve_iditem, t.quantity, t.price_unit, t.time, t.remaining');
+            $this->db->from('transaction t');
+            $this->db->join('aggr a', 't.character_eve_idcharacter = a.character_eve_idcharacter');
+            $this->db->join('user u', 'a.user_iduser = u.iduser');
+            $this->db->where('t.remaining > 0');
+            $this->db->where('t.transaction_type', 'Buy');
+            $this->db->where('u.id', $user_id);
+            $this->db->order_by('t.time', 'asc');
+            $transactions = $this->db->get('')->result();
+        }
+
+        // sort by date (oldest first)
+        $this->load->helper('sort_by_date_helper');
+        usort($sell_orders, 'sortByDate');
+
+        foreach($sell_orders as $order) {
+            
+        }
     }
 
     /**

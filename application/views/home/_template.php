@@ -24,7 +24,7 @@
         //PushBots ApplicationId (required)
         PB.app_id = "5969d3bb4a9efaa3b08b4568";
         //Your domain name, must be HTTPS or localhost  (required)
-        PB.domain = "https://www.evetrademaster.com";
+        PB.domain = "https://www.evetrademaster.com/v2/";
         PB.logging_enabled = true;
         PB.auto_subscribe = true;
 

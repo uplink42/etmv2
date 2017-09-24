@@ -30,9 +30,10 @@ final class MarketOrders extends MY_Controller
             $chars            = $data['chars'];
             $data['selected'] = "marketorders";
 
-            $this->load->model('MarketOrders_model');
-            $orders_buy  = injectIcons($this->MarketOrders_model->getMarketOrders($chars, "buy", $this->check));
-            $orders_sell = injectIcons($this->MarketOrders_model->getMarketOrders($chars, "sell", $this->check));
+            $this->load->model('MarketOrders_model', 'marketorders');
+            $orders_buy  = injectIcons($this->marketorders->getMarketOrders($chars, "buy", $this->check));
+            $orders_sell = injectIcons($this->marketorders->getMarketOrders($chars, "sell", $this->check));
+            $orders_sell  = $this->marketorders->getEstimatedProfits($orders_sell, $this->user_id);
 
             if ($this->check) {
                 $this->load->model('common/Log');
