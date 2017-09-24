@@ -22,4 +22,20 @@ class Log
         $ci->db->set('login_count', 'login_count + 1', FALSE);
         $ci->db->update('user');
     }
+
+    public static function getChangeLog(bool $recent = false): array
+    {
+        $ci = &get_instance();
+        $ci->load->model('Changelog_model', 'changelog');
+
+        $options = [
+            'order_by' => 'date',
+            'order_by_dir' => 'desc',
+        ];
+        if ($recent) {
+            $options['limit'] = 3;
+        }
+
+        return $ci->changelog->getAll($options);
+    }
 }

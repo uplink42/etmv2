@@ -132,11 +132,11 @@ final class Updater extends CI_Controller
             }
 
             // profits and history
-            $this->db->trans_start();
+            /*$this->db->trans_start();
             $profitCalc = new ProfitCalculator($this->idUser);
             $profitCalc->beginProfitCalculation();
             $this->updateTotals();
-            $this->db->trans_complete();
+            $this->db->trans_complete();*/
 
             // something went wrong while calculating profits, abort
             if ($this->db->trans_status() === false) {
@@ -148,9 +148,21 @@ final class Updater extends CI_Controller
 
             // successfully updated
             buildMessage('success', Msg::UPDATE_SUCCESS);
-            $this->displayResultTable($this->idUser);
+            $tableData = $this->displayResultTable($this->idUser);
             $updater->release($this->idUser);
 
+            $data['cl']        = Log::getChangeLog();
+            $data['cl_recent'] = Log::getChangeLog(true);
+            $data['table']     = array($tableData);
+            $data['view']      = "login/select_v";
+            $data['SESSION']   = $_SESSION; // not part of MY_Controller
+            $data['no_header'] = 1;
+
+            Log::addEntry('update', $this->idUser);
+            Log::addLogin($this->idUser);
+
+            // finally, load the next page
+            $this->twig->display('main/_template_v', $data);
         } catch (Throwable $e) {
             // if an exception happens during update (this is a bug on Eve's API)
             log_message('error', $this->username . ' had an error iterating characters: ' . $e->getMessage());
@@ -265,11 +277,6 @@ final class Updater extends CI_Controller
             return 1; //everything is ok
         }
         return true;
-    }
-
-    private function displayResultTable()
-    {
-
     }
 
     private function getWalletBalance(): void
@@ -632,7 +639,7 @@ final class Updater extends CI_Controller
      */
     private function updateTotals($global = false)
     {
-        $max_days = 0;
+        $max_days      = 0;
         $characterList = $this->aggr->getAll(array('user_iduser' => $this->idUser));
 
         if ($global) {
@@ -653,26 +660,26 @@ final class Updater extends CI_Controller
 
                 // sum of sales
                 $optionsBuy = [
-                    'transaction_type' => 'Sell',
+                    'transaction_type'          => 'Sell',
                     'character_eve_idcharacter' => $this->idCharacter,
-                    'date' => $date,
-                    'sum' => 1,
+                    'date'                      => $date,
+                    'sum'                       => 1,
                 ];
                 $salesSumValue = $this->transactions->getOne($optionsBuy)->sum;
 
                 // sum of purchases
                 $optionsSell = [
-                    'transaction_type' => 'Buy',
+                    'transaction_type'          => 'Buy',
                     'character_eve_idcharacter' => $this->idCharacter,
-                    'date' => $date,
-                    'sum' => 1,
+                    'date'                      => $date,
+                    'sum'                       => 1,
                 ];
                 $purchasesSumValue = $this->transactions->getOne($optionsSell)->sum;
 
                 // sum of profits
                 $optionsProfit = [
-                    'sum' => 1,
-                    'date' => $date,
+                    'sum'                             => 1,
+                    'date'                            => $date,
                     'characters_eve_idcharacters_OUT' => $this->idCharacter,
                 ];
                 $profitsSumValue = $this->profits->getOne($optionsProfit)->profit;
@@ -696,5 +703,54 @@ final class Updater extends CI_Controller
         if (!$global) {
             return $characterList;
         }
+    }
+
+    private function displayResultTable()
+    {
+        $balanceTotal  = 0;
+        $networthTotal = 0;
+        $escrowTotal   = 0;
+        $sellTotal     = 0;
+        $grandTotal    = 0;
+
+        $data = array(
+            "character"   => array(),
+            "total"       => array(),
+            "grand_total" => array(),
+        );
+
+        foreach ($this->characters as $character) {
+            $characterData = $this->chars->getOne(array('eve_idcharacter' => $character->id_character));
+            $id       = $characterData->eve_idcharacter;
+            $name     = $characterData->name;
+            $balance  = $characterData->balance;
+            $networth = $characterData->networth;
+            $escrow   = $characterData->escrow;
+            $sell     = $characterData->total_sell;
+
+            $personalData = array(
+                "id"       => $id,
+                "name"     => $name,
+                "balance"  => $balance,
+                "networth" => $networth,
+                "escrow"   => $escrow,
+                "sell"     => $sell,
+            );
+
+            $totalData = array(
+                "balance_total"  => $balanceTotal += $balance,
+                "networth_total" => $networthTotal += $networth,
+                "escrow_total"   => $escrowTotal += $escrow,
+                "sell_total"     => $sellTotal += $sell,
+            );
+
+            array_push($data['character'], $personalData);
+            $data['total'] = $totalData;
+        }
+
+        $grandTotal = $balanceTotal + $networthTotal + $escrowTotal + $sellTotal;
+        $data['grand_total'] = $grandTotal;
+
+        return $data;
     }
 }

@@ -14,7 +14,8 @@ class Db_log {
         $times = $CI->db->query_times;                   
         // Get execution time of all the queries executed by controller
         foreach ($CI->db->queries as $key => $query) { 
-            $sql = $query . " \n Execution Time:" . $times[$key]; 
+            //$sql = $query . " \n Execution Time:" . $times[$key]; 
+            $sql = $query . ";"; 
             fwrite($handle, $sql . "\n\n");             
         }
  
