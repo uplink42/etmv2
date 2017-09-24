@@ -5,20 +5,21 @@ if (!defined('BASEPATH')) {
 
 class ProfitCalculator
 {
-	private $idUser;
+    private $idUser;
     private $settings;
     private $charactersList;
     private $ci;
 
     public function __construct(string $idUser)
     {
-    	$this->idUser = $idUser;
+        $this->idUser = $idUser;
 
-    	$this->ci = &get_instance();
-    	$this->ci->load->model('User_model', 'user');
-    	$this->ci->load->model('Aggr_model', 'aggr');
-    	$this->ci->load->model('Transactions_model', 'transactions');
-        $this->load->helper('tax_calculator_helper');
+        $this->ci = &get_instance();
+        $this->ci->load->model('User_model', 'user');
+        $this->ci->load->model('Aggr_model', 'aggr');
+        $this->ci->load->model('Transactions_model', 'transactions');
+        $this->ci->load->model('Profit_model', 'profits');
+        $this->ci->load->helper('tax_calculator_helper');
     }
 
     public function beginProfitCalculation()
@@ -37,16 +38,16 @@ class ProfitCalculator
         }
     }
 
-    private function calculate(int $idCharacter = null) : void
+    private function calculate(int $idCharacter = null): void
     {
-        $buyStack   = [];
-        $sellStack  = [];
+        $buyStack    = [];
+        $sellStack   = [];
         $num_profits = 0;
 
-        $buyStack   = $this->ci->transactions->getStack($idCharacter, 'Buy', $this->idUser);
-        $sellStack  = $this->ci->transactions->getStack($idCharacter, 'Sell', $this->idUser);
-        $sizeBuy    = sizeof($buyStack);
-        $sizeSell   = sizeof($sellStack);
+        $buyStack  = $this->ci->transactions->getStack($idCharacter, 'Buy', $this->idUser);
+        $sellStack = $this->ci->transactions->getStack($idCharacter, 'Sell', $this->idUser);
+        $sizeBuy   = sizeof($buyStack);
+        $sizeSell  = sizeof($sellStack);
 
         for ($i = 0; $i <= $sizeBuy - 1; $i++) {
             $quantity_b_calc = $buyStack[$i]['quantity'];
@@ -73,8 +74,8 @@ class ProfitCalculator
                     // calulate taxes
                     $stationFromID   = $buyStack[$i]['station_id'];
                     $stationToID     = $sellStack[$k]['station_id'];
-                    $date_buy        = $buyStack[$i]['transaction_time'];
-                    $date_sell       = $sellStack[$k]['transaction_time'];
+                    $date_buy        = $buyStack[$i]['time'];
+                    $date_sell       = $sellStack[$k]['time'];
                     $characterBuyID  = $buyStack[$i]['character_id'];
                     $characterSellID = $sellStack[$k]['character_id'];
 
@@ -97,38 +98,20 @@ class ProfitCalculator
                     $trans_s     = $sellStack[$k]["idbuy"];
 
                     $data = [
-                        'transaction_idbuy_buy' => $trans_b,
-                        'transaction_idbuy_sell' => $trans_s,
-                        'profit_unit' => $profit_unit,
-                        'timestamp_buy' => $date_buy,
-                        'timestamp_sell' => $date_sell,
-                        'characters_eve_idcharacters_IN' => $characterBuyID,
-                        'characters_eve_idcharacters_OUT' => $characterSellID,
-                        'quantity_profit' => $profit_q,
+                        'idprofit'        => null,
+                        'trans_b'         => $trans_b,
+                        'trans_s'         => $trans_s,
+                        'profit_unit'     => $profit_unit,
+                        'date_buy'        => $date_buy,
+                        'date_sell'       => $date_sell,
+                        'characterBuyID'  => $characterBuyID,
+                        'characterSellID' => $characterSellID,
+                        'profit_q'        => $profit_q,
                     ];
 
-                    $this->profit->insertOrIgnore($data);
+                    $this->ci->profits->insertProfit($data);
                 }
             }
         }
-        $this->character_new_profits = $num_profits;
     }
-
-    /*private function getStack(int $idCharacter = null, string $type) : array
-    {
-        $options = [
-        	'remaining_gt' => 0,
-        	'transaction_type' => $type,
-        	'order_by' => 'time',
-        	'order_by_dir' => 'asc',
-        ];
-
-        if (empty($idCharacter)) {
-        	$options['id_user'] = $this->idUser;
-        } else {
-        	$options['character_eve_idcharacter'] = $this->idCharacter;
-        }
-
-        return $this->transactions->getAll($options, true);
-    }*/
 }

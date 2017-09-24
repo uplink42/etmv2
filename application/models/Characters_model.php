@@ -36,4 +36,14 @@ final class Characters_model extends DB_Model
 
         return parent::parseOptions($options);
     }
+
+    public function insertUpdateCharacters($configs)
+    {
+        extract($configs);
+        $this->db->query("INSERT INTO characters
+            (eve_idcharacter, name, balance, api_apikey, networth, escrow, total_sell, broker_relations, accounting)
+              VALUES ('$eve_idcharacter', " . $name . ", '$balance', '$api_apikey', '$networth', '$escrow', '$total_sell', '$broker_relations', '$accounting')
+                  ON DUPLICATE KEY UPDATE eve_idcharacter = '$eve_idcharacter', name=" . $name . ", api_apikey = '$api_apikey', networth='$networth',
+                      escrow='$escrow', total_sell='$total_sell', broker_relations='$broker_relations', accounting='$accounting'");
+    }
 }

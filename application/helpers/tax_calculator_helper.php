@@ -2,7 +2,7 @@
 
 class TaxCalculator
 {
-    private $ci;
+    public $ci;
 
     public $stationFromID;
     public $stationToID;
@@ -35,7 +35,7 @@ class TaxCalculator
         $this->ci->load->model('Station_model', 'station');
         $this->ci->load->model('Standings_corporation_model', 'standings_corporation');
         $this->ci->load->model('Standings_faction_model', 'standings_faction');
-        $this->ci->load->model('Characters_model', 'characters');
+        $this->ci->load->model('Characters_model', 'chars');
         $this->ci->load->model('Citadel_tax_model', 'citadel_tax');
 
         $this->stationFromID    = $stationFromID;
@@ -179,7 +179,7 @@ class TaxCalculator
                 break;
         }
 
-        $brokerRelations = $this->ci->characters->getOne(array('eve_idcharacter' => $characterID))->broker_relations;
+        $brokerRelations = $this->ci->chars->getOne(array('eve_idcharacter' => $characterID))->broker_relations;
         switch ($type) {
             case 'from':
                 $this->brokerLevelFrom = $brokerRelations;
@@ -202,7 +202,7 @@ class TaxCalculator
                 break;
         }
         
-        $accounting = $this->ci->characters->getOne(array('eve_idcharacter' => $characterID))->accounting;
+        $accounting = $this->ci->chars->getOne(array('eve_idcharacter' => $characterID))->accounting;
         switch ($type) {
             case 'from':
                 $this->accountingLevelFrom = $accounting;
@@ -234,7 +234,7 @@ class TaxCalculator
 
         if ($this->transFrom == 'buy' && $type === 'from' || $this->transTo == 'sell' && $type === 'to') {
             $station_type = $this->getStationType($stationID);
-            
+
             switch ($station_type) {
                 case 'station':
                     if ($this->ignoreStationTax) {
@@ -345,7 +345,7 @@ class TaxCalculator
             $station = $this->ci->station->getOne(array('eve_idstation' => $stationID));
 
             if ($station) {
-                $owner = $station->owner;
+                $owner = $station->corporation_eve_idcorporation;
                 if ($owner == 1) {
                     $type = 'outpost';
                 } else {

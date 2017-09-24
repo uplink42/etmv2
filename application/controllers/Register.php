@@ -160,11 +160,7 @@ final class Register extends CI_Controller
         );
 
         $idUser = $this->user->insert($userData);
-        $options = [
-                'apikey' => $data['apikey'],
-                'vcode' => $data['vcode'],
-        ];
-        $this->keys->insertOrIgnore($options);
+        $this->keys->insertIgnoreKeys($data['apikey'], $data['vcode']);
 
         foreach ($data['chars'] as $row) {
             $idCharacter     = (int) $row;
@@ -190,7 +186,7 @@ final class Register extends CI_Controller
                 'accounting'       => '0',
             ];
 
-            $this->characters->insertOrUpdate($configs);
+            $this->characters->insertUpdateCharacter($configs);
             $data_assoc = array(
                 "user_iduser"               => $idUser,
                 "character_eve_idcharacter" => $idCharacter,

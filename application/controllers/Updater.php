@@ -62,13 +62,6 @@ final class Updater extends CI_Controller
             $this->displayResultTable();
             return;
         }
-        ///////////////
-        $this->db->trans_start();
-            $profitCalc = new ProfitCalculator($this->idUser);
-            $profitCalc->beginProfitCalculation();
-            $this->db->trans_complete();
-        ///////////////
-        return;
 
         // check if API server is up
         if (!$updater->testEndpoint()) {
@@ -138,13 +131,26 @@ final class Updater extends CI_Controller
                 return;
             }
 
-            /*$this->db->trans_start();
+            // profits and history
+            $this->db->trans_start();
             $profitCalc = new ProfitCalculator($this->idUser);
             $profitCalc->beginProfitCalculation();
-            $this->db->trans_complete();*/
+            $this->updateTotals();
+            $this->db->trans_complete();
 
-            //$updater = new UpdaterHelper();
-            //$updater->release($this->idUser); // remove later
+            // something went wrong while calculating profits, abort
+            if ($this->db->trans_status() === false) {
+                $updater->release($username);
+                buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
+                $this->displayResultTable($this->idUser);
+                return;
+            }
+
+            // successfully updated
+            buildMessage('success', Msg::UPDATE_SUCCESS);
+            $this->displayResultTable($this->idUser);
+            $updater->release($this->idUser);
+
         } catch (Throwable $e) {
             // if an exception happens during update (this is a bug on Eve's API)
             log_message('error', $this->username . ' had an error iterating characters: ' . $e->getMessage());
@@ -176,8 +182,8 @@ final class Updater extends CI_Controller
             $this->characterEscrow   = $characterData->escrow;
             $this->characterNetworth = $characterData->networth;
             $this->characterOrders   = $characterData->total_sell;
-            $this->apikey            = $characterData->apikey;
-            $this->vcode             = $this->keys->getOne(array('apikey' => $characterData->apikey))->vcode;
+            $this->apikey            = $characterData->api_apikey;
+            $this->vcode             = $this->keys->getOne(array('apikey' => $characterData->api_apikey))->vcode;
 
             // get character data
             $this->getWalletBalance();
@@ -616,5 +622,79 @@ final class Updater extends CI_Controller
         );
 
         $this->chars->update($this->idCharacter, $data);
+    }
+
+    /**
+     * Update each character's total profit, sales, etc for this day
+     * @param  bool|boolean $global global update flag
+     * @param  string|null  $user   username
+     * @return array              result list, only for non global update
+     */
+    private function updateTotals($global = false)
+    {
+        $max_days = 0;
+        $characterList = $this->aggr->getAll(array('user_iduser' => $this->idUser));
+
+        if ($global) {
+            $max_days = 2;
+        }
+
+        foreach ($characterList as $row) {
+            $dt = new DateTime();
+            $tz = new DateTimeZone('Europe/Lisbon');
+            $dt->setTimezone($tz);
+
+            for ($i = 0; $i <= $max_days; $i++) {
+                if ($i == 0) {
+                    $date = $dt->format('Y-m-d');
+                } else {
+                    $date = date_sub($dt, date_interval_create_from_date_string('1 days'))->format('Y-m-d');
+                }
+
+                // sum of sales
+                $optionsBuy = [
+                    'transaction_type' => 'Sell',
+                    'character_eve_idcharacter' => $this->idCharacter,
+                    'date' => $date,
+                    'sum' => 1,
+                ];
+                $salesSumValue = $this->transactions->getOne($optionsBuy)->sum;
+
+                // sum of purchases
+                $optionsSell = [
+                    'transaction_type' => 'Buy',
+                    'character_eve_idcharacter' => $this->idCharacter,
+                    'date' => $date,
+                    'sum' => 1,
+                ];
+                $purchasesSumValue = $this->transactions->getOne($optionsSell)->sum;
+
+                // sum of profits
+                $optionsProfit = [
+                    'sum' => 1,
+                    'date' => $date,
+                    'characters_eve_idcharacters_OUT' => $this->idCharacter,
+                ];
+                $profitsSumValue = $this->profits->getOne($optionsProfit)->profit;
+
+                //profit margin
+                $marginValue = $this->profits->getProfitMargin($this->idCharacter, $date)->margin;
+
+                $data = array(
+                    "characters_eve_idcharacters" => $this->idCharacter,
+                    "date"                        => $date,
+                    "total_buy"                   => $purchasesSumValue,
+                    "total_sell"                  => $salesSumValue,
+                    "total_profit"                => $purchasesSumValue,
+                    "margin"                      => $marginValue,
+                );
+
+                $this->db->replace('history', $data);
+            }
+        }
+
+        if (!$global) {
+            return $characterList;
+        }
     }
 }

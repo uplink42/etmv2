@@ -24,4 +24,9 @@ final class Api_keys_model extends DB_Model
     {
         return parent::parseOptions($options);
     }
+
+    public function insertIgnoreKeys($key, $vcode)
+    {
+        $this->db->query("INSERT IGNORE INTO api(apikey, vcode) VALUES ('$key', '$vcode')");
+    }
 }

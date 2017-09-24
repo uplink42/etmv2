@@ -32,30 +32,24 @@ final class Transactions_model extends DB_Model
 
     protected function parseOptions(array $options = [])
     {
-        $this->db->select([
-            $this->alias . '.idbuy',
-            $this->alias . '.item_eve_iditem',
-            $this->alias . '.quantity',
-            $this->alias . '.price_unit',
-            $this->alias . '.time',
-            $this->alias . '.remaining',
-        ]);
-
         if (isset($options['id_user'])) {
             $this->db->join('aggr a', $this->alias . '.character_eve_idcharacter = a.character_eve_idcharacter');
             $this->db->where('a.user_iduser', $options['id_user']);
         }
 
         if (isset($options['stack'])) {
-            $this->db->select([
-                'i.name as item_name',
-                'i.eve_iditem as item_id',
-                's.name as station_name',
-                't.station_eve_idstation as station_id',
-                'c.eve_idcharacter as character_id',
-                'c.name as character_name,',
-                't.time as transaction_time',
-            ]);
+            $this->db->select(
+                'i.name as item_name,
+                i.eve_iditem as item_eve_iditem,
+                s.name as station_name,
+                t.station_eve_idstation as station_id,
+                c.eve_idcharacter as character_id,
+                c.name as character_name,
+                t.idbuy as idbuy,
+                t.time as time,
+                t.quantity as quantity,
+                t.price_unit as price_unit,
+                t.remaining as remaining');
 
             $this->db->join('characters c', $this->alias . '.character_eve_idcharacter = c.eve_idcharacter');
             $this->db->join('station s', $this->alias . '.station_eve_idstation = s.eve_idstation', 'left');
@@ -65,6 +59,14 @@ final class Transactions_model extends DB_Model
         if (isset($options['latest'])) {
             $this->db->select('COALESCE(max(' . $this->alias . '.transkey),0) AS val');
             $this->db->where($this->alias . '.character_eve_idcharacter', $options['latest']);
+        }
+
+        if (isset($options['sum'])) {
+            $this->db->select('coalesce(sum(price_total),0) as sum');
+        }
+
+        if (isset($options['date'])) {
+            $this->db->where('date(time)', $options['date']);
         }
 
         return parent::parseOptions($options);
