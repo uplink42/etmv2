@@ -25,7 +25,7 @@ final class Aggr_model extends DB_Model
     {
         $this->db->select(
             ['c.eve_idcharacter as id_character', 
-             $this->alias . '.user_iduser as id_user', 
+             'a.user_iduser as id_user', 
              'c.name as name', 
              'c.api_apikey as apikey',
              'ap.vcode as vcode',

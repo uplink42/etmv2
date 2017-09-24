@@ -17,18 +17,13 @@ class ValidateRequest
      * @param  bool|null $json         json result flag (for javascript requests)
      * @return [bool/json]              
      */
-    public static function checkCharacterBelong($character_id, int $user_id, bool $json = null): bool
+    public static function checkCharacterBelong($idCharacter, int $idUser, bool $json = null): bool
     {
-        $this->db->where('character_eve_idcharacter', $character_id);
-        $this->db->where('iduser', $user_id);
-        $query = $this->db->get('v_user_characters');
-        if ($query->num_rows() != 0) {
-            return true;
-        } else if ($json) {
-            echo Msg::INVALID_REQUEST;
-        } else {
-            return false;
-        }
+        $ci =&get_instance();
+        $ci->load->model('Aggr_model', 'aggr');
+        $characterMatch = $ci->aggr->getOne(array('character_eve_idcharacter' => $idCharacter, 'user_iduser' => $idUser));
+
+        return $characterMatch ? true : false;
     }
 
     /**
@@ -37,15 +32,13 @@ class ValidateRequest
      * @param  int    $tax_id       
      * @return bool               
      */
-    public static function checkCitadelOwnership(int $character_id, int $tax_id): bool
+    public static function checkCitadelOwnership(int $idCharacter, int $idTax): bool
     {
-        $this->db->where('character_eve_idcharacter', $character_id);
-        $this->db->where('idcitadel_tax', $tax_id);
-        $query = $this->db->get('citadel_tax');
-        if ($query->num_rows() != 0) {
-            return true;
-        }
-        return false;
+        $ci =&get_instance();
+        $ci->load->model('Citadel_tax_model', 'citadel_tax');
+        $taxMatch = $ci->citadel_tax->getOne(array('character_eve_idcharacter' => $idCharacter, 'idcitadel_tax' => $idTax));
+
+        return $taxMatch ? true : false;
     }
 
     /**
@@ -163,12 +156,9 @@ class ValidateRequest
     {
         $ci =& get_instance();
         $ci->load->model('User_model', 'user');
-        $count = $ci->user->countAll(['username' => $username]);
-        if ($count >= 1) {
-            return false;
-        }
+        $userCount = $ci->user->countAll(['username' => $username]);
 
-        return true;
+        return $userCount >= 1 ? false : true;
     }
 
     /**
@@ -194,12 +184,9 @@ class ValidateRequest
     {
         $ci =& get_instance();
         $ci->load->model('User_model', 'user');
-        $count = $ci->user->countAll(['email' => $email]);
-        if ($count >= 1) {
-            return false;
-        }
-
-        return true;
+        $emailCount = $ci->user->countAll(['email' => $email]);
+        
+        return $userCount >= 1 ? false : true;
     }
 
     /**
@@ -210,14 +197,17 @@ class ValidateRequest
      */
     public static function validateAPI(int $apikey, string $vcode)
     {
+        $ci =& get_instance();
+        $ci->load->helper('msg_helper');
+
         try {
             $phealAPI = new Pheal($apikey, $vcode, "account");
             $response = $phealAPI->APIKeyInfo();
             $accessMask = $response->key->accessMask;
             $expiry     = $response->key->expires;
         } catch (Throwable $e) {
-            //communication error, abort
-            //todo: difference between no reply and expired key
+            // communication error, abort
+            // todo: difference between no reply and expired key
             return Msg::INVALID_API_KEY;
         }
         if ($accessMask == "" && $response) {
@@ -268,11 +258,8 @@ class ValidateRequest
     {
         $url    = "https://crest-tq.eveonline.com/market/10000002/orders/sell/?type=https://crest-tq.eveonline.com/inventory/types/34/";
         $result = json_decode(file_get_contents($url), true);
-        if ($result) {
-            return true;
-        }
-
-        return false;
+        
+        return $result ? true : false;
     }
     
     /**
@@ -283,6 +270,10 @@ class ValidateRequest
      */
     public static function validateUserEmail(string $username, string $email): bool
     {
+        $ci =&get_instance();
+        $ci->load->model('User_model', 'user');
+        $emailMatch = $ci->user->getOne(array('username' => $username, 'email' => $email));
+
         $this->db->where('username', $username);
         $this->db->where('email', $email);
         $query = $this->db->get('user');
