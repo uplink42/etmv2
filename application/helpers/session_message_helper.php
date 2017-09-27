@@ -9,7 +9,7 @@
 	 * @param  [type] $view    
 	 * @return void        
 	 */
-	function buildMessage(string $type, string $message)
+	function buildMessage(string $type, string $message) : void
 	{
 		$CI = &get_instance();
 	    $CI->load->library('etmsession');

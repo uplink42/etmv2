@@ -61,6 +61,7 @@ class TaxCalculator
             $this->getCorpStanding('to', $corpIDTo);
             $this->getFactionStanding('to', $this->getFactionID($corpIDTo));
         }
+
         $this->getBrokerLevel('from');
         $this->getBrokerLevel('to');
         $this->getAccountingLevel('from');

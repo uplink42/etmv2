@@ -5,19 +5,23 @@ class MY_Controller extends CI_Controller
 {
     protected $aggregate;
     protected $page;
-    protected $user_id;
+    protected $idUser;
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper('msg');
-        $this->load->helper('log');
-        $this->load->helper('validation');
-        //$this->load->model('Login_model');
+        $this->load->model('User_model', 'user');
+        $this->load->model('Aggr_model', 'aggr');
+        $this->load->model('Characters_model', 'characters');
+
+        $this->idUser = (int) $this->etmsession->get('iduser');
+
+        $this->load->helper('msg_helper');
+        $this->load->helper('log_helper');
+        $this->load->helper('validation_helper');
+
         $this->load->library('etmsession');
         $this->load->library('twig');
-        $this->load->model('User_model', 'user');
-        $this->user_id = (int) $this->etmsession->get('iduser');
 
         if ($this->config->item('maintenance') == true) {
             redirect('internal/maintenance');
@@ -32,17 +36,7 @@ class MY_Controller extends CI_Controller
 
     private function setAggregate()
     {
-        if (isset($this->input->get['aggr'])) {
-            $aggr = $this->input->get['aggr'];
-
-            if ($aggr != 1 && $aggr != 0) {
-                $this->aggregate = false;
-            } else {
-                $this->aggregate = (bool) $aggr;
-            }
-        } else {
-            $this->aggregate = false;
-        }
+        $aggr = (bool) $this->input->get('aggr');
     }
 
     /**
@@ -55,11 +49,11 @@ class MY_Controller extends CI_Controller
     {
         // get rid of unwanted session variables
         $this->clearMessages();
-        $count = $this->user->countAll(['username' => $this->etmsession->get('username'), 'iduser' => $this->etmsession->get('iduser')]);
+        $count = $this->user->countAll(array('username' => $this->etmsession->get('username'), $this->idUser));
         if ($count < 1) {
             if (!$isJSRequest) {
-                $data['view'] = "login/login_v";
                 buildMessage("error", Msg::INVALID_REQUEST_SESSION);
+                $data['view'] = "login/login_v";
                 $data['SESSION']   = $_SESSION;
                 $data['no_header'] = 1;
 
@@ -93,40 +87,42 @@ class MY_Controller extends CI_Controller
      * @param  bool   $aggregate    
      * @return array           
      */
-    /*protected function loadViewDependencies($character_id, $user_id, $aggregate) : array
+    protected function loadCommon($idCharacter, $idUser, $aggregate) : array
     {
         $chars      = [];
-        $char_names = [];
+        $charNames  = [];
 
         if ($aggregate) {
-            $characters = $this->Login_model->getCharacterList($user_id);
-            $chars      = $characters['aggr'];
-            $char_names = $characters['char_names'];
+            $characterList = $this->aggr->getAll(array('user_iduser' => $this->idUser));
+            foreach ($characterList as $char) {
+                array_push($chars, $char->name);
+                array_push($charNames, $char->character_eve_idcharacter);
+            }
         } else {
-            $chars = "(" . $character_id . ")";
+            array_push($chars, $idCharacter);
         }
 
         $data['email']           = $this->etmsession->get('email');
         $data['username']        = $this->etmsession->get('username');
         $data['chars']           = $chars;
         $data['aggregate']       = $aggregate;
-        $data['char_names']      = $char_names;
-        $data['character_list']  = $this->getCharacterList($this->user_id);
-        $data['character_name']  = $this->Login_model->getCharacterName($character_id);
-        $data['character_id']    = $character_id;
+        $data['charNames']       = $charNames;
+        $data['character_list']  = $characterList;
+        $data['character_name']  = $this->characters->getOne(array('eve_idcharacter' => $idCharacter))->name;
+        $data['character_id']    = $idCharacter;
         $data['HASH_CACHE']      = HASH_CACHE; // twig can't access CI constants
         $data['SESSION']         = $_SESSION;  // nor session variables
         
         $data['selector']        = $this->buildSelector();
         return $data;
-    }*/
+    }
 
 
     /**
      * Build the character selector dropdown with options
      * @return array
      */
-    /*private function buildSelector(): array
+    private function buildSelector(): array
     {
         switch ($this->page) {
             case ('dashboard'):
@@ -224,22 +220,22 @@ class MY_Controller extends CI_Controller
 
         $data['page'] = $this->page;
         return $data;
-    }*/
+    }
 
-
-    /*protected function buildData(int $character_id, bool $aggr, string $callback, string $model, array $configs)
+    protected function buildData(int $idCharacter, bool $aggr, string $callback, string $model, array $configs)
     {
         $msg = Msg::INVALID_REQUEST;
         $notice = "error";
-        if ($this->enforce($character_id, $this->user_id, true)) {
-            $chars      = [];
-            $char_names = [];
-
-            if ($aggr) {
-                $characters = $this->Login_model->getCharacterList($this->user_id);
-                $chars      = $characters['aggr'];
+        
+        if ($this->enforce($idCharacter, $this->idUser, true)) {
+            $chars = [];
+            if ($aggregate) {
+                $characterList = $this->aggr->getAll(array('user_iduser' => $this->idUser));
+                foreach ($characterList as $char) {
+                    array_push($chars, $char->name);
+                }
             } else {
-                $chars = "(" . $character_id . ")";
+                array_push($chars, $idCharacter);
             }
 
             if ($chars) {
@@ -248,6 +244,7 @@ class MY_Controller extends CI_Controller
                 return $this->{$model}->$callback($configs);
             }
         }
+
         return json_encode(array("notice" => $notice, "message" => $msg));
-    }*/
+    }
 }
