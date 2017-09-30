@@ -26,4 +26,22 @@ final class New_info_model extends DB_Model
     {
         return parent::parseOptions($options);
     }
+
+    public function getNewInfo(array $chars)
+    {
+        $info = [
+            'contracts'    => 0,
+            'orders'       => 0,
+            'transactions' => 0,
+        ];
+
+        foreach ($chars as $char) {
+            $data = $this->getOne(array('characters_eve_idcharacters' => $char));
+            $info['contracts'] += $data->contracts;
+            $info['orders'] += $data->orders;
+            $info['transactions'] += $data->transactions;
+        }
+
+        return $info;
+    }
 }

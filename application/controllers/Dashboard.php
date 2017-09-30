@@ -25,19 +25,24 @@ final class Dashboard extends MY_Controller
         if ($this->enforce($idCharacter, $this->idUser)) {
             Log::addEntry("visit " . $this->page, $this->idUser);
 
-            $aggregate = $this->aggregate;
-            $data      = $this->loadCommon($idCharacter, $this->idUser, $aggregate);
-            $chars     = $data['chars'];
-            $data['selected']       = "dashboard";
-            $data['interval']       = $interval;
-            $data['week_profits']   = Chart::buildSparkline($this->history->getWeekProfits($chars));
-            $data['new_info']       = $this->new_info->getNewInfo($chars);
-            $data['profits_trends'] = $this->profit->getTotalProfitsTrends($chars);
-            
+            $aggregate            = $this->aggregate;
+            $data                 = $this->loadCommon($idCharacter, $this->idUser, $aggregate);
+            $chars                = $data['chars'];
+            $data['selected']     = "dashboard";
+            $data['interval']     = $interval;
+            $data['week_profits'] = Chart::buildSparkline($this->history->getWeekProfits($chars));
+            $data['new_info']     = $this->new_info->getNewInfo($chars);
+
+            $weekProfitSum                 = $this->history->getWeeklySum($chars)->sum;
+            $dayProfitSum                  = $this->history->getDailySum($chars)->sum;
+            $weekProfitSum == 0 ? $weekAvg = 0 : $weekAvg = $weekProfitSum / 7;
+            $trend                         = $weekAvg == 0 ? 0 : $dayProfitSum / $weekAvg * 100;
+            $data['profits_trends']        = array('total_week' => $weekProfitSum, 'avg_week' => $weekAvg, 'trend_today' => $trend);
+
             $data['layout']['page_title']     = "Dashboard";
             $data['layout']['icon']           = "pe-7s-shield";
             $data['layout']['page_aggregate'] = true;
-            $data['view'] = 'main/dashboard_v';
+            $data['view']                     = 'main/dashboard_v';
             $this->twig->display('main/_template_v', $data);
         }
     }

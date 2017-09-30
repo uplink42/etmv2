@@ -26,6 +26,10 @@ final class History_model extends DB_Model
 
     protected function parseOptions(array $options = [], array $select = [])
     {
+        if (isset($options['sum'])) {
+            $this->db->select('coalesce(sum(total_profit),0) as sum');
+        }
+
         if (isset($options['characters_eve_idcharacters_IN'])) {
             $this->db->where_in($this->alias . '.characters_eve_idcharacters', $options['characters_eve_idcharacters_IN']);
         }
@@ -57,5 +61,31 @@ final class History_model extends DB_Model
 
         $select = array('total_profit');
         return parent::getAll($options, $select);
+    }
+
+    public function getWeeklySum(array $chars)
+    {
+        $options = [
+            'sum' => 1,
+            'characters_eve_idcharacters_IN' => $chars,
+            'date_gte_7_days' => 1,
+            'order_by' => 'date',
+            'order_dir' => 'asc',
+        ];
+
+        return parent::getOne($options);
+    }
+
+    public function getDailySum(array $chars)
+    {
+        $options = [
+            'sum' => 1,
+            'characters_eve_idcharacters_IN' => $chars,
+            'date_gte_1_days' => 1,
+            'order_by' => 'date',
+            'order_dir' => 'asc',
+        ];
+
+        return parent::getOne($options);
     }
 }
