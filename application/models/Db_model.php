@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) {
 
 class DB_model extends CI_Model
 {
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -17,21 +17,26 @@ class DB_model extends CI_Model
 
     protected function getTable()
     {
-    	return $this->table;
+        return $this->table;
     }
 
     protected function getTableAlias()
     {
-    	return $this->alias;
+        return $this->alias;
     }
 
     protected function getTableIdentifier()
     {
-    	return $this->identifier;
+        return $this->identifier;
     }
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
+        // parse selected fields
+        foreach ($select as $field) {
+            $this->db->select($field);
+        }
+
         // parse table fields
         foreach ($this->fields as $field) {
             if (isset($options[$field])) {
@@ -40,12 +45,12 @@ class DB_model extends CI_Model
         }
 
         // alias own table
-    	$this->db->from($this->table . ' ' . $this->alias);
+        $this->db->from($this->table . ' ' . $this->alias);
 
         // order
-    	if (isset($options['order_by']) && isset($options['order_dir'])) {
-    		$this->db->order_by($this->alias . '.' . $options['order_by'], $options['order_dir']);
-    	}
+        if (isset($options['order_by']) && isset($options['order_dir'])) {
+            $this->db->order_by($this->alias . '.' . $options['order_by'], $options['order_dir']);
+        }
 
         // pagination
         if (isset($options['limit']) && !isset($options['skip'])) {
@@ -56,26 +61,26 @@ class DB_model extends CI_Model
             $this->db->limit($options['limit'], $options['skip']);
         }
 
-    	return $this->db->get('');
+        return $this->db->get('');
     }
 
     public function insert(array $data = [])
     {
-    	if ($this->db->insert($this->table, $data)) {
-    		return $this->db->insert_id();
-    	}
+        if ($this->db->insert($this->table, $data)) {
+            return $this->db->insert_id();
+        }
 
-    	return false;
+        return false;
     }
 
     public function update($id, array $data = [])
     {
-    	$this->db->where($this->identifier, $id);
-    	if ($this->db->update($this->table, $data)) {
-    		return $this->db->affected_rows();
-    	}
+        $this->db->where($this->identifier, $id);
+        if ($this->db->update($this->table, $data)) {
+            return $this->db->affected_rows();
+        }
 
-    	return false;
+        return false;
     }
 
     public function delete(array $options = [])
@@ -91,7 +96,7 @@ class DB_model extends CI_Model
         return false;
     }
 
-    public function getAll(array $options = [], bool $isArray = false) : array
+    public function getAll(array $options = [], array $select = [], bool $isArray = false): array
     {
         if ($isArray) {
             return $this->parseOptions($options)->result_array();
@@ -100,14 +105,14 @@ class DB_model extends CI_Model
         }
     }
 
-    public function getOne(array $options = [])
+    public function getOne(array $options = [], array $select = [])
     {
-    	return $this->parseOptions($options)->row();
+        return $this->parseOptions($options)->row();
     }
 
     public function countAll(array $options = [])
     {
-    	return count(self::getAll($options));
+        return count(self::getAll($options));
     }
 
     public function insertOrUpdate(array $options = [])

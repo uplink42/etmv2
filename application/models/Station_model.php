@@ -22,7 +22,7 @@ final class Station_model extends DB_Model
         'corporation_eve_idcorporation',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         return parent::parseOptions($options);
     }

@@ -24,7 +24,7 @@ final class Stats_model extends DB_Model
         'timestamp',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         return parent::parseOptions($options);
     }

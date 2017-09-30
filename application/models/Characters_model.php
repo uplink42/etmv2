@@ -27,7 +27,7 @@ final class Characters_model extends DB_Model
         'accounting',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         if (isset($options['character_eve_idcharacter'])) {
             $this->db->join('aggr a', 'a.character_eve_idcharacter = ' . $this->alias . '.eve_idcharacter');

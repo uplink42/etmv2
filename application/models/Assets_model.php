@@ -23,7 +23,7 @@ final class Assets_model extends DB_Model
         'locationID',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         if (isset($options['sum_character'])) {
             $this->db->select('coalesce(SUM(' . $this->alias . '.quantity * ipd.price_evecentral),0) AS grand_total');

@@ -30,7 +30,7 @@ final class Transactions_model extends DB_Model
         'remaining',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         if (isset($options['id_user'])) {
             $this->db->join('aggr a', $this->alias . '.character_eve_idcharacter = a.character_eve_idcharacter');
@@ -105,6 +105,18 @@ final class Transactions_model extends DB_Model
             $options['character_eve_idcharacter'] = $idCharacter;
         }
 
-        return parent::getAll($options, true);
+        $select = [
+            'idbuy',
+            'time',
+            'quantity',
+            'price_unit',
+            'transaction_type',
+            'character_eve_idcharacter',
+            'item_eve_iditem',
+            'transkey',
+            'remaining',
+        ];
+
+        return parent::getAll($options, $select, true);
     }
 }

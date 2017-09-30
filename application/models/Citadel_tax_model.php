@@ -22,7 +22,7 @@ final class Citadel_tax_model extends DB_Model
         'value',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         return parent::parseOptions($options);
     }

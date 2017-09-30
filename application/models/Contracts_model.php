@@ -34,7 +34,7 @@ final class Contracts_model extends DB_Model
         'characters_eve_idcharacters',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         if (isset($options['latest'])) {
             $this->db->select('COALESCE(max(' . $this->alias . '.eve_idcontracts),0) AS val');

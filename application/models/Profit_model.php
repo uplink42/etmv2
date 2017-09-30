@@ -27,7 +27,7 @@ final class Profit_model extends DB_Model
         'quantity_profit',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         if (isset($options['sum'])) {
             $this->db->select('COALESCE(sum(profit_unit * quantity_profit),0) as profit');
@@ -43,7 +43,6 @@ final class Profit_model extends DB_Model
             $this->db->join('transaction t1', $this->alias . '.transaction_idbuy_buy = t1.idbuy');
             $this->db->join('transaction t2', $this->alias . '.transaction_idbuy_sell = t2.idbuy');
             $this->db->join('characters', 't2.character_eve_idcharacter = characters.eve_idcharacter');
-            
         }
 
         if (isset($options['date_sell'])) {
@@ -76,7 +75,6 @@ final class Profit_model extends DB_Model
     public function insertProfit($profitData)
     {
         extract($profitData);
-        
         $this->db->query("INSERT IGNORE profit
             (idprofit,
             transaction_idbuy_buy,

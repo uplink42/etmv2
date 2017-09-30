@@ -21,7 +21,7 @@ final class Aggr_model extends DB_Model
         'character_eve_idcharacter',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         $this->db->select(
             ['c.eve_idcharacter as id_character', 

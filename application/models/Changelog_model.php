@@ -21,7 +21,7 @@ final class Changelog_model extends DB_Model
         'content',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         return parent::parseOptions($options);
     }

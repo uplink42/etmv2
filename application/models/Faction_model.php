@@ -20,7 +20,7 @@ final class Faction_model extends DB_Model
         'name',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         return parent::parseOptions($options);
     }

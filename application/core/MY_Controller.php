@@ -70,17 +70,6 @@ class MY_Controller extends CI_Controller
     }
 
     /**
-     * Returns the character list for a user
-     * @param  int    $user_id
-     * @return array    
-     */
-    /*protected function getCharacterList(int $user_id) : array
-    {
-        $data = $this->Login_model->getCharacterList($user_id);
-        return $data;
-    }*/
-
-    /**
      * Loads common view dependencies for most pages
      * @param  int    $character_id 
      * @param  int    $user_id      
@@ -91,12 +80,12 @@ class MY_Controller extends CI_Controller
     {
         $chars      = [];
         $charNames  = [];
+        $characterList = $this->aggr->getAll(array('user_iduser' => $this->idUser));
 
         if ($aggregate) {
-            $characterList = $this->aggr->getAll(array('user_iduser' => $this->idUser));
             foreach ($characterList as $char) {
-                array_push($chars, $char->name);
-                array_push($charNames, $char->character_eve_idcharacter);
+                array_push($charNames, $char->name);
+                array_push($chars, $char->character_eve_idcharacter);
             }
         } else {
             array_push($chars, $idCharacter);
@@ -215,7 +204,6 @@ class MY_Controller extends CI_Controller
                 $data['hasRegion']   = false;
                 $data['gets']        = false;
                 break;
-
         }
 
         $data['page'] = $this->page;

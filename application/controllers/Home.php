@@ -8,7 +8,6 @@ final class Home extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Stats_model', 'stats');
-        $this->db->cache_off();
     }
 
     /**

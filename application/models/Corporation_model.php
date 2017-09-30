@@ -20,7 +20,7 @@ final class Corporation_model extends DB_Model
         'faction_eve_idfaction',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
 
         return parent::parseOptions($options);

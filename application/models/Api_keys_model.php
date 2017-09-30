@@ -20,7 +20,7 @@ final class Api_keys_model extends DB_Model
         'vcode',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         return parent::parseOptions($options);
     }

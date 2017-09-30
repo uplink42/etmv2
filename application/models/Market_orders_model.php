@@ -31,7 +31,7 @@ final class Market_orders_model extends DB_Model
         'transkey',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         if (isset($options['sum_character'])) {
             $this->db->select('coalesce(sum(' . $this->alias . '.volume_remaining * ipd.price_evecentral),0) AS grand_total');

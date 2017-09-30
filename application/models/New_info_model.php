@@ -22,7 +22,7 @@ final class New_info_model extends DB_Model
         'transactions',
     ];
 
-    protected function parseOptions(array $options = [])
+    protected function parseOptions(array $options = [], array $select = [])
     {
         return parent::parseOptions($options);
     }
