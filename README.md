@@ -19,8 +19,8 @@ Main features:
 
 <h1>Requirements:</h1>
 
-- Apache 2.2+ web server
-- PHP 7.1
+- Apache 2.2+ web server (mod_rewrite and .htaccess files must be enabled)
+- PHP >=7.1
 - MariaDB or MySQL database
 - NodeJS (for npm)
 - Should work on any OS, but Windows users will need some extra tweaking with certificates to get the API calls working: 
