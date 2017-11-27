@@ -33,14 +33,14 @@ $(function() {
             $("#repeatpassword").parent('div').addClass('has-error');
             e.preventDefault();
         }
-        if (apikey.length < 6) {
+        /*if (apikey.length < 6) {
             $("#apikey").parent('div').addClass('has-error');
             e.preventDefault();
         }
         if (vcode.length < 6) {
             $("#vcode").parent('div').addClass('has-error');
             e.preventDefault();
-        }
+        }*/
         if (reports.length < 6) {
             $("#reports").parent('div').addClass('has-error');
             e.preventDefault();
