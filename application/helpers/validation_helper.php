@@ -186,82 +186,9 @@ class ValidateRequest
         $ci->load->model('User_model', 'user');
         $emailCount = $ci->user->countAll(['email' => $email]);
         
-        return $userCount >= 1 ? false : true;
+        return $emailCount >= 1 ? false : true;
     }
 
-    /**
-     * Checks if the api key is valid and has the right permissions
-     * @param  int    $apikey 
-     * @param  string $vcode  
-     * @return void        
-     */
-    public static function validateAPI(int $apikey, string $vcode)
-    {
-        $ci =& get_instance();
-        $ci->load->helper('msg_helper');
-
-        try {
-            $phealAPI = new Pheal($apikey, $vcode, "account");
-            $response = $phealAPI->APIKeyInfo();
-            $accessMask = $response->key->accessMask;
-            $expiry     = $response->key->expires;
-        } catch (Throwable $e) {
-            // communication error, abort
-            // todo: difference between no reply and expired key
-            return Msg::INVALID_API_KEY;
-        }
-        if ($accessMask == "" && $response) {
-            return Msg::INVALID_API_KEY;
-        } else if ($accessMask != MASK_PERSONAL_KEY && $accessMask != MASK_FULL_KEY && $response) {
-            return Msg::INVALID_API_MASK;
-        } else if (!isset($expiry) && $response) {
-            return Msg::INVALID_API_KEY;
-        }
-    }
-
-    /**
-     * Checks if an api key is not in use by another character
-     * @param  int    $apikey 
-     * @return bool         
-     */
-    public static function validateAPIAvailability(int $apikey): bool
-    {
-        $this->db->where('apikey', $apikey);
-        $query = $this->db->get('v_user_characters');
-        if ($query->num_rows() == 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if not empty response
-     * depercated
-     * @param  string $xml 
-     * @return bool      
-     */
-    private static function checkXML($xml)
-    {
-        if ($xml == "") {
-            throw new Exception(Msg::INVALID_API_KEY);
-        }
-
-        return true;
-    }
-
-    /**
-     * Get current CREST API status (online or offline)
-     * @return bool
-     */
-    public static function getCrestStatus(): bool
-    {
-        $url    = "https://crest-tq.eveonline.com/market/10000002/orders/sell/?type=https://crest-tq.eveonline.com/inventory/types/34/";
-        $result = json_decode(file_get_contents($url), true);
-        
-        return $result ? true : false;
-    }
-    
     /**
      * Checks if a username and email match any registered accounts
      * @param  string $username 
@@ -280,7 +207,19 @@ class ValidateRequest
         if ($query->num_rows() != 0) {
             return true;
         }
-        
+
         return false;
+    }
+
+    public static function validateCharacterAvailability(string $idCharacter)
+    {
+        $ci =&get_instance();
+        $ci->load->model('Characters_model', 'character');
+        $characterMatch = $ci->character->getOne(array('eve_idcharacter' => $idCharacter));
+        if ($characterMatch) {
+            return false;
+        }
+
+        return true;
     }
 }

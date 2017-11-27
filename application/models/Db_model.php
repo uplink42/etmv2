@@ -14,6 +14,7 @@ class DB_model extends CI_Model
     protected $alias; // table alias
     protected $identifier; // table id column
     protected $fields; // table columns
+    protected $ai = true; // default AI
 
     protected function getTable()
     {
@@ -67,7 +68,12 @@ class DB_model extends CI_Model
     public function insert(array $data = [])
     {
         if ($this->db->insert($this->table, $data)) {
-            return $this->db->insert_id();
+            if ($this->ai) {
+                $id = $this->db->insert_id();
+            } else {
+                $id = $data[$this->identifier];
+            }
+            return $id;
         }
 
         return false;
@@ -120,7 +126,8 @@ class DB_model extends CI_Model
         $data = $this->getOne([$this->identifier => $options[$this->identifier]]);
         if ($data) {
             $id = $data->{$this->identifier};
-            return $this->update($id, $options);
+            $this->update($id, $options);
+            return $id;
         } else {
             return $this->insert($options);
         }

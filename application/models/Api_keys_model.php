@@ -19,6 +19,7 @@ final class Api_keys_model extends DB_Model
         'apikey',
         'vcode',
     ];
+    protected $ai = false;
 
     protected function parseOptions(array $options = [], array $select = [])
     {

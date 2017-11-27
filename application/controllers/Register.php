@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-use Pheal\Pheal;
 
 final class Register extends CI_Controller
 {
@@ -10,62 +9,40 @@ final class Register extends CI_Controller
         $this->load->helper('msg');
         $this->load->helper('validation');
         $this->load->library('twig');
+        $this->load->config('esi_config');
+        $this->load->model('User_model', 'user');
+        $this->load->model('Characters_model', 'characters');
+        $this->load->model('Aggr_model', 'aggr');
+        $this->load->model('Refresh_token_model', 'token');
     }
 
     public function index()
     {
-        $data['no_header'] = 1;
-        $data['view']      = 'register/register_v';
+        if (!$this->input->get('character') || !$this->input->get('refresh') || !$this->input->get('token')) {
+            echo 'Invalid Request';
+            return false;
+        }
+
+        $data['no_header']   = 1;
+        $data['view']        = 'register/register_v';
+        $data['characterID'] = $this->input->get('character');
+        $data['refresh']     = $this->input->get('refresh');
+        $data['token']       = $this->input->get('token');
         $this->twig->display('main/_template_v', $data);
     }
 
     public function processData(): void
     {
-        $username       = $this->input->post('username', true);
-        $password       = $this->input->post('password', true);
-        $repeatpassword = $this->input->post('repeatpassword', true);
-        $email          = $this->input->post('email', true);
-        $apikey         = (int) $this->input->post('apikey', true);
-        $vcode          = $this->input->post('vcode', true);
-        $reports        = $this->input->post('reports');
-
-        $result = array("username" => $this->validateUsername($username),
-                        "password" => $this->validatePassword($password, $repeatpassword),
-                        "email"    => $this->validateEmail($email),
-                        "api"      => $this->validateAPI($apikey, $vcode),
-                        "reports"  => $this->validateReports($reports),
-        );
-
-        if (!isset($result['username']) && !isset($result['password']) &&
-            !isset($result['email']) && !isset($result['api']) && !isset($result['reports'])) {
-            $characters         = $this->getCharacters($apikey, $vcode);
-            $data['characters'] = $characters;
-            $data['view']       = "register/register_characters_v";
-            $data['apikey']     = $apikey;
-            $data['vcode']      = $vcode;
-            $data['no_header']  = 1;
-            $this->twig->display('main/_template_v', $data);
-        } else {
-            $data['result']    = $result;
-            $data['view']      = "register/register_v";
-            $data['no_header'] = 1;
-            $this->twig->display('main/_template_v', $data);
-        }
-    }
-
-    /**
-     * Begin registration operations and validations - step 2
-     * @return void
-     */
-    public function processCharacters(): void
-    {
-        $userData = [
+        $registrationData = array(
             'username'         => $this->input->post('username', true),
+            'character'        => $this->input->post('character', true),
             'password'         => $this->input->post('password', true),
+            'repeatpassword'   => $this->input->post('repeatpassword', true),
             'email'            => $this->input->post('email', true),
-            'apikey'           => (int) $this->input->post('apikey', true),
-            'vcode'            => $this->input->post('vcode', true),
             'reports'          => $this->input->post('reports'),
+            'characterID'      => $this->input->post('character', true),
+            'token'            => $this->input->post('token', true),
+            'refresh'          => $this->input->post('refresh', true),
             'default_buy'      => $this->input->post('default-buy', true),
             'default_sell'     => $this->input->post('default-sell', true),
             'x_character'      => $this->input->post('x-character', true),
@@ -74,44 +51,33 @@ final class Register extends CI_Controller
             'null_outpost_tax' => $this->input->post('null-outpost-tax', true),
             'null_buy_tax'     => $this->input->post('null-buy-tax', true),
             'null_sell_tax'    => $this->input->post('null-sell-tax', true),
-        ];
-        $chars = array();
-        if ($char1 = $this->input->post('char1', true)) {
-            array_push($chars, $char1);
-        } else {
-            $char1 = "";
-        }
-        if ($char2 = $this->input->post('char2', true)) {
-            array_push($chars, $char2);
-        } else {
-            $char2 = "";
-        }
-        if ($char3 = $this->input->post('char3', true)) {
-            array_push($chars, $char3);
-        } else {
-            $char3 = "";
-        }
+        );
+        $result = array("username"  => $this->validateUsername($registrationData['username']),
+                        "password"  => $this->validatePassword($registrationData['password'], $registrationData['repeatpassword']),
+                        "character" => $this->validateCharacter($registrationData['character']),
+                        "email"     => $this->validateEmail($registrationData['email']),
+                        "reports"   => $this->validateReports($registrationData['reports']),
+        );
 
-        $userData['chars'] = $chars;
-        // no characters selected
-        if (count($chars) == 0) {
-            $data['characters'] = $this->getCharacters($userData['apikey'], $userData['vcode']);
-            buildMessage("error", Msg::NO_CHARACTER_SELECTED);
-            $data['characters'] = $characters;
-            $data['view']       = "register/register_characters_v";
-            $data['no_header']  = 1;
+        if (!isset($result['username']) && !isset($result['password']) &&
+            !isset($result['email']) && !isset($result['character']) && !isset($result['reports'])) {
+            $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
+                'client_id'     => $this->config->item('esi_client_id'),
+                'secret'        => $this->config->item('esi_secret'),
+                'refresh_token' => $registrationData['refresh'],
+            ]);
 
-            $this->twig->display('main/_template_v', $data);
-            return;
-        }
-
-        if ($this->verifyCharacters($userData['chars'], $userData['apikey'], $userData['vcode'])) {
-            $result = $this->createAccount($userData);
+            $esi = new \Seat\Eseye\Eseye($authentication);
+            $character_info = $esi->invoke('get', '/characters/{character_id}/', [
+                'character_id' => $registrationData['character'],
+            ]);
+            $registrationData['character_name'] = $character_info->name;
+            
+            $result = $this->createAccount($registrationData);
             if (!$result['success']) {
                 // failure creating account (sssion msg wont show on same page)
                 buildMessage('error', $result['msg']);
-                $data['characters'] = $this->getCharacters($userData['apikey'], $userData['vcode']);
-                $data['view']       = "register/register_characters_v";
+                $data['view']       = "register/register_v";
                 $data['no_header']  = 1;
                 $this->twig->display('main/_template_v', $data);
             } else {
@@ -121,16 +87,20 @@ final class Register extends CI_Controller
                 $data['no_header'] = 1;
                 $this->twig->display('main/_template_v', $data);
             }
+        } else {
+            // error
+            $data['result']      = $result;
+            $data['characterID'] = $registrationData['character'];
+            $data['refresh']     = $registrationData['refresh'];
+            $data['token']       = $registrationData['token'];
+            $data['view']        = "register/register_v";
+            $data['no_header']   = 1;
+            $this->twig->display('main/_template_v', $data);
         }
     }
 
     public function createAccount(array $data): array
     {
-        $this->load->model('Api_keys_model', 'keys');
-        $this->load->model('User_model', 'user');
-        $this->load->model('Characters_model', 'characters');
-        $this->load->model('Aggr_model', 'aggr');
-
         $error = "";
         $dt    = new DateTime();
         $tz    = new DateTimeZone('Europe/Lisbon');
@@ -158,79 +128,30 @@ final class Register extends CI_Controller
             "login_count"             => 0,
             "updating"                => 0,
         );
-
         $idUser = $this->user->insert($userData);
-        $this->keys->insertIgnoreKeys($data['apikey'], $data['vcode']);
+        $idToken = $this->token->insert(array('token' => $data['refresh']));
 
-        foreach ($data['chars'] as $row) {
-            $idCharacter     = (int) $row;
-            $characterExists = $this->characters->getOne(['character_eve_idcharacter' => $idCharacter]);
-            if ($characterExists) {
-                $this->db->trans_rollback();
-                $result['success'] = false;
-                $result['msg']     = Msg::CHARACTER_ALREADY_TAKEN;
-                return $result;
-            }
+        $configs = [
+            'eve_idcharacter'  => $data['character'],
+            'name'             => $data['character_name'],
+            'balance'          => 0,
+            'networth'         => 0,
+            'escrow'           => 0,
+            'total_sell'       => 0,
+            'broker_relations' => '0',
+            'accounting'       => '0',
+            'refresh_token_id' => $idToken,
+        ];
+        $idCharacter = $this->characters->insertOrUpdate($configs);
 
-            $pheal   = new Pheal($data['apikey'], $data['vcode'], "char"); //fetch character name
-            $result  = $pheal->CharacterSheet(array("characterID" => $idCharacter));
-            $configs = [
-                'eve_idcharacter'  => $idCharacter,
-                'name'             => $result->name,
-                'balance'          => 0,
-                'api_apikey'       => $data['apikey'],
-                'networth'         => 0,
-                'escrow'           => 0,
-                'total_sell'       => 0,
-                'broker_relations' => '0',
-                'accounting'       => '0',
-            ];
-
-            $this->characters->insertUpdateCharacter($configs);
-            $data_assoc = array(
-                "user_iduser"               => $idUser,
-                "character_eve_idcharacter" => $idCharacter,
-            );
-            $this->aggr->insert($data_assoc);
-        }
-
+        $data_assoc = array(
+            "user_iduser"               => $idUser,
+            "character_eve_idcharacter" => $idCharacter,
+        );
+        $this->aggr->insert($data_assoc);
+        
         $data['success'] = true;
         return $data;
-    }
-
-    private function getCharacters($apikey, $vcode)
-    {
-        $pheal      = new Pheal($apikey, $vcode);
-        $result     = $pheal->accountScope->APIKeyInfo();
-        $characters = array();
-        foreach ($result->key->characters as $character) {
-            array_push($characters, array(
-                array("name" => $character->characterName),
-                array("id" => $character->characterID),
-                )
-            );
-        }
-
-        return $characters;
-    }
-
-    public function verifyCharacters(array $chars, int $apikey, string $vcode): bool
-    {
-        $pheal      = new Pheal($apikey, $vcode);
-        $result     = $pheal->accountScope->APIKeyInfo();
-        $apiChars  = array();
-        $nameChars = array();
-        $empty      = array();
-        foreach ($result->key->characters as $character) {
-            array_push($chars_api, $character->characterID);
-            array_push($nameChars, $character->characterName);
-        }
-
-        // calculate differences between api result and selected characters and intersect the result
-        if (array_intersect(array_diff($chars, $apiChars), $apiChars) != $empty) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -280,17 +201,6 @@ final class Register extends CI_Controller
     }
 
     /**
-     * Apply all API key related validations
-     * @param  int    $apikey
-     * @param  string $vcode
-     * @return [type]
-     */
-    private function validateAPI(int $apikey, string $vcode)
-    {
-        return ValidateRequest::validateAPI($apikey, $vcode);
-    }
-
-    /**
      * Apply all user report related validations
      * @param  [type] $reports
      * @return [type]
@@ -299,6 +209,13 @@ final class Register extends CI_Controller
     {
         if (empty($reports)) {
             return Msg::INVALID_REPORT_SELECTION;
+        }
+    }
+
+    private function validateCharacter($idCharacter)
+    {
+        if (!ValidateRequest::validateCharacterAvailability($idCharacter)) {
+            return Msg::CHARACTER_ALREADY_TAKEN;
         }
     }
 }

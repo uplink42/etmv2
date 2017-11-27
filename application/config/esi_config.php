@@ -1,0 +1,6 @@
+<?php
+$config['esi_scopes'] = 'publicData characterStatsRead characterWalletRead characterAssetsRead characterIndustryJobsRead characterMarketOrdersRead characterSkillsRead characterAccountRead characterContractsRead corporationWalletRead corporationAssetsRead corporationMarketOrdersRead corporationStructuresRead corporationContractsRead esi-skills.read_skills.v1 esi-wallet.read_character_wallet.v1 esi-search.search_structures.v1 esi-assets.read_assets.v1 esi-markets.structure_markets.v1 esi-corporations.read_structures.v1 esi-characters.read_standings.v1 esi-markets.read_character_orders.v1 esi-characters.read_blueprints.v1 esi-location.read_online.v1 esi-contracts.read_character_contracts.v1 esi-wallet.read_corporation_wallets.v1 esi-assets.read_corporation_assets.v1 esi-corporations.read_blueprints.v1 esi-contracts.read_corporation_contracts.v1 esi-corporations.read_standings.v1 esi-markets.read_corporation_orders.v1';
+$config['esi_esi_callback_url'] = 'http://localhost/v2/OAuth/authenticate';
+$config['esi_client_id'] = '144ab2c2bec44c99829450ea0bf535d5';
+$config['esi_secret'] = 'XkUvMuyQmfZgZGpMyAF2Ai2cA2UZTJ1xXV7pfsco';
+$config['user_agent'] = 'etmv3';

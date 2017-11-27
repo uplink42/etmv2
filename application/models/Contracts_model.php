@@ -33,6 +33,7 @@ final class Contracts_model extends DB_Model
         'toStation_eve_idstation',
         'characters_eve_idcharacters',
     ];
+    protected $ai = false;
 
     protected function parseOptions(array $options = [], array $select = [])
     {

@@ -16,6 +16,7 @@ final class History_model extends DB_Model
     protected $alias      = 'h';
     protected $identifier = 'idhistory';
     protected $fields     = [
+        'idhistory',
         'characters_eve_idcharacters',
         'date',
         'total_buy',

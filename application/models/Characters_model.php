@@ -19,31 +19,24 @@ final class Characters_model extends DB_Model
         'eve_idcharacter',
         'name',
         'balance',
-        'api_apikey',
+        'refresh_token_id',
         'networth',
         'escrow',
         'total_sell',
         'broker_relations',
         'accounting',
     ];
+    protected $ai = false;
 
     protected function parseOptions(array $options = [], array $select = [])
     {
+        $this->db->join('refresh_token rt', 'rt.id = ' . $this->alias . '.refresh_token_id', 'left');
+
         if (isset($options['character_eve_idcharacter'])) {
             $this->db->join('aggr a', 'a.character_eve_idcharacter = ' . $this->alias . '.eve_idcharacter');
             $this->db->where($this->alias .'.eve_idcharacter', $options['character_eve_idcharacter']);
         }
 
         return parent::parseOptions($options);
-    }
-
-    public function insertUpdateCharacters($configs)
-    {
-        extract($configs);
-        $this->db->query("INSERT INTO characters
-            (eve_idcharacter, name, balance, api_apikey, networth, escrow, total_sell, broker_relations, accounting)
-              VALUES ('$eve_idcharacter', " . $name . ", '$balance', '$api_apikey', '$networth', '$escrow', '$total_sell', '$broker_relations', '$accounting')
-                  ON DUPLICATE KEY UPDATE eve_idcharacter = '$eve_idcharacter', name=" . $name . ", api_apikey = '$api_apikey', networth='$networth',
-                      escrow='$escrow', total_sell='$total_sell', broker_relations='$broker_relations', accounting='$accounting'");
     }
 }

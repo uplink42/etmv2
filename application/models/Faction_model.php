@@ -19,6 +19,7 @@ final class Faction_model extends DB_Model
         'eve_idfaction',
         'name',
     ];
+    protected $ai = false;
 
     protected function parseOptions(array $options = [], array $select = [])
     {

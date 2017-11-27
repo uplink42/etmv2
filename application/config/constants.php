@@ -84,23 +84,8 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-//Application specific constants
-define("FILESTORAGE", "phealcache/"); //pheal cache folder
-define("URL", "../../");
-define("GUSER", "");
-define("GPWD", "");
-define("SMTPDEBUG", 0);
-define("SMTPAUTH", true);
-define("SMTPSECURE", "");
-define("SMTPHOST", "");
-define("SMTPPORT", 0);
-define("FROM_EMAIL", "");
-define("FROM_NAME", "Eve Trade Master");
-
+// Masks
 define("MASK_PERSONAL_KEY", '82317323');
 define("MASK_FULL_KEY", '1073741823');
-
-define('PUSHBOTS_APPID', '5969d3bb4a9efaa3b08b4568');
-define('PUSHBOTS_APPSECRET', 'cd811859684e489428e6c0be6eb98eef');
-
-
+define("FILESTORAGE", "phealcache/"); //pheal cache folder
+define("URL", "../../");

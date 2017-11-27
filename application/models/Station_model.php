@@ -21,6 +21,7 @@ final class Station_model extends DB_Model
         'system_eve_idsystem',
         'corporation_eve_idcorporation',
     ];
+    protected $ai = false;
 
     protected function parseOptions(array $options = [], array $select = [])
     {

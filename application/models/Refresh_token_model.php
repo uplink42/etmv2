@@ -5,25 +5,23 @@ if (!defined('BASEPATH')) {
 
 require_once 'DB_model.php';
 
-final class Corporation_model extends DB_Model
+final class Refresh_token_model extends DB_Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    protected $table      = 'corporation';
-    protected $alias      = 'c';
-    protected $identifier = 'eve_idcorporation';
+    protected $table      = 'refresh_token';
+    protected $alias      = 'rt';
+    protected $identifier = 'id';
     protected $fields     = [
-        'eve_idcorporation',
-        'faction_eve_idfaction',
+        'id',
+        'token',
     ];
-    protected $ai = false;
 
     protected function parseOptions(array $options = [], array $select = [])
     {
-
         return parent::parseOptions($options);
     }
 }

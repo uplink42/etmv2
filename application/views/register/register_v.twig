@@ -9,77 +9,209 @@
 		    </div>
 		    <div class="header-title">
 			<h3>Register in Eve Trade Master </h3>
-			<small>
-			    Make sure you set your API Key as "no expiry" to prevent possible errors.
-			</small>
 		    </div>
 		</div>
 
-		<div class="panel panel-filled">
-		    <div class="panel-body">
-		    	{% if result is defined %}
-			    <div class="text-center">
-					<button class="btn btn-w-md btn-danger">
-						{% for error in result %}
-							{% if error is not empty %}
-								{{ error }} <br>
-							{% endif %}
-						{% endfor %}
-					</button>
-			    </div>
-			    {% endif %}
-			<p></p>
-			<form action="{{ base_url('Register/processData') }}" method="POST" id="registerForm" name="register">
-			    <div class="row">
-				<div class="form-group col-lg-6">
-				    <label>Username</label>
-				    <input type="text" id="username" class="form-control" name="username" required='required' value="{{set_value('username')}}">
-				    <span class="help-block small">Your unique username (6 characters minimum)</span>
-				</div>
-				<div class="form-group col-lg-6">
-				    <label>Email Address</label>
-				    <input type="email" id="email" class="form-control" name="email" value="{{set_value('email')}}">
-				    <span class="help-block small">Your valid email for password retrieval and automated reports</span>
-				</div>
-				<div class="form-group col-lg-6">
-				    <label>Password</label>
-				    <input type="password" id="password" class="form-control" name="password" required='required' value="{{set_value('password')}}">
-				    <span class="help-block small">Don't use the same password as Eve (6 characters minimum)</span>
-				</div>
+		<form action="{{ base_url('Register/processData') }}" method="POST" id="registerForm" name="register">
+			<div class="panel panel-filled">
+			    <div class="panel-body">
+			    	{% if result is defined %}
+				    <div class="text-center">
+						<button class="btn btn-w-md btn-danger">
+							{% for error in result %}
+								{% if error is not empty %}
+									{{ error }} <br>
+								{% endif %}
+							{% endfor %}
+						</button>
+				    </div>
+				    {% endif %}
+				    
+				    <div class="row">
+						<div class="form-group col-lg-6">
+						    <label>Username</label>
+						    <input type="text" id="username" class="form-control" name="username" required='required' value="{{set_value('username')}}">
+						    <span class="help-block small">Your unique username (6 characters minimum)</span>
+						</div>
+						<div class="form-group col-lg-6">
+						    <label>Email Address</label>
+						    <input type="email" id="email" class="form-control" name="email" value="{{set_value('email')}}">
+						    <span class="help-block small">Your valid email for password retrieval and automated reports</span>
+						</div>
+						<div class="form-group col-lg-6">
+						    <label>Password</label>
+						    <input type="password" id="password" class="form-control" name="password" required='required' value="{{set_value('password')}}">
+						    <span class="help-block small">Don't use the same password as Eve (6 characters minimum)</span>
+						</div>
 
-				<div class="form-group col-lg-6">
-				    <label>Repeat Password</label>
-				    <input type="password"  id="repeatpassword" class="form-control" name="repeatpassword" required='required' value="{{set_value('repeatpassword')}}">
-				    <span class="help-block small">Please repeat your password</span>
-				</div>
-				<div class="form-group col-lg-6">
-				    <label>API Key</label>
-				    <input type="number" id="apikey" placeholder="Paste the KeyID generated below here" class="form-control" name="apikey" required='required' value="{{set_value('apikey')}}">
-				    <strong><span class="help-block yellow"><i class="fa fa-info"></i> <a href="https://community.eveonline.com/support/api-key/CreatePredefined?accessMask=82317323" target="_blank">Generate key HERE. ETM only accepts keys created with this link!</a></span></strong>
-				</div>
-				<div class="form-group col-lg-6">
-				    <label>vCode</label>
-				    <input type="text" id="vcode" class="form-control" name="vcode" required='required' value="{{set_value('vcode')}}">
-				    <span class="help-block small">Paste the generated vCode here</span>
-				</div>
-				<div class="form-group col-lg-4 col-lg-offset-4">
-				    <label>Automated reports</label>
-				    <select class="form-control" id="reports" name="reports">
-						<option id="none">none</option>
-						<option id="daily">daily</option>
-						<option id="weekly">weekly</option>
-						<option id="monthly">monthly</option>                                 
-				    </select>
-				    <span class="help-block small">Allow ETM to e-mail you detailed earnings reports. <br/>
-					This can be changed anytime.</span>
-				</div>
+						<div class="form-group col-lg-6">
+						    <label>Repeat Password</label>
+						    <input type="password"  id="repeatpassword" class="form-control" name="repeatpassword" required='required' value="{{set_value('repeatpassword')}}">
+						    <input type="hidden" id="character" class="form-control" name="character" required='required' value="{{characterID}}">
+						    <input type="hidden" id="refresh" class="form-control" name="refresh" required='required' value="{{refresh}}">
+						    <input type="hidden" id="token" class="form-control" name="token" required='required' value="{{token}}">
+						    <span class="help-block small">Please repeat your password</span>
+						</div>
+						<div class="form-group col-lg-4 col-lg-offset-4">
+						    <label>Automated reports</label>
+						    <select class="form-control" id="reports" name="reports">
+								<option id="none">none</option>
+								<option id="daily">daily</option>
+								<option id="weekly">weekly</option>
+								<option id="monthly">monthly</option>                                 
+						    </select>
+						    <span class="help-block small">Allow ETM to e-mail you detailed earnings reports. <br/>
+							This can be changed anytime.</span>
+						</div>
+				    </div>
 			    </div>
-			    <div class="text-center submit-register">
+			</div>
+
+			<div class="panel panel-filled">
+			    <div class="panel-body">
+			    	<h4>General Settings</h4>
+                    <div class="row form-group">
+                        <div class="col-md-6 col-xs-6">
+                            <b>Default buy transactions behaviour:</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6 text-right">
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="default-buy" value="1" checked> Buy order
+                            </div>
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="default-buy" value="0"> Sell order
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 help-block">
+                            <i class="fa fa-info"></i> By default, ETM will assume your purchases come from buy orders and calculates taxes accordingly.
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6 col-xs-6">
+                            <b>Default sell transactions behaviour:</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6 text-right">
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="default-sell" value="0"> Buy order
+                            </div>
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="default-sell" value="1" checked> Sell order
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 help-block">
+                            <i class="fa fa-info"></i> By default, ETM will assume your sales go to sell orders and calculates taxes accordingly.
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6 col-xs-6">
+                            <b>Cross-character profit tracking:</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6 text-right">
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="x-character" value="1" checked> Enabled
+                            </div>
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="x-character" value="0"> Disabled
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 help-block">
+                            <i class="fa fa-info"></i> By default, ETM will calculate profits even when purchases and sales come from different characters. You can disable this behaviour and never match transactions between different characters.
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6 col-xs-6">
+                            <b>Set all Citadel taxes to zero:</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6 text-right">
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-citadel-tax" value="1"> Yes
+                            </div>
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-citadel-tax" value="0" checked> No
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 help-block">
+                            <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from citadels. This is useful when you trade mainly out of low tax citadels.
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6 col-xs-6">
+                            <b>Set all NPC station taxes to zero:</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6 text-right">
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-station-tax" value="1"> Yes
+                            </div>
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-station-tax" value="0" checked> No
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 help-block">
+                            <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from NPC stations. This is useful when you trade mainly with remote buy orders from low tax Citadels.
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6 col-xs-6">
+                            <b>Set all Nullsec outpost taxes to zero:</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6 text-right">
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-outpost-tax" value="1"> Yes
+                            </div>
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-outpost-tax" value="0" checked> No
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 help-block">
+                            <i class="fa fa-info"></i> When enabled, ETM will set your broker fees to be 0% when dealing from player-made outposts in Nullsec. This is useful when you trade items into staging systems with next to no broker fee.
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6 col-xs-6">
+                            <b>Set all purchase taxes to zero:</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6 text-right">
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-buy-tax" value="1"> Yes
+                            </div>
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-buy-tax" value="0" checked> No
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 help-block">
+                            <i class="fa fa-info"></i> When enabled, the broker fee is set to zero everytime you buy an item (either from buy or sell orders). This is useful when you mainly deal from low or zero tax citadels with ranged buy orders which might get fullfilled somewhere else.
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6 col-xs-6">
+                            <b>Set all sell taxes to zero:</b>
+                        </div>
+                        <div class="col-md-6 col-xs-6 text-right">
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-sell-tax" value="1"> Yes
+                            </div>
+                            <div class="col-md-6" style="float:right;">
+                                <input type="radio" name="null-sell-tax" value="0" checked> No
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 help-block">
+                            <i class="fa fa-info"></i> When enabled, the broker fee is set to zero everytime you sell an item (either to buy or sell orders). This is useful when you mainly deal from low or zero tax citadels with ranged sell orders which might get fullfilled somewhere else.
+                        </div>
+                    </div>
+			    </div>
+			</div>
+
+			<div class="text-center submit-register">
 				<input type="Submit" class="btn btn-accent" name="register" value="Register">
-			    </div>
-			</form>
-		    </div>
-		</div>
+			</div>
+		</form>
     </div>
 </section>
 <script src="{{ base_url('assets/js/validate_register.js') }}"></script>
