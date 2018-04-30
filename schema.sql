@@ -1,4 +1,8 @@
-﻿SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+-- Generation Time: Apr 30, 2018 at 07:58 AM
+-- Server version: 10.0.34-MariaDB-0ubuntu0.16.04.1
+-- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -8,10 +12,14 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `trader2`
+-- Database: `trader`
 --
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `aggr`
+--
 
 CREATE TABLE `aggr` (
   `idaggr` int(11) NOT NULL,
@@ -21,6 +29,9 @@ CREATE TABLE `aggr` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `api`
+--
 
 CREATE TABLE `api` (
   `apikey` int(11) NOT NULL,
@@ -29,6 +40,9 @@ CREATE TABLE `api` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `assets`
+--
 
 CREATE TABLE `assets` (
   `idassets` bigint(11) NOT NULL,
@@ -40,6 +54,9 @@ CREATE TABLE `assets` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `calendar`
+--
 
 CREATE TABLE `calendar` (
   `days` date NOT NULL
@@ -47,6 +64,9 @@ CREATE TABLE `calendar` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `changelog`
+--
 
 CREATE TABLE `changelog` (
   `idchangelog` int(11) NOT NULL,
@@ -56,6 +76,10 @@ CREATE TABLE `changelog` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `characters`
+--
+
 CREATE TABLE `characters` (
   `eve_idcharacter` int(10) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -64,39 +88,44 @@ CREATE TABLE `characters` (
   `networth` bigint(20) NOT NULL,
   `escrow` bigint(20) NOT NULL,
   `total_sell` bigint(20) NOT NULL,
-  `broker_relations` enum('0','1','2','3','4','5') NOT NULL DEFAULT '0',
-  `accounting` enum('0','1','2','3','4','5') NOT NULL DEFAULT '0'
+  `broker_relations` enum('0','1','2','3','4','5') NOT NULL,
+  `accounting` enum('0','1','2','3','4','5') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+--
+-- Triggers `characters`
+--
 DELIMITER $$
 CREATE TRIGGER `update_net_history_insert` AFTER INSERT ON `characters` FOR EACH ROW BEGIN
-  
-    IF NEW.eve_idcharacter THEN
-      SET @characters = NEW.eve_idcharacter, @total_wallet = NEW.balance, @dates = date(NOW()), @total_assets = NEW.networth, @total_sell = NEW.total_sell, @total_escrow = NEW.escrow;
+	
+		IF NEW.eve_idcharacter THEN
+			SET @characters = NEW.eve_idcharacter, @total_wallet = NEW.balance, @dates = date(NOW()), @total_assets = NEW.networth, @total_sell = NEW.total_sell, @total_escrow = NEW.escrow;
 
-    END IF;
+		END IF;
     
-    INSERT INTO net_history (characters_eve_idcharacters, date, total_wallet, total_assets, total_sell, total_escrow) VALUES (@characters, @dates, @total_wallet, @total_assets, @total_sell, @total_escrow);
-    
+		INSERT INTO net_history (characters_eve_idcharacters, date, total_wallet, total_assets, total_sell, total_escrow) VALUES (@characters, @dates, @total_wallet, @total_assets, @total_sell, @total_escrow);
+		
     END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `update_net_history_update` AFTER UPDATE ON `characters` FOR EACH ROW BEGIN
-      SET @characters = NEW.eve_idcharacter, @total_wallet = NEW.balance, @dates = date(NOW()), @total_assets = NEW.networth, @total_sell = NEW.total_sell, @total_escrow = NEW.escrow;
+			SET @characters = NEW.eve_idcharacter, @total_wallet = NEW.balance, @dates = date(NOW()), @total_assets = NEW.networth, @total_sell = NEW.total_sell, @total_escrow = NEW.escrow;
 
 
 
-    DELETE FROM net_history WHERE characters_eve_idcharacters = @characters AND date = @dates;
-    INSERT INTO net_history (characters_eve_idcharacters, date, total_wallet, total_assets, total_sell, total_escrow) VALUES (@characters, @dates, @total_wallet, @total_assets, @total_sell, @total_escrow);
-    
+		DELETE FROM net_history WHERE characters_eve_idcharacters = @characters AND date = @dates;
+		INSERT INTO net_history (characters_eve_idcharacters, date, total_wallet, total_assets, total_sell, total_escrow) VALUES (@characters, @dates, @total_wallet, @total_assets, @total_sell, @total_escrow);
+		
     END
 $$
 DELIMITER ;
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `characters_public`
+--
 
 CREATE TABLE `characters_public` (
   `eve_idcharacters` int(11) NOT NULL,
@@ -105,6 +134,9 @@ CREATE TABLE `characters_public` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `citadel_tax`
+--
 
 CREATE TABLE `citadel_tax` (
   `idcitadel_tax` int(11) NOT NULL,
@@ -115,6 +147,9 @@ CREATE TABLE `citadel_tax` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `contracts`
+--
 
 CREATE TABLE `contracts` (
   `eve_idcontracts` int(11) NOT NULL,
@@ -138,6 +173,10 @@ CREATE TABLE `contracts` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `corporation`
+--
+
 CREATE TABLE `corporation` (
   `eve_idcorporation` int(11) NOT NULL,
   `faction_eve_idfaction` int(11) NOT NULL
@@ -145,6 +184,9 @@ CREATE TABLE `corporation` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `faction`
+--
 
 CREATE TABLE `faction` (
   `eve_idfaction` int(11) NOT NULL,
@@ -153,6 +195,21 @@ CREATE TABLE `faction` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `fixed_prices`
+--
+
+CREATE TABLE `fixed_prices` (
+  `id` int(11) NOT NULL,
+  `item_eve_iditem` int(11) NOT NULL,
+  `price` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `history`
+--
 
 CREATE TABLE `history` (
   `idhistory` bigint(20) NOT NULL,
@@ -166,6 +223,9 @@ CREATE TABLE `history` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `item`
+--
 
 CREATE TABLE `item` (
   `eve_iditem` int(11) NOT NULL,
@@ -176,6 +236,9 @@ CREATE TABLE `item` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `itemcontents`
+--
 
 CREATE TABLE `itemcontents` (
   `iditemcontents` int(11) NOT NULL,
@@ -185,6 +248,9 @@ CREATE TABLE `itemcontents` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `itemlist`
+--
 
 CREATE TABLE `itemlist` (
   `iditemlist` int(11) NOT NULL,
@@ -194,6 +260,9 @@ CREATE TABLE `itemlist` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `item_price_data`
+--
 
 CREATE TABLE `item_price_data` (
   `item_eve_iditem` int(11) NOT NULL,
@@ -202,16 +271,22 @@ CREATE TABLE `item_price_data` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `log`
+--
 
 CREATE TABLE `log` (
   `idlog` bigint(20) NOT NULL,
   `user_iduser` int(11) NOT NULL,
   `type` varchar(45) NOT NULL,
-  `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `net_history`
+--
 
 CREATE TABLE `net_history` (
   `characters_eve_idcharacters` int(11) NOT NULL,
@@ -224,6 +299,10 @@ CREATE TABLE `net_history` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `new_info`
+--
+
 CREATE TABLE `new_info` (
   `characters_eve_idcharacters` int(11) NOT NULL,
   `contracts` int(11) NOT NULL,
@@ -233,6 +312,9 @@ CREATE TABLE `new_info` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `orders`
+--
 
 CREATE TABLE `orders` (
   `idorders` bigint(11) NOT NULL,
@@ -252,6 +334,10 @@ CREATE TABLE `orders` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `order_status`
+--
+
 CREATE TABLE `order_status` (
   `orders_transkey` bigint(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
@@ -259,6 +345,10 @@ CREATE TABLE `order_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `profit`
+--
 
 CREATE TABLE `profit` (
   `idprofit` bigint(11) NOT NULL,
@@ -274,6 +364,10 @@ CREATE TABLE `profit` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `region`
+--
+
 CREATE TABLE `region` (
   `eve_idregion` int(10) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -281,6 +375,10 @@ CREATE TABLE `region` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `ship_volumes`
+--
 
 CREATE TABLE `ship_volumes` (
   `marketGroupID` int(11) NOT NULL,
@@ -291,6 +389,10 @@ CREATE TABLE `ship_volumes` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `standings_corporation`
+--
+
 CREATE TABLE `standings_corporation` (
   `idstandings_corporation` int(11) NOT NULL,
   `characters_eve_idcharacters` int(11) NOT NULL,
@@ -300,6 +402,9 @@ CREATE TABLE `standings_corporation` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `standings_faction`
+--
 
 CREATE TABLE `standings_faction` (
   `idstandings_faction` int(11) NOT NULL,
@@ -310,6 +415,9 @@ CREATE TABLE `standings_faction` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `station`
+--
 
 CREATE TABLE `station` (
   `eve_idstation` bigint(10) NOT NULL,
@@ -320,6 +428,25 @@ CREATE TABLE `station` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `stats`
+--
+
+CREATE TABLE `stats` (
+  `id` int(11) NOT NULL,
+  `profit` float NOT NULL,
+  `transactions` bigint(20) NOT NULL,
+  `api_keys` bigint(20) NOT NULL,
+  `characters` bigint(20) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=ucs2;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `system`
+--
+
 CREATE TABLE `system` (
   `eve_idsystem` int(10) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -328,16 +455,22 @@ CREATE TABLE `system` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `traderoutes`
+--
+
 CREATE TABLE `traderoutes` (
   `idtraderoute` int(11) NOT NULL,
   `user_iduser` int(11) NOT NULL,
   `station_eve_idstation_from` bigint(11) NOT NULL,
-  `station_eve_idstation_to` bigint(11) NOT NULL,
-  `starting_character` int(11) DEFAULT NULL,
-  `destination_character` int(11) DEFAULT NULL
+  `station_eve_idstation_to` bigint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction`
+--
 
 CREATE TABLE `transaction` (
   `idbuy` bigint(11) NOT NULL,
@@ -351,10 +484,14 @@ CREATE TABLE `transaction` (
   `item_eve_iditem` int(11) NOT NULL,
   `transkey` bigint(20) NOT NULL,
   `client` varchar(100) NOT NULL,
-  `remaining` bigint(11) NOT NULL
+  `remaining` bigint(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
 
 CREATE TABLE `user` (
   `iduser` int(11) NOT NULL,
@@ -371,14 +508,15 @@ CREATE TABLE `user` (
   `cross_character_profits` tinyint(1) NOT NULL DEFAULT '1',
   `ignore_citadel_tax` tinyint(1) NOT NULL DEFAULT '0',
   `ignore_station_tax` tinyint(1) NOT NULL DEFAULT '0',
-  `ignore_outpost_tax` tinyint(1) NOT NULL DEFAULT '0'
+  `ignore_outpost_tax` tinyint(1) NOT NULL DEFAULT '0',
+  `ignore_buy_tax` tinyint(4) NOT NULL DEFAULT '0',
+  `ignore_sell_tax` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
 -- Stand-in structure for view `v_profit_details`
--- (See below for the actual view)
 --
 CREATE TABLE `v_profit_details` (
 `idprofit` bigint(11)
@@ -415,7 +553,6 @@ CREATE TABLE `v_profit_details` (
 
 --
 -- Stand-in structure for view `v_transaction_details`
--- (See below for the actual view)
 --
 CREATE TABLE `v_transaction_details` (
 `idbuy` bigint(11)
@@ -440,7 +577,6 @@ CREATE TABLE `v_transaction_details` (
 
 --
 -- Stand-in structure for view `v_user_characters`
--- (See below for the actual view)
 --
 CREATE TABLE `v_user_characters` (
 `iduser` int(11)
@@ -487,6 +623,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 ALTER TABLE `aggr`
   ADD PRIMARY KEY (`idaggr`),
+  ADD UNIQUE KEY `idx_char_acc` (`user_iduser`,`character_eve_idcharacter`),
   ADD KEY `fk_aggr_user1_idx` (`user_iduser`),
   ADD KEY `fk_aggr_character1_idx` (`character_eve_idcharacter`);
 
@@ -546,7 +683,9 @@ ALTER TABLE `contracts`
   ADD PRIMARY KEY (`eve_idcontracts`,`characters_eve_idcharacters`),
   ADD KEY `index_station` (`fromStation_eve_idstation`),
   ADD KEY `index_station_to` (`toStation_eve_idstation`),
-  ADD KEY `index_characters` (`characters_eve_idcharacters`);
+  ADD KEY `index_characters` (`characters_eve_idcharacters`),
+  ADD KEY `status` (`status`),
+  ADD KEY `type` (`type`);
 
 --
 -- Indexes for table `corporation`
@@ -561,6 +700,13 @@ ALTER TABLE `corporation`
 --
 ALTER TABLE `faction`
   ADD PRIMARY KEY (`eve_idfaction`);
+
+--
+-- Indexes for table `fixed_prices`
+--
+ALTER TABLE `fixed_prices`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_item` (`item_eve_iditem`);
 
 --
 -- Indexes for table `history`
@@ -584,7 +730,6 @@ ALTER TABLE `item`
 --
 ALTER TABLE `itemcontents`
   ADD PRIMARY KEY (`iditemcontents`),
-  ADD UNIQUE KEY `unique_item_list` (`itemlist_iditemlist`,`item_eve_iditem`),
   ADD KEY `idx_list` (`itemlist_iditemlist`),
   ADD KEY `idx_item` (`item_eve_iditem`);
 
@@ -690,10 +835,16 @@ ALTER TABLE `standings_faction`
 --
 ALTER TABLE `station`
   ADD PRIMARY KEY (`eve_idstation`),
-  ADD UNIQUE KEY `name_UNIQUE` (`name`),
   ADD KEY `fk_station_system1_idx` (`system_eve_idsystem`),
   ADD KEY `station_index` (`name`),
-  ADD KEY `fk_corp` (`corporation_eve_idcorporation`);
+  ADD KEY `fk_corp` (`corporation_eve_idcorporation`),
+  ADD KEY `name` (`name`) USING BTREE;
+
+--
+-- Indexes for table `stats`
+--
+ALTER TABLE `stats`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `system`
@@ -711,9 +862,7 @@ ALTER TABLE `traderoutes`
   ADD PRIMARY KEY (`idtraderoute`),
   ADD KEY `stationFrom` (`station_eve_idstation_from`),
   ADD KEY `stationTo` (`station_eve_idstation_to`),
-  ADD KEY `iduser` (`user_iduser`),
-  ADD KEY `starting_character` (`starting_character`),
-  ADD KEY `destination_character` (`destination_character`);
+  ADD KEY `iduser` (`user_iduser`);
 
 --
 -- Indexes for table `transaction`
@@ -724,7 +873,9 @@ ALTER TABLE `transaction`
   ADD KEY `fk_transaction_item1_idx` (`item_eve_iditem`),
   ADD KEY `fk_transaction_station1_idx` (`station_eve_idstation`),
   ADD KEY `fk_transaction_character1_idx` (`character_eve_idcharacter`),
-  ADD KEY `idx_transaction_lookup` (`transaction_type`);
+  ADD KEY `idx_transaction_lookup` (`transaction_type`),
+  ADD KEY `remaining` (`remaining`),
+  ADD KEY `time` (`time`);
 
 --
 -- Indexes for table `user`
@@ -742,166 +893,191 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `aggr`
 --
 ALTER TABLE `aggr`
-  MODIFY `idaggr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idaggr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21229;
 --
 -- AUTO_INCREMENT for table `assets`
 --
 ALTER TABLE `assets`
-  MODIFY `idassets` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idassets` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3188956696;
 --
 -- AUTO_INCREMENT for table `changelog`
 --
 ALTER TABLE `changelog`
-  MODIFY `idchangelog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idchangelog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 --
 -- AUTO_INCREMENT for table `citadel_tax`
 --
 ALTER TABLE `citadel_tax`
-  MODIFY `idcitadel_tax` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcitadel_tax` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=912;
 --
 -- AUTO_INCREMENT for table `corporation`
 --
 ALTER TABLE `corporation`
-  MODIFY `eve_idcorporation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `eve_idcorporation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000275;
 --
 -- AUTO_INCREMENT for table `faction`
 --
 ALTER TABLE `faction`
-  MODIFY `eve_idfaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `eve_idfaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=500025;
+--
+-- AUTO_INCREMENT for table `fixed_prices`
+--
+ALTER TABLE `fixed_prices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `idhistory` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idhistory` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12170728;
 --
 -- AUTO_INCREMENT for table `itemcontents`
 --
 ALTER TABLE `itemcontents`
-  MODIFY `iditemcontents` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `iditemcontents` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145860;
 --
 -- AUTO_INCREMENT for table `itemlist`
 --
 ALTER TABLE `itemlist`
-  MODIFY `iditemlist` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `iditemlist` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10820;
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `idlog` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idlog` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2216111;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `idorders` bigint(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idorders` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=342724135;
 --
 -- AUTO_INCREMENT for table `profit`
 --
 ALTER TABLE `profit`
-  MODIFY `idprofit` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idprofit` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64697625;
 --
 -- AUTO_INCREMENT for table `standings_corporation`
 --
 ALTER TABLE `standings_corporation`
-  MODIFY `idstandings_corporation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idstandings_corporation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53432141;
 --
 -- AUTO_INCREMENT for table `standings_faction`
 --
 ALTER TABLE `standings_faction`
-  MODIFY `idstandings_faction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idstandings_faction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50886959;
+--
+-- AUTO_INCREMENT for table `stats`
+--
+ALTER TABLE `stats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5604;
 --
 -- AUTO_INCREMENT for table `traderoutes`
 --
 ALTER TABLE `traderoutes`
-  MODIFY `idtraderoute` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtraderoute` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9279;
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `idbuy` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idbuy` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57891523;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11217;
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `aggr`
 --
 ALTER TABLE `aggr`
   ADD CONSTRAINT `fk_aggr_character1` FOREIGN KEY (`character_eve_idcharacter`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_aggr_user1` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`);
 
 --
+-- Constraints for table `assets`
 --
 ALTER TABLE `assets`
   ADD CONSTRAINT `fk_assets_character` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `characters`
 --
 ALTER TABLE `characters`
   ADD CONSTRAINT `fk_character_api1` FOREIGN KEY (`api_apikey`) REFERENCES `api` (`apikey`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `citadel_tax`
 --
 ALTER TABLE `citadel_tax`
   ADD CONSTRAINT `fk_citadel_tax` FOREIGN KEY (`character_eve_idcharacter`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_citadel_tax_station` FOREIGN KEY (`station_eve_idstation`) REFERENCES `station` (`eve_idstation`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `contracts`
 --
 ALTER TABLE `contracts`
   ADD CONSTRAINT `fk_contracts_character` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `corporation`
 --
 ALTER TABLE `corporation`
   ADD CONSTRAINT `fk_corp_faction` FOREIGN KEY (`faction_eve_idfaction`) REFERENCES `faction` (`eve_idfaction`);
 
 --
+-- Constraints for table `history`
 --
 ALTER TABLE `history`
   ADD CONSTRAINT `fk_history_characters` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_history_date` FOREIGN KEY (`date`) REFERENCES `calendar` (`days`);
 
 --
+-- Constraints for table `itemcontents`
 --
 ALTER TABLE `itemcontents`
   ADD CONSTRAINT `fk_content_list` FOREIGN KEY (`itemlist_iditemlist`) REFERENCES `itemlist` (`iditemlist`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `itemlist`
 --
 ALTER TABLE `itemlist`
   ADD CONSTRAINT `fk_list_user` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `log`
 --
 ALTER TABLE `log`
   ADD CONSTRAINT `fk_log_user` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `net_history`
 --
 ALTER TABLE `net_history`
   ADD CONSTRAINT `fk_net_calendar` FOREIGN KEY (`date`) REFERENCES `calendar` (`days`),
   ADD CONSTRAINT `fk_net_character` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `new_info`
 --
 ALTER TABLE `new_info`
   ADD CONSTRAINT `fk_new_info_character_id` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `fk_order_char` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `order_status`
 --
 ALTER TABLE `order_status`
   ADD CONSTRAINT `fk_status_order` FOREIGN KEY (`orders_transkey`) REFERENCES `orders` (`transkey`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `profit`
 --
 ALTER TABLE `profit`
   ADD CONSTRAINT `fk_profit_buy` FOREIGN KEY (`transaction_idbuy_buy`) REFERENCES `transaction` (`idbuy`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -910,71 +1086,46 @@ ALTER TABLE `profit`
   ADD CONSTRAINT `fk_profit_sell` FOREIGN KEY (`transaction_idbuy_sell`) REFERENCES `transaction` (`idbuy`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `standings_corporation`
 --
 ALTER TABLE `standings_corporation`
   ADD CONSTRAINT `standings_corp_corp` FOREIGN KEY (`corporation_eve_idcorporation`) REFERENCES `corporation` (`eve_idcorporation`),
   ADD CONSTRAINT `standings_corporation_ibfk_1` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `standings_faction`
 --
 ALTER TABLE `standings_faction`
   ADD CONSTRAINT `fk_standinds_faction_faction` FOREIGN KEY (`faction_eve_idfaction`) REFERENCES `faction` (`eve_idfaction`),
   ADD CONSTRAINT `fk_standings_faction_ib_1` FOREIGN KEY (`characters_eve_idcharacters`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `station`
 --
 ALTER TABLE `station`
   ADD CONSTRAINT `fk_station_corp` FOREIGN KEY (`corporation_eve_idcorporation`) REFERENCES `corporation` (`eve_idcorporation`),
-  ADD CONSTRAINT `fk_station_system1` FOREIGN KEY (`system_eve_idsystem`) REFERENCES `system` (`eve_idsystem`);
+  ADD CONSTRAINT `fk_system` FOREIGN KEY (`system_eve_idsystem`) REFERENCES `system` (`eve_idsystem`);
 
 --
+-- Constraints for table `system`
 --
 ALTER TABLE `system`
   ADD CONSTRAINT `fk_system_region1` FOREIGN KEY (`region_eve_idregion`) REFERENCES `region` (`eve_idregion`);
 
 --
+-- Constraints for table `traderoutes`
 --
 ALTER TABLE `traderoutes`
-  ADD CONSTRAINT `fk_character_to` FOREIGN KEY (`destination_character`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_station_from` FOREIGN KEY (`station_eve_idstation_from`) REFERENCES `station` (`eve_idstation`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_station_to` FOREIGN KEY (`station_eve_idstation_to`) REFERENCES `station` (`eve_idstation`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
   ADD CONSTRAINT `fk_transaction_character1` FOREIGN KEY (`character_eve_idcharacter`) REFERENCES `characters` (`eve_idcharacter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Table structure for table `fixed_prices`
---
-
-CREATE TABLE `fixed_prices` (
-  `id` int(11) NOT NULL,
-  `item_eve_iditem` int(11) NOT NULL,
-  `price` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `fixed_prices`
---
-ALTER TABLE `fixed_prices`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_item` (`item_eve_iditem`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `fixed_prices`
---
-ALTER TABLE `fixed_prices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
