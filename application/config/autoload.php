@@ -134,4 +134,4 @@ $autoload['language'] = array();
 */
 $autoload['model'] = array();
 
-include 'vendor/autoload.php';
+//include 'vendor/autoload.php';

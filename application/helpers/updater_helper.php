@@ -3,8 +3,6 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-use Pheal\Pheal;
-
 class UpdaterHelper
 {
 	private $ci;
@@ -12,6 +10,7 @@ class UpdaterHelper
 	public function __construct()
 	{
 		$this->ci = &get_instance();
+        $this->ci->load->config('esi_config');
 		$this->ci->load->model('User_model', 'user');
 	}
 
@@ -22,9 +21,14 @@ class UpdaterHelper
     public function testEndpoint(): bool
     {
         try {
-            $pheal    = new Pheal();
-            $response = $pheal->serverScope->ServerStatus();
-            if (!is_numeric($response->onlinePlayers)) {
+            $authentication = new \Seat\Eseye\Containers\EsiAuthentication([
+                'client_id'     => $this->ci->config->item('esi_client_id'),
+                'secret'        => $this->ci->config->item('esi_secret'),
+            ]);
+            $esi = new \Seat\Eseye\Eseye();
+            $serverStatus = $esi->invoke('get', '/status/', []);
+
+            if (!is_numeric($serverStatus->players)) {
                 return false;
             }
             return true;

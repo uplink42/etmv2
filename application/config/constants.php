@@ -87,5 +87,6 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 // Masks
 define("MASK_PERSONAL_KEY", '82317323');
 define("MASK_FULL_KEY", '1073741823');
-define("FILESTORAGE", "phealcache/"); //pheal cache folder
+define("FILESTORAGE", "seatcache/"); // request cache folder
+define("LOGSTORAGE", "seatlogs/");
 define("URL", "../../");

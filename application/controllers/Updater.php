@@ -1,12 +1,13 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
-use Pheal\Core\Config;
-use Pheal\Pheal;
 
-Config::getInstance()->cache  = new \Pheal\Cache\FileStorage(FILESTORAGE);
-Config::getInstance()->access = new \Pheal\Access\StaticCheck();
+use Seat\Eseye\Cache\FileCache;
+use Seat\Eseye\Configuration;
+use Seat\Eseye\Containers\EsiAuthentication;
+use Seat\Eseye\Eseye;
 
 final class Updater extends CI_Controller
 {
+    private $authentication;
     private $idUser;
     private $username;
     private $characters;
@@ -25,11 +26,14 @@ final class Updater extends CI_Controller
     private $newCharacterContracts;
     private $newCharacterOrders;
 
+    private $esi;
+
     public function __construct()
     {
         parent::__construct();
+        $this->load->config('esi_config');
         $this->load->model('Aggr_model', 'aggr');
-        $this->load->model('Api_keys_model', 'keys');
+        $this->load->model('Refresh_token_model', 'token');
         $this->load->model('Characters_model', 'chars');
         $this->load->model('Transactions_model', 'transactions');
         $this->load->model('Contracts_model', 'contracts');
@@ -42,8 +46,12 @@ final class Updater extends CI_Controller
         $this->load->helper('msg_helper');
         $this->load->helper('log_helper');
         $this->load->helper('profit_calculator_helper');
-
         $this->load->library('twig');
+
+        $this->configuration = \Seat\Eseye\Configuration::getInstance();
+        //$this->configuration->logfile_location    = LOGSTORAGE;
+        $this->configuration->file_cache_location = FILESTORAGE;
+        $this->esi  = new \Seat\Eseye\Eseye($this->authentication);
     }
 
     public function index()
@@ -76,7 +84,7 @@ final class Updater extends CI_Controller
             $this->displayResultTable($username);
             return;
         }
-
+        
         // check if user is already updating
         if ($updater->isLocked($this->idUser)) {
             log_message('error', $this->username . ' is already updating!');
@@ -85,44 +93,8 @@ final class Updater extends CI_Controller
             return;
         }
 
-        // check if user has any keys
-        $keys = $this->aggr->getAll(array('user_iduser' => $this->idUser));
-        if (count($keys) == 0) {
-            log_message('error', $this->username . ' has no keys');
-            $updater->release($this->idUser);
-            // no keys, so prompt for new one
-            $this->askForKey();
-            return;
-        }
-
-        // validate existing keys
-        $keysStatus = $this->processAPIKeys($keys);
-        if (!$keysStatus) {
-            log_message('error', $this->username . ' was unable to connect to verify key status');
-            $updater->release($this->idUser);
-            // unable to connect to verify keys
-            buildMessage('error', Msg::OFFLINE_MODE_NOTICE);
-            $this->displayResultTable($this->idUser);
-            return;
-        }
-
-        foreach ($keysStatus as $key => $val) {
-            $invalidKeys = [];
-            if ($val < 1) {
-                array_push($invalidKeys, $key);
-            }
-            if (count($invalidKeys) > 0) {
-                $updater->release($this->idUser);
-                log_message('error', 'Invalid Keys detected for ' . $this->username);
-                // invalid key
-                buildMessage('error', Msg::OFFLINE_MODE_NOTICE_KEY . ' ' . implode($invalidKeys, ','));
-                $this->displayResultTable($this->idUser);
-                return;
-            }
-        }
-
         // begin update
-        $updater->lock($this->idUser);
+        //$updater->lock($this->idUser);
         try {
             $resultIterate = $this->iterateAccountCharacters();
             if (!$resultIterate) {
@@ -164,7 +136,6 @@ final class Updater extends CI_Controller
 
             Log::addEntry('update', $this->idUser);
             Log::addLogin($this->idUser);
-
             // finally, load the next page
             $this->twig->display('main/_template_v', $data);
         } catch (Throwable $e) {
@@ -198,8 +169,12 @@ final class Updater extends CI_Controller
             $this->characterEscrow   = $characterData->escrow;
             $this->characterNetworth = $characterData->networth;
             $this->characterOrders   = $characterData->total_sell;
-            $this->apikey            = $characterData->api_apikey;
-            $this->vcode             = $this->keys->getOne(array('apikey' => $characterData->api_apikey))->vcode;
+            // auth object
+            $this->authentication    = new \Seat\Eseye\Containers\EsiAuthentication([
+                'client_id'     => $this->config->item('esi_client_id'),
+                'secret'        => $this->config->item('esi_secret'),
+                'refresh_token' => $characterData->token,
+            ]);
 
             // get character data
             $this->getWalletBalance();
@@ -218,125 +193,62 @@ final class Updater extends CI_Controller
         return true;
     }
 
-    /**
-     * Begins checking each key's validity (e.g expired or wrong permissions)
-     * @param  array  $user_keys
-     * @param  string $username
-     * @return bool            validation result
-     */
-    private function processAPIKeys(array $userKeys)
-    {
-        $result = [];
-        foreach ($userKeys as $apis) {
-            $apikey = (int) $apis->apikey;
-            $vcode  = $apis->vcode;
-            $idChar = $apis->id_character;
-
-            $pheal = new Pheal($apikey, $vcode, "account");
-            try {
-                $response = $pheal->APIKeyInfo();
-            } catch (Throwable $e) {
-                log_message('error', $this->username . ' had an error processing api keys: ' . $e->getMessage());
-                return false;
-            }
-
-            $result[$apikey] = $this->validateAPIKey($apikey, $vcode, $idChar);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Performs validation checks for each key's result
-     * @param  int    $apikey
-     * @param  string $vcode
-     * @param  string $char
-     * @return [bool|int]      validation result
-     */
-    public function validateAPIKey(int $apikey, string $vcode, string $char)
-    {
-        try {
-            $phealAPI   = new Pheal($apikey, $vcode, "account");
-            $response   = $phealAPI->APIKeyInfo();
-            $accessMask = $response->key->accessMask;
-            $expiry     = $response->key->expires;
-            $apichars   = array();
-            foreach ($response->key->characters as $row) {
-                $char_api = $row->characterID;
-                array_push($apichars, $char_api);
-            }
-        } catch (Throwable $e) {
-            log_message('error', $this->username . ' had an error validating api keys: ' . $e->getMessage());
-            return false;
-        }
-        if ($accessMask == "" && $response) {
-            return -4; //api key does not exist
-        } else if ($accessMask != MASK_PERSONAL_KEY && $accessMask != MASK_FULL_KEY && $response) {
-            return -3; //api key has invalid permissions
-        } else if (!in_array($char, $apichars) && $response) {
-            return -2; //character does not belong to API key
-        } else if (!isset($expiry) && $response) {
-            return -1; //key has expired
-        } else {
-            return 1; //everything is ok
-        }
-        return true;
-    }
-
     private function getWalletBalance(): void
     {
         $this->characterBalance = 0;
-        $pheal                  = new Pheal($this->apikey, $this->vcode, "char");
-        $response               = $pheal->AccountBalance(array("characterID" => $this->idCharacter));
-        foreach ($response->accounts as $row) {
-            if ($row['accountKey'] == 1000) {
-                // master wallet
-                $balance                = $row->balance;
-                $this->characterBalance = $balance;
-            }
-        }
+        $response = $this->esi->invoke('get', '/characters/{character_id}/wallet/', [
+            'character_id' => $this->idCharacter,
+        ]);
+        $this->balance          = $response->scalar;
+        $this->characterBalance = $response->scalar;
     }
 
     private function getBrokerRelationsLevel(): void
     {
-        $this->characterBrokerLevel = '0';
-        $pheal                      = new Pheal($this->apikey, $this->vcode, "char");
-        $response                   = $pheal->CharacterSheet(array("characterID" => $this->idCharacter));
+        $this->characterBrokerLevel = 0;
+        $response = $this->esi->invoke('get', '/characters/{character_id}/skills/', [
+            'character_id' => $this->idCharacter,
+        ]);
+
         foreach ($response->skills as $skills) {
-            if (($skills->typeID) == 3446) {
-                $this->characterBrokerLevel = $skills->level;
+            if (($skills->skill_id) == 3446) {
+                $this->characterBrokerLevel = $skills->current_skill_level;
             }
         }
     }
 
     private function getAccountingLevel(): void
     {
-        $this->characterAccountingLevel = '0';
-        $pheal                          = new Pheal($this->apikey, $this->vcode, "char");
-        $response                       = $pheal->CharacterSheet(array("characterID" => $this->idCharacter));
+        $this->characterAccountingLevel = 0;
+        $response = $this->esi->invoke('get', '/characters/{character_id}/skills/', [
+            'character_id' => $this->idCharacter,
+        ]);
+
         foreach ($response->skills as $skills) {
-            if (($skills->typeID) == 16622) {
-                $this->characterAccountingLevel = $skills->level;
+            if (($skills->skill_id) == 16622) {
+                $this->characterAccountingLevel = $skills->current_skill_level;
             }
         }
     }
 
     private function getCorpStandings(): void
     {
-        $pheal             = new Pheal($this->apikey, $this->vcode, "char");
-        $result            = $pheal->Standings(array("characterID" => $this->idCharacter));
+        $response = $this->esi->invoke('get', '/characters/{character_id}/standings/', [
+            'character_id' => $this->idCharacter,
+        ]);
         $corpStandingsData = array();
 
-        foreach ($result->characterNPCStandings->NPCCorporations as $corpStandings) {
-            $data = array("idstandings_corporation" => "null",
-                "characters_eve_idcharacters"           => $this->idCharacter,
-                "corporation_eve_idcorporation"         => $corpStandings->fromID,
-                "value"                                 => $corpStandings->standing);
-            array_push($corpStandingsData, $data);
+        foreach ($response as $corpStandings) {
+            if ($corpStandings->from_type === 'npc_corp') {
+                $data = array("idstandings_corporation" => "null",
+                    "characters_eve_idcharacters"           => $this->idCharacter,
+                    "corporation_eve_idcorporation"         => $corpStandings->from_id,
+                    "value"                                 => $corpStandings->standing);
+                array_push($corpStandingsData, $data);
+            }
         }
 
         if (count($corpStandingsData) > 0) {
-            // mass insert
             batch("standings_corporation",
                 array('idstandings_corporation', 'characters_eve_idcharacters', 'corporation_eve_idcorporation', 'value'), $corpStandingsData);
         }
@@ -344,16 +256,19 @@ final class Updater extends CI_Controller
 
     private function getFactionStandings(): void
     {
-        $pheal                = new Pheal($this->apikey, $this->vcode, "char");
-        $result               = $pheal->Standings(array("characterID" => $this->idCharacter));
+        $response = $this->esi->invoke('get', '/characters/{character_id}/standings/', [
+            'character_id' => $this->idCharacter,
+        ]);
         $factionStandingsData = array();
 
-        foreach ($result->characterNPCStandings->factions as $factionStandings) {
-            $data = array("idstandings_faction" => "null",
-                "characters_eve_idcharacters"       => $this->idCharacter,
-                "faction_eve_idfaction"             => $factionStandings->fromID,
-                "value"                             => $factionStandings->standing);
-            array_push($factionStandingsData, $data);
+        foreach ($response as $factionStandings) {
+            if ($factionStandings->from_type === 'faction') {
+                $data = array("idstandings_faction" => "null",
+                    "characters_eve_idcharacters"           => $this->idCharacter,
+                    "corporation_eve_idcorporation"         => $factionStandings->from_id,
+                    "value"                                 => $factionStandings->standing);
+                array_push($factionStandingsData, $data);
+            }
         }
 
         if (count($factionStandingsData) > 0) {
@@ -362,37 +277,44 @@ final class Updater extends CI_Controller
         }
     }
 
-    private function getTransactions($refID = false): void
+    private function getTransactions(): void
     {
         $this->newCharacterTransactions = 0;
-        $pheal                          = new Pheal($this->apikey, $this->vcode, "char");
-        $response                       = $pheal->WalletTransactions(array("characterID" => $this->idCharacter));
-        if ($refID != false) {
-            $response = $pheal->WalletTransactions(array("fromID" => $refID));
-        }
+        $response = $this->esi->invoke('get', '/characters/{character_id}/wallet/transactions', [
+            'character_id' => $this->idCharacter,
+        ]);
 
         $latestTransaction = $this->transactions->getLatestTransaction($this->idCharacter)->val;
         if (!$latestTransaction) {
             $latestTransaction = 0;
         }
 
-        // only update transactions not in db already
         $transactions = array();
-        foreach ($response->transactions as $row) {
-            if ($row->transactionID > $latestTransaction) {
-                $data = array("idbuy"       => "null",
-                    "time"                      => $this->db->escape($row->transactionDateTime),
+        foreach ($response as $row) {
+            if ($row->transaction_id > $latestTransaction) {
+                $time = new DateTime($row->transactionDateTime);
+                $data = array(
+                    "idbuy"                     => "null",
+                    "time"                      => $this->db->escape($time->format('Y-m-d H:i:s')),
                     "quantity"                  => $this->db->escape($row->quantity),
-                    "price_unit"                => $this->db->escape($row->price),
-                    "price_total"               => $this->db->escape($row->price * $row->quantity),
-                    "transaction_type"          => $this->db->escape($row->transactionType),
+                    "price_unit"                => $this->db->escape($row->unit_price),
+                    "price_total"               => $this->db->escape($row->unit_price * $row->quantity),
+                    "transaction_type"          => $this->db->escape($row->is_buy ? 'Buy' : 'Sell'),
                     "character_eve_idcharacter" => $this->db->escape($this->idCharacter),
-                    "station_eve_idstation"     => $this->db->escape($row->stationID),
-                    "item_eve_iditem"           => $this->db->escape($row->typeID),
-                    "transkey"                  => $this->db->escape($row->transactionID),
-                    "client"                    => $this->db->escape($row->clientName),
+                    //"station_eve_idstation"     => $this->db->escape($row->stationID),
+                    "item_eve_iditem"           => $this->db->escape($row->type_id),
+                    "transkey"                  => $this->db->escape($row->transaction_id),
+                    //"client"                    => $this->db->escape($row->clientName),
                     "remaining"                 => $this->db->escape($row->quantity));
                 array_push($transactions, $data);
+
+                $esi      = new \Seat\Eseye\Eseye($this->authentication);
+                $response = $esi->invoke('get', '/characters/{character_id}/wallet/journal/{journal_ref}', [
+                    'character_id' => $this->idCharacter,
+                    'journal_ref'  => $row->journal_ref_id,
+                ]);
+
+                log_message('error', print_r($response,1));
             }
         }
 
@@ -400,12 +322,6 @@ final class Updater extends CI_Controller
         if (!empty($transactions)) {
             $this->transactions->batchInsert($transactions);
             $this->newCharacterTransactions = count($transactions);
-            if (count($transactions) == 2560) {
-                //check if we exceed the max transactions per request
-                $refID = end($transactions['transkey']);
-                $this->newCharacterTransactions += 2560;
-                $this->getTransactions($refID); //pass the last transaction as request again
-            }
         } else {
             $this->newCharacterTransactions = 0;
         }
